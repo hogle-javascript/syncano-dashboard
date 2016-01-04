@@ -1,16 +1,17 @@
 import Reflux from 'reflux';
 
-import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
-import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
+import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
-import ChannelsActions from './ChannelsActions';
+import Actions from './ChannelsActions';
 
 export default Reflux.createStore({
-  listenables: ChannelsActions,
+  listenables: Actions,
+
   mixins: [
-    CheckListStoreMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.WaitForStore,
+    Mixins.StoreLoading
   ],
 
   channelTypes: [
@@ -52,6 +53,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   getItems() {
@@ -81,38 +83,21 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('ChannelsStore::refreshData');
-    ChannelsActions.fetchChannels();
+    Actions.fetchChannels();
   },
 
   setChannels(items) {
-    this.data.items = Object.keys(items).map((key) => {
-      return items[key];
-    });
-    this.data.isLoading = false;
-    this.trigger(this.data);
-  },
-
-  onRemoveChannels() {
-    this.data.isLoading = true;
+    this.data.items = items;
     this.trigger(this.data);
   },
 
   onRemoveChannelsCompleted() {
     console.debug('ChannelsStore::onRemoveChannelsCompleted');
-    this.data.hideDialogs = true;
-    this.data.isLoading = false;
     this.refreshData();
-  },
-
-  onFetchChannels() {
-    console.debug('ChannelsStore::onFetchChannels');
-    this.data.isLoading = true;
-    this.trigger(this.data);
   },
 
   onFetchChannelsCompleted(items) {
     console.debug('ChannelsStore::onFetchChannelsCompleted');
-    ChannelsActions.setChannels(items);
+    Actions.setChannels(items._items);
   }
-
 });

@@ -9,11 +9,10 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeyDialogStore';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {FlatButton, Toggle, TextField} from 'syncano-material-ui';
+import {Dialog} from '../../common';
 
 export default React.createClass({
-
   displayName: 'ApiKeyDialog',
 
   mixins: [
@@ -24,6 +23,14 @@ export default React.createClass({
 
   handleAddSubmit() {
     Actions.createApiKey({
+      description: this.state.description,
+      allow_user_create: this.state.allow_user_create,
+      ignore_acl: this.state.ignore_acl
+    });
+  },
+
+  handleEditSubmit() {
+    Actions.updateApiKey(this.state.id, {
       description: this.state.description,
       allow_user_create: this.state.allow_user_create,
       ignore_acl: this.state.ignore_acl
@@ -41,12 +48,12 @@ export default React.createClass({
     let title = this.hasEditMode() ? 'Edit' : 'Generate';
     let submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label={submitLabel}
         primary={true}
@@ -55,35 +62,37 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
-        key='dialog'
-        ref='dialog'
+      <Dialog
+        key="dialog"
+        ref="dialog"
         title={`${title} an API Key`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
         actions={dialogStandardActions}>
         {this.renderFormNotifications()}
-        <MUI.TextField
-          ref='description'
-          name='description'
+        <TextField
+          ref="description"
+          name="description"
           fullWidth={true}
           valueLink={this.linkState('description')}
           errorText={this.getValidationMessages('description').join(' ')}
-          floatingLabelText='Description of an API Key'/>
-        <MUI.Toggle
-          ref='ignore_acl'
-          name='ignore_acl'
+          floatingLabelText="Description of an API Key"
+          className="vm-3-b"/>
+        <Toggle
+          ref="ignore_acl"
+          name="ignore_acl"
+          defaultToggled={this.state.ignore_acl}
           onToggle={this.handleToogle}
-          style={{marginTop: 20}}
-          label='Ignore ACL?'/>
-        <MUI.Toggle
-          ref='allow_user_create'
-          name='allow_user_create'
+          label="Ignore ACL?"
+          className="vm-3-b"/>
+        <Toggle
+          ref="allow_user_create"
+          name="allow_user_create"
+          defaultToggled={this.state.allow_user_create}
           onToggle={this.handleToogle}
-          style={{marginTop: 20}}
-          label='User registration?'/>
-      </Common.Dialog>
+          label="User registration?"/>
+      </Dialog>
     );
   }
 });

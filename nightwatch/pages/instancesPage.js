@@ -25,6 +25,10 @@ export default {
       selector: '(//span[@class="synicon-dots-vertical"])[2]',
       locateStrategy: 'xpath'
     },
+    instancesDropdown: {
+      selector: '(//span[@class="synicon-dots-vertical"])[1]',
+      locateStrategy: 'xpath'
+    },
     instancesTable: {
       selector: 'div[id=instances]'
     },

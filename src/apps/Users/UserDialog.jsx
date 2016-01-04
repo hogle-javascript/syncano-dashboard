@@ -15,7 +15,7 @@ import {GroupsStore} from './../Groups';
 import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
-import 'react-select/dist/default.css';
+import 'react-select/dist/react-select.min.css';
 
 export default React.createClass({
 
@@ -36,37 +36,29 @@ export default React.createClass({
         presence: true
       }
     };
-    let editFormmConstraints = {
+    let editFormConstraints = {
       username: {
         presence: true
       }
     };
 
-    return this.hasEditMode() ? editFormmConstraints : addFormConstraints;
-  },
-
-  componentWillUnmount() {
-    GroupsStore.resetActiveGroup();
+    return this.hasEditMode() ? editFormConstraints : addFormConstraints;
   },
 
   getSelectValueSource() {
-    let activeGroup = GroupsStore.getActiveGroup();
-
     if (this.state.newUserGroups) {
       return this.linkState('newUserGroups');
     } else if (this.state.groups) {
       return this.linkState('groups');
     } else if (this.state.secondInstance && this.state.secondInstance.value) {
       return this.state.secondInstance;
-    } else if (activeGroup) {
-      return activeGroup;
     }
+
     return null;
   },
 
   handleAddSubmit() {
-    let activeGroup = GroupsStore.getActiveGroup();
-    let userGroups = this.state.newUserGroups || this.state.secondInstance || activeGroup;
+    let userGroups = this.state.newUserGroups || this.state.secondInstance;
 
     UsersActions.createUser(
       {

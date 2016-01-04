@@ -1,4 +1,4 @@
-import utils from '../../utils';
+import Utils from '../../utils';
 
 export default {
   tags: ['codeBoxSockets'],
@@ -13,40 +13,46 @@ export default {
     client.end();
   },
   'User adds a CodeBox Socket': (client) => {
-    const codeBox = utils.addSuffix('codebox');
     const socketsPage = client.page.socketsPage();
+    const codeBox = Utils.addSuffix('codeBox');
 
-    socketsPage.navigate();
-    socketsPage.waitForElementVisible('@codeBoxSocketItem');
-    socketsPage.clickButton('@addCodeBoxButton', client);
-    socketsPage.waitForElementVisible('@addCodeBoxModalTitle');
-    socketsPage.fillInputField('@modalNameInput', codeBox, client);
-    socketsPage.selectFromDropdown('@addCodeBoxModalSnippetDropdown', '@addCodeBoxModalSnippetDropdownChoice', client);
-    socketsPage.clickButton('@confirmButton', client);
-    socketsPage.waitForElementVisible('@codeBoxTableRow');
+    socketsPage
+      .navigate()
+      .waitForElementVisible('@codeBoxSocketItem')
+      .clickElement('@addCodeBoxButton')
+      .waitForElementVisible('@addCodeBoxModalTitle')
+      .fillInput('@modalNameInput', codeBox)
+      .selectDropdownValue('@addCodeBoxModalSnippetDropdown', 'snippet')
+      .clickElement('@confirmButton')
+      .waitForElementVisible('@codeBoxTableRow');
   },
   'User edits a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
+    const edited = Utils.addSuffix('edited');
 
-    socketsPage.navigate();
-    socketsPage.waitForElementVisible('@codeBoxSocketItem');
-    socketsPage.clickButton('@codeBoxSocketDropDown', client);
-    socketsPage.clickButton('@editDropdownItem', client);
-    socketsPage.waitForElementVisible('@editCodeBoxModalTitle');
-    socketsPage.fillInputField('@modalDescriptionInput', 'codeBox_description', client);
-    socketsPage.clickButton('@confirmButton', client);
-    socketsPage.waitForElementVisible('@codeBoxTableRow');
-    socketsPage.waitForElementVisible('@codeBoxTableRowDescription');
+    socketsPage
+      .navigate()
+      .waitForElementVisible('@codeBoxSocketItem')
+      .clickElement('@codeBoxSocketDropDown')
+      .clickElement('@editDropdownItem')
+      .waitForElementVisible('@editCodeBoxModalTitle')
+      .fillInput('@modalDescriptionInput', edited)
+      .clickElement('@confirmButton')
+      .waitForElementVisible('@codeBoxTableRow')
+      .waitForElementVisible('@codeBoxTableRowDescription');
+
+    socketsPage.verify.containsText('@codeBoxTableRowDescription', edited);
   },
   'User deletes a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
-    socketsPage.navigate();
-    socketsPage.waitForElementVisible('@codeBoxSocketItem');
-    socketsPage.clickButton('@codeBoxSocketDropDown', client);
-    socketsPage.clickButton('@deleteDropdownItem', client);
-    socketsPage.waitForElementVisible('@deleteCodeBoxModalTitle');
-    socketsPage.clickButton('@confirmButton', client);
-    socketsPage.waitForElementNotPresent('@selectCodeBoxTableRow');
+    socketsPage
+      .navigate()
+      .waitForElementVisible('@codeBoxSocketItem')
+      .clickElement('@codeBoxSocketDropDown')
+      .clickElement('@deleteDropdownItem')
+      .waitForElementVisible('@deleteCodeBoxModalTitle')
+      .clickElement('@confirmButton')
+      .waitForElementNotPresent('@selectCodeBoxTableRow');
   }
 };

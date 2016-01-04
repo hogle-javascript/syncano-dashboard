@@ -11,21 +11,29 @@ export default {
   },
 
   create(payload) {
-    return this.Connection
-            .Instances
-            .create({
-              name: payload.name,
-              description: payload.description,
-              metadata: payload.metadata
-            })
-            .then(this.completed)
-            .catch(this.failure);
+    this.Connection
+      .Instances
+      .create({
+        name: payload.name,
+        description: payload.description,
+        metadata: payload.metadata
+      })
+      .then(this.completed)
+      .catch(this.failure);
   },
 
   update(name, payload) {
     this.Connection
       .Instances
       .update(name, payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  rename(name, payload) {
+    this.Connection
+      .Instances
+      .rename(name, payload)
       .then(this.completed)
       .catch(this.failure);
   },

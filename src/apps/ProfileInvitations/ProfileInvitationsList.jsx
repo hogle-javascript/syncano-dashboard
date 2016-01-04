@@ -17,17 +17,9 @@ import ListItem from './ProfileInvitationsListItem';
 let Column = Common.ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'ProfileInvitationsList',
 
-  mixins: [
-    Mixins.Dialog,
-    Mixins.Dialogs
-  ],
-
-  getInitialState() {
-    return {};
-  },
+  mixins: [Mixins.Dialogs],
 
   componentWillUpdate(nextProps) {
     console.info('ProfileInvitations::componentWillUpdate');

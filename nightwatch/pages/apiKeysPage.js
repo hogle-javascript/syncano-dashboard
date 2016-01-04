@@ -39,15 +39,15 @@ export default {
       locateStrategy: 'xpath'
     },
     apiKeysTableRow: {
-      selector: `//div[text()="${utils.addSuffix('api_key_description')}"]`,
+      selector: `//div[text()="${utils.addSuffix('')}"]`,
       locateStrategy: 'xpath'
     },
     selectApiKey: {
-      selector: `//div[text()="${utils.addSuffix('api_key_description')}"]/../preceding-sibling::div//span`,
+      selector: `//div[text()="${utils.addSuffix('')}"]/../preceding-sibling::div//span`,
       locateStrategy: 'xpath'
     },
     apiKeyValue: {
-      selector: `//div[text()="${utils.addSuffix('api_key_description')}"]/../../following-sibling::div[2]/div[1]`,
+      selector: `//div[text()="${utils.addSuffix('')}"]/../../following-sibling::div[2]/div[1]`,
       locateStrategy: 'xpath'
     },
     deleteButton: {

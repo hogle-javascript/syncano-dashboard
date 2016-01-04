@@ -8,10 +8,11 @@ import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
-import AdminsActions from './AdminsActions';
+import Actions from './AdminsActions';
 
 export default Reflux.createStore({
-  listenables: AdminsActions,
+  listenables: Actions,
+
   mixins: [
     Reflux.connect(AdminsInvitationsStore),
     Mixins.CheckListStore,
@@ -38,13 +39,12 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('AdminsStore::refreshData');
-    AdminsActions.fetchAdmins();
+    Actions.fetchAdmins();
     AdminsInvitationsActions.fetchInvitations();
   },
 
   setAdmins(items) {
     console.debug('AdminsStore::setAdmins');
-
     this.data.items = items;
     this.trigger(this.data);
   },
@@ -61,19 +61,13 @@ export default Reflux.createStore({
     });
   },
 
-  onFetchAdmins() {
-    console.debug('AdminsStore::onFetchAdmins');
-    this.trigger(this.data);
-  },
-
   onFetchAdminsCompleted(items) {
     console.debug('AdminsStore::onFetchAdminsCompleted');
-    AdminsActions.setAdmins(items._items);
+    Actions.setAdmins(items._items);
   },
 
   onRemoveAdminsCompleted() {
     console.debug('AdminsStore::onRemoveAdminsCompleted');
-    this.data.hideDialogs = true;
     this.refreshData();
   }
 });

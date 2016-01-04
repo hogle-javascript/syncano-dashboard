@@ -7,12 +7,14 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
+import RenameDialog from './RenameDialog';
+import RenameDialogActions from './RenameDialogActions';
 
 // Utils
 import Mixins from '../../mixins';
 
 // Components
-import {Utils, FlatButton, IconButton, RaisedButton, TextField} from 'syncano-material-ui';
+import {Utils, IconButton, RaisedButton, TextField} from 'syncano-material-ui';
 import {Container, InnerToolbar, ColorIconPicker, Dialog, Loading, ColumnList, Color} from '../../common';
 
 export default React.createClass({
@@ -28,7 +30,6 @@ export default React.createClass({
     Navigation,
     Reflux.connect(SessionStore),
     Reflux.connect(Store),
-    Mixins.Dialog,
     Mixins.Dialogs,
     Utils.Styles
   ],
@@ -99,12 +100,12 @@ export default React.createClass({
   },
 
   handleUpdate() {
-    const instance = SessionStore.getInstance();
+    const instance = this.state.instance;
     const params = {
       description: this.refs.description.getValue(),
       metadata: {
-        icon: this.state.instance.metadata.icon,
-        color: this.state.instance.metadata.color
+        icon: instance.metadata.icon,
+        color: instance.metadata.color
       }
     };
 
@@ -195,7 +196,21 @@ export default React.createClass({
       <div>
         {this.getDialogs()}
 
-        <InnerToolbar title="General"/>
+        <RenameDialog/>
+
+        <InnerToolbar title="General">
+          <IconButton
+            style={{fontSize: 25, marginTop: 5}}
+            iconClassName="synicon-pencil"
+            tooltip="Rename an Instance"
+            onTouchTap={RenameDialogActions.showDialog.bind(null, this.state.instance)}/>
+          <IconButton
+            style={{fontSize: 25, marginTop: 5}}
+            iconClassName="synicon-delete"
+            tooltip={`${deleteButtonText} an Instance`}
+            tooltipPosition="bottom-left"
+            onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
+        </InnerToolbar>
 
         <Container>
           <div style={{width: '50%'}}>
@@ -207,7 +222,7 @@ export default React.createClass({
                     tooltipStyles={styles.tooltip}
                     iconStyle={styles.instanceIcon}
                     style={this.mergeAndPrefix(styles.instanceIconButton, iconBackgroundColor)}
-                    iconClassName={'synicon-' + icon}
+                    iconClassName={`synicon-${icon}`}
                     onClick={this.showDialog.bind(this, 'pickColorIconDialog')}/>
                   <TextField
                     className="instance-name-field"
@@ -231,10 +246,6 @@ export default React.createClass({
                     type="submit"
                     label="Update"
                     secondary={true}/>
-                  <FlatButton
-                    label={`${deleteButtonText} an Instance`}
-                    style={styles.deleteButton}
-                    onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
                 </div>
               </div>
             </div>

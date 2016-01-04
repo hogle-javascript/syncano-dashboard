@@ -1,4 +1,5 @@
 import commonCommands from '../commands/commonCommands';
+
 const loginCommands = {
   login(email, pass) {
     return this

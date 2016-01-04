@@ -22,13 +22,8 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
-    Mixins.Dialog,
     Mixins.Dialogs
   ],
-
-  getInitialState() {
-    return {};
-  },
 
   componentWillUpdate(nextProps) {
     console.info('Admins::componentWillUpdate');

@@ -1,4 +1,4 @@
-import utils from '../../utils';
+import Utils from '../../utils';
 
 export default {
   tags: ['channels'],
@@ -13,39 +13,43 @@ export default {
     client.end();
   },
   'User adds a Channel Socket': (client) => {
-    const channel = utils.addSuffix('channel');
     const socketsPage = client.page.socketsPage();
 
-    socketsPage.navigate();
-    socketsPage.waitForElementVisible('@channelSocketsListTitle');
-    socketsPage.clickButton('@addChannelButton', client);
-    socketsPage.waitForElementVisible('@addChannelModalTitle');
-    socketsPage.fillInputField('@modalNameInput', channel, client);
-    socketsPage.clickButton('@confirmButton', client);
-    socketsPage.waitForElementVisible('@channelTableRow');
+    socketsPage
+      .navigate()
+      .waitForElementVisible('@channelSocketsListTitle')
+      .clickElement('@addChannelButton')
+      .waitForElementVisible('@addChannelModalTitle')
+      .fillInput('@modalNameInput', Utils.addSuffix('channel'))
+      .clickElement('@confirmButton')
+      .waitForElementVisible('@channelTableRow');
   },
   'User edits a Channel Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
-    socketsPage.navigate();
-    socketsPage.waitForElementVisible('@channelSocketsListTitle');
-    socketsPage.clickButton('@channelSocketDropDown', client);
-    socketsPage.clickButton('@editDropdownItem', client);
-    socketsPage.waitForElementVisible('@editChannelModalTitle');
-    socketsPage.fillInputField('@modalDescriptionInput', 'channel_description', client);
-    socketsPage.clickButton('@confirmButton', client);
-    socketsPage.waitForElementVisible('@channelTableRow');
-    socketsPage.waitForElementVisible('@channelTableRowDescription');
+    socketsPage
+      .navigate()
+      .waitForElementVisible('@channelSocketsListTitle')
+      .clickElement('@channelSocketDropDown')
+      .clickElement('@editDropdownItem')
+      .waitForElementVisible('@editChannelModalTitle')
+      .fillInput('@modalDescriptionInput', Utils.addSuffix('edit'))
+      .clickElement('@confirmButton')
+      .waitForElementVisible('@channelTableRow')
+      .waitForElementVisible('@channelTableRowDescription');
+
+    socketsPage.verify.containsText('@channelTableRowDescription', Utils.addSuffix('edit'));
   },
   'User deletes a Channel Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
-    socketsPage.navigate();
-    socketsPage.waitForElementVisible('@channelSocketsListTitle');
-    socketsPage.clickButton('@channelSocketDropDown', client);
-    socketsPage.clickButton('@deleteDropdownItem', client);
-    socketsPage.waitForElementVisible('@deleteChannelModalTitle');
-    socketsPage.clickButton('@confirmButton', client);
-    socketsPage.waitForElementNotPresent('@selectChannelTableRow');
+    socketsPage
+      .navigate()
+      .waitForElementVisible('@channelSocketsListTitle')
+      .clickElement('@channelSocketDropDown')
+      .clickElement('@deleteDropdownItem')
+      .waitForElementVisible('@deleteChannelModalTitle')
+      .clickElement('@confirmButton')
+      .waitForElementNotPresent('@selectChannelTableRow');
   }
 };

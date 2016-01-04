@@ -70,7 +70,6 @@ export default React.createClass({
     return (
       <Show if={!_.isEmpty(this.props.items)}>
         <MUI.List
-          zDepth={1}
           subheader="Tags"
           className="tags-list">
           {this.renderAllTagsListItem()}

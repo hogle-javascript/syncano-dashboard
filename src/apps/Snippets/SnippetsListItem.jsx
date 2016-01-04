@@ -29,7 +29,7 @@ export default React.createClass({
 
   render() {
     let item = this.props.item;
-    let runtime = Store.getRuntimeColorIcon(item.runtime_name);
+    let runtime = Store.getRuntimeColorIcon(item.runtime_name) || {};
 
     return (
       <Common.ColumnList.Item

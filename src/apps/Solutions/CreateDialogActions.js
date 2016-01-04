@@ -19,6 +19,11 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Solutions.create'
     },
+    updateSolution: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Solutions.update'
+    },
     starSolution: {
       asyncResult: true,
       children: ['completed', 'failure'],

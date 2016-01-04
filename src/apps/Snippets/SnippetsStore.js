@@ -8,6 +8,7 @@ import Actions from './SnippetsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     Mixins.CheckListStore,
     Mixins.StoreLoading,

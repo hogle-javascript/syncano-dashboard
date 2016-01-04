@@ -420,6 +420,7 @@ var Syncano = (function() {
      * @property {function} get - shortcut to {@link Syncano#getInstance} method
      * @property {function} remove - shortcut to {@link Syncano#removeInstance} method
      * @property {function} update - shortcut to {@link Syncano#updateInstance} method
+     * @property {function} rename - shortcut to {@link Syncano#renameInstance} method
      * @property {function} listAdmins - shortcut to {@link Syncano#listInstanceAdmins} method
      */
     this.Instances = {
@@ -429,6 +430,7 @@ var Syncano = (function() {
       remove: this.removeInstance.bind(this),
       removeShared: this.removeSharedInstance.bind(this),
       update: this.updateInstance.bind(this),
+      rename: this.renameInstance.bind(this),
       listAdmins: this.listInstanceAdmins.bind(this)
     };
 
@@ -521,6 +523,7 @@ var Syncano = (function() {
      */
     this.ApiKeys = {
       create: this.createApiKey.bind(this),
+      update: this.updateApiKey.bind(this),
       list: this.listApiKeys.bind(this),
       get: this.getApiKey.bind(this),
       remove: this.removeApiKey.bind(this),
@@ -1031,6 +1034,26 @@ var Syncano = (function() {
     },
 
     /**
+     * Renames instance identified by specified name
+     *
+     * @method Syncano#renameInstance
+     * @alias Syncano.Instances.rename
+     * @param {string} name - name of the instance to change
+     * @param {Object} params - new values of the instance parameters
+     * @param {string} params.new_name - new name of the instance
+     * @param {string} params.description - new description of the instance
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    renameInstance: function(name, params, callbackOK, callbackError) {
+      if (typeof name === 'undefined' || name.length === 0) {
+        throw new Error('Missing instance name');
+      }
+      return this.request('POST', 'v1/instances/' + name + '/rename/', params, callbackOK, callbackError);
+    },
+
+    /**
      * Returns all defined instance admins as a list
      *
      * @method Syncano#listInstanceAdmins
@@ -1144,6 +1167,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
     updateSolution: function(id, params, callbackOK, callbackError) {
+      params.serialize = false;
       return this.request('PATCH', 'v1/marketplace/solutions/' + id, params, callbackOK, callbackError);
     },
 
@@ -1820,6 +1844,24 @@ var Syncano = (function() {
         throw new Error('Not connected to any instance');
       }
       return this.request('POST', linksObject.instance_api_keys, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Updates api key
+     *
+     * @method  Syncano#updateApiKey
+     * @alias Syncano.ApiKeys.update
+     * @param  {object} params
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    updateApiKey: function(id, params, callbackOK, callbackError) {
+      params = params || {};
+      if (typeof linksObject.instance_api_keys === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PATCH', linksObject.instance_api_keys + '/' + id, params, callbackOK, callbackError);
     },
 
     /**
@@ -3443,12 +3485,17 @@ var Syncano = (function() {
         callbackError('Missing request method');
       } else {
         params = params || {};
-        Object.keys(params).forEach(function(key) {
-          if (Array.isArray(params[key])) {
-            var arr = params[key];
-            params[key] = arr.join('&' + key + '=')
-          }
-        });
+        if (typeof params.serialize === 'undefined') {
+          params.serialize = true;
+        }
+        if (params.serialize) {
+          Object.keys(params).forEach(function(key) {
+            if (Array.isArray(params[key])) {
+              var arr = params[key];
+              params[key] = arr.join('&' + key + '=')
+            }
+          });
+        }
         var url = normalizeUrl(baseURL + method);
         var ajaxParams = {
           type: requestType,

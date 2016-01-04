@@ -9,11 +9,6 @@ export default React.createClass({
 
   getStyles() {
     return {
-      list: {
-        listStyle: 'none',
-        margin: '0 40px',
-        padding: 0
-      },
       listItem: {
         padding: '0 15px',
         marginBottom: 40,
@@ -70,9 +65,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div
-        className="row"
-        style={this.getStyles().list}>
+      <div className="row">
         {this.getListItems()}
       </div>
     );

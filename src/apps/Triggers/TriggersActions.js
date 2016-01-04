@@ -4,16 +4,17 @@ export default CreateActions(
   {
     fetch: {},
     setTriggers: {},
+    fetchTriggers: {
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Triggers.list'
+    },
     createTrigger: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Triggers.create'
-    },
-    fetchTriggers: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Triggers.list'
     },
     updateTrigger: {
       asyncResult: true,

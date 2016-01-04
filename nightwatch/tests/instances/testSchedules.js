@@ -16,37 +16,37 @@ export default {
     const schedulesPage = client.page.schedulesPage();
     const suffix = utils.addSuffix('schedule');
 
-    schedulesPage.navigate();
-    schedulesPage.clickButton('@addScheduleButton', client);
-    schedulesPage.waitForElementPresent('@addScheduleModalTitle');
-    schedulesPage.fillInputField('@addScheduleModalLabel', suffix, client);
-    schedulesPage.selectFromDropdown('@addScheduleModalSnippet', '@addScheduleModalSnippetName', client);
-    schedulesPage.selectFromDropdown('@addScheduleModalCronTab', '@addScheduleModalCronTabName', client);
-    schedulesPage.waitForElementNotPresent('@runEvery5minutes');
-    schedulesPage.clickButton('@confirm', client);
-    schedulesPage.waitForElementPresent('@scheduleTableRow');
+    schedulesPage
+      .navigate()
+      .clickElement('@addScheduleButton')
+      .waitForElementPresent('@addScheduleModalTitle')
+      .fillInput('@addScheduleModalLabel', suffix)
+      .selectDropdownValue('@addScheduleModalSnippet', 'snippet')
+      .selectDropdownValue('@addScheduleModalCronTab', 'Run once a year at midnight')
+      .clickElement('@confirm')
+      .waitForElementPresent('@scheduleTableRow');
   },
   'Administrator edits a Schedule Socket Crontab': (client) => {
     const schedulesPage = client.page.schedulesPage();
 
-    schedulesPage.navigate();
-    schedulesPage.clickDropdown('@scheduleDropdown', client);
-    schedulesPage.clickButton('@editDropdownItem', client);
-    schedulesPage.waitForElementVisible('@editScheduleModalTitle');
-    schedulesPage.selectFromDropdown('@addScheduleModalCronTab', '@runEvery5minutes', client);
-    schedulesPage.waitForElementNotPresent('@addScheduleModalCronTabName');
-    schedulesPage.clickButton('@confirm', client);
-    schedulesPage.waitForElementVisible('@cronTabScheduleTableRow');
+    schedulesPage
+      .navigate()
+      .clickListItemDropdown('@scheduleDropdown', 'Edit')
+      .waitForElementVisible('@editScheduleModalTitle')
+      .selectDropdownValue('@addScheduleModalCronTab', 'Run every 5 minutes')
+      .clickElement('@confirm')
+      .waitForElementVisible('@cronTabScheduleTableRow');
   },
   'Administrator deletes a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
 
-    schedulesPage.navigate();
-    schedulesPage.clickButton('@selectScheduleTableRow', client);
-    schedulesPage.clickButton('@schedulesListMenu', client);
-    schedulesPage.clickButton('@schedulesDeleteButton', client);
-    schedulesPage.waitForElementPresent('@deleteScheduleModalTitle');
-    schedulesPage.clickButton('@confirm', client);
-    schedulesPage.waitForElementNotPresent('@selectScheduleTableRow');
+    schedulesPage
+      .navigate()
+      .clickElement('@selectScheduleTableRow')
+      .clickElement('@schedulesListMenu')
+      .clickElement('@schedulesDeleteButton')
+      .waitForElementPresent('@deleteScheduleModalTitle')
+      .clickElement('@confirm')
+      .waitForElementNotPresent('@selectScheduleTableRow');
   }
 };
