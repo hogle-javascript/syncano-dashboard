@@ -34,7 +34,6 @@ export default React.createClass({
     Reflux.connect(Triggers.Store, 'triggers'),
     Reflux.connect(CodeBoxes.Store, 'codeboxes'),
 
-    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin

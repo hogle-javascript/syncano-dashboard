@@ -1,5 +1,4 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
@@ -21,11 +20,9 @@ export default React.createClass({
   displayName: 'ApiKeysList',
 
   mixins: [
-    Reflux.connect(Store),
     HeaderMixin,
     Router.State,
     Router.Navigation,
-    Mixins.Dialog,
     Mixins.Dialogs
   ],
 

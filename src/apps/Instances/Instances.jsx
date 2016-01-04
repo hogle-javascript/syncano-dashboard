@@ -22,7 +22,6 @@ import WelcomeDialog from './WelcomeDialog';
 import './Instances.sass';
 
 export default React.createClass({
-
   displayName: 'Instances',
 
   mixins: [

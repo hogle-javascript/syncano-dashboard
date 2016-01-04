@@ -23,13 +23,8 @@ export default Radium(React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
-    Mixins.Dialog,
     Mixins.Dialogs
   ],
-
-  getInitialState() {
-    return {};
-  },
 
   componentWillUpdate(nextProps) {
     console.info('Users::componentWillUpdate');

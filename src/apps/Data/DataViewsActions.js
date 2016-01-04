@@ -7,6 +7,7 @@ export default CreateActions(
 
     fetchDataViews: {
       asyncResult: true,
+      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataViews.list'
     },

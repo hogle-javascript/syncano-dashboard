@@ -11,10 +11,12 @@ import Actions from './InstancesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     Mixins.CheckListStore,
     Mixins.StoreForm,
-    Mixins.WaitForStore
+    Mixins.WaitForStore,
+    Mixins.StoreLoading
   ],
 
   getInitialState() {
@@ -35,6 +37,7 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.listenToForms();
+    this.setLoadingStates();
   },
 
   refreshData() {
@@ -193,12 +196,6 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchInstances() {
-    console.debug('InstancesStore::onFetchInstances');
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
   onFetchInstancesCompleted(items) {
     console.debug('InstancesStore::onFetchInstancesCompleted');
     Actions.setInstances(items);
@@ -211,22 +208,16 @@ export default Reflux.createStore({
   },
 
   onRemoveInstancesCompleted() {
-    this.data.hideDialogs = true;
-    this.data.isLoading = false;
     this.redirectToInstancesList();
     this.refreshData();
   },
 
   onRemoveSharedInstanceCompleted() {
-    this.data.hideDialogs = true;
-    this.data.isLoading = false;
     this.redirectToInstancesList();
     this.refreshData();
   },
 
   onUpdateInstanceCompleted() {
-    this.data.hideDialogs = true;
-    this.data.isLoading = false;
     this.refreshData();
   },
 

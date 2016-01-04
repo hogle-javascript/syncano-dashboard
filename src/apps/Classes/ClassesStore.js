@@ -12,9 +12,11 @@ import Actions from './ClassesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     Mixins.CheckListStore,
-    Mixins.WaitForStore
+    Mixins.WaitForStore,
+    Mixins.StoreLoading
   ],
 
   getInitialState() {
@@ -33,6 +35,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   refreshData() {
@@ -180,17 +183,8 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onUpdateClass() {
-    this.data.isLoading = true;
-  },
-
   onUpdateClassCompleted() {
     this.refreshData();
-  },
-
-  onFetchClasses() {
-    this.data.isLoading = true;
-    this.trigger(this.data);
   },
 
   onFetchClassesCompleted(items) {
@@ -200,18 +194,17 @@ export default Reflux.createStore({
 
   onFetchTriggersCompleted(items) {
     console.debug('ClassesStore::onFetchTriggersCompleted');
-    this.setTriggers(items);
+    this.setTriggers(items._items);
   },
 
   setTriggers(items) {
     console.debug('ClassesStore::setTriggers');
-    this.data.triggers = Object.keys(items).map((key) => items[key]);
+    this.data.triggers = items;
+    this.trigger(this.data);
   },
 
   onRemoveClassesCompleted() {
     console.debug('ClassesStore::onRemoveClassesCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   }
 });

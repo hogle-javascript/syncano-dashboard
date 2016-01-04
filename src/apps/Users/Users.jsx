@@ -27,7 +27,6 @@ export default React.createClass({
 
     Reflux.connect(Store, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
-    Mixins.Dialog,
     Mixins.InstanceTabs,
     HeaderMixin
   ],

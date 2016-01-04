@@ -20,17 +20,11 @@ export default React.createClass({
   displayName: 'ChannelsList',
 
   mixins: [
+    HeaderMixin,
     Router.State,
     Router.Navigation,
-
-    HeaderMixin,
-    Mixins.Dialog,
     Mixins.Dialogs
   ],
-
-  getInitialState() {
-    return {};
-  },
 
   componentWillUpdate(nextProps) {
     console.info('Channels::componentWillUpdate');

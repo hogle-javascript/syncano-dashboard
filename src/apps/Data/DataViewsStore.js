@@ -5,13 +5,15 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import DataViewsActions from './DataViewsActions';
+import Actions from './DataViewsActions';
 
 export default Reflux.createStore({
-  listenables: DataViewsActions,
+  listenables: Actions,
+
   mixins: [
     Mixins.CheckListStore,
-    Mixins.WaitForStore
+    Mixins.WaitForStore,
+    Mixins.StoreLoading
   ],
 
   getInitialState() {
@@ -27,6 +29,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   getDataViews(empty) {
@@ -35,30 +38,22 @@ export default Reflux.createStore({
 
   setDataViews(items) {
     console.debug('DataViewsStore::setDataViews');
-    this.data.items = Object.keys(items).map((key) => items[key]);
-    this.data.isLoading = false;
+    this.data.items = items;
     this.trigger(this.data);
   },
 
   refreshData() {
     console.debug('DataViewsStore::refreshData');
-    DataViewsActions.fetchDataViews();
-  },
-
-  onFetchDataViews() {
-    this.data.isLoading = true;
-    this.trigger(this.data);
+    Actions.fetchDataViews();
   },
 
   onFetchDataViewsCompleted(items) {
     console.debug('DataViewsStore::onFetchDataViewsCompleted');
-    DataViewsActions.setDataViews(items);
+    Actions.setDataViews(items._items);
   },
 
   onRemoveDataViewsCompleted() {
     console.debug('DataViewsStore::onRemoveDataViewsCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   }
 });

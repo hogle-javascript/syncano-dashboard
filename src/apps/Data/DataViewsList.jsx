@@ -16,20 +16,14 @@ import {Dialog, ColumnList, Lists} from '../../common';
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'DataViewsList',
 
   mixins: [
-    Mixins.Dialog,
     Mixins.Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
   ],
-
-  getInitialState() {
-    return {};
-  },
 
   componentWillUpdate(nextProps) {
     console.info('Data::componentWillUpdate');

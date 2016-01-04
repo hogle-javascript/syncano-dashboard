@@ -14,19 +14,16 @@ export default CreateActions(
     createInvitation: {
       asyncResult: true,
       asyncForm: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Invitations.create'
     },
     resendInvitation: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Invitations.resend'
     },
     removeInvitation: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Invitations.remove'
     }

@@ -27,13 +27,12 @@ export default React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    Mixins.Dialog,
     Mixins.Dialogs
   ],
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     console.info('Snippets::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   getAssociatedSnippets(associatedWith) {

@@ -22,13 +22,8 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
-    Mixins.Dialog,
     Mixins.Dialogs
   ],
-
-  getInitialState() {
-    return {};
-  },
 
   componentWillUpdate(nextProps) {
     console.info('Admins::componentWillUpdate');
@@ -47,7 +42,8 @@ export default React.createClass({
           isLoading: this.props.isLoading,
           items: Store.getCheckedItems(),
           actionName: 'resend',
-          groupName: 'Channel'
+          itemLabelName: 'email',
+          groupName: 'Invitation'
         }
       },
       {
@@ -60,7 +56,7 @@ export default React.createClass({
           isLoading: this.props.isLoading,
           items: Store.getCheckedItems(),
           itemLabelName: 'email',
-          groupName: 'Channel'
+          groupName: 'Invitation'
         }
       }
     ];

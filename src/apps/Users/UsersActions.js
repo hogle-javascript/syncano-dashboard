@@ -13,38 +13,32 @@ export default CreateActions(
     createUser: {
       asyncResult: true,
       asyncForm: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.create'
     },
     updateUser: {
       asyncResult: true,
       asyncForm: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.update'
     },
     removeUsers: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.remove'
     },
     addToGroup: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.addToGroup'
     },
     removeFromGroup: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.removeFromGroup'
     },
     getUserGroups: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.listUserGroups'
     }
