@@ -42,9 +42,14 @@ export default React.createClass({
   },
 
   showInstanceDialog() {
-    let userEmail = SessionStore.getUser().email;
-
     InstanceDialogActions.showDialog();
+  },
+
+  transitionToFirstInstance() {
+    let userEmail = SessionStore.getUser() ? SessionStore.getUser().email : '';
+    let firstInstance = Store.getMyInstances().length > 0 ? Store.getMyInstances()[0].name : null;
+
+    this.transitionTo('instance', {instanceName: firstInstance});
     localStorage.setItem(`welcomeShowed${userEmail}`, true);
   },
 
@@ -60,14 +65,12 @@ export default React.createClass({
     }
 
     let userEmail = SessionStore.getUser() ? SessionStore.getUser().email : '';
-    let shouldShowWelcomeDialog = this.state.items !== null && !this.state.isLoading &&
-      Store.getAllInstances().length === 0 &&
-      !localStorage.getItem(`welcomeShowed${userEmail}`);
+    let shouldShowWelcomeDialog = !this.state.isLoading && !localStorage.getItem(`welcomeShowed${userEmail}`);
 
     return (
       <div>
         <WelcomeDialog
-          getStarted={this.showInstanceDialog}
+          getStarted={this.transitionToFirstInstance}
           visible={shouldShowWelcomeDialog}/>
         <InstanceDialog />
 

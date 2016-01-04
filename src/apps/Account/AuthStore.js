@@ -53,7 +53,6 @@ export default Reflux.createStore({
       email: payload.email
     });
 
-    localStorage.setItem(`showWelcomeDialog-${payload.id}`, true);
     this.onPasswordSignInCompleted(payload);
   },
 
@@ -93,7 +92,6 @@ export default Reflux.createStore({
     window.analytics.alias(payload.email);
 
     if (payload.created === true) {
-      localStorage.setItem(`showWelcomeDialog-${payload.id}`, true);
       window.analytics.track('Sign up Dashboard', {
         authBackend: payload.network,
         email: payload.email
