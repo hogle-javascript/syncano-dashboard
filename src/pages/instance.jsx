@@ -96,9 +96,6 @@ export default React.createClass({
               <LinkListItem
                 routeName="snippets"
                 primaryText="Snippets"/>
-              <LinkListItem
-                routeName="push-notification-devices"
-                primaryText="Push Devices"/>
             </List>
             <Divider/>
             <List
