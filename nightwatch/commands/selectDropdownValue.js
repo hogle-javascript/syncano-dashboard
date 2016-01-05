@@ -1,5 +1,5 @@
 exports.command = function selectDropdownValue(element, dropdownValue) {
-  const value = `//div[text()="${dropdownValue}"]`;
+  const value = `//iframe//following-sibling::div//div[text()="${dropdownValue}"]`;
 
   this
     .waitForElementVisible(element)

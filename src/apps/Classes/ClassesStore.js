@@ -205,6 +205,7 @@ export default Reflux.createStore({
 
   onRemoveClassesCompleted() {
     console.debug('ClassesStore::onRemoveClassesCompleted');
+    this.data.hideDialogs = true;
     this.refreshData();
   }
 });
