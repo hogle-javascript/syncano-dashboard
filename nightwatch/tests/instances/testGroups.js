@@ -1,7 +1,7 @@
 import utils from '../../utils';
 
 export default {
-  tags: ['users'],
+  tags: ['groups'],
   before(client) {
     const loginPage = client.page.loginPage();
 
@@ -12,32 +12,32 @@ export default {
   after(client) {
     client.end();
   },
-  'Administrator adds a User': (client) => {
+  'Administrator adds a Group': (client) => {
     const usersPage = client.page.usersPage();
-    const suffix = utils.addSuffix('user');
+    const suffix = utils.addSuffix('group');
 
     usersPage
       .navigate()
       .waitForElementVisible('@groupEditButton')
       .waitForElementVisible('@userList')
-      .clickElement('@addUserButton')
-      .waitForElementPresent('@addUserModalTitle')
-      .fillInput('@username', suffix)
-      .fillInput('@password', suffix)
+      .clickElement('@addGroupButton')
+      .waitForElementPresent('@addGroupModalTitle')
+      .fillInput('@groupName', suffix)
       .clickElement('@confirm')
-      .waitForElementPresent('@userTableRow');
+      .waitForElementPresent('@groupTableRow');
   },
-  'Administrator deletes a User': (client) => {
+  'Administrator deletes a Group': (client) => {
     const usersPage = client.page.usersPage();
 
     usersPage
       .navigate()
       .waitForElementVisible('@groupEditButton')
       .waitForElementVisible('@userList')
-      .clickListItemDropdown('@selectUserTableRow', 'Delete')
-      .waitForElementPresent('@deleteUserModalTitle')
+      .clickListItemDropdown('@groupTableRowDropdown', 'Delete')
+      .waitForElementPresent('@deleteGroupModalTitle')
       .clickElement('@confirm')
-      .waitForElementNotPresent('@userTableRow');
+      .waitForElementVisible('@groupList')
+      .waitForElementNotPresent('@groupTableRowDropdown');
   }
 };
 

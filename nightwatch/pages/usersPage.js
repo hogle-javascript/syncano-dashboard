@@ -39,7 +39,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectUserTableRow: {
-      selector: `//div[text()="${utils.addSuffix('user')}"]/preceding-sibling::div`,
+      selector: `//div[text()="${utils.addSuffix('user')}"]/../../..//span[@class="synicon-dots-vertical"]`,
       locateStrategy: 'xpath'
     },
     deleteButton: {
