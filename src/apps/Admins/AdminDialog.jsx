@@ -7,18 +7,17 @@ import Mixins from '../../mixins';
 // Stores and Actions
 import AdminsActions from './AdminsActions';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
-import AdminDialogStore from './AdminDialogStore';
+import Store from './AdminDialogStore';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, FlatButton} from 'syncano-material-ui';
+import {Dialog, SelectFieldWrapper} from '../../common';
 
 export default React.createClass({
-
   displayName: 'AdminDialog',
 
   mixins: [
-    Reflux.connect(AdminDialogStore),
+    Reflux.connect(Store),
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -52,12 +51,12 @@ export default React.createClass({
     let title = this.hasEditMode() ? 'Edit' : 'Invite';
     let submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label={submitLabel}
         primary={true}
@@ -66,7 +65,7 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
+      <Dialog
         key='dialog'
         ref='dialog'
         title={`${title} an Administrator`}
@@ -75,7 +74,7 @@ export default React.createClass({
         open={this.state.open}
         actions={dialogStandardActions}>
         {this.renderFormNotifications()}
-        <MUI.TextField
+        <TextField
           ref='email'
           name='email'
           fullWidth={true}
@@ -84,19 +83,14 @@ export default React.createClass({
           errorText={this.getValidationMessages('email').join(' ')}
           hintText='Email of the administrator'
           floatingLabelText='Email'/>
-        <MUI.SelectField
-          className="invite-admin-dropdown"
-          ref='role'
-          name='role'
-          autoWidth={true}
-          valueLink={this.linkState('role')}
-          valueMember='payload'
-          displayMember='text'
-          floatingLabelText='Role of the administrator'
-          style={{width: '50%'}}
-          errorText={this.getValidationMessages('role').join(' ')}
-          menuItems={AdminDialogStore.getRoles()}/>
-      </Common.Dialog>
+        <SelectFieldWrapper
+          name="role"
+          floatingLabelText="Role of the administrator"
+          options={Store.getRoles()}
+          value={this.state.role}
+          onChange={this.setSelectFieldValue.bind(null, 'role')}
+          errorText={this.getValidationMessages('role').join(' ')}/>
+      </Dialog>
     );
   }
 });

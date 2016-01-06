@@ -5,21 +5,20 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import TriggersActions from './TriggersActions';
-import TriggerDialogStore from './TriggerDialogStore';
+import Actions from './TriggersActions';
+import Store from './TriggerDialogStore';
 import SnippetsActions from '../Snippets/SnippetsActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, FlatButton} from 'syncano-material-ui';
+import {Dialog, SelectFieldWrapper} from '../../common';
 
 export default React.createClass({
-
   displayName: 'TriggerDialog',
 
   mixins: [
-    Reflux.connect(TriggerDialogStore),
+    Reflux.connect(Store),
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -35,7 +34,9 @@ export default React.createClass({
       presence: true
     },
     codebox: {
-      presence: true
+      presence: {
+        message: `^Snippet can't be blank`
+      }
     }
   },
 
@@ -46,7 +47,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    TriggersActions.createTrigger({
+    Actions.createTrigger({
       label: this.state.label,
       codebox: this.state.codebox,
       class: this.state.class,
@@ -55,7 +56,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    TriggersActions.updateTrigger(
+    Actions.updateTrigger(
       this.state.id, {
         label: this.state.label,
         codebox: this.state.codebox,
@@ -67,12 +68,12 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -81,7 +82,7 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
+      <Dialog
         key='dialog'
         ref="dialog"
         title={`${title} a Trigger Socket`}
@@ -91,7 +92,7 @@ export default React.createClass({
         actions={dialogStandardActions}>
         <div>
           {this.renderFormNotifications()}
-          <MUI.TextField
+          <TextField
             ref="label"
             name="label"
             fullWidth={true}
@@ -99,41 +100,26 @@ export default React.createClass({
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Label of the trigger"
             floatingLabelText="Label"/>
-          <MUI.SelectField
-            ref="signal"
+          <SelectFieldWrapper
             name="signal"
-            className="signal-dropdown"
-            floatingLabelText="Signal"
-            fullWidth={true}
-            valueLink={this.linkState('signal')}
-            errorText={this.getValidationMessages('signal').join(' ')}
-            valueMember="payload"
-            displayMember="text"
-            menuItems={TriggerDialogStore.getSignalsDropdown()}/>
-          <MUI.SelectField
-            ref="class"
+            options={Store.getSignalsDropdown()}
+            value={this.state.signal}
+            onChange={this.setSelectFieldValue.bind(null, 'signal')}
+            errorText={this.getValidationMessages('signal').join(' ')}/>
+          <SelectFieldWrapper
             name="class"
-            className="class-dropdown"
-            floatingLabelText="Class"
-            fullWidth={true}
-            valueLink={this.linkState('class')}
-            errorText={this.getValidationMessages('class').join(' ')}
-            valueMember="payload"
-            displayMember="text"
-            menuItems={this.state.classes}/>
-          <MUI.SelectField
-            ref="snippet"
+            options={this.state.classes}
+            value={this.state.class}
+            onChange={this.setSelectFieldValue.bind(null, 'class')}
+            errorText={this.getValidationMessages('class').join(' ')}/>
+          <SelectFieldWrapper
             name="snippet"
-            className="snippet-dropdown"
-            floatingLabelText="Snippet"
-            valueLink={this.linkState('codebox')}
-            errorText={this.getValidationMessages('codebox').join(' ')}
-            valueMember="payload"
-            displayMember="text"
-            fullWidth={true}
-            menuItems={this.state.snippets}/>
+            options={this.state.snippets}
+            value={this.state.codebox}
+            onChange={this.setSelectFieldValue.bind(null, 'codebox')}
+            errorText={this.getValidationMessages('codebox').join(' ')}/>
         </div>
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });

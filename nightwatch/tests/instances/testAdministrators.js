@@ -21,8 +21,8 @@ export default {
       .waitForElementVisible('@adminsListItem')
       .clickElement('@addAdminButton')
       .waitForElementVisible('@addAdminModalTitle')
-      .fillInput('@addAdminModalEmailInput', email)
       .selectDropdownValue('@addAdminModalRoleDropdown', 'read')
+      .fillInput('@addAdminModalEmailInput', email)
       .clickElement('@confirmButton')
       .waitForElementVisible('@adminEmailTableRow');
   },

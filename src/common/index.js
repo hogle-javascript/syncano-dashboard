@@ -24,7 +24,7 @@ import Slider from './Slider';
 import SolutionStar from './SolutionStar';
 import Solutions from './Solutions';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
-import SelectField from './SelectField';
+import SelectFieldWrapper from './SelectFieldWrapper';
 import Sidebar from './Sidebar';
 import Socket from './Socket';
 import Spacing from './Spacing';
@@ -63,7 +63,7 @@ export default {
   SolutionStar,
   Solutions,
   SocialAuthButtonsList,
-  SelectField,
+  SelectFieldWrapper,
   Socket,
   Spacing,
   SyncanoTheme,

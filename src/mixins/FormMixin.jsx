@@ -4,6 +4,7 @@ import ReactStateSetters from 'react/lib/ReactStateSetters';
 import _ from 'lodash';
 import validate from 'validate.js';
 
+import {MenuItem} from 'syncano-material-ui';
 import Notification from '../common/Notification/Notification';
 
 validate.moment = require('moment');
@@ -202,6 +203,23 @@ export default {
     }
 
     callback(this.isValid(key), (key !== null) ? this.state.errors[key] : this.state.errors);
-  }
+  },
 
+  renderSelectFieldItems(items) {
+    return _.map(items, (item) => {
+      return (
+        <MenuItem
+          key={item.payload}
+          value={item.payload}
+          primaryText={item.text}/>
+      );
+    });
+  },
+
+  setSelectFieldValue(stateParamName, event, index, value) {
+    let state = {};
+
+    state[stateParamName] = value;
+    this.setState(state);
+  }
 };

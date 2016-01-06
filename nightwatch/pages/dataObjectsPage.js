@@ -13,7 +13,8 @@ export default {
       selector: '.synicon-cog'
     },
     dataObjectsTableBody: {
-      selector: '.mui-body-table'
+      selector: '//tbody[@class="mui-table-body"]',
+      locateStrategy: 'xpath'
     },
     confirm: {
       selector: '//span[text()="Confirm"]',

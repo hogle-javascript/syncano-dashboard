@@ -1,9 +1,7 @@
 import React from 'react';
-
-import MUI from 'syncano-material-ui';
+import {Checkbox, IconMenu, ListItem, IconButton} from 'syncano-material-ui';
 
 export default React.createClass({
-
   displayName: 'ColumnsFilterMenu',
 
   propTypes: {
@@ -34,13 +32,13 @@ export default React.createClass({
   renderMenuItems() {
     return this.state.columns.map((column) => {
       let checkbox = (
-        <MUI.Checkbox
+        <Checkbox
           checked={column.checked}
           onCheck={this.handleClick.bind(null, column.id)}/>
       );
 
       return (
-        <MUI.ListItem
+        <ListItem
           key={column.id}
           id={column.id}
           primaryText={column.name}
@@ -51,13 +49,12 @@ export default React.createClass({
   },
 
   render() {
-    let mainIcon = <MUI.IconButton iconClassName="synicon-view-column"/>;
+    let mainIcon = <IconButton iconClassName="synicon-view-column"/>;
 
     return (
-      <MUI.IconMenu
+      <IconMenu
         closeOnItemTouchTap={false}
         iconButtonElement={mainIcon}
-        maxHeight={`calc(100vh - 90px)`}
         anchorOrigin={{
           vertical: 'center',
           horizontal: 'middle'
@@ -67,7 +64,7 @@ export default React.createClass({
           horizontal: 'right'
         }}>
         {this.renderMenuItems()}
-      </MUI.IconMenu>
+      </IconMenu>
     );
   }
 });

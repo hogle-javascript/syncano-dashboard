@@ -5,20 +5,19 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import SchedulesActions from './SchedulesActions';
-import ScheduleDialogStore from './ScheduleDialogStore';
+import Actions from './SchedulesActions';
+import Store from './ScheduleDialogStore';
 import SnippetsActions from '../Snippets/SnippetsActions';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {FlatButton, TextField} from 'syncano-material-ui';
+import {Dialog, SelectFieldWrapper} from '../../common';
 
 export default React.createClass({
-
   displayName: 'ScheduleDialog',
 
   mixins: [
-    Reflux.connect(ScheduleDialogStore),
+    Reflux.connect(Store),
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -41,7 +40,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    SchedulesActions.createSchedule({
+    Actions.createSchedule({
       label: this.state.label,
       crontab: this.state.crontab,
       codebox: this.state.codebox
@@ -49,7 +48,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    SchedulesActions.updateSchedule(
+    Actions.updateSchedule(
       this.state.id, {
         label: this.state.label,
         crontab: this.state.crontab,
@@ -61,12 +60,12 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -75,9 +74,9 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
-        key='dialog'
-        ref='dialog'
+      <Dialog
+        key="dialog"
+        ref="dialog"
         title={`${title} a Schedule Socket`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
@@ -85,37 +84,28 @@ export default React.createClass({
         actions={dialogStandardActions}>
         <div>
           {this.renderFormNotifications()}
-          <MUI.TextField
-            ref='label'
-            name='label'
+          <TextField
+            ref="label"
+            name="label"
             fullWidth={true}
             valueLink={this.linkState('label')}
             errorText={this.getValidationMessages('label').join(' ')}
-            floatingLabelText='Label of the schedule'/>
-          <MUI.SelectField
-            ref='snippet'
-            name='snippet'
-            className='snippet-dropdown'
-            floatingLabelText='Snippet'
-            valueLink={this.linkState('codebox')}
-            errorText={this.getValidationMessages('codebox').join(' ')}
-            valueMember='payload'
-            displayMember='text'
-            fullWidth={true}
-            menuItems={this.state.snippets}/>
-          <MUI.SelectField
-            ref='crontab'
-            name='crontab'
-            className='crontab-dropdown'
-            floatingLabelText='CronTab'
-            valueLink={this.linkState('crontab')}
-            errorText={this.getValidationMessages('crontab').join(' ')}
-            valueMember='payload'
-            displayMember='text'
-            fullWidth={true}
-            menuItems={ScheduleDialogStore.getCrontabDropdown()}/>
+            floatingLabelText="Label of the schedule"/>
+          <SelectFieldWrapper
+            name="snippet"
+            options={this.state.snippets}
+            value={this.state.codebox}
+            onChange={this.setSelectFieldValue.bind(null, 'codebox')}
+            errorText={this.getValidationMessages('codebox').join(' ')}/>
+          <SelectFieldWrapper
+            name="crontab"
+            options={Store.getCrontabDropdown()}
+            value={this.state.crontab}
+            floatingLabelText="CronTab"
+            onChange={this.setSelectFieldValue.bind(null, 'crontab')}
+            errorText={this.getValidationMessages('crontab').join(' ')}/>
         </div>
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });
