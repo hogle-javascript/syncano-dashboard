@@ -3,7 +3,6 @@ set -e
 
 function run_unit_tests {
     npm run-script eslint
-    npm test
 }
 
 function run_e2e_tests {
