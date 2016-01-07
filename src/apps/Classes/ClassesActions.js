@@ -15,6 +15,7 @@ export default CreateActions(
     },
     fetchTriggers: {
       asyncResult: true,
+      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Triggers.list'
     },
