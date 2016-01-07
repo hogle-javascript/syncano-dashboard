@@ -61,17 +61,6 @@ export default {
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   },
-  'Test Delete an Instance': (client) => {
-    const instancesPage = client.page.instancesPage();
-
-    instancesPage
-      .navigate()
-      .clickListItemDropdown('@instanceDropdown', 'Delete')
-      .clickElement('@confirmDeleteButton')
-      .waitForElementNotPresent('@deleteInstanceModalTitle');
-
-    instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
-  },
   'Add an Instance from empty list item': (client) => {
     const instancesPage = client.page.instancesPage();
 
