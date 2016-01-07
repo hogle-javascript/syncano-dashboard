@@ -1,30 +1,33 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import GCMDevicesStore from './GCMDevicesStore';
-import Actions from '../DevicesActions';
+import Store from './GCMDevicesStore';
+import Actions from './GCMDevicesActions';
 
 import Devices from '../Devices';
-import GCMDeviceDialog from './GCMDeviceDialog';
+import GCMDialog from './GCMDeviceDialog';
 
 export default React.createClass({
 
   displayName: 'GCMDevices',
 
   mixins: [
-    Reflux.connect(GCMDevicesStore)
+    Reflux.connect(Store)
   ],
 
-  showDeviceDialog() {
-    Actions.showDialog();
+  componentWillMount() {
+    Actions.fetch();
   },
 
   render() {
     return (
       <div>
-        <GCMDeviceDialog />
+        <GCMDialog />
         <Devices
-          emptyItemHandleClick={this.showDeviceDialog}
+          listItemIcon="android"
+          getChekcedItems={Store.getCheckedItems}
+          actions={Actions}
+          emptyItemHandleClick={Actions.showDialog}
           emptyItemContent="Add GCM Device"
           hideDialogs={this.state.hideDialogs}
           isLoading={this.state.isLoading}

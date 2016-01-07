@@ -1,9 +1,6 @@
 import React from 'react';
 import {State} from 'react-router';
 
-// Stores and Actions
-import Actions from './DevicesActions';
-
 // Components
 import Common from '../../common';
 import MenuItem from '../../../node_modules/syncano-material-ui/lib/menus/menu-item';
@@ -52,7 +49,7 @@ export default React.createClass({
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={Actions.showDialog.bind(null, item)}
+            onTouchTap={this.props.showEditDialog.bind(null, item)}
             primaryText="Edit a Device"/>
           <MenuItem
             className="dropdown-item-delete"

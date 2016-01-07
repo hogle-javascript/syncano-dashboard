@@ -4,8 +4,6 @@ import {State, Navigation} from 'react-router';
 
 import {Dialogs as DialogsMixin} from '../../mixins';
 
-import Actions from './DevicesActions';
-
 import {Styles} from 'syncano-material-ui';
 import {InnerToolbar, Socket, Container} from '../../common';
 import DevicesList from './DevicesList';
@@ -19,10 +17,6 @@ export default Radium(React.createClass({
     State,
     Navigation
   ],
-
-  componentWillMount() {
-    Actions.fetch();
-  },
 
   getStyles() {
     return {
@@ -62,10 +56,6 @@ export default Radium(React.createClass({
     this.transitionTo(routeName, {instanceName});
   },
 
-  showDeviceDialog() {
-    Actions.showDialog();
-  },
-
   renderTitle() {
     const styles = this.getStyles();
 
@@ -100,9 +90,7 @@ export default Radium(React.createClass({
             onTouchTap={this.props.emptyItemHandleClick}/>
         </InnerToolbar>
         <Container>
-          <DevicesList
-            {...this.props}
-            isAPNS={this.isIOSTabActive()} />
+          <DevicesList {...this.props} />
         </Container>
       </div>
     );

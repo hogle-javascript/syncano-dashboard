@@ -45,6 +45,7 @@ export default Reflux.createStore({
       Actions.fetchTriggers()
     ]).then(() => {
       this.data.isLoading = false;
+      this.data.hideDialogs = true;
       this.trigger(this.data);
     });
   },
@@ -205,7 +206,6 @@ export default Reflux.createStore({
 
   onRemoveClassesCompleted() {
     console.debug('ClassesStore::onRemoveClassesCompleted');
-    this.data.hideDialogs = true;
     this.refreshData();
   }
 });

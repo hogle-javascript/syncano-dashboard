@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 import {CheckListStore, WaitForStore, StoreHelpers, StoreLoading} from '../../../mixins';
 
 // Stores & Actions
-import Actions from '../DevicesActions';
+import Actions from './APNSDevicesActions';
 import SessionActions from '../../Session/SessionActions';
 
 export default Reflux.createStore({
@@ -37,26 +37,25 @@ export default Reflux.createStore({
   },
 
   setDevices(devices) {
-    console.debug('PushNotificationsStore::setAPNSDevices');
+    console.debug('PushNotificationsStore::setDevices');
     this.data.items = devices;
     this.trigger(this.data);
   },
 
   refreshData() {
     console.debug('PushNotificationsStore::refreshData');
-    Actions.fetchAPNSDevices();
+    Actions.fetchDevices();
   },
 
-  onFetchAPNSDevicesCompleted(devices) {
-    console.debug('PushNotificationsStore::onFetchAPNSDevicesCompleted');
+  onFetchDevicesCompleted(devices) {
+    console.debug('PushNotificationsStore::onFetchDevicesCompleted');
     let items = this.saveListFromSyncano(devices);
 
-    this.setDevices(items);
+    Actions.setDevices(items);
   },
 
-  onRemoveAPNSDevicesCompleted() {
-    console.debug('APNSDevicesStore::onRemoveAPNSDevicesCompleted');
-    this.data.hideDialogs = true;
+  onRemoveDevicesCompleted() {
+    console.debug('APNSDevicesStore::onRemoveDevicesCompleted');
     this.refreshData();
   }
 });

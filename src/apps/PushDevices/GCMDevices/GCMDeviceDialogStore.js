@@ -1,10 +1,10 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreForm, DialogStore, StoreLoading} from '../../mixins';
+import {StoreForm, DialogStore, StoreLoading} from '../../../mixins';
 
 // Stores & Actions
-import Actions from './DevicesActions';
+import Actions from './GCMDevicesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -30,27 +30,15 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  onCreateAPNSDeviceCompleted() {
+  onCreateDeviceCompleted() {
     console.debug('DeviceDialogStore::onCreateDeviceCompleted');
     this.dismissDialog();
-    Actions.fetchAPNSDevices();
+    Actions.fetchDevices();
   },
 
-  onUpdateAPNSDeviceCompleted() {
+  onUpdateDeviceCompleted() {
     console.debug('DeviceDialogStore::onUpdateDeviceCompleted');
     this.dismissDialog();
-    Actions.fetchAPNSDevices();
-  },
-
-  onCreateGCMDeviceCompleted() {
-    console.debug('DeviceDialogStore::onCreateDeviceCompleted');
-    this.dismissDialog();
-    Actions.fetchGCMDevices();
-  },
-
-  onUpdateGCMDeviceCompleted() {
-    console.debug('DeviceDialogStore::onUpdateDeviceCompleted');
-    this.dismissDialog();
-    Actions.fetchGCMDevices();
+    Actions.fetchDevices();
   }
 });

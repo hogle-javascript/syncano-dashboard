@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 import {CheckListStore, WaitForStore, StoreHelpers, StoreLoading} from '../../../mixins';
 
 // Stores & Actions
-import Actions from '../DevicesActions';
+import Actions from './GCMDevicesActions';
 import SessionActions from '../../Session/SessionActions';
 
 export default Reflux.createStore({
@@ -44,19 +44,18 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('GCMDevicesStore::refreshData');
-    Actions.fetchGCMDevices();
+    Actions.fetchDevices();
   },
 
-  onFetchGCMDevicesCompleted(devices) {
-    console.debug('GCMDevicesStore::onFetchGCMDevicesCompleted');
+  onFetchDevicesCompleted(devices) {
+    console.debug('GCMDevicesStore::onFetchDevicesCompleted');
     let items = this.saveListFromSyncano(devices);
 
-    this.setDevices(items);
+    Actions.setDevices(items);
   },
 
-  onRemoveGCMDevicesCompleted() {
-    console.debug('GCMDevicesStore::onRemoveGCMDevicesCompleted');
-    this.data.hideDialogs = true;
+  onRemoveDevicesCompleted() {
+    console.debug('GCMDevicesStore::onRemoveDevicesCompleted');
     this.refreshData();
   }
 });

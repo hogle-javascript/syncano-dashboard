@@ -1,9 +1,6 @@
 import React from 'react';
 
 import {Dialog as DialogMixin, Dialogs as DialogsMixin} from '../../mixins';
-import Actions from './DevicesActions';
-import GCMDevicesStore from './GCMDevices/GCMDevicesStore';
-import APNSDevicesStore from './APNSDevices/APNSDevicesStore';
 
 import {ColumnList, Container, Lists, Loading, Dialog} from '../../common';
 import ListItem from './DevicesListItem';
@@ -35,9 +32,9 @@ export default React.createClass({
         key: 'deleteDeviceDialog',
         ref: 'deleteDeviceDialog',
         title: 'Delete a Device',
-        handleConfirm: this.props.isAPNS ? Actions.removeAPNSDevices : Actions.removeGCMDevices,
+        handleConfirm: this.props.actions.removeDevices,
         isLoading: this.props.isLoading,
-        items: this.props.isAPNS ? APNSDevicesStore.getCheckedItems() : GCMDevicesStore.getCheckedItems(),
+        items: this.props.getChekcedItems(),
         groupName: 'Device',
         itemLabelName: 'label'
       }
@@ -48,17 +45,16 @@ export default React.createClass({
     return (
       <ListItem
         key={`devices-list-item-${item.registration_id}`}
-        onIconClick={Actions.checkItem}
-        icon={this.props.isAPNS ? 'apple' : 'android'}
+        onIconClick={this.props.actions.checkItem}
+        icon={this.props.listItemIcon}
+        showEditDialog={this.props.actions.showDialog}
         showDeleteDialog={this.showDialog.bind(null, 'deleteDeviceDialog', item)}
         item={item}/>
     );
   },
 
   render() {
-    let checkedGCMCount = GCMDevicesStore.getNumberOfChecked();
-    let checkedAPNSCount = APNSDevicesStore.getNumberOfChecked();
-    let checkedItems = this.props.isAPNS ? checkedAPNSCount : checkedGCMCount;
+    let checkedItems = this.props.getChekcedItems().length;
 
     return (
       <div>
@@ -84,7 +80,7 @@ export default React.createClass({
             </Column.ColumnHeader>
             <Lists.Menu
               checkedItemsCount={checkedItems}
-              actions={Actions}>
+              actions={this.props.actions}>
               <Lists.MenuItem
                 singleItemText="Delete a Device"
                 multipleItemsText="Delete Devices"

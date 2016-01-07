@@ -1,30 +1,33 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import APNSDevicesStore from './APNSDevicesStore';
-import Actions from '../DevicesActions';
+import Store from './APNSDevicesStore';
+import Actions from './APNSDevicesActions';
 
 import Devices from '../Devices';
-import APNSDeviceDialog from './APNSDeviceDialog';
+import APNSDialog from './APNSDeviceDialog';
 
 export default React.createClass({
 
   displayName: 'APNSDevices',
 
   mixins: [
-    Reflux.connect(APNSDevicesStore)
+    Reflux.connect(Store)
   ],
 
-  showDeviceDialog() {
-    Actions.showDialog();
+  componentWillMount() {
+    Actions.fetch();
   },
 
   render() {
     return (
       <div>
-        <APNSDeviceDialog />
+        <APNSDialog />
         <Devices
-          emptyItemHandleClick={this.showDeviceDialog}
+          listItemIcon="apple"
+          getChekcedItems={Store.getCheckedItems}
+          actions={Actions}
+          emptyItemHandleClick={Actions.showDialog}
           emptyItemContent="Add APNS Device"
           hideDialogs={this.state.hideDialogs}
           isLoading={this.state.isLoading}

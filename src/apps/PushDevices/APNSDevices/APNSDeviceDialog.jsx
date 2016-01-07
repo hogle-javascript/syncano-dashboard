@@ -1,20 +1,6 @@
-import React from 'react';
-
-import Actions from '../DevicesActions';
+import Actions from './APNSDevicesActions';
+import Store from './APNSDeviceDialogStore';
 
 import DeviceDialog from '../DeviceDialog';
 
-export default React.createClass({
-
-  displayName: 'APNSDeviceDialog',
-
-  render() {
-    return (
-      <div>
-        <DeviceDialog
-          handleAddSubmit={Actions.createAPNSDevice}
-          handleEditSubmit={Actions.updateAPNSDevice} />
-      </div>
-    );
-  }
-});
+export default DeviceDialog('APNSDialog', Store, Actions);
