@@ -26,6 +26,7 @@ export default CreateActions(
     },
     removeDevices: {
       asyncResult: true,
+      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushDevices.removeGCMDevices'
     }
