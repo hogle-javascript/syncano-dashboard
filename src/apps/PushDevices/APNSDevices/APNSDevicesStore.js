@@ -32,10 +32,6 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  getDevices(empty) {
-    return this.data.items || empty || null;
-  },
-
   setDevices(devices) {
     console.debug('PushNotificationsStore::setDevices');
     this.data.items = devices;

@@ -6,8 +6,8 @@ import Reflux from 'reflux';
 import {Dialog as DialogMixin, Form} from '../../mixins';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {FlatButton, TextField, Toggle} from 'syncano-material-ui';
+import {Dialog, Loading} from '../../common';
 
 export default function(displayName, Store, Actions) {
   return React.createClass({
@@ -60,12 +60,12 @@ export default function(displayName, Store, Actions) {
     render() {
       let title = this.hasEditMode() ? 'Edit' : 'Create';
       let dialogStandardActions = [
-        <MUI.FlatButton
+        <FlatButton
           key="cancel"
           label="Cancel"
           onTouchTap={this.handleCancel}
           ref="cancel"/>,
-        <MUI.FlatButton
+        <FlatButton
           key="confirm"
           label="Confirm"
           primary={true}
@@ -74,7 +74,7 @@ export default function(displayName, Store, Actions) {
       ];
 
       return (
-        <Common.Dialog
+        <Dialog
           key="dialog"
           ref="dialog"
           title={`${title} a Device`}
@@ -83,14 +83,14 @@ export default function(displayName, Store, Actions) {
           actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
-            <MUI.TextField
+            <TextField
               ref="label"
               name="label"
               valueLink={this.linkState('label')}
               fullWidth={true}
               errorText={this.getValidationMessages('label').join(' ')}
               floatingLabelText="Label of the Device"/>
-            <MUI.TextField
+            <TextField
               ref="registration_id"
               name="registration_id"
               disabled={this.hasEditMode()}
@@ -98,14 +98,14 @@ export default function(displayName, Store, Actions) {
               fullWidth={true}
               errorText={this.getValidationMessages('registration_id').join(' ')}
               floatingLabelText="Device's registration ID"/>
-            <MUI.TextField
+            <TextField
               ref="user_id"
               name="user_id"
               valueLink={this.linkState('user_id')}
               fullWidth={true}
               errorText={this.getValidationMessages('user_id').join(' ')}
               floatingLabelText="User ID"/>
-            <MUI.TextField
+            <TextField
               ref="device_id"
               name="device_id"
               valueLink={this.linkState('device_id')}
@@ -114,7 +114,7 @@ export default function(displayName, Store, Actions) {
               floatingLabelText="Device ID"/>
 
             <div className="vm-4-t">
-              <MUI.Toggle
+              <Toggle
                 ref="is_active"
                 key="is_active"
                 defaultToggled={this.state.is_active}
@@ -122,11 +122,11 @@ export default function(displayName, Store, Actions) {
                 label="Active"/>
             </div>
           </div>
-          <Common.Loading
+          <Loading
             type="linear"
             position="bottom"
             show={this.state.isLoading} />
-        </Common.Dialog>
+        </Dialog>
       );
     }
   });
