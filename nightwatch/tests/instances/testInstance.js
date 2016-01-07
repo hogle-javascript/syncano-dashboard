@@ -1,5 +1,5 @@
 export default {
-  tags: ['instance'],
+  tags: ['instances'],
   before(client) {
     const signupPage = client.page.signupPage();
     const slug = Date.now();
@@ -14,29 +14,42 @@ export default {
   after(client) {
     client.end();
   },
-  // 'Test Edit Instance': (client) => {
-  //   const instancesPage = client.page.instancesPage();
+  'Go to an Instance from welcome screen': (client) => {
+    const instancesPage = client.page.instancesPage();
+    const socketsPage = client.page.socketsPage();
 
-  //   instancesPage
-  //     .navigate()
-  //     .clickListItemDropdown('@instanceDropdown', 'Edit')
-  //     .fillInput('@createModalDescriptionInput', 'new_description')
-  //     .clickElement('@confirmButton')
-  //     .waitForElementNotPresent('@editInstanceModalTitle')
-  //     .waitForElementVisible('@instancesTableName');
+    client.pause(1000);
 
-  //   instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
-  // },
-  // 'Test Select/Deselect Instance': (client) => {
-  //   const instancesPage = client.page.instancesPage();
+    instancesPage
+      .navigate()
+      .clickElement('@welcomeDialogButton');
 
-  //   instancesPage
-  //     .navigate()
-  //     .clickElement('@selectInstance')
-  //     .waitForElementVisible('@instanceSelected')
-  //     .clickElement('@selectInstance')
-  //     .waitForElementNotPresent('@instanceSelected');
-  // },
+    socketsPage
+      .waitForElementVisible('@emptySocketsHeading');
+  },
+  'Test Edit Instance': (client) => {
+    const instancesPage = client.page.instancesPage();
+
+    instancesPage
+      .navigate()
+      .clickListItemDropdown('@instanceDropdown', 'Edit')
+      .fillInput('@createModalDescriptionInput', 'new_description')
+      .clickElement('@confirmButton')
+      .waitForElementNotPresent('@editInstanceModalTitle')
+      .waitForElementVisible('@instancesTableName');
+
+    instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
+  },
+  'Test Select/Deselect Instance': (client) => {
+    const instancesPage = client.page.instancesPage();
+
+    instancesPage
+      .navigate()
+      .clickElement('@selectInstance')
+      .waitForElementVisible('@instanceSelected')
+      .clickElement('@selectInstance')
+      .waitForElementNotPresent('@instanceSelected');
+  },
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
@@ -47,18 +60,6 @@ export default {
       .waitForElementNotPresent('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
-  },
-  // This test should be reanabled once we merge with the devel branch
-  'Add an Instance from welcome screen': (client) => {
-    const instancesPage = client.page.instancesPage();
-
-    instancesPage
-      .navigate()
-      .clickElement('@welcomeDialogCreateInstance')
-      .fillInput('@createModalDescriptionInput', 'nightwatch_test_instance')
-      .clickElement('@confirmButton')
-      .waitForElementNotVisible('@addInstanceModalTitle', 60000)
-      .waitForElementVisible('@instanceDescription');
   },
   'Test Delete an Instance': (client) => {
     const instancesPage = client.page.instancesPage();
