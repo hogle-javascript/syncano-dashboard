@@ -154,6 +154,7 @@ export default React.createClass({
         bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>
         {tableHeader}
         <TableBody
+          className="mui-table-body"
           deselectOnClickaway={false}
           showRowHover={true}
           stripedRows={false}>

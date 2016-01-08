@@ -10,8 +10,8 @@ import DialogStore from './CodeBoxDialogStore';
 import SnippetsActions from '../Snippets/SnippetsActions';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, Toggle, FlatButton} from 'syncano-material-ui';
+import {Dialog, SelectFieldWrapper} from '../../common';
 
 export default React.createClass({
 
@@ -66,12 +66,12 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -80,7 +80,7 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
+      <Dialog
         key='dialog'
         ref='dialog'
         title={`${title} a CodeBox Socket`}
@@ -89,7 +89,7 @@ export default React.createClass({
         open={this.state.open}
         modal={true}>
         {this.renderFormNotifications()}
-        <MUI.TextField
+        <TextField
           ref="name"
           name="name"
           fullWidth={true}
@@ -98,7 +98,7 @@ export default React.createClass({
           errorText={this.getValidationMessages('name').join(' ')}
           hintText="Name of the CodeBox"
           floatingLabelText="Name"/>
-        <MUI.TextField
+        <TextField
           ref="description"
           name="description"
           fullWidth={true}
@@ -106,25 +106,20 @@ export default React.createClass({
           errorText={this.getValidationMessages('description').join(' ')}
           hintText="Description of the CodeBox"
           floatingLabelText="Description"/>
-        <MUI.SelectField
-          className="snippet-dropdown"
-          ref="snippet"
+        <SelectFieldWrapper
           name="snippet"
-          floatingLabelText="Snippet"
-          valueLink={this.linkState('codebox')}
-          errorText={this.getValidationMessages('codebox').join(' ')}
-          valueMember="payload"
-          displayMember="text"
-          fullWidth={true}
-          menuItems={this.state.snippets}/>
-        <MUI.Toggle
+          options={this.state.snippets}
+          value={this.state.codebox}
+          onChange={this.setSelectFieldValue.bind(null, 'codebox')}
+          errorText={this.getValidationMessages('codebox').join(' ')}/>
+        <Toggle
           ref='public'
           name='public'
           onToggle={this.handleToogle}
           style={{marginTop: 20}}
           defaultToggled={this.state.public}
           label='Make this CodeBox public?'/>
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });

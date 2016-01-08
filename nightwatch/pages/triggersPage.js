@@ -15,7 +15,7 @@ export default {
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
-      selector: '//a[@class="dropdown-item-edit"]',
+      selector: '//span[@class="dropdown-item-edit"]',
       locateStrategy: 'xpath'
     },
     confirm: {

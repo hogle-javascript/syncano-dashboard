@@ -202,6 +202,12 @@ export default {
     }
 
     callback(this.isValid(key), (key !== null) ? this.state.errors[key] : this.state.errors);
-  }
+  },
 
+  setSelectFieldValue(stateParamName, event, index, value) {
+    let state = {};
+
+    state[stateParamName] = value;
+    this.setState(state);
+  }
 };

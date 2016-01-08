@@ -11,11 +11,11 @@ export default {
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
-      selector: '//a[@class="dropdown-item-edit"]',
+      selector: '//span[@class="dropdown-item-edit"]',
       locateStrategy: 'xpath'
     },
     deleteDropdownItem: {
-      selector: '//a[@class="dropdown-item-delete"]',
+      selector: '//span[@class="dropdown-item-delete"]',
       locateStrategy: 'xpath'
     },
     instancesDropdown: {
