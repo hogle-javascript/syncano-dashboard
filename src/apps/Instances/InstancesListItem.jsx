@@ -1,7 +1,7 @@
 import React from 'react';
 import {Navigation} from 'react-router';
 
-import Mixins from '../../mixins/';
+import {DialogsMixin} from '../../mixins/';
 
 // Stores and Actions
 import Actions from './InstancesActions';
@@ -19,7 +19,7 @@ export default React.createClass({
 
   mixins: [
     Navigation,
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   handleItemClick(instanceName) {

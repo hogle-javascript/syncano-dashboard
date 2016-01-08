@@ -5,7 +5,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 import UnsavedDataMixin from './UnsavedDataMixin';
-import Mixins from '../../mixins';
+import {DialogMixin, MousetrapMixin, DialogsMixin, FormMixin} from '../../mixins';
 
 import Store from './SnippetStore';
 import Actions from './SnippetActions';
@@ -30,10 +30,10 @@ export default Radium(React.createClass({
 
     SnackbarNotificationMixin,
     UnsavedDataMixin,
-    Mixins.Mousetrap,
-    Mixins.Dialog,
-    Mixins.Dialogs,
-    Mixins.Form,
+    MousetrapMixin,
+    DialogMixin,
+    DialogsMixin,
+    FormMixin,
     Utils.Styles
   ],
 

@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 export default {
-
   getInitialState() {
     return {
       open: false

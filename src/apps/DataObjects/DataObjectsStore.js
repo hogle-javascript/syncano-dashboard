@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import URI from 'urijs';
 
 // Utils & Mixins
-import Mixins from '../../mixins';
+import {CheckListStoreMixin, StoreFormMixin, WaitForStoreMixin} from '../../mixins';
 import DataObjectsRenderer from './DataObjectsRenderer';
 
 // Stores & Actions
@@ -13,9 +13,9 @@ import DataObjectsActions from './DataObjectsActions';
 export default Reflux.createStore({
   listenables: DataObjectsActions,
   mixins: [
-    Mixins.CheckListStore,
-    Mixins.StoreForm,
-    Mixins.WaitForStore
+    CheckListStoreMixin,
+    StoreFormMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState() {

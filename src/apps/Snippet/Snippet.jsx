@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 import HeaderMixin from '../Header/HeaderMixin';
-import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
+import {InstanceTabsMixin} from '../../mixins';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './SnippetStore';

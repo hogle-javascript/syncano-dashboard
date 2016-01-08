@@ -4,7 +4,7 @@ import Router from 'react-router';
 import Radium from 'radium';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
@@ -23,8 +23,8 @@ export default Radium(React.createClass({
     Router.State,
     Router.Navigation,
 
-    Mixins.Dialog,
-    Mixins.Form,
+    DialogMixin,
+    FormMixin,
     HeaderMixin,
     Reflux.connect(Store)
   ],

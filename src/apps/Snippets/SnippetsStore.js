@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import D from 'd.js';
 
-import Mixins from '../../mixins';
+import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './SnippetsActions';
@@ -10,9 +10,9 @@ export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
-    Mixins.CheckListStore,
-    Mixins.StoreLoading,
-    Mixins.WaitForStore
+    CheckListStoreMixin,
+    StoreLoadingMixin,
+    WaitForStoreMixin
   ],
 
   langMap: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, State} from 'react-router';
 
-import {Dialogs} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './CodeBoxesActions';
@@ -18,7 +18,7 @@ export default React.createClass({
 
   mixins: [
     State,
-    Dialogs
+    DialogsMixin
   ],
 
   render() {

@@ -11,7 +11,7 @@ import RenameDialog from './RenameDialog';
 import RenameDialogActions from './RenameDialogActions';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Components
 import {Utils, IconButton, RaisedButton, TextField} from 'syncano-material-ui';
@@ -30,7 +30,7 @@ export default React.createClass({
     Navigation,
     Reflux.connect(SessionStore),
     Reflux.connect(Store),
-    Mixins.Dialogs,
+    DialogsMixin,
     Utils.Styles
   ],
 

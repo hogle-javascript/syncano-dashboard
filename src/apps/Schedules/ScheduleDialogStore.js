@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import Mixins from '../../mixins';
+import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 
 // Stores & Actions
 import SchedulesActions from './SchedulesActions';
@@ -11,8 +11,8 @@ import SnippetsStore from '../Snippets/SnippetsStore';
 export default Reflux.createStore({
   listenables: SchedulesActions,
   mixins: [
-    Mixins.StoreForm,
-    Mixins.DialogStore
+    StoreFormMixin,
+    DialogStoreMixin
   ],
 
   crontabItems: [

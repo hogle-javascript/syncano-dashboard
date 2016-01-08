@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin} from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -29,7 +29,7 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialog
+    DialogMixin
   ],
 
   componentDidMount() {

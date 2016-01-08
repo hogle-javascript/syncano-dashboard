@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Mixins from '../../mixins/';
+import {DialogsMixin} from '../../mixins/';
 
 import Actions from './ApiKeysActions';
 
@@ -14,7 +14,7 @@ export default React.createClass({
   displayName: 'ApiKeysListItem',
 
   mixins: [
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   render() {

@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import Mixins from '../../mixins';
+import {DialogStoreMixin, StoreFormMixin} from '../../mixins';
 
 // Stores & Actions
 import AdminsActions from './AdminsActions';
@@ -13,8 +13,8 @@ export default Reflux.createStore({
     AdminsInvitationsActions
   ],
   mixins: [
-    Mixins.StoreForm,
-    Mixins.DialogStore
+    StoreFormMixin,
+    DialogStoreMixin
   ],
 
   roleMenuItems: [

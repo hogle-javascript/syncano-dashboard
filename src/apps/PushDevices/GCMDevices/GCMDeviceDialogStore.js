@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreForm, DialogStore, StoreLoading} from '../../../mixins';
+import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin} from '../../../mixins';
 
 // Stores & Actions
 import Actions from './GCMDevicesActions';
@@ -9,9 +9,9 @@ import Actions from './GCMDevicesActions';
 export default Reflux.createStore({
   listenables: Actions,
   mixins: [
-    StoreForm,
-    DialogStore,
-    StoreLoading
+    StoreFormMixin,
+    DialogStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {

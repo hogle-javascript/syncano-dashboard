@@ -4,7 +4,7 @@ import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
@@ -34,8 +34,8 @@ export default React.createClass({
     Reflux.connect(Triggers.Store, 'triggers'),
     Reflux.connect(CodeBoxes.Store, 'codeboxes'),
 
-    Mixins.Dialogs,
-    Mixins.InstanceTabs,
+    DialogsMixin,
+    InstanceTabsMixin,
     HeaderMixin
   ],
 

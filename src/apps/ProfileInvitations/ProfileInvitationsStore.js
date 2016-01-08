@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import Mixins from '../../mixins';
+import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -12,9 +12,9 @@ export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
-    Mixins.CheckListStore,
-    Mixins.StoreLoading,
-    Mixins.WaitForStore
+    CheckListStoreMixin,
+    StoreLoadingMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState() {

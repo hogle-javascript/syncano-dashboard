@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import Mixins from '../../mixins';
+import {StoreFormMixin, DialogStoreMixin, WaitForStoreMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import BillingPlanActions from './ProfileBillingPlanActions';
@@ -9,9 +9,9 @@ import Actions from './ProfileBillingPlanDialogActions';
 export default Reflux.createStore({
   listenables: Actions,
   mixins: [
-    Mixins.StoreForm,
-    Mixins.DialogStore,
-    Mixins.WaitForStore
+    StoreFormMixin,
+    DialogStoreMixin,
+    WaitForStoreMixin
   ],
 
   init() {

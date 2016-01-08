@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
@@ -29,8 +29,8 @@ export default React.createClass({
 
     Reflux.connect(Store, 'admins'),
     Reflux.connect(AdminsInvitationsStore, 'invitations'),
-    Mixins.Dialogs,
-    Mixins.InstanceTabs,
+    DialogsMixin,
+    InstanceTabsMixin,
     HeaderMixin
   ],
 

@@ -4,7 +4,7 @@ import Router from 'react-router';
 import MUI from 'syncano-material-ui' ;
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import InstanceDialogStore from '../Instances/InstanceDialogStore';
@@ -22,8 +22,8 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Mixins.Form,
-    Mixins.Dialog,
+    DialogMixin,
+    FormMixin,
 
     Reflux.connect(Store)
   ],
