@@ -11,7 +11,8 @@ exports.command = function(element, dropdownChoice) {
     .waitForElementNotPresent('//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div')
     .click(choice)
     // Waiting for dropdown to be removed from DOM
-    .waitForElementNotPresent('//iframe/following-sibling::div[@style]/div');
+    .waitForElementNotPresent('//iframe/following-sibling::div[@style]/div')
+    .pause(1000);
 
   return this;
 };
