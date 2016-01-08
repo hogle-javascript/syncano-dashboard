@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import Mixins from '../../mixins';
+import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 
 // Stores & Actions
 import DataViewsActions from './DataViewsActions';
@@ -11,8 +11,8 @@ import ClassesStore from '../Classes/ClassesStore';
 export default Reflux.createStore({
   listenables: DataViewsActions,
   mixins: [
-    Mixins.StoreForm,
-    Mixins.DialogStore
+    StoreFormMixin,
+    DialogStoreMixin
   ],
 
   getInitialState() {

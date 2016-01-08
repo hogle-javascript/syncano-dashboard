@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, State} from 'react-router';
 
-import {Dialogs} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 import Actions from './TriggersActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
@@ -17,7 +17,7 @@ export default React.createClass({
 
   mixins: [
     State,
-    Dialogs
+    DialogsMixin
   ],
 
   render() {

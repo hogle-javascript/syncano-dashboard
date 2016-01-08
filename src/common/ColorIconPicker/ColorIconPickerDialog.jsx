@@ -1,7 +1,7 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
-import {Dialog} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 import {FlatButton, Tabs, Tab} from 'syncano-material-ui';
 import Common from '../../common';
@@ -23,7 +23,7 @@ export default React.createClass({
   },
 
   mixins: [
-    Dialog,
+    DialogsMixin,
     LinkedStateMixin
   ],
 

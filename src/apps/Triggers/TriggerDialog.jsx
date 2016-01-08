@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogsMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import TriggersActions from './TriggersActions';
@@ -20,8 +20,8 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(TriggerDialogStore),
-    Mixins.Dialog,
-    Mixins.Form
+    DialogsMixin,
+    FormMixin
   ],
 
   validatorConstraints: {

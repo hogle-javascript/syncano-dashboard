@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Dialogs} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 import Actions from './GroupsActions';
 import UserActions from '../Users/UsersActions';
@@ -15,7 +15,7 @@ export default React.createClass({
   displayName: 'GroupsListItem',
 
   mixins: [
-    Dialogs
+    DialogsMixin
   ],
 
   showUserDialog(group) {

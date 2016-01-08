@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 
-import Mixins from '../../mixins';
+import {DialogsMixin, FormMixin} from '../../mixins';
 
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
@@ -19,8 +19,8 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Mixins.Dialog,
-    Mixins.Form,
+    DialogsMixin,
+    FormMixin,
 
     Reflux.connect(Store)
   ],

@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'react-router';
 
 // Utils
-import Mixins from '../../mixins';
+import {IsLoadingMixin, DialogsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
@@ -23,8 +23,8 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
-    Mixins.IsLoading({attr: 'state.items'}),
-    Mixins.Dialogs
+    IsLoadingMixin({attr: 'state.items'}),
+    DialogsMixin
   ],
 
   handleChangePalette(color, icon) {

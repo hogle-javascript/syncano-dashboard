@@ -2,16 +2,15 @@ import Reflux from 'reflux';
 import moment from 'moment';
 import _ from 'lodash';
 
-import Mixins from '../../mixins';
+import {WaitForStoreMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './ProfileBillingPlanActions';
 
 export default Reflux.createStore({
   listenables: Actions,
-  mixins: [
-    Mixins.WaitForStore
-  ],
+
+  mixins: [WaitForStoreMixin],
 
   getInitialState() {
     return {

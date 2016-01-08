@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone';
 import Filesize from 'filesize';
 
 // Utils
-import Mixins from '../../mixins';
+import {FormMixin, DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import DataObjectsActions from './DataObjectsActions';
@@ -23,8 +23,8 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(DataObjectDialogStore),
-    Mixins.Form,
-    Mixins.Dialog
+    FormMixin,
+    DialogsMixin
   ],
 
   validatorConstraints() {

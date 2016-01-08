@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 import Common from '../../common';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
@@ -10,7 +10,7 @@ export default React.createClass({
   displayName: 'AdminsInvitationsListItem',
 
   mixins: [
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   render() {
