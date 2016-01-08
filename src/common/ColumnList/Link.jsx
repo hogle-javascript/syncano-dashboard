@@ -15,7 +15,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      snackbar: 'URL copied to the clipboard'
+      snackbar: 'URL copied to the clipboard',
+      addBaseUrl: true
     };
   },
 
@@ -69,7 +70,7 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let link = SYNCANO_BASE_URL.slice(0, -1) + this.props.link;
+    let link = this.props.addBaseUrl ? SYNCANO_BASE_URL.slice(0, -1) + this.props.link : this.props.link;
 
     return (
       <div

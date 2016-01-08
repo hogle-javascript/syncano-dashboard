@@ -70,14 +70,26 @@ export default React.createClass({
             {this.props.name}
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
-          <Column.ColumnHeader className="col-flex-1" columnName="DESC">Crontab</Column.ColumnHeader>
+          <Column.ColumnHeader
+            className="col-flex-1"
+            columnName="DESC">
+            Crontab
+          </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
             className="col-md-4">
             Snippet
           </Column.ColumnHeader>
-          <Column.ColumnHeader className="col-sm-4"columnName="DESC">Traces</Column.ColumnHeader>
-          <Column.ColumnHeader className="col-sm-3" columnName="DATE">Next run</Column.ColumnHeader>
+          <Column.ColumnHeader
+            className="col-sm-4"
+            columnName="DESC">
+            Traces
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            className="col-sm-3"
+            columnName="DATE">
+            Next run
+          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}

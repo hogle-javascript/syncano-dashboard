@@ -34,6 +34,8 @@ import Channels from './apps/Channels/Channels';
 import Sockets from './apps/Sockets';
 import Triggers from './apps/Triggers';
 import Schedules from './apps/Schedules';
+import PushNotifications from './apps/PushNotifications';
+import PushDevices from './apps/PushDevices';
 
 const Route = Router.Route;
 const Redirect = Router.Redirect;
@@ -143,9 +145,9 @@ export default (
             path="add" />
 
           <Route
-            name = "classes-edit"
-            handler = {Classes.FormView}
-            path = ":className/edit" />
+            name="classes-edit"
+            handler={Classes.FormView}
+            path=":className/edit" />
 
           {/* Classes - Data Objects */}
           <Route
@@ -154,6 +156,35 @@ export default (
             path=":className/objects" />
 
           <DefaultRoute handler={Classes}/>
+        </Route>
+
+        {/* Push Notifications */}
+        <Route
+          name="push-notifications"
+          path="push-notifications"
+          >
+
+          {/* Push Notification Devices */}
+          <Route
+            name="push-notification-devices"
+            path="devices"
+            >
+            <Route
+              name="apns-devices"
+              path="apns"
+              handler={PushDevices.APNS}/>
+            <Route
+              name="gcm-devices"
+              path="gcm"
+              handler={PushDevices.GCM}/>
+
+            <Redirect
+              from="/instances/:instanceName/push-notifications/devices"
+              to="apns-devices"
+              />
+            <DefaultRoute handler={PushDevices.APNS} />
+            </Route>
+          <DefaultRoute handler={PushNotifications}/>
         </Route>
 
         {/* CodeBoxes */}

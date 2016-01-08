@@ -34,6 +34,7 @@ export default React.createClass({
           icon='table'
           background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
+          keyName="name"
           handleIconClick={this.props.onIconClick}>
           <Common.ColumnList.Link
             name={item.name}

@@ -56,6 +56,7 @@ export default React.createClass({
           icon={metadata && metadata.icon ? metadata.icon : 'table-large'}
           background={Common.Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
           checked={item.checked}
+          keyName="name"
           handleIconClick={this.props.onIconClick}>
           <Common.Truncate
             onClick={this.handleItemNameClick.bind(null, item.name)}
