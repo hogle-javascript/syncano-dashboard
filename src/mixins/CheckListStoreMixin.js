@@ -12,14 +12,10 @@ export default {
     return this.data.items.filter(checkedFilter).length;
   },
 
-  onCheckItem(checkId, state) {
+  onCheckItem(checkId, state, key = 'id') {
     console.debug('CheckListStoreMixin::onCheckItem');
     this.data.items.forEach((item) => {
-      if (item.id) {
-        if (checkId.toString() === item.id.toString()) {
-          item.checked = state;
-        }
-      } else if (checkId.toString() === item.name) {
+      if (item[key].toString() === checkId.toString()) {
         item.checked = state;
       }
     });

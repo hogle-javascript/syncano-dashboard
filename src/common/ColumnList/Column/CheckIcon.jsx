@@ -60,9 +60,9 @@ export default Radium(React.createClass({
     };
   },
 
-  handleIconClick(id, state) {
+  handleIconClick(id, state, keyName) {
     console.info('ColumnCheckIcon:handleClick');
-    this.props.handleIconClick(id, state);
+    this.props.handleIconClick(id, state, keyName);
   },
 
   handleNameClick() {
@@ -82,6 +82,7 @@ export default Radium(React.createClass({
         <CheckIcon
           id={this.props.id}
           icon={this.props.icon}
+          keyName={this.props.keyName}
           background={this.props.background}
           checked={this.props.checked}
           handleClick={this.handleIconClick}

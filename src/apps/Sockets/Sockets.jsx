@@ -120,7 +120,7 @@ export default React.createClass({
             name="CodeBox Sockets"
             isLoading={this.state.codeboxes.isLoading}
             items={this.state.codeboxes.items}
-            handleTitleClick={this.handleListTitleClick.bind(null, 'codeboxes')}
+            handleTitleClick={this.handleListTitleClick.bind(null, 'codeBoxes')}
             emptyItemHandleClick={this.showCodeBoxAddDialog}
             emptyItemContent="Create a CodeBox Socket"/>
 
