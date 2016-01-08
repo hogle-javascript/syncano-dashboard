@@ -2,7 +2,7 @@
 // 'dropdoownChoice' can be part of the name of the dropdown option like "Edit" or "Delete"
 
 exports.command = function(element, dropdownChoice) {
-  const choice = `//iframe/following-sibling::div[@style]//div[contains(text(), "${dropdownChoice}")]`;
+  const choice = `//div[contains(text(), "${dropdownChoice}")]`;
 
   this
     .waitForElementVisible(element)
