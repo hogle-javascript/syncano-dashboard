@@ -70,7 +70,7 @@ export default Radium(React.createClass({
       container: {
         margin: '25px auto',
         width: '100%',
-        maxWidth: '600px'
+        maxWidth: '700px'
       },
       field: {
         margin: '10px 14px'
@@ -79,7 +79,7 @@ export default Radium(React.createClass({
         padding: '24px 12px'
       },
       buttonsSection: {
-        margin: '15px 20px 0'
+        margin: '30px 60px 0'
       },
       saveButton: {
         marginLeft: 10
@@ -241,7 +241,7 @@ export default Radium(React.createClass({
             defaultValue={field.key}
             value={this.state.snippetConfig[index].key}
             style={styles.field}
-            onChange={this.handleUpdateKey.bind(this, field.key, index)} />
+            onChange={this.handleUpdateKey.bind(this, field.key, index)}/>
           <TextField
             key={`fieldValue${index}`}
             ref={`fieldValue${index}`}
@@ -249,7 +249,7 @@ export default Radium(React.createClass({
             defaultValue={field.value}
             value={this.state.snippetConfig[index].value}
             style={styles.field}
-            onChange={this.handleUpdateKey.bind(this, field.key, index)} />
+            onChange={this.handleUpdateKey.bind(this, field.key, index)}/>
           <IconButton
             iconClassName="synicon-close"
             style={styles.deleteIcon}
@@ -276,20 +276,20 @@ export default Radium(React.createClass({
           key="newFieldKey"
           hintText="Key"
           defaultValue=""
-          style={styles.field} />
+          style={styles.field}/>
         <TextField
           className="config-input-value"
           ref="newFieldValue"
           key="newFieldValue"
           hintText="Value"
           defaultValue=""
-          style={styles.field} />
+          style={styles.field}/>
         <IconButton
           className="add-field-button"
           iconClassName="synicon-plus"
           tooltip="Add field"
           type="submit"
-          style={styles.deleteIcon} />
+          style={styles.deleteIcon}/>
       </form>
     );
   },
@@ -303,12 +303,12 @@ export default Radium(React.createClass({
         style={styles.buttonsSection}>
         <FlatButton
           label="Cancel"
-          onClick={this.handleCancelChanges} />
+          onClick={this.handleCancelChanges}/>
         <RaisedButton
           label="Save"
           style={styles.saveButton}
           secondary={true}
-          onTouchTap={this.handleFormValidation} />
+          onTouchTap={this.handleFormValidation}/>
       </div>
     );
   },
@@ -321,21 +321,19 @@ export default Radium(React.createClass({
     }
 
     return (
-      <div>
-        <Container style={styles.container}>
-          {this.getDialogs()}
-          {this.renderFields()}
-          {this.renderNewFiledSection()}
-          {this.renderButtons()}
-          <Common.Show if={this.getValidationMessages('config').length > 0}>
-            <div style={styles.notification}>
-              <Common.Notification type="error">
-                {this.getValidationMessages('config').join(' ')}
-              </Common.Notification>
-            </div>
-          </Common.Show>
-        </Container>
-      </div>
+      <Container style={styles.container}>
+        {this.getDialogs()}
+        {this.renderFields()}
+        {this.renderNewFiledSection()}
+        {this.renderButtons()}
+        <Common.Show if={this.getValidationMessages('config').length > 0}>
+          <div style={styles.notification}>
+            <Common.Notification type="error">
+              {this.getValidationMessages('config').join(' ')}
+            </Common.Notification>
+          </div>
+        </Common.Show>
+      </Container>
     );
   }
 }));

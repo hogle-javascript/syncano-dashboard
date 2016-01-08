@@ -150,11 +150,9 @@ export default React.createClass({
           forceBackFallback={true}
           backButtonTooltip="Go back to Snippets list"/>
 
-        <div style={{margin: '65px auto', width: '100%'}}>
-          <div style={{paddingTop: 32}}>
-            {this.renderTabs()}
-            <RouteHandler/>
-          </div>
+        <div style={{margin: '15px auto', width: '100%'}}>
+          {this.renderTabs()}
+          <RouteHandler/>
         </div>
       </div>
     );
