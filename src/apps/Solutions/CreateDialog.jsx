@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Select from 'react-select';
 
 // Utils
-import {DialogsMixin, FormMixin} from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './CreateDialogActions';
@@ -20,7 +20,7 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
 
-    DialogsMixin,
+    DialogMixin,
     FormMixin
   ],
 

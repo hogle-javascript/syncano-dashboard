@@ -4,7 +4,7 @@ import Select from 'react-select';
 import _ from 'lodash';
 
 // Utils
-import {DialogsMixin, FormMixin} from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import Store from './UserDialogStore';
@@ -23,8 +23,8 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    FormMixin,
-    DialogsMixin
+    DialogMixin,
+    FormMixin
   ],
 
   validatorConstraints() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {DialogsMixin} from '../../mixins';
+import {DialogMixin} from '../../mixins';
 import {Dialog, Utils} from 'syncano-material-ui';
 
 export default React.createClass({
@@ -7,7 +7,7 @@ export default React.createClass({
 
   mixins: [
     Utils.Styles,
-    DialogsMixin
+    DialogMixin
   ],
 
   getStyles() {

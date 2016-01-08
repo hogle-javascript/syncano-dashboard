@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogsMixin, FormMixin} from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import TriggersActions from './TriggersActions';
@@ -20,7 +20,7 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(TriggerDialogStore),
-    DialogsMixin,
+    DialogMixin,
     FormMixin
   ],
 

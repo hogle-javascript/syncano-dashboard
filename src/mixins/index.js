@@ -1,5 +1,6 @@
 import DialogStoreMixin from './DialogStoreMixin';
 import DialogsMixin from './DialogsMixin';
+import DialogMixin from './DialogMixin';
 import FormMixin from './FormMixin';
 import CheckListStoreMixin from './CheckListStoreMixin';
 import InstanceTabsMixin from './InstanceTabsMixin';
@@ -11,6 +12,7 @@ import StoreHelpersMixin from './StoreHelpersMixin';
 import IsLoadingMixin from './IsLoadingMixin';
 
 export default {
+  DialogMixin,
   DialogsMixin,
   DialogStoreMixin,
   FormMixin,

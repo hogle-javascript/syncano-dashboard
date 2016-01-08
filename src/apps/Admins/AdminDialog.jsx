@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogsMixin, FormMixin} from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import AdminsActions from './AdminsActions';
@@ -19,7 +19,7 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(AdminDialogStore),
-    DialogsMixin,
+    DialogMixin,
     FormMixin
   ],
 
