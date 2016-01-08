@@ -3,7 +3,7 @@ import _ from 'lodash';
 import Reflux from 'reflux';
 
 // Utils
-import {Dialog as DialogMixin, Form} from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Components
 import {FlatButton, TextField, Toggle} from 'syncano-material-ui';
@@ -17,7 +17,7 @@ export default function(displayName, Store, Actions) {
     mixins: [
       Reflux.connect(Store),
       DialogMixin,
-      Form
+      FormMixin
     ],
 
     validatorConstraints: {

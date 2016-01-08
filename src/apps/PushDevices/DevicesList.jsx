@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Dialog as DialogMixin, Dialogs as DialogsMixin} from '../../mixins';
+import {DialogMixin, DialogsMixin} from '../../mixins';
 
 import {ColumnList, Container, Lists, Loading, Dialog} from '../../common';
 import ListItem from './DevicesListItem';

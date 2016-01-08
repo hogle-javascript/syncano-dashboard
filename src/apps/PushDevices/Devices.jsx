@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import {State, Navigation} from 'react-router';
 
-import {Dialogs as DialogsMixin} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 import {Styles} from 'syncano-material-ui';
 import {InnerToolbar, Socket, Container} from '../../common';
