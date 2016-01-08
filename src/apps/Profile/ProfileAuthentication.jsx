@@ -81,7 +81,7 @@ export default Radium(React.createClass({
             <div>Account key</div>
             <div className="row" style={styles.contentRow}>
               <div className="col-xs-15" style={styles.accountKey}>{this.state.account_key}</div>
-              <div className="col-xs-10">
+              <div className="col-xs-10 row">
                 <Clipboard
                   copyText={this.state.account_key}
                   snackbarText="API key copied to the clipboard"
