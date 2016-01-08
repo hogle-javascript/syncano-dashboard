@@ -5,7 +5,7 @@ import Spacing from './Spacing';
 
 export default {
   spacing: Spacing,
-  contentFontFamily: 'Avenir, sans-serif',
+  fontFamily: 'Avenir, sans-serif',
   zIndex: {
     menu: 1000,
     appBar: 1100,
