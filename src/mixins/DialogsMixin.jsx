@@ -51,32 +51,6 @@ export default {
         }
       });
     }
-  },
-
-  getInitialState() {
-    return {
-      open: false
-    };
-  },
-
-  componentWillUpdate(nextProps, nextState) {
-    console.debug('DialogMixin::componentWillUpdate');
-
-    if (this.state._dialogVisible === nextState._dialogVisible) {
-      return true;
-    }
-
-    if (!nextState._dialogVisible) {
-      return this.handleCancel();
-    }
-
-    if (!this.state._dialogVisible && nextState._dialogVisible) {
-      if (_.isFunction(this.handleDialogShow)) {
-        this.handleDialogShow();
-      }
-
-      this.show();
-    }
   }
 };
 
