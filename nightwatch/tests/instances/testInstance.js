@@ -1,5 +1,5 @@
 export default {
-  tags: ['instances'],
+  tags: ['instance'],
   before(client) {
     const signupPage = client.page.signupPage();
     const slug = Date.now();
@@ -14,29 +14,29 @@ export default {
   after(client) {
     client.end();
   },
-  'Test Edit Instance': (client) => {
-    const instancesPage = client.page.instancesPage();
+  // 'Test Edit Instance': (client) => {
+  //   const instancesPage = client.page.instancesPage();
 
-    instancesPage
-      .navigate()
-      .clickListItemDropdown('@instanceDropdown', 'Edit')
-      .fillInput('@createModalDescriptionInput', 'new_description')
-      .clickElement('@confirmButton')
-      .waitForElementNotPresent('@editInstanceModalTitle')
-      .waitForElementVisible('@instancesTableName');
+  //   instancesPage
+  //     .navigate()
+  //     .clickListItemDropdown('@instanceDropdown', 'Edit')
+  //     .fillInput('@createModalDescriptionInput', 'new_description')
+  //     .clickElement('@confirmButton')
+  //     .waitForElementNotPresent('@editInstanceModalTitle')
+  //     .waitForElementVisible('@instancesTableName');
 
-    instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
-  },
-  'Test Select/Deselect Instance': (client) => {
-    const instancesPage = client.page.instancesPage();
+  //   instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
+  // },
+  // 'Test Select/Deselect Instance': (client) => {
+  //   const instancesPage = client.page.instancesPage();
 
-    instancesPage
-      .navigate()
-      .clickElement('@selectInstance')
-      .waitForElementVisible('@instanceSelected')
-      .clickElement('@selectInstance')
-      .waitForElementNotPresent('@instanceSelected');
-  },
+  //   instancesPage
+  //     .navigate()
+  //     .clickElement('@selectInstance')
+  //     .waitForElementVisible('@instanceSelected')
+  //     .clickElement('@selectInstance')
+  //     .waitForElementNotPresent('@instanceSelected');
+  // },
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
@@ -47,20 +47,40 @@ export default {
       .waitForElementNotPresent('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
-  }
+  },
   // This test should be reanabled once we merge with the devel branch
-  // 'Add an Instance from empty list item': (client) => {
-  //   const instancesPage = client.page.instancesPage();
+  'Add an Instance from welcome screen': (client) => {
+    const instancesPage = client.page.instancesPage();
 
-  //   instancesPage
-  //     .navigate()
-  //     .waitForElementPresent('@emptyListItem');
-  //   client.pause(1000);
-  //   instancesPage
-  //     .clickButton('@emptyListItem')
-  //     .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
-  //     .clickButton('@confirmButton')
-  //     .waitForElementNotVisible('@addInstanceModalTitle', 60000)
-  //     .waitForElementVisible('@instanceDescription');
-  // }
+    instancesPage
+      .navigate()
+      .clickElement('@welcomeDialogCreateInstance')
+      .fillInput('@createModalDescriptionInput', 'nightwatch_test_instance')
+      .clickElement('@confirmButton')
+      .waitForElementNotVisible('@addInstanceModalTitle', 60000)
+      .waitForElementVisible('@instanceDescription');
+  },
+  'Test Delete an Instance': (client) => {
+    const instancesPage = client.page.instancesPage();
+
+    instancesPage
+      .navigate()
+      .clickListItemDropdown('@instanceDropdown', 'Delete')
+      .clickElement('@confirmDeleteButton')
+      .waitForElementNotPresent('@deleteInstanceModalTitle');
+
+    instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
+  },
+  'Add an Instance from empty list item': (client) => {
+    const instancesPage = client.page.instancesPage();
+
+    instancesPage
+      .navigate()
+      .waitForElementPresent('@emptyListItem')
+      .clickElement('@emptyListItem')
+      .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
+      .clickElement('@confirmButton')
+      .waitForElementNotVisible('@addInstanceModalTitle', 60000)
+      .waitForElementVisible('@instanceDescription');
+  }
 };

@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
 
-import Mixins from '../../mixins';
+import {FormMixin} from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
@@ -18,7 +18,7 @@ export default Radium(React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Mixins.Form
+    FormMixin
   ],
 
   validatorConstraints: {

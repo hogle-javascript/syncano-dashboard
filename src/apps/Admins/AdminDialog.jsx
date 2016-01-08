@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import AdminsActions from './AdminsActions';
@@ -18,8 +18,8 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Mixins.Dialog,
-    Mixins.Form
+    DialogMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -66,8 +66,8 @@ export default React.createClass({
 
     return (
       <Dialog
-        key='dialog'
-        ref='dialog'
+        key="dialog"
+        ref="dialog"
         title={`${title} an Administrator`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
@@ -75,14 +75,14 @@ export default React.createClass({
         actions={dialogStandardActions}>
         {this.renderFormNotifications()}
         <TextField
-          ref='email'
-          name='email'
+          ref="email"
+          name="email"
           fullWidth={true}
           disabled={this.hasEditMode()}
           valueLink={this.linkState('email')}
           errorText={this.getValidationMessages('email').join(' ')}
-          hintText='Email of the administrator'
-          floatingLabelText='Email'/>
+          hintText="Email of the administrator"
+          floatingLabelText="Email"/>
         <SelectFieldWrapper
           name="role"
           floatingLabelText="Role of the administrator"

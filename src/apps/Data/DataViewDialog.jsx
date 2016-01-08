@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './DataViewsActions';
@@ -19,8 +19,8 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Mixins.Dialog,
-    Mixins.Form
+    DialogMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -109,8 +109,8 @@ export default React.createClass({
     if (this.state.class) {
       return fields.concat(ClassesStore.getClassFields(this.state.class).map((field) => {
         return (
-          <div className='row'>
-            <div className='col-flex-1'>
+          <div className="row">
+            <div className="col-flex-1">
               <Toggle
                 key={field.name}
                 name={field.name}
@@ -120,7 +120,7 @@ export default React.createClass({
                 onToggle={this.handleToggle.bind(this, 'showFields', field.name)}
                 />
             </div>
-            <div className='col-xs-8'>
+            <div className="col-xs-8">
               <Show if={field.type === 'reference'}>
                 <Checkbox
                   name="expand"
@@ -157,13 +157,13 @@ export default React.createClass({
       <div>Response options</div>,
       orderField,
       <TextField
-        ref='page_size'
-        name='page_size'
+        ref="page_size"
+        name="page_size"
         fullWidth={true}
         valueLink={this.linkState('page_size')}
         errorText={this.getValidationMessages('page_size').join(' ')}
-        hintText='Number'
-        floatingLabelText='Number of records in data set'/>
+        hintText="Number"
+        floatingLabelText="Number of records in data set"/>
     ];
   },
 
@@ -193,8 +193,8 @@ export default React.createClass({
 
     return (
       <Dialog
-        key='dialog'
-        ref='dialog'
+        key="dialog"
+        ref="dialog"
         title={`${title} a Data Socket`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
@@ -202,31 +202,31 @@ export default React.createClass({
         modal={true}>
         {this.renderFormNotifications()}
         <div>Main settings</div>
-        <div className='row'>
-          <div className='col-xs-12'>
+        <div className="row">
+          <div className="col-xs-12">
             <TextField
-              ref='name'
-              name='name'
+              ref="name"
+              name="name"
               fullWidth={true}
               disabled={this.hasEditMode()}
               valueLink={this.linkState('name')}
               errorText={this.getValidationMessages('name').join(' ')}
-              hintText='Name of the Socket'
-              floatingLabelText='Socket'/>
+              hintText="Name of the Socket"
+              floatingLabelText="Socket"/>
           </div>
-          <div className='col-flex-1' style={{paddingLeft: 15}}>
+          <div className="col-flex-1" style={{paddingLeft: 15}}>
             <TextField
-              ref='description'
-              name='description'
+              ref="description"
+              name="description"
               fullWidth={true}
               valueLink={this.linkState('description')}
               errorText={this.getValidationMessages('description').join(' ')}
-              hintText='Description of the Socket'
-              floatingLabelText='Description'/>
+              hintText="Description of the Socket"
+              floatingLabelText="Description"/>
           </div>
         </div>
-        <div className='row'>
-          <div className='col-flex-1'>
+        <div className="row vm-4-b">
+          <div className="col-flex-1">
             <SelectFieldWrapper
               name="class"
               options={this.state.classes}
@@ -235,7 +235,7 @@ export default React.createClass({
               errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
         </div>
-        <div className="row" style={{marginTop: 30}}>
+        <div className="row">
           <div className="col-flex-1">
             {fields}
           </div>

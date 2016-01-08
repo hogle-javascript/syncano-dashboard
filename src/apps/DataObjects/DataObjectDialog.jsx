@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone';
 import Filesize from 'filesize';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './DataObjectsActions';
@@ -18,13 +18,12 @@ import {TextField, FlatButton, IconButton, DatePicker, TimePicker} from 'syncano
 import {SelectFieldWrapper, Dialog, Loading} from '../../common';
 
 export default React.createClass({
-
   displayName: 'DataObjectDialog',
 
   mixins: [
     Reflux.connect(Store),
-    Mixins.Form,
-    Mixins.Dialog
+    DialogMixin,
+    FormMixin
   ],
 
   validatorConstraints() {
@@ -609,8 +608,8 @@ export default React.createClass({
 
     return (
       <Dialog
-        key='dialog'
-        ref='dialog'
+        key="dialog"
+        ref="dialog"
         title={title}
         onRequestClose={this.handleCancel}
         open={this.state.open}

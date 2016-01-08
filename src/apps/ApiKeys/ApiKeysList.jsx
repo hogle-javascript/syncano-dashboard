@@ -3,7 +3,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './ApiKeysActions';
@@ -23,7 +23,7 @@ export default React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   componentWillUpdate(nextProps) {

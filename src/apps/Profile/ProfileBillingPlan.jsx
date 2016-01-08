@@ -4,7 +4,7 @@ import Radium from 'radium';
 import Moment from 'moment';
 import _ from 'lodash';
 
-import Mixins from '../../mixins';
+import {FormMixin, DialogsMixin, IsLoadingMixin} from '../../mixins';
 
 import Store from './ProfileBillingPlanStore';
 import Actions from './ProfileBillingPlanActions.js';
@@ -24,9 +24,9 @@ export default Radium(React.createClass({
   displayName: 'ProfileBillingPlan',
 
   mixins: [
-    Mixins.Form,
-    Mixins.Dialogs,
-    Mixins.IsLoading(),
+    FormMixin,
+    DialogsMixin,
+    IsLoadingMixin(),
     Reflux.connect(Store),
     Reflux.connect(PlanDialogStore)
   ],

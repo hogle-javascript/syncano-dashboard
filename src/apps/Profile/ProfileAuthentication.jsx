@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 
-import FormMixin from '../../mixins/FormMixin';
+import {FormMixin} from '../../mixins';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';

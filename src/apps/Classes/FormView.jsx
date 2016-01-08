@@ -4,7 +4,7 @@ import _ from 'lodash';
 import Router from 'react-router';
 
 // Utils
-import Mixins from '../../mixins';
+import {FormMixin} from '../../mixins';
 import Constants from '../../constants/Constants';
 
 // Stores and Actions
@@ -28,7 +28,7 @@ export default React.createClass({
 
     Reflux.connect(Store),
     Reflux.connect(GroupsStore, 'groups'),
-    Mixins.Form
+    FormMixin
   ],
 
   validatorConstraints: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, State, Navigation} from 'react-router';
 
-import {Dialogs} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 import Actions from './ClassesActions';
 import Store from './ClassesStore';
@@ -17,7 +17,7 @@ export default React.createClass({
   mixins: [
     State,
     Navigation,
-    Dialogs
+    DialogsMixin
   ],
 
   handleClassDropdownClick(item) {
@@ -56,6 +56,7 @@ export default React.createClass({
           icon={metadata && metadata.icon ? metadata.icon : 'table-large'}
           background={Common.Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
           checked={item.checked}
+          keyName="name"
           handleIconClick={this.props.onIconClick}>
           <Common.Truncate
             onClick={this.handleItemNameClick.bind(null, item.name)}

@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
+import {InstanceTabsMixin} from '../../mixins';
 
 // Stores and Actions
 import Store from './TracesStore';

@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './TriggersActions';
@@ -19,8 +19,8 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Mixins.Dialog,
-    Mixins.Form
+    DialogMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -83,7 +83,7 @@ export default React.createClass({
 
     return (
       <Dialog
-        key='dialog'
+        key="dialog"
         ref="dialog"
         title={`${title} a Trigger Socket`}
         defaultOpen={this.props.defaultOpen}

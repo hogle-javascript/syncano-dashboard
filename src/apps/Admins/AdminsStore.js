@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import Mixins from '../../mixins';
+import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
@@ -15,9 +15,9 @@ export default Reflux.createStore({
 
   mixins: [
     Reflux.connect(AdminsInvitationsStore),
-    Mixins.CheckListStore,
-    Mixins.StoreLoading,
-    Mixins.WaitForStore
+    CheckListStoreMixin,
+    StoreLoadingMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState() {

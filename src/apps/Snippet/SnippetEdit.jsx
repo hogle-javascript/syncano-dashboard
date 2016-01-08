@@ -4,7 +4,7 @@ import Router from 'react-router';
 import SnippetConstants from './SnippetConstants';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, DialogsMixin, InstanceTabsMixin, FormMixin, MousetrapMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './SnippetAutosaveMixin';
@@ -29,11 +29,11 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialog,
-    Mixins.Dialogs,
-    Mixins.InstanceTabs,
-    Mixins.Mousetrap,
-    Mixins.Form,
+    DialogMixin,
+    DialogsMixin,
+    InstanceTabsMixin,
+    MousetrapMixin,
+    FormMixin,
     HeaderMixin,
     UnsavedDataMixin,
     AutosaveMixin,

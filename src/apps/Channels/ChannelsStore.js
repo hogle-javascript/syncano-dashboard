@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import Mixins from '../../mixins';
+import {CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './ChannelsActions';
@@ -9,9 +9,9 @@ export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
-    Mixins.CheckListStore,
-    Mixins.WaitForStore,
-    Mixins.StoreLoading
+    CheckListStoreMixin,
+    WaitForStoreMixin,
+    StoreLoadingMixin
   ],
 
   channelTypes: [

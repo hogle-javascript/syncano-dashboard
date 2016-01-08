@@ -108,7 +108,7 @@ export default {
       locateStrategy: 'xpath'
     },
     instanceDescription: {
-      selector: '//div[@class="instances-list-container"]//*[text()="nightwatch_test_instance"]',
+      selector: '//div[@class="description-field col-flex-1" and text()="nightwatch_test_instance"]',
       locateStrategy: 'xpath'
     },
     socketsHeaderTitle: {

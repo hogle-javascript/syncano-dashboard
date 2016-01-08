@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils & Mixins
-import Mixins from '../../mixins';
+import {StoreFormMixin, WaitForStoreMixin, StoreHelpersMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './ListViewActions';
@@ -11,9 +11,9 @@ export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
-    Mixins.StoreForm,
-    Mixins.WaitForStore,
-    Mixins.StoreHelpers
+    StoreFormMixin,
+    WaitForStoreMixin,
+    StoreHelpersMixin
   ],
 
   getInitialState() {

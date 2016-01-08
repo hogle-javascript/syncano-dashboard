@@ -4,7 +4,7 @@ import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
@@ -34,8 +34,8 @@ export default React.createClass({
     Reflux.connect(Triggers.Store, 'triggers'),
     Reflux.connect(CodeBoxes.Store, 'codeboxes'),
 
-    Mixins.Dialogs,
-    Mixins.InstanceTabs,
+    DialogsMixin,
+    InstanceTabsMixin,
     HeaderMixin
   ],
 
@@ -120,7 +120,7 @@ export default React.createClass({
             name="CodeBox Sockets"
             isLoading={this.state.codeboxes.isLoading}
             items={this.state.codeboxes.items}
-            handleTitleClick={this.handleListTitleClick.bind(null, 'codeboxes')}
+            handleTitleClick={this.handleListTitleClick.bind(null, 'codeBoxes')}
             emptyItemHandleClick={this.showCodeBoxAddDialog}
             emptyItemContent="Create a CodeBox Socket"/>
 

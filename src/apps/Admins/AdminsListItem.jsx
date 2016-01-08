@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Mixins from '../../mixins/';
+import {DialogsMixin} from '../../mixins/';
 
 // Stores and Actions
 import Actions from './AdminsActions';
@@ -14,7 +14,7 @@ export default React.createClass({
   displayName: 'AdminstListItem',
 
   mixins: [
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   getStyles() {

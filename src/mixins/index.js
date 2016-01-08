@@ -1,6 +1,6 @@
-import DialogMixin from './DialogMixin';
 import DialogStoreMixin from './DialogStoreMixin';
 import DialogsMixin from './DialogsMixin';
+import DialogMixin from './DialogMixin';
 import FormMixin from './FormMixin';
 import CheckListStoreMixin from './CheckListStoreMixin';
 import InstanceTabsMixin from './InstanceTabsMixin';
@@ -11,19 +11,17 @@ import WaitForStoreMixin from './WaitForStoreMixin';
 import StoreHelpersMixin from './StoreHelpersMixin';
 import IsLoadingMixin from './IsLoadingMixin';
 
-let Mixins = {};
-
-Mixins.Dialog = DialogMixin;
-Mixins.Dialogs = DialogsMixin;
-Mixins.DialogStore = DialogStoreMixin;
-Mixins.Form = FormMixin;
-Mixins.CheckListStore = CheckListStoreMixin;
-Mixins.InstanceTabs = InstanceTabsMixin;
-Mixins.Mousetrap = MousetrapMixin;
-Mixins.StoreForm = StoreFormMixin;
-Mixins.StoreLoading = StoreLoadingMixin;
-Mixins.WaitForStore = WaitForStoreMixin;
-Mixins.StoreHelpers = StoreHelpersMixin;
-Mixins.IsLoading = IsLoadingMixin;
-
-export default Mixins;
+export default {
+  DialogMixin,
+  DialogsMixin,
+  DialogStoreMixin,
+  FormMixin,
+  CheckListStoreMixin,
+  InstanceTabsMixin,
+  MousetrapMixin,
+  StoreFormMixin,
+  StoreLoadingMixin,
+  WaitForStoreMixin,
+  StoreHelpersMixin,
+  IsLoadingMixin
+};
