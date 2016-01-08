@@ -86,7 +86,11 @@ export default Radium(React.createClass({
                   copyText={this.state.account_key}
                   snackbarText="API key copied to the clipboard"
                   snackbarAutoHideDuration={3000}
-                  text="COPY"/>
+                  text="COPY">
+                  <FlatButton
+                    label="COPY"
+                    primary={true}/>
+                </Clipboard>
                 <FlatButton
                   label="RESET"
                   primary={true}
