@@ -21,8 +21,6 @@ import Notification from './Notification';
 import Request from './Request';
 import Show from './Show';
 import Slider from './Slider';
-import SolutionStar from './SolutionStar';
-import Solutions from './Solutions';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
 import SelectFieldWrapper from './SelectFieldWrapper';
 import Sidebar from './Sidebar';
@@ -56,8 +54,6 @@ export default {
   Show,
   Sidebar,
   Slider,
-  SolutionStar,
-  Solutions,
   SocialAuthButtonsList,
   SelectFieldWrapper,
   Socket,
