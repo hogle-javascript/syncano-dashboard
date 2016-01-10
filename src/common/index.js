@@ -27,8 +27,6 @@ import SocialAuthButtonsList from './SocialAuthButtonsList';
 import SelectFieldWrapper from './SelectFieldWrapper';
 import Sidebar from './Sidebar';
 import Socket from './Socket';
-import Spacing from './Spacing';
-import SyncanoTheme from './SyncanoTheme';
 import SnackbarNotification from './SnackbarNotification';
 import Tags from './Tags';
 import Tour from './Tour';
@@ -65,8 +63,6 @@ export default {
   SocialAuthButtonsList,
   SelectFieldWrapper,
   Socket,
-  Spacing,
-  SyncanoTheme,
   SnackbarNotification,
   Tags,
   Tour,
