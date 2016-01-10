@@ -30,7 +30,6 @@ import Socket from './Socket';
 import SnackbarNotification from './SnackbarNotification';
 import Tags from './Tags';
 import Tour from './Tour';
-import Trace from './Trace';
 
 export default {
   Billing,
@@ -64,6 +63,5 @@ export default {
   Socket,
   SnackbarNotification,
   Tags,
-  Tour,
-  Trace
+  Tour
 };
