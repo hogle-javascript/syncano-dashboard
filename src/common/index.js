@@ -19,15 +19,12 @@ import Loading from './Loading';
 import Logo from './Logo';
 import Notification from './Notification';
 import Request from './Request';
-import Show from './Show';
 import Slider from './Slider';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
 import SelectFieldWrapper from './SelectFieldWrapper';
 import Sidebar from './Sidebar';
 import Socket from './Socket';
 import SnackbarNotification from './SnackbarNotification';
-import Tags from './Tags';
-import Tour from './Tour';
 
 export default {
   Billing,
@@ -51,13 +48,10 @@ export default {
   Logo,
   Notification,
   Request,
-  Show,
   Sidebar,
   Slider,
   SocialAuthButtonsList,
   SelectFieldWrapper,
   Socket,
-  SnackbarNotification,
-  Tags,
-  Tour
+  SnackbarNotification
 };

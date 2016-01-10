@@ -15,13 +15,19 @@ import Store from './SnippetStore';
 
 // Components
 import {FlatButton, Styles, Checkbox} from 'syncano-material-ui';
-import Common from '../../common';
-import Container from '../../common/Container';
-
-let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
+import {Show} from 'syncano-components';
+import {
+  Container,
+  Dialog,
+  Editor,
+  CharacterCounter,
+  Notification,
+  SnackbarNotification,
+  Fab,
+  Loading
+} from '../../common';
 
 export default React.createClass({
-
   displayName: 'SnippetEdit',
 
   mixins: [
@@ -37,7 +43,7 @@ export default React.createClass({
     HeaderMixin,
     UnsavedDataMixin,
     AutosaveMixin,
-    SnackbarNotificationMixin
+    SnackbarNotification.Mixin
   ],
 
   autosaveAttributeName: 'snippetSourceAutosave',
@@ -126,7 +132,7 @@ export default React.createClass({
 
   initDialogs() {
     return [{
-      dialog: Common.Dialog,
+      dialog: Dialog,
       params: {
         key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
@@ -177,24 +183,24 @@ export default React.createClass({
 
       return (
         <div>
-          <Common.Editor
+          <Editor
             ref="editorSource"
             mode={editorMode}
             theme="tomorrow"
             onChange={this.handleOnSourceChange}
             onLoad={this.clearAutosaveTimer}
             value={source}/>
-          <Common.CharacterCounter
+          <CharacterCounter
             charactersCountWarn={SnippetConstants.charactersCountWarn}
             characters={charactersCount}
             maxCharacters={SnippetConstants.maxCharactersCount}/>
-          <Common.Show if={this.getValidationMessages('source').length > 0}>
+          <Show if={this.getValidationMessages('source').length > 0}>
             <div style={styles.notification}>
-              <Common.Notification type="error">
+              <Notification type="error">
                 {this.getValidationMessages('source').join(' ')}
-              </Common.Notification>
+              </Notification>
             </div>
-          </Common.Show>
+          </Show>
           <Checkbox
             ref="autosaveCheckbox"
             name="autosaveCheckbox"
@@ -204,16 +210,16 @@ export default React.createClass({
             onCheck={this.saveCheckboxState}/>
 
           <div style={styles.tracePanel}>
-            <Common.Editor.Panel
+            <Editor.Panel
               ref="tracePanel"
               trace={this.state.lastTraceResult}
               loading={!this.state.lastTraceReady}/>
-            <Common.Show if={this.state.lastTraceDuration && this.state.lastTraceStatus}>
+            <Show if={this.state.lastTraceDuration && this.state.lastTraceStatus}>
               <div style={styles.durationSummary}>
                 Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
                 duration: {this.state.lastTraceDuration}ms
               </div>
-            </Common.Show>
+            </Show>
           </div>
         </div>
       );
@@ -226,16 +232,16 @@ export default React.createClass({
     return (
       <Container style={styles.container}>
         {this.getDialogs()}
-        <Common.Fab position="top">
-          <Common.Fab.TooltipItem
+        <Fab position="top">
+          <Fab.TooltipItem
             tooltip="Click here to execute Snippet"
             mini={true}
             onClick={this.handleRun}
             iconClassName="synicon-play"/>
-        </Common.Fab>
-        <Common.Loading show={this.state.isLoading}>
+        </Fab>
+        <Loading show={this.state.isLoading}>
           {this.renderEditor()}
-        </Common.Loading>
+        </Loading>
       </Container>
     );
   }
