@@ -6,10 +6,11 @@ import Actions from './SchedulesActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
 
 // Components
-import Common from '../../common';
-import MenuItem from '../../../node_modules/syncano-material-ui/lib/menus/menu-item';
+import {ColumnList, Color} from '../../common';
+import {MenuItem} from 'syncano-material-ui';
+import {Truncate} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -25,16 +26,16 @@ export default React.createClass({
     let snippetLabel = snippet ? snippet.label : '';
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         checked={item.checked}
         key={item.id}>
         <Column.CheckIcon
           id={item.id.toString()}
           icon="camera-timer"
-          background={Common.Color.getColorByName('blue', 'xlight')}
+          background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          <Common.Truncate text={item.label}/>
+          <Truncate text={item.label}/>
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
         <Column.Desc className="col-flex-1">{item.crontab}</Column.Desc>
@@ -65,7 +66,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Schedule Socket" />
         </Column.Menu>
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     );
   }
 });

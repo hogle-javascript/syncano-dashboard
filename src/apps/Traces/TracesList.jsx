@@ -9,10 +9,11 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import Store from './TracesStore';
 
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {Styles, Paper, FontIcon} from 'syncano-material-ui';
+import {ColumnList, Trace, Lists, Loading} from '../../common';
+import {Truncate} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default Radium(React.createClass({
 
@@ -68,19 +69,19 @@ export default Radium(React.createClass({
         icon: 'alert'
       },
       pending: {
-        background: MUI.Styles.Colors.lightBlue500,
+        background: Styles.Colors.lightBlue500,
         icon: 'timelapse'
       },
       success: {
-        background: MUI.Styles.Colors.green400,
+        background: Styles.Colors.green400,
         icon: 'check'
       },
       failure: {
-        background: MUI.Styles.Colors.red400,
+        background: Styles.Colors.red400,
         icon: 'alert'
       },
       timeout: {
-        background: MUI.Styles.Colors.red400,
+        background: Styles.Colors.red400,
         icon: 'alert'
       }
     }[item.status];
@@ -97,10 +98,10 @@ export default Radium(React.createClass({
       };
     }
     return (
-      <MUI.Paper
+      <Paper
         zDepth={1}
         style={styles.trace}>
-        <Common.ColumnList.Item
+        <ColumnList.Item
           checked={item.checked}
           key={item.id}
           id={item.id}
@@ -111,19 +112,19 @@ export default Radium(React.createClass({
             icon={status.icon}
             background={status.background}
             checkable={false}>
-            <Common.Truncate text={item.status}/>
+            <Truncate text={item.status}/>
           </Column.CheckIcon>
           <Column.ID>{item.id}</Column.ID>
           <Column.Desc>{duration}</Column.Desc>
           <Column.Date
             date={item.executed_at}
             ifInvalid={item.status}/>
-        </Common.ColumnList.Item>
+        </ColumnList.Item>
 
         <div style={styles.traceResult}>
-          <Common.Trace.Result result={item.result}/>
+          <Trace.Result result={item.result}/>
         </div>
-      </MUI.Paper>
+      </Paper>
     );
   },
 
@@ -156,7 +157,7 @@ export default Radium(React.createClass({
 
     return [
       <div style={styles.noTracesContainer}>
-        <MUI.FontIcon
+        <FontIcon
           style={styles.noTracesIcon}
           className={tracesFor[this.props.tracesFor].icon}/>
 
@@ -168,12 +169,12 @@ export default Radium(React.createClass({
   renderHeader() {
     if (this.state.items.length > 0) {
       return (
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader primary={true} columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
           <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Duration</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
-        </Common.ColumnList.Header>
+        </ColumnList.Header>
       );
     }
     return true;
@@ -181,14 +182,14 @@ export default Radium(React.createClass({
 
   render() {
     return (
-      <Common.Lists.Container>
-        <Common.Loading show={this.state.isLoading}>
+      <Lists.Container>
+        <Loading show={this.state.isLoading}>
           {this.renderHeader()}
-          <Common.Lists.List key="traces-list">
+          <Lists.List key="traces-list">
             {this.renderList()}
-          </Common.Lists.List>
-        </Common.Loading>
-      </Common.Lists.Container>
+          </Lists.List>
+        </Loading>
+      </Lists.Container>
     );
   }
 }));
