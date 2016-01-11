@@ -1,10 +1,8 @@
 import React from 'react';
 
-// Components
-import MUI from 'syncano-material-ui';
-import ColumnList from '../ColumnList';
+import {Avatar, IconButton} from 'syncano-material-ui';
+import {ColumnList} from '../../common';
 
-// Shortcut
 let Column = ColumnList.Column;
 
 export default React.createClass({
@@ -26,9 +24,9 @@ export default React.createClass({
         handleClick={this.handleItemClick}>
         <Column.Desc className="col-xs-5 col-md-5">
           <div style={{marginLeft: 10}}>
-            <MUI.Avatar style={{fontSize: '1rem'}}>
+            <Avatar style={{fontSize: '1rem'}}>
               {item.number}
-            </MUI.Avatar>
+            </Avatar>
           </div>
         </Column.Desc>
 
@@ -43,7 +41,7 @@ export default React.createClass({
         </Column.ID>
 
         <Column.ID className="col-xs-4 col-md-4">
-          <MUI.IconButton
+          <IconButton
             iconClassName="synicon-cloud-download"
             tooltip="Download this Solution version file"
             onClick={this.handleDownloadVersion.bind(this, item.data.url)}
@@ -51,7 +49,7 @@ export default React.createClass({
         </Column.ID>
 
         <Column.ID className="col-xs-4 col-md-4">
-          <MUI.IconButton
+          <IconButton
             iconClassName="synicon-download"
             tooltip="Install this Solution version"
             onClick={this.props.onInstallClick.bind(null, item.id)}

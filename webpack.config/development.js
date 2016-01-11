@@ -18,7 +18,7 @@ config.module.loaders[1].loaders = [
 config.module.preLoaders.push({
   test: /\.js(|x)$/,
   loader: 'eslint-loader',
-  exclude: /node_modules/
+  exclude: [/node_modules/, /syncano-components/]
 });
 
 config.eslint = {

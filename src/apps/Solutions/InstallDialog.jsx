@@ -12,7 +12,8 @@ import Actions from './InstallDialogActions';
 
 // Components
 import {TextField, FlatButton} from 'syncano-material-ui' ;
-import {SelectFieldWrapper, Notification, Loading, Dialog, Show} from '../../common';
+import {Show} from 'syncano-components';
+import {SelectFieldWrapper, Notification, Loading, Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'SolutionInstallDialog',

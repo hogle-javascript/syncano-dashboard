@@ -1,18 +1,16 @@
 import React from 'react';
 import {State, Navigation} from 'react-router';
 
-// Stores and Actions
 import Actions from './SnippetsActions';
 import Store from './SnippetsStore';
 
-// Components
-import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import {ColumnList} from '../../common';
+import {MenuItem} from 'syncano-material-ui';
+import {Truncate} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'SnippetsListItem',
 
   mixins: [
@@ -32,7 +30,7 @@ export default React.createClass({
     let runtime = Store.getRuntimeColorIcon(item.runtime_name) || {};
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         checked={item.checked}
         key={item.id}
         id={item.id}>
@@ -42,7 +40,7 @@ export default React.createClass({
           background={runtime.color}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          <Common.Truncate
+          <Truncate
             onClick={this.handleItemClick.bind(null, item.id)}
             text={item.label}
             style={{cursor: 'pointer'}}/>
@@ -60,7 +58,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Snippet" />
         </Column.Menu>
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     );
   }
 });
