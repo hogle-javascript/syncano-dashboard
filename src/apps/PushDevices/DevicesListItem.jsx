@@ -2,13 +2,13 @@ import React from 'react';
 import {State} from 'react-router';
 
 // Components
-import Common from '../../common';
-import MenuItem from '../../../node_modules/syncano-material-ui/lib/menus/menu-item';
+import {MenuItem} from 'syncano-material-ui';
+import {Color} from 'syncano-components';
+import {ColumnList} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'DeviceListItem',
 
   mixins: [
@@ -20,7 +20,7 @@ export default React.createClass({
     let user = item.user_id ? item.user_id : 'no user';
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         key={item.device_id}
         checked={item.checked}>
         <Column.CheckIcon
@@ -28,10 +28,10 @@ export default React.createClass({
           icon={this.props.icon}
           checked={item.checked}
           keyName="registration_id"
-          background={Common.Color.getColorByName('blue')}
+          background={Color.getColorByName('blue')}
           handleIconClick={this.props.onIconClick}
           className="col-xs-14">
-          <Common.ColumnList.Link
+          <ColumnList.Link
             name={item.label}
             addBaseUrl={false}
             link={item.device_id}
@@ -56,7 +56,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Device"/>
         </Column.Menu>
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     );
   }
 });

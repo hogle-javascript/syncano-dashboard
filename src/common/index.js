@@ -1,5 +1,4 @@
 import Clipboard from './Clipboard';
-import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
 import ColumnList from './ColumnList';
 import Container from './Container';
@@ -24,9 +23,7 @@ import Socket from './Socket';
 import SnackbarNotification from './SnackbarNotification';
 
 export default {
-  CheckIcon,
   Clipboard,
-  Color,
   ColorIconPicker,
   ColumnList,
   Container,
