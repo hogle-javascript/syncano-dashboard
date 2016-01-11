@@ -103,7 +103,7 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation(data) {
-    SessionStore.setWelcomeDialog();
+    SessionStore.showWelcomeDialog();
     SessionStore.setSignUpMode();
 
     Actions.passwordSignUp({

@@ -47,9 +47,12 @@ export default React.createClass({
   },
 
   transitionToFirstInstance() {
-    let firstInstance = Store.getMyInstances().length > 0 ? Store.getMyInstances()[0].name : null;
+    let firstInstance = Store.getMyInstances()[0] ? Store.getMyInstances()[0].name : null;
 
-    this.transitionTo('instance', {instanceName: firstInstance});
+    if (firstInstance) {
+      this.transitionTo('instance', {instanceName: firstInstance});
+    }
+    SessionStore.hideWelcomeDialog();
   },
 
   render() {

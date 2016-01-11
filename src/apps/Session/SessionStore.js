@@ -71,7 +71,7 @@ export default Reflux.createStore({
     return this.isWelcomeDialogVisible;
   },
 
-  setWelcomeDialog() {
+  showWelcomeDialog() {
     this.isWelcomeDialogVisible = true;
   },
 

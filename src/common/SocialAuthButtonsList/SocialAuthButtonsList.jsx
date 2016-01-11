@@ -50,7 +50,7 @@ export default Radium(React.createClass({
 
   handleSocialSignup(network) {
     if (this.isActive('signup')) {
-      SessionStore.setWelcomeDialog();
+      SessionStore.showWelcomeDialog();
     }
 
     SessionStore.setSignUpMode();

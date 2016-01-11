@@ -1,8 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
 
-import SessionStore from '../Session/SessionStore';
-
 import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
@@ -62,7 +60,6 @@ export default Radium(React.createClass({
   },
 
   handleCloseDialog() {
-    SessionStore.hideWelcomeDialog();
     this.setState({visible: false});
     this.props.getStarted();
   },
