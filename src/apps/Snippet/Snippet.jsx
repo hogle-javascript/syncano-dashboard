@@ -50,6 +50,8 @@ export default React.createClass({
         backgroundColor: 'transparent'
       },
       tabs: {
+        margin: '0 auto',
+        width: '90%',
         padding: '0 250px',
         borderBottom: '1px solid #DDDDDD'
       },
