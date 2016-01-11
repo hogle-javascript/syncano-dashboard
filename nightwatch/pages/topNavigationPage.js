@@ -1,7 +1,4 @@
-import commonCommands from '../commands/commonCommands';
-
 export default {
-  commands: [commonCommands],
   url: 'https://localhost:8080/#/instances',
   elements: {
     syncanoLogo: {

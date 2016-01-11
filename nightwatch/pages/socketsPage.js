@@ -1,10 +1,8 @@
 import utils from '../utils';
 import globals from '../globals';
-import commonCommands from '../commands/commonCommands';
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/sockets`,
-  commands: [commonCommands],
   elements: {
     codeBoxSocketDropDown: {
       selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../../..//button`,

@@ -1,6 +1,5 @@
 import utils from '../utils';
 import globals from '../globals';
-import commonCommands from '../commands/commonCommands';
 
 const apiKeysCommands = {
   waitForModalToClose() {
@@ -11,7 +10,7 @@ const apiKeysCommands = {
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/api_keys`,
-  commands: [commonCommands, apiKeysCommands],
+  commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
       selector: '//span[@class="synicon-plus-circle-outline"]',

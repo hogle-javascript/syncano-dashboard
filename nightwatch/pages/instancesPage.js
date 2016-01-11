@@ -1,4 +1,3 @@
-import commonCommands from '../commands/commonCommands';
 const instancesCommands = {
   clickFAB() {
     return this.waitForElementVisible('@fab')
@@ -19,7 +18,7 @@ const instancesCommands = {
 
 export default {
   url: 'https://localhost:8080/#/instances',
-  commands: [commonCommands, instancesCommands],
+  commands: [instancesCommands],
   elements: {
     instanceDropdown: {
       selector: '(//span[@class="synicon-dots-vertical"])[2]',

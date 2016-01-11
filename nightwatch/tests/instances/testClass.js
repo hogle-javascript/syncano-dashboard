@@ -65,7 +65,7 @@ export default {
   'Test Admin cannot delete user_profile class': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage.clickDropdown('@userClassDropDown', client);
+    classesPage.clickElement('@userClassDropDown', client);
     classesPage.waitForElementVisible('@inactiveDeleteButton');
 
   // assert that Delete Class element is greyed out
