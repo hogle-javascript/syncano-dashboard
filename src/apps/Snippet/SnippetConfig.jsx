@@ -294,25 +294,6 @@ export default Radium(React.createClass({
     );
   },
 
-  renderButtons() {
-    let styles = this.getStyles();
-
-    return (
-      <div
-        className="row align-right"
-        style={styles.buttonsSection}>
-        <FlatButton
-          label="Cancel"
-          onClick={this.handleCancelChanges}/>
-        <RaisedButton
-          label="Save"
-          style={styles.saveButton}
-          secondary={true}
-          onTouchTap={this.handleFormValidation}/>
-      </div>
-    );
-  },
-
   render() {
     let styles = this.getStyles();
 
@@ -325,7 +306,18 @@ export default Radium(React.createClass({
         {this.getDialogs()}
         {this.renderFields()}
         {this.renderNewFiledSection()}
-        {this.renderButtons()}
+        <div
+          className="row align-right"
+          style={styles.buttonsSection}>
+          <FlatButton
+            label="Cancel"
+            onClick={this.handleCancelChanges}/>
+          <RaisedButton
+            label="Save"
+            style={styles.saveButton}
+            secondary={true}
+            onTouchTap={this.handleFormValidation}/>
+        </div>
         <Common.Show if={this.getValidationMessages('config').length > 0}>
           <div style={styles.notification}>
             <Common.Notification type="error">

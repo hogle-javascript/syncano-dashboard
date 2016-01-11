@@ -9,7 +9,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import Store from './SnippetStore';
 
 import {Tabs, Tab} from 'syncano-material-ui';
-import {InnerToolbar} from '../../common';
+import {InnerToolbar, Container} from '../../common';
 
 let RouteHandler = Router.RouteHandler;
 
@@ -150,10 +150,10 @@ export default React.createClass({
           forceBackFallback={true}
           backButtonTooltip="Go back to Snippets list"/>
 
-        <div style={{margin: '15px auto', width: '100%'}}>
+        <Container>
           {this.renderTabs()}
           <RouteHandler/>
-        </div>
+        </Container>
       </div>
     );
   }
