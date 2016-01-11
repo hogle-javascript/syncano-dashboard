@@ -2,7 +2,8 @@ import React from 'react';
 
 import {DialogMixin, DialogsMixin} from '../../mixins';
 
-import {ColumnList, Container, Lists, Loading, Dialog} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Container, Lists, Loading, Dialog} from '../../common';
 import ListItem from './DevicesListItem';
 
 let Column = ColumnList.Column;

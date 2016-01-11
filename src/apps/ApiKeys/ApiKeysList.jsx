@@ -11,12 +11,12 @@ import Store from './ApiKeysStore';
 
 // Components
 import ListItem from './ApiKeysListItem';
-import {Dialog, ColumnList, Lists} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'ApiKeysList',
 
   mixins: [

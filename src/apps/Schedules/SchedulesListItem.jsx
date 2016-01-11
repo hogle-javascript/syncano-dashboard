@@ -6,14 +6,12 @@ import Actions from './SchedulesActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
 
 // Components
-import {ColumnList, Color} from '../../common';
 import {MenuItem} from 'syncano-material-ui';
-import {Truncate} from 'syncano-components';
+import {ColumnList, Color, Truncate} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'SchedulesListItem',
 
   mixins: [

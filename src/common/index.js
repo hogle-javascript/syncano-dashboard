@@ -1,6 +1,5 @@
 import Clipboard from './Clipboard';
 import ColorIconPicker from './ColorIconPicker';
-import ColumnList from './ColumnList';
 import Container from './Container';
 import ConversionPixel from './ConversionPixel';
 import CreditCard from './CreditCard';
@@ -25,7 +24,6 @@ import SnackbarNotification from './SnackbarNotification';
 export default {
   Clipboard,
   ColorIconPicker,
-  ColumnList,
   Container,
   ConversionPixel,
   CreditCard,

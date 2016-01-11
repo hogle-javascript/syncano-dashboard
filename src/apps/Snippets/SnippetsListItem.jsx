@@ -4,9 +4,8 @@ import {State, Navigation} from 'react-router';
 import Actions from './SnippetsActions';
 import Store from './SnippetsStore';
 
-import {ColumnList} from '../../common';
 import {MenuItem} from 'syncano-material-ui';
-import {Truncate} from 'syncano-components';
+import {ColumnList, Truncate} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
