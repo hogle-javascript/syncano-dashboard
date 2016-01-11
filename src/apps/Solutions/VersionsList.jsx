@@ -2,8 +2,7 @@ import React from 'react';
 
 // Components
 import ListItem from './VersionsListItem';
-import ColumnList from '../ColumnList';
-import Lists from '../Lists';
+import {ColumnList, Lists} from '../../common';
 
 // Shortcut
 let Column = ColumnList.Column;

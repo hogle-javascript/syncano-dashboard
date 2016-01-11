@@ -1,7 +1,6 @@
 import React from 'react' ;
 import Reflux from 'reflux';
 import Router from 'react-router';
-import MUI from 'syncano-material-ui' ;
 
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
@@ -12,10 +11,11 @@ import Store from './InstallDialogStore';
 import Actions from './InstallDialogActions';
 
 // Components
-import Common from '../../common';
+import {TextField, FlatButton} from 'syncano-material-ui' ;
+import {Show} from 'syncano-components';
+import {SelectFieldWrapper, Notification, Loading, Dialog} from '../../common';
 
 export default React.createClass({
-
   displayName: 'SolutionInstallDialog',
 
   mixins: [
@@ -82,18 +82,18 @@ export default React.createClass({
       }
     });
     if (messages.length > 0) {
-      return <Common.Notification type='error'>{messages.join(' ')}</Common.Notification>;
+      return <Notification type='error'>{messages.join(' ')}</Notification>;
     }
   },
 
   renderInstanceField() {
     if (this.state.instances === null) {
-      return <Common.Loading />;
+      return <Loading />;
     }
 
     if (this.state.instances instanceof Array && this.state.instances.length < 2) {
       return (
-        <MUI.TextField
+        <TextField
           ref="instance"
           name="instance"
           fullWidth={true}
@@ -105,28 +105,25 @@ export default React.createClass({
     }
 
     return (
-      <MUI.SelectField
-        ref='instance'
-        name='instance'
-        fullWidth={true}
-        valueLink={this.linkState('instance')}
-        valueMember='payload'
-        displayMember='text'
+      <SelectFieldWrapper
+        name="instance"
+        options={Store.getInstancesDropdown()}
+        value={this.state.instance}
         floatingLabelText='Instances'
-        errorText={this.getValidationMessages('instance').join(' ')}
-        menuItems={Store.getInstancesDropdown()}/>
+        onChange={this.setSelectFieldValue.bind(null, 'instance')}
+        errorText={this.getValidationMessages('instance').join(' ')}/>
     );
   },
 
   render() {
     let title = 'Install a Solution';
     let dialogCustomActions = [
-      <MUI.FlatButton
+      <FlatButton
         ref='cancel'
         key='cancel'
         label='Cancel'
         onTouchTap={this.handleCancel}/>,
-      <MUI.FlatButton
+      <FlatButton
         ref='submit'
         key='confirm'
         label='Confirm'
@@ -135,7 +132,7 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
+      <Dialog
         key='dialog'
         ref="dialog"
         title={title}
@@ -153,20 +150,16 @@ export default React.createClass({
             </div>
           </div>
 
-          <Common.Show if={!this.state.hideVersionPicker}>
-            <MUI.SelectField
-              ref='version'
-              name='version'
-              fullWidth={true}
-              valueLink={this.linkState('version')}
-              valueMember='payload'
-              displayMember='text'
-              floatingLabelText='Version'
-              errorText={this.getValidationMessages('version').join(' ')}
-              menuItems={Store.getVersionsDropdown()}/>
-          </Common.Show>
+          <Show if={!this.state.hideVersionPicker}>
+            <SelectFieldWrapper
+              name="version"
+              options={Store.getVersionsDropdown()}
+              value={this.state.version}
+              onChange={this.setSelectFieldValue.bind(null, 'version')}
+              errorText={this.getValidationMessages('version').join(' ')}/>
+          </Show>
         </div>
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });

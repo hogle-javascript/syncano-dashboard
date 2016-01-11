@@ -5,21 +5,21 @@ import Reflux from 'reflux';
 import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
-import DataViewsActions from './DataViewsActions';
-import DataViewDialogStore from './DataViewDialogStore';
+import Actions from './DataViewsActions';
+import Store from './DataViewDialogStore';
 import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, FlatButton, Toggle, Checkbox} from 'syncano-material-ui';
+import {Show} from 'syncano-components';
+import {SelectFieldWrapper, Dialog} from '../../common';
 
 export default React.createClass({
-
   displayName: 'DataViewDialog',
 
   mixins: [
-    Reflux.connect(DataViewDialogStore),
+    Reflux.connect(Store),
     DialogMixin,
     FormMixin
   ],
@@ -46,7 +46,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    DataViewsActions.createDataView({
+    Actions.createDataView({
       name: this.state.name,
       class: this.state.class,
       description: this.state.description,
@@ -58,7 +58,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    DataViewsActions.updateDataView(
+    Actions.updateDataView(
       this.state.name, {
         class: this.state.class,
         description: this.state.description,
@@ -101,18 +101,18 @@ export default React.createClass({
     console.info('DataViewDialog::renderFields', this.state.class);
 
     let fields = [
-      <div className='row' style={{marginBottom: 20}}>
-        <div className='col-flex-1'>Class Fields</div>
-        <div className='col-xs-8'>Expand</div>
+      <div className="row vp-3-b">
+        <div className="col-flex-1">Class Fields</div>
+        <div className="col-xs-8">Expand</div>
       </div>
     ];
 
     if (this.state.class) {
       return fields.concat(ClassesStore.getClassFields(this.state.class).map((field) => {
         return (
-          <div className='row'>
-            <div className='col-flex-1'>
-              <MUI.Toggle
+          <div className="row">
+            <div className="col-flex-1">
+              <Toggle
                 key={field.name}
                 name={field.name}
                 value={field.name}
@@ -121,15 +121,15 @@ export default React.createClass({
                 onToggle={this.handleToggle.bind(this, 'showFields', field.name)}
                 />
             </div>
-            <div className='col-xs-8'>
-              <Common.Show if={field.type === 'reference'}>
-                <MUI.Checkbox
+            <div className="col-xs-8">
+              <Show if={field.type === 'reference'}>
+                <Checkbox
                   name="expand"
                   defaultChecked={this.isEnabled(this.state.expand, field.name)}
                   disabled={!this.isEnabled(this.state.fields, field.name)}
                   onCheck={this.handleToggle.bind(this, 'expandFields', field.name)}
                   />
-              </Common.Show>
+              </Show>
             </div>
           </div>
         );
@@ -144,42 +144,39 @@ export default React.createClass({
 
     if (orderFields.length > 0) {
       orderField = (
-        <MUI.SelectField
-          ref="order_by"
+        <SelectFieldWrapper
           name="order_by"
           floatingLabelText="Order by"
-          fullWidth={true}
-          valueLink={this.linkState('order_by')}
-          errorText={this.getValidationMessages('order_by').join(' ')}
-          valueMember="payload"
-          displayMember="text"
-          menuItems={orderFields} />
+          options={orderFields}
+          value={this.state.order_by}
+          onChange={this.setSelectFieldValue.bind(null, 'order_by')}
+          errorText={this.getValidationMessages('order_by').join(' ')}/>
       );
     }
 
     return [
       <div>Response options</div>,
       orderField,
-      <MUI.TextField
-        ref='page_size'
-        name='page_size'
+      <TextField
+        ref="page_size"
+        name="page_size"
         fullWidth={true}
         valueLink={this.linkState('page_size')}
         errorText={this.getValidationMessages('page_size').join(' ')}
-        hintText='Number'
-        floatingLabelText='Number of records in data set'/>
+        hintText="Number"
+        floatingLabelText="Number of records in data set"/>
     ];
   },
 
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -196,9 +193,9 @@ export default React.createClass({
     }
 
     return (
-      <Common.Dialog
-        key='dialog'
-        ref='dialog'
+      <Dialog
+        key="dialog"
+        ref="dialog"
         title={`${title} a Data Socket`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
@@ -206,44 +203,40 @@ export default React.createClass({
         modal={true}>
         {this.renderFormNotifications()}
         <div>Main settings</div>
-        <div className='row'>
-          <div className='col-xs-12'>
-            <MUI.TextField
-              ref='name'
-              name='name'
+        <div className="row">
+          <div className="col-xs-12">
+            <TextField
+              ref="name"
+              name="name"
               fullWidth={true}
               disabled={this.hasEditMode()}
               valueLink={this.linkState('name')}
               errorText={this.getValidationMessages('name').join(' ')}
-              hintText='Name of the Socket'
-              floatingLabelText='Socket'/>
+              hintText="Name of the Socket"
+              floatingLabelText="Socket"/>
           </div>
-          <div className='col-flex-1' style={{paddingLeft: 15}}>
-            <MUI.TextField
-              ref='description'
-              name='description'
+          <div className="col-flex-1" style={{paddingLeft: 15}}>
+            <TextField
+              ref="description"
+              name="description"
               fullWidth={true}
               valueLink={this.linkState('description')}
               errorText={this.getValidationMessages('description').join(' ')}
-              hintText='Description of the Socket'
-              floatingLabelText='Description'/>
+              hintText="Description of the Socket"
+              floatingLabelText="Description"/>
           </div>
         </div>
-        <div className='row'>
-          <div className='col-flex-1'>
-            <MUI.SelectField
-              ref="class"
+        <div className="row vm-4-b">
+          <div className="col-flex-1">
+            <SelectFieldWrapper
               name="class"
-              fullWidth={true}
-              floatingLabelText="Class"
-              valueLink={this.linkState('class')}
-              errorText={this.getValidationMessages('class').join(' ')}
-              valueMember="payload"
-              displayMember="text"
-              menuItems={this.state.classes}/>
+              options={this.state.classes}
+              value={this.state.class}
+              onChange={this.setSelectFieldValue.bind(null, 'class')}
+              errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
         </div>
-        <div className="row" style={{marginTop: 30}}>
+        <div className="row">
           <div className="col-flex-1">
             {fields}
           </div>
@@ -251,7 +244,7 @@ export default React.createClass({
             {options}
           </div>
         </div>
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });

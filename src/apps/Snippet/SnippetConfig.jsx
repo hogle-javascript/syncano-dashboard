@@ -11,13 +11,10 @@ import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
 import {FlatButton, Utils, TextField, IconButton, RaisedButton} from 'syncano-material-ui';
-import Common from '../../common';
-import Container from '../../common/Container/Container';
-
-let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
+import {Container, Dialog, Notification, SnackbarNotification} from '../../common';
+import {Show} from 'syncano-components';
 
 export default Radium(React.createClass({
-
   displayName: 'SnippetConfig',
 
   contextTypes: {
@@ -28,7 +25,7 @@ export default Radium(React.createClass({
     Reflux.connect(Store),
     Router.Navigation,
 
-    SnackbarNotificationMixin,
+    SnackbarNotification.Mixin,
     UnsavedDataMixin,
     MousetrapMixin,
     DialogMixin,
@@ -200,7 +197,7 @@ export default Radium(React.createClass({
 
   initDialogs() {
     return [{
-      dialog: Common.Dialog,
+      dialog: Dialog,
       params: {
         key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
@@ -318,13 +315,13 @@ export default Radium(React.createClass({
             secondary={true}
             onTouchTap={this.handleFormValidation}/>
         </div>
-        <Common.Show if={this.getValidationMessages('config').length > 0}>
+        <Show if={this.getValidationMessages('config').length > 0}>
           <div style={styles.notification}>
-            <Common.Notification type="error">
+            <Notification type="error">
               {this.getValidationMessages('config').join(' ')}
-            </Common.Notification>
+            </Notification>
           </div>
-        </Common.Show>
+        </Show>
       </Container>
     );
   }
