@@ -9,7 +9,7 @@ import {DialogMixin, FormMixin} from '../../mixins';
 import {FlatButton, TextField, Toggle} from 'syncano-material-ui';
 import {Dialog, Loading} from '../../common';
 
-export default function(displayName, Store, Actions) {
+export default (displayName, Store, Actions) => {
   return React.createClass({
 
     displayName,
@@ -130,4 +130,4 @@ export default function(displayName, Store, Actions) {
       );
     }
   });
-}
+};
