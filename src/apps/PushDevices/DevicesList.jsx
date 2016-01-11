@@ -2,7 +2,7 @@ import React from 'react';
 
 import {DialogMixin, DialogsMixin} from '../../mixins';
 
-import {ColumnList, Container, Lists, Loading, Dialog} from '../../common';
+import {ColumnList, Container, Lists, Dialog} from '../../common';
 import ListItem from './DevicesListItem';
 
 let Column = ColumnList.Column;
@@ -87,11 +87,9 @@ export default React.createClass({
                 onTouchTap={this.showDialog.bind(null, 'deleteDeviceDialog')}/>
             </Lists.Menu>
           </ColumnList.Header>
-          <Loading show={this.props.isLoading}>
             <Lists.List
               {...this.props}
               renderItem={this.renderItem}/>
-          </Loading>
         </Lists.Container>
       </div>
     );

@@ -33,18 +33,18 @@ export default Reflux.createStore({
   },
 
   setDevices(devices) {
-    console.debug('PushNotificationsStore::setDevices');
+    console.debug('APNSDevicesStore::setDevices');
     this.data.items = devices;
     this.trigger(this.data);
   },
 
   refreshData() {
-    console.debug('PushNotificationsStore::refreshData');
+    console.debug('APNSDevicesStore::refreshData');
     Actions.fetchDevices();
   },
 
   onFetchDevicesCompleted(devices) {
-    console.debug('PushNotificationsStore::onFetchDevicesCompleted');
+    console.debug('APNSDevicesStore::onFetchDevicesCompleted');
     let items = this.saveListFromSyncano(devices);
 
     Actions.setDevices(items);
