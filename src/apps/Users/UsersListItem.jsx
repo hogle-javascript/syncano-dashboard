@@ -5,10 +5,11 @@ import Actions from './UsersActions';
 
 // Components
 import UserInfo from './UserInfo';
-import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import {ColumnList, Color} from '../../common';
+import {MenuItem} from 'syncano-material-ui';
+import {Truncate} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -74,16 +75,16 @@ export default React.createClass({
 
     return (
       <div>
-        <Common.ColumnList.Item
+        <ColumnList.Item
           checked={item.checked}
           key={item.id}>
           <Column.CheckIcon
             id={item.id.toString()}
             icon='account'
-            background={Common.Color.getColorByName('blue', 'xlight')}
+            background={Color.getColorByName('blue', 'xlight')}
             checked={item.checked}
             handleIconClick={this.props.onIconClick}>
-            <Common.Truncate
+            <Truncate
               onClick={this.toggleUserInfo}
               style={styles.showInfoItem}
               text={item.username}/>
@@ -102,8 +103,7 @@ export default React.createClass({
               onTouchTap={this.props.showDeleteDialog}
               primaryText="Delete a User"/>
           </Column.Menu>
-        </Common.ColumnList.Item>
-
+        </ColumnList.Item>
         <div>
           <UserInfo
             visible={this.state.userInfoVisible}

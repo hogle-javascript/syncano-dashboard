@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import FormMixin from '../../mixins/FormMixin';
+import {FormMixin} from '../../mixins';
 
 // Stores and Actions
 import Store from './AuthStore';

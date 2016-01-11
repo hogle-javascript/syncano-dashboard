@@ -4,27 +4,26 @@ import Dropzone from 'react-dropzone';
 import Filesize from 'filesize';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
-import DataObjectsActions from './DataObjectsActions';
-import DataObjectDialogStore from './DataObjectDialogStore';
+import Actions from './DataObjectsActions';
+import Store from './DataObjectDialogStore';
 import DataObjectsStore from './DataObjectsStore';
 import ChannelsActions from '../Channels/ChannelsActions';
 import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, FlatButton, IconButton, DatePicker, TimePicker} from 'syncano-material-ui';
+import {SelectFieldWrapper, Dialog, Loading} from '../../common';
 
 export default React.createClass({
-
   displayName: 'DataObjectDialog',
 
   mixins: [
-    Reflux.connect(DataObjectDialogStore),
-    Mixins.Form,
-    Mixins.Dialog
+    Reflux.connect(Store),
+    DialogMixin,
+    FormMixin
   ],
 
   validatorConstraints() {
@@ -243,7 +242,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    DataObjectsActions.createDataObject({
+    Actions.createDataObject({
       className: DataObjectsStore.getCurrentClassName(),
       params: this.getParams(),
       fileFields: this.getFileFields()
@@ -251,7 +250,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    DataObjectsActions.updateDataObject({
+    Actions.updateDataObject({
       className: DataObjectsStore.getCurrentClassName(),
       params: this.getParams(),
       fileFields: this.getFileFields()
@@ -343,7 +342,7 @@ export default React.createClass({
       if (this.hasEditMode()) {
         return (
           <div key="edit-fields">
-            <MUI.TextField
+            <TextField
               ref="field-channel"
               name="field-channel"
               style={styles.dialogField}
@@ -351,7 +350,7 @@ export default React.createClass({
               disabled={true}
               value={this.state.channel || 'no channel'}
               floatingLabelText="Channel"/>
-            <MUI.TextField
+            <TextField
               ref="field-channel_room"
               name="field-channel_room"
               style={styles.dialogField}
@@ -364,18 +363,15 @@ export default React.createClass({
       }
       return (
         <div key="add-fields">
-          <MUI.SelectField
-            ref="field-channel"
+          <SelectFieldWrapper
             name="field-channel"
-            style={styles.dialogField}
-            fullWidth={true}
-            valueMember="payload"
-            displayMember="text"
             floatingLabelText="Channel"
-            valueLink={this.linkState('channel')}
-            errorText={this.getValidationMessages('channel').join(' ')}
-            menuItems={this.state.channels}/>
-          <MUI.TextField
+            options={this.state.channels}
+            value={this.state.channel}
+            style={styles.dialogField}
+            onChange={this.setSelectFieldValue.bind(null, 'channel')}
+            errorText={this.getValidationMessages('channel').join(' ')}/>
+          <TextField
             ref="field-channel_room"
             name="field-channel_room"
             style={styles.dialogField}
@@ -395,7 +391,7 @@ export default React.createClass({
         style={styles.buildInFieldsContainer}>
         <div className="col-flex-1">
           <div>Built-in fields</div>
-          <MUI.TextField
+          <TextField
             ref="field-owner"
             name="owner"
             style={styles.dialogField}
@@ -404,19 +400,16 @@ export default React.createClass({
             errorText={this.getValidationMessages('owner').join(' ')}
             hintText="User ID"
             floatingLabelText="Owner"/>
-          <MUI.SelectField
-            ref="group"
+          <SelectFieldWrapper
             name="group"
-            style={styles.dialogField}
-            fullWidth={true}
+            options={this.getGroups()}
+            value={this.state.group}
+            floatingLabelText="Group (ID)"
             labelStyle={styles.groupDropdownLabel}
             menuItemStyle={styles.groupMenuItem}
-            valueMember="payload"
-            displayMember="text"
-            valueLink={this.linkState('group')}
-            floatingLabelText="Group (ID)"
-            errorText={this.getValidationMessages('group').join(' ')}
-            menuItems={this.getGroups()}/>
+            style={styles.dialogField}
+            onChange={this.setSelectFieldValue.bind(null, 'group')}
+            errorText={this.getValidationMessages('group').join(' ')}/>
           {renderChannelFields()}
         </div>
 
@@ -424,39 +417,30 @@ export default React.createClass({
           className="col-flex-1"
           style={styles.customFieldsContainer}>
           <div>Permissions</div>
-          <MUI.SelectField
-            ref="field-owner_permissions"
-            name="field-owner_permissions"
-            style={styles.dialogField}
-            fullWidth={true}
-            valueMember="payload"
-            displayMember="text"
-            valueLink={this.linkState('owner_permissions')}
+          <SelectFieldWrapper
+            name="owner_permissions"
             floatingLabelText="Owner Permissions"
-            errorText={this.getValidationMessages('owner_permissions').join(' ')}
-            menuItems={permissions}/>
-          <MUI.SelectField
-            ref="field-group_permissions"
-            name="field-group_permissions"
+            options={permissions}
             style={styles.dialogField}
-            fullWidth={true}
-            valueMember="payload"
-            displayMember="text"
-            valueLink={this.linkState('group_permissions')}
+            value={this.state.owner_permissions}
+            onChange={this.setSelectFieldValue.bind(null, 'owner_permissions')}
+            errorText={this.getValidationMessages('owner_permissions').join(' ')}/>
+          <SelectFieldWrapper
+            name="group_permissions"
             floatingLabelText="Group Permissions"
-            errorText={this.getValidationMessages('group_permissions').join(' ')}
-            menuItems={permissions}/>
-          <MUI.SelectField
-            ref="field-other_permissions"
-            name="field-other_permissions"
+            options={permissions}
             style={styles.dialogField}
-            fullWidth={true}
-            valueMember="payload"
-            displayMember="text"
-            valueLink={this.linkState('other_permissions')}
+            value={this.state.group_permissions}
+            onChange={this.setSelectFieldValue.bind(null, 'group_permissions')}
+            errorText={this.getValidationMessages('group_permissions').join(' ')}/>
+          <SelectFieldWrapper
+            name="other_permissions"
             floatingLabelText="Other Permissions"
-            errorText={this.getValidationMessages('other_permissions').join(' ')}
-            menuItems={permissions}/>
+            options={permissions}
+            style={styles.dialogField}
+            value={this.state.other_permissions}
+            onChange={this.setSelectFieldValue.bind(null, 'other_permissions')}
+            errorText={this.getValidationMessages('other_permissions').join(' ')}/>
         </div>
       </div>
     );
@@ -500,18 +484,14 @@ export default React.createClass({
           ];
 
           return (
-            <MUI.SelectField
-              key={`field-${item.name}`}
-              ref={`field-${item.name}`}
+            <SelectFieldWrapper
               name={item.name}
-              valueLink={this.linkState(item.name)}
-              style={styles.dialogField}
-              fullWidth={true}
-              valueMember="payload"
-              displayMember="text"
+              options={menuItems}
               floatingLabelText={`Value of ${item.name}`}
-              errorText={this.getValidationMessages(item.name).join(' ')}
-              menuItems={menuItems}/>
+              value={this.state[item.name]}
+              style={styles.dialogField}
+              onChange={this.setSelectFieldValue.bind(null, item.name)}
+              errorText={this.getValidationMessages(item.name).join(' ')}/>
           );
         }
 
@@ -533,7 +513,7 @@ export default React.createClass({
               </div>
               <div className="row">
                 <div className="col-flex-1">
-                  <MUI.DatePicker
+                  <DatePicker
                     errorText={this.getValidationMessages(`fielddate-${item.name}`).join(' ')}
                     ref={`fielddate-${item.name}`}
                     textFieldStyle={styles.dateField}
@@ -541,14 +521,14 @@ export default React.createClass({
                     defaultDate={value}/>
                 </div>
                 <div className="col-flex-1">
-                  <MUI.TimePicker
+                  <TimePicker
                     errorText={this.getValidationMessages(`fieldtime-${item.name}`).join(' ')}
                     ref={`fieldtime-${item.name}`}
                     textFieldStyle={styles.dateField}
                     defaultTime={value}/>
                 </div>
                 <div className="col-xs-5">
-                  <MUI.IconButton
+                  <IconButton
                     iconClassName="synicon-close"
                     tooltip={`Clear ${item.name} field`}
                     tooltipPosition="bottom-left"
@@ -571,13 +551,13 @@ export default React.createClass({
                     className="row"
                     style={styles.fileButtonsContainer}>
                     <div className="col-xs-8">
-                      <MUI.IconButton
+                      <IconButton
                         iconClassName="synicon-download"
                         onClick={this.handleFileOnClick.bind(this, url)}
                         tooltip={url}/>
                     </div>
                     <div className="col-flex-1">
-                      <MUI.FlatButton
+                      <FlatButton
                         style={styles.removeFileButton}
                         label="Remove"
                         secondary={true}
@@ -592,7 +572,7 @@ export default React.createClass({
         }
 
         return (
-          <MUI.TextField
+          <TextField
             key={`field-${item.name}`}
             ref={`field-${item.name}`}
             name={item.name}
@@ -613,12 +593,12 @@ export default React.createClass({
     let addTitle = 'Add a Data Object';
     let title = this.hasEditMode() ? editTitle : addTitle;
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -627,9 +607,9 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
-        key='dialog'
-        ref='dialog'
+      <Dialog
+        key="dialog"
+        ref="dialog"
         title={title}
         onRequestClose={this.handleCancel}
         open={this.state.open}
@@ -646,11 +626,11 @@ export default React.createClass({
             {this.renderCustomFields()}
           </div>
         </div>
-        <Common.Loading
+        <Loading
           type="linear"
           position="bottom"
           show={this.state.isLoading} />
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });

@@ -1,37 +1,35 @@
 import React from 'react';
 
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
-import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import {ColumnList, Color} from '../../common';
+import {MenuItem} from 'syncano-material-ui';
+import {Truncate} from 'syncano-components';
 
 export default React.createClass({
-
   displayName: 'AdminsInvitationsListItem',
 
-  mixins: [
-    Mixins.Dialogs
-  ],
+  mixins: [DialogsMixin],
 
   render() {
     let item = this.props.item;
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         checked={item.checked}
         key={item.id}>
-        <Common.ColumnList.Column.CheckIcon
+        <ColumnList.Column.CheckIcon
           className="col-xs-25 col-md-20"
           id={item.id.toString()}
           icon='account'
-          background={Common.Color.getColorByName('blue', 'xlight')}
+          background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          <Common.Truncate text={item.email}/>
-        </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Date date={item.created_at}/>
-        <Common.ColumnList.Column.Menu>
+          <Truncate text={item.email}/>
+        </ColumnList.Column.CheckIcon>
+        <ColumnList.Column.Desc>{item.role}</ColumnList.Column.Desc>
+        <ColumnList.Column.Date date={item.created_at}/>
+        <ColumnList.Column.Menu>
           <MenuItem
             onTouchTap={this.props.showResendDialog}
             className="dropdown-item-resend-invitation"
@@ -40,8 +38,8 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             className="dropdown-item-remove-invitation"
             primaryText="Delete an Invitation" />
-        </Common.ColumnList.Column.Menu>
-      </Common.ColumnList.Item>
+        </ColumnList.Column.Menu>
+      </ColumnList.Item>
     );
   }
 });

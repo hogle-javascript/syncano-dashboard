@@ -78,25 +78,39 @@ export default React.createClass({
             <List
               style={styles.menuStyle}
               subheaderStyle={styles.listSubheader}>
-              <LinkListItem routeName="sockets" primaryText="Sockets"/>
+              <LinkListItem
+                routeName="sockets"
+                primaryText="Sockets"/>
             </List>
             <Divider/>
             <List
               style={styles.menuStyle}
               subheader="Modules"
               subheaderStyle={styles.listSubheader}>
-              <LinkListItem routeName="users" primaryText="Users & Groups"/>
-              <LinkListItem routeName="classes" primaryText="Classes"/>
-              <LinkListItem routeName="snippets" primaryText="Snippets"/>
+              <LinkListItem
+                routeName="users"
+                primaryText="Users & Groups"/>
+              <LinkListItem
+                routeName="classes"
+                primaryText="Classes"/>
+              <LinkListItem
+                routeName="snippets"
+                primaryText="Snippets"/>
             </List>
             <Divider/>
             <List
               style={styles.menuStyle}
               subheader="Settings"
               subheaderStyle={styles.listSubheader}>
-              <LinkListItem routeName="instance-edit" primaryText="General"/>
-              <LinkListItem routeName="admins" primaryText="Administrators"/>
-              <LinkListItem routeName="api-keys" primaryText="API keys"/>
+              <LinkListItem
+                routeName="instance-edit"
+                primaryText="General"/>
+              <LinkListItem
+                routeName="admins"
+                primaryText="Administrators"/>
+              <LinkListItem
+                routeName="api-keys"
+                primaryText="API keys"/>
             </List>
           </Sidebar>
           <div className="col-flex-1">

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './ProfileInvitationsActions';
@@ -19,7 +19,7 @@ let Column = Common.ColumnList.Column;
 export default React.createClass({
   displayName: 'ProfileInvitationsList',
 
-  mixins: [Mixins.Dialogs],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('ProfileInvitations::componentWillUpdate');

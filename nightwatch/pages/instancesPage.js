@@ -62,11 +62,11 @@ export default {
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
-      selector: '//a[@class="dropdown-item-instance-edit"]',
+      selector: '//span[@class="dropdown-item-instance-edit"]',
       locateStrategy: 'xpath'
     },
     deleteDropdownItem: {
-      selector: '//a[@class="dropdown-item-instance-delete"]',
+      selector: '//span[@class="dropdown-item-instance-delete"]',
       locateStrategy: 'xpath'
     },
     editButton: {

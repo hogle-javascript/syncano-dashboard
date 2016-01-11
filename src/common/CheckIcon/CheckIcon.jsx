@@ -86,7 +86,7 @@ export default Radium(React.createClass({
   handleClick(event) {
     event.stopPropagation();
     if (this.props.handleClick) {
-      this.props.handleClick(this.props.id, !this.state.checked);
+      this.props.handleClick(this.props.id, !this.state.checked, this.props.keyName);
     }
 
     this.setState({

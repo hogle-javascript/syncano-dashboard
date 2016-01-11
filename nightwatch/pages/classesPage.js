@@ -23,11 +23,11 @@ export default {
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
-      selector: '//a[@class="dropdown-item-edit-class"]',
+      selector: '//span[@class="dropdown-item-edit-class"]',
       locateStrategy: 'xpath'
     },
     deleteDropdownItem: {
-      selector: '//a[@class="dropdown-item-delete-class"]',
+      selector: '//span[@class="dropdown-item-delete-class"]',
       locateStrategy: 'xpath'
     },
     addClassButton: {
@@ -45,7 +45,7 @@ export default {
       locateStrategy: 'xpath'
     },
     createModalDropdownType: {
-      selector: '//div[@class="type-dropdown"]',
+      selector: '//div[@class="fieldType-dropdown"]',
       locateStrategy: 'xpath'
     },
     createModalDescriptionInput: {

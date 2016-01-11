@@ -1,8 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
-import StoreFormMixin from '../../mixins/StoreFormMixin';
+import {StoreFormMixin, WaitForStoreMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';

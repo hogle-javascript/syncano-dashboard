@@ -1,21 +1,22 @@
 import React from 'react';
 
-import {Dialogs} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 import Actions from './GroupsActions';
 import UserActions from '../Users/UsersActions';
 
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
-import Common from '../../common';
+import {MenuItem} from 'syncano-material-ui';
+import {ColumnList, Color} from '../../common';
+import {Truncate} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
   displayName: 'GroupsListItem',
 
   mixins: [
-    Dialogs
+    DialogsMixin
   ],
 
   showUserDialog(group) {
@@ -28,17 +29,17 @@ export default React.createClass({
     let item = this.props.item;
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         checked={item.checked}
         key={item.id}>
         <Column.CheckIcon
           id={item.id.toString()}
           icon='arrow-up-bold'
-          background={Common.Color.getColorByName('blue', 'xlight')}
+          background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}
           className="col-flex-1">
-          <Common.Truncate text={item.label}/>
+          <Truncate text={item.label}/>
         </Column.CheckIcon>
         <Column.ID className="col-sm-4">{item.id}</Column.ID>
         <Column.Menu>
@@ -55,7 +56,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Group" />
         </Column.Menu>
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     );
   }
 });

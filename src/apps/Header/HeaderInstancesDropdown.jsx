@@ -9,8 +9,9 @@ import SessionStore from '../Session/SessionStore';
 import InstancesStore from '../Instances/InstancesStore';
 import InstanceDialogActions from '../Instances/InstanceDialogActions';
 
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {Utils, FontIcon, List, ListItem, IconMenu} from 'syncano-material-ui';
+import {Show} from 'syncano-components';
+import {ColumnList, Color} from '../../common';
 
 export default Radium(React.createClass({
 
@@ -26,7 +27,7 @@ export default Radium(React.createClass({
     Reflux.connect(InstancesStore),
     Router.Navigation,
     Router.State,
-    MUI.Utils.Styles
+    Utils.Styles
   ],
 
   componentDidMount() {
@@ -118,38 +119,38 @@ export default Radium(React.createClass({
   renderAddInstanceItem() {
     let styles = this.getStyles();
     let icon = (
-      <MUI.FontIcon
+      <FontIcon
         className="synicon-plus"
         style={this.mergeAndPrefix(styles.dropdownInstanceIcon, styles.addInstanceIcon)}/>
     );
 
     return (
-      <MUI.List style={styles.addInstanceList}>
-        <MUI.ListItem
+      <List style={styles.addInstanceList}>
+        <ListItem
           primaryText="Add an Instance"
           leftIcon={icon}
           onTouchTap={this.showAddInstanceDialog}/>
-      </MUI.List>
+      </List>
     );
   },
 
   renderListItems(instances) {
     let styles = this.getStyles();
-    let defaultIconBackground = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
-    let defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
+    let defaultIconBackground = ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
+    let defaultIcon = ColumnList.ColumnListConstans.DEFAULT_ICON;
     let items = instances.map((instance) => {
       let iconName = instance.metadata.icon ? 'synicon-' + instance.metadata.icon : 'synicon-' + defaultIcon;
       let iconBackground = {
-        backgroundColor: Common.Color.getColorByName(instance.metadata.color, 'dark') || defaultIconBackground
+        backgroundColor: Color.getColorByName(instance.metadata.color, 'dark') || defaultIconBackground
       };
       let icon = (
-        <MUI.FontIcon
+        <FontIcon
           className={iconName}
           style={this.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
       );
 
       return (
-        <MUI.ListItem
+        <ListItem
           key={instance.name}
           primaryText={instance.name}
           onTouchTap={this.handleDropdownItemClick.bind(null, instance.name)}
@@ -165,25 +166,25 @@ export default Radium(React.createClass({
     let subheaderText = InstancesStore.amIOwner(instances[0]) ? 'My Instances' : 'Shared with me';
 
     return (
-      <Common.Show if={instances.length > 0}>
-        <MUI.List
+      <Show if={instances.length > 0}>
+        <List
           className={InstancesStore.amIOwner(instances[0]) ? 'my-instances-list' : 'shared-instances-list'}
           style={styles.list}
           subheader={subheaderText}
           subheaderStyle={styles.separator}>
           {this.renderListItems(instances)}
-        </MUI.List>
-      </Common.Show>
+        </List>
+      </Show>
     );
   },
 
   renderDropdownIcon() {
     let styles = this.getStyles();
-    let defaultIconBackground = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
+    let defaultIconBackground = ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
     let currentInstance = SessionStore.instance;
-    let defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
+    let defaultIcon = ColumnList.ColumnListConstans.DEFAULT_ICON;
     let iconStyle = {
-      backgroundColor: Common.Color.getColorByName(currentInstance.metadata.color, 'dark') || defaultIconBackground,
+      backgroundColor: Color.getColorByName(currentInstance.metadata.color, 'dark') || defaultIconBackground,
       left: 0
     };
     let iconName = currentInstance.metadata.icon ? currentInstance.metadata.icon : defaultIcon;
@@ -191,14 +192,14 @@ export default Radium(React.createClass({
 
     return (
       <div style={styles.dropdownIcon}>
-        <MUI.FontIcon
+        <FontIcon
           className={icon}
           style={this.mergeAndPrefix(styles.dropdownInstanceIcon, iconStyle)}/>
-        <MUI.ListItem
+        <ListItem
           disabled={true}
           primaryText={currentInstance.name}
           style={styles.dropdownText}/>
-        <MUI.FontIcon className='synicon-menu-down'/>
+        <FontIcon className='synicon-menu-down'/>
       </div>
     );
   },
@@ -214,7 +215,7 @@ export default Radium(React.createClass({
 
     return (
       <div style={styles.root}>
-        <MUI.IconMenu
+        <IconMenu
           ref="instancesDropdown"
           onItemTouchTap={this.closeDropdown}
           iconButtonElement={this.renderDropdownIcon()}
@@ -224,7 +225,7 @@ export default Radium(React.createClass({
           {this.renderAddInstanceItem()}
           {this.renderList(InstancesStore.getMyInstances())}
           {this.renderList(InstancesStore.getOtherInstances())}
-        </MUI.IconMenu>
+        </IconMenu>
       </div>
     );
   }

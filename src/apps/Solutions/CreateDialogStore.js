@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import Mixins from '../../mixins';
+import {StoreFormMixin, DialogStoreMixin, StoreHelpersMixin} from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -11,9 +11,9 @@ export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
-    Mixins.StoreForm,
-    Mixins.DialogStore,
-    Mixins.StoreHelpers
+    StoreFormMixin,
+    DialogStoreMixin,
+    StoreHelpersMixin
   ],
 
   getInitialState() {

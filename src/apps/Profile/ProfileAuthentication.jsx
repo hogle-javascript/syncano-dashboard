@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 
-import FormMixin from '../../mixins/FormMixin';
+import {FormMixin} from '../../mixins';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
@@ -86,7 +86,8 @@ export default Radium(React.createClass({
                   copyText={this.state.account_key}
                   snackbarText="API key copied to the clipboard"
                   snackbarAutoHideDuration={3000}
-                  text="COPY"/>
+                  text="COPY"
+                  type="button"/>
                 <FlatButton
                   label="RESET"
                   primary={true}

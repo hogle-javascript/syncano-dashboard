@@ -7,7 +7,7 @@ import Store from './InstancesStore';
 
 import Header from '../Header';
 import {IconButton, Styles} from 'syncano-material-ui';
-import {Tour} from '../../common';
+import {Tour} from 'syncano-components';
 
 export default React.createClass({
 

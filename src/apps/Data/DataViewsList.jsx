@@ -3,7 +3,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './DataViewsActions';
@@ -19,7 +19,7 @@ export default React.createClass({
   displayName: 'DataViewsList',
 
   mixins: [
-    Mixins.Dialogs,
+    DialogsMixin,
     HeaderMixin,
     Router.State,
     Router.Navigation

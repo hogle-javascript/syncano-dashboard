@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './SnippetsActions';
@@ -27,7 +27,7 @@ export default React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   componentWillUpdate(nextProps) {

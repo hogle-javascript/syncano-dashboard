@@ -5,14 +5,13 @@ import SessionStore from '../Session/SessionStore';
 import Actions from './ProfileActions';
 import Store from './ProfileBillingInvoicesStore';
 
-import MUI from 'syncano-material-ui';
-import {Loading, Show, InnerToolbar, ColumnList, Lists} from '../../common';
-import EmptyContainer from '../../common/Container/EmptyContainer';
+import {FlatButton} from 'syncano-material-ui';
+import {Show} from 'syncano-components';
+import {Loading, InnerToolbar, ColumnList, Lists, Container} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'ProfileBillingInvoices',
 
   mixins: [
@@ -38,7 +37,7 @@ export default React.createClass({
         <Column.Desc>{invoice.amount}</Column.Desc>
         <Column.Desc>{invoice.status}</Column.Desc>
         <Column.Desc>
-          <MUI.FlatButton
+          <FlatButton
             label="VIEW"
             primary={true}
             onClick={this.handlePDFClick.bind(null, invoice)}/>
@@ -53,7 +52,7 @@ export default React.createClass({
         <InnerToolbar title="Invoices"/>
 
         <Show if={this.state.invoices.length < 1}>
-          <EmptyContainer
+          <Container.Empty
             icon='synicon-file-outline'
             text='You have no invoices'/>
         </Show>

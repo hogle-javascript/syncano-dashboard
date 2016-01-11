@@ -6,7 +6,7 @@ import Store from './AdminsStore';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Components
 import ListItem from './AdminsListItem';
@@ -22,7 +22,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   componentWillUpdate(nextProps) {

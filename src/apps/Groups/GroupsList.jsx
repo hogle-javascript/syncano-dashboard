@@ -6,7 +6,7 @@ import Actions from './GroupsActions';
 import Store from './GroupsStore';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 import HeaderMixin from'../Header/HeaderMixin';
 
 // Components
@@ -23,7 +23,7 @@ export default Radium(React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   componentWillUpdate(nextProps) {

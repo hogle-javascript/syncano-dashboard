@@ -3,7 +3,7 @@ import URL from 'url';
 import D from 'd.js';
 
 // Utils & Mixins
-import Mixins from '../../mixins';
+import {StoreFormMixin, WaitForStoreMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -17,8 +17,8 @@ export default Reflux.createStore({
   ],
 
   mixins: [
-    Mixins.StoreForm,
-    Mixins.WaitForStore
+    StoreFormMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState() {

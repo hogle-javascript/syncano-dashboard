@@ -35,7 +35,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdown: {
-      selector: '//div[@class="invite-admin-dropdown"]',
+      selector: '//div[@class="role-dropdown"]',
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdownRead: {

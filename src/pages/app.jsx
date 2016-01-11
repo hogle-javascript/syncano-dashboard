@@ -5,16 +5,15 @@ import _ from 'lodash';
 import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
 import {Styles} from 'syncano-material-ui';
-import {SyncanoTheme, SnackbarNotification} from './../common';
+import {SnackbarNotification} from './../common';
+import {SyncanoTheme} from 'syncano-components';
 
 export default React.createClass({
-
   displayName: 'App',
 
   contextTypes: {
     router: React.PropTypes.func
   },
-
 
   childContextTypes: {
     muiTheme: React.PropTypes.object

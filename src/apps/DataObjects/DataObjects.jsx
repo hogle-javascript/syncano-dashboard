@@ -4,7 +4,7 @@ import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, DialogsMixin, InstanceTabsMixin} from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -13,7 +13,8 @@ import Store from './DataObjectsStore';
 
 // Components
 import {IconButton, RaisedButton, Table, TableBody} from 'syncano-material-ui';
-import {Dialog, Show, InnerToolbar, Loading, Container} from '../../common';
+import {Show} from 'syncano-components';
+import {Dialog, InnerToolbar, Loading, Container} from '../../common';
 
 // Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu';
@@ -28,10 +29,9 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    Mixins.Header,
-    Mixins.Dialog,
-    Mixins.Dialogs,
-    Mixins.InstanceTabs
+    DialogMixin,
+    DialogsMixin,
+    InstanceTabsMixin
   ],
 
   componentDidMount() {
@@ -155,6 +155,7 @@ export default React.createClass({
         bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>
         {tableHeader}
         <TableBody
+          className="mui-table-body"
           deselectOnClickaway={false}
           showRowHover={true}
           stripedRows={false}>

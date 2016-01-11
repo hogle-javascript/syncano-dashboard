@@ -4,7 +4,7 @@ import Router from 'react-router';
 import Radium from 'radium';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
@@ -12,19 +12,18 @@ import Store from './AddVersionViewStore';
 import Actions from './AddVersionViewActions';
 
 // Components
-import MUI from 'syncano-material-ui';
-import {Container, Loading, InnerToolbar} from '../../common';
+import {Checkbox, FlatButton, RaisedButton} from 'syncano-material-ui';
+import {SelectFieldWrapper, Container, Loading, InnerToolbar} from '../../common';
 
 export default Radium(React.createClass({
-
   displayName: 'AddVersionView',
 
   mixins: [
     Router.State,
     Router.Navigation,
 
-    Mixins.Dialog,
-    Mixins.Form,
+    DialogMixin,
+    FormMixin,
     HeaderMixin,
     Reflux.connect(Store)
   ],
@@ -180,7 +179,7 @@ export default Radium(React.createClass({
           key={`checkbox-${type}-${item[pk]}`}
           className="col-xs-35 col-md-17"
           style={{paddingRight: 10}}>
-          <MUI.Checkbox
+          <Checkbox
             ref={`checkbox-${type}-${item[pk]}`}
             iconStyle={{fill: '#4D4D4D'}}
             labelStyle={{color: '#4D4D4D'}}
@@ -243,31 +242,23 @@ export default Radium(React.createClass({
             {this.renderFormNotifications()}
             <div className='row'>
               <div className='col-lg-8'>
-                <MUI.SelectField
-                  ref='type'
-                  name='type'
-                  fullWidth={true}
-                  onChange={this.handleTypeChange}
+                <SelectFieldWrapper
+                  name="type"
+                  options={Store.getTypes()}
                   value={this.state.type}
-                  valueMember='payload'
-                  displayMember='text'
-                  floatingLabelText='Type'
-                  menuItems={Store.getTypes()} />
+                  onChange={this.handleTypeChange}
+                  errorText={this.getValidationMessages('type').join(' ')}/>
               </div>
               <div className='col-flex-1'>
-                <MUI.SelectField
-                  ref='instance'
-                  name='instance'
-                  onChange={this.handleInstanceChange}
-                  fullWidth={true}
+                <SelectFieldWrapper
+                  name="instance"
+                  options={Store.getInstancesDropdown()}
                   value={this.state.instance}
-                  valueMember='payload'
-                  displayMember='text'
                   floatingLabelText='Instances'
                   labelStyle={styles.instanceDropdowInputLabel}
                   menuItemStyle={styles.instancesDropdownItem}
-                  errorText={this.getValidationMessages('instance').join(' ')}
-                  menuItems={Store.getInstancesDropdown()} />
+                  onChange={this.handleInstanceChange}
+                  errorText={this.getValidationMessages('instance').join(' ')}/>
               </div>
             </div>
           </div>
@@ -285,13 +276,13 @@ export default Radium(React.createClass({
           </div>
           <div className="row" style={{paddingTop: 30}}>
             <div className="col-flex-1" style={{display: 'flex', justifyContent: 'flex-end'}}>
-              <MUI.FlatButton
+              <FlatButton
                 style={{marginRight: 10}}
                 ref='cancel'
                 key='cancel'
                 label='Cancel'
                 onTouchTap={this.handleBackClick} />
-              <MUI.RaisedButton
+              <RaisedButton
                 ref='submit'
                 key='confirm'
                 label='Confirm'

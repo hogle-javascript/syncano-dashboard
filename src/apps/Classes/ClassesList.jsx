@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './ClassesActions';
@@ -23,7 +23,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   componentWillUpdate(nextProps) {

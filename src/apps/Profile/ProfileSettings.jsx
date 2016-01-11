@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import FormMixin from '../../mixins/FormMixin';
+import {FormMixin} from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileSettingsStore';

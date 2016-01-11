@@ -12,61 +12,32 @@ export default {
   after(client) {
     client.end();
   },
-  'Administrator adds a Group': (client) => {
+  'Administrator adds a User': (client) => {
     const usersPage = client.page.usersPage();
-    const suffix = utils.addSuffix('group');
+    const suffix = utils.addSuffix('user');
 
     usersPage
       .navigate()
       .waitForElementVisible('@groupEditButton')
       .waitForElementVisible('@userList')
-      .clickElement('@addGroupButton')
-      .waitForElementPresent('@addGroupModalTitle')
-      .fillInput('@groupName', suffix)
+      .clickElement('@addUserButton')
+      .waitForElementPresent('@addUserModalTitle')
+      .fillInput('@username', suffix)
+      .fillInput('@password', suffix)
       .clickElement('@confirm')
-      .waitForElementPresent('@groupTableRow');
+      .waitForElementPresent('@userTableRow');
   },
-  'Administrator deletes a Group': (client) => {
+  'Administrator deletes a User': (client) => {
     const usersPage = client.page.usersPage();
 
     usersPage
       .navigate()
       .waitForElementVisible('@groupEditButton')
       .waitForElementVisible('@userList')
-      .clickListItemDropdown('@groupTableRowDropdown', 'Delete')
-      .waitForElementPresent('@deleteGroupModalTitle')
+      .clickListItemDropdown('@selectUserTableRow', 'Delete')
+      .waitForElementPresent('@deleteUserModalTitle')
       .clickElement('@confirm')
-      .waitForElementVisible('@groupList')
-      .waitForElementNotPresent('@groupTableRowDropdown');
+      .waitForElementNotPresent('@userTableRow');
   }
-  // 'Administrator adds a User': (client) => {
-  //   const usersPage = client.page.usersPage();
-  //   const suffix = utils.addSuffix('user');
-  //
-  //   usersPage
-  //     .navigate()
-  //     .waitForElementVisible('@groupEditButton')
-  //     .waitForElementVisible('@userList')
-  //     .clickElement('@addUserButton')
-  //     .waitForElementPresent('@addUserModalTitle')
-  //     .fillInputField('@username', suffix)
-  //     .fillInputField('@password', suffix)
-  //     .clickElement('@confirm')
-  //     .waitForElementPresent('@userTableRow');
-  // },
-  // 'Administrator deletes a User': (client) => {
-  //   const usersPage = client.page.usersPage();
-  //
-  //   usersPage
-  //     .navigate()
-  //     .waitForElementVisible('@groupEditButton')
-  //     .waitForElementVisible('@userList')
-  //     .clickElement('@selectUserTableRow')
-  //     .clickElement('@usersListMenu')
-  //     .clickElement('@deleteButton')
-  //     .waitForElementPresent('@deleteUserModalTitle')
-  //     .clickElement('@confirm')
-  //     .waitForElementNotPresent('@userTableRow');
-  // }
 };
 

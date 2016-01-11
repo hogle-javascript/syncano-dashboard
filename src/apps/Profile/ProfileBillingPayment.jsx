@@ -3,22 +3,21 @@ import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
 
-import Mixins from '../../mixins';
+import {FormMixin} from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
 
 import {TextField, RaisedButton} from 'syncano-material-ui';
-import {Container, Loading, Show, InnerToolbar, CreditCard} from '../../common';
-
+import {Show} from 'syncano-components';
+import {Container, Loading, InnerToolbar, CreditCard} from '../../common';
 
 export default Radium(React.createClass({
-
   displayName: 'ProfileBillingPayment',
 
   mixins: [
     Reflux.connect(Store),
-    Mixins.Form
+    FormMixin
   ],
 
   validatorConstraints: {

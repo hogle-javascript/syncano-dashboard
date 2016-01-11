@@ -1,15 +1,16 @@
 import React from 'react';
 import {Link, State, Navigation} from 'react-router';
 
-import {Dialogs} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
-import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import {ColumnList, Color} from '../../common';
+import {MenuItem} from 'syncano-material-ui';
+import {Truncate} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ClassesListItem',
@@ -17,7 +18,7 @@ export default React.createClass({
   mixins: [
     State,
     Navigation,
-    Dialogs
+    DialogsMixin
   ],
 
   handleClassDropdownClick(item) {
@@ -47,17 +48,18 @@ export default React.createClass({
     let metadata = item.metadata;
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         key={item.name}
         id={item.name}
         checked={item.checked}>
         <Column.CheckIcon
           id={item.name.toString()}
           icon={metadata && metadata.icon ? metadata.icon : 'table-large'}
-          background={Common.Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
+          background={Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
           checked={item.checked}
+          keyName="name"
           handleIconClick={this.props.onIconClick}>
-          <Common.Truncate
+          <Truncate
             onClick={this.handleItemNameClick.bind(null, item.name)}
             style={{cursor: 'pointer'}}
             text={item.name}/>
@@ -97,7 +99,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Class"/>
         </Column.Menu>
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     );
   }
 });

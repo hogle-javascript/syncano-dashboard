@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import StoreFormMixin from '../../mixins/StoreFormMixin';
+import {StoreFormMixin} from '../../mixins';
 
 import Actions from './ProfileActions';
 

@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, DialogsMixin, IsLoadingMixin} from '../../mixins';
 
 // Stores and Actions
 import InstancesActions from '../Instances/InstancesActions';
@@ -18,8 +18,9 @@ import InstallDialogActions from './InstallDialogActions';
 // Components
 import {Header} from '../../apps';
 import {FontIcon, IconButton, RaisedButton, Avatar} from 'syncano-material-ui';
-import {Dialog, Show, Solutions, SolutionStar, InnerToolbar} from '../../common';
-import Container from '../../common/Container';
+import {Solutions, Show} from 'syncano-components';
+import {Dialog, InnerToolbar, Container} from '../../common';
+import VersionsList from './VersionsList';
 
 import CreateDialog from './CreateDialog';
 import InstallDialog from './InstallDialog';
@@ -32,9 +33,9 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Mixins.Dialog,
-    Mixins.Dialogs,
-    Mixins.IsLoading(),
+    DialogMixin,
+    DialogsMixin,
+    IsLoadingMixin(),
 
     Reflux.connect(Store)
   ],
@@ -191,11 +192,10 @@ export default React.createClass({
                 </div>
 
                 <div className="row" style={{marginLeft: '-18px'}}>
-                  <SolutionStar
+                  <Solutions.Star
                     solution={this.state.item}
                     onStar={Actions.starSolution}
-                    onUnstar={Actions.unstarSolution}
-                    />
+                    onUnstar={Actions.unstarSolution}/>
                 </div>
 
                 <div className="row vp-5-t align-left">
@@ -234,7 +234,7 @@ export default React.createClass({
               </Show>
 
               <Show if={!this.isNoVersions() || this.isMySolution()}>
-                <Solutions.VersionsList
+                <VersionsList
                   name="Versions"
                   items={this.state.versions}
                   isLoading={this.state.isLoading}

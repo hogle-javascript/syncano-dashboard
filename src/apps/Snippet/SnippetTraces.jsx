@@ -4,7 +4,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
+import {InstanceTabsMixin} from '../../mixins';
 
 // Stores & Actions
 import Store from './SnippetStore';

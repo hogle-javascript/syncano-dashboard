@@ -1,25 +1,25 @@
 import React from 'react';
 import {Navigation} from 'react-router';
 
-import Mixins from '../../mixins/';
+import {DialogsMixin} from '../../mixins/';
 
 // Stores and Actions
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
-import Common from '../../common';
+import {MenuItem} from 'syncano-material-ui';
+import {ColumnList, Color} from '../../common';
+import {Truncate} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'InstancesListItem',
 
   mixins: [
     Navigation,
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   handleItemClick(instanceName) {
@@ -41,17 +41,17 @@ export default React.createClass({
     item.metadata = item.metadata || {};
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         checked={item.checked}
         id={item.name}
         key={item.name}>
         <Column.CheckIcon
           id={item.name}
           icon={item.metadata.icon}
-          background={Common.Color.getColorByName(item.metadata.color)}
+          background={Color.getColorByName(item.metadata.color)}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          <Common.Truncate
+          <Truncate
             onClick={this.handleItemClick.bind(null, item.name)}
             style={{cursor: 'pointer'}}
             text={item.name}/>
@@ -72,7 +72,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText={removeText} />
         </Column.Menu>
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     );
   }
 });

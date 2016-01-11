@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, State} from 'react-router';
 
-import {Dialogs} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './CodeBoxesActions';
@@ -18,7 +18,7 @@ export default React.createClass({
 
   mixins: [
     State,
-    Dialogs
+    DialogsMixin
   ],
 
   render() {
@@ -35,6 +35,7 @@ export default React.createClass({
           className="col-xs-12"
           id={item.name.toString()}
           icon='arrow-up-bold'
+          keyName="name"
           background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>

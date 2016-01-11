@@ -4,7 +4,7 @@ import React from 'react';
 import Radium from 'radium';
 
 // Utils
-import FormMixin from '../../mixins/FormMixin';
+import {FormMixin} from '../../mixins';
 
 // Components
 import MUI from 'syncano-material-ui';

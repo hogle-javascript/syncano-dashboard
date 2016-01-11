@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import ChannelsStore from './ChannelsStore';
@@ -10,8 +10,8 @@ import ChannelsActions from './ChannelsActions';
 import ChannelDialogStore from './ChannelDialogStore';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, FlatButton, Toggle} from 'syncano-material-ui';
+import {Dialog, SelectFieldWrapper, Loading} from '../../common';
 
 export default React.createClass({
 
@@ -19,8 +19,8 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(ChannelDialogStore),
-    Mixins.Dialog,
-    Mixins.Form
+    DialogMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -62,12 +62,12 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -76,7 +76,7 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
+      <Dialog
         key='dialog'
         ref='dialog'
         title={`${title} a Channel Socket`}
@@ -87,7 +87,7 @@ export default React.createClass({
         {this.renderFormNotifications()}
         <div className="row">
           <div className="col-md-12">
-            <MUI.TextField
+            <TextField
               ref='name'
               valueLink={this.linkState('name')}
               errorText={this.getValidationMessages('name').join(' ')}
@@ -98,7 +98,7 @@ export default React.createClass({
               floatingLabelText='Name of a Channel Socket' />
           </div>
           <div className="col-flex-1">
-            <MUI.TextField
+            <TextField
               ref='description'
               name='description'
               valueLink={this.linkState('description')}
@@ -108,67 +108,56 @@ export default React.createClass({
               floatingLabelText='Description of a Channel Socket' />
           </div>
         </div>
-        <Common.SelectField
-          ref='type'
-          name='type'
-          floatingLabelText='Channel type'
-          valueLink={this.linkState('type')}
-          errorText={this.getValidationMessages('type').join(' ')}
-          valueMember='payload'
-          displayMember='text'
+        <SelectFieldWrapper
+          name="type"
+          floatingLabelText="Channel type"
+          options={ChannelsStore.getChannelTypesDropdown()}
           disabled={this.hasEditMode()}
-          fullWidth={true}
-          menuItems={ChannelsStore.getChannelTypesDropdown()} />
-
-        <div style={{marginTop: 40}}>Permissions</div>
+          value={this.state.type}
+          onChange={this.setSelectFieldValue.bind(null, 'type')}
+          errorText={this.getValidationMessages('type').join(' ')}/>
+        <div className="vm-5-t">Permissions</div>
         <div className="row">
           <div className="col-flex-1">
-            <MUI.TextField
+            <TextField
               ref='group'
               name='group'
               fullWidth={true}
-              valueLink={this.linkState('group')}
               errorText={this.getValidationMessages('group').join(' ')}
               hintText='ID of the Group'
               floatingLabelText='Group (ID)' />
           </div>
           <div className="col-flex-1">
-            <MUI.SelectField
-              ref='group_permissions'
+            <SelectFieldWrapper
               name='group_permissions'
               floatingLabelText='Group permissions'
-              valueLink={this.linkState('group_permissions')}
-              errorText={this.getValidationMessages('group_permissions').join(' ')}
-              valueMember='payload'
-              displayMember='text'
-              fullWidth={true}
-              menuItems={ChannelsStore.getChannelPermissionsDropdown()} />
+              options={ChannelsStore.getChannelPermissionsDropdown()}
+              value={this.state.group_permissions}
+              onChange={this.setSelectFieldValue.bind(null, 'group_permissions')}
+              errorText={this.getValidationMessages('group_permissions').join(' ')}/>
           </div>
           <div className="col-flex-1">
-            <MUI.SelectField
-              ref='other_permissions'
+            <SelectFieldWrapper
               name='other_permissions'
               floatingLabelText='Other permissions'
-              valueLink={this.linkState('other_permissions')}
-              errorText={this.getValidationMessages('other_permissions').join(' ')}
-              valueMember='payload'
-              displayMember='text'
-              fullWidth={true}
-              menuItems={ChannelsStore.getChannelPermissionsDropdown()} />
+              options={ChannelsStore.getChannelPermissionsDropdown()}
+              value={this.state.other_permissions}
+              onChange={this.setSelectFieldValue.bind(null, 'other_permissions')}
+              errorText={this.getValidationMessages('other_permissions').join(' ')}/>
           </div>
         </div>
-        <MUI.Toggle
+        <Toggle
           ref='custom_publish'
           name='custom_publish'
           defaultToggled={this.state.custom_publish}
           onToggle={this.handleToogle}
           style={{marginTop: 20}}
           label='Custom publishing in this channel?' />
-        <Common.Loading
+        <Loading
           type='linear'
           position='bottom'
           show={this.state.isLoading} />
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });

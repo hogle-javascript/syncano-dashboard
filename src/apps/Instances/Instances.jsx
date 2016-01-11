@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogMixin} from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -12,7 +12,8 @@ import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
 import Header from '../Header';
-import {Container, Show, InnerToolbar, Socket} from '../../common';
+import {Show} from 'syncano-components';
+import {Container, InnerToolbar, Socket} from '../../common';
 
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';
@@ -29,7 +30,7 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialog
+    DialogMixin
   ],
 
   componentDidMount() {

@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import Mixins from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './ProfileInvitationsActions';
@@ -10,15 +10,15 @@ import Store from './ProfileInvitationsStore';
 
 // Components
 import ProfileInvitationsList from './ProfileInvitationsList';
-import {Container, Loading, Show, InnerToolbar} from '../../common';
+import {Show} from 'syncano-components';
+import {Container, Loading, InnerToolbar} from '../../common';
 
 export default React.createClass({
-
   displayName: 'ProfileInvitations',
 
   mixins: [
     Reflux.connect(Store),
-    Mixins.Dialogs
+    DialogsMixin
   ],
 
   componentDidMount() {

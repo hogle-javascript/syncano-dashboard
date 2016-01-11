@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import FormMixin from '../../mixins/FormMixin';
+import {FormMixin} from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileBillingAddressStore';
