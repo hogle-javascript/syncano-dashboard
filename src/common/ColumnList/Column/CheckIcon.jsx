@@ -2,12 +2,10 @@ import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
 
-import MUI from 'syncano-material-ui';
-
-import CheckIcon from '../../../common/CheckIcon/CheckIcon';
+import {Styles} from 'syncano-material-ui';
+import {CheckIcon} from 'syncano-components';
 
 export default Radium(React.createClass({
-
   displayName: 'ColumnCheckIcon',
 
   propTypes: {
@@ -24,7 +22,7 @@ export default Radium(React.createClass({
       color: 'black',
       icon: ColumnListConstans.DEFAULT_ICON,
       background: ColumnListConstans.DEFAULT_BACKGROUND,
-      hoverColor: MUI.Styles.Colors.blue600,
+      hoverColor: Styles.Colors.blue600,
       className: ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
       checkable: true,
       checked: false

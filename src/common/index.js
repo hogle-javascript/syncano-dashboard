@@ -1,4 +1,3 @@
-import CheckIcon from './CheckIcon';
 import Clipboard from './Clipboard';
 import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
