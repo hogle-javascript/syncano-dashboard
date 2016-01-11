@@ -1,4 +1,3 @@
-import CharacterCounter from './CharacterCounter';
 import CheckIcon from './CheckIcon';
 import Clipboard from './Clipboard';
 import Color from './Color';
@@ -26,7 +25,6 @@ import Socket from './Socket';
 import SnackbarNotification from './SnackbarNotification';
 
 export default {
-  CharacterCounter,
   CheckIcon,
   Clipboard,
   Color,
