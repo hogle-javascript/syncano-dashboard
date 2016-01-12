@@ -11,7 +11,7 @@ import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
 import {FlatButton, Utils, TextField, IconButton, RaisedButton} from 'syncano-material-ui';
-import {Container, Dialog, Notification, SnackbarNotification} from '../../common';
+import {Dialog, Notification, SnackbarNotification} from '../../common';
 import {Show} from 'syncano-components';
 
 export default Radium(React.createClass({
@@ -64,11 +64,6 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
-      container: {
-        margin: '25px auto',
-        width: '100%',
-        maxWidth: '700px'
-      },
       field: {
         margin: '10px 14px'
       },
@@ -229,7 +224,7 @@ export default Radium(React.createClass({
     let configFields = _.map(snippetConfig, (field, index) => {
       return (
         <div
-          className="row"
+          className="row align-center"
           key={index}>
           <TextField
             key={`fieldKey${index}`}
@@ -265,7 +260,7 @@ export default Radium(React.createClass({
     return (
       <form
         key="form"
-        className="row"
+        className="row align-center"
         onSubmit={this.handleAddField}>
         <TextField
           className="config-input-key"
@@ -299,7 +294,7 @@ export default Radium(React.createClass({
     }
 
     return (
-      <Container style={styles.container}>
+      <div>
         {this.getDialogs()}
         {this.renderFields()}
         {this.renderNewFiledSection()}
@@ -322,7 +317,7 @@ export default Radium(React.createClass({
             </Notification>
           </div>
         </Show>
-      </Container>
+      </div>
     );
   }
 }));
