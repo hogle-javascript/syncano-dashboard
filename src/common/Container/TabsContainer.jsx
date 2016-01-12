@@ -3,17 +3,16 @@ import {Utils} from 'syncano-material-ui';
 
 export default React.createClass({
 
-  displayName: 'Container',
-
-  propTypes: {
-    style: React.PropTypes.object
-  },
+  displayName: 'TabsContainer',
 
   mixins: [Utils.Styles],
 
   getStyles() {
     let styles = {
-      padding: '32px 24px 64px'
+      base: {
+        width: '90%',
+        margin: '0 auto'
+      }
     };
 
     return this.mergeAndPrefix(styles, this.props.style);
@@ -23,9 +22,7 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <div
-        id={this.props.id}
-        style={styles}>
+      <div style={styles.base}>
         {this.props.children}
       </div>
     );

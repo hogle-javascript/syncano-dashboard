@@ -50,8 +50,6 @@ export default React.createClass({
         backgroundColor: 'transparent'
       },
       tabs: {
-        margin: '0 auto',
-        width: '90%',
         padding: '0 250px',
         borderBottom: '1px solid #DDDDDD'
       },
@@ -119,26 +117,28 @@ export default React.createClass({
 
     if (snippet !== null) {
       return (
-        <Tabs
-          initialSelectedIndex={this.getActiveSubTabIndex()}
-          tabItemContainerStyle={styles.subTabsHeader}
-          style={styles.tabs}>
-          <Tab
-            style={styles.tab}
-            label="Edit"
-            route="snippet-edit"
-            onActive={this.handleTabActive}/>
-          <Tab
-            style={styles.tab}
-            label="Config"
-            route="snippet-config"
-            onActive={this.handleTabActive}/>
-          <Tab
-            style={styles.tab}
-            label="Traces"
-            route="snippet-traces"
-            onActive={this.handleTabActive}/>
-        </Tabs>
+        <Container.Tabs>
+          <Tabs
+            initialSelectedIndex={this.getActiveSubTabIndex()}
+            tabItemContainerStyle={styles.subTabsHeader}
+            style={styles.tabs}>
+            <Tab
+              style={styles.tab}
+              label="Edit"
+              route="snippet-edit"
+              onActive={this.handleTabActive}/>
+            <Tab
+              style={styles.tab}
+              label="Config"
+              route="snippet-config"
+              onActive={this.handleTabActive}/>
+            <Tab
+              style={styles.tab}
+              label="Traces"
+              route="snippet-traces"
+              onActive={this.handleTabActive}/>
+          </Tabs>
+        </Container.Tabs>
       );
     }
   },
