@@ -15,7 +15,8 @@ import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
 import {TextField, FlatButton, IconButton, DatePicker, TimePicker} from 'syncano-material-ui';
-import {SelectFieldWrapper, Dialog, Loading} from '../../common';
+import {Loading} from 'syncano-components';
+import {SelectFieldWrapper, Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'DataObjectDialog',

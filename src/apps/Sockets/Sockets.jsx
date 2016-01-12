@@ -8,7 +8,8 @@ import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
-import {Loading, InnerToolbar, Socket, Container} from '../../common';
+import {Loading} from 'syncano-components';
+import {InnerToolbar, Socket, Container} from '../../common';
 
 // Apps
 import Data from '../Data';

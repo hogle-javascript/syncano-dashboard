@@ -8,8 +8,8 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Store from './TracesStore';
 
 import {Styles, Paper, FontIcon} from 'syncano-material-ui';
-import {ColumnList, Truncate, Trace} from 'syncano-components';
-import {Lists, Loading} from '../../common';
+import {ColumnList, Loading, Truncate, Trace} from 'syncano-components';
+import {Lists} from '../../common';
 
 let Column = ColumnList.Column;
 

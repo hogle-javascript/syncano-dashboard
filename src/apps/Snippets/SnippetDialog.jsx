@@ -10,7 +10,8 @@ import Store from './SnippetDialogStore';
 
 // Components
 import {TextField, FlatButton} from 'syncano-material-ui';
-import {SelectFieldWrapper, Dialog, Loading} from '../../common';
+import {Loading} from 'syncano-components';
+import {SelectFieldWrapper, Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'SnippetDialog',

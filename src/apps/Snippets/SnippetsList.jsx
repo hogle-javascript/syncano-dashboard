@@ -13,8 +13,8 @@ import Store from './SnippetsStore';
 
 // Components
 import ListItem from './SnippetsListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists, Loading} from '../../common';
+import {ColumnList, Loading} from 'syncano-components';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 

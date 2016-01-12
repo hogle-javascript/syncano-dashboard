@@ -6,8 +6,9 @@ import {DialogMixin, FormMixin} from '../../mixins';
 import Actions from './RenameDialogActions';
 import Store from './RenameDialogStore';
 
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, FlatButton} from 'syncano-material-ui';
+import {Loading} from 'syncano-components';
+import {Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'RenameDialog',
@@ -38,12 +39,12 @@ export default React.createClass({
 
   render() {
     let dialogCustomActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -64,7 +65,7 @@ export default React.createClass({
         actions={dialogCustomActions}>
         {this.renderFormNotifications()}
         Renaming this Instance can cause problems with your applications that are connected to it.
-        <MUI.TextField
+        <TextField
           ref="name"
           name="name"
           fullWidth={true}

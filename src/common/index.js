@@ -8,7 +8,6 @@ import Editor from './Editor';
 import Icon from './Icon';
 import InnerToolbar from './InnerToolbar';
 import Lists from './Lists';
-import Loading from './Loading';
 import Logo from './Logo';
 import Notification from './Notification';
 import Request from './Request';
@@ -30,7 +29,6 @@ export default {
   Icon,
   InnerToolbar,
   Lists,
-  Loading,
   Logo,
   Notification,
   Request,

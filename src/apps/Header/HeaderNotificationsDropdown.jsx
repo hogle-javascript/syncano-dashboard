@@ -9,8 +9,8 @@ import ProfileInvitationsStore from '../ProfileInvitations/ProfileInvitationsSto
 import ProfileInvitationsActions from '../ProfileInvitations/ProfileInvitationsActions';
 
 import {Utils, Styles, FontIcon, FlatButton, MenuItem, Divider, Badge, IconButton, IconMenu} from 'syncano-material-ui';
-import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
-import Loading from '../../common/Loading';
+import {Loading} from 'syncano-components';
+import {SnackbarNotification} from '../../common';
 
 export default Radium(React.createClass({
 
@@ -26,7 +26,7 @@ export default Radium(React.createClass({
     Reflux.connect(ProfileInvitationsStore, 'accountInvitations'),
     Router.Navigation,
     Router.State,
-    SnackbarNotificationMixin,
+    SnackbarNotification.Mixin,
     Utils.Styles
   ],
 

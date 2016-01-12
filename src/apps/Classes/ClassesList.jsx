@@ -11,8 +11,8 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 import ListItem from './ClassesListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists, ColorIconPicker, Loading} from '../../common';
+import {ColumnList, Loading} from 'syncano-components';
+import {Dialog, Lists, ColorIconPicker} from '../../common';
 
 let Column = ColumnList.Column;
 

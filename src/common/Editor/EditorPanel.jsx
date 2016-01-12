@@ -1,5 +1,3 @@
-/* eslint no-catch-shadow:0 */
-
 import React from 'react';
 import Radium from 'radium';
 
@@ -7,13 +5,12 @@ import Radium from 'radium';
 import {FormMixin} from '../../mixins';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Loading from '../../common/Loading';
+import {Paper, TextField} from 'syncano-material-ui';
+import {Loading} from 'syncano-components';
 
 import './Editor.css';
 
 export default Radium(React.createClass({
-
   displayName: 'EditorPanel',
 
   propTypes: {
@@ -73,37 +70,36 @@ export default Radium(React.createClass({
 
     if (this.state.panelCollapsed) {
       trace = (
-        <MUI.Paper
+        <Paper
           ref="trace"
           rounded={false}
           zDepth={1}
           style={styles.trace}>
           {this.props.trace}
-        </MUI.Paper>
+        </Paper>
       );
     }
 
     return (
-      <MUI.Paper zDepth={1}>
-        <MUI.Paper
+      <Paper zDepth={1}>
+        <Paper
           zDepth={1}
           style={styles.payloadStyle}>
-          <MUI.TextField
-            name='payloadField'
-            ref='payloadField'
+          <TextField
+            name="payloadField"
+            ref="payloadField"
             valueLink={this.linkState('payloadValue')}
             fullWidth={true}
-            hintText='Type in your payload here e.g. {"my_argument": "test123}'
-            floatingLabelText='Payload'
+            hintText={`Type in your payload here e.g. {"my_argument": "test123}`}
+            floatingLabelText="Payload"
             onBlur={this.handleFormValidation}
             errorText={this.getValidationMessages('payloadValue').join(' ')}/>
-
-        </MUI.Paper>
+        </Paper>
         <Loading
           show={this.props.loading}
-          type='linear'/>
+          type="linear"/>
         {trace}
-      </MUI.Paper>
+      </Paper>
     );
   }
 

@@ -15,8 +15,8 @@ import Store from './SnippetStore';
 
 // Components
 import {FlatButton, Styles, Checkbox} from 'syncano-material-ui';
-import {Show, CharacterCounter, Fab} from 'syncano-components';
-import {Container, Dialog, Editor, Notification, SnackbarNotification, Loading} from '../../common';
+import {Show, CharacterCounter, Fab, Loading} from 'syncano-components';
+import {Container, Dialog, Editor, Notification, SnackbarNotification} from '../../common';
 
 export default React.createClass({
   displayName: 'SnippetEdit',

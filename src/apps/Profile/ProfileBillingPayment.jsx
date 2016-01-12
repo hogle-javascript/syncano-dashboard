@@ -9,8 +9,8 @@ import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
 
 import {TextField, RaisedButton} from 'syncano-material-ui';
-import {Show, CreditCard} from 'syncano-components';
-import {Container, Loading, InnerToolbar} from '../../common';
+import {CreditCard, Show, Loading} from 'syncano-components';
+import {Container, InnerToolbar} from '../../common';
 
 export default Radium(React.createClass({
   displayName: 'ProfileBillingPayment',
