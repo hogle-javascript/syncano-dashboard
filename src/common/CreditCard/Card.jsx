@@ -1,18 +1,17 @@
 import React from 'react';
 import Radium from 'radium';
-import MUI from 'syncano-material-ui';
 
-import PaymentIcon from '../PaymentIcon';
+import {Utils} from 'syncano-material-ui';
+import PaymentIcon from 'syncano-components';
 
 export default Radium(React.createClass({
-
   displayName: 'Card',
 
   propTypes: {
     handleClick: React.PropTypes.func
   },
 
-  mixins: [MUI.Utils.Styles],
+  mixins: [Utils.Styles],
 
   getStyles() {
     return {
