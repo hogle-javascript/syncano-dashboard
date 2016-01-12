@@ -8,6 +8,7 @@ export default React.createClass({
   getStyles() {
     return {
       style: {
+        marginTop: 4,
         padding: 6
       },
       iconStyle: {

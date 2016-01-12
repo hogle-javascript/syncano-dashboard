@@ -51,8 +51,6 @@ export default React.createClass({
         ref="submit"/>
     ];
 
-    console.error(this.state);
-
     return (
       <Common.Dialog
         key="dialog"

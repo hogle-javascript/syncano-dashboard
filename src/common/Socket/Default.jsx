@@ -8,7 +8,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      tooltipPosition: 'bottom-left'
+      tooltipPosition: 'bottom-left',
+      iconClassName: 'synicon-plus-circle-outline'
     };
   },
 
@@ -23,6 +24,7 @@ export default React.createClass({
   render() {
     const styles = this.getStyles();
     const {
+      iconClassName,
       style,
       iconStyle,
       ...other
@@ -31,7 +33,7 @@ export default React.createClass({
     return (
       <SocketWrapper
         {...other}
-        iconClassName="synicon-plus-circle-outline"
+        iconClassName={iconClassName}
         style={style}
         iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );
