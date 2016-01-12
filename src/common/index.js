@@ -11,10 +11,8 @@ import Lists from './Lists';
 import Logo from './Logo';
 import Notification from './Notification';
 import Request from './Request';
-import Slider from './Slider';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
 import Sidebar from './Sidebar';
-import Socket from './Socket';
 import SnackbarNotification from './SnackbarNotification';
 
 export default {
@@ -32,8 +30,6 @@ export default {
   Notification,
   Request,
   Sidebar,
-  Slider,
   SocialAuthButtonsList,
-  Socket,
   SnackbarNotification
 };

@@ -6,10 +6,9 @@ import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 
-import Socket from '../../common/Socket';
+import {Socket} from 'syncano-components';
 
 export default React.createClass({
-
   displayName: 'SocketsEmpty',
 
   getStyles() {

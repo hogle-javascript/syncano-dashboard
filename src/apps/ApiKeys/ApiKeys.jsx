@@ -11,7 +11,8 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import {Container, InnerToolbar, Socket} from '../../common';
+import {Socket} from 'syncano-components';
+import {Container, InnerToolbar} from '../../common';
 
 // Local components
 import ApiKeysList from './ApiKeysList';

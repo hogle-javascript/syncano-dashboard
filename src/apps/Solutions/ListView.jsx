@@ -14,8 +14,8 @@ import SessionStore from '../Session/SessionStore';
 // Components
 import {Header} from '../../apps';
 import {Styles, List, ListItem, Divider} from 'syncano-material-ui';
-import {Loading, Tags, Show, Solutions} from 'syncano-components';
-import {Socket, InnerToolbar, Sidebar, Container} from '../../common';
+import {Loading, Tags, Show, Socket, Solutions} from 'syncano-components';
+import {InnerToolbar, Sidebar, Container} from '../../common';
 
 import CreateDialog from './CreateDialog';
 import CreateDialogActions from './CreateDialogActions';
