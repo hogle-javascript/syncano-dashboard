@@ -11,10 +11,10 @@ import SnippetsActions from '../Snippets/SnippetsActions';
 
 // Components
 import {TextField, Toggle, FlatButton} from 'syncano-material-ui';
-import {Dialog, SelectFieldWrapper} from '../../common';
+import {SelectFieldWrapper} from 'syncano-components';
+import {Dialog} from '../../common';
 
 export default React.createClass({
-
   displayName: 'CodeBoxDialog',
 
   mixins: [

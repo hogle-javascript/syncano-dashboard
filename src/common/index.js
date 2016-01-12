@@ -13,7 +13,6 @@ import Notification from './Notification';
 import Request from './Request';
 import Slider from './Slider';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
-import SelectFieldWrapper from './SelectFieldWrapper';
 import Sidebar from './Sidebar';
 import Socket from './Socket';
 import SnackbarNotification from './SnackbarNotification';
@@ -35,7 +34,6 @@ export default {
   Sidebar,
   Slider,
   SocialAuthButtonsList,
-  SelectFieldWrapper,
   Socket,
   SnackbarNotification
 };
