@@ -2,7 +2,6 @@ import Clipboard from './Clipboard';
 import ColorIconPicker from './ColorIconPicker';
 import Container from './Container';
 import ConversionPixel from './ConversionPixel';
-import CreditCard from './CreditCard';
 import Dialog from './Dialog';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
@@ -26,7 +25,6 @@ export default {
   ColorIconPicker,
   Container,
   ConversionPixel,
-  CreditCard,
   Dialog,
   Dropdown,
   Editor,
