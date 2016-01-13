@@ -1,33 +1,30 @@
 import React from 'react';
+
 import {Utils} from 'syncano-material-ui';
+import Container from './Container';
 
 export default React.createClass({
-
-  displayName: 'Container',
-
-  propTypes: {
-    style: React.PropTypes.object
-  },
+  displayName: 'TabsContainer',
 
   mixins: [Utils.Styles],
 
   getStyles() {
-    let styles = {
-      padding: '32px 24px 64px'
+    return {
+      maxWidth: '800px',
+      margin: '0 auto'
     };
-
-    return this.mergeAndPrefix(styles, this.props.style);
   },
 
   render() {
     let styles = this.getStyles();
 
     return (
-      <div
-        id={this.props.id}
-        style={styles}>
+      <Container style={styles}>
+        <div className="vm-4-b">
+          {this.props.tabs}
+        </div>
         {this.props.children}
-      </div>
+      </Container>
     );
   }
 });

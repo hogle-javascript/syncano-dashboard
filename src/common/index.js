@@ -11,7 +11,6 @@ import CreditCard from './CreditCard';
 import Dialog from './Dialog';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
-import Fab from './Fab';
 import Icon from './Icon';
 import InnerToolbar from './InnerToolbar';
 import Lists from './Lists';
@@ -40,7 +39,6 @@ export default {
   Dialog,
   Dropdown,
   Editor,
-  Fab,
   Icon,
   InnerToolbar,
   Lists,

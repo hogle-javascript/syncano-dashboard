@@ -9,13 +9,17 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import Store from './SnippetStore';
 
 import {Tabs, Tab} from 'syncano-material-ui';
-import {InnerToolbar} from '../../common';
+import {InnerToolbar, Container, Socket} from '../../common';
 
 let RouteHandler = Router.RouteHandler;
 
 export default React.createClass({
 
   displayName: 'Snippet',
+
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
 
   mixins: [
     Router.State,
@@ -50,7 +54,7 @@ export default React.createClass({
         backgroundColor: 'transparent'
       },
       tabs: {
-        padding: '0 250px',
+        padding: '0 20%',
         borderBottom: '1px solid #DDDDDD'
       },
       tab: {
@@ -141,6 +145,16 @@ export default React.createClass({
     }
   },
 
+  renderRunButton() {
+    return (
+      <Socket
+        iconClassName="synicon-play-circle"
+        iconStyle={{color: this.context.muiTheme.rawTheme.palette.accent2Color}}
+        tooltip="Click here to execute Snippet"
+        onTouchTap={this.handleRun}/>
+    );
+  },
+
   render() {
     return (
       <div>
@@ -148,14 +162,13 @@ export default React.createClass({
           title={this.getToolbarTitle()}
           backFallback={this.handleBackClick}
           forceBackFallback={true}
-          backButtonTooltip="Go back to Snippets list"/>
+          backButtonTooltip="Go back to Snippets list">
+          {this.isActive('snippet-edit') ? this.renderRunButton() : null}
+        </InnerToolbar>
 
-        <div style={{margin: '65px auto', width: '100%'}}>
-          <div style={{paddingTop: 32}}>
-            {this.renderTabs()}
-            <RouteHandler/>
-          </div>
-        </div>
+        <Container.Tabs tabs={this.renderTabs()}>
+          <RouteHandler/>
+        </Container.Tabs>
       </div>
     );
   }
