@@ -42,19 +42,33 @@ export default React.createClass({
             style={styles.menuStyle}
             subheader="Main Settings"
             subheaderStyle={styles.listSubheader}>
-            <Lists.LinkListItem routeName="profile-settings" primaryText="Profile"/>
-            <Lists.LinkListItem routeName="profile-authentication" primaryText="Authentication"/>
-            <Lists.LinkListItem routeName="profile-invitations" primaryText="Invitations"/>
+            <Lists.LinkListItem
+              routeName="profile-settings"
+              primaryText="Profile"/>
+            <Lists.LinkListItem
+              routeName="profile-authentication"
+              primaryText="Authentication"/>
+            <Lists.LinkListItem
+              routeName="profile-invitations"
+              primaryText="Invitations"/>
           </List>
           <Divider/>
           <List
             style={styles.menuStyle}
             subheader="Billing"
             subheaderStyle={styles.listSubheader}>
-            <Lists.LinkListItem routeName="profile-billing-plan" primaryText="Billing plan"/>
-            <Lists.LinkListItem routeName="profile-billing-payment" primaryText="Payment methods"/>
-            <Lists.LinkListItem routeName="profile-billing-invoices" primaryText="Invoices"/>
-            <Lists.LinkListItem routeName="profile-billing-address" primaryText="Billing address"/>
+            <Lists.LinkListItem
+              routeName="profile-billing-plan"
+              primaryText="Billing plan"/>
+            <Lists.LinkListItem
+              routeName="profile-billing-payment"
+              primaryText="Payment methods"/>
+            <Lists.LinkListItem
+              routeName="profile-billing-invoices"
+              primaryText="Invoices"/>
+            <Lists.LinkListItem
+              routeName="profile-billing-address"
+              primaryText="Billing address"/>
           </List>
         </Sidebar>
         <div className="col-flex-1">

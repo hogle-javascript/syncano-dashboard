@@ -140,7 +140,7 @@ export default React.createClass({
   },
 
   handleDismiss() {
-    this.resetDialogState();
+    this.handleCancel();
     if (typeof this.props.onDismiss === 'function') {
       this.props.onDismiss();
     }
@@ -276,7 +276,7 @@ export default React.createClass({
       <MUI.FlatButton
         key="cancel"
         label="Cancel"
-        onTouchTap={this.handleCancel}
+        onTouchTap={this.handleDismiss}
         ref="cancel"/>,
       <MUI.FlatButton
         key="confirm"
@@ -320,7 +320,7 @@ export default React.createClass({
         defaultOpen={this.props.defaultOpen}
         actions={dialogCustomActions}
         open={this.state.open}
-        onRequestClose={this.handleCancel}>
+        onRequestClose={this.handleDismiss}>
         <div>
           <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
           <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>

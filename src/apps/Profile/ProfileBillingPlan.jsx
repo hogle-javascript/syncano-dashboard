@@ -4,7 +4,7 @@ import Radium from 'radium';
 import Moment from 'moment';
 import _ from 'lodash';
 
-import {FormMixin, DialogsMixin, IsLoadingMixin} from '../../mixins';
+import {FormMixin, DialogsMixin, IsLoadingMixin, DialogMixin} from '../../mixins';
 
 import Store from './ProfileBillingPlanStore';
 import Actions from './ProfileBillingPlanActions.js';
@@ -26,6 +26,7 @@ export default Radium(React.createClass({
   mixins: [
     FormMixin,
     DialogsMixin,
+    DialogMixin,
     IsLoadingMixin(),
     Reflux.connect(Store),
     Reflux.connect(PlanDialogStore)
@@ -86,8 +87,8 @@ export default Radium(React.createClass({
   },
 
   handleCancelCancelProductionPlan() {
+    this.refs.cancelProductionPlan.dismiss();
     this.setupToggles();
-    this.handleCancel('cancelProductionPlan');
   },
 
   handleShowCancelPlanDialog() {
