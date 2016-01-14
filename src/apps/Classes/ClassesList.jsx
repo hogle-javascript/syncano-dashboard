@@ -31,20 +31,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  getStyles() {
-    return {
-      fabListTop: {
-        top: 200
-      },
-      fabListTopButton: {
-        margin: '5px 0'
-      },
-      fabListBottom: {
-        bottom: 100
-      }
-    };
-  },
-
   getAssociatedClasses() {
     let checkedClasses = Store.getCheckedItems();
 

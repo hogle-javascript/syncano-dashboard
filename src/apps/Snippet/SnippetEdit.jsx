@@ -22,8 +22,8 @@ import Store from './SnippetStore';
 
 // Components
 import {FlatButton, Styles, Checkbox} from 'syncano-material-ui';
-import {Show, CharacterCounter, Fab, Loading} from 'syncano-components';
-import {Container, Dialog, Editor, Notification} from '../../common';
+import {Show, CharacterCounter, Loading} from 'syncano-components';
+import {Dialog, Editor, Notification} from '../../common';
 
 export default React.createClass({
   displayName: 'SnippetEdit',
@@ -56,11 +56,6 @@ export default React.createClass({
 
   getStyles() {
     return {
-      container: {
-        margin: '25px auto',
-        width: '100%',
-        maxWidth: '1140px'
-      },
       tracePanel: {
         marginTop: 30,
         height: 300
@@ -225,22 +220,13 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-
     return (
-      <Container style={styles.container}>
+      <div>
         {this.getDialogs()}
-        <Fab position="top">
-          <Fab.TooltipItem
-            tooltip="Click here to execute Snippet"
-            mini={true}
-            onClick={this.handleRun}
-            iconClassName="synicon-play"/>
-        </Fab>
         <Loading show={this.state.isLoading}>
           {this.renderEditor()}
         </Loading>
-      </Container>
+      </div>
     );
   }
 });
