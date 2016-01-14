@@ -12,6 +12,7 @@ function run_e2e_tests {
     nohup npm run-script e2e-http-server &
     nohup npm run-script oauth-server &
     sleep 5
+    npm run-script e2e
     rm -rf ./dist_e2e
 }
 
