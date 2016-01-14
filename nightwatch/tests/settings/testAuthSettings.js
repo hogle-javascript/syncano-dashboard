@@ -34,7 +34,7 @@ export default {
       .url('https://www.google.pl/')
       .clickElement('input[name=q]')
       .waitForElementPresent('input[name=q]', function() {
-        client.keys([client.Keys.COMMAND, 'v']);
+        client.keys([client.Keys.CONTROL, 'v']);
       })
       .clickElement('button.lsb')
       .element('xpath', '//div[@class="mnr-c"]//em', (result) => {
