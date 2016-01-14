@@ -5,14 +5,14 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 import UnsavedDataMixin from './UnsavedDataMixin';
-import {DialogMixin, MousetrapMixin, DialogsMixin, FormMixin} from '../../mixins';
+import {DialogMixin, MousetrapMixin, DialogsMixin, FormMixin, SnackbarNotificationMixin} from '../../mixins';
 
 import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
 import {FlatButton, Utils, TextField, IconButton, RaisedButton} from 'syncano-material-ui';
-import {Container, Dialog, Notification, SnackbarNotification} from '../../common';
 import {Show} from 'syncano-components';
+import {Container, Dialog, Notification} from '../../common';
 
 export default Radium(React.createClass({
   displayName: 'SnippetConfig',
@@ -24,8 +24,7 @@ export default Radium(React.createClass({
   mixins: [
     Reflux.connect(Store),
     Router.Navigation,
-
-    SnackbarNotification.Mixin,
+    SnackbarNotificationMixin,
     UnsavedDataMixin,
     MousetrapMixin,
     DialogMixin,

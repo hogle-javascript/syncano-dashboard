@@ -1,4 +1,4 @@
-import SnackbarNotificationActions from './SnackbarNotificationActions';
+import SnackbarNotificationActions from '../apps/SnackbarNotification/SnackbarNotificationActions';
 
 export default {
   setSnackbarNotification(snackbar) {

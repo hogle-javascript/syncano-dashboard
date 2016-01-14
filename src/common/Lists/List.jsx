@@ -1,5 +1,5 @@
 import React from 'react';
-import {ColumnList, Loading} from 'syncano-componentsn';
+import {ColumnList, Loading} from 'syncano-components';
 
 export default React.createClass({
   displayName: 'List',

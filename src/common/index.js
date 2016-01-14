@@ -1,4 +1,3 @@
-import Clipboard from './Clipboard';
 import ColorIconPicker from './ColorIconPicker';
 import Container from './Container';
 import ConversionPixel from './ConversionPixel';
@@ -13,10 +12,8 @@ import Notification from './Notification';
 import Request from './Request';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
 import Sidebar from './Sidebar';
-import SnackbarNotification from './SnackbarNotification';
 
 export default {
-  Clipboard,
   ColorIconPicker,
   Container,
   ConversionPixel,
@@ -29,7 +26,6 @@ export default {
   Logo,
   Notification,
   Request,
-  Sidebar,
   SocialAuthButtonsList,
-  SnackbarNotification
+  Sidebar
 };

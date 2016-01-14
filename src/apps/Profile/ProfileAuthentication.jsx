@@ -2,22 +2,23 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 
-import {FormMixin} from '../../mixins';
+import {FormMixin, SnackbarNotificationMixin} from '../../mixins';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
 
 import {TextField, FlatButton, RaisedButton} from 'syncano-material-ui';
-import {Container, Clipboard, InnerToolbar} from '../../common';
+import {Clipboard} from 'syncano-components';
+import {Container, InnerToolbar} from '../../common';
 
 export default Radium(React.createClass({
-
   displayName: 'ProfileAuthentication',
 
   mixins: [
     Reflux.connect(Store),
     Reflux.ListenerMixin,
-    FormMixin
+    FormMixin,
+    SnackbarNotificationMixin
   ],
 
   validatorConstraints: {

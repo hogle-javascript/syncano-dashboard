@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import RequestActions from './RequestActions';
-import SnackbarNotificationActions from '../SnackbarNotification/SnackbarNotificationActions';
+import SnackbarNotificationActions from '../../apps/SnackbarNotification/SnackbarNotificationActions';
 
 let RequestStore = Reflux.createStore({
   listenables: RequestActions,

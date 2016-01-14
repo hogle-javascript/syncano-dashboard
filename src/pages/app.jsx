@@ -1,11 +1,11 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, RouteHandler} from 'react-router';
 import _ from 'lodash';
 
 import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
 import {Styles} from 'syncano-material-ui';
-import {SnackbarNotification} from './../common';
+import {SnackbarNotification} from './../apps';
 import {SyncanoTheme} from 'syncano-components';
 
 export default React.createClass({
@@ -20,7 +20,7 @@ export default React.createClass({
   },
 
   mixins: [
-    Router.State
+    State
   ],
 
   getInitialState() {
@@ -52,7 +52,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <Router.RouteHandler/>
+        <RouteHandler/>
         <SnackbarNotification />
       </div>
     );

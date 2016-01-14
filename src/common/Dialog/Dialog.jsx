@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import {DialogMixin} from '../../mixins';
 import {Dialog, Utils} from 'syncano-material-ui';
 
@@ -27,7 +28,7 @@ export default React.createClass({
     return (
       <Dialog
         {...other}
-        open={open ? open : this.state.open}
+        open={_.isBoolean(open) ? open : this.state.open}
         style={dialogStyle}
         autoDetectWindowHeight={false}>
         {children}

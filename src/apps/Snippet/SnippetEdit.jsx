@@ -1,10 +1,17 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {Navigation, State} from 'react-router';
 import SnippetConstants from './SnippetConstants';
 
 // Utils
-import {DialogMixin, DialogsMixin, InstanceTabsMixin, FormMixin, MousetrapMixin} from '../../mixins';
+import {
+  DialogMixin,
+  DialogsMixin,
+  InstanceTabsMixin,
+  FormMixin,
+  MousetrapMixin,
+  SnackbarNotificationMixin
+} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './SnippetAutosaveMixin';
@@ -16,14 +23,14 @@ import Store from './SnippetStore';
 // Components
 import {FlatButton, Styles, Checkbox} from 'syncano-material-ui';
 import {Show, CharacterCounter, Fab, Loading} from 'syncano-components';
-import {Container, Dialog, Editor, Notification, SnackbarNotification} from '../../common';
+import {Container, Dialog, Editor, Notification} from '../../common';
 
 export default React.createClass({
   displayName: 'SnippetEdit',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
     DialogMixin,
@@ -34,7 +41,7 @@ export default React.createClass({
     HeaderMixin,
     UnsavedDataMixin,
     AutosaveMixin,
-    SnackbarNotification.Mixin
+    SnackbarNotificationMixin
   ],
 
   autosaveAttributeName: 'snippetSourceAutosave',

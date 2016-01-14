@@ -10,6 +10,7 @@ import StoreLoadingMixin from './StoreLoadingMixin';
 import WaitForStoreMixin from './WaitForStoreMixin';
 import StoreHelpersMixin from './StoreHelpersMixin';
 import IsLoadingMixin from './IsLoadingMixin';
+import SnackbarNotificationMixin from './SnackbarNotificationMixin';
 
 export default {
   DialogMixin,
@@ -23,5 +24,6 @@ export default {
   StoreLoadingMixin,
   WaitForStoreMixin,
   StoreHelpersMixin,
-  IsLoadingMixin
+  IsLoadingMixin,
+  SnackbarNotificationMixin
 };

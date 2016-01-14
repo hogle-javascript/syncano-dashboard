@@ -1,16 +1,15 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
+import {StoreFormMixin, DialogStoreMixin, SnackbarNotificationMixin} from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
-import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
-
 import Actions from './InstallDialogActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     StoreFormMixin,
     DialogStoreMixin,

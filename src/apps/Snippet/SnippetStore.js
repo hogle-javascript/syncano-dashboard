@@ -1,15 +1,15 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import {StoreFormMixin, WaitForStoreMixin} from '../../mixins';
+import {StoreFormMixin, WaitForStoreMixin, SnackbarNotificationMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 import Actions from './SnippetActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     StoreFormMixin,
     WaitForStoreMixin,

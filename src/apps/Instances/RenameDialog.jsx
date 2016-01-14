@@ -52,10 +52,8 @@ export default React.createClass({
         ref="submit"/>
     ];
 
-    console.error(this.state);
-
     return (
-      <Common.Dialog
+      <Dialog
         key="dialog"
         ref="dialog"
         title="Rename an Instance"
@@ -73,11 +71,11 @@ export default React.createClass({
           errorText={this.getValidationMessages('new_name').join(' ')}
           hintText="Short name for your Instance"
           floatingLabelText="Name"/>
-        <Common.Loading
+        <Loading
           type="linear"
           position="bottom"
           show={this.state.isLoading} />
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });
