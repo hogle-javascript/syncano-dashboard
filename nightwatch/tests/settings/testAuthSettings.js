@@ -1,6 +1,5 @@
 import Globals from '../../globals';
 import Async from 'async';
-import Utils from '../../utils';
 
 export default {
   tags: ['settings'],
