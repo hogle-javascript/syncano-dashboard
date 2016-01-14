@@ -27,20 +27,16 @@ export default {
       .navigate()
       .clickElement('@copyButton');
 
-// This part is a bit wierd. I'm going to google, paste the account key and assert if an element
-// With the account key text is present on the page. Our input fields don't allow to check for
-// text values and that's why I'm going to google page
+// This part is a bit wierd. I'm going to stackoverflow with the account key set as a query
+// then i check the search fields value to check if the account key is there
+// This is because there input fields in our app have empty value attrs so I can't use'em
 
     client
-      .url('https://www.google.pl/')
-      .clickElement('input[name=q]')
-      .waitForElementPresent('input[name=q]', function() {
-        client.keys([Utils.cmdOrCtrl(), 'v']);
-      })
-      .clickElement('button.lsb')
-      .element('xpath', '//div[@class="mnr-c"]//em', (result) => {
-        client.elementIdText(result.value.ELEMENT, (text) => {
-          client.assert.equal(text.value, Globals.tempAccountKey);
+      .url(`http://stackoverflow.com/search?q=${Globals.tempAccountKey}`)
+      .waitForElementPresent('input.textbox')
+      .element('css selector', 'input.textbox', (result) => {
+        client.elementIdAttribute(result.value.ELEMENT, 'value', (attribute) => {
+          client.assert.equal(attribute.value, Globals.tempAccountKey);
         });
       });
   }
