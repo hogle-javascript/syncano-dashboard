@@ -96,6 +96,11 @@
         "on_failure" : true,
         "path" : "./reports/screenshots"
       },
+      "desiredCapabilities": {
+        "unexpectedAlertBehaviour": "accept",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      },
       "exclude": "utils.js"
     }
   }
