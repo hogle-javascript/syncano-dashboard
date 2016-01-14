@@ -1,5 +1,6 @@
 import Globals from '../../globals';
 import Async from 'async';
+import Utils from '../../utils';
 
 export default {
   tags: ['settings'],
@@ -19,7 +20,7 @@ export default {
         .login(Globals.tempEmail, Globals.tempPass);
     });
   },
-  ' Test Administrator copies an Account key': (client) => {
+  'Test Administrator copies an Account key': (client) => {
     const authenticationPage = client.page.authenticationPage();
 
     authenticationPage
@@ -34,7 +35,7 @@ export default {
       .url('https://www.google.pl/')
       .clickElement('input[name=q]')
       .waitForElementPresent('input[name=q]', function() {
-        client.keys([client.Keys.CONTROL, 'v']);
+        client.keys([Utils.cmdOrCtrl(), 'v']);
       })
       .clickElement('button.lsb')
       .element('xpath', '//div[@class="mnr-c"]//em', (result) => {
