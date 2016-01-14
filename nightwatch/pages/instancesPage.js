@@ -50,7 +50,7 @@ export default {
       locateStrategy: 'xpath'
     },
     instancesTableRow: {
-      selector: '//div[@class="description-field col-flex-1"]',
+      selector: '//div[@class=" description-field col-flex-1"]',
       locateStrategy: 'xpath'
     },
     instancesTableName: {

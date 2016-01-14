@@ -70,7 +70,7 @@ export default {
       .clickElement('@emptyListItem')
       .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
       .clickElement('@confirmButton')
-      .waitForElementNotVisible('@addInstanceModalTitle', 60000)
+      .waitForElementNotPresent('@addInstanceModalTitle')
       .waitForElementVisible('@instanceDescription');
   }
 };
