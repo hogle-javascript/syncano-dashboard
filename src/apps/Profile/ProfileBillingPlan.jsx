@@ -113,7 +113,7 @@ export default Radium(React.createClass({
     Actions.fetch();
   },
 
-  handleAddSubmit() {
+  handleSuccessfullValidation() {
     Actions.updateBillingProfile({
       hard_limit: this.state.hard_limit,
       soft_limit: this.state.soft_limit

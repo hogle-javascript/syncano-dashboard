@@ -148,6 +148,7 @@ export default Reflux.createStore({
   },
 
   onUpdateBillingProfileCompleted() {
+    BillingPlanActions.fetch();
     this.trigger(this.data);
   },
 
