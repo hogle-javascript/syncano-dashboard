@@ -97,7 +97,8 @@
         "path" : "./reports/screenshots"
       },
       "desiredCapabilities": {
-        "unexpectedAlertBehaviour": "accept",
+        "unexpectedAlertBehaviour": "dismiss",
+        
         "javascriptEnabled": true,
         "acceptSslCerts": true
       },
