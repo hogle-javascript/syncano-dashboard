@@ -83,6 +83,20 @@
         }
       },
       "exclude": "utils.js"
+    },
+    "firefox" : {
+      "launch_url" : "https://localhost:8080/",
+      "selenium_port"  : 4444,
+      "selenium_host"  : "localhost",
+      "silent": true,
+      "skip_testcases_on_fail": false,
+      "resolution": "1280x1024",
+      "screenshots" : {
+        "enabled" : true,
+        "on_failure" : true,
+        "path" : "./reports/screenshots"
+      },
+      "exclude": "utils.js"
     }
   }
 }
