@@ -103,7 +103,7 @@ export default {
       selector: '//h3[text()="Delete an Instance"]',
       locateStrategy: 'xpath'
     },
-    welcomeDialogCreateInstance: {
+    welcomeDialogButton: {
       selector: '//div[@class=" welcome-dialog"]//button',
       locateStrategy: 'xpath'
     },
