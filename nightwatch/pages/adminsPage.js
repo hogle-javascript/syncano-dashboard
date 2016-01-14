@@ -11,7 +11,7 @@ export default {
       locateStrategy: 'xpath'
     },
     adminsListMenu: {
-      selector: '//div[@class="admins-invitations-list"]/div[1]/div[@class="col-menu"]//button',
+      selector: '//div[@class="admins-invitations-list"]/div[1]/div[@class=" col-menu"]//button',
       locateStrategy: 'xpath'
     },
     deleteButton: {

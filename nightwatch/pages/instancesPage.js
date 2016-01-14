@@ -104,11 +104,11 @@ export default {
       locateStrategy: 'xpath'
     },
     welcomeDialogCreateInstance: {
-      selector: '//div[@class="welcome-dialog"]//button',
+      selector: '//div[@class=" welcome-dialog"]//button',
       locateStrategy: 'xpath'
     },
     instanceDescription: {
-      selector: '//div[@class="description-field col-flex-1" and text()="nightwatch_test_instance"]',
+      selector: '//div[@class=" description-field col-flex-1" and text()="nightwatch_test_instance"]',
       locateStrategy: 'xpath'
     },
     socketsHeaderTitle: {

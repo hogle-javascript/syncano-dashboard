@@ -57,7 +57,7 @@ export default {
       .clickElement('@welcomeDialogCreateInstance')
       .fillInput('@createModalDescriptionInput', 'nightwatch_test_instance')
       .clickElement('@confirmButton')
-      .waitForElementNotVisible('@addInstanceModalTitle', 60000)
+      .waitForElementNotPresent('@addInstanceModalTitle', 60000)
       .waitForElementVisible('@instanceDescription');
   },
   'Test Delete an Instance': (client) => {
@@ -80,7 +80,7 @@ export default {
       .clickElement('@emptyListItem')
       .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
       .clickElement('@confirmButton')
-      .waitForElementNotVisible('@addInstanceModalTitle', 60000)
+      .waitForElementNotPresent('@addInstanceModalTitle', 60000)
       .waitForElementVisible('@instanceDescription');
   }
 };

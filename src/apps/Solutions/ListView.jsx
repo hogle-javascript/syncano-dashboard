@@ -12,7 +12,7 @@ import Actions from './ListViewActions';
 import SessionStore from '../Session/SessionStore';
 
 // Components
-import {Header} from '../../apps';
+import Header from '../../apps/Header';
 import {Styles, List, ListItem, Divider} from 'syncano-material-ui';
 import {Loading, Tags, Show, Socket, Solutions} from 'syncano-components';
 import {InnerToolbar, Sidebar, Container} from '../../common';

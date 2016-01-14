@@ -7,11 +7,11 @@ export default {
   commands: [commonCommands],
   elements: {
     triggersListMenu: {
-      selector: '//div[@class="triggers-list"]/div[1]/div[@class="col-menu"]//button',
+      selector: '//div[@class="triggers-list"]/div[1]/div[@class=" col-menu"]//button',
       locateStrategy: 'xpath'
     },
     triggerDropdown: {
-      selector: `//div[text()="${utils.addSuffix('trigger')}"]/../../following-sibling::div[@class="col-menu"]//button`,
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]/../../following-sibling::div[@class=" col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {

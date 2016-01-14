@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 // Utils
-import {FormMixin} from '../../mixins';
+import FormMixin from '../../mixins/FormMixin';
 
 // Components
 import {Paper, TextField} from 'syncano-material-ui';
