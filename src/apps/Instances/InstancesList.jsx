@@ -10,12 +10,12 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
 import ListItem from './InstancesListItem';
-import {Dialog, ColumnList, Lists, ColorIconPicker} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Dialog, Lists, ColorIconPicker} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'InstancesList',
 
   mixins: [

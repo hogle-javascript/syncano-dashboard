@@ -11,7 +11,8 @@ import Actions from './DataViewsActions';
 import Store from './DataViewsStore';
 
 // Components
-import {Container, InnerToolbar, Socket} from '../../common';
+import {Socket} from 'syncano-components';
+import {Container, InnerToolbar} from '../../common';
 
 // Local components
 import DataList from './DataViewsList';

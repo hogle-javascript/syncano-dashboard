@@ -8,13 +8,12 @@ import Actions from './ProfileInvitationsActions';
 import Store from './ProfileInvitationsStore';
 
 // Components
-import {FlatButton} from 'syncano-material-ui';
-import MenuItem from '../../../node_modules/syncano-material-ui/lib/menus/menu-item';
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {FlatButton, MenuItem} from 'syncano-material-ui';
+import {ColumnList} from 'syncano-components';
+import {Container, Dialog, Lists} from '../../common';
 import ListItem from './ProfileInvitationsListItem';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ProfileInvitationsList',
@@ -39,7 +38,7 @@ export default React.createClass({
   initDialogs() {
     return [
       {
-        dialog: Common.Dialog,
+        dialog: Dialog,
         params: {
           key: 'acceptInvitationsDialog',
           ref: 'acceptInvitationsDialog',
@@ -60,7 +59,7 @@ export default React.createClass({
         }
       },
       {
-        dialog: Common.Dialog,
+        dialog: Dialog,
         params: {
           key: 'declineInvitationsDialog',
           ref: 'declineInvitationsDialog',
@@ -99,9 +98,9 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container>
+      <Lists.Container>
         {this.getDialogs()}
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
@@ -111,25 +110,25 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Role</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Accept an Invitation"
                 multipleItemsText="Accept Invitations"
                 onTouchTap={this.showDialog.bind(null, 'acceptInvitationsDialog')}/>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Decline an Invitation"
                 multipleItemsText="Decline Invitations"
                 onTouchTap={this.showDialog.bind(null, 'declineInvitationsDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           key="profile-invitations-list"
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

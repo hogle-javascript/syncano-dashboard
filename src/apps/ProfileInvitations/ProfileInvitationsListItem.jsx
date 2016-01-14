@@ -1,8 +1,7 @@
 import React from 'react';
 
 import {MenuItem, Styles} from 'syncano-material-ui';
-import {ColumnList} from '../../common';
-import {Truncate} from 'syncano-components';
+import {ColumnList, Truncate} from 'syncano-components';
 
 let Column = ColumnList.Column;
 

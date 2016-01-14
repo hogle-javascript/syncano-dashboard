@@ -50,7 +50,7 @@ export default {
       locateStrategy: 'xpath'
     },
     instancesTableRow: {
-      selector: '//div[@class="description-field col-flex-1"]',
+      selector: '//div[@class=" description-field col-flex-1"]',
       locateStrategy: 'xpath'
     },
     instancesTableName: {
@@ -104,11 +104,11 @@ export default {
       locateStrategy: 'xpath'
     },
     welcomeDialogButton: {
-      selector: '//div[@class="welcome-dialog"]//button',
+      selector: '//div[@class=" welcome-dialog"]//button',
       locateStrategy: 'xpath'
     },
     instanceDescription: {
-      selector: '//div[@class="description-field col-flex-1" and text()="nightwatch_test_instance"]',
+      selector: '//div[@class=" description-field col-flex-1" and text()="nightwatch_test_instance"]',
       locateStrategy: 'xpath'
     },
     socketsHeaderTitle: {

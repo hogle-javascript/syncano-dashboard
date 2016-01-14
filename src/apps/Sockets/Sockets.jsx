@@ -8,7 +8,8 @@ import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
-import {Loading, InnerToolbar, Socket, Container} from '../../common';
+import {Loading, Socket} from 'syncano-components';
+import {InnerToolbar, Container} from '../../common';
 
 // Apps
 import Data from '../Data';
@@ -113,7 +114,7 @@ export default React.createClass({
             isLoading={this.state.dataviews.isLoading}
             items={this.state.dataviews.items}
             handleTitleClick={this.handleListTitleClick.bind(null, 'data')}
-            emptyItemHandleClick={this.showDataViewAddDialog}
+            emptyItemHandleClick={Data.Actions.showDialog}
             emptyItemContent="Create a Data Socket"/>
 
           <CodeBoxes.List
@@ -121,7 +122,7 @@ export default React.createClass({
             isLoading={this.state.codeboxes.isLoading}
             items={this.state.codeboxes.items}
             handleTitleClick={this.handleListTitleClick.bind(null, 'codeBoxes')}
-            emptyItemHandleClick={this.showCodeBoxAddDialog}
+            emptyItemHandleClick={CodeBoxes.Actions.showDialog}
             emptyItemContent="Create a CodeBox Socket"/>
 
           <Channels.List
@@ -129,7 +130,7 @@ export default React.createClass({
             isLoading={this.state.channels.isLoading}
             items={this.state.channels.items}
             handleTitleClick={this.handleListTitleClick.bind(null, 'channels')}
-            emptyItemHandleClick={this.showChannelAddDialog}
+            emptyItemHandleClick={Channels.Actions.showDialog}
             emptyItemContent="Create a Channel Socket"/>
 
           <Triggers.List
@@ -137,7 +138,7 @@ export default React.createClass({
             isLoading={this.state.triggers.isLoading}
             items={this.state.triggers.items}
             handleTitleClick={this.handleListTitleClick.bind(null, 'triggers')}
-            emptyItemHandleClick={this.showTriggerAddDialog}
+            emptyItemHandleClick={Triggers.Actions.showDialog}
             emptyItemContent="Create a Trigger Socket"/>
 
           <Schedules.List
@@ -145,7 +146,7 @@ export default React.createClass({
             isLoading={this.state.schedules.isLoading}
             items={this.state.schedules.items}
             handleTitleClick={this.handleListTitleClick.bind(null, 'schedules')}
-            emptyItemHandleClick={this.showScheduleAddDialog}
+            emptyItemHandleClick={Schedules.Actions.showDialog}
             emptyItemContent="Create a Schedule Socket"/>
         </Loading>
       </div>

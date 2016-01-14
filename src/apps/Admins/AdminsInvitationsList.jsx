@@ -10,12 +10,12 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import ListItem from './AdminsInvitationsListItem';
-import {Dialog, ColumnList, Lists} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'AdminsInvitationsList',
 
   mixins: [

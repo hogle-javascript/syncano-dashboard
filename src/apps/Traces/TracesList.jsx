@@ -3,20 +3,17 @@ import Radium from 'radium';
 import Reflux from 'reflux';
 import Router from 'react-router';
 
-// Utils
 import HeaderMixin from '../Header/HeaderMixin';
 
-// Stores and Actions
 import Store from './TracesStore';
 
 import {Styles, Paper, FontIcon} from 'syncano-material-ui';
-import {ColumnList, Lists, Loading} from '../../common';
-import {Truncate, Trace} from 'syncano-components';
+import {ColumnList, Loading, Truncate, Trace} from 'syncano-components';
+import {Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default Radium(React.createClass({
-
   displayName: 'TracesList',
 
   mixins: [

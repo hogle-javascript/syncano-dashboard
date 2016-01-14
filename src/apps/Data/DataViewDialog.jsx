@@ -12,8 +12,8 @@ import ClassesStore from '../Classes/ClassesStore';
 
 // Components
 import {TextField, FlatButton, Toggle, Checkbox} from 'syncano-material-ui';
-import {Show} from 'syncano-components';
-import {SelectFieldWrapper, Dialog} from '../../common';
+import {SelectFieldWrapper, Show} from 'syncano-components';
+import {Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'DataViewDialog',

@@ -3,7 +3,7 @@ import pluralize from 'pluralize';
 import _ from 'lodash';
 
 import {FlatButton, Dialog} from 'syncano-material-ui';
-import Loading from '../Loading';
+import {Loading} from 'syncano-components';
 
 export default React.createClass({
   displayName: 'DeleteDialog',

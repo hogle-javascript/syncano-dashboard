@@ -7,7 +7,7 @@ import SessionActions from '../apps/Session/SessionActions';
 import Sticky from 'react-stickydiv';
 import Header from '../apps/Header';
 import {List, Divider} from 'syncano-material-ui';
-import {Sidebar} from '../common/';
+import {Sidebar} from '../common';
 import {LinkListItem} from '../common/Lists';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
