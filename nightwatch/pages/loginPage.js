@@ -1,5 +1,3 @@
-import commonCommands from '../commands/commonCommands';
-
 const loginCommands = {
   login(email, pass) {
     return this
@@ -14,7 +12,7 @@ const loginCommands = {
 
 export default {
   url: 'https://localhost:8080/#/login',
-  commands: [commonCommands, loginCommands],
+  commands: [loginCommands],
   elements: {
     emailInput: {
       selector: 'input[type=text]'
