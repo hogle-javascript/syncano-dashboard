@@ -12,7 +12,7 @@ export default {
       locateStrategy: 'xpath'
     },
     account: {
-      selector: '//ul[@class=" toolbar-list"]//li[@id="menu-account"]',
+      selector: '//li[@id="menu-account"]/div',
       locateStrategy: 'xpath'
     },
     accountDropdown: {
