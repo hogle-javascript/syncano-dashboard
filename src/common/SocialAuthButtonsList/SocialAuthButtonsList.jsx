@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import {State} from 'react-router';
 
 import SessionStore from '../../apps/Session/SessionStore';
 import AuthActions from '../../apps/Account/AuthActions';
@@ -10,6 +11,10 @@ import {Styles, FontIcon, Divider, List, ListItem} from 'syncano-material-ui';
 export default Radium(React.createClass({
 
   displayName: 'SocialAuthButtonsList',
+
+  mixins: [
+    State
+  ],
 
   getDefaultProps() {
     return {
@@ -44,6 +49,10 @@ export default Radium(React.createClass({
   },
 
   handleSocialSignup(network) {
+    if (this.isActive('signup')) {
+      SessionStore.showWelcomeDialog();
+    }
+
     SessionStore.setSignUpMode();
     AuthActions.socialLogin(network);
   },

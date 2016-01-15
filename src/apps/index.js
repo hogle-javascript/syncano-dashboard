@@ -12,6 +12,7 @@ import Profile from './Profile';
 import ProfileInvitations from './ProfileInvitations';
 import Schedules from './Schedules';
 import Session from './Session';
+import SnackbarNotification from './SnackbarNotification';
 import Snippet from './Snippet';
 import Snippets from './Snippets';
 import Solutions from './Solutions';
@@ -34,6 +35,7 @@ export default {
   ProfileInvitations,
   Schedules,
   Session,
+  SnackbarNotification,
   Snippet,
   Snippets,
   Solutions,

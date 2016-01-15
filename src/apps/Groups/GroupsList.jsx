@@ -11,12 +11,12 @@ import HeaderMixin from'../Header/HeaderMixin';
 
 // Components
 import ListItem from './GroupsListItem';
-import {Dialog, ColumnList, Lists} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default Radium(React.createClass({
-
   displayName: 'GroupsList',
 
   mixins: [

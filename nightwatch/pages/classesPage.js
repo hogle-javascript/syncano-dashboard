@@ -7,7 +7,7 @@ export default {
   commands: [commonCommands],
   elements: {
     classesListMenu: {
-      selector: '//div[@class="classes-list"]/div[1]/div[@class="col-menu"]//button',
+      selector: '//div[@class="classes-list"]/div[1]/div[@class=" col-menu"]//button',
       locateStrategy: 'xpath'
     },
     selectAll: {
@@ -19,7 +19,7 @@ export default {
       locateStrategy: 'xpath'
     },
     classItemDropdown: {
-      selector: `//div[text()="${utils.addSuffix('class')}"]/../../following-sibling::div[@class="col-menu"]//button`,
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../../following-sibling::div[@class=" col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -89,7 +89,7 @@ export default {
       locateStrategy: 'xpath'
     },
     userClassDropDown: {
-      selector: '//div[text()="user_profile"]/../../../div[@class="col-menu"]//button',
+      selector: '//div[text()="user_profile"]/../../../div[@class=" col-menu"]//button',
       locateStrategy: 'xpath'
     },
     classToSelect: {

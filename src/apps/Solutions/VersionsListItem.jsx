@@ -1,15 +1,13 @@
 import React from 'react';
 
 import {Avatar, IconButton} from 'syncano-material-ui';
-import {ColumnList} from '../../common';
+import {ColumnList} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'SolutionVersionsListItem',
 
-  // List
   handleDownloadVersion(url) {
     window.open(url, '_blank');
   },

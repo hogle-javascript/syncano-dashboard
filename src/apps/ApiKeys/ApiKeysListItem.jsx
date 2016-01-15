@@ -4,10 +4,8 @@ import {DialogsMixin} from '../../mixins/';
 
 import Actions from './ApiKeysActions';
 
-// Components
-import {ColumnList, Color} from '../../common';
 import {MenuItem} from 'syncano-material-ui';
-import {Truncate} from 'syncano-components';
+import {ColumnList, Color, Truncate} from 'syncano-components';
 
 let Column = ColumnList.Column;
 

@@ -10,7 +10,8 @@ import Store from './CodeBoxesStore';
 
 // Components
 import ListItem from './CodeBoxesListItem';
-import {Dialog, ColumnList, Lists} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 

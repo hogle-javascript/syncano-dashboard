@@ -1,16 +1,12 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, Navigation, RouteHandler} from 'react-router';
 
-// Stores and Action
 import SessionStore from '../apps/Session/SessionStore';
 import AuthConstants from '../apps/Account/AuthConstants';
 
-// Components
 import {ConversionPixel} from '../common';
 
-
 export default React.createClass({
-
   displayName: 'Dashboard',
 
   contextTypes: {
@@ -18,8 +14,8 @@ export default React.createClass({
   },
 
   mixins: [
-    Router.State,
-    Router.Navigation
+    State,
+    Navigation
   ],
 
   statics: {
@@ -46,7 +42,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <Router.RouteHandler />
+        <RouteHandler />
         {this.renderConversionPixels()}
       </div>
     );

@@ -11,12 +11,12 @@ import Store from './ChannelsStore';
 
 // Components
 import ListItem from './ChannelsListItem';
-import {Dialog, Lists, ColumnList} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'ChannelsList',
 
   mixins: [

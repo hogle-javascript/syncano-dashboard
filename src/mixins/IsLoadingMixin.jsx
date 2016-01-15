@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import Common from '../common';
+import {Loading} from 'syncano-components';
+import {Container} from '../common';
 
 export default (options = {}, props = {}) => {
   options.attr = options.attr || 'state.isLoading';
@@ -23,9 +24,9 @@ export default (options = {}, props = {}) => {
 
     renderLoadingComponent() {
       return (
-        <Common.Container.Loading>
-          <Common.Loading {...props} show = {true} />
-        </Common.Container.Loading>
+        <Container.Loading>
+          <Loading {...props} show = {true} />
+        </Container.Loading>
       );
     },
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import Loading from '../Loading';
-import EmptyItem from '../ColumnList/EmptyListItem';
+import {ColumnList, Loading} from 'syncano-components';
 
 export default React.createClass({
   displayName: 'List',
@@ -21,9 +20,9 @@ export default React.createClass({
     }
 
     return (
-      <EmptyItem handleClick={this.props.emptyItemHandleClick}>
+      <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
-      </EmptyItem>
+      </ColumnList.EmptyItem>
     );
   },
 

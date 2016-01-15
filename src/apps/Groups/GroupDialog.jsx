@@ -9,8 +9,9 @@ import Actions from './GroupsActions';
 import Store from './GroupDialogStore';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, FlatButton} from 'syncano-material-ui';
+import {Loading} from 'syncano-components';
+import {Dialog} from '../../common';
 
 export default React.createClass({
 
@@ -41,12 +42,12 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -55,7 +56,7 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
+      <Dialog
         key='dialog'
         ref="dialog"
         title={`${title} a Group`}
@@ -64,7 +65,7 @@ export default React.createClass({
         open={this.state.open}
         actions={dialogStandardActions}>
         {this.renderFormNotifications()}
-        <MUI.TextField
+        <TextField
           ref="label"
           label="label"
           fullWidth={true}
@@ -72,11 +73,11 @@ export default React.createClass({
           errorText={this.getValidationMessages('label').join(' ')}
           hintText="Name of the group"
           floatingLabelText="Group Name"/>
-        <Common.Loading
+        <Loading
           type="linear"
           position="bottom"
           show={this.state.isLoading}/>
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });
