@@ -38,7 +38,7 @@ export default (displayName, Store, Actions) => {
           numericality: true,
           inclusion: {
             within: users,
-            message: '^Thers is no user %{value}'
+            message: '^There is no user %{value}'
           }
         }
       };
