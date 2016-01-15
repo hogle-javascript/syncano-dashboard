@@ -151,7 +151,7 @@ export default React.createClass({
     let styles = this.getStyles();
     let source = null;
     let snippet = this.state.currentSnippet;
-    let editorMode = 'php';
+    let editorMode = 'python';
     let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
     let traceStyle =
       this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
