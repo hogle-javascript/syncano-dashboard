@@ -38,5 +38,29 @@ export default {
           client.assert.equal(attribute.value, Globals.tempAccountKey);
         });
       });
+  },
+  'Test Administrator resets an Account Key': (client) => {
+    const authenticationPage = client.page.authenticationPage();
+    let accountKeyValue = null;
+
+    authenticationPage
+      .navigate()
+      .waitForElementPresent('@accountKey');
+
+    const accountKeyElement = authenticationPage.elements.accountKey.selector;
+
+    client.element('xpath', accountKeyElement, (result) => {
+      client.elementIdText(result.value.ELEMENT, (text) => accountKeyValue = text.value);
+    });
+
+    authenticationPage.clickElement('@resetButton');
+
+    client
+      .pause(1000)
+      .element('xpath', accountKeyElement, (result) => {
+        client.elementIdText(result.value.ELEMENT, (text) => {
+          client.assert.notEqual(text.value, accountKeyValue);
+        });
+      });
   }
 };

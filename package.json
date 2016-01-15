@@ -118,7 +118,7 @@
     "clean": "gulp clean",
     "oauth-server": "node oauth-server.js",
     "eslint": "eslint src --quiet --ext .js --ext .jsx",
-    "e2e": "nightwatch -e 1280x1024 --suiteRetries 1 --skiptags snippets,socialLogins",
+    "e2e": "nightwatch -e 1280x1024 --suiteRetries 1 --skiptags settings",
     "e2e-local": "nightwatch -e 1280x1024 --suiteRetries 1 --skiptags snippets,socialLogins",
     "e2e-screenshots": "nightwatch -e 1280x1024,360x640,768x1024 --tag navigation || true",
     "e2e-setup": "gulp selenium-install",

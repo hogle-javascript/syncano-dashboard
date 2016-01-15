@@ -12,6 +12,10 @@ export default {
     copyButton: {
       selector: '//span[text()="COPY"]',
       locateStrategy: 'xpath'
+    },
+    resetButton: {
+      selector: '//span[text()="RESET"]',
+      locateStrategy: 'xpath' 
     }
   }
 };
