@@ -20,7 +20,9 @@ export default Reflux.createStore({
     python: 'python',
     nodejs: 'javascript',
     ruby: 'ruby',
-    golang: 'golang'
+    golang: 'golang',
+    php: 'php',
+    swift: 'swift'
   },
 
   runtimeColors: {

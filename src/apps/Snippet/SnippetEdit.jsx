@@ -147,19 +147,11 @@ export default React.createClass({
     }];
   },
 
-  shouldSnippetRun() {
-    if (this.isSaved()) {
-      this.handleRun();
-    } else {
-      this.showDialog('runUnsavedSnippet');
-    }
-  },
-
-  renderEditor() {
+  render() {
     let styles = this.getStyles();
     let source = null;
     let snippet = this.state.currentSnippet;
-    let editorMode = 'python';
+    let editorMode = 'php';
     let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
     let traceStyle =
       this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
@@ -173,58 +165,52 @@ export default React.createClass({
     if (snippet) {
       source = snippet.source;
       editorMode = Store.getEditorMode();
-
-      return (
-        <div>
-          <Editor
-            ref="editorSource"
-            mode={editorMode}
-            theme="tomorrow"
-            onChange={this.handleOnSourceChange}
-            onLoad={this.clearAutosaveTimer}
-            value={source}/>
-          <CharacterCounter
-            charactersCountWarn={SnippetConstants.charactersCountWarn}
-            characters={charactersCount}
-            maxCharacters={SnippetConstants.maxCharactersCount}/>
-          <Show if={this.getValidationMessages('source').length > 0}>
-            <div style={styles.notification}>
-              <Notification type="error">
-                {this.getValidationMessages('source').join(' ')}
-              </Notification>
-            </div>
-          </Show>
-          <Checkbox
-            ref="autosaveCheckbox"
-            name="autosaveCheckbox"
-            label="Autosave"
-            style={styles.autosaveCheckbox}
-            defaultChecked={this.isAutosaveEnabled()}
-            onCheck={this.saveCheckboxState}/>
-
-          <div style={styles.tracePanel}>
-            <Editor.Panel
-              ref="tracePanel"
-              trace={this.state.lastTraceResult}
-              loading={!this.state.lastTraceReady}/>
-            <Show if={this.state.lastTraceDuration && this.state.lastTraceStatus}>
-              <div style={styles.durationSummary}>
-                Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
-                duration: {this.state.lastTraceDuration}ms
-              </div>
-            </Show>
-          </div>
-        </div>
-      );
     }
-  },
 
-  render() {
     return (
       <div>
         {this.getDialogs()}
-        <Loading show={this.state.isLoading}>
-          {this.renderEditor()}
+        <Loading show={this.state.isLoading || !snippet}>
+          <div>
+            <Editor
+              ref="editorSource"
+              mode={editorMode}
+              theme="tomorrow"
+              onChange={this.handleOnSourceChange}
+              onLoad={this.clearAutosaveTimer}
+              value={source}/>
+            <CharacterCounter
+              charactersCountWarn={SnippetConstants.charactersCountWarn}
+              characters={charactersCount}
+              maxCharacters={SnippetConstants.maxCharactersCount}/>
+            <Show if={this.getValidationMessages('source').length > 0}>
+              <div style={styles.notification}>
+                <Notification type="error">
+                  {this.getValidationMessages('source').join(' ')}
+                </Notification>
+              </div>
+            </Show>
+            <Checkbox
+              ref="autosaveCheckbox"
+              name="autosaveCheckbox"
+              label="Autosave"
+              style={styles.autosaveCheckbox}
+              defaultChecked={this.isAutosaveEnabled()}
+              onCheck={this.saveCheckboxState}/>
+
+            <div style={styles.tracePanel}>
+              <Editor.Panel
+                ref="tracePanel"
+                trace={this.state.lastTraceResult}
+                loading={!this.state.lastTraceReady}/>
+              <Show if={this.state.lastTraceDuration && this.state.lastTraceStatus}>
+                <div style={styles.durationSummary}>
+                  Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
+                  duration: {this.state.lastTraceDuration}ms
+                </div>
+              </Show>
+            </div>
+          </div>
         </Loading>
       </div>
     );
