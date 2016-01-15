@@ -1,10 +1,17 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {Navigation, State} from 'react-router';
 import SnippetConstants from './SnippetConstants';
 
 // Utils
-import {DialogMixin, DialogsMixin, InstanceTabsMixin, FormMixin, MousetrapMixin} from '../../mixins';
+import {
+  DialogMixin,
+  DialogsMixin,
+  InstanceTabsMixin,
+  FormMixin,
+  MousetrapMixin,
+  SnackbarNotificationMixin
+} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './SnippetAutosaveMixin';
@@ -15,24 +22,15 @@ import Store from './SnippetStore';
 
 // Components
 import {FlatButton, Styles, Checkbox} from 'syncano-material-ui';
-import {Show} from 'syncano-components';
-import {
-  Container,
-  Dialog,
-  Editor,
-  CharacterCounter,
-  Notification,
-  SnackbarNotification,
-  Fab,
-  Loading
-} from '../../common';
+import {Show, CharacterCounter, Loading} from 'syncano-components';
+import {Dialog, Editor, Notification} from '../../common';
 
 export default React.createClass({
   displayName: 'SnippetEdit',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
     DialogMixin,
@@ -43,7 +41,7 @@ export default React.createClass({
     HeaderMixin,
     UnsavedDataMixin,
     AutosaveMixin,
-    SnackbarNotification.Mixin
+    SnackbarNotificationMixin
   ],
 
   autosaveAttributeName: 'snippetSourceAutosave',
@@ -58,11 +56,6 @@ export default React.createClass({
 
   getStyles() {
     return {
-      container: {
-        margin: '25px auto',
-        width: '100%',
-        maxWidth: '1140px'
-      },
       tracePanel: {
         marginTop: 30,
         height: 300
@@ -227,22 +220,13 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-
     return (
-      <Container style={styles.container}>
+      <div>
         {this.getDialogs()}
-        <Fab position="top">
-          <Fab.TooltipItem
-            tooltip="Click here to execute Snippet"
-            mini={true}
-            onClick={this.handleRun}
-            iconClassName="synicon-play"/>
-        </Fab>
         <Loading show={this.state.isLoading}>
           {this.renderEditor()}
         </Loading>
-      </Container>
+      </div>
     );
   }
 });

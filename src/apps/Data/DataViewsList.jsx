@@ -11,7 +11,8 @@ import Store from './DataViewsStore';
 
 // Components
 import ListItem from './DataViewsListItem';
-import {Dialog, ColumnList, Lists} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 

@@ -7,7 +7,7 @@ export default {
   commands: [commonCommands],
   elements: {
     usersListMenu: {
-      selector: '//div[@class="users-list"]/div[1]/div[@class="col-menu"]//button',
+      selector: '//div[@class="users-list"]/div[1]/div[@class=" col-menu"]//button',
       locateStrategy: 'xpath'
     },
     user: {
@@ -83,7 +83,7 @@ export default {
       locateStrategy: 'xpath'
     },
     userList: {
-      selector: '//div[@class="col-lg-27"]//div[@class="col-xs-10"]',
+      selector: '//div[@class="col-lg-27"]//div[@class=" col-xs-10"]',
       locateStrategy: 'xpath'
     },
     groupList: {

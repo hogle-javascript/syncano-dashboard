@@ -62,7 +62,5 @@ export default {
       .clickListItemDropdown('@instancesDropdown', 'Delete')
       .clickElement('@confirmDeleteButton')
       .waitForElementNotPresent('@deleteInstanceModalTitle');
-
-    instancesPage.expect.element('@welcomeDialogCreateInstance').to.be.present.after(10000);
   }
 };

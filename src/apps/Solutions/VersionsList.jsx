@@ -1,14 +1,12 @@
 import React from 'react';
 
-// Components
 import ListItem from './VersionsListItem';
-import {ColumnList, Lists} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Lists} from '../../common';
 
-// Shortcut
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'SolutionVersionsList',
 
   renderItem(item) {

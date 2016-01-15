@@ -58,7 +58,7 @@ export default React.createClass({
         radius: 200
       },
       {
-        node: ReactDOM.findDOMNode(this.refs.addInstanceFab),
+        node: ReactDOM.findDOMNode(this.refs.addInstanceButton),
         text: <div>You can add a new <strong style={styles.tourHighlight}>Instance</strong> by clicking here
           <div style={styles.secondLine}>
             You will see a similar button placed in same screen corner, on other views as well - you will
@@ -112,6 +112,7 @@ export default React.createClass({
       <div>
         <div style={{position: 'fixed', left: 10, bottom: 10}}>
           <IconButton
+            ref="addInstanceButton"
             iconClassName="synicon-help-circle"
             onClick={this.onNextStep}
             touch={true}

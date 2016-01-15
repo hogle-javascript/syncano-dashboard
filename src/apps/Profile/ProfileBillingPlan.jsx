@@ -12,7 +12,8 @@ import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
 import {FlatButton, IconButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
-import {Container, Dialog, Billing, InnerToolbar, Color} from '../../common';
+import {Billing} from 'syncano-components';
+import {Container, Dialog, InnerToolbar, Color} from '../../common';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 import Chart from './ProfileBillingChart';
@@ -20,7 +21,6 @@ import Chart from './ProfileBillingChart';
 import EmptyContainer from '../../common/Container/EmptyContainer';
 
 export default Radium(React.createClass({
-
   displayName: 'ProfileBillingPlan',
 
   mixins: [
@@ -113,7 +113,7 @@ export default Radium(React.createClass({
     Actions.fetch();
   },
 
-  handleAddSubmit() {
+  handleSuccessfullValidation() {
     Actions.updateBillingProfile({
       hard_limit: this.state.hard_limit,
       soft_limit: this.state.soft_limit

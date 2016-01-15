@@ -7,11 +7,11 @@ export default {
   commands: [commonCommands],
   elements: {
     schedulesListMenu: {
-      selector: '//div[@class="schedules-list"]/div[1]/div[@class="col-menu"]//button',
+      selector: '//div[@class="schedules-list"]/div[1]/div[@class=" col-menu"]//button',
       locateStrategy: 'xpath'
     },
     scheduleDropdown: {
-      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../../following-sibling::div[@class="col-menu"]//button`,
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../../following-sibling::div[@class=" col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {

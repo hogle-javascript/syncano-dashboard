@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Common from '../../common';
+import {Loading} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 
 export default React.createClass({
-
   displayName: 'ProfileContainer',
 
   getStyles() {
@@ -29,12 +29,12 @@ export default React.createClass({
       <div
         className="container"
         style={styles.container}>
-        <Common.InnerToolbar title={this.props.headerText}/>
+        <InnerToolbar title={this.props.headerText}/>
         <div className="row align-center">
           <div className="col-flex-1">
-            <Common.Loading show={this.props.show}>
+            <Loading show={this.props.show}>
               {this.props.children}
-            </Common.Loading>
+            </Loading>
           </div>
         </div>
       </div>

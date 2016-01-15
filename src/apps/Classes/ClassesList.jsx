@@ -11,12 +11,12 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 import ListItem from './ClassesListItem';
-import {Dialog, ColumnList, Lists, ColorIconPicker, Loading} from '../../common';
+import {ColumnList, Loading} from 'syncano-components';
+import {Dialog, Lists, ColorIconPicker} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'ClassesList',
 
   mixins: [
@@ -29,20 +29,6 @@ export default React.createClass({
   componentWillUpdate(nextProps) {
     console.info('ApiKeysList::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
-  },
-
-  getStyles() {
-    return {
-      fabListTop: {
-        top: 200
-      },
-      fabListTopButton: {
-        margin: '5px 0'
-      },
-      fabListBottom: {
-        bottom: 100
-      }
-    };
   },
 
   getAssociatedClasses() {

@@ -7,11 +7,11 @@ import {DialogMixin, FormMixin} from '../../mixins';
 
 // Components
 import {FlatButton, TextField, Toggle} from 'syncano-material-ui';
-import {Dialog, Loading} from '../../common';
+import {Loading} from 'syncano-components';
+import {Dialog} from '../../common';
 
 export default (displayName, Store, Actions) => {
   return React.createClass({
-
     displayName,
 
     mixins: [

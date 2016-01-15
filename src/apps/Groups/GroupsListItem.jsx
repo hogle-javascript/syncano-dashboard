@@ -6,13 +6,11 @@ import Actions from './GroupsActions';
 import UserActions from '../Users/UsersActions';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from '../../common';
-import {Truncate} from 'syncano-components';
+import {ColumnList, Color, Truncate} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'GroupsListItem',
 
   mixins: [

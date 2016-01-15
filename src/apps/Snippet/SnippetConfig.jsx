@@ -5,14 +5,14 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 import UnsavedDataMixin from './UnsavedDataMixin';
-import {DialogMixin, MousetrapMixin, DialogsMixin, FormMixin} from '../../mixins';
+import {DialogMixin, MousetrapMixin, DialogsMixin, FormMixin, SnackbarNotificationMixin} from '../../mixins';
 
 import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
 import {FlatButton, Utils, TextField, IconButton, RaisedButton} from 'syncano-material-ui';
-import {Container, Dialog, Notification, SnackbarNotification} from '../../common';
 import {Show} from 'syncano-components';
+import {Dialog, Notification} from '../../common';
 
 export default Radium(React.createClass({
   displayName: 'SnippetConfig',
@@ -24,8 +24,7 @@ export default Radium(React.createClass({
   mixins: [
     Reflux.connect(Store),
     Router.Navigation,
-
-    SnackbarNotification.Mixin,
+    SnackbarNotificationMixin,
     UnsavedDataMixin,
     MousetrapMixin,
     DialogMixin,
@@ -64,11 +63,6 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
-      container: {
-        margin: '25px auto',
-        width: '100%',
-        maxWidth: '600px'
-      },
       field: {
         margin: '10px 14px'
       },
@@ -76,7 +70,7 @@ export default Radium(React.createClass({
         padding: '24px 12px'
       },
       buttonsSection: {
-        margin: '15px 20px 0'
+        margin: '30px 60px 0'
       },
       saveButton: {
         marginLeft: 10
@@ -229,7 +223,7 @@ export default Radium(React.createClass({
     let configFields = _.map(snippetConfig, (field, index) => {
       return (
         <div
-          className="row"
+          className="row align-center"
           key={index}>
           <TextField
             key={`fieldKey${index}`}
@@ -238,7 +232,7 @@ export default Radium(React.createClass({
             defaultValue={field.key}
             value={this.state.snippetConfig[index].key}
             style={styles.field}
-            onChange={this.handleUpdateKey.bind(this, field.key, index)} />
+            onChange={this.handleUpdateKey.bind(this, field.key, index)}/>
           <TextField
             key={`fieldValue${index}`}
             ref={`fieldValue${index}`}
@@ -246,7 +240,7 @@ export default Radium(React.createClass({
             defaultValue={field.value}
             value={this.state.snippetConfig[index].value}
             style={styles.field}
-            onChange={this.handleUpdateKey.bind(this, field.key, index)} />
+            onChange={this.handleUpdateKey.bind(this, field.key, index)}/>
           <IconButton
             iconClassName="synicon-close"
             style={styles.deleteIcon}
@@ -265,7 +259,7 @@ export default Radium(React.createClass({
     return (
       <form
         key="form"
-        className="row"
+        className="row align-center"
         onSubmit={this.handleAddField}>
         <TextField
           className="config-input-key"
@@ -273,40 +267,21 @@ export default Radium(React.createClass({
           key="newFieldKey"
           hintText="Key"
           defaultValue=""
-          style={styles.field} />
+          style={styles.field}/>
         <TextField
           className="config-input-value"
           ref="newFieldValue"
           key="newFieldValue"
           hintText="Value"
           defaultValue=""
-          style={styles.field} />
+          style={styles.field}/>
         <IconButton
           className="add-field-button"
           iconClassName="synicon-plus"
           tooltip="Add field"
           type="submit"
-          style={styles.deleteIcon} />
+          style={styles.deleteIcon}/>
       </form>
-    );
-  },
-
-  renderButtons() {
-    let styles = this.getStyles();
-
-    return (
-      <div
-        className="row align-right"
-        style={styles.buttonsSection}>
-        <FlatButton
-          label="Cancel"
-          onClick={this.handleCancelChanges} />
-        <RaisedButton
-          label="Save"
-          style={styles.saveButton}
-          secondary={true}
-          onTouchTap={this.handleFormValidation} />
-      </div>
     );
   },
 
@@ -319,19 +294,28 @@ export default Radium(React.createClass({
 
     return (
       <div>
-        <Container style={styles.container}>
-          {this.getDialogs()}
-          {this.renderFields()}
-          {this.renderNewFiledSection()}
-          {this.renderButtons()}
-          <Show if={this.getValidationMessages('config').length > 0}>
-            <div style={styles.notification}>
-              <Notification type="error">
-                {this.getValidationMessages('config').join(' ')}
-              </Notification>
-            </div>
-          </Show>
-        </Container>
+        {this.getDialogs()}
+        {this.renderFields()}
+        {this.renderNewFiledSection()}
+        <div
+          className="row align-right"
+          style={styles.buttonsSection}>
+          <FlatButton
+            label="Cancel"
+            onClick={this.handleCancelChanges}/>
+          <RaisedButton
+            label="Save"
+            style={styles.saveButton}
+            secondary={true}
+            onTouchTap={this.handleFormValidation}/>
+        </div>
+        <Show if={this.getValidationMessages('config').length > 0}>
+          <div style={styles.notification}>
+            <Notification type="error">
+              {this.getValidationMessages('config').join(' ')}
+            </Notification>
+          </div>
+        </Show>
       </div>
     );
   }

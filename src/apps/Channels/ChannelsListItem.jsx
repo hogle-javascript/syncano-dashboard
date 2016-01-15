@@ -2,20 +2,19 @@ import React from 'react';
 
 import Actions from './ChannelsActions';
 
-import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import {MenuItem} from 'syncano-material-ui';
+import {Color, ColumnList} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'ChannelsListItem',
 
   render() {
     let item = this.props.item;
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         checked={item.checked}
         key={item.name}>
         <Column.CheckIcon
@@ -23,10 +22,10 @@ export default React.createClass({
           id={item.name}
           icon={'bullhorn'}
           keyName="name"
-          background={Common.Color.getColorByName('blue', 'xlight')}
+          background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          <Common.ColumnList.Link
+          <ColumnList.Link
             name={item.name}
             link={item.links.poll}
             tooltip="Copy Channel Socket url"/>
@@ -52,7 +51,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Channel Socket"/>
         </Column.Menu>
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     );
   }
 });

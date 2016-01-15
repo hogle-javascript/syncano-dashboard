@@ -13,12 +13,12 @@ import Store from './SnippetsStore';
 
 // Components
 import ListItem from './SnippetsListItem';
-import {Dialog, ColumnList, Lists, Loading} from '../../common';
+import {ColumnList, Loading} from 'syncano-components';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'SnippetsList',
 
   mixins: [

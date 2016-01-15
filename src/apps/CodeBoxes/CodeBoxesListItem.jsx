@@ -3,17 +3,14 @@ import {Link, State} from 'react-router';
 
 import {DialogsMixin} from '../../mixins';
 
-// Stores and Actions
 import Actions from './CodeBoxesActions';
 
-// Components
-import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import {MenuItem} from 'syncano-material-ui';
+import {Color, ColumnList} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'CodeBoxesListItem',
 
   mixins: [
@@ -27,7 +24,7 @@ export default React.createClass({
     let link = item.public ? item.links['public-link'] : item.links.self;
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         checked={item.checked}
         id={item.name}
         key={item.name}>
@@ -36,10 +33,10 @@ export default React.createClass({
           id={item.name.toString()}
           icon='arrow-up-bold'
           keyName="name"
-          background={Common.Color.getColorByName('blue', 'xlight')}
+          background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          <Common.ColumnList.Link
+          <ColumnList.Link
             name={item.name}
             link={link}
             tooltip="Copy CobeBox Socket url"/>
@@ -76,7 +73,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a CodeBox Socket" />
         </Column.Menu>
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     );
   }
 });

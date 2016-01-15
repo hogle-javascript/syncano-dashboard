@@ -7,13 +7,11 @@ import Actions from './TriggersActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from '../../common';
-import {Truncate} from 'syncano-components';
+import {ColumnList, Color, Truncate} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'TriggersListItem',
 
   mixins: [

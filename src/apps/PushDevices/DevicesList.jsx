@@ -2,13 +2,13 @@ import React from 'react';
 
 import {DialogMixin, DialogsMixin} from '../../mixins';
 
-import {ColumnList, Container, Lists, Dialog} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Container, Lists, Dialog} from '../../common';
 import ListItem from './DevicesListItem';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'DevicesList',
 
   mixins: [

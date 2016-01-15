@@ -6,19 +6,19 @@ import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
 import ChannelsStore from './ChannelsStore';
-import ChannelsActions from './ChannelsActions';
-import ChannelDialogStore from './ChannelDialogStore';
+import Actions from './ChannelsActions';
+import Store from './ChannelDialogStore';
 
 // Components
 import {TextField, FlatButton, Toggle} from 'syncano-material-ui';
-import {Dialog, SelectFieldWrapper, Loading} from '../../common';
+import {Loading, SelectFieldWrapper} from 'syncano-components';
+import {Dialog} from '../../common';
 
 export default React.createClass({
-
   displayName: 'ChannelDialog',
 
   mixins: [
-    Reflux.connect(ChannelDialogStore),
+    Reflux.connect(Store),
     DialogMixin,
     FormMixin
   ],
@@ -45,11 +45,11 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    ChannelsActions.updateChannel(this.state.name, this.getParams());
+    Actions.updateChannel(this.state.name, this.getParams());
   },
 
   handleAddSubmit() {
-    ChannelsActions.createChannel(this.getParams());
+    Actions.createChannel(this.getParams());
   },
 
   handleToogle(event, status) {
