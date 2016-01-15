@@ -1,9 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'syncano-material-ui';
-
-import ColorStore from '../Color/ColorStore';
+import {Utils, Paper, FontIcon} from 'syncano-material-ui';
+import {Color} from 'syncano-components';
 import IconStore from '../Icon/IconStore';
 
 export default Radium(React.createClass({
@@ -18,7 +17,7 @@ export default Radium(React.createClass({
   },
 
   mixins: [
-    MUI.Utils.Styles
+    Utils.Styles
   ],
 
   getInitialState() {
@@ -81,22 +80,22 @@ export default Radium(React.createClass({
 
     if (icon === this.state.selectedIcon) {
       zDepth = 3;
-      styles.background = ColorStore.getColorByName(this.state.selectedColor);
+      styles.background = Color.getColorByName(this.state.selectedColor);
       iconColor = '#fff';
     }
 
     return (
-      <MUI.Paper
+      <Paper
         zDepth={zDepth}
         key={icon}
         circle={true}
         style={styles}>
-        <MUI.FontIcon
+        <FontIcon
           id={icon}
           className={`synicon-${icon}`}
           style={{color: iconColor}}
           onClick={this.handleSetIcon}/>
-      </MUI.Paper>
+      </Paper>
     );
   },
 
@@ -105,19 +104,19 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
     let zDepth = 0;
 
-    styles.item.background = ColorStore.getColorByName(color);
+    styles.item.background = Color.getColorByName(color);
 
     if (color === this.state.selectedColor) {
       zDepth = 3;
       icon = (
-        <MUI.FontIcon
+        <FontIcon
           className={`synicon-${this.state.selectedIcon}`}
           style={{color: 'white'}}/>
       );
     }
 
     return (
-      <MUI.Paper
+      <Paper
         id={color}
         zDepth={zDepth}
         key={color}
@@ -125,7 +124,7 @@ export default Radium(React.createClass({
         style={this.mergeAndPrefix(styles.item, styles.colorItem)}
         onClick={this.handleSetColor}>
         {icon}
-      </MUI.Paper>
+      </Paper>
     );
   },
 
@@ -134,7 +133,7 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     if (this.props.pickerType === 'color') {
-      items = ColorStore.getColorPickerPalette().map((color) => this.genColorItem(color));
+      items = Color.getColorPickerPalette().map((color) => this.genColorItem(color));
     } else {
       items = IconStore.getIconPickerIcons().map((icon) => this.genIconItem(icon));
     }

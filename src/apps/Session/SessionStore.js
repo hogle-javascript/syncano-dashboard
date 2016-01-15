@@ -19,6 +19,7 @@ export default Reflux.createStore({
     this.router = null;
     this.theme = null;
     this.signUpMode = null;
+    this.isWelcomeDialogVisible = false;
 
     if (this.isAuthenticated() && !this.user) {
       SessionActions.fetchUser(this.token);
@@ -64,6 +65,18 @@ export default Reflux.createStore({
 
   getUTMData() {
     return JSON.parse(localStorage.getItem('UTMData'));
+  },
+
+  shouldShowWelcomeDialog() {
+    return this.isWelcomeDialogVisible;
+  },
+
+  showWelcomeDialog() {
+    this.isWelcomeDialogVisible = true;
+  },
+
+  hideWelcomeDialog() {
+    this.isWelcomeDialogVisible = false;
   },
 
   setAnalyticsIdentifying(user) {

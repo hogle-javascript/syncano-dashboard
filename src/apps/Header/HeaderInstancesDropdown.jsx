@@ -10,11 +10,9 @@ import InstancesStore from '../Instances/InstancesStore';
 import InstanceDialogActions from '../Instances/InstanceDialogActions';
 
 import {Utils, FontIcon, List, ListItem, IconMenu} from 'syncano-material-ui';
-import {Show} from 'syncano-components';
-import {ColumnList, Color} from '../../common';
+import {ColumnList, Color, Show} from 'syncano-components';
 
 export default Radium(React.createClass({
-
   displayName: 'HeaderInstancesDropdown',
 
   contextTypes: {

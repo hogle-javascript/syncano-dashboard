@@ -9,7 +9,8 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import Store from './SnippetStore';
 
 import {Tabs, Tab} from 'syncano-material-ui';
-import {InnerToolbar, Container, Socket} from '../../common';
+import {Socket} from 'syncano-components';
+import {InnerToolbar, Container} from '../../common';
 
 let RouteHandler = Router.RouteHandler;
 

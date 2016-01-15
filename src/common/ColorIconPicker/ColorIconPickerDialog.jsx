@@ -1,13 +1,11 @@
 import React from 'react';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
-import {DialogMixin} from '../../mixins';
+import DialogMixin from '../../mixins/DialogMixin';
 
 import {FlatButton, Tabs, Tab} from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({
-
   displayName: 'ColorIconPickerDialog',
 
   propTypes: {
@@ -23,8 +21,7 @@ export default React.createClass({
   },
 
   mixins: [
-    DialogMixin,
-    LinkedStateMixin
+    DialogMixin
   ],
 
   getInitialState() {

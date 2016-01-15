@@ -2,9 +2,8 @@ import React from 'react';
 
 import {DialogsMixin} from '../../mixins';
 
-import {ColumnList, Color} from '../../common';
 import {MenuItem} from 'syncano-material-ui';
-import {Truncate} from 'syncano-components';
+import {ColumnList, Color, Truncate} from 'syncano-components';
 
 export default React.createClass({
   displayName: 'AdminsInvitationsListItem',

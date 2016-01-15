@@ -7,8 +7,9 @@ import {DialogMixin, FormMixin} from '../../mixins';
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
 
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, FlatButton} from 'syncano-material-ui';
+import {CreditCard, Loading} from 'syncano-components';
+import {Dialog, Slider} from '../../common';
 import SliderSection from './SliderSection';
 
 export default React.createClass({
@@ -148,7 +149,7 @@ export default React.createClass({
 
   renderCard() {
     if (typeof this.state.card === 'undefined') {
-      return <Common.Loading show={true}/>;
+      return <Loading show={true}/>;
     }
 
     if (this.state.card) {
@@ -157,7 +158,7 @@ export default React.createClass({
         <div style={this.getStyles().sectionTopic}>Credit card info:</div>
         <div className="row" style={{marginTop: 20, height: 110}}>
           <div className="col-md-18">
-            <Common.CreditCard card={this.state.card}/>
+            <CreditCard card={this.state.card}/>
           </div>
           <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
             Want to use a different method of payment?
@@ -172,7 +173,7 @@ export default React.createClass({
       <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
       <div className="row">
         <div className="col-flex-1">
-          <MUI.TextField
+          <TextField
             name="number"
             ref="number"
             fullWidth={true}
@@ -186,7 +187,7 @@ export default React.createClass({
 
       <div className="row">
         <div className="col-md-5">
-          <MUI.TextField
+          <TextField
             name="cvc"
             ref="cvc"
             fullWidth={true}
@@ -198,7 +199,7 @@ export default React.createClass({
         </div>
 
         <div className="col-flex-1">
-          <MUI.TextField
+          <TextField
             name="exp_month"
             ref="exp_month"
             fullWidth={true}
@@ -210,7 +211,7 @@ export default React.createClass({
         </div>
 
         <div className="col-flex-1">
-          <MUI.TextField
+          <TextField
             name="exp_year"
             ref="exp_year"
             fullWidth={true}
@@ -238,7 +239,7 @@ export default React.createClass({
     });
 
     return (
-    <Common.Slider
+    <Slider
       key={type + 'Slider'}
       ref={type + 'Slider'}
       name={type + 'Slider'}
@@ -273,12 +274,12 @@ export default React.createClass({
     let sum = parseInt(apiInfo.total, 10) + parseInt(cbxInfo.total, 10);
 
     let dialogCustomActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleDismiss}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -313,7 +314,7 @@ export default React.createClass({
     );
 
     return (
-      <Common.Dialog
+      <Dialog
         key='dialog'
         ref="dialog"
         contentStyle={{maxWidth: 850, padding: 0}}
@@ -378,11 +379,11 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <Common.Loading
+        <Loading
           type="linear"
           position="bottom"
           show={this.state.isLoading}/>
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });

@@ -1,10 +1,9 @@
 import React from 'react';
 
-import MUI from 'syncano-material-ui';
-import Loading from '../../common/Loading';
+import {FontIcon, FlatButton, List, ListItem} from 'syncano-material-ui';
+import {Loading} from 'syncano-components';
 
 export default React.createClass({
-
   displayName: 'DropdownNotifiItem',
 
   propTypes: {
@@ -34,30 +33,30 @@ export default React.createClass({
     let invitationItems = this.getInvitationItems();
     let items = invitationItems.map((item) => {
       let icon = (
-        <MUI.FontIcon
+        <FontIcon
           className={item.leftIcon.name || null}
           color={item.leftIcon.color}/>
       );
 
       let buttons = (
         <div>
-          <MUI.FlatButton
+          <FlatButton
             onClick={item.handleAccept}
             label={item.buttonsText[0]}
             primary={true}/>
-          <MUI.FlatButton
+          <FlatButton
             onClick={item.handleDecline}
             label={item.buttonsText[1]}/>
         </div>
       );
 
       return (
-        <MUI.ListItem
+        <ListItem
           leftIcon={icon}
           disabled={true}>
           {item.content.text}
           {buttons}
-        </MUI.ListItem>
+        </ListItem>
       );
     });
 
@@ -81,24 +80,24 @@ export default React.createClass({
       }
     };
     let icon = (
-    <MUI.FontIcon
+    <FontIcon
       className={emptyItem.leftIcon.name}
       color={emptyItem.leftIcon.color}/>
     );
 
     return (
-    <MUI.List
+    <List
       subheader={emptyItem.subheader}
       subheaderStyle={emptyItem.subheaderStyle}>
-      <MUI.ListItem
+      <ListItem
         key={emptyItem.name}
         disableTouchTap={true}
         leftIcon={icon}>
           <span>
             {emptyItem.content.text}
           </span>
-      </MUI.ListItem>
-    </MUI.List>
+      </ListItem>
+    </List>
     );
   },
 
@@ -106,13 +105,13 @@ export default React.createClass({
     let linkItems = this.getLinkItems();
     let items = linkItems.map((item, index) => {
       let icon = (
-        <MUI.FontIcon
+        <FontIcon
           className={item.leftIcon.name || null}
           color={item.leftIcon.color}/>
       );
 
       return (
-        <MUI.ListItem
+        <ListItem
           disabled={true}
           key={item.name + index}
           leftIcon={icon}
@@ -122,7 +121,7 @@ export default React.createClass({
             style={item.content.style}>
             {item.content.text}
           </span>
-        </MUI.ListItem>
+        </ListItem>
       );
     });
 

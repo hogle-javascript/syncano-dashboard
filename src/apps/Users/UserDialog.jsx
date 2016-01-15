@@ -12,13 +12,13 @@ import UsersActions from './UsersActions';
 import {GroupsStore} from './../Groups';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, FlatButton} from 'syncano-material-ui';
+import {Loading} from 'syncano-components';
+import {Dialog} from '../../common';
 
 import 'react-select/dist/react-select.min.css';
 
 export default React.createClass({
-
   displayName: 'UserDialog',
 
   mixins: [
@@ -106,12 +106,12 @@ export default React.createClass({
       return group;
     });
     let dialogStandardActions = [
-      <MUI.FlatButton
+      <FlatButton
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <MUI.FlatButton
+      <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -126,7 +126,7 @@ export default React.createClass({
     }
 
     return (
-      <Common.Dialog
+      <Dialog
         key='dialog'
         ref='dialog'
         title={`${title} a User`}
@@ -135,14 +135,14 @@ export default React.createClass({
         actions={dialogStandardActions}>
         <div>
           {this.renderFormNotifications()}
-          <MUI.TextField
+          <TextField
             ref='username'
             fullWidth={true}
             valueLink={this.linkState('username')}
             errorText={this.getValidationMessages('username').join(' ')}
             hintText='Username'
             floatingLabelText='Username' />
-          <MUI.TextField
+          <TextField
             ref='password'
             type='password'
             fullWidth={true}
@@ -158,12 +158,12 @@ export default React.createClass({
             placeholder='User groups'
             options={allGroups}
             onChange={this.handleSelectFieldChange} />
-          <Common.Loading
+          <Loading
             type="linear"
             position="bottom"
             show={this.state.isLoading} />
         </div>
-      </Common.Dialog>
+      </Dialog>
     );
   }
 });

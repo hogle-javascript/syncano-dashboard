@@ -12,7 +12,8 @@ import ClassesActions from '../Classes/ClassesActions';
 
 // Components
 import {TextField, FlatButton} from 'syncano-material-ui';
-import {Dialog, SelectFieldWrapper} from '../../common';
+import {SelectFieldWrapper} from 'syncano-components';
+import {Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'TriggerDialog',

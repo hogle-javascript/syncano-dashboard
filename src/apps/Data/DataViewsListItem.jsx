@@ -3,17 +3,14 @@ import {Link, State} from 'react-router';
 
 import {DialogsMixin} from '../../mixins';
 
-// Stores and Actions
 import Actions from './DataViewsActions';
 
-// Components
-import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import {MenuItem} from 'syncano-material-ui';
+import {Color, ColumnList} from 'syncano-components';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'DataViewsListItem',
 
   mixins: [
@@ -25,18 +22,18 @@ export default React.createClass({
     let item = this.props.item;
 
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         checked={item.checked}
         key={item.name}>
         <Column.CheckIcon
           className="col-xs-12"
           id={item.name}
           icon='table'
-          background={Common.Color.getColorByName('blue', 'xlight')}
+          background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           keyName="name"
           handleIconClick={this.props.onIconClick}>
-          <Common.ColumnList.Link
+          <ColumnList.Link
             name={item.name}
             link={item.links.self}
             tooltip="Copy Data Socket url"/>
@@ -60,7 +57,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Data Socket" />
         </Column.Menu>
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     );
   }
 });

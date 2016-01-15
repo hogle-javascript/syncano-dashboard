@@ -11,7 +11,8 @@ import Store from './AdminDialogStore';
 
 // Components
 import {TextField, FlatButton} from 'syncano-material-ui';
-import {Dialog, SelectFieldWrapper} from '../../common';
+import {SelectFieldWrapper} from 'syncano-components';
+import {Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'AdminDialog',

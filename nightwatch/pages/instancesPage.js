@@ -50,7 +50,7 @@ export default {
       locateStrategy: 'xpath'
     },
     instancesTableRow: {
-      selector: '//div[@class="description-field col-flex-1"]',
+      selector: '//div[@class=" description-field col-flex-1"]',
       locateStrategy: 'xpath'
     },
     instancesTableName: {
@@ -103,12 +103,12 @@ export default {
       selector: '//h3[text()="Delete an Instance"]',
       locateStrategy: 'xpath'
     },
-    welcomeDialogCreateInstance: {
-      selector: '//div[@class="welcome-dialog"]//button',
+    welcomeDialogButton: {
+      selector: '//div[@class=" welcome-dialog"]//button',
       locateStrategy: 'xpath'
     },
     instanceDescription: {
-      selector: '//div[@class="description-field col-flex-1" and text()="nightwatch_test_instance"]',
+      selector: '//div[@class=" description-field col-flex-1" and text()="nightwatch_test_instance"]',
       locateStrategy: 'xpath'
     },
     socketsHeaderTitle: {

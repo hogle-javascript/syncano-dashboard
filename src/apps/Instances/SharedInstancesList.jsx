@@ -11,12 +11,12 @@ import Store from './InstancesStore';
 import SessionStore from '../Session/SessionStore';
 
 import ListItem from './InstancesListItem';
-import {Dialog, ColumnList, Lists, ColorIconPicker} from '../../common';
+import {ColumnList} from 'syncano-components';
+import {Dialog, Lists, ColorIconPicker} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'SharedInstancesList',
 
   mixins: [
