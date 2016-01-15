@@ -1,5 +1,7 @@
+import Utils from '../utils';
+
 export default {
-  url: 'https://localhost:8080/#/account/authentication/',
+  url: `${Utils.testBaseUrl()}/#/account/authentication/`,
   elements: {
     updateButton: {
       selector: '//button[@class="raised-button"]',

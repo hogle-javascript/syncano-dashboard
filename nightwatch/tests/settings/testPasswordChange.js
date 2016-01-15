@@ -39,8 +39,8 @@ export default {
 
     topNavigationPage
       .clickElement('@account')
-      .clickElement('@logoutDropdown')
-    
+      .clickElement('@logoutDropdown');
+
     loginPage
       .navigate()
       .login(Globals.tempEmail, newPassword);
