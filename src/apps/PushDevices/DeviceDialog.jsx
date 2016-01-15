@@ -5,6 +5,10 @@ import Reflux from 'reflux';
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
 
+// Stores and Actions
+import UsersStore from '../Users/UsersStore';
+import UsersActions from '../Users/UsersActions';
+
 // Components
 import {FlatButton, TextField, Toggle} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
@@ -16,17 +20,38 @@ export default (displayName, Store, Actions) => {
 
     mixins: [
       Reflux.connect(Store),
+      Reflux.connect(UsersStore, 'users'),
       DialogMixin,
       FormMixin
     ],
 
-    validatorConstraints: {
-      label: {
-        presence: true
-      },
-      registration_id: {
-        presence: true
+    validatorConstraints() {
+      let users = this.state.users.items.map((user) => user.id);
+      let validatorObj = {
+        label: {
+          presence: true
+        },
+        registration_id: {
+          presence: true
+        },
+        user_id: {
+          numericality: true,
+          inclusion: {
+            within: users,
+            message: '^Thers is no user %{value}'
+          }
+        }
+      };
+
+      if (!users || users.length === 0) {
+        validatorObj.user_id.inclusion.message = '^There is no users yet. Please add some first.';
       }
+
+      return validatorObj;
+    },
+
+    componentWillMount() {
+      UsersActions.fetch();
     },
 
     getParams() {
@@ -125,7 +150,7 @@ export default (displayName, Store, Actions) => {
           <Loading
             type="linear"
             position="bottom"
-            show={this.state.isLoading} />
+            show={this.state.isLoading}/>
         </Dialog>
       );
     }
