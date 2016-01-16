@@ -1,6 +1,6 @@
 {
   "name": "syncano-dashboard",
-  "version": "4.0.18",
+  "version": "4.0.19",
   "license": "UNLICENSED",
   "description": "Syncano Dashboard",
   "main": "js/app.jsx",
@@ -41,7 +41,7 @@
     "react-tap-event-plugin": "0.2.1",
     "reflux": "0.3.0",
     "syncano-c3": "0.4.11-rc4",
-    "syncano-components": "0.0.11",
+    "syncano-components": "0.0.12",
     "syncano-material-ui": "0.14.2-1",
     "urijs": "1.16.1",
     "validate.js": "0.9.0"
