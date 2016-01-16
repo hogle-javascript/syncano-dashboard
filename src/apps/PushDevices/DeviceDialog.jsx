@@ -26,7 +26,7 @@ export default (displayName, Store, Actions) => {
     ],
 
     validatorConstraints() {
-      let users = this.state.users.items.map((user) => user.id);
+      let users = this.state.users.items.map((user) => user.id.toString());
       let validatorObj = {
         label: {
           presence: true
@@ -44,7 +44,7 @@ export default (displayName, Store, Actions) => {
       };
 
       if (!users || users.length === 0) {
-        validatorObj.user_id.inclusion.message = '^You don't have any users yet. Please add some first.';
+        validatorObj.user_id.inclusion.message = "^You don't have any users yet. Please add some first.";
       }
 
       return validatorObj;
