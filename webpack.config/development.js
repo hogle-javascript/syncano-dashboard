@@ -10,11 +10,6 @@ config.entry.app.unshift(
   'webpack/hot/only-dev-server'
 );
 
-config.module.loaders[1].loaders = [
-  'react-hot',
-  config.module.loaders[1].loader
-];
-
 config.module.preLoaders.push({
   test: /\.js(|x)$/,
   loader: 'eslint-loader',
@@ -26,8 +21,6 @@ config.eslint = {
   configFile: '.eslintrc',
   quiet: true
 };
-
-delete config.module.loaders[1].loader;
 
 config.plugins.unshift(
   new webpack.HotModuleReplacementPlugin(),
