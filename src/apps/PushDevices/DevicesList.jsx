@@ -2,7 +2,7 @@ import React from 'react';
 
 import {DialogMixin, DialogsMixin} from '../../mixins';
 
-import {ColumnList, Loading} from 'syncano-components';
+import {ColumnList} from 'syncano-components';
 import {Container, Lists, Dialog} from '../../common';
 import ListItem from './DevicesListItem';
 
@@ -87,11 +87,9 @@ export default React.createClass({
                 onTouchTap={this.showDialog.bind(null, 'deleteDeviceDialog')}/>
             </Lists.Menu>
           </ColumnList.Header>
-          <Loading show={this.props.isLoading}>
             <Lists.List
               {...this.props}
               renderItem={this.renderItem}/>
-          </Loading>
         </Lists.Container>
       </div>
     );
