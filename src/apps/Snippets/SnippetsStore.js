@@ -1,6 +1,5 @@
 import Reflux from 'reflux';
 import D from 'd.js';
-import _ from 'lodash';
 
 import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
 
@@ -82,7 +81,7 @@ export default Reflux.createStore({
   },
 
   getRuntimeColorIcon(runtimeName) {
-    let runtime = _.includes(_.keys(this.runtimeColors), runtimeName) ? runtimeName : 'default';
+    let runtime = this.runtimeColors[runtimeName] ? runtimeName : 'default';
 
     return this.runtimeColors[runtime];
   },
