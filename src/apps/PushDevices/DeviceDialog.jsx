@@ -38,13 +38,13 @@ export default (displayName, Store, Actions) => {
           numericality: true,
           inclusion: {
             within: users,
-            message: '^There is no user %{value}'
+            message: '^There is no user with id %{value}'
           }
         }
       };
 
       if (!users || users.length === 0) {
-        validatorObj.user_id.inclusion.message = '^There is no users yet. Please add some first.';
+        validatorObj.user_id.inclusion.message = '^You don't have any users yet. Please add some first.';
       }
 
       return validatorObj;
