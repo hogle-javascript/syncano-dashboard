@@ -114,7 +114,7 @@ export default Radium(React.createClass({
     Actions.fetch();
   },
 
-  handleSuccessfullValidation() {
+  handleAddSubmit() {
     Actions.updateBillingProfile({
       hard_limit: this.state.hard_limit,
       soft_limit: this.state.soft_limit
@@ -365,7 +365,7 @@ export default Radium(React.createClass({
   renderLoaded() {
     const styles = this.getStyles();
 
-    if (this.state.subscriptions.length === 0) {
+    if (this.state.subscriptions && this.state.subscriptions.length === 0) {
       return (
         <div className="vp-5-t">
           <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
