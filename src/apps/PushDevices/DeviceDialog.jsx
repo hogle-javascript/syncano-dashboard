@@ -5,28 +5,53 @@ import Reflux from 'reflux';
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
 
+// Stores and Actions
+import UsersStore from '../Users/UsersStore';
+import UsersActions from '../Users/UsersActions';
+
 // Components
 import {FlatButton, TextField, Toggle} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {Dialog} from '../../common';
 
-export default function(displayName, Store, Actions) {
+export default (displayName, Store, Actions) => {
   return React.createClass({
     displayName,
 
     mixins: [
       Reflux.connect(Store),
+      Reflux.connect(UsersStore, 'users'),
       DialogMixin,
       FormMixin
     ],
 
-    validatorConstraints: {
-      label: {
-        presence: true
-      },
-      registration_id: {
-        presence: true
+    validatorConstraints() {
+      let users = this.state.users.items.map((user) => user.id.toString());
+      let validatorObj = {
+        label: {
+          presence: true
+        },
+        registration_id: {
+          presence: true
+        },
+        user_id: {
+          numericality: true,
+          inclusion: {
+            within: users,
+            message: '^There is no user with id %{value}'
+          }
+        }
+      };
+
+      if (!users || users.length === 0) {
+        validatorObj.user_id.inclusion.message = "^You don't have any users yet. Please add some first.";
       }
+
+      return validatorObj;
+    },
+
+    componentWillMount() {
+      UsersActions.fetch();
     },
 
     getParams() {
@@ -125,9 +150,9 @@ export default function(displayName, Store, Actions) {
           <Loading
             type="linear"
             position="bottom"
-            show={this.state.isLoading} />
+            show={this.state.isLoading}/>
         </Dialog>
       );
     }
   });
-}
+};

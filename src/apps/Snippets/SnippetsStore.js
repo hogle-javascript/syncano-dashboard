@@ -19,14 +19,19 @@ export default Reflux.createStore({
     python: 'python',
     nodejs: 'javascript',
     ruby: 'ruby',
-    golang: 'golang'
+    golang: 'golang',
+    php: 'php',
+    swift: 'swift'
   },
 
   runtimeColors: {
     nodejs: {color: '#80BD01', icon: 'language-nodejs'},
-    python: {color: '#4984B1', icon: 'language-python'},
-    golang: {color: '#FFC107', icon: 'language-golang'},
-    ruby: {color: '#B21000', icon: 'language-ruby'}
+    python: {color: '#FFC107', icon: 'language-python'},
+    golang: {color: '#95DCF4', icon: 'language-golang'},
+    ruby: {color: '#ED4545', icon: 'language-ruby'},
+    swift: {color: '#FC8737', icon: 'language-swift'},
+    php: {color: '#6C7EB7', icon: 'language-php'},
+    default: {color: '#244273', icon: 'xml'}
   },
 
   getInitialState() {
@@ -75,7 +80,9 @@ export default Reflux.createStore({
     return this.langMap[snippet.runtime_name];
   },
 
-  getRuntimeColorIcon(runtime) {
+  getRuntimeColorIcon(runtimeName) {
+    let runtime = this.runtimeColors[runtimeName] ? runtimeName : 'default';
+
     return this.runtimeColors[runtime];
   },
 

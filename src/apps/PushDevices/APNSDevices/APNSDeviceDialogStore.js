@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin} from '../../../mixins';
+import {StoreFormMixin, DialogStoreMixin} from '../../../mixins';
 
 // Stores & Actions
 import Actions from './APNSDevicesActions';
@@ -10,8 +10,7 @@ export default Reflux.createStore({
   listenables: Actions,
   mixins: [
     StoreFormMixin,
-    DialogStoreMixin,
-    StoreLoadingMixin
+    DialogStoreMixin
   ],
 
   getInitialState() {
@@ -27,7 +26,6 @@ export default Reflux.createStore({
   init() {
     this.data = this.getInitialState();
     this.listenToForms();
-    this.setLoadingStates();
   },
 
   onCreateDeviceCompleted() {
