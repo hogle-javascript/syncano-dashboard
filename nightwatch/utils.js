@@ -7,5 +7,8 @@ export default {
       return this.suffix;
     }
     return text.toString() + this.suffix;
+  },
+  testBaseUrl() {
+    return 'https://localhost:8080';
   }
 };
