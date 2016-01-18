@@ -20,8 +20,8 @@ export default {
 
         client.switchWindow(handle);
       });
-    loginPage.fillInputField('@emailInputFacebook', process.env.NIGHTWATCH_EMAIL, client);
-    loginPage.fillInputField('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD, client);
+    loginPage.fillInput('@emailInputFacebook', process.env.NIGHTWATCH_EMAIL);
+    loginPage.fillInput('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD);
     loginPage.clickElement('@signInButtonFacebook');
 
     client.windowHandles((result) => {
@@ -44,9 +44,9 @@ export default {
   //       client.switchWindow(handle);
   //     });
   //   loginPage
-  //     .fillInputField('@emailInputGoogle', process.env.NIGHTWATCH_EMAIL, client)
+  //     .fillInput('@emailInputGoogle', process.env.NIGHTWATCH_EMAIL)
   //     .clickElement('@nextButtonGoogle')
-  //     .fillInputField('@passInputGoogle', process.env.NIGHTWATCH_PASSWORD, client)
+  //     .fillInput('@passInputGoogle', process.env.NIGHTWATCH_PASSWORD)
   //     .clickElement('@signInButtonGoogle');
 
   //   client.pause(2000);

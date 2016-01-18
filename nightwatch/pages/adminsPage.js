@@ -1,10 +1,8 @@
 import utils from '../utils';
 import globals from '../globals';
-import commonCommands from '../commands/commonCommands';
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/admins`,
-  commands: [commonCommands],
   elements: {
     confirmButton: {
       selector: '//span[text()="Confirm"]',

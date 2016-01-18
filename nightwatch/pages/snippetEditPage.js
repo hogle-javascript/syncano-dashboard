@@ -1,7 +1,4 @@
-import commonCommands from '../commands/commonCommands';
-
 export default {
-  commands: [commonCommands],
   elements: {
     snippetEditView: {
       selector: '#brace-editor'

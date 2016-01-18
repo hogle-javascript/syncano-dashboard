@@ -8,7 +8,15 @@ export default {
       locateStrategy: 'xpath'
     },
     accountKey: {
-      selector: '//div[text()="Account key"]',
+      selector: '//div[@style="font-family:monospace;"]',
+      locateStrategy: 'xpath'
+    },
+    copyButton: {
+      selector: '//span[text()="COPY"]',
+      locateStrategy: 'xpath'
+    },
+    resetButton: {
+      selector: '//span[text()="RESET"]',
       locateStrategy: 'xpath'
     },
     currentPassword: {
