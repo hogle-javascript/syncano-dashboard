@@ -16,5 +16,8 @@ export default {
       return '\uE03D';
     }
     return '\uE009';
+  },
+  testBaseUrl() {
+    return 'https://localhost:8080';
   }
 };

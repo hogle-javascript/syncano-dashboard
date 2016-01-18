@@ -7,13 +7,15 @@ import 'brace/mode/python';
 import 'brace/mode/javascript';
 import 'brace/mode/ruby';
 import 'brace/mode/golang';
+import 'brace/mode/swift';
+import 'brace/mode/php';
 import 'brace/theme/tomorrow';
 
 
 export default React.createClass({
 
   propTypes: {
-    mode: React.PropTypes.oneOf(['python', 'javascript', 'ruby', 'golang']),
+    mode: React.PropTypes.oneOf(['python', 'javascript', 'ruby', 'golang', 'swift', 'php']),
     theme: React.PropTypes.string,
     name: React.PropTypes.string,
     height: React.PropTypes.string,

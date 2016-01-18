@@ -1,4 +1,4 @@
-import 'babel-core/polyfill';
+import 'babel-polyfill';
 import 'normalize.css';
 import './lib/localStoragePolyfill';
 import './raven';
