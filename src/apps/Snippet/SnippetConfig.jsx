@@ -11,7 +11,7 @@ import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
 import {FlatButton, Utils, TextField, IconButton, RaisedButton} from 'syncano-material-ui';
-import {Show} from 'syncano-components';
+import {Show, SelectFieldWrapper} from 'syncano-components';
 import {Dialog, Notification} from '../../common';
 
 export default Radium(React.createClass({
@@ -61,10 +61,19 @@ export default Radium(React.createClass({
     }
   },
 
+  getParams() {
+    return {
+      value: this.state.config_value_type
+    };
+  },
+
   getStyles() {
     return {
       field: {
-        margin: '10px 14px'
+        margin: '24px 14px'
+      },
+      valueField: {
+        margin: '0px 14px'
       },
       deleteIcon: {
         padding: '24px 12px'
@@ -111,9 +120,21 @@ export default Radium(React.createClass({
   handleAddField(event) {
     event.preventDefault();
     let snippetConfig = this.state.snippetConfig;
+    let configValueType = this.refs.newFieldType.refs.configValueType.props.value;
+    let configKey = this.refs.newFieldKey.getValue();
+    let configValue = this.refs.newFieldValue.getValue();
+
+    if (configValueType === 'integer' && _.isNaN(Number(configValue))) {
+      this.refs.newFieldValue.setErrorText('This field should be a number');
+      return;
+    } else if (configValueType === 'integer' && !_.isNaN(Number(configValue))) {
+      configValue = Number(configValue);
+    }
+
     let newField = {
-      key: this.refs.newFieldKey.getValue(),
-      value: this.refs.newFieldValue.getValue()
+      key: configKey,
+      value: configValue,
+      type: configValueType
     };
 
     if (this.hasKey(newField.key)) {
@@ -160,9 +181,11 @@ export default Radium(React.createClass({
 
   handleUpdateKey(key, index) {
     let snippetConfig = this.state.snippetConfig;
+
     let newField = {
       key: this.refs[`fieldKey${index}`].getValue(),
-      value: this.refs[`fieldValue${index}`].getValue()
+      value: this.refs[`fieldValue${index}`].getValue(),
+      type: this.refs[`fieldType${index}`].getValue()
     };
 
     if (key !== newField.key && this.hasKey(newField.key)) {
@@ -184,7 +207,6 @@ export default Radium(React.createClass({
     this.replaceState(newState);
     this.clearValidations();
   },
-
   handleAddSubmit() {
     this.handleUpdate();
   },
@@ -241,6 +263,17 @@ export default Radium(React.createClass({
             value={this.state.snippetConfig[index].value}
             style={styles.field}
             onChange={this.handleUpdateKey.bind(this, field.key, index)}/>
+          <SelectFieldWrapper
+              key={`fieldType${index}`}
+              ref={`fieldType${index}`}
+              name="configValueType"
+              hintText="Config Value Type"
+              options={Store.getSnippetConfigValueTypes()}
+              value={this.state.snippetConfig[index].type}
+              onChange={this.setSelectFieldValue.bind(null, 'config_value_type')}
+              errorText={this.getValidationMessages('config_value_type').join(' ')}
+              fullWidth={false}
+              style={styles.valueField}/>
           <IconButton
             iconClassName="synicon-close"
             style={styles.deleteIcon}
@@ -253,13 +286,14 @@ export default Radium(React.createClass({
     return configFields;
   },
 
-  renderNewFiledSection() {
+  renderNewFieldSection() {
     let styles = this.getStyles();
 
     return (
+       <div
+          className="row align-center">
       <form
         key="form"
-        className="row align-center"
         onSubmit={this.handleAddField}>
         <TextField
           className="config-input-key"
@@ -267,14 +301,27 @@ export default Radium(React.createClass({
           key="newFieldKey"
           hintText="Key"
           defaultValue=""
-          style={styles.field}/>
+          style={styles.field}
+         />
         <TextField
           className="config-input-value"
           ref="newFieldValue"
           key="newFieldValue"
           hintText="Value"
           defaultValue=""
-          style={styles.field}/>
+          style={styles.field}
+          />
+        <SelectFieldWrapper
+            key="newFieldType"
+            ref="newFieldType"
+            name="configValueType"
+            hintText="Config Value Type"
+            options={Store.getSnippetConfigValueTypes()}
+            value={this.state.config_value_type}
+            onChange={this.setSelectFieldValue.bind(null, 'config_value_type')}
+            errorText={this.getValidationMessages('config_value_type').join(' ')}
+            fullWidth={false}
+            style={styles.valueField}/>
         <IconButton
           className="add-field-button"
           iconClassName="synicon-plus"
@@ -282,6 +329,7 @@ export default Radium(React.createClass({
           type="submit"
           style={styles.deleteIcon}/>
       </form>
+      </div>
     );
   },
 
@@ -296,7 +344,7 @@ export default Radium(React.createClass({
       <div>
         {this.getDialogs()}
         {this.renderFields()}
-        {this.renderNewFiledSection()}
+        {this.renderNewFieldSection()}
         <div
           className="row align-right"
           style={styles.buttonsSection}>

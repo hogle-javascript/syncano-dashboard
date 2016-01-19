@@ -25,6 +25,17 @@ export default Reflux.createStore({
     php: 'php'
   },
 
+  snippetConfigValueTypes: [
+    {
+      payload: 'string',
+      text: 'String'
+    },
+    {
+      payload: 'integer',
+      text: 'Integer'
+    }
+  ],
+
   getInitialState() {
     return {
       currentSnippet: null,
@@ -58,7 +69,8 @@ export default Reflux.createStore({
     let config = _.map(originalConfig, (value, key) => {
       return {
         key,
-        value
+        value,
+        type: typeof value
       };
     });
 
@@ -136,6 +148,10 @@ export default Reflux.createStore({
       }
     }
     this.trigger(this.data);
+  },
+
+  getSnippetConfigValueTypes() {
+    return this.snippetConfigValueTypes;
   },
 
   onUpdateSnippetCompleted(snippet) {

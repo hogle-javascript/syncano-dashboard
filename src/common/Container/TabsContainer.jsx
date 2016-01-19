@@ -10,7 +10,7 @@ export default React.createClass({
 
   getStyles() {
     return {
-      maxWidth: '800px',
+      maxWidth: '1000px',
       margin: '0 auto'
     };
   },
