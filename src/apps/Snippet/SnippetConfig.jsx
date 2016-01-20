@@ -74,11 +74,8 @@ export default Radium(React.createClass({
       field: {
         margin: '6px 14px'
       },
-      valueField: {
-        margin: '0px 14px'
-      },
       deleteIcon: {
-        padding: '40px 12px'
+        padding: '24px 12px 0'
       },
       buttonsSection: {
         margin: '30px 60px 0'
@@ -307,23 +304,24 @@ export default Radium(React.createClass({
             style={styles.field}
             onChange={this.handleUpdateKey.bind(this, field.key, index)}/>
           <SelectFieldWrapper
-              key={`fieldType${index}`}
-              ref={`fieldType${index}`}
-              name="configValueType"
-              hintText="Value Type"
-              floatingLabelText="Value Type"
-              options={Store.getSnippetConfigValueTypes()}
-              value={this.state.snippetConfig[index].type}
-              onTouchTap={this.handleSelectFieldClick}
-              onChange={this.handleSelectFieldChange.bind(null, index)}
-              errorText={this.getValidationMessages('config_value_type').join(' ')}
-              fullWidth={false}
-              style={styles.field}/>
-          <IconButton
-            iconClassName="synicon-close"
-            style={styles.deleteIcon}
-            tooltip="Delete key"
-            onClick={this.handleDeleteKey.bind(this, index)}/>
+            key={`fieldType${index}`}
+            ref={`fieldType${index}`}
+            name="configValueType"
+            hintText="Value Type"
+            floatingLabelText="Value Type"
+            options={Store.getSnippetConfigValueTypes()}
+            value={this.state.snippetConfig[index].type}
+            onTouchTap={this.handleSelectFieldClick}
+            onChange={this.handleSelectFieldChange.bind(null, index)}
+            errorText={this.getValidationMessages('config_value_type').join(' ')}
+            fullWidth={false}
+            style={styles.field}/>
+          <div style={styles.deleteIcon}>
+            <IconButton
+              iconClassName="synicon-close"
+              tooltip="Delete key"
+              onClick={this.handleDeleteKey.bind(this, index)}/>
+          </div>
         </div>
       );
     });
@@ -335,10 +333,9 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-       <div
-          className="row align-center">
       <form
         key="form"
+        className="row align-center"
         onSubmit={this.handleAddField}>
         <TextField
           className="config-input-key"
@@ -347,8 +344,7 @@ export default Radium(React.createClass({
           hintText="Key"
           floatingLabelText="Key"
           defaultValue=""
-          style={styles.field}
-         />
+          style={styles.field}/>
         <TextField
           className="config-input-value"
           ref="newFieldValue"
@@ -356,28 +352,27 @@ export default Radium(React.createClass({
           hintText="Value"
           floatingLabelText="Value"
           defaultValue=""
-          style={styles.field}
-          />
+          style={styles.field}/>
         <SelectFieldWrapper
-            key="newFieldType"
-            ref="newFieldType"
-            name="configValueType"
-            hintText="Value Type"
-            floatingLabelText="Value Type"
-            options={Store.getSnippetConfigValueTypes()}
-            value={this.state.config_value_type}
-            onChange={this.setSelectFieldValue.bind(null, 'config_value_type')}
-            errorText={this.getValidationMessages('config_value_type').join(' ')}
-            fullWidth={false}
-            style={styles.valueField}/>
-        <IconButton
-          className="add-field-button"
-          iconClassName="synicon-plus"
-          tooltip="Add field"
-          type="submit"
-          style={styles.deleteIcon}/>
+          key="newFieldType"
+          ref="newFieldType"
+          name="configValueType"
+          hintText="Value Type"
+          floatingLabelText="Value Type"
+          options={Store.getSnippetConfigValueTypes()}
+          value={this.state.config_value_type}
+          onChange={this.setSelectFieldValue.bind(null, 'config_value_type')}
+          errorText={this.getValidationMessages('config_value_type').join(' ')}
+          fullWidth={false}
+          style={styles.field}/>
+        <div style={styles.deleteIcon}>
+          <IconButton
+            className="add-field-button"
+            iconClassName="synicon-plus"
+            tooltip="Add field"
+            type="submit"/>
+        </div>
       </form>
-      </div>
     );
   },
 
