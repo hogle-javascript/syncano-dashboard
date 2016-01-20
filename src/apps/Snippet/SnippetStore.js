@@ -66,11 +66,17 @@ export default Reflux.createStore({
   },
 
   mapConfig(originalConfig) {
+    function getFieldValueType(fieldValue) {
+      if (typeof fieldValue === 'number') {
+        return 'integer';
+      }
+      return 'string';
+    }
     let config = _.map(originalConfig, (value, key) => {
       return {
         key,
         value,
-        type: typeof value
+        type: getFieldValueType(value)
       };
     });
 

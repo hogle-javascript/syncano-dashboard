@@ -62,6 +62,8 @@ export default Radium(React.createClass({
   },
 
   getParams() {
+    console.log('state');
+    console.log(this.state.config_value_type);
     return {
       value: this.state.config_value_type
     };
@@ -70,13 +72,13 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       field: {
-        margin: '24px 14px'
+        margin: '6px 14px'
       },
       valueField: {
         margin: '0px 14px'
       },
       deleteIcon: {
-        padding: '24px 12px'
+        padding: '40px 12px'
       },
       buttonsSection: {
         margin: '30px 60px 0'
@@ -124,21 +126,21 @@ export default Radium(React.createClass({
     let configKey = this.refs.newFieldKey.getValue();
     let configValue = this.refs.newFieldValue.getValue();
 
-    if (configValueType === 'integer' && _.isNaN(Number(configValue))) {
+    let parsedValue = this.parseValue(configValue, configValueType);
+
+    if (parsedValue === null) {
       this.refs.newFieldValue.setErrorText('This field should be a number');
       return;
-    } else if (configValueType === 'integer' && !_.isNaN(Number(configValue))) {
-      configValue = Number(configValue);
     }
 
     let newField = {
       key: configKey,
-      value: configValue,
+      value: parsedValue,
       type: configValueType
     };
 
     if (this.hasKey(newField.key)) {
-      this.refs.newFieldKey.setErrorText('Field with this name already exist. Please choose another.');
+      this.refs.newFieldKey.setErrorText('Field with this Key already exist. Please choose another.');
       return;
     }
 
@@ -181,11 +183,19 @@ export default Radium(React.createClass({
 
   handleUpdateKey(key, index) {
     let snippetConfig = this.state.snippetConfig;
+    let newValue = this.refs[`fieldValue${index}`].getValue();
+    let type = this.refs[`fieldType${index}`].props.value;
+    let parsedValue = this.parseValue(newValue, type);
+
+    if (parsedValue === null) {
+      this.refs[`fieldValue${index}`].setErrorText('This field should be a number');
+      return;
+    }
 
     let newField = {
       key: this.refs[`fieldKey${index}`].getValue(),
-      value: this.refs[`fieldValue${index}`].getValue(),
-      type: this.refs[`fieldType${index}`].getValue()
+      value: parsedValue,
+      type: this.refs[`fieldType${index}`].props.value
     };
 
     if (key !== newField.key && this.hasKey(newField.key)) {
@@ -209,6 +219,37 @@ export default Radium(React.createClass({
   },
   handleAddSubmit() {
     this.handleUpdate();
+  },
+
+  handleSelectFieldChange(fieldIndex, event, selectedIndex, value) {
+    let fieldValueType = value;
+    let fieldValue = this.refs[`fieldValue${fieldIndex}`].getValue();
+    let snippetConfig = this.state.snippetConfig;
+    let parsedValue = this.parseValue(fieldValue, fieldValueType);
+
+    if (parsedValue) {
+      snippetConfig[fieldIndex].type = fieldValueType;
+      snippetConfig[fieldIndex].value = parsedValue;
+      this.setState({snippetConfig});
+    } else {
+      this.refs[`fieldValue${fieldIndex}`].setErrorText('This field should be a number');
+    }
+  },
+
+  parseValue(value, type) {
+    let parsedValue = null;
+
+    if (type === 'integer' && value === '') {
+      parsedValue = 0;
+    } else if (type === 'integer' && _.isNaN(Number(value))) {
+      return parsedValue;
+    } else if (type === 'integer' && !_.isNaN(Number(value))) {
+      parsedValue = Number(value);
+    } else {
+      parsedValue = String(value);
+    }
+
+    return parsedValue;
   },
 
   initDialogs() {
@@ -251,6 +292,7 @@ export default Radium(React.createClass({
             key={`fieldKey${index}`}
             ref={`fieldKey${index}`}
             hintText="Key"
+            floatingLabelText="Key"
             defaultValue={field.key}
             value={this.state.snippetConfig[index].key}
             style={styles.field}
@@ -259,6 +301,7 @@ export default Radium(React.createClass({
             key={`fieldValue${index}`}
             ref={`fieldValue${index}`}
             hintText="Value"
+            floatingLabelText="Value"
             defaultValue={field.value}
             value={this.state.snippetConfig[index].value}
             style={styles.field}
@@ -267,13 +310,15 @@ export default Radium(React.createClass({
               key={`fieldType${index}`}
               ref={`fieldType${index}`}
               name="configValueType"
-              hintText="Config Value Type"
+              hintText="Value Type"
+              floatingLabelText="Value Type"
               options={Store.getSnippetConfigValueTypes()}
               value={this.state.snippetConfig[index].type}
-              onChange={this.setSelectFieldValue.bind(null, 'config_value_type')}
+              onTouchTap={this.handleSelectFieldClick}
+              onChange={this.handleSelectFieldChange.bind(null, index)}
               errorText={this.getValidationMessages('config_value_type').join(' ')}
               fullWidth={false}
-              style={styles.valueField}/>
+              style={styles.field}/>
           <IconButton
             iconClassName="synicon-close"
             style={styles.deleteIcon}
@@ -300,6 +345,7 @@ export default Radium(React.createClass({
           ref="newFieldKey"
           key="newFieldKey"
           hintText="Key"
+          floatingLabelText="Key"
           defaultValue=""
           style={styles.field}
          />
@@ -308,6 +354,7 @@ export default Radium(React.createClass({
           ref="newFieldValue"
           key="newFieldValue"
           hintText="Value"
+          floatingLabelText="Value"
           defaultValue=""
           style={styles.field}
           />
@@ -315,7 +362,8 @@ export default Radium(React.createClass({
             key="newFieldType"
             ref="newFieldType"
             name="configValueType"
-            hintText="Config Value Type"
+            hintText="Value Type"
+            floatingLabelText="Value Type"
             options={Store.getSnippetConfigValueTypes()}
             value={this.state.config_value_type}
             onChange={this.setSelectFieldValue.bind(null, 'config_value_type')}
