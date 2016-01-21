@@ -61,14 +61,6 @@ export default Radium(React.createClass({
     }
   },
 
-  getParams() {
-    console.log('state');
-    console.log(this.state.config_value_type);
-    return {
-      value: this.state.config_value_type
-    };
-  },
-
   getStyles() {
     return {
       field: {
