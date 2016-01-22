@@ -86,7 +86,7 @@ export default Radium(React.createClass({
   },
 
   handleCancelCancelProductionPlan() {
-    this.refs.cancelProductionPlan.dismiss();
+    this.hideDialogs(true);
     this.setupToggles();
   },
 
@@ -148,12 +148,21 @@ export default Radium(React.createClass({
   setupToggles() {
     const plan = Store.getPlan();
 
-    if (plan === 'builder') {
-      this.refs.toggle.setToggled(false);
-    } else if (plan === 'paid-commitment' && Store.isPlanCanceled()) {
-      this.refs.toggle.setToggled(false);
-    } else if (plan === 'paid-commitment') {
-      this.refs.toggle.setToggled(true);
+    switch (true) {
+      case (plan === 'builder'):
+        this.refs.toggle.setToggled(false);
+        break;
+
+      case (plan === 'paid-commitment' && _.isString(Store.isPlanCanceled())):
+        this.refs.toggle.setToggled(false);
+        break;
+
+      case (plan === 'paid-commitment' || plan === 'free'):
+        this.refs.toggle.setToggled(true);
+        break;
+
+      default:
+        break;
     }
   },
 
