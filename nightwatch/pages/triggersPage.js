@@ -1,10 +1,8 @@
 import utils from '../utils';
 import globals from '../globals';
-import commonCommands from '../commands/commonCommands';
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/triggers`,
-  commands: [commonCommands],
   elements: {
     triggersListMenu: {
       selector: '//div[@class="triggers-list"]/div[1]/div[@class=" col-menu"]//button',

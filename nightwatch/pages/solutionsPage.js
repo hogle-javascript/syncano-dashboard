@@ -1,8 +1,5 @@
-import commonCommands from '../commands/commonCommands';
-
 export default {
   url: 'https://localhost:8080/#/solutions/list',
-  commands: [commonCommands],
   elements: {
     solutionsView: {
       selector: 'div#solutions'

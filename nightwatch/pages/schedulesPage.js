@@ -1,10 +1,8 @@
 import utils from '../utils';
 import globals from '../globals';
-import commonCommands from '../commands/commonCommands';
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/schedules`,
-  commands: [commonCommands],
   elements: {
     schedulesListMenu: {
       selector: '//div[@class="schedules-list"]/div[1]/div[@class=" col-menu"]//button',

@@ -1,7 +1,4 @@
-import commonCommands from '../commands/commonCommands';
-
 export default {
-  commands: [commonCommands],
   url: 'https://localhost:8080/#/instances',
   elements: {
     syncanoLogo: {
@@ -12,7 +9,7 @@ export default {
       locateStrategy: 'xpath'
     },
     account: {
-      selector: '//ul[@class=" toolbar-list"]//li[@id="menu-account"]',
+      selector: '//li[@id="menu-account"]/div',
       locateStrategy: 'xpath'
     },
     accountDropdown: {
