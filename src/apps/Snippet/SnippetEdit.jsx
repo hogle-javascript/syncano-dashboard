@@ -78,30 +78,12 @@ export default React.createClass({
     };
   },
 
-  isPayloadValid() {
-    return this.refs.tracePanel ? this.refs.tracePanel.isValid() : false;
-  },
-
   isSaved() {
     if (this.state.currentSnippet && this.refs.editorSource) {
       let initialSnippetSource = this.state.currentSnippet.source;
       let currentSnippetSource = this.refs.editorSource.editor.getValue();
 
       return initialSnippetSource === currentSnippetSource;
-    }
-  },
-
-  handleRun() {
-    if (this.isPayloadValid()) {
-      Actions.runSnippet({
-        id: this.state.currentSnippet.id,
-        payload: this.refs.tracePanel.refs.payloadField.getValue()
-      });
-    } else {
-      this.setSnackbarNotification({
-        message: "Can't run Snippet with invalid payload",
-        autoHideDuration: 3000
-      });
     }
   },
 
