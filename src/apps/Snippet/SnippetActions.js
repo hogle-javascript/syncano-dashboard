@@ -4,6 +4,8 @@ export default CreateActions({
   setCurrentSnippetTraces: {},
   setCurrentSnippetId: {},
   setCurrentSnippet: {},
+  setPayloadValidator: {},
+  setPayloadValue: {},
   fetch: {},
 
   runSnippetWithUpdate: {

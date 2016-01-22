@@ -79,10 +79,7 @@ export default React.createClass({
   },
 
   isPayloadValid() {
-    let payloadErrors = this.refs.tracePanel.state.errors;
-    let payloadIsValid = typeof payloadErrors.payloadValue === 'undefined';
-
-    return payloadIsValid;
+    return this.refs.tracePanel ? this.refs.tracePanel.isValid() : false;
   },
 
   isSaved() {
@@ -201,6 +198,8 @@ export default React.createClass({
             <div style={styles.tracePanel}>
               <Editor.Panel
                 ref="tracePanel"
+                onError={Actions.setPayloadValidator}
+                handleChange={Actions.setPayloadValue}
                 trace={this.state.lastTraceResult}
                 loading={!this.state.lastTraceReady}/>
               <Show if={this.state.lastTraceDuration && this.state.lastTraceStatus}>

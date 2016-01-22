@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import _ from 'lodash';
 
 // Utils
 import FormMixin from '../../mixins/FormMixin';
@@ -45,6 +46,12 @@ export default Radium(React.createClass({
     };
   },
 
+  componentWillUpdate(nextProps, nextState) {
+    if (!_.isEqual(nextState.errors.payloadValue, this.state.errors.payloadValue) && this.props.onError) {
+      this.props.onError(nextState.errors.payloadValue);
+    }
+  },
+
   getStyles() {
     return {
       payloadStyle: {
@@ -62,6 +69,15 @@ export default Radium(React.createClass({
         overflow: 'auto'
       }
     };
+  },
+
+  handleChange(event) {
+    if (this.props.handleChange) {
+      this.props.handleChange(event.target.value);
+    }
+    this.setState({
+      payloadValue: event.target.value
+    });
   },
 
   render() {
@@ -86,9 +102,10 @@ export default Radium(React.createClass({
           zDepth={1}
           style={styles.payloadStyle}>
           <TextField
+            onChange={this.handleChange}
             name="payloadField"
             ref="payloadField"
-            valueLink={this.linkState('payloadValue')}
+            value={this.state.payloadValue}
             fullWidth={true}
             hintText={`Type in your payload here e.g. {"my_argument": "test123}`}
             floatingLabelText="Payload"
