@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import MUI from 'syncano-material-ui';
+import {Snackbar} from 'syncano-material-ui';
 
 import Store from './SnackbarNotificationStore';
 
@@ -24,7 +24,7 @@ export default React.createClass({
     }
 
     if (this.state.snackbar !== null) {
-      this.refs.snackbar.dismiss();
+      this.refs.snackbar.setState({open: false});
     }
   },
 
@@ -32,10 +32,6 @@ export default React.createClass({
     console.log('SnackbarNotification::componentDidUpdate');
 
     if (this.state.snackbar === null) {
-      return;
-    }
-
-    if (this.state.snackbar.openOnMount === true) {
       return;
     }
 
@@ -49,6 +45,12 @@ export default React.createClass({
     }
   },
 
+  handleRequestClose() {
+    this.setState({
+      open: false
+    });
+  },
+
   render() {
     let snackbar = this.state.snackbar;
 
@@ -57,14 +59,15 @@ export default React.createClass({
     }
 
     return (
-      <MUI.Snackbar
+      <Snackbar
         ref="snackbar"
         key={snackbar.key}
         message={snackbar.message}
         action={snackbar.action}
         autoHideDuration={snackbar.autoHideDuration}
-        onActionTouchTap={(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this) : null}
-        openOnMount={snackbar.openOnMount}
+        onActionTouchTap={(snackbar.onActionTouchTap) ? () => snackbar.onActionTouchTap : null}
+        open={snackbar.open}
+        onRequestClose={this.handleRequestClose}
         style={snackbar.style}/>
     );
   }
