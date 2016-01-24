@@ -14,7 +14,8 @@ import Constants from './AuthConstants';
 
 // Components
 import {TextField, RaisedButton} from 'syncano-material-ui';
-import {Container, SocialAuthButtonsList} from '../../common';
+import {Container} from '../../common';
+import {SocialAuthButtonsList} from 'syncano-components';
 
 export default React.createClass({
   displayName: 'AccountLogin',

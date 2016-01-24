@@ -10,7 +10,6 @@ import Lists from './Lists';
 import Logo from './Logo';
 import Notification from './Notification';
 import Request from './Request';
-import SocialAuthButtonsList from './SocialAuthButtonsList';
 import Sidebar from './Sidebar';
 
 export default {
@@ -26,6 +25,5 @@ export default {
   Logo,
   Notification,
   Request,
-  SocialAuthButtonsList,
   Sidebar
 };
