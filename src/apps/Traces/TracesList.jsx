@@ -1,11 +1,5 @@
 import React from 'react';
 import Radium from 'radium';
-import Reflux from 'reflux';
-import Router from 'react-router';
-
-import HeaderMixin from '../Header/HeaderMixin';
-
-import Store from './TracesStore';
 
 import {Styles, Paper, FontIcon} from 'syncano-material-ui';
 import {ColumnList, Loading, Truncate, Trace} from 'syncano-components';
@@ -16,12 +10,11 @@ let Column = ColumnList.Column;
 export default Radium(React.createClass({
   displayName: 'TracesList',
 
-  mixins: [
-    Reflux.connect(Store),
-    HeaderMixin,
-    Router.State,
-    Router.Navigation
-  ],
+  getInitialState() {
+    return {
+      visibleTraceId: null
+    };
+  },
 
   getStyles() {
     return {
@@ -50,11 +43,9 @@ export default Radium(React.createClass({
 
   toggleTrace(traceId) {
     console.info('SnippetsTraces::toggleTrace', traceId);
-    if (this.state.visibleTraceId === traceId) {
-      this.setState({visibleTraceId: null});
-    } else {
-      this.setState({visibleTraceId: traceId});
-    }
+    const visibleTraceId = this.state.visibleTraceId !== traceId ? traceId : null;
+
+    this.setState({visibleTraceId});
   },
 
   renderItem(item) {
@@ -126,7 +117,7 @@ export default Radium(React.createClass({
   },
 
   renderList() {
-    let items = this.state.items || [];
+    let items = this.props.items || [];
     let styles = this.getStyles();
     let tracesFor = {
       snippet: {
@@ -164,7 +155,7 @@ export default Radium(React.createClass({
   },
 
   renderHeader() {
-    if (this.state.items.length > 0) {
+    if (this.props.items.length > 0) {
       return (
         <ColumnList.Header>
           <Column.ColumnHeader primary={true} columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
@@ -180,7 +171,7 @@ export default Radium(React.createClass({
   render() {
     return (
       <Lists.Container>
-        <Loading show={this.state.isLoading}>
+        <Loading show={this.props.isLoading}>
           {this.renderHeader()}
           <Lists.List key="traces-list">
             {this.renderList()}

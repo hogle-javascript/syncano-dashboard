@@ -14,7 +14,6 @@ import Actions from './SnippetActions';
 import Traces from '../Traces';
 
 export default React.createClass({
-
   displayName: 'SnippetTraces',
 
   mixins: [
@@ -31,11 +30,11 @@ export default React.createClass({
 
   render() {
     return (
-      <div style={{marginTop: 100}}>
-        <Traces
-          objectId={this.getParams().snippetId}
-          tracesFor='snippet'/>
-      </div>
+      <Traces.List
+        isLoading={this.state.isLoading}
+        tracesFor="snippet"
+        name="Traces"
+        items={this.state.traces}/>
     );
   }
 });

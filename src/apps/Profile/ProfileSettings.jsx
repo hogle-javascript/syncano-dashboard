@@ -70,7 +70,6 @@ export default React.createClass({
               errorText={this.getValidationMessages('firstName').join(' ')}
               name="firstName"
               floatingLabelText="First name"
-              className="text-field"
               autoComplete="firstName"
               hintText="First name"
               fullWidth={true}/>
@@ -81,7 +80,6 @@ export default React.createClass({
               errorText={this.getValidationMessages('lastName').join(' ')}
               name="lastName"
               floatingLabelText="Last name"
-              className="text-field"
               autoComplete="lastName"
               hintText="Last name"
               fullWidth={true}/>
@@ -90,7 +88,7 @@ export default React.createClass({
               name="email"
               value={this.state.email}
               floatingLabelText="Email"
-              className="text-field vm-6-b"
+              className="vm-6-b"
               autoComplete="email"
               hintText="Your email"
               disabled={true}

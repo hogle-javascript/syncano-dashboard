@@ -120,7 +120,7 @@ export default Radium(React.createClass({
           <TracesList
             tracesFor={this.props.tracesFor}
             name="Traces"
-            items={this.state.traces}/>
+            items={this.state.items}/>
         </div>
       </div>
     );

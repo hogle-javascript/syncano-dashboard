@@ -1,6 +1,5 @@
 import React from 'react';
-import {IconMenu, IconButton} from 'syncano-material-ui';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import {IconMenu, IconButton, MenuItem} from 'syncano-material-ui';
 
 export default React.createClass({
   displayName: 'ListMenu',
