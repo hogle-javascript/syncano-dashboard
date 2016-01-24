@@ -93,7 +93,6 @@ export default React.createClass({
             valueLink={this.linkState('description')}
             errorText={this.getValidationMessages('description').join(' ')}
             style={{width: 500}}
-            className='text-field'
             multiLine={true}
             hintText='Multiline Snippet description (optional)'
             floatingLabelText='Description of a Snippet'/>
