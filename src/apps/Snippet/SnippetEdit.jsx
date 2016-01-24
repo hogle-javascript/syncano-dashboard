@@ -5,7 +5,6 @@ import SnippetConstants from './SnippetConstants';
 
 // Utils
 import {
-  DialogMixin,
   DialogsMixin,
   InstanceTabsMixin,
   FormMixin,
@@ -33,7 +32,6 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    DialogMixin,
     DialogsMixin,
     InstanceTabsMixin,
     MousetrapMixin,
@@ -118,8 +116,9 @@ export default React.createClass({
             label="Continue editing"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={this.handleCancel.bind(null, 'unsavedDataWarn')}/>
+            onTouchTap={() => this.handleCancel('unsavedDataWarn')}/>
         ],
+        avoidResetState: true,
         modal: true,
         children: "You're leaving Snippet Editor with unsaved changes. Are you sure you want to continue?"
       }

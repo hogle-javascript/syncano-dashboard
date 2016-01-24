@@ -2,9 +2,6 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 
-// Utils
-import {DialogMixin} from '../../mixins';
-
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
 import Store from './InstancesStore';
@@ -29,8 +26,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(Store),
-    DialogMixin
+    Reflux.connect(Store)
   ],
 
   componentDidMount() {

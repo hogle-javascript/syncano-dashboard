@@ -8,6 +8,18 @@ export default {
     return dialogs.map((dialog) => React.createElement(dialog.dialog, dialog.params));
   },
 
+  handleCancel(dialogRef) {
+    console.debug('DialogsMixin::handleCancel');
+
+    let ref = _.isString(dialogRef) ? this.refs[dialogRef] : this.refs.dialog;
+
+    ref.dismiss();
+
+    if (!ref.props.avoidResetState) {
+      this.resetDialogState();
+    }
+  },
+
   removeEventFromArray() {
     let newArray = _.dropRight(arguments);
 
