@@ -4,7 +4,7 @@ import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
-import {DialogMixin, DialogsMixin, InstanceTabsMixin} from '../../mixins';
+import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -29,7 +29,6 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    DialogMixin,
     DialogsMixin,
     InstanceTabsMixin
   ],

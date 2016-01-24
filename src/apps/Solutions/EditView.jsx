@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import {DialogMixin, DialogsMixin, IsLoadingMixin} from '../../mixins';
+import {DialogsMixin, IsLoadingMixin} from '../../mixins';
 
 // Stores and Actions
 import InstancesActions from '../Instances/InstancesActions';
@@ -33,7 +33,6 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    DialogMixin,
     DialogsMixin,
     IsLoadingMixin(),
 
