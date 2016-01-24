@@ -81,41 +81,17 @@ export default React.createClass({
     ];
   },
 
-  getSnippetLabel() {
-    if (this.state.currentSnippet !== null) {
-      return this.state.currentSnippet.label;
-    }
-
-    return null;
-  },
-
   getToolbarTitle() {
-    let toolbarTitleText = this.getToolbarTitleText();
+    let currentSnippet = this.state.currentSnippet;
 
-    return !this.isActive('snippet-traces') ? toolbarTitleText : null;
-  },
-
-  getToolbarTitleText() {
-    let snippetLabel = this.getSnippetLabel();
-
-    if (this.state.currentSnippet) {
-      return `Snippet: ${snippetLabel} (id: ${this.getParams().snippetId})`;
-    }
-
-    return '';
+    return currentSnippet ? `Snippet: ${currentSnippet.label} (id: ${currentSnippet.id})` : '';
   },
 
   handleTabActive(tab) {
-    this.transitionTo(tab.props.route,
-      {
-        snippetId: this.state.currentSnippet.id,
-        instanceName: this.getParams().instanceName
-      }
-    );
-  },
-
-  handleBackClick() {
-    this.transitionTo('snippets', this.getParams());
+    this.transitionTo(tab.props.route, {
+      snippetId: this.state.currentSnippet.id,
+      instanceName: this.getParams().instanceName
+    });
   },
 
   handleRunSnippet() {
