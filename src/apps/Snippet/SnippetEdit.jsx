@@ -5,7 +5,6 @@ import SnippetConstants from './SnippetConstants';
 
 // Utils
 import {
-  DialogMixin,
   DialogsMixin,
   InstanceTabsMixin,
   FormMixin,
@@ -33,7 +32,6 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    DialogMixin,
     DialogsMixin,
     InstanceTabsMixin,
     MousetrapMixin,
@@ -78,33 +76,12 @@ export default React.createClass({
     };
   },
 
-  isPayloadValid() {
-    let payloadErrors = this.refs.tracePanel.state.errors;
-    let payloadIsValid = typeof payloadErrors.payloadValue === 'undefined';
-
-    return payloadIsValid;
-  },
-
   isSaved() {
     if (this.state.currentSnippet && this.refs.editorSource) {
       let initialSnippetSource = this.state.currentSnippet.source;
       let currentSnippetSource = this.refs.editorSource.editor.getValue();
 
       return initialSnippetSource === currentSnippetSource;
-    }
-  },
-
-  handleRun() {
-    if (this.isPayloadValid()) {
-      Actions.runSnippet({
-        id: this.state.currentSnippet.id,
-        payload: this.refs.tracePanel.refs.payloadField.getValue()
-      });
-    } else {
-      this.setSnackbarNotification({
-        message: "Can't run Snippet with invalid payload",
-        autoHideDuration: 3000
-      });
     }
   },
 
@@ -139,8 +116,9 @@ export default React.createClass({
             label="Continue editing"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={this.handleCancel.bind(null, 'unsavedDataWarn')}/>
+            onTouchTap={() => this.handleCancel('unsavedDataWarn')}/>
         ],
+        avoidResetState: true,
         modal: true,
         children: "You're leaving Snippet Editor with unsaved changes. Are you sure you want to continue?"
       }
@@ -201,6 +179,8 @@ export default React.createClass({
             <div style={styles.tracePanel}>
               <Editor.Panel
                 ref="tracePanel"
+                onError={Actions.setPayloadValidator}
+                handleChange={Actions.setPayloadValue}
                 trace={this.state.lastTraceResult}
                 loading={!this.state.lastTraceReady}/>
               <Show if={this.state.lastTraceDuration && this.state.lastTraceStatus}>

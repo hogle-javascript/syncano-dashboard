@@ -29,6 +29,7 @@ export default Reflux.createStore({
     return {
       currentSnippet: null,
       snippetConfig: null,
+      isPayloadValid: true,
 
       traces: [],
       lastTraceResult: null,
@@ -72,6 +73,16 @@ export default Reflux.createStore({
 
   clearCurrentSnippet() {
     this.data.currentSnippet = null;
+  },
+
+  setPayloadValue(payload) {
+    this.data.payloadValue = payload;
+    this.trigger(this.data);
+  },
+
+  onSetPayloadValidator(value) {
+    this.data.isPayloadValid = typeof value === 'undefined';
+    this.trigger(this.data);
   },
 
   onFetchSnippetCompleted(snippet) {

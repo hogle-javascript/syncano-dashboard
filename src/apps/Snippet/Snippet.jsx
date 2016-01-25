@@ -3,10 +3,11 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 import HeaderMixin from '../Header/HeaderMixin';
-import {InstanceTabsMixin} from '../../mixins';
+import {InstanceTabsMixin, SnackbarNotificationMixin} from '../../mixins';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './SnippetStore';
+import Actions from './SnippetActions';
 
 import {Tabs, Tab} from 'syncano-material-ui';
 import {Socket} from 'syncano-components';
@@ -29,7 +30,8 @@ export default React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    InstanceTabsMixin
+    InstanceTabsMixin,
+    SnackbarNotificationMixin
   ],
 
   componentWillUnmount() {
@@ -79,41 +81,31 @@ export default React.createClass({
     ];
   },
 
-  getSnippetLabel() {
-    if (this.state.currentSnippet !== null) {
-      return this.state.currentSnippet.label;
-    }
-
-    return null;
-  },
-
   getToolbarTitle() {
-    let toolbarTitleText = this.getToolbarTitleText();
+    let currentSnippet = this.state.currentSnippet;
 
-    return !this.isActive('snippet-traces') ? toolbarTitleText : null;
-  },
-
-  getToolbarTitleText() {
-    let snippetLabel = this.getSnippetLabel();
-
-    if (this.state.currentSnippet) {
-      return `Snippet: ${snippetLabel} (id: ${this.getParams().snippetId})`;
-    }
-
-    return '';
+    return currentSnippet ? `Snippet: ${currentSnippet.label} (id: ${currentSnippet.id})` : '';
   },
 
   handleTabActive(tab) {
-    this.transitionTo(tab.props.route,
-      {
-        snippetId: this.state.currentSnippet.id,
-        instanceName: this.getParams().instanceName
-      }
-    );
+    this.transitionTo(tab.props.route, {
+      snippetId: this.state.currentSnippet.id,
+      instanceName: this.getParams().instanceName
+    });
   },
 
-  handleBackClick() {
-    this.transitionTo('snippets', this.getParams());
+  handleRunSnippet() {
+    if (this.state.isPayloadValid) {
+      Actions.runSnippet({
+        id: this.state.currentSnippet.id,
+        payload: this.state.payloadValue
+      });
+    } else {
+      this.setSnackbarNotification({
+        message: "Can't run Snippet with invalid payload",
+        autoHideDuration: 3000
+      });
+    }
   },
 
   renderTabs() {
@@ -152,7 +144,7 @@ export default React.createClass({
         iconClassName="synicon-play-circle"
         iconStyle={{color: this.context.muiTheme.rawTheme.palette.accent2Color}}
         tooltip="Click here to execute Snippet"
-        onTouchTap={this.handleRun}/>
+        onTouchTap={this.handleRunSnippet}/>
     );
   },
 

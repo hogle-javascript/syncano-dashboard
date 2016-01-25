@@ -278,7 +278,6 @@ export default Radium(React.createClass({
                 valueLink={this.linkState('soft_limit')}
                 errorText={this.getValidationMessages('soft_limit').join(' ')}
                 name="soft_limit"
-                className="text-field"
                 floatingLabelText="Soft Limit"
                 fullWidth={true}/>
             </div>
@@ -288,7 +287,6 @@ export default Radium(React.createClass({
                 valueLink={this.linkState('hard_limit')}
                 errorText={this.getValidationMessages('hard_limit').join(' ')}
                 name="hard_limit"
-                className="text-field"
                 floatingLabelText="Hard Limit"
                 fullWidth={true}/>
             </div>

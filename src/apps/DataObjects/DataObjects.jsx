@@ -4,7 +4,7 @@ import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
-import {DialogMixin, DialogsMixin, InstanceTabsMixin} from '../../mixins';
+import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -29,7 +29,6 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    DialogMixin,
     DialogsMixin,
     InstanceTabsMixin
   ],
@@ -41,7 +40,6 @@ export default React.createClass({
 
   componentWillUpdate(nextProps, nextState) {
     console.info('DataObjects::componentWillUpdate');
-    // Merging "hideDialogs
     this.hideDialogs(nextState.hideDialogs);
 
     if (!nextState.selectedRows && this.refs.table) {
@@ -110,7 +108,7 @@ export default React.createClass({
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         groupName: 'Channel',
-        children: 'Do you really want to delete ' + Store.getSelectedRowsLength() + ' Data Object(s)?'
+        children: `Do you really want to delete ${Store.getSelectedRowsLength()} Data Object(s)?`
       }
     }];
   },
@@ -183,7 +181,12 @@ export default React.createClass({
 
   render() {
     let table = this.state.items ? this.renderTable() : <Loading visible={true}/>;
-    let selectedMessageText = !_.isEmpty(this.state.selectedRows) ? 'selected: ' + this.state.selectedRows.length : '';
+    const selectedRows = this.state.selectedRows;
+    let selectedMessageText = '';
+
+    if (_.isArray(selectedRows) && !_.isEmpty(selectedRows)) {
+      selectedMessageText = `selected: ${selectedRows.length}`;
+    }
 
     return (
       <div>

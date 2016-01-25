@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation, Link} from 'react-router';
 
 // Utils
 import {FormMixin} from '../../mixins';
@@ -13,14 +13,11 @@ import Actions from './AuthActions';
 import Constants from './AuthConstants';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
-import Container from '../../common/Container/AccountContainer';
-
-let Link = Router.Link;
+import {TextField, RaisedButton} from 'syncano-material-ui';
+import {Container} from '../../common';
+import {SocialAuthButtonsList} from 'syncano-components';
 
 export default React.createClass({
-
   displayName: 'AccountLogin',
 
   contextTypes: {
@@ -29,8 +26,8 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
     FormMixin
   ],
 
@@ -92,6 +89,11 @@ export default React.createClass({
     }
   },
 
+  handleSocialLogin(network) {
+    SessionStore.setSignUpMode();
+    Actions.socialLogin(network);
+  },
+
   handleSuccessfullValidation(data) {
     Actions.passwordSignIn({
       email: data.email,
@@ -101,7 +103,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <Container.Account>
         <div className="account-container__content__header vm-3-b">
           <p className="vm-2-b">Access your dashboard</p>
         </div>
@@ -112,7 +114,7 @@ export default React.createClass({
           acceptCharset="UTF-8"
           method="post">
 
-          <MUI.TextField
+          <TextField
             ref="email"
             valueLink={this.linkState('email')}
             errorText={this.getValidationMessages('email').join(' ')}
@@ -122,7 +124,7 @@ export default React.createClass({
             hintText="Email"
             fullWidth={true}/>
 
-          <MUI.TextField
+          <TextField
             ref="password"
             valueLink={this.linkState('password')}
             errorText={this.getValidationMessages('password').join(' ')}
@@ -133,16 +135,18 @@ export default React.createClass({
             hintText="My password"
             fullWidth={true}/>
 
-          <MUI.RaisedButton
+          <RaisedButton
             type="submit"
             label="Login"
             labelStyle={{fontSize: '16px'}}
             fullWidth={true}
             style={{boxShadow: 'none', height: '48px'}}
             primary={true}/>
-
         </form>
-        <Common.SocialAuthButtonsList />
+
+        <SocialAuthButtonsList
+          networks={Constants.SOCIAL_NETWORKS}
+          onSocialLogin={this.handleSocialLogin} />
 
         <div className="account-container__content__footer">
           <ul className="list--flex list--horizontal">
@@ -166,7 +170,7 @@ export default React.createClass({
             If you created your account before August 2015, please login <a href="https://login.syncano.com/">here</a>
           </p>
         </div>
-      </Container>
+      </Container.Account>
     );
   }
 });

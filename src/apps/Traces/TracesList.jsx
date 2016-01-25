@@ -1,11 +1,5 @@
 import React from 'react';
 import Radium from 'radium';
-import Reflux from 'reflux';
-import Router from 'react-router';
-
-import HeaderMixin from '../Header/HeaderMixin';
-
-import Store from './TracesStore';
 
 import {Styles, Paper, FontIcon} from 'syncano-material-ui';
 import {ColumnList, Loading, Truncate, Trace} from 'syncano-components';
@@ -16,12 +10,17 @@ let Column = ColumnList.Column;
 export default Radium(React.createClass({
   displayName: 'TracesList',
 
-  mixins: [
-    Reflux.connect(Store),
-    HeaderMixin,
-    Router.State,
-    Router.Navigation
-  ],
+  getDefaultProps() {
+    return {
+      items: []
+    };
+  },
+
+  getInitialState() {
+    return {
+      visibleTraceId: null
+    };
+  },
 
   getStyles() {
     return {
@@ -50,11 +49,9 @@ export default Radium(React.createClass({
 
   toggleTrace(traceId) {
     console.info('SnippetsTraces::toggleTrace', traceId);
-    if (this.state.visibleTraceId === traceId) {
-      this.setState({visibleTraceId: null});
-    } else {
-      this.setState({visibleTraceId: traceId});
-    }
+    const visibleTraceId = this.state.visibleTraceId !== traceId ? traceId : null;
+
+    this.setState({visibleTraceId});
   },
 
   renderItem(item) {
@@ -94,13 +91,14 @@ export default Radium(React.createClass({
         margin: '15px 0 0'
       };
     }
+
     return (
       <Paper
+        key={item.id}
         zDepth={1}
         style={styles.trace}>
         <ColumnList.Item
           checked={item.checked}
-          key={item.id}
           id={item.id}
           zDepth={0}
           handleClick={this.toggleTrace.bind(null, item.id)}>
@@ -117,7 +115,6 @@ export default Radium(React.createClass({
             date={item.executed_at}
             ifInvalid={item.status}/>
         </ColumnList.Item>
-
         <div style={styles.traceResult}>
           <Trace.Result result={item.result}/>
         </div>
@@ -126,7 +123,20 @@ export default Radium(React.createClass({
   },
 
   renderList() {
-    let items = this.state.items || [];
+    return (
+      <Lists.List key="traces-list">
+        <ColumnList.Header>
+          <Column.ColumnHeader primary={true} columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DESC">Duration</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
+        </ColumnList.Header>
+        {this.props.items.map((item) => this.renderItem(item))}
+      </Lists.List>
+    );
+  },
+
+  renderEmptyContent() {
     let styles = this.getStyles();
     let tracesFor = {
       snippet: {
@@ -147,44 +157,21 @@ export default Radium(React.createClass({
       }
     };
 
-    if (items.length > 0) {
-      items = items.map((item) => this.renderItem(item));
-      return items;
-    }
-
-    return [
+    return (
       <div style={styles.noTracesContainer}>
         <FontIcon
           style={styles.noTracesIcon}
           className={tracesFor[this.props.tracesFor].icon}/>
-
         <p style={styles.noTracesText}>There are no traces for this {tracesFor[this.props.tracesFor].name} yet</p>
       </div>
-    ];
-  },
-
-  renderHeader() {
-    if (this.state.items.length > 0) {
-      return (
-        <ColumnList.Header>
-          <Column.ColumnHeader primary={true} columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DESC">Duration</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
-        </ColumnList.Header>
-      );
-    }
-    return true;
+    );
   },
 
   render() {
     return (
       <Lists.Container>
-        <Loading show={this.state.isLoading}>
-          {this.renderHeader()}
-          <Lists.List key="traces-list">
-            {this.renderList()}
-          </Lists.List>
+        <Loading show={this.props.isLoading}>
+          {this.props.items.length > 0 ? this.renderList() : this.renderEmptyContent()}
         </Loading>
       </Lists.Container>
     );

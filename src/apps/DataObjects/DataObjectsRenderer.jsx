@@ -72,10 +72,7 @@ export default {
     });
 
     return (
-      <MUI.TableHeader
-        key='header'
-        enableSelectAll={false}
-        displaySelectAll={false}>
+      <MUI.TableHeader key='header'>
         <MUI.TableRow key='header-row'>
           {columnsComponents}
         </MUI.TableRow>

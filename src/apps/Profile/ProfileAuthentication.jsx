@@ -112,7 +112,6 @@ export default Radium(React.createClass({
                     errorText={this.getValidationMessages('current_password').join(' ')}
                     name="currentPassword"
                     floatingLabelText="Current password"
-                    className="text-field"
                     autoComplete="currentPassword"
                     hintText="Current password"
                     fullWidth={true} />
@@ -123,7 +122,6 @@ export default Radium(React.createClass({
                     errorText={this.getValidationMessages('newPassword').join(' ')}
                     name="newPassword"
                     floatingLabelText="New password"
-                    className="text-field"
                     autoComplete="newPassword"
                     hintText="New password"
                     fullWidth={true} />
@@ -134,7 +132,7 @@ export default Radium(React.createClass({
                     errorText={this.getValidationMessages('confirmNewPassword').join(' ')}
                     name="confirmNewPassword"
                     floatingLabelText="Confirm new password"
-                    className="text-field vm-6-b"
+                    className="vm-6-b"
                     autoComplete="confirmNewPassword"
                     hintText="Confirm new password"
                     fullWidth={true} />

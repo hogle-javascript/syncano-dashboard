@@ -17,6 +17,7 @@ export default Reflux.createStore({
     console.log('SnackbarNotificationStore::set');
 
     snackbar.key = snackbar.key || Date.now();
+    snackbar.open = true;
     this.snackbar = snackbar;
     this.trigger({snackbar: this.snackbar});
   },

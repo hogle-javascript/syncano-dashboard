@@ -13,12 +13,11 @@ import Actions from './AuthActions';
 import Constants from './AuthConstants';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
-import Container from '../../common/Container/AccountContainer';
+import {TextField, RaisedButton} from 'syncano-material-ui';
+import {Container} from '../../common';
+import {SocialAuthButtonsList} from 'syncano-components';
 
 export default React.createClass({
-
   displayName: 'AccountSignup',
 
   contextTypes: {
@@ -102,6 +101,12 @@ export default React.createClass({
     );
   },
 
+  handleSocialLogin(network) {
+    SessionStore.showWelcomeDialog();
+    SessionStore.setSignUpMode();
+    Actions.socialLogin(network);
+  },
+
   handleSuccessfullValidation(data) {
     SessionStore.showWelcomeDialog();
     SessionStore.setSignUpMode();
@@ -114,7 +119,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Container bottomContent={this.getBottomContent()}>
+      <Container.Account bottomContent={this.getBottomContent()}>
         <div className="account-container__content__header vm-3-b">
           <p className="vm-2-b">Start Building Now</p>
           <small>
@@ -128,7 +133,7 @@ export default React.createClass({
           className="account-container__content__form"
           acceptCharset="UTF-8"
           method="post">
-          <MUI.TextField
+          <TextField
             ref="email"
             valueLink={this.linkState('email')}
             errorText={this.getValidationMessages('email').join(' ')}
@@ -138,7 +143,7 @@ export default React.createClass({
             hintText="Email"
             fullWidth={true}/>
 
-          <MUI.TextField
+          <TextField
             ref="password"
             valueLink={this.linkState('password')}
             errorText={this.getValidationMessages('password').join(' ')}
@@ -149,7 +154,7 @@ export default React.createClass({
             hintText="My password"
             fullWidth={true}/>
 
-          <MUI.RaisedButton
+          <RaisedButton
             type="submit"
             label="Create my account"
             labelStyle={{fontSize: '16px'}}
@@ -157,7 +162,11 @@ export default React.createClass({
             style={{boxShadow: 'none', height: '48px'}}
             primary={true}/>
         </form>
-        <Common.SocialAuthButtonsList mode="signup"/>
+
+        <SocialAuthButtonsList
+          mode="signup"
+          networks={Constants.SOCIAL_NETWORKS}
+          onSocialLogin={this.handleSocialLogin} />
 
         <div className="account-container__content__footer">
           <ul className="list--flex list--horizontal">
@@ -173,7 +182,7 @@ export default React.createClass({
             </li>
           </ul>
         </div>
-      </Container>
+      </Container.Account>
     );
   }
 });
