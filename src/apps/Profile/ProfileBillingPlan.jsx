@@ -395,7 +395,9 @@ export default Radium(React.createClass({
     return (
       <div>
         {this.getDialogs()}
-        <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+        <PlanDialog
+          onDismiss={this.handlePlanDialogDismiss}
+          avoidResetState={true}/>
 
         <InnerToolbar title={<div>Your plan:
           <span style={styles.planTitleText}><strong> {Store.getPlanName()}</strong></span></div>}>
