@@ -228,29 +228,18 @@ export default Radium(React.createClass({
   parseValue(value, type) {
     let parsedValue = null;
 
-    switch (true) {
-      default:
-        parsedValue = String(value);
-        break;
-      case (type === 'integer' && value === ''):
+    if (type === 'integer') {
+      if (value === '') {
         parsedValue = 0;
-        break;
-      case (type === 'integer' && _.isNaN(Number(value))):
-        break;
-      case (type === 'integer' && !_.isNaN(Number(value))):
+      } else if (!_.isNaN(Number(value))) {
         parsedValue = Number(value);
-        break;
+    // handle case where type is NaN
+      } else {
+        return parsedValue;
+      }
+    } else {
+      parsedValue = String(value);
     }
-
-    // if (type === 'integer' && value === '') {
-    //   parsedValue = 0;
-    // } else if (type === 'integer' && _.isNaN(Number(value))) {
-    //   return parsedValue;
-    // } else if (type === 'integer' && !_.isNaN(Number(value))) {
-    //   parsedValue = Number(value);
-    // } else {
-    //   parsedValue = String(value);
-    // }
 
     return parsedValue;
   },
