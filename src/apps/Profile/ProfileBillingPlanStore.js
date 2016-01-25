@@ -97,7 +97,8 @@ export default Reflux.createStore({
   getPlanName() {
     const planDict = {
       builder: 'Builder',
-      'paid-commitment': 'Production'
+      'paid-commitment': 'Production',
+      free: 'Free'
     };
 
     return planDict[this.getPlan()];
