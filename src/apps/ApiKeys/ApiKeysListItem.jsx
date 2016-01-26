@@ -20,12 +20,16 @@ export default React.createClass({
     let item = this.props.item;
     let ignore_acl = null;
     let allow_user_create = null;
+    let allow_anonymous_read = null;
 
     if (item.ignore_acl) {
       ignore_acl = <div>Ignore ACL</div>;
     }
     if (item.allow_user_create) {
       allow_user_create = <div>Allow user creation</div>;
+    }
+    if (item.allow_anonymous_read) {
+      allow_anonymous_read = <div>Allow anonymous read</div>;
     }
 
     return (
@@ -45,6 +49,7 @@ export default React.createClass({
         <Column.Text>
           {ignore_acl}
           {allow_user_create}
+          {allow_anonymous_read}
         </Column.Text>
         <Column.Date date={item.created_at}/>
         <Column.Menu>

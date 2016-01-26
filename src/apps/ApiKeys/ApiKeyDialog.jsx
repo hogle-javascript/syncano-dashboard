@@ -25,6 +25,7 @@ export default React.createClass({
     Actions.createApiKey({
       description: this.state.description,
       allow_user_create: this.state.allow_user_create,
+      allow_anonymous_read: this.state.allow_anonymous_read,
       ignore_acl: this.state.ignore_acl
     });
   },
@@ -33,6 +34,7 @@ export default React.createClass({
     Actions.updateApiKey(this.state.id, {
       description: this.state.description,
       allow_user_create: this.state.allow_user_create,
+      allow_anonymous_read: this.state.allow_anonymous_read,
       ignore_acl: this.state.ignore_acl
     });
   },
@@ -84,14 +86,19 @@ export default React.createClass({
           name="ignore_acl"
           defaultToggled={this.state.ignore_acl}
           onToggle={this.handleToogle}
-          label="Ignore ACL?"
-          className="vm-3-b"/>
+          label="Ignore ACL?"/>
         <Toggle
           ref="allow_user_create"
           name="allow_user_create"
           defaultToggled={this.state.allow_user_create}
           onToggle={this.handleToogle}
           label="User registration?"/>
+        <Toggle
+          ref="allow_anonymous_read"
+          name="allow_anonymous_read"
+          defaultToggled={this.state.allow_anonymous_read}
+          onToggle={this.handleToogle}
+          label="Anonymous usage?"/>
       </Dialog>
     );
   }
