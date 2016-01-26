@@ -9,9 +9,10 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
 import {Loading, Socket} from 'syncano-components';
-import {InnerToolbar, Container} from '../../common';
+import {InnerToolbar, Container, Dialog} from '../../common';
 
 // Apps
+import {Actions} from '../Session';
 import Data from '../Data';
 import Channels from '../Channels';
 import Classes from '../Classes';
@@ -39,6 +40,14 @@ export default React.createClass({
     InstanceTabsMixin,
     HeaderMixin
   ],
+
+  statics: {
+    willTransitionFrom(transition) {
+      if (_.includes(transition.path, 'prolong')) {
+        Actions.setProlongDialog(true);
+      }
+    }
+  },
 
   componentDidMount() {
     console.info('Data::componentDidMount');
@@ -161,6 +170,7 @@ export default React.createClass({
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
+        <Dialog.Prolong />
 
         {this.renderToolbar()}
         <Container>
