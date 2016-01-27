@@ -210,13 +210,13 @@ export default Radium(React.createClass({
     this.handleUpdate();
   },
 
-  handleSelectFieldChange(fieldIndex, event, selectedIndex, value) {
+  handleTypeFieldChange(fieldIndex, event, selectedIndex, value) {
     const fieldValueType = value;
     const fieldValue = this.refs[`fieldValue${fieldIndex}`].getValue();
     const snippetConfig = this.state.snippetConfig;
     const parsedValue = this.parseValue(fieldValue, fieldValueType);
 
-    if (parsedValue) {
+    if (parsedValue || parsedValue === 0) {
       snippetConfig[fieldIndex].type = fieldValueType;
       snippetConfig[fieldIndex].value = parsedValue;
       this.setState({snippetConfig});
@@ -226,22 +226,15 @@ export default Radium(React.createClass({
   },
 
   parseValue(value, type) {
-    let parsedValue = null;
+    // for integer type if value is empty string, convert to 0, if it's a valid number convert to int
+    // if it's not a number either return null for error handling
+    let parsedInt = value === '' ? 0 : Number(value);
+    let obj = {
+      string: value,
+      integer: _.isNumber(parsedInt) ? parsedInt : null
+    };
 
-    if (type === 'integer') {
-      if (value === '') {
-        parsedValue = 0;
-      } else if (!_.isNaN(Number(value))) {
-        parsedValue = Number(value);
-    // handle case where type is NaN
-      } else {
-        return parsedValue;
-      }
-    } else {
-      parsedValue = String(value);
-    }
-
-    return parsedValue;
+    return obj[type];
   },
 
   initDialogs() {
@@ -307,7 +300,7 @@ export default Radium(React.createClass({
             options={Store.getSnippetConfigValueTypes()}
             value={this.state.snippetConfig[index].type}
             onTouchTap={this.handleSelectFieldClick}
-            onChange={this.handleSelectFieldChange.bind(null, index)}
+            onChange={this.handleTypeFieldChange.bind(null, index)}
             errorText={this.getValidationMessages('config_value_type').join(' ')}
             fullWidth={false}
             style={styles.field}/>
