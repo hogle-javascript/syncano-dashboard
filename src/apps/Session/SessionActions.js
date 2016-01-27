@@ -11,7 +11,6 @@ export default CreateActions(
     setInstance: {},
     setInvitationFromUrl: {},
     getInvitationFromUrl: {},
-    setProlongDialog: {},
     fetchUser: {
       asyncResult: true,
       children: ['completed', 'failure'],

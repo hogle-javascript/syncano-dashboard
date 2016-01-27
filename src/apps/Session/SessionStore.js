@@ -20,7 +20,6 @@ export default Reflux.createStore({
     this.theme = null;
     this.signUpMode = null;
     this.isWelcomeDialogVisible = false;
-    this.isProlongDialogVisible = false;
 
     if (this.isAuthenticated() && !this.user) {
       SessionActions.fetchUser(this.token);
@@ -185,11 +184,6 @@ export default Reflux.createStore({
     }
 
     return false;
-  },
-
-  onSetProlongDialog(value) {
-    this.isProlongDialogVisible = value;
-    this.trigger(this);
   },
 
   onFetchInstanceCompleted(payload) {
