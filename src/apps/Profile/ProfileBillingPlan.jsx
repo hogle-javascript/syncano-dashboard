@@ -361,7 +361,7 @@ export default Radium(React.createClass({
 
   renderLoaded() {
     const styles = this.getStyles();
-    const subscriptions = this.state.subscriptions;
+    const {subscriptions} = this.state;
 
     if (subscriptions && subscriptions.length === 0) {
       return (
