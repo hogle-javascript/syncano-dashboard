@@ -11,8 +11,8 @@ import Store from './UsersStore';
 import {GroupsActions, GroupsStore, GroupsList, GroupDialog} from './../Groups';
 
 // Components
-import {Socket} from 'syncano-components';
-import {Container, InnerToolbar, Lists} from '../../common';
+import {Container, Socket} from 'syncano-components';
+import {InnerToolbar, Lists} from '../../common';
 
 // Local components
 import UsersList from './UsersList';

@@ -13,8 +13,8 @@ import Store from './DataObjectsStore';
 
 // Components
 import {IconButton, RaisedButton, Table, TableBody} from 'syncano-material-ui';
-import {Show, Loading} from 'syncano-components';
-import {Dialog, InnerToolbar, Container} from '../../common';
+import {Container, Show, Loading} from 'syncano-components';
+import {Dialog, InnerToolbar} from '../../common';
 
 // Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu';

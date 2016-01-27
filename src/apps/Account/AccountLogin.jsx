@@ -13,8 +13,8 @@ import Actions from './AuthActions';
 import Constants from './AuthConstants';
 
 // Components
+import AccountContainer from './AccountContainer';
 import {TextField, RaisedButton} from 'syncano-material-ui';
-import {Container} from '../../common';
 import {SocialAuthButtonsList} from 'syncano-components';
 
 export default React.createClass({
@@ -103,7 +103,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Container.Account>
+      <AccountContainer>
         <div className="account-container__content__header vm-3-b">
           <p className="vm-2-b">Access your dashboard</p>
         </div>
@@ -170,7 +170,7 @@ export default React.createClass({
             If you created your account before August 2015, please login <a href="https://login.syncano.com/">here</a>
           </p>
         </div>
-      </Container.Account>
+      </AccountContainer>
     );
   }
 });

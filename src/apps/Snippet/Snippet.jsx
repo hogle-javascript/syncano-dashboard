@@ -10,8 +10,8 @@ import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
 import {Tabs, Tab} from 'syncano-material-ui';
-import {Socket} from 'syncano-components';
-import {InnerToolbar, Container} from '../../common';
+import {Container, Socket} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 
 let RouteHandler = Router.RouteHandler;
 

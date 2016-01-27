@@ -10,8 +10,8 @@ import Store from './AuthStore';
 import Actions from './AuthActions';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Container from '../../common/Container/AccountContainer';
+import {TextField, RaisedButton} from 'syncano-material-ui';
+import AccountContainer from './AccountContainer';
 
 let Link = Router.Link;
 
@@ -40,7 +40,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <AccountContainer>
         <div className="account-container__content__header">
           <p className="">Reset your password</p>
         </div>
@@ -51,7 +51,7 @@ export default React.createClass({
           acceptCharset="UTF-8"
           method="post">
 
-          <MUI.TextField
+          <TextField
             ref="email"
             valueLink={this.linkState('email')}
             errorText={this.getValidationMessages('email').join(' ')}
@@ -61,7 +61,7 @@ export default React.createClass({
             hintText="Your email"
             fullWidth={true}/>
 
-          <MUI.RaisedButton
+          <RaisedButton
             type="submit"
             label="Reset password"
             fullWidth={true}
@@ -75,7 +75,7 @@ export default React.createClass({
             <li><p>Already have an account? <Link to="login">Login</Link></p></li>
           </ul>
         </div>
-      </Container>
+      </AccountContainer>
     );
   }
 });

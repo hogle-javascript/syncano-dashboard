@@ -16,8 +16,8 @@ import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
 import {TextField, RaisedButton, FlatButton, Checkbox} from 'syncano-material-ui';
-import {Color, Show, Loading, SelectFieldWrapper} from 'syncano-components';
-import {Icon, InnerToolbar, Container} from '../../common';
+import {Color, Container, Show, Loading, SelectFieldWrapper} from 'syncano-components';
+import {Icon, InnerToolbar} from '../../common';
 
 export default React.createClass({
   displayName: 'FormView',

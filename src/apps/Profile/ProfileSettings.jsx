@@ -7,7 +7,8 @@ import Actions from './ProfileActions';
 import Store from './ProfileSettingsStore';
 
 import {TextField, RaisedButton} from 'syncano-material-ui';
-import {Container, InnerToolbar} from '../../common';
+import {Container} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 
 export default React.createClass({
 

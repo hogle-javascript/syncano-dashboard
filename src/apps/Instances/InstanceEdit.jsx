@@ -15,8 +15,8 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import {Utils, IconButton, RaisedButton, TextField} from 'syncano-material-ui';
-import {Color, ColumnList, Loading} from 'syncano-components';
-import {Container, InnerToolbar, ColorIconPicker, Dialog} from '../../common';
+import {Color, ColumnList, Container, Loading} from 'syncano-components';
+import {InnerToolbar, ColorIconPicker, Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'InstanceEdit',

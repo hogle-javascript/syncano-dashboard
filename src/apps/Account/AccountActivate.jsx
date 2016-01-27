@@ -5,7 +5,7 @@ import Router from 'react-router';
 import Store from './AuthStore';
 import Actions from './AuthActions';
 
-import Container from '../../common/Container/AccountContainer';
+import AccountContainer from './AccountContainer';
 
 export default React.createClass({
 
@@ -31,11 +31,11 @@ export default React.createClass({
 
   render() {
     return (
-      <Container ref="loginPage">
+      <AccountContainer ref="loginPage">
         <div className="account-container__content__header">
           <p className="vm-0-b">{this.state.status}</p>
         </div>
-      </Container>
+      </AccountContainer>
     );
   }
 });

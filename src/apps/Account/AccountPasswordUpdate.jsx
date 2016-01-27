@@ -5,8 +5,8 @@ import Router from 'react-router';
 import Store from './AuthStore';
 import Constants from './AuthConstants';
 
-import MUI from 'syncano-material-ui';
-import Container from '../../common/Container/AccountContainer';
+import {RaisedButton} from 'syncano-material-ui';
+import AccountContainer from './AccountContainer';
 
 export default React.createClass({
 
@@ -50,7 +50,7 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <Container>
+      <AccountContainer>
         <div className="account-container__content__header">
           <p className="vm-0-b">Password updated</p>
         </div>
@@ -60,15 +60,14 @@ export default React.createClass({
             style={styles.text}>
             Sweet! Your new password has now been set and you can login.
           </p>
-
-          <MUI.RaisedButton
+          <RaisedButton
             style={styles.button}
             labelStyle={styles.buttonLabel}
             label="Go to dashboard"
             onClick={this.handleButtonClick}
             primary={true}/>
         </div>
-      </Container>
+      </AccountContainer>
     );
   }
 });

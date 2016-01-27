@@ -11,8 +11,8 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 // Components
-import {Socket} from 'syncano-components';
-import {InnerToolbar, Container} from '../../common';
+import {Container, Socket} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 
 // Local components
 import ClassesList from './ClassesList';
