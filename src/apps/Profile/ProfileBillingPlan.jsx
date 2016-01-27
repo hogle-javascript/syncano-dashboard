@@ -148,13 +148,13 @@ export default Radium(React.createClass({
   setupToggles() {
     const plan = Store.getPlan();
     const isPlanCanceled = _.isBoolean(Store.isPlanCanceled());
-    const setToggle = {
-      builder: this.refs.toggle.setToggled.bind(null, false),
-      free: this.refs.toggle.setToggled.bind(null, true),
-      'paid-commitment': this.refs.toggle.setToggled.bind(null, isPlanCanceled)
+    const toggleDict = {
+      builder: false,
+      free: true,
+      'paid-commitment': isPlanCanceled
     };
 
-    setToggle[plan]();
+    this.refs.toggle.setToggled(toggleDict[plan]);
   },
 
   renderMainDesc() {
@@ -361,8 +361,9 @@ export default Radium(React.createClass({
 
   renderLoaded() {
     const styles = this.getStyles();
+    const subscriptions = this.state.subscriptions;
 
-    if (this.state.subscriptions && this.state.subscriptions.length === 0) {
+    if (subscriptions && subscriptions.length === 0) {
       return (
         <div className="vp-5-t">
           <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
