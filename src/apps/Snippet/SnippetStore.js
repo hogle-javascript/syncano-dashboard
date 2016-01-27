@@ -25,6 +25,17 @@ export default Reflux.createStore({
     php: 'php'
   },
 
+  snippetConfigValueTypes: [
+    {
+      payload: 'string',
+      text: 'String'
+    },
+    {
+      payload: 'integer',
+      text: 'Integer'
+    }
+  ],
+
   getInitialState() {
     return {
       currentSnippet: null,
@@ -56,10 +67,17 @@ export default Reflux.createStore({
   },
 
   mapConfig(originalConfig) {
+    function getFieldValueType(fieldValue) {
+      if (typeof fieldValue === 'number') {
+        return 'integer';
+      }
+      return 'string';
+    }
     let config = _.map(originalConfig, (value, key) => {
       return {
         key,
-        value
+        value,
+        type: getFieldValueType(value)
       };
     });
 
@@ -131,7 +149,7 @@ export default Reflux.createStore({
     if (this.data.traces.length > 0) {
       let lastTrace = this.data.traces[0];
 
-      if (lastTrace.status === 'pending') {
+      if (lastTrace.status !== 'success' && lastTrace.status !== 'failure') {
         this.data.lastTraceReady = false;
         setTimeout(() => {
           this.fetchTraces();
@@ -147,6 +165,10 @@ export default Reflux.createStore({
       }
     }
     this.trigger(this.data);
+  },
+
+  getSnippetConfigValueTypes() {
+    return this.snippetConfigValueTypes;
   },
 
   onUpdateSnippetCompleted(snippet) {

@@ -14,11 +14,7 @@ export default {
   create(payload) {
     this.Connection
       .ApiKeys
-      .create({
-        description: payload.description,
-        allow_user_create: payload.allow_user_create,
-        ignore_acl: payload.ignore_acl
-      })
+      .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },

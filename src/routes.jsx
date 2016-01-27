@@ -95,6 +95,16 @@ export default (
 
         <Redirect from="/instances/:instanceName" to="sockets" />
 
+        {/* Prolong */}
+        <Route
+          name="prolong"
+          path="prolong"
+        >
+
+          <Redirect from="/instances/:instanceName/prolong" to="sockets" />
+
+        </Route>
+
         {/* Sockets */}
         <Route
           name="sockets"

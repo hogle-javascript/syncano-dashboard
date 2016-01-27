@@ -9,7 +9,8 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
 import {Container, Loading, Socket} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {InnerToolbar, Dialog} from '../../common';
+import {FlatButton} from 'syncano-material-ui';
 
 // Apps
 import Data from '../Data';
@@ -39,6 +40,14 @@ export default React.createClass({
     InstanceTabsMixin,
     HeaderMixin
   ],
+
+  statics: {
+    willTransitionFrom(transition, component) {
+      if (_.includes(transition.path, 'prolong')) {
+        component.refs.prolongDialog.show();
+      }
+    }
+  },
 
   componentDidMount() {
     console.info('Data::componentDidMount');
@@ -75,6 +84,32 @@ export default React.createClass({
     Schedules.Actions.fetch();
     Triggers.Actions.fetch();
     CodeBoxes.Actions.fetch();
+  },
+
+  initDialogs() {
+    let params = this.getParams();
+
+    return [
+      {
+        dialog: Dialog,
+        params: {
+          key: 'prolongDialog',
+          ref: 'prolongDialog',
+          avoidResetState: true,
+          title: 'Prolong instance lifetime',
+          children: `Youv've canceled the archiving of your instance ${params.instanceName}.
+          Close this dialog to continue work with your instance.`,
+          actions: (
+            <FlatButton
+              key="cancel"
+              onTouchTap={this.handleCancel.bind(null, 'prolongDialog')}
+              primary={true}
+              label="Close"
+              ref="cancel"/>
+          )
+        }
+      }
+    ];
   },
 
   renderToolbar() {
@@ -162,6 +197,7 @@ export default React.createClass({
         <Triggers.Dialog />
         <Channels.Dialog />
 
+        {this.getDialogs()}
         {this.renderToolbar()}
         <Container>
           {this.renderLists()}
