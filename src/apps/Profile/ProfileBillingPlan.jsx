@@ -86,8 +86,8 @@ export default Radium(React.createClass({
   },
 
   handleCancelCancelProductionPlan() {
+    this.hideDialogs(true);
     this.setupToggles();
-    this.handleCancel('cancelProductionPlan');
   },
 
   handleShowCancelPlanDialog() {
@@ -147,14 +147,14 @@ export default Radium(React.createClass({
 
   setupToggles() {
     const plan = Store.getPlan();
+    const isPlanCanceled = _.isBoolean(Store.isPlanCanceled());
+    const toggleDict = {
+      builder: false,
+      free: true,
+      'paid-commitment': isPlanCanceled
+    };
 
-    if (plan === 'builder') {
-      this.refs.toggle.setToggled(false);
-    } else if (plan === 'paid-commitment' && Store.isPlanCanceled()) {
-      this.refs.toggle.setToggled(false);
-    } else if (plan === 'paid-commitment') {
-      this.refs.toggle.setToggled(true);
-    }
+    this.refs.toggle.setToggled(toggleDict[plan]);
   },
 
   renderMainDesc() {
@@ -361,8 +361,9 @@ export default Radium(React.createClass({
 
   renderLoaded() {
     const styles = this.getStyles();
+    const {subscriptions} = this.state;
 
-    if (this.state.subscriptions.length === 0) {
+    if (subscriptions && subscriptions.length === 0) {
       return (
         <div className="vp-5-t">
           <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
@@ -385,7 +386,9 @@ export default Radium(React.createClass({
     return (
       <div>
         {this.getDialogs()}
-        <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+        <PlanDialog
+          onDismiss={this.handlePlanDialogDismiss}
+          avoidResetState={true}/>
 
         <InnerToolbar title={<div>Your plan:
           <span style={styles.planTitleText}><strong> {Store.getPlanName()}</strong></span></div>}>
