@@ -148,23 +148,13 @@ export default Radium(React.createClass({
   setupToggles() {
     const plan = Store.getPlan();
     const isPlanCanceled = _.isBoolean(Store.isPlanCanceled());
+    const setToggle = {
+      builder: this.refs.toggle.setToggled.bind(null, false),
+      free: this.refs.toggle.setToggled.bind(null, true),
+      'paid-commitment': this.refs.toggle.setToggled.bind(null, isPlanCanceled)
+    };
 
-    switch (plan) {
-      case 'builder':
-        this.refs.toggle.setToggled(false);
-        break;
-
-      case 'paid-commitment':
-        this.refs.toggle.setToggled(isPlanCanceled);
-        break;
-
-      case 'free':
-        this.refs.toggle.setToggled(true);
-        break;
-
-      default:
-        break;
-    }
+    setToggle[plan]();
   },
 
   renderMainDesc() {
