@@ -12,13 +12,11 @@ import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
 import {FlatButton, IconButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
-import {Billing} from 'syncano-components';
-import {Container, Dialog, InnerToolbar, Color} from '../../common';
+import {Billing, Container} from 'syncano-components';
+import {Dialog, InnerToolbar, Color} from '../../common';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 import Chart from './ProfileBillingChart';
-
-import EmptyContainer from '../../common/Container/EmptyContainer';
 
 export default Radium(React.createClass({
   displayName: 'ProfileBillingPlan',
@@ -367,7 +365,7 @@ export default Radium(React.createClass({
       return (
         <div className="vp-5-t">
           <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
-          <EmptyContainer
+          <Container.Empty
             icon="synicon-block-helper"
             text="You don't have any active subscription."/>
 

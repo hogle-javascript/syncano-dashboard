@@ -8,8 +8,8 @@ import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
-import {Loading, Socket} from 'syncano-components';
-import {InnerToolbar, Container, Dialog} from '../../common';
+import {Container, Loading, Socket} from 'syncano-components';
+import {InnerToolbar, Dialog} from '../../common';
 import {FlatButton} from 'syncano-material-ui';
 
 // Apps

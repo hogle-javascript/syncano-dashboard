@@ -13,8 +13,8 @@ import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
 // Components
-import {Socket} from 'syncano-components';
-import {InnerToolbar, Container} from '../../common';
+import {Container, Socket} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 
 // Local components
 import AdminsList from './AdminsList';

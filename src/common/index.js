@@ -1,5 +1,4 @@
 import ColorIconPicker from './ColorIconPicker';
-import Container from './Container';
 import ConversionPixel from './ConversionPixel';
 import Dialog from './Dialog';
 import Dropdown from './Dropdown';
@@ -14,7 +13,6 @@ import Sidebar from './Sidebar';
 
 export default {
   ColorIconPicker,
-  Container,
   ConversionPixel,
   Dialog,
   Dropdown,

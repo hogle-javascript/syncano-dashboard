@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import {Loading} from 'syncano-components';
-import {Container} from '../common';
+import {Container, Loading} from 'syncano-components';
 
 export default (options = {}, props = {}) => {
   options.attr = options.attr || 'state.isLoading';

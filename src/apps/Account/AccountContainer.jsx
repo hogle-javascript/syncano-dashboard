@@ -1,20 +1,19 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-import MUI from 'syncano-material-ui';
-import Common from '../';
+import {Utils, Paper} from 'syncano-material-ui';
+import {Logo} from '../../common/';
 
 import './AccountContainer.sass';
 
 export default React.createClass({
-
   displayName: 'AccountContainer',
 
   propTypes: {
     style: React.PropTypes.object
   },
 
-  mixins: [MUI.Utils.Styles],
+  mixins: [Utils.Styles],
 
   getStyles() {
     let styles = {
@@ -25,23 +24,23 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
+    const {id, bottomContent, children} = this.props;
 
     return (
       <div
-        className="account-container"
-        id={this.props.id}
-        style={styles}
-        ref={this.props.ref}>
+        className="col-lg-15 account-container"
+        id={id}
+        style={styles}>
         <div className="account-logo">
-          <Link to="login"><Common.Logo className="logo-blue"/></Link>
+          <Link to="login"><Logo className="logo-blue"/></Link>
         </div>
-        <MUI.Paper
+        <Paper
           className="account-container__content"
           rounded={false}>
-          {this.props.children}
-        </MUI.Paper>
-        {this.props.bottomContent}
+          {children}
+        </Paper>
+        {bottomContent}
       </div>
     );
   }

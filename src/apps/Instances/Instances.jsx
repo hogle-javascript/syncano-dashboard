@@ -9,8 +9,8 @@ import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
 import Header from '../Header';
-import {Show, Socket} from 'syncano-components';
-import {Container, InnerToolbar} from '../../common';
+import {Container, Show, Socket} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';

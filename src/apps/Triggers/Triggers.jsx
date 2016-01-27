@@ -9,8 +9,8 @@ import Actions from './TriggersActions';
 import Store from './TriggersStore';
 import SnippetsActions from '../Snippets/SnippetsActions';
 
-import {Socket} from 'syncano-components';
-import {Container, InnerToolbar} from '../../common';
+import {Container, Socket} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
 

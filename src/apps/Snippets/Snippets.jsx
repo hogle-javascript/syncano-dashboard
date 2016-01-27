@@ -11,8 +11,8 @@ import Actions from './SnippetsActions';
 import Store from './SnippetsStore';
 
 // Components
-import {Socket} from 'syncano-components';
-import {Container, InnerToolbar} from '../../common';
+import {Container, Socket} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 
 // Local components
 import SnippetsList from './SnippetsList';

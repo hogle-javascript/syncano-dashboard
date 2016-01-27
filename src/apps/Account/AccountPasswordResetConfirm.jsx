@@ -10,8 +10,8 @@ import Store from './AuthStore';
 import Actions from './AuthActions';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Container from '../../common/Container/AccountContainer';
+import {TextField, RaisedButton} from 'syncano-material-ui';
+import AccountContainer from './AccountContainer';
 
 export default React.createClass({
 
@@ -45,7 +45,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <AccountContainer>
         <div className="account-container__content__header">
           <p className="">Choose a new password</p>
         </div>
@@ -56,7 +56,7 @@ export default React.createClass({
           acceptCharset="UTF-8"
           method="post">
 
-          <MUI.TextField
+          <TextField
             ref="password"
             valueLink={this.linkState('password')}
             errorText={this.getValidationMessages('password').join(' ')}
@@ -67,7 +67,7 @@ export default React.createClass({
             hintText="New password"
             fullWidth={true}/>
 
-          <MUI.TextField
+          <TextField
             ref="confirmPassword"
             valueLink={this.linkState('confirmPassword')}
             errorText={this.getValidationMessages('confirmPassword').join(' ')}
@@ -78,7 +78,7 @@ export default React.createClass({
             hintText="Confirm password"
             fullWidth={true}/>
 
-          <MUI.RaisedButton
+          <RaisedButton
             type="submit"
             label="Change password"
             fullWidth={true}
@@ -86,7 +86,7 @@ export default React.createClass({
             style={{boxShadow: 'none', height: '48px'}}
             primary={true}/>
         </form>
-      </Container>
+      </AccountContainer>
     );
   }
 });

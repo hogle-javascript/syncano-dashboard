@@ -10,8 +10,8 @@ import Store from './ProfileInvitationsStore';
 
 // Components
 import ProfileInvitationsList from './ProfileInvitationsList';
-import {Show, Loading} from 'syncano-components';
-import {Container, InnerToolbar} from '../../common';
+import {Container, Show, Loading} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 
 export default React.createClass({
   displayName: 'ProfileInvitations',

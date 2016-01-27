@@ -6,8 +6,8 @@ import Actions from './ProfileActions';
 import Store from './ProfileBillingInvoicesStore';
 
 import {FlatButton} from 'syncano-material-ui';
-import {ColumnList, Loading, Show} from 'syncano-components';
-import {InnerToolbar, Lists, Container} from '../../common';
+import {ColumnList, Container, Loading, Show} from 'syncano-components';
+import {InnerToolbar, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 

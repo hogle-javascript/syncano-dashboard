@@ -11,8 +11,8 @@ import SnippetsActions from '../Snippets/SnippetsActions';
 
 import SchedulesList from './SchedulesList';
 import ScheduleDialog from './ScheduleDialog';
-import {Socket} from 'syncano-components';
-import {Container, InnerToolbar} from '../../common';
+import {Container, Socket} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 
 export default React.createClass({
 

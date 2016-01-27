@@ -5,8 +5,8 @@ import {State, Navigation} from 'react-router';
 import {DialogsMixin} from '../../mixins';
 
 import {Styles} from 'syncano-material-ui';
-import {Socket} from 'syncano-components';
-import {InnerToolbar, Container} from '../../common';
+import {Container, Socket} from 'syncano-components';
+import {InnerToolbar} from '../../common';
 import DevicesList from './DevicesList';
 
 export default Radium(React.createClass({
