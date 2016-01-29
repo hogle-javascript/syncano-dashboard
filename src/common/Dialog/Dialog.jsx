@@ -23,7 +23,7 @@ export default React.createClass({
   render() {
     let styles = this.getStyles();
     let {children, style, open, ...other} = this.props;
-    let dialogStyle = this.mergeAndPrefix(style, styles.style);
+    let dialogStyle = this.mergeStyles(style, styles.style);
 
     return (
       <Dialog

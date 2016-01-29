@@ -1,12 +1,10 @@
 import React from 'react';
-
-import MUI from 'syncano-material-ui';
+import {Utils} from 'syncano-material-ui';
 
 export default React.createClass({
-
   displayName: 'SliderSection',
 
-  mixins: [MUI.Utils.Styles],
+  mixins: [Utils.Styles],
 
   getStyles() {
     return {
@@ -19,7 +17,7 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let rootStyle = this.mergeAndPrefix(styles.root, this.props.style);
+    let rootStyle = this.mergeStyles(styles.root, this.props.style);
 
     return (
       <div

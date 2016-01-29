@@ -221,7 +221,7 @@ export default React.createClass({
                     tooltip="Click to customize Instance"
                     tooltipStyles={styles.tooltip}
                     iconStyle={styles.instanceIcon}
-                    style={this.mergeAndPrefix(styles.instanceIconButton, iconBackgroundColor)}
+                    style={this.mergeStyles(styles.instanceIconButton, iconBackgroundColor)}
                     iconClassName={`synicon-${icon}`}
                     onClick={this.showDialog.bind(this, 'pickColorIconDialog')}/>
                   <TextField

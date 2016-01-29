@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import MUI from 'syncano-material-ui';
+import {FontIcon, Utils} from 'syncano-material-ui';
 
 import './Notification.sass';
 
@@ -15,7 +14,7 @@ export default React.createClass({
     children: React.PropTypes.any.isRequired
   },
 
-  mixins: [MUI.Utils.Styles],
+  mixins: [Utils.Styles],
 
   getDefaultProps() {
     return {
@@ -31,7 +30,7 @@ export default React.createClass({
       verticalAlign: 'middle'
     };
 
-    return this.mergeAndPrefix(styles, this.props.style);
+    return this.mergeStyles(styles, this.props.style);
   },
 
   render() {
@@ -54,7 +53,7 @@ export default React.createClass({
       <div className={cssClasses}>
         <div className="notification__content">
           <div className="notification__content__icon">
-            <MUI.FontIcon
+            <FontIcon
               style={styles}
               className={`synicon-${iconClass}`} />
           </div>

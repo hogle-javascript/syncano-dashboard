@@ -84,7 +84,10 @@ export default Radium(React.createClass({
       dropdownText: {
         overflow: 'hidden',
         whiteSpace: 'nowrap',
-        paddingLeft: 0
+        paddingLeft: 0,
+        textOverflow: 'ellipsis',
+        fontSize: 16,
+        lineHeight: '24px'
       },
       noInstancesItem: {
         fontWeight: 500,
@@ -119,7 +122,7 @@ export default Radium(React.createClass({
     let icon = (
       <FontIcon
         className="synicon-plus"
-        style={this.mergeAndPrefix(styles.dropdownInstanceIcon, styles.addInstanceIcon)}/>
+        style={this.mergeStyles(styles.dropdownInstanceIcon, styles.addInstanceIcon)}/>
     );
 
     return (
@@ -144,7 +147,7 @@ export default Radium(React.createClass({
       let icon = (
         <FontIcon
           className={iconName}
-          style={this.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+          style={this.mergeStyles(styles.dropdownInstanceIcon, iconBackground)}/>
       );
 
       return (
@@ -192,11 +195,10 @@ export default Radium(React.createClass({
       <div style={styles.dropdownIcon}>
         <FontIcon
           className={icon}
-          style={this.mergeAndPrefix(styles.dropdownInstanceIcon, iconStyle)}/>
-        <ListItem
-          disabled={true}
-          primaryText={currentInstance.name}
-          style={styles.dropdownText}/>
+          style={this.mergeStyles(styles.dropdownInstanceIcon, iconStyle)}/>
+        <div style={styles.dropdownText}>
+          {currentInstance.name}
+        </div>
         <FontIcon className='synicon-menu-down'/>
       </div>
     );

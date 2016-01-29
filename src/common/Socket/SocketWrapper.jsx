@@ -2,8 +2,9 @@ import React from 'react';
 import {IconButton, Utils} from 'syncano-material-ui';
 
 export default React.createClass({
-
   displayName: 'SocketWrapper',
+
+  mixins: [Utils.Styles],
 
   getStyles() {
     return {
@@ -28,9 +29,8 @@ export default React.createClass({
     return (
       <IconButton
         {...other}
-        style={Utils.Styles.mergeAndPrefix(styles.style, style)}
-        iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}
-        />
+        style={this.mergeStyles(styles.style, style)}
+        iconStyle={this.mergeStyles(styles.iconStyle, iconStyle)} />
     );
   }
 });
