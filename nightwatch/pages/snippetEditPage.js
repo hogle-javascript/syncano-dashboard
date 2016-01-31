@@ -4,7 +4,7 @@ export default {
       selector: '#brace-editor'
     },
     config: {
-      selector: '//div[text()="Config"]',
+      selector: '//div/span[text()="Config"]',
       locateStrategy: 'xpath'
     },
     configKeyField: {
@@ -20,7 +20,7 @@ export default {
       locateStrategy: 'xpath'
     },
     traces: {
-      selector: '//div[text()="Traces"]',
+      selector: '//div/span[text()="Traces"]',
       locateStrategy: 'xpath'
     },
     tracesEmpty: {
