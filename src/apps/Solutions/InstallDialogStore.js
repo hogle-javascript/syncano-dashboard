@@ -140,8 +140,8 @@ export default Reflux.createStore({
       delay: true,
       message: 'Solution successfully installed',
       action: 'dismiss',
-      onActionTouchTap() {
-        this.refs.snackbar.dismiss();
+      onActionTouchTap: () => {
+        this.dismissSnackbarNotification();
       }
     });
   },
