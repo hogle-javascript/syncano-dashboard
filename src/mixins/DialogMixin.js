@@ -38,7 +38,7 @@ export default {
 
     this.dismiss();
 
-    if (this.props.avoidResetState) {
+    if (!this.props.avoidResetState) {
       this.resetDialogState();
     }
   },
