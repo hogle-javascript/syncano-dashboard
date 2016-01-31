@@ -153,7 +153,7 @@ export default React.createClass({
       <div>
         <InnerToolbar
           title={this.getToolbarTitle()}
-          backFallback={this.handleBackClick}
+          backFallback={() => this.transitionTo('snippets', this.getParams())}
           forceBackFallback={true}
           backButtonTooltip="Go back to Snippets list">
           {this.isActive('snippet-edit') ? this.renderRunButton() : null}
