@@ -1,11 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router';
+import Radium from 'radium';
 
 import Sticky from 'react-stickydiv';
 import {Utils} from 'syncano-material-ui';
 import Logo from '../Logo';
 
-export default React.createClass({
+export default Radium(React.createClass({
   displayName: 'Sidebar',
 
   contextTypes: {
@@ -13,6 +14,12 @@ export default React.createClass({
   },
 
   mixins: [Utils.Styles],
+
+  getDefaultProps() {
+    return {
+      logoCentered: false
+    };
+  },
 
   getStyles() {
     return {
@@ -34,28 +41,30 @@ export default React.createClass({
         display: 'flex',
         alignItems: 'center'
       },
-      logotypeContainer: {
-        height: '100%',
-        display: 'flex'
-      },
       logo: {
         width: 120
+      },
+      logoCentered: {
+        justifyContent: 'center'
+      },
+      contentStretched: {
+        width: '100%'
       }
     };
   },
 
   render() {
     let styles = this.getStyles();
-    let {children, style, ...other} = this.props;
+    let {children, style, logoCentered, ...other} = this.props;
 
     return (
       <div
         className="col-flex-0 left-nav"
         style={this.mergeStyles(style, styles.root)}
         {...other}>
-        <div style={styles.content}>
+        <div style={[styles.content, logoCentered && styles.contentStretched]}>
           <Sticky>
-            <div className="col-flex-1" style={styles.topToolbar}>
+            <div className="col-flex-1" style={[styles.topToolbar, logoCentered && styles.logoCentered]}>
               <Link to="app">
                 <Logo
                   style={styles.logo}
@@ -68,4 +77,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}));

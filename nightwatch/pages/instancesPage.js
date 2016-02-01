@@ -110,6 +110,10 @@ export default {
       selector: '//div[@class=" description-field col-flex-1" and text()="nightwatch_test_instance"]',
       locateStrategy: 'xpath'
     },
+    instancesHeaderTitle: {
+      selector: '//span[text()="Instances"]',
+      locateStrategy: 'xpath'
+    },
     socketsHeaderTitle: {
       selector: '//span[text()="Sockets"]',
       locateStrategy: 'xpath'

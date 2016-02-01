@@ -7,6 +7,7 @@ import Icon from './Icon';
 import InnerToolbar from './InnerToolbar';
 import Lists from './Lists';
 import Logo from './Logo';
+import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
 import Request from './Request';
 import Sidebar from './Sidebar';
@@ -21,6 +22,7 @@ export default {
   InnerToolbar,
   Lists,
   Logo,
+  NoMobileInfo,
   Notification,
   Request,
   Sidebar

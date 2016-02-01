@@ -14,16 +14,6 @@ export default {
   after(client) {
     client.end();
   },
-  'Go to Instances view': (client) => {
-    const instancesPage = client.page.instancesPage();
-
-    client.pause(1000);
-
-    instancesPage
-      .navigate()
-      .clickElement('@welcomeDialogButton')
-      .waitForElementVisible('@emptyListItem');
-  },
   'Add an Instance from empty list item': (client) => {
     const instancesPage = client.page.instancesPage();
 

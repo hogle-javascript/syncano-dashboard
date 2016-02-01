@@ -1,10 +1,11 @@
 import React from 'react';
 import {State, Navigation, RouteHandler} from 'react-router';
+import {Grid, Breakpoint} from 'react-responsive-grid';
 
 import SessionStore from '../apps/Session/SessionStore';
 import AuthConstants from '../apps/Account/AuthConstants';
 
-import {ConversionPixel} from '../common';
+import {ConversionPixel, Sidebar, NoMobileInfo} from '../common';
 
 export default React.createClass({
   displayName: 'Dashboard',
@@ -42,7 +43,20 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <RouteHandler />
+        <Grid>
+          <Breakpoint minWidth={768} widthMethod="componentWidth">
+            <RouteHandler />
+          </Breakpoint>
+          <Breakpoint maxWidth={767} widthMethod="componentWidth">
+            <div className="row">
+              <Sidebar
+                logoCentered="true"
+                style={{width: '100%'}}>
+                <NoMobileInfo/>
+              </Sidebar>
+            </div>
+          </Breakpoint>
+        </Grid>
         {this.renderConversionPixels()}
       </div>
     );
