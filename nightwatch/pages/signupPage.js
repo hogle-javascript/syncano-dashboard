@@ -1,9 +1,4 @@
 const signupCommands = {
-  clickSubmitButton() {
-    return this.waitForElementVisible('@submitButton')
-      .click('@submitButton')
-      .waitForElementNotPresent('@submitButton', 60000);
-  },
   clickTermsOfUseLink() {
     return this.waitForElementVisible('@termsOfUseLink')
       .click('@termsOfUseLink');
