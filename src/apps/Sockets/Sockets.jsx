@@ -97,8 +97,8 @@ export default React.createClass({
           ref: 'prolongDialog',
           avoidResetState: true,
           title: 'Prolong instance lifetime',
-          children: `Youv've canceled the archiving of your instance ${params.instanceName}.
-          Close this dialog to continue work with your instance.`,
+          children: `You've canceled the archiving of your instance ${params.instanceName}.
+          Close this dialog to continue working with your instance.`,
           actions: (
             <FlatButton
               key="cancel"
