@@ -65,7 +65,7 @@ export default React.createClass({
         message={snackbar.message}
         action={snackbar.action}
         autoHideDuration={snackbar.autoHideDuration}
-        onActionTouchTap={(snackbar.onActionTouchTap) ? () => snackbar.onActionTouchTap : null}
+        onActionTouchTap={(snackbar.onActionTouchTap) ? () => snackbar.onActionTouchTap() : null}
         open={snackbar.open}
         onRequestClose={this.handleRequestClose}
         style={snackbar.style}/>
