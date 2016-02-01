@@ -205,7 +205,8 @@ export default Radium(React.createClass({
     this.replaceState(newState);
     this.clearValidations();
   },
-  handleAddSubmit() {
+
+  handleSuccessfullValidation() {
     this.handleUpdate();
   },
 
