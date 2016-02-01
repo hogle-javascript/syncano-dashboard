@@ -9,7 +9,7 @@ export default {
       .navigate()
       .setValue('@emailInput', email)
       .setValue('@passInput', slug)
-      .clickSubmitButton();
+      .clickElement('@submitButton');
   },
   after(client) {
     client.end();
