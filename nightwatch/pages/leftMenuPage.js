@@ -4,11 +4,11 @@ export default {
       selector: '.left-nav'
     },
     instancesDropdown: {
-      selector: '//div[@class="col-flex-0 left-nav"]/div/div[2]/div',
+      selector: '//span[@class="synicon-menu-down"]',
       locateStrategy: 'xpath'
     },
     instancesDropdownName: {
-      selector: '//span[@class="synicon-menu-down"]/preceding-sibling::div/div',
+      selector: '//span[@class="synicon-menu-down"]/preceding-sibling::div',
       locateStrategy: 'xpath'
     },
     instancesDropdownItems: {
