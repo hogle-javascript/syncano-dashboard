@@ -43,7 +43,7 @@ export default React.createClass({
 
     return (
       <ListItem
-        style={this.Styles.mergeAndPrefix(styles.base, style, isActive && styles.active)}
+        style={this.Styles.mergeStyles(styles.base, style, isActive && styles.active)}
         onTouchTap={this.handleTouchTap.bind(null, routeName)}
         desktop={true}
         href={this.getMenuItemHref(routeName)}

@@ -121,7 +121,7 @@ export default Radium(React.createClass({
         zDepth={zDepth}
         key={color}
         circle={true}
-        style={this.mergeAndPrefix(styles.item, styles.colorItem)}
+        style={this.mergeStyles(styles.item, styles.colorItem)}
         onClick={this.handleSetColor}>
         {icon}
       </Paper>

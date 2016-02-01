@@ -51,7 +51,7 @@ export default React.createClass({
     return (
       <div
         className="col-flex-0 left-nav"
-        style={this.mergeAndPrefix(style, styles.root)}
+        style={this.mergeStyles(style, styles.root)}
         {...other}>
         <div style={styles.content}>
           <Sticky>

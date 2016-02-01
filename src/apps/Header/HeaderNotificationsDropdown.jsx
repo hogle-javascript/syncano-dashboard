@@ -203,8 +203,8 @@ export default Radium(React.createClass({
     let notificationCountIcon = isBadge ? notifications.length : '';
     let iconClassName = notifications.length > 0 ? 'synicon-bell' : 'synicon-bell-outline';
     let styles = this.getStyles();
-    let badgeContainerStyle = this.mergeAndPrefix(styles.badgeContainer, isBadge && styles.badgeContainerFilled);
-    let badgeStyle = this.mergeAndPrefix(styles.badge, isBadge && styles.badgeFilled);
+    let badgeContainerStyle = this.mergeStyles(styles.badgeContainer, isBadge && styles.badgeContainerFilled);
+    let badgeStyle = this.mergeStyles(styles.badge, isBadge && styles.badgeFilled);
 
     return (
       <div>

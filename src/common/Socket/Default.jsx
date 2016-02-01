@@ -3,8 +3,9 @@ import {Styles, Utils} from 'syncano-material-ui';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
-
   displayName: 'ChannelSocket',
+
+  mixins: [Utils.Styles],
 
   getDefaultProps() {
     return {
@@ -35,7 +36,7 @@ export default React.createClass({
         {...other}
         iconClassName={iconClassName}
         style={style}
-        iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
+        iconStyle={this.mergeStyles(styles.iconStyle, iconStyle)}/>
     );
   }
 });
