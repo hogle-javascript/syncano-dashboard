@@ -9,9 +9,11 @@ export default {
       .navigate()
       .setValue('@emailInput', 'syncano.bot+' + slug + '@syncano.com')
       .setValue('@passInput', slug)
-      .clickSubmitButton();
+      .click('@submitButton');
 
-    instancesPage.expect.element('@socketsHeaderTitle').to.be.present.after(2000);
+    client.pause(5000).refresh();
+
+    instancesPage.expect.element('@instancesHeaderTitle').to.be.present.after(2000);
     client.end();
   }
 };

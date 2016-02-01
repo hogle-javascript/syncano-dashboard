@@ -15,7 +15,7 @@ import {InnerToolbar} from '../../common';
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';
 import InstanceDialog from './InstanceDialog';
-import WelcomeDialog from './WelcomeDialog';
+// import WelcomeDialog from './WelcomeDialog';
 
 import './Instances.sass';
 
@@ -64,9 +64,6 @@ export default React.createClass({
 
     return (
       <div>
-        <WelcomeDialog
-          getStarted={this.transitionToFirstInstance}
-          visible={SessionStore.shouldShowWelcomeDialog()}/>
         <InstanceDialog />
 
         <Header logo={true}/>

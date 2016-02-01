@@ -30,7 +30,7 @@ export default Radium(React.createClass({
       },
       content: {
         position: 'fixed',
-        width: '100%',
+        width: 256,
         maxHeight: '100%',
         overflow: 'auto'
       },
@@ -46,6 +46,9 @@ export default Radium(React.createClass({
       },
       logoCentered: {
         justifyContent: 'center'
+      },
+      contentStretched: {
+        width: '100%'
       }
     };
   },
@@ -59,7 +62,7 @@ export default Radium(React.createClass({
         className="col-flex-0 left-nav"
         style={this.mergeStyles(style, styles.root)}
         {...other}>
-        <div style={styles.content}>
+        <div style={[styles.content, logoCentered && styles.contentStretched]}>
           <Sticky>
             <div className="col-flex-1" style={[styles.topToolbar, logoCentered && styles.logoCentered]}>
               <Link to="app">

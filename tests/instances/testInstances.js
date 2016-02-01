@@ -14,14 +14,14 @@ export default {
   after(client) {
     client.end();
   },
-  'Test Close welcome dialog': (client) => {
-    const instancesPage = client.page.instancesPage();
-    const dataPage = client.page.dataPage();
-
-    client.pause(2000);
-    instancesPage.clickButton('@welcomeDialog');
-    dataPage.waitForElementPresent('@instancesDropdown');
-  },
+  //'Test Close welcome dialog': (client) => {
+  //  const instancesPage = client.page.instancesPage();
+  //  const dataPage = client.page.dataPage();
+  //
+  //  client.pause(2000);
+  //  instancesPage.clickButton('@welcomeDialog');
+  //  dataPage.waitForElementPresent('@instancesDropdown');
+  //},
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
