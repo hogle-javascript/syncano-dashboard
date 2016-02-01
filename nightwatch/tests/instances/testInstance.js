@@ -14,18 +14,27 @@ export default {
   after(client) {
     client.end();
   },
-  'Go to an Instance from welcome screen': (client) => {
+  'Go to Instances view': (client) => {
     const instancesPage = client.page.instancesPage();
-    const socketsPage = client.page.socketsPage();
 
     client.pause(1000);
 
     instancesPage
       .navigate()
-      .clickElement('@welcomeDialogButton');
+      .clickElement('@welcomeDialogButton')
+      .waitForElementVisible('@emptyListItem');
+  },
+  'Add an Instance from empty list item': (client) => {
+    const instancesPage = client.page.instancesPage();
 
-    socketsPage
-      .waitForElementVisible('@emptySocketsHeading');
+    instancesPage
+      .navigate()
+      .waitForElementPresent('@emptyListItem')
+      .clickElement('@emptyListItem')
+      .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
+      .clickElement('@confirmButton')
+      .waitForElementNotPresent('@addInstanceModalTitle')
+      .waitForElementVisible('@instanceDescription');
   },
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
@@ -60,17 +69,5 @@ export default {
       .waitForElementNotPresent('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
-  },
-  'Add an Instance from empty list item': (client) => {
-    const instancesPage = client.page.instancesPage();
-
-    instancesPage
-      .navigate()
-      .waitForElementPresent('@emptyListItem')
-      .clickElement('@emptyListItem')
-      .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
-      .clickElement('@confirmButton')
-      .waitForElementNotPresent('@addInstanceModalTitle')
-      .waitForElementVisible('@instanceDescription');
   }
 };
