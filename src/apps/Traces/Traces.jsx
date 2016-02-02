@@ -13,6 +13,7 @@ import Store from './TracesStore';
 import Actions from './TracesActions';
 
 // Components
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
@@ -117,10 +118,12 @@ export default Radium(React.createClass({
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}/>
         <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>
-          <TracesList
-            tracesFor={this.props.tracesFor}
-            name="Traces"
-            items={this.state.items}/>
+          <Container>
+            <TracesList
+              tracesFor={this.props.tracesFor}
+              name="Traces"
+              items={this.state.items}/>
+          </Container>
         </div>
       </div>
     );
