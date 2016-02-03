@@ -20,6 +20,8 @@ import Snippets from '../Snippets';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
 import CodeBoxes from '../CodeBoxes';
+import PushDevices from '../PushDevices';
+import PushNotifications from '../PushNotifications';
 import EmptyView from './EmptyView';
 
 export default React.createClass({
@@ -84,6 +86,8 @@ export default React.createClass({
     Schedules.Actions.fetch();
     Triggers.Actions.fetch();
     CodeBoxes.Actions.fetch();
+    PushDevices.APNSActions.fetch();
+    PushDevices.GCMActions.fetch();
   },
 
   initDialogs() {
@@ -183,6 +187,10 @@ export default React.createClass({
             handleTitleClick={this.handleListTitleClick.bind(null, 'schedules')}
             emptyItemHandleClick={Schedules.Actions.showDialog}
             emptyItemContent="Create a Schedule Socket"/>
+
+          <PushNotifications.List
+            items={PushNotifications.Store.getItemsObjs()}
+            actions={PushNotifications.Actions} />
         </Loading>
       </div>
     );
