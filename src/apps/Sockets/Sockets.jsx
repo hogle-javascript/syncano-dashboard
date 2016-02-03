@@ -56,6 +56,29 @@ export default React.createClass({
     this.fetch();
   },
 
+  getPushNotificationsItems() {
+    let items = [
+      {
+        name: 'APNS',
+        label: 'Apple Push Notification service (APNs)',
+        devicesCount: PushDevices.APNSStore.getDevices().length,
+        route: 'apns-devices',
+        icon: 'apple',
+        showConfigDialog: PushNotifications.APNSActions.showDialog
+      },
+      {
+        name: 'GCM',
+        label: 'Google Cloud Messaging (GCM)',
+        devicesCount: PushDevices.GCMStore.getDevices().length,
+        route: 'gcm-devices',
+        icon: 'android',
+        showConfigDialog: PushNotifications.GCMActions.showDialog
+      }
+    ];
+
+    return items;
+  },
+
   isViewLoading() {
     let loadingStates = Object.keys(this.state).map((key) => {
       if (this.state[key].hasOwnProperty('isLoading')) {
@@ -189,8 +212,9 @@ export default React.createClass({
             emptyItemContent="Create a Schedule Socket"/>
 
           <PushNotifications.List
-            items={PushNotifications.Store.getItemsObjs()}
-            actions={PushNotifications.Actions} />
+            name="Push Notification Sockets"
+            handleTitleClick={this.handleListTitleClick.bind(null, 'apns-devices')}
+            items={this.getPushNotificationsItems()} />
         </Loading>
       </div>
     );
@@ -204,6 +228,8 @@ export default React.createClass({
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
+        <PushNotifications.APNSConfigDialog />
+        <PushNotifications.GCMConfigDialog />
 
         {this.getDialogs()}
         {this.renderToolbar()}

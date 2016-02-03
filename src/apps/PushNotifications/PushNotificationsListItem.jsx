@@ -45,23 +45,24 @@ export default Radium(React.createClass({
     let {item} = this.props;
 
     return (
-      <ColumnList.Item key={item.label}>
-        {this.props.dialog}
-        <Column.CheckIcon
-          id={`push-notification${item.label}`}
-          icon={item.icon}
-          checkable={false}
-          background={Color.getColorByName('blue')}
-          className="col-xs-18">
-          <div>
+      <div>
+        <ColumnList.Item key={item.label}>
+          {this.props.dialog}
+          <Column.CheckIcon
+            id={`push-notification${item.label}`}
+            icon={item.icon}
+            checkable={false}
+            background={Color.getColorByName('blue')}
+            className="col-xs-18">
             <div>
-              {item.label}
-            </div>
-            <div style={styles.linksSection}>
+              <div>
+                {item.label}
+              </div>
+              <div style={styles.linksSection}>
               <span
                 key="configuration"
                 style={styles.linkItem}
-                onClick={item.configureDevice}>
+                onClick={item.showConfigDialog}>
                 Configuration
               </span>
               <span
@@ -75,23 +76,24 @@ export default Radium(React.createClass({
                 style={styles.linkItem}>
                 Devices
               </span>
+              </div>
             </div>
-          </div>
-        </Column.CheckIcon>
-        <Column.Desc className="col-xs-16">
-          {item.devicesCount}
-        </Column.Desc>
-        <Column.Menu>
-          <MenuItem
-            className="dropdown-item-edit"
-            onTouchTap={this.props.onIconClick}
-            primaryText="Edit a Device"/>
-          <MenuItem
-            className="dropdown-item-delete"
-            onTouchTap={this.props.onIconClick}
-            primaryText="Delete a Device"/>
-        </Column.Menu>
-      </ColumnList.Item>
+          </Column.CheckIcon>
+          <Column.Desc className="col-xs-16">
+            {item.devicesCount}
+          </Column.Desc>
+          <Column.Menu>
+            <MenuItem
+              className="dropdown-item-edit"
+              onTouchTap={this.props.onIconClick}
+              primaryText="Edit a Device"/>
+            <MenuItem
+              className="dropdown-item-delete"
+              onTouchTap={this.props.onIconClick}
+              primaryText="Delete a Device"/>
+          </Column.Menu>
+        </ColumnList.Item>
+      </div>
     );
   }
 }));

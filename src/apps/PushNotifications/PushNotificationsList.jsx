@@ -4,8 +4,6 @@ import {DialogsMixin} from '../../mixins';
 
 import {ColumnList} from 'syncano-components';
 import {Container, Lists} from '../../common';
-import APNSDialog from '../PushDevices/APNSDevices/APNSDeviceDialog';
-import GCMDialog from '../PushDevices/GCMDevices/GCMDeviceDialog';
 import ListItem from './PushNotificationsListItem';
 
 let Column = ColumnList.Column;
@@ -29,15 +27,9 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let dialogs = {
-      android: <GCMDialog />,
-      apple: <APNSDialog />
-    };
-
     return (
       <ListItem
-        dialog={dialogs[item.icon]}
-        key={`push-notification-list-item-${item.label}`}
+        key={`push-notification-list-item-${item.name}`}
         item={item}/>
     );
   },
@@ -48,10 +40,11 @@ export default React.createClass({
         <Lists.Container>
           <ColumnList.Header>
             <Column.ColumnHeader
+              handleClick={this.props.handleTitleClick}
               primary={true}
               columnName="DESC"
               className="col-xs-18">
-              Push Notification Sockets
+              {this.props.name}
             </Column.ColumnHeader>
             <Column.ColumnHeader
               className="col-xs-18"
