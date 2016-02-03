@@ -46,13 +46,12 @@ export default Radium(React.createClass({
 
     return (
       <ColumnList.Item key={item.label}>
+        {this.props.dialog}
         <Column.CheckIcon
-          id={Date.now()}
-          icon={this.props.icon}
+          id={`push-notification${item.label}`}
+          icon={item.icon}
           checkable={false}
-          keyName="registration_id"
           background={Color.getColorByName('blue')}
-          handleIconClick={this.props.onIconClick}
           className="col-xs-18">
           <div>
             <div>
@@ -61,7 +60,8 @@ export default Radium(React.createClass({
             <div style={styles.linksSection}>
               <span
                 key="configuration"
-                style={styles.linkItem}>
+                style={styles.linkItem}
+                onClick={item.configureDevice}>
                 Configuration
               </span>
               <span

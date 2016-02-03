@@ -1,7 +1,11 @@
 import React from 'react';
 
+import {DialogsMixin} from '../../mixins';
+
 import {ColumnList} from 'syncano-components';
 import {Container, Lists} from '../../common';
+import APNSDialog from '../PushDevices/APNSDevices/APNSDeviceDialog';
+import GCMDialog from '../PushDevices/GCMDevices/GCMDeviceDialog';
 import ListItem from './PushNotificationsListItem';
 
 let Column = ColumnList.Column;
@@ -9,8 +13,15 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'DevicesList',
 
+  mixins: [DialogsMixin],
+
   getInitialState() {
     return {};
+  },
+
+  componentWillUpdate(nextProps) {
+    console.info('Channels::componentWillUpdate');
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   test() {
@@ -18,11 +29,15 @@ export default React.createClass({
   },
 
   renderItem(item) {
+    let dialogs = {
+      android: <GCMDialog />,
+      apple: <APNSDialog />
+    };
+
     return (
       <ListItem
+        dialog={dialogs[item.icon]}
         key={`push-notification-list-item-${item.label}`}
-        onIconClick={this.test}
-        icon={item.icon}
         item={item}/>
     );
   },
