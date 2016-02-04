@@ -9,7 +9,7 @@ import Actions from './GCMPushNotificationsActions';
 import Store from './GCMConfigDialogStore';
 
 // Components
-import {FlatButton, TextField, Styles} from 'syncano-material-ui';
+import {FlatButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {Dialog} from '../../../common';
 
@@ -36,10 +36,8 @@ export default React.createClass({
 
   getStyles() {
     return {
-      device: {
-        outline: '1px solid red',
-        minWidth: 180,
-        minHeight: 350
+      actionsContainer: {
+        padding: 20
       },
       apiKeys: {
         padding: '0 30px'
@@ -69,26 +67,27 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <FlatButton
+      <RaisedButton
         key="confirm"
+        type="submit"
         label="Confirm"
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
+        secondary={true}
+        onTouchTap={this.handleFormValidation}/>
     ];
 
-    console.error('dialog state: ', this.state);
     return (
       <Dialog
         key='dialog'
         ref='dialog'
         title="Configure Push Notification Socket - GCM"
         actions={dialogStandardActions}
+        actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}>
-        <div className="row align-center">
-          <div style={styles.device}>DEVICE PIC</div>
-          <div className="col-flex-1 hm-3-l hm-3-r">
+        <div className="row align-center hp-2-l hp-2-r">
+          <div dangerouslySetInnerHTML={{__html: require('../../../assets/img/phone-android.svg')}}>
+          </div>
+          <div className="col-flex-1 hm-3-l">
             <TextField
               ref="development_api_key"
               name="development_api_key"

@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {DialogStoreMixin, WaitForStoreMixin} from '../../../mixins';
+import {DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../../mixins';
 
 // Stores & Actions
 import SessionActions from '../../Session/SessionActions';
@@ -12,7 +12,8 @@ export default Reflux.createStore({
 
   mixins: [
     DialogStoreMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -28,6 +29,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   refreshData() {
