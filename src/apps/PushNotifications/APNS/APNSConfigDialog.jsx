@@ -22,7 +22,6 @@ export default React.createClass({
   ],
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
       <FlatButton
         key="cancel"
@@ -41,12 +40,10 @@ export default React.createClass({
       <Dialog
         key='dialog'
         ref='dialog'
-        title={`${title} a Channel Socket`}
+        title="Configure Push Notification Socket - APNS"
         actions={dialogStandardActions}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        contentStyle={{padding: '8px 0 0 0'}}>
-        {this.renderFormNotifications()}
+        open={this.state.open}>
         APNS
         <Loading
           type='linear'

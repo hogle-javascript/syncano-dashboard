@@ -758,6 +758,14 @@ var Syncano = (function() {
      * @property {function} listDevices - shorcut to {@link Syncano#listDevices} method
      */
     this.PushNotifications = {
+      GCM: {
+        config: this.configGCMPushNotification.bind(this),
+        get: this.getGCMPushNotificationConfig.bind(this)
+      },
+      APNS: {
+        config: this.configAPNSPushNotification.bind(this),
+        get: this.getAPNSPushNotificationConfig.bind(this)
+      },
       Devices: {
         create: this.createDevice.bind(this),
         update: this.updateDevice.bind(this),
@@ -3336,10 +3344,93 @@ var Syncano = (function() {
      PUSH NOIFICATIONS METHODS
      *********************/
     /**
+     * Configures new APNS Push Notification
+     *
+     * @method Syncano#configPushNotification
+     * @alias Syncano.PushNotifications.APNS.config
+     * @param {Object} params
+     * @param {string} params.development_certificate - name of the device
+     * @param {string} params.development_certificate_name - device's registration id
+     * @param {string} params.development_expiration_date - device's registration id
+     * @param {string} params.development_bundle_identifier - device's registration id
+     * @param {string} params.production_certificate - device's registration id
+     * @param {string} params.production_certificate_name - device's registration id
+     * @param {string} params.production_expiration_date - device's registration id
+     * @param {string} params.production_bundle_identifier - device's registration id
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    configAPNSPushNotification: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PUT', linksObject.instance_push_notifications + 'apns/config/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Returns APNS Push Notification config
+     *
+     * @method Syncano#getAPNSPushNotificationConfig
+     * @alias Syncano.PushNotifications.APNS.get
+     * @param {object} params - optional parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    getAPNSPushNotificationConfig: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      params = params || {};
+      var url = linksObject.instance_push_notifications + 'apns/config/';
+      return this.request('GET', url, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Configures new GCM Push Notification
+     *
+     * @method Syncano#configPushNotification
+     * @alias Syncano.PushNotifications.GCM.config
+     * @param {Object} params
+     * @param {string} params.production_api_key - name of the device
+     * @param {string} params.development_api_key - device's registration id
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    configGCMPushNotification: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PUT', linksObject.instance_push_notifications + 'gcm/config/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Returns GCM Push Notification config
+     *
+     * @method Syncano#getGCMPushNotificationConfig
+     * @alias Syncano.PushNotifications.GCM.get
+     * @param {object} params - optional parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    getGCMPushNotificationConfig: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      params = params || {};
+      var url = linksObject.instance_push_notifications + 'gcm/config/';
+      return this.request('GET', url, params, callbackOK, callbackError);
+    },
+
+    /**
      * Creates new Device based on passed parameters
      *
      * @method Syncano#createDevice
      * @alias Syncano.PushNotifications.Device.create
+     * @param {string} deviceType 'gcm' or 'apns'
      * @param {Object} params
      * @param {string} params.label - name of the device
      * @param {string} params.registration_id - device's registration id

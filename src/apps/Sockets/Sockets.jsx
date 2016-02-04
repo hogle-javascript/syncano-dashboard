@@ -57,26 +57,7 @@ export default React.createClass({
   },
 
   getPushNotificationsItems() {
-    let items = [
-      {
-        name: 'APNS',
-        label: 'Apple Push Notification service (APNs)',
-        devicesCount: PushDevices.APNSStore.getDevices().length,
-        route: 'apns-devices',
-        icon: 'apple',
-        showConfigDialog: PushNotifications.APNSActions.showDialog
-      },
-      {
-        name: 'GCM',
-        label: 'Google Cloud Messaging (GCM)',
-        devicesCount: PushDevices.GCMStore.getDevices().length,
-        route: 'gcm-devices',
-        icon: 'android',
-        showConfigDialog: PushNotifications.GCMActions.showDialog
-      }
-    ];
-
-    return items;
+    return [PushNotifications.APNSListItem, PushNotifications.GCMListItem];
   },
 
   isViewLoading() {
@@ -214,7 +195,8 @@ export default React.createClass({
           <PushNotifications.List
             name="Push Notification Sockets"
             handleTitleClick={this.handleListTitleClick.bind(null, 'apns-devices')}
-            items={this.getPushNotificationsItems()} />
+            items={this.getPushNotificationsItems()}/>
+
         </Loading>
       </div>
     );

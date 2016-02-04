@@ -1,5 +1,4 @@
 import React from 'react';
-import Radium from 'radium';
 import {State, Navigation} from 'react-router';
 
 // Components
@@ -8,46 +7,44 @@ import {Color, ColumnList} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
-export default Radium(React.createClass({
-  displayName: 'DeviceListItem',
+export default (name, item) => {
+  return React.createClass({
+    displayName: `${name}DeviceListItem`,
 
-  mixins: [
-    State,
-    Navigation
-  ],
+    mixins: [
+      State,
+      Navigation
+    ],
 
-  getStyles() {
-    return {
-      linksSection: {
-        color: '#9B9B9B',
-        fontSize: 12
-      },
-      separator: {
-        padding: '0 8px'
-      },
-      linkItem: {
-        cursor: 'pointer',
-        ':hover': {
-          color: Styles.Colors.blue400
+    getStyles() {
+      return {
+        linksSection: {
+          color: '#9B9B9B',
+          fontSize: 12
+        },
+        separator: {
+          padding: '0 8px'
+        },
+        linkItem: {
+          cursor: 'pointer',
+          ':hover': {
+            color: Styles.Colors.blue400
+          }
         }
-      }
-    };
-  },
+      };
+    },
 
-  handleDevicesClick(routeName) {
-    let instanceName = this.getParams().instanceName;
+    handleDevicesClick() {
+      let instanceName = this.getParams().instanceName;
 
-    this.transitionTo(routeName, {instanceName});
-  },
+      this.transitionTo(item.devicesRoute, {instanceName});
+    },
 
-  render() {
-    let styles = this.getStyles();
-    let {item} = this.props;
+    render() {
+      let styles = this.getStyles();
 
-    return (
-      <div>
-        <ColumnList.Item key={item.label}>
-          {this.props.dialog}
+      return (
+        <ColumnList.Item key={item.name}>
           <Column.CheckIcon
             id={`push-notification${item.label}`}
             icon={item.icon}
@@ -56,7 +53,7 @@ export default Radium(React.createClass({
             className="col-xs-18">
             <div>
               <div>
-                {item.label}
+                {item.name}
               </div>
               <div style={styles.linksSection}>
               <span
@@ -80,21 +77,20 @@ export default Radium(React.createClass({
             </div>
           </Column.CheckIcon>
           <Column.Desc className="col-xs-16">
-            {item.devicesCount}
+            {item.getDevices().length}
           </Column.Desc>
           <Column.Menu>
             <MenuItem
               className="dropdown-item-edit"
-              onTouchTap={this.props.onIconClick}
-              primaryText="Edit a Device"/>
+              onTouchTap={item.showConfigDialog}
+              primaryText="Edit Socket"/>
             <MenuItem
               className="dropdown-item-delete"
               onTouchTap={this.props.onIconClick}
               primaryText="Delete a Device"/>
           </Column.Menu>
         </ColumnList.Item>
-      </div>
-    );
-  }
-}));
-
+      );
+    }
+  });
+};
