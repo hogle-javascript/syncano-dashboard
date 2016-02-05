@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import Dropzone from 'react-dropzone';
+import _ from 'lodash';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../../mixins';
@@ -11,9 +11,17 @@ import Actions from './APNSPushNotificationsActions';
 import Store from './APNSConfigDialogStore';
 
 // Components
-import {FlatButton, RaisedButton, FontIcon, Styles} from 'syncano-material-ui';
+import {
+  FlatButton,
+  RaisedButton,
+  IconButton,
+  TextField,
+  SelectField,
+  MenuItem,
+  Styles
+} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
-import {Dialog} from '../../../common';
+import {Dialog, DropZone} from '../../../common';
 
 export default Radium(React.createClass({
   displayName: 'APNSConfigDialog',
@@ -24,11 +32,9 @@ export default Radium(React.createClass({
     FormMixin
   ],
 
-  validatorConstraints() {
+  getInitialState() {
     return {
-      development_api_key: {
-        presence: true
-      }
+      certType: 'development'
     };
   },
 
@@ -38,6 +44,9 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
+      dropzoneContainer: {
+        padding: '20px 0'
+      },
       apiKeys: {
         paddingLeft: 30
       },
@@ -49,69 +58,143 @@ export default Radium(React.createClass({
       actionsContainer: {
         padding: 20
       },
-      dropZone: {
-        display: 'webkit-flex; display: flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 200,
-        width: '100%',
-        borderStyle: 'dashed',
-        borderWidth: 1,
-        opacity: '0.4',
-        borderColor: Styles.Colors.grey500,
-        backgroundColor: Styles.Colors.grey200,
-        color: Styles.Colors.grey500,
-        ':hover': {
-          opacity: '1',
-          borderColor: Styles.Colors.blue500,
-          backgroundColor: Styles.Colors.blue200,
-          color: Styles.Colors.blue500
-        }
+      dropzoneWithFileTitle: {
+        color: Styles.Colors.black,
+        fontSize: 16,
+        fontWeight: 500
       },
-      uploadButton: {
-        marginBottom: 20,
-        fontWeight: 600,
-        width: '50%',
-        color: Styles.Colors.grey500
+      dropzoneWithFileContainer: {
+        position: 'relative',
+        width: '100%'
       },
-      uploadButtonIcon: {
-        color: Styles.Colors.grey500,
-        fontSize: 18,
-        paddingRight: 8
+      certType: {
+        fontSize: 11,
+        paddingBottom: 10
       },
-      dropZoneDescription: {
-        lineHeight: '24px',
-        maxWidth: 150,
-        textAlign: 'center',
-        fontSize: '24px'
+      closeIconColor: {
+        color: Styles.Colors.grey400
       },
-      uploadIcon: {
-        color: Styles.Colors.grey500,
-        fontSize: '70px'
+      closeIcon: {
+        position: 'absolute',
+        right: 5,
+        top: -15
       }
     };
   },
 
-  onDrop(fieldName, files) {
-    let state = {};
+  onDrop(file) {
+    let cert = file;
 
-    state[fieldName] = files[0];
-    this.setState(state);
+    if (_.isArray(file)) {
+      cert = file[0];
+    }
+
+    this.setState({
+      form: {
+        development_certificate_name: cert.name,
+        development_certificate: cert,
+        production_certificate_name: cert.name,
+        production_certificate: cert
+      }
+    }, () => console.error(this.state));
+  },
+
+  isDevelopment() {
+    return this.state.certType === 'development';
   },
 
   handleAddSubmit() {
-    let params = {
-      development_certificate: this.state.development_certificate,
-      development_certificate_name: this.state.development_certificate_name,
-      development_expiration_date: this.state.development_expiration_date,
-      development_bundle_identifier: this.state.development_bundle_identifier,
-      production_certificate: this.state.production_certificate,
-      production_certificate_name: this.state.production_certificate_name,
-      production_expiration_date: this.state.production_expiration_date,
-      production_bundle_identifier: this.state.production_bundle_identifier
-    };
+    const form = this.state.form;
+    const certType = this.state.certType;
+    let params = {};
 
+    _.keys(form)
+      .filter((key) => _.includes(key, certType))
+      .forEach((properKey) => params[properKey] = form[properKey]);
+
+    console.error('confirm: ', params);
     Actions.configAPNSPushNotification(params);
+  },
+
+  handleCertTypeChange(event, index, value) {
+    this.setState({
+      certType: value
+    });
+  },
+
+  clearCertificate() {
+    let form = this.state.form;
+
+    _.keys(form).forEach((key) => form[key] = null);
+
+    console.error(form);
+    this.setState(form);
+  },
+
+  renderDropzoneDescription() {
+    const styles = this.getStyles();
+    const certType = this.state.certType;
+    const form = this.state.form;
+    const dropdownItems = [
+      <MenuItem
+        key="dropdown-production"
+        value="production"
+        primaryText="Production"/>,
+      <MenuItem
+        key="dropdown-development"
+        value="development"
+        primaryText="Development"/>
+    ];
+
+    if (form.development_certificate || form.production_certificate) {
+      return (
+        <div
+          className="row"
+          style={styles.dropzoneWithFileContainer}>
+          <IconButton
+            onTouchTap={this.clearCertificate}
+            style={styles.closeIcon}
+            iconStyle={styles.closeIconColor}
+            tooltip="Remove cerificate"
+            iconClassName="synicon-close"/>
+          <div className="col-flex-1">
+            <div style={styles.dropzoneWithFileTitle}>Current certificate</div>
+            <div className="row align-middle">
+              <div className="col-xs-23">
+                <TextField
+                  fullWidth={true}
+                  valueLink={this.linkState(`${certType}_certificate_name`)}
+                  defaultValue={form.development_certificate_name}
+                  floatingLabelText="Apple Push Notification Certificate Name"/>
+              </div>
+              <div className="col-xs-12">
+                <SelectField
+                  autoWidth={true}
+                  fullWidth={true}
+                  value={certType}
+                  onChange={this.handleCertTypeChange}
+                  floatingLabelText="Type">
+                  {dropdownItems}
+                </SelectField>
+              </div>
+            </div>
+            <div className="row align-middle">
+              <div className="col-xs-23">
+                <TextField
+                  fullWidth={true}
+                  valueLink={this.linkState(`${certType}_bundle_identifier`)}
+                  defaultValue={form.development_bundle_identifier}
+                  floatingLabelText="Bundle Identifier"/>
+              </div>
+              <div className="col-xs-12">
+                <div style={styles.certType}>Expiration Date</div>
+                {form[`${certType}_expiration_date`]}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
   },
 
   render() {
@@ -135,52 +218,33 @@ export default Radium(React.createClass({
         key='dialog'
         ref='dialog'
         title="Configure Push Notification Socket - APNS"
+        autoDetectWindowHeight={true}
         actions={dialogStandardActions}
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}>
         <div className="row align-center hp-2-l hp-2-r">
-          <div dangerouslySetInnerHTML={{__html: require('../../../assets/img/phone-apple.svg')}}>
-          </div>
-          <div className="col-flex-1 hm-3-l">
-            <RaisedButton
-              style={styles.uploadButton}
-              backgroundColor={Styles.Colors.grey200}
-              labelColor={Styles.Colors.grey500}>
-              <div className="row align-center align-middle">
-                <FontIcon
-                  style={styles.uploadButtonIcon}
-                  className="synicon-cloud-upload"/>
-                <div>UPLOAD .p12 CERTYFICATE</div>
-              </div>
-            </RaisedButton>
-            <Dropzone
-              className="cert-dropzone"
-              ref="dropzone"
+          <div dangerouslySetInnerHTML={{__html: require('../../../assets/img/phone-apple.svg')}}></div>
+          <div className="col-flex-1">
+            <DropZone
+              handleButtonClick={this.onDrop}
+              onDrop={this.onDrop}
               disableClick={true}
-              onDrop={this.onDrop.bind(this, 'cert')}
-              style={styles.dropZone}>
-              <div
-                style={styles.dropZoneDescription}>
-                <FontIcon
-                  style={styles.uploadIcon}
-                  className="synicon-cloud-upload"/>
-                <div>
-                  Drag & Drop to upload
-                </div>
-              </div>
-            </Dropzone>
+              withButton={true}
+              uploadButtonLabel="UPLOAD .p12 CERTIFICATE">
+              {this.renderDropzoneDescription()}
+            </DropZone>
             <div className="vm-4-t">
               If you don't have any certificates generated yet read
               <a
                 style={styles.GDClink}
-                href="https://console.developers.google.com"> here</a> to get them.
+                href="https://developer.apple.com/membercenter"> here</a> to get them.
             </div>
           </div>
         </div>
         <Loading
-          type='linear'
-          position='bottom'
+          type="linear"
+          position="bottom"
           show={this.state.isLoading}/>
       </Dialog>
     );
