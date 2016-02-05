@@ -39,7 +39,6 @@ export default {
       .Templates
       .create({
         name: payload.name,
-        description: payload.description,
         content_type: payload.content_type,
         content: '{# This is how to use comments in template #}'
       })
@@ -47,8 +46,8 @@ export default {
       .catch(this.failure);
   },
 
-  remove(ids) {
-    let promises = ids.map((id) => this.Connection.Templates.remove(id));
+  remove(names) {
+    let promises = names.map((name) => this.Connection.Templates.remove(name));
 
     this.D.all(promises)
       .success(this.completed)

@@ -61,7 +61,7 @@ export default React.createClass({
             isLoading={this.state.isLoading}
             items={this.state.items}
             hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.showCodeBoxDialog}
+            emptyItemHandleClick={this.showTemplateDialog}
             emptyItemContent="Create a Template Socket"/>
         </Container>
 

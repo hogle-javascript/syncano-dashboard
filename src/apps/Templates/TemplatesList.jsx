@@ -38,7 +38,7 @@ export default React.createClass({
         key: 'removeCodeBoxDialog',
         ref: 'removeCodeBoxDialog',
         title: 'Delete a CodeBox Socket',
-        handleConfirm: Actions.removeCodeBoxes,
+        handleConfirm: Actions.removeTemplates,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         groupName: 'CodeBox Socket'

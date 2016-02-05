@@ -7,11 +7,9 @@ import {DialogMixin, FormMixin} from '../../mixins';
 // Stores and Actions
 import Actions from './TemplatesActions';
 import DialogStore from './TemplateDialogStore';
-import SnippetsActions from '../Snippets/SnippetsActions';
 
 // Components
-import {TextField, Toggle, FlatButton} from 'syncano-material-ui';
-import {SelectFieldWrapper} from 'syncano-components';
+import {TextField, FlatButton} from 'syncano-material-ui';
 import {Dialog} from '../../common';
 
 export default React.createClass({
@@ -27,32 +25,21 @@ export default React.createClass({
     name: {
       presence: true
     },
-    codebox: {
-      presence: {
-        message: `^Snippet can't be blank`
-      }
+    content_type: {
+      presence: true
     }
   },
 
-  handleDialogShow() {
-    console.info('CodeBoxDialog::handleDialogShow');
-    SnippetsActions.fetch();
-  },
-
   handleAddSubmit() {
-    Actions.createCodeBox({
+    Actions.createTemplate({
       name: this.state.name,
-      codebox: this.state.codebox,
-      description: this.state.description,
-      public: this.state.public
+      content_type: this.state.content_type
     });
   },
 
   handleEditSubmit() {
-    Actions.updateCodeBox(this.state.name, {
-      codebox: this.state.codebox,
-      description: this.state.description,
-      public: this.state.public
+    Actions.updateTemplate(this.state.name, {
+      content_type: this.state.content_type
     });
   },
 
@@ -83,7 +70,7 @@ export default React.createClass({
       <Dialog
         key='dialog'
         ref='dialog'
-        title={`${title} a CodeBox Socket`}
+        title={`${title} a Template Socket`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
         open={this.state.open}
@@ -96,29 +83,16 @@ export default React.createClass({
           disabled={this.hasEditMode()}
           valueLink={this.linkState('name')}
           errorText={this.getValidationMessages('name').join(' ')}
-          hintText="Name of the CodeBox"
+          hintText="Name of the Template"
           floatingLabelText="Name"/>
         <TextField
-          ref="description"
-          name="description"
+          ref="content_type"
+          name="content_type"
           fullWidth={true}
-          valueLink={this.linkState('description')}
-          errorText={this.getValidationMessages('description').join(' ')}
-          hintText="Description of the CodeBox"
-          floatingLabelText="Description"/>
-        <SelectFieldWrapper
-          name="snippet"
-          options={this.state.snippets}
-          value={this.state.codebox}
-          onChange={this.setSelectFieldValue.bind(null, 'codebox')}
-          errorText={this.getValidationMessages('codebox').join(' ')}/>
-        <Toggle
-          ref='public'
-          name='public'
-          onToggle={this.handleToogle}
-          style={{marginTop: 20}}
-          defaultToggled={this.state.public}
-          label='Make this CodeBox public?'/>
+          valueLink={this.linkState('content_type')}
+          errorText={this.getValidationMessages('content_type').join(' ')}
+          hintText="Content type of the Template"
+          floatingLabelText="Content type"/>
       </Dialog>
     );
   }

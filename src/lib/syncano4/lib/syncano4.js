@@ -92,12 +92,19 @@ var Syncano = (function() {
         linksObject[prefix + '_' + key] = obj.links[key];
       });
     }
+
     if (typeof linksObject.instance_channels === 'undefined') {
       linksObject.instance_channels = linksObject.instance_self + 'channels/';
     }
+
     if (typeof obj.links.push_notifications === 'undefined') {
       linksObject.instance_push_notifications = obj.links.self + 'push_notifications/';
     }
+
+    if (typeof obj.links.templates === 'undefined') {
+      linksObject.instance_templates = obj.links.self + 'snippets/templates/';
+    }
+
     delete obj.links;
     return linksObject;
   }
@@ -1395,7 +1402,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
     removeTemplate: function(name, callbackOK, callbackError) {
-      return this.genericRemove(name, linksObject.instance_templates, callbackOK, callbackError);
+      return this.genericRemove(name, 'instance_templates', callbackOK, callbackError);
     },
 
     /**

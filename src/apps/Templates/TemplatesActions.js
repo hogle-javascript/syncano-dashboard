@@ -3,29 +3,34 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 export default CreateActions(
   {
     fetch: {},
-    setCodeBoxes: {},
-    fetchCodeBoxes: {
+    setTemplates: {},
+    fetchTemplates: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CodeBoxes.list'
+      method: 'Syncano.Actions.Templates.list'
     },
-    createCodeBox: {
+    createTemplate: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CodeBoxes.create'
+      method: 'Syncano.Actions.Templates.create'
     },
-    updateCodeBox: {
+    updateTemplate: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CodeBoxes.update'
+      method: 'Syncano.Actions.Templates.update'
     },
-    removeCodeBoxes: {
+    removeTemplates: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CodeBoxes.remove'
+      method: 'Syncano.Actions.Templates.remove'
+    },
+    renderTemplatese: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Templates.render'
     }
   },
   {

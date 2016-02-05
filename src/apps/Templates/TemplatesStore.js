@@ -32,25 +32,25 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  setCodeBoxes(items) {
+  setTemplates(items) {
     this.data.items = items;
     this.trigger(this.data);
   },
 
-  getCodeBoxes(empty) {
+  getTemplates(empty) {
     return this.data.items || empty || null;
   },
 
   refreshData() {
-    Actions.fetchCodeBoxes();
+    Actions.fetchTemplates();
   },
 
-  onFetchCodeBoxesCompleted(items) {
-    console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
-    Actions.setCodeBoxes(items._items);
+  onFetchTemplatesCompleted(items) {
+    console.debug('TemplatesStore::onFetchTemplatesCompleted');
+    Actions.setTemplates(items._items);
   },
 
-  onRemoveCodeBoxesCompleted() {
+  onRemoveTemplatesCompleted() {
     this.refreshData();
   }
 });
