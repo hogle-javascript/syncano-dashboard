@@ -626,6 +626,26 @@ var Syncano = (function() {
     };
 
     /**
+     * Object with methods to handle Templates
+     *
+     * @alias Syncano#Templates
+     * @type {object}
+     * @property {function} create - shortcut to {@link Syncano#createTemplate} method
+     * @property {function} list - shortcut to {@link Syncano#listTemplate} method
+     * @property {function} get - shortcut to {@link Syncano#getTemplate} method
+     * @property {function} remove - shortcut to {@link Syncano#removeTemplate} method
+     * @property {function} update - shortcut to {@link Syncano#updateTemplate} method
+     */
+    this.Templates = {
+      create: this.createTemplate.bind(this),
+      list: this.listTemplates.bind(this),
+      get: this.getTemplate.bind(this),
+      update: this.updateTemplate.bind(this),
+      remove: this.removeTemplate.bind(this),
+      render: this.renderTemplate.bind(this),
+    };
+
+    /**
      * Object with methods to handle Invitations
      *
      * @alias Syncano#Invitations
@@ -1273,6 +1293,134 @@ var Syncano = (function() {
     listTags: function(callbackOK, callbackError) {
       return this.request('GET', 'v1/marketplace/tags/', {}, callbackOK, callbackError);
     },
+
+    /*********************
+       TEMPLATES METHODS
+    **********************/
+    /**
+     * Creates new template
+     *
+     * @method Syncano#createTemplate
+     * @alias Syncano.Templatees.create
+     * @param {object} params
+     * @param {string} params.name - name of the template
+     * @param {string} params.description - name of the template
+     * @param {string} params.source - template source code
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    createTemplate: function(params, callbackOK, callbackError) {
+      if (typeof params !== 'object') {
+        throw new Error('Missing parameters object');
+      }
+      if (typeof linksObject.instance_templates === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('POST', linksObject.instance_templates, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Returns all defined templatees as a list
+     *
+     * @method Syncano#listTemplatees
+     * @alias Syncano.Templatees.list
+     * @param  {object} [params]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    listTemplates: function(params, callbackOK, callbackError) {
+      return this.genericList(params, 'instance_templates', callbackOK, callbackError);
+    },
+
+    /**
+     * Returns the template with specified id
+     *
+     * @method Syncano#getTemplate
+     * @alias Syncano.Templatees.get
+     * @param {Number|object} id
+     * @param {Number} id.id - when passed parameter is an object, we use its id property
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    getTemplate: function(name, callbackOK, callbackError) {
+      return this.genericGet(name, 'instance_templates', callbackOK, callbackError);
+    },
+
+    /**
+     * Updates template identified by specified id
+     *
+     * @method Syncano#updateTemplate
+     * @alias Syncano.Templatees.update
+     * @param {Number} id - template id
+     * @param {Object} params - new values of the template parameters
+     * @param {string} params.config -
+     * @param {string} params.runtime_name - Node.js / Python / Ruby
+     * @param {string} params.name - new template name
+     * @param {string} params.description -
+     * @param {string} params.source - source code in Node.js / Python / Ruby
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    updateTemplate: function(name, params, callbackOK, callbackError) {
+      if (typeof name === 'object') {
+        params = name;
+        name = params.name;
+        delete params.name;
+      }
+
+      if (typeof name === 'undefined') {
+        throw new Error('Missing template name');
+      }
+
+      if (typeof linksObject.instance_templates === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+
+      return this.request('PATCH', linksObject.instance_templates + name, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Removes Template identified by specified id
+     *
+     * @method Syncano#removeTemplate
+     * @alias Syncano.Templatees.remove
+     * @param {Number|object} id - identifier of the Template to remove
+     * @param {Number} id.id - when passed parameter is an object, we use its id property
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    removeTemplate: function(name, callbackOK, callbackError) {
+      return this.genericRemove(name, linksObject.instance_templates, callbackOK, callbackError);
+    },
+
+    /**
+     * Render template
+     *
+     * @method Syncano#runCodeBox
+     * @alias Syncano.CodeBoxes.run
+     * @param {number|object} id - identifier of the CodeBox to run
+     * @param {object} params
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    renderTemplate: function(name, params, callbackOK, callbackError) {
+      if (typeof params !== 'object') {
+        throw new Error('Missing parameters object');
+      }
+
+      if (typeof linksObject.instance_templates === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+
+      return this.request('POST', linksObject.instance_templates + name + '/render', params, callbackOK, callbackError);
+    },
+
 
     /*********************
        ADMIN METHODS
