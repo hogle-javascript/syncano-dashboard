@@ -34,12 +34,6 @@ export default (name, item) => {
       };
     },
 
-    handleDevicesClick() {
-      let instanceName = this.getParams().instanceName;
-
-      this.transitionTo(item.devicesRoute, {instanceName});
-    },
-
     render() {
       let styles = this.getStyles();
 
@@ -69,7 +63,7 @@ export default (name, item) => {
               </span>
               <span
                 key="devices"
-                onClick={this.handleDevicesClick.bind(null, item.route)}
+                onClick={() => this.transitionTo(item.devicesRoute, this.getParams())}
                 style={styles.linkItem}>
                 Devices
               </span>

@@ -24,17 +24,21 @@ export default React.createClass({
     this.refs.hiddenInput.click();
   },
 
-  handleOpenFile(event) {
+  handleFile(event) {
     event.preventDefault();
     let reader = new FileReader();
     let file = event.target.files[0];
 
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
+    reader.onload = () => {
       if (this.props.getFile) {
+        if (!file.hasOwnProperty('preview')) {
+          file.preview = URL.createObjectURL(file);
+        }
         this.props.getFile(file);
       }
     };
+
+    reader.readAsDataURL(file);
   },
 
   render() {
@@ -47,7 +51,7 @@ export default React.createClass({
           ref="hiddenInput"
           style={{display: 'none', visibility: 'hidden'}}
           type="file"
-          onChange={this.handleOpenFile}/>
+          onChange={this.handleFile}/>
         <RaisedButton
           style={styles.uploadButton}
           backgroundColor={Styles.Colors.grey200}

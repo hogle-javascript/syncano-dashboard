@@ -2,6 +2,7 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 
 import {Styles, FontIcon, Utils} from 'syncano-material-ui';
+import {Loading} from 'syncano-components';
 import UploadFileButton from './UploadFileButton';
 
 export default React.createClass({
@@ -19,7 +20,7 @@ export default React.createClass({
         display: 'webkit-flex; display: flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 200,
+        height: 210,
         width: '100%',
         borderStyle: 'dashed',
         borderWidth: 1,
@@ -79,14 +80,16 @@ export default React.createClass({
 
     return (
       <div style={Utils.Styles.mergeStyles({}, this.props.containerStyle)}>
-        {this.renderUploadButton()}
-        <Dropzone
-          multiple={false}
-          disableClick={this.props.disableClick}
-          onDrop={this.props.onDrop}
-          style={Utils.Styles.mergeStyles(styles.dropZone, this.props.styles)}>
-          {this.renderDescription()}
-        </Dropzone>
+        <Loading show={this.props.isLoading}>
+          {this.renderUploadButton()}
+          <Dropzone
+            multiple={false}
+            disableClick={this.props.disableClick}
+            onDrop={this.props.onDrop}
+            style={Utils.Styles.mergeStyles(styles.dropZone, this.props.styles)}>
+            {this.renderDescription()}
+          </Dropzone>
+        </Loading>
       </div>
     );
   }

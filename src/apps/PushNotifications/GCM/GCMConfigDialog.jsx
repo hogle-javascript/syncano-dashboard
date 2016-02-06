@@ -25,13 +25,22 @@ export default React.createClass({
   validatorConstraints() {
     return {
       development_api_key: {
-        presence: true
+        length: {
+          maximum: 200
+        }
+      },
+      production_api_key: {
+        length: {
+          maximum: 200
+        }
       }
     };
   },
 
-  componentWillMount() {
-    Actions.fetch();
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.state._dialogVisible && nextState._dialogVisible) {
+      Actions.fetch();
+    }
   },
 
   getStyles() {
@@ -51,12 +60,9 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    let params = {
-      production_api_key: this.state.production_api_key,
-      development_api_key: this.state.development_api_key
-    };
+    const {production_api_key, development_api_key} = this.state;
 
-    Actions.configGCMPushNotification(params);
+    Actions.configGCMPushNotification({production_api_key, development_api_key});
   },
 
   render() {
@@ -85,25 +91,25 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={this.state.open}>
         <div className="row align-center hp-2-l hp-2-r">
-          <div dangerouslySetInnerHTML={{__html: require('../../../assets/img/phone-android.svg')}}>
+          <div dangerouslySetInnerHTML={{__html: require('./phone-android.svg')}}>
           </div>
           <div className="col-flex-1 hm-3-l">
-            <TextField
-              ref="development_api_key"
-              name="development_api_key"
-              disabled={this.hasEditMode()}
-              valueLink={this.linkState('development_api_key')}
-              fullWidth={true}
-              floatingLabelText="Google Cloud Messaging Development API key"
-              errorText={this.getValidationMessages('development_api_key').join(' ')}/>
-            <TextField
-              ref="production_api_key"
-              name="production_api_key"
-              disabled={this.hasEditMode()}
-              valueLink={this.linkState('production_api_key')}
-              fullWidth={true}
-              floatingLabelText="Google Cloud Messaging Production API key"
-              errorText={this.getValidationMessages('production_api_key').join(' ')}/>
+            <Loading show={this.state.isCertLoading}>
+              <TextField
+                ref="development_api_key"
+                name="development_api_key"
+                valueLink={this.linkState('development_api_key')}
+                fullWidth={true}
+                floatingLabelText="Google Cloud Messaging Development API key"
+                errorText={this.getValidationMessages('development_api_key').join(' ')}/>
+              <TextField
+                ref="production_api_key"
+                name="production_api_key"
+                valueLink={this.linkState('production_api_key')}
+                fullWidth={true}
+                floatingLabelText="Google Cloud Messaging Production API key"
+                errorText={this.getValidationMessages('production_api_key').join(' ')}/>
+            </Loading>
             <div className="vm-4-t">
               You can find this key in
               <a

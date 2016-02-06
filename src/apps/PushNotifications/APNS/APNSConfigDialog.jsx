@@ -20,8 +20,8 @@ import {
   MenuItem,
   Styles
 } from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
-import {Dialog, DropZone} from '../../../common';
+import {Loading, Show} from 'syncano-components';
+import {Dialog, DropZone, Notification} from '../../../common';
 
 export default Radium(React.createClass({
   displayName: 'APNSConfigDialog',
@@ -32,14 +32,19 @@ export default Radium(React.createClass({
     FormMixin
   ],
 
-  getInitialState() {
-    return {
-      certType: 'development'
-    };
+  validatorConstraints() {
+    let validator = {};
+
+    validator[`${this.state.certType}_certificate`] = {presence: true};
+    validator[`${this.state.certType}_certificate_name`] = {length: {maximum: 200}};
+    validator[`${this.state.certType}_bundle_identifier`] = {length: {maximum: 200}};
+    return validator;
   },
 
-  componentWillMount() {
-    Actions.fetch();
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.state._dialogVisible && nextState._dialogVisible) {
+      Actions.fetch();
+    }
   },
 
   getStyles() {
@@ -76,8 +81,8 @@ export default Radium(React.createClass({
       },
       closeIcon: {
         position: 'absolute',
-        right: 5,
-        top: -15
+        right: 0,
+        top: -25
       }
     };
   },
@@ -89,14 +94,14 @@ export default Radium(React.createClass({
       cert = file[0];
     }
 
-    this.setState({
-      form: {
-        development_certificate_name: cert.name,
-        development_certificate: cert,
-        production_certificate_name: cert.name,
-        production_certificate: cert
-      }
-    }, () => console.error(this.state));
+    let state = {
+      development_certificate_name: cert.name,
+      development_certificate: {file: cert, name: 'development_certificate'},
+      production_certificate_name: cert.name,
+      production_certificate: {file: cert, name: 'production_certificate'}
+    };
+
+    this.setState(state);
   },
 
   isDevelopment() {
@@ -104,16 +109,23 @@ export default Radium(React.createClass({
   },
 
   handleAddSubmit() {
-    const form = this.state.form;
+    const state = this.state;
     const certType = this.state.certType;
     let params = {};
 
-    _.keys(form)
+    _.keys(state)
       .filter((key) => _.includes(key, certType))
-      .forEach((properKey) => params[properKey] = form[properKey]);
+      .forEach((properKey) => params[properKey] = state[properKey]);
 
+    let file = params[`${certType}_certificate`];
+
+    delete params[`${certType}_certificate`];
     console.error('confirm: ', params);
-    Actions.configAPNSPushNotification(params);
+    Actions.configAPNSPushNotification(params, file);
+  },
+
+  handleFailedValidation(errors) {
+    console.error(errors);
   },
 
   handleCertTypeChange(event, index, value) {
@@ -123,18 +135,21 @@ export default Radium(React.createClass({
   },
 
   clearCertificate() {
-    let form = this.state.form;
+    let state = this.state;
 
-    _.keys(form).forEach((key) => form[key] = null);
+    _.keys(state).forEach((key) => {
+      if (_.includes(key, ['development']) || _.includes(key, ['production'])) {
+        state[key] = null;
+      }
+    });
 
-    console.error(form);
-    this.setState(form);
+    this.setState(state);
   },
 
   renderDropzoneDescription() {
     const styles = this.getStyles();
     const certType = this.state.certType;
-    const form = this.state.form;
+    const state = this.state;
     const dropdownItems = [
       <MenuItem
         key="dropdown-production"
@@ -146,7 +161,7 @@ export default Radium(React.createClass({
         primaryText="Development"/>
     ];
 
-    if (form.development_certificate || form.production_certificate) {
+    if (state.development_certificate || state.production_certificate) {
       return (
         <div
           className="row"
@@ -164,7 +179,8 @@ export default Radium(React.createClass({
                 <TextField
                   fullWidth={true}
                   valueLink={this.linkState(`${certType}_certificate_name`)}
-                  defaultValue={form.development_certificate_name}
+                  defaultValue={state[`${certType}_certificate_name`]}
+                  errorText={this.getValidationMessages(`${certType}_certificate_name`).join(' ')}
                   floatingLabelText="Apple Push Notification Certificate Name"/>
               </div>
               <div className="col-xs-12">
@@ -183,12 +199,13 @@ export default Radium(React.createClass({
                 <TextField
                   fullWidth={true}
                   valueLink={this.linkState(`${certType}_bundle_identifier`)}
-                  defaultValue={form.development_bundle_identifier}
+                  defaultValue={state[`${certType}_bundle_identifier`]}
+                  errorText={this.getValidationMessages(`${certType}_bundle_identifier`).join(' ')}
                   floatingLabelText="Bundle Identifier"/>
               </div>
               <div className="col-xs-12">
                 <div style={styles.certType}>Expiration Date</div>
-                {form[`${certType}_expiration_date`]}
+                {state[`${certType}_expiration_date`]}
               </div>
             </div>
           </div>
@@ -198,9 +215,11 @@ export default Radium(React.createClass({
   },
 
   render() {
+    console.error(this.state.errors);
     let styles = this.getStyles();
     let dialogStandardActions = [
       <FlatButton
+        style={{marginRight: 10}}
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
@@ -223,10 +242,12 @@ export default Radium(React.createClass({
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}>
+        {this.renderFormNotifications()}
         <div className="row align-center hp-2-l hp-2-r">
-          <div dangerouslySetInnerHTML={{__html: require('../../../assets/img/phone-apple.svg')}}></div>
+          <div dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
           <div className="col-flex-1">
             <DropZone
+              isLoading={this.state.isCertLoading}
               handleButtonClick={this.onDrop}
               onDrop={this.onDrop}
               disableClick={true}
@@ -240,6 +261,13 @@ export default Radium(React.createClass({
                 style={styles.GDClink}
                 href="https://developer.apple.com/membercenter"> here</a> to get them.
             </div>
+            <Show if={this.getValidationMessages(`${this.state.certType}_certificate`).length > 0}>
+              <div className="vm-2-t">
+                <Notification type="error">
+                  {this.getValidationMessages(`${this.state.certType}_certificate`).join(' ')}
+                </Notification>
+              </div>
+            </Show>
           </div>
         </div>
         <Loading

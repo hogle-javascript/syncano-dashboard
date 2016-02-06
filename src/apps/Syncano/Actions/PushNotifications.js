@@ -7,12 +7,16 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-  configAPNSPushNotification(params = {}) {
+  configAPNSPushNotification(params = {}, file) {
     this.Connection
       .PushNotifications
       .APNS
       .config(params)
-      .then(this.completed)
+      .then(() => {
+        this.Connection.PushNotifications.APNS.uploadCertificate(file)
+          .then(this.completed)
+          .catch(this.failure);
+      })
       .catch(this.failure);
   },
   getGCMPushNotificationConfig(params = {}) {

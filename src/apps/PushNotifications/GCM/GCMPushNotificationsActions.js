@@ -5,6 +5,7 @@ export default CreateActions(
     fetch: {},
     setDevices: {},
     fetchGCMPushNotificationConfig: {
+      loading: true,
       asyncForm: true,
       asyncResult: true,
       children: ['completed', 'failure'],

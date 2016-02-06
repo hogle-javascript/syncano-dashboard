@@ -18,6 +18,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
+      isCertLoading: true,
       production_api_key: null,
       development_api_key: null
     };
@@ -37,10 +38,16 @@ export default Reflux.createStore({
     Actions.fetchGCMPushNotificationConfig();
   },
 
+  onFetchGCMPushNotificationConfig() {
+    this.data.isCertLoading = true;
+    this.trigger(this.data);
+  },
+
   onFetchGCMPushNotificationConfigCompleted(config) {
     console.debug('GCMConfigDialogStore::onFetchGCMPushNotificationConfigCompleted');
     this.data.production_api_key = config.production_api_key;
     this.data.development_api_key = config.development_api_key;
+    this.data.isCertLoading = false;
     this.trigger(this.data);
   },
 
