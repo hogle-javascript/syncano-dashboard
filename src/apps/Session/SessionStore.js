@@ -149,14 +149,6 @@ export default Reflux.createStore({
   setInstance(instance) {
     console.info('SessionStore::setInstance');
 
-    // Let's go back to this topic later
-    // let colorName       = instance.metadata.color,
-    //    secondColorName = 'indigo';
-    //
-    // if (ColorStore.getColorByName(colorName)) {
-    //   this.theme.setPalette(this.makePalette(colorName, secondColorName));
-    // }
-
     this.instance = instance;
     this.trigger(this);
   },

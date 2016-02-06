@@ -7,16 +7,14 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
-import RenameDialog from './RenameDialog';
-import RenameDialogActions from './RenameDialogActions';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
 
 // Components
 import {Utils, IconButton, RaisedButton, TextField} from 'syncano-material-ui';
-import {Color, ColumnList, Container, Loading} from 'syncano-components';
-import {InnerToolbar, ColorIconPicker, Dialog} from '../../common';
+import {Container, Loading} from 'syncano-components';
+import {InnerToolbar, Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'InstanceEdit',
@@ -123,33 +121,11 @@ export default React.createClass({
     remove[ownage]();
   },
 
-  handleIconColorChange(color, icon) {
-    let instance = this.state.instance;
-
-    instance.metadata = {
-      color,
-      icon
-    };
-    this.setState({instance});
-  },
-
   initDialogs() {
     let instance = this.state.instance;
     let deleteText = Store.amIOwner(instance) ? ['Delete', 'Deleting'] : ['Leave', 'Leaving'];
-    let metadata = instance ? instance.metadata : {icon: null, color: null};
 
     return [
-      {
-        dialog: ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: metadata.color,
-          initialIcon: metadata.icon,
-          handleClick: this.handleIconColorChange
-        }
-      },
       {
         dialog: Dialog.Delete,
         params: {
@@ -178,15 +154,8 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const instance = this.state.instance;
+    const {instance} = this.state;
     const deleteButtonText = Store.amIOwner(instance) ? 'Delete' : 'Leave';
-    const defaultIcon = ColumnList.ColumnListConstans.DEFAULT_ICON;
-    const defaultIconColor = ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
-    let icon = instance ? instance.metadata.icon : defaultIcon;
-    let color = instance ? instance.metadata.color : defaultIconColor;
-    let iconBackgroundColor = {
-      backgroundColor: Color.getColorByName(color, 'dark') || defaultIconColor
-    };
 
     if (!instance) {
       return null;
@@ -196,20 +165,13 @@ export default React.createClass({
       <div>
         {this.getDialogs()}
 
-        <RenameDialog/>
-
         <InnerToolbar title="General">
-          <IconButton
-            style={{fontSize: 25, marginTop: 5}}
-            iconClassName="synicon-pencil"
-            tooltip="Rename an Instance"
-            onTouchTap={RenameDialogActions.showDialog.bind(null, this.state.instance)}/>
           <IconButton
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-delete"
             tooltip={`${deleteButtonText} an Instance`}
             tooltipPosition="bottom-left"
-            onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
+            onTouchTap={() => this.showDialog('deleteInstanceDialog')} />
         </InnerToolbar>
 
         <Container>
@@ -217,13 +179,6 @@ export default React.createClass({
             <div className="col-flex-1">
               <div>
                 <div style={styles.customizeSection}>
-                  <IconButton
-                    tooltip="Click to customize Instance"
-                    tooltipStyles={styles.tooltip}
-                    iconStyle={styles.instanceIcon}
-                    style={this.mergeStyles(styles.instanceIconButton, iconBackgroundColor)}
-                    iconClassName={`synicon-${icon}`}
-                    onClick={this.showDialog.bind(this, 'pickColorIconDialog')}/>
                   <TextField
                     className="instance-name-field"
                     ref="name"

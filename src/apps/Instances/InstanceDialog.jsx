@@ -6,9 +6,9 @@ import {DialogMixin, FormMixin} from '../../mixins';
 import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
 
-import {FlatButton, TextField} from 'syncano-material-ui';
+import {FlatButton, RaisedButton, TextField, Utils} from 'syncano-material-ui';
 import {Color, Loading} from 'syncano-components';
-import {Dialog, Icon} from '../../common';
+import {Dialog, Icon, Notification, ColorIconPicker} from '../../common';
 
 export default React.createClass({
   displayName: 'InstanceDialog',
@@ -17,7 +17,8 @@ export default React.createClass({
     Reflux.connect(Store),
     Reflux.ListenerMixin,
     DialogMixin,
-    FormMixin
+    FormMixin,
+    Utils.Styles
   ],
 
   validatorConstraints: {
@@ -26,41 +27,78 @@ export default React.createClass({
       length: {
         minimum: 5
       }
+    },
+    description: {
+      length: {
+        maximum: 256
+      }
     }
   },
 
   componentWillUpdate(nextProps, nextState) {
     if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
       this.setState({
-        name: Store.genUniqueName()
+        name: Store.genUniqueName(),
+        metadata: {
+          color: Color.getRandomColorName(),
+          icon: Icon.Store.getRandomIconPickerIcon()
+        }
       });
     }
   },
 
-  handleEditSubmit() {
-    Actions.updateInstance(
-      this.state.name,
-      {description: this.state.description}
-    );
-  },
-
   handleAddSubmit() {
+    const {name, description, metadata} = this.state;
+
     if (this.props.handleSubmit) {
       this.listenTo(Actions.createInstance.completed, this.extendSubmit);
     }
-    Actions.createInstance({
-      name: this.state.name,
-      description: this.state.description,
-      metadata: {
-        color: Color.getRandomColorName(),
-        icon: Icon.Store.getRandomIconPickerIcon()
-      }
+
+    Actions.createInstance({name, description, metadata});
+  },
+
+  handleEditSubmit() {
+    const {name, initialName, description, metadata} = this.state;
+
+    if (initialName && initialName !== name) {
+      Actions.renameAndUpdateInstance(initialName, name, {description, metadata});
+    } else {
+      Actions.updateInstance(name, {description, metadata});
+    }
+  },
+
+  handleColorChange(payload) {
+    let {metadata} = this.state;
+
+    metadata.color = payload.color;
+    this.setState({metadata});
+  },
+
+  handleIconChange(payload) {
+    let {metadata} = this.state;
+
+    metadata.icon = payload.icon;
+    this.setState({metadata});
+  },
+
+  handleInstanceNameFieldFocus() {
+    this.setState({
+      notificationShowed: true,
+      initialName: this.state.name
     });
   },
 
   extendSubmit() {
     this.props.handleSubmit();
     this.stopListeningTo(Actions.createInstance.completed);
+  },
+
+  renderNotification() {
+    return (
+      <Notification type="warning">
+        Do you want to change the name? It will affect all of your apps!
+      </Notification>
+    );
   },
 
   render() {
@@ -71,7 +109,7 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <FlatButton
+      <RaisedButton
         key="confirm"
         label="Confirm"
         primary={true}
@@ -87,31 +125,59 @@ export default React.createClass({
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
+        overlayStyle={{background: '#fff'}}
+        contentStyle={{transform: 'none', width: 998, maxWidth: 'none', minHeight: 484}}
         actions={dialogCustomActions}>
+
+        <div style={{
+          position: 'fixed',
+          top: 40,
+          right: 40,
+          fontSize: 30,
+          color: '#b8c0c9',
+          cursor: 'pointer'
+        }} onClick={this.handleCancel}><i className="synicon-close"/></div>
+
         {this.renderFormNotifications()}
-        <TextField
-          ref="name"
-          name="name"
-          fullWidth={true}
-          disabled={true}
-          valueLink={this.linkState('name')}
-          errorText={this.getValidationMessages('name').join(' ')}
-          hintText="Short name for your Instance"
-          floatingLabelText="Name"/>
-        <TextField
-          ref="description"
-          name="description"
-          fullWidth={true}
-          valueLink={this.linkState('description')}
-          errorText={this.getValidationMessages('description').join(' ')}
-          hintText="Multiline description of Instance (optional)"
-          floatingLabelText="Description"/>
+
+        <div className="row">
+          <div className="col-flex-0" style={{width: 226}}>
+            <ColorIconPicker
+              icon={this.state.metadata.icon}
+              color={this.state.metadata.color}
+              onIconChange={this.handleIconChange}
+              onColorChange={this.handleColorChange} />
+          </div>
+          <div className="col-flex-1">
+            <div className="vm-2-b">
+              <TextField
+                ref="name"
+                name="name"
+                fullWidth={true}
+                valueLink={this.linkState('name')}
+                errorText={this.getValidationMessages('name').join(' ')}
+                hintText="Short name for your Instance"
+                onFocus={this.handleInstanceNameFieldFocus}
+                floatingLabelText="Name"/>
+              {this.hasEditMode() && this.state.notificationShowed ? this.renderNotification() : null}
+            </div>
+            <TextField
+              ref="description"
+              name="description"
+              fullWidth={true}
+              multiLine={true}
+              valueLink={this.linkState('description')}
+              errorText={this.getValidationMessages('description').join(' ')}
+              hintText="Multiline description of Instance (optional)"
+              floatingLabelText="Description"/>
+          </div>
+        </div>
         <Loading
           type="linear"
-          position="bottom"
+          position="top"
+          style={{position: 'fixed'}}
           show={this.state.isLoading} />
       </Dialog>
     );
   }
 });
-

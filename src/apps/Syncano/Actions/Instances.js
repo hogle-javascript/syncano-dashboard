@@ -38,6 +38,20 @@ export default {
       .catch(this.failure);
   },
 
+  renameAndUpdate(name, newName, payload) {
+    this.Connection
+      .Instances
+      .rename(name, {new_name: newName})
+      .then(
+        this.Connection
+          .Instances
+          .update(newName, payload)
+          .then(this.completed)
+          .catch(this.failure)
+      )
+      .catch(this.failure);
+  },
+
   remove(names) {
     let promises = _.map(names, this.Connection.Instances.remove);
 

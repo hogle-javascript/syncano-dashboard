@@ -89,10 +89,6 @@ export default React.createClass({
             onTouchTap={this.redirectToEditClassView.bind(null, item.name)}
             primaryText="Edit a Class"/>
           <MenuItem
-            className="dropdown-item-customize-class"
-            onTouchTap={this.props.showCustomizeDialog}
-            primaryText="Customize a Class"/>
-          <MenuItem
             className="dropdown-item-delete-class"
             disabled={item.protectedFromDelete}
             onTouchTap={this.props.showDeleteDialog}
