@@ -6,6 +6,7 @@ import _ from 'lodash';
 // Utils
 import {DialogMixin, FormMixin} from '../../../mixins';
 
+
 // Stores and Actions
 import Actions from './APNSPushNotificationsActions';
 import Store from './APNSConfigDialogStore';
@@ -33,11 +34,13 @@ export default Radium(React.createClass({
   ],
 
   validatorConstraints() {
+    let certificateType = this.state.certificateType;
     let validator = {};
 
-    validator[`${this.state.certType}_certificate`] = {presence: true};
-    validator[`${this.state.certType}_certificate_name`] = {length: {maximum: 200}};
-    validator[`${this.state.certType}_bundle_identifier`] = {length: {maximum: 200}};
+    validator[`${certificateType}_certificate_name`] = {length: {maximum: 200}};
+    validator[`${certificateType}_bundle_identifier`] = {length: {maximum: 200}};
+    validator[`${certificateType}_certificate`] = {presence: {message: "Certificate can't be blank"}};
+
     return validator;
   },
 
@@ -72,7 +75,7 @@ export default Radium(React.createClass({
         position: 'relative',
         width: '100%'
       },
-      certType: {
+      certificateType: {
         fontSize: 11,
         paddingBottom: 10
       },
@@ -105,32 +108,27 @@ export default Radium(React.createClass({
   },
 
   isDevelopment() {
-    return this.state.certType === 'development';
+    return this.state.certificateType === 'development';
   },
 
   handleAddSubmit() {
     const state = this.state;
-    const certType = this.state.certType;
+    const certificateType = this.state.certificateType;
     let params = {};
 
     _.keys(state)
-      .filter((key) => _.includes(key, certType))
+      .filter((key) => _.includes(key, certificateType))
       .forEach((properKey) => params[properKey] = state[properKey]);
 
-    let file = params[`${certType}_certificate`];
+    let file = params[`${certificateType}_certificate`];
 
-    delete params[`${certType}_certificate`];
-    console.error('confirm: ', params);
+    delete params[`${certificateType}_certificate`];
     Actions.configAPNSPushNotification(params, file);
   },
 
-  handleFailedValidation(errors) {
-    console.error(errors);
-  },
-
-  handleCertTypeChange(event, index, value) {
+  handleCertificateTypeChange(event, index, value) {
     this.setState({
-      certType: value
+      certificateType: value
     });
   },
 
@@ -148,7 +146,7 @@ export default Radium(React.createClass({
 
   renderDropzoneDescription() {
     const styles = this.getStyles();
-    const certType = this.state.certType;
+    const certificateType = this.state.certificateType;
     const state = this.state;
     const dropdownItems = [
       <MenuItem
@@ -178,17 +176,17 @@ export default Radium(React.createClass({
               <div className="col-xs-23">
                 <TextField
                   fullWidth={true}
-                  valueLink={this.linkState(`${certType}_certificate_name`)}
-                  defaultValue={state[`${certType}_certificate_name`]}
-                  errorText={this.getValidationMessages(`${certType}_certificate_name`).join(' ')}
+                  valueLink={this.linkState(`${certificateType}_certificate_name`)}
+                  defaultValue={state[`${certificateType}_certificate_name`]}
+                  errorText={this.getValidationMessages(`${certificateType}_certificate_name`).join(' ')}
                   floatingLabelText="Apple Push Notification Certificate Name"/>
               </div>
               <div className="col-xs-12">
                 <SelectField
                   autoWidth={true}
                   fullWidth={true}
-                  value={certType}
-                  onChange={this.handleCertTypeChange}
+                  value={certificateType}
+                  onChange={this.handleCertificateTypeChange}
                   floatingLabelText="Type">
                   {dropdownItems}
                 </SelectField>
@@ -198,14 +196,14 @@ export default Radium(React.createClass({
               <div className="col-xs-23">
                 <TextField
                   fullWidth={true}
-                  valueLink={this.linkState(`${certType}_bundle_identifier`)}
-                  defaultValue={state[`${certType}_bundle_identifier`]}
-                  errorText={this.getValidationMessages(`${certType}_bundle_identifier`).join(' ')}
+                  valueLink={this.linkState(`${certificateType}_bundle_identifier`)}
+                  defaultValue={state[`${certificateType}_bundle_identifier`]}
+                  errorText={this.getValidationMessages(`${certificateType}_bundle_identifier`).join(' ')}
                   floatingLabelText="Bundle Identifier"/>
               </div>
               <div className="col-xs-12">
-                <div style={styles.certType}>Expiration Date</div>
-                {state[`${certType}_expiration_date`]}
+                <div style={styles.certificateType}>Expiration Date</div>
+                {state[`${certificateType}_expiration_date`]}
               </div>
             </div>
           </div>
@@ -215,7 +213,6 @@ export default Radium(React.createClass({
   },
 
   render() {
-    console.error(this.state.errors);
     let styles = this.getStyles();
     let dialogStandardActions = [
       <FlatButton
@@ -261,10 +258,10 @@ export default Radium(React.createClass({
                 style={styles.GDClink}
                 href="https://developer.apple.com/membercenter"> here</a> to get them.
             </div>
-            <Show if={this.getValidationMessages(`${this.state.certType}_certificate`).length > 0}>
+            <Show if={this.getValidationMessages(`${this.state.certificateType}_certificate`).length > 0}>
               <div className="vm-2-t">
                 <Notification type="error">
-                  {this.getValidationMessages(`${this.state.certType}_certificate`).join(' ')}
+                  {this.getValidationMessages(`${this.state.certificateType}_certificate`).join(' ')}
                 </Notification>
               </div>
             </Show>

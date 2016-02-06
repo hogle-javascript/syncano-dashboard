@@ -11,6 +11,7 @@ export default CreateActions(
       method: 'Syncano.Actions.PushNotifications.getAPNSPushNotificationConfig'
     },
     configAPNSPushNotification: {
+      asyncForm: true,
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],

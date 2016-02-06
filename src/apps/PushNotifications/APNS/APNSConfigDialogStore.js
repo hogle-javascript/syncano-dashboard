@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../../mixins';
+import {DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin, StoreFormMixin} from '../../../mixins';
 
 // Stores & Actions
 import SessionActions from '../../Session/SessionActions';
@@ -13,13 +13,14 @@ export default Reflux.createStore({
   mixins: [
     DialogStoreMixin,
     WaitForStoreMixin,
-    StoreLoadingMixin
+    StoreLoadingMixin,
+    StoreFormMixin
   ],
 
   getInitialState() {
     return {
       isCertLoading: true,
-      certType: 'development',
+      certificateType: 'development',
       development_certificate: null,
       development_certificate_name: null,
       development_expiration_date: null,
@@ -37,6 +38,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.listenToForms();
     this.setLoadingStates();
   },
 
@@ -63,8 +65,13 @@ export default Reflux.createStore({
   },
 
   onConfigAPNSPushNotificationCompleted() {
+    console.error('succes');
     console.debug('APNSConfigDialogStore::onConfigAPNSPushNotification');
     this.dismissDialog();
     this.refreshData();
+  },
+
+  onConfigAPNSPushNotificationFailure() {
+    console.error('failed');
   }
 });

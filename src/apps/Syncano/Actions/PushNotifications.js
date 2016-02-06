@@ -7,6 +7,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+
   configAPNSPushNotification(params = {}, file) {
     this.Connection
       .PushNotifications
@@ -19,6 +20,7 @@ export default {
       })
       .catch(this.failure);
   },
+
   getGCMPushNotificationConfig(params = {}) {
     this.Connection
       .PushNotifications
@@ -27,6 +29,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+
   getAPNSPushNotificationConfig(params = {}) {
     this.Connection
       .PushNotifications

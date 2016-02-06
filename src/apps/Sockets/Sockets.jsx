@@ -110,7 +110,7 @@ export default React.createClass({
           actions: (
             <FlatButton
               key="cancel"
-              onTouchTap={this.handleCancel.bind(null, 'prolongDialog')}
+              onTouchTap={() => this.handleCancel('prolongDialog')}
               primary={true}
               label="Close"
               ref="cancel"/>
@@ -131,6 +131,7 @@ export default React.createClass({
           <Socket.Data onTouchTap={Data.Actions.showDialog}/>
           <Socket.CodeBox onTouchTap={CodeBoxes.Actions.showDialog}/>
           <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
+          <Socket.Push onTouchTap={() => this.transitionTo('apns-devices', this.getParams())}/>
           <Socket.Trigger onTouchTap={Triggers.Actions.showDialog}/>
           <Socket.Schedule
             onTouchTap={Schedules.Actions.showDialog}
@@ -156,7 +157,7 @@ export default React.createClass({
             name="Data Sockets"
             isLoading={this.state.dataviews.isLoading}
             items={this.state.dataviews.items}
-            handleTitleClick={this.handleListTitleClick.bind(null, 'data')}
+            handleTitleClick={() => this.handleListTitleClick('data')}
             emptyItemHandleClick={Data.Actions.showDialog}
             emptyItemContent="Create a Data Socket"/>
 
@@ -164,7 +165,7 @@ export default React.createClass({
             name="CodeBox Sockets"
             isLoading={this.state.codeboxes.isLoading}
             items={this.state.codeboxes.items}
-            handleTitleClick={this.handleListTitleClick.bind(null, 'codeBoxes')}
+            handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
             emptyItemHandleClick={CodeBoxes.Actions.showDialog}
             emptyItemContent="Create a CodeBox Socket"/>
 
@@ -172,7 +173,7 @@ export default React.createClass({
             name="Channel Sockets"
             isLoading={this.state.channels.isLoading}
             items={this.state.channels.items}
-            handleTitleClick={this.handleListTitleClick.bind(null, 'channels')}
+            handleTitleClick={() => this.handleListTitleClick('channels')}
             emptyItemHandleClick={Channels.Actions.showDialog}
             emptyItemContent="Create a Channel Socket"/>
 
@@ -180,7 +181,7 @@ export default React.createClass({
             name="Trigger Sockets"
             isLoading={this.state.triggers.isLoading}
             items={this.state.triggers.items}
-            handleTitleClick={this.handleListTitleClick.bind(null, 'triggers')}
+            handleTitleClick={() => this.handleListTitleClick('triggers')}
             emptyItemHandleClick={Triggers.Actions.showDialog}
             emptyItemContent="Create a Trigger Socket"/>
 
@@ -188,13 +189,13 @@ export default React.createClass({
             name="Schedule Sockets"
             isLoading={this.state.schedules.isLoading}
             items={this.state.schedules.items}
-            handleTitleClick={this.handleListTitleClick.bind(null, 'schedules')}
+            handleTitleClick={() => this.handleListTitleClick('schedules')}
             emptyItemHandleClick={Schedules.Actions.showDialog}
             emptyItemContent="Create a Schedule Socket"/>
 
           <PushNotifications.List
             name="Push Notification Sockets"
-            handleTitleClick={this.handleListTitleClick.bind(null, 'apns-devices')}
+            handleTitleClick={() => this.handleListTitleClick('apns-devices')}
             items={this.getPushNotificationsItems()}/>
 
         </Loading>

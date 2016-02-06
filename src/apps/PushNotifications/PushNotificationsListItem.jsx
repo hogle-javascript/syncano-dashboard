@@ -47,7 +47,7 @@ export default (name, item) => {
             className="col-xs-18">
             <div>
               <div>
-                {item.name}
+                {item.label}
               </div>
               <div style={styles.linksSection}>
               <span
@@ -79,9 +79,9 @@ export default (name, item) => {
               onTouchTap={item.showConfigDialog}
               primaryText="Edit Socket"/>
             <MenuItem
-              className="dropdown-item-delete"
-              onTouchTap={this.props.onIconClick}
-              primaryText="Delete a Device"/>
+              className="dropdown-item-devices"
+              onTouchTap={() => this.transitionTo(item.devicesRoute, this.getParams())}
+              primaryText="Devices list"/>
           </Column.Menu>
         </ColumnList.Item>
       );
