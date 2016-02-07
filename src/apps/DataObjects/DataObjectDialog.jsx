@@ -286,21 +286,7 @@ export default React.createClass({
 
     /* eslint-enable no-undefined */
 
-    let emptyTime = new Date();
-
-    emptyTime.setHours(0);
-    emptyTime.setMinutes(0);
-
-    this.refs[`fieldtime-${name}`].refs.input.setValue('');
-
-    /* eslint-disable no-undefined */
-
-    this.refs[`fieldtime-${name}`].setState({
-      time: undefined,
-      dialogTime: new Date()
-    });
-
-    /* eslint-enable no-undefined */
+    this.refs[`fieldtime-${name}`].setTime();
   },
 
   renderGroupDropdownItem(group) {
