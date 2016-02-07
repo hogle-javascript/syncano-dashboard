@@ -52,7 +52,7 @@ export default React.createClass({
         key={`schedules-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'removeScheduleDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('removeScheduleDialog', item)} />
     );
   },
 
@@ -97,7 +97,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Schedule Socket"
                 multipleItemsText="Delete Schedule Sockets"
-                onTouchTap={this.showDialog.bind(null, 'removeScheduleDialog')}/>
+                onTouchTap={() => this.showDialog('removeScheduleDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

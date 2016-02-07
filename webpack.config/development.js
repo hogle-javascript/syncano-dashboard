@@ -13,7 +13,7 @@ config.entry.app.unshift(
 config.module.preLoaders.push({
   test: /\.js(|x)$/,
   loader: 'eslint-loader',
-  exclude: [/node_modules/, /syncano-components/]
+  exclude: [/node_modules/, /syncano-components/, /material-ui/]
 });
 
 config.eslint = {

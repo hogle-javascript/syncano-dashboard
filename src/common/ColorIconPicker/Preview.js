@@ -9,7 +9,7 @@ export default Radium(({color, icon}) => {
       background: Color.getColorByName(color),
       display: 'flex',
       justifyContent: 'center',
-      margin: '0 auto',
+      margin: '0 auto 15px',
       width: 100,
       height: 100,
       borderRadius: '50%',

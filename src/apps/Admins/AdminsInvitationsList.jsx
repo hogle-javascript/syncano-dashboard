@@ -68,8 +68,8 @@ export default React.createClass({
         key={`admins-invitations-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'removeInvitationDialog', item)}
-        showResendDialog={this.showDialog.bind(null, 'resendInvitationDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('removeInvitationDialog', item)}
+        showResendDialog={() => this.showDialog('resendInvitationDialog', item)} />
     );
   },
 
@@ -95,7 +95,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete an Invitation"
                 multipleItemsText="Delete Invitations"
-                onTouchTap={this.showDialog.bind(null, 'removeInvitationDialog')}/>
+                onTouchTap={() => this.showDialog('removeInvitationDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

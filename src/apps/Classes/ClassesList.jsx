@@ -69,14 +69,6 @@ export default React.createClass({
     return item.protectedFromDelete;
   },
 
-  handleChangePalette(color, icon) {
-    console.info('Classes::handleChangePalette', color, icon);
-    let metadata = JSON.stringify({color, icon});
-
-    Actions.updateClass(Store.getClickedItem().name, {metadata});
-    Actions.uncheckAll();
-  },
-
   initDialogs() {
     let checkedClasses = Store.getCheckedItems();
     let classesAssociatedWithTriggers = this.getAssociatedClasses();
@@ -164,7 +156,7 @@ export default React.createClass({
                 singleItemText="Delete a Class"
                 multipleItemsText="Delete Classes"
                 disabled={someClassIsProtectedFromDelete}
-                onTouchTap={this.showDialog.bind(null, 'deleteClassDialog')}/>
+                onTouchTap={() => this.showDialog('deleteClassDialog')}/>
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

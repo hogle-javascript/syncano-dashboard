@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import {DialogMixin, FormMixin} from '../../mixins';
 
@@ -67,18 +68,16 @@ export default React.createClass({
     }
   },
 
-  handleColorChange(payload) {
-    let {metadata} = this.state;
+  handleColorChange(color) {
+    const {metadata} = this.state;
 
-    metadata.color = payload.color;
-    this.setState({metadata});
+    this.setState({metadata: _.merge({}, metadata, {color})});
   },
 
-  handleIconChange(payload) {
-    let {metadata} = this.state;
+  handleIconChange(icon) {
+    const {metadata} = this.state;
 
-    metadata.icon = payload.icon;
-    this.setState({metadata});
+    this.setState({metadata: _.merge({}, metadata, {icon})});
   },
 
   handleInstanceNameFieldFocus() {
@@ -102,8 +101,9 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update' : 'Create';
-    let dialogCustomActions = [
+    const {open, metadata, notificationShowed, isLoading} = this.state;
+    const title = this.hasEditMode() ? 'Update' : 'Create';
+    const dialogCustomActions = [
       <FlatButton
         key="cancel"
         label="Cancel"
@@ -124,16 +124,22 @@ export default React.createClass({
         title={`${title} an Instance`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
+        open={open}
         overlayStyle={{background: '#fff'}}
-        contentStyle={{transform: 'none', width: 998, maxWidth: 'none', minHeight: 484}}
-        actions={dialogCustomActions}>
+        contentStyle={{transform: 'none', width: '100%', maxWidth: 998}}
+        actions={dialogCustomActions}
+        repositionOnUpdate={false}
+        style={{padding: '136px 0 0px'}}
+        titleStyle={{paddingTop: 0}}
+        bodyStyle={{paddingTop: 35}}
+        actionsContainerStyle={{padding: '0 24px'}}
+        zDepth={0}>
 
         <div style={{
           position: 'fixed',
           top: 40,
           right: 40,
-          fontSize: 30,
+          fontSize: 40,
           color: '#b8c0c9',
           cursor: 'pointer'
         }} onClick={this.handleCancel}><i className="synicon-close"/></div>
@@ -143,13 +149,13 @@ export default React.createClass({
         <div className="row">
           <div className="col-flex-0" style={{width: 226}}>
             <ColorIconPicker
-              icon={this.state.metadata.icon}
-              color={this.state.metadata.color}
+              icon={metadata.icon}
+              color={metadata.color}
               onIconChange={this.handleIconChange}
               onColorChange={this.handleColorChange} />
           </div>
           <div className="col-flex-1">
-            <div className="vm-2-b">
+            <div className="vm-3-b">
               <TextField
                 ref="name"
                 name="name"
@@ -159,7 +165,7 @@ export default React.createClass({
                 hintText="Short name for your Instance"
                 onFocus={this.handleInstanceNameFieldFocus}
                 floatingLabelText="Name"/>
-              {this.hasEditMode() && this.state.notificationShowed ? this.renderNotification() : null}
+              {this.hasEditMode() && notificationShowed ? this.renderNotification() : null}
             </div>
             <TextField
               ref="description"
@@ -176,7 +182,7 @@ export default React.createClass({
           type="linear"
           position="top"
           style={{position: 'fixed'}}
-          show={this.state.isLoading} />
+          show={isLoading} />
       </Dialog>
     );
   }

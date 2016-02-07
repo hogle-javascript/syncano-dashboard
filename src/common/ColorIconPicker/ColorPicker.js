@@ -27,7 +27,7 @@ export default Radium(({selectedColor, onColorChange}) => {
     }
   });
 
-  const genColorItem = (color) => {
+  const renderColorItem = (color) => {
     let icon = null;
     let styles = getStyles();
     let zDepth = 0;
@@ -50,7 +50,7 @@ export default Radium(({selectedColor, onColorChange}) => {
         key={color}
         circle={true}
         style={styles.item}
-        onClick={() => onColorChange({color})}>
+        onClick={() => onColorChange(color)}>
         {icon}
       </Paper>
     );
@@ -58,7 +58,7 @@ export default Radium(({selectedColor, onColorChange}) => {
 
   return (
     <div style={getStyles().container}>
-      {Color.getColorPickerPalette().map((color) => genColorItem(color))}
+      {Color.getColorPickerPalette().map((color) => renderColorItem(color))}
     </div>
   );
 });

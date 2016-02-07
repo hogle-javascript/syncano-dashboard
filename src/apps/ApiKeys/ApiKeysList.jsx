@@ -57,7 +57,7 @@ export default React.createClass({
           isLoading: this.props.isLoading,
           items: Store.getCheckedItems(),
           itemLabelName: 'api_key',
-          groupName: 'Channel'
+          groupName: 'API Key'
         }
       }
     ];
@@ -69,8 +69,8 @@ export default React.createClass({
         key={`apikeys-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'deleteApiKeyDialog', item)}
-        showResetDialog={this.showDialog.bind(null, 'resetApiKeyDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('deleteApiKeyDialog', item)}
+        showResetDialog={() => this.showDialog('resetApiKeyDialog', item)} />
     );
   },
 
@@ -97,11 +97,11 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Reset an API Key"
                 multipleItemsText="Reset API Keys"
-                onTouchTap={this.showDialog.bind(null, 'resetApiKeyDialog')}/>
+                onTouchTap={() => this.showDialog('resetApiKeyDialog')} />
               <Lists.MenuItem
                 singleItemText="Delete an API Key"
                 multipleItemsText="Delete API Keys"
-                onTouchTap={this.showDialog.bind(null, 'deleteApiKeyDialog')}/>
+                onTouchTap={() => this.showDialog('deleteApiKeyDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

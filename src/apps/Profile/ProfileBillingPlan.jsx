@@ -88,11 +88,6 @@ export default Radium(React.createClass({
     this.setupToggles();
   },
 
-  handleShowCancelPlanDialog() {
-    console.debug('ProfileBillingPlan::handlePlanToggle');
-    this.showDialog('cancelProductionPlan');
-  },
-
   handleCancelProductionPlan() {
     Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => item.id));
   },
@@ -100,10 +95,6 @@ export default Radium(React.createClass({
   handleShowPlanDialog() {
     console.debug('ProfileBillingPlan::handleShowPlanDialog');
     PlanDialogActions.showDialog();
-  },
-
-  handleDeleteSubscription() {
-    Actions.cancelNewPlan(this.state.subscriptions._items);
   },
 
   handlePlanDialogDismiss() {
@@ -395,7 +386,7 @@ export default Radium(React.createClass({
             plan={this.state.profile.subscription.plan}
             planCanceled={Store.isPlanCanceled()}
             onPlanDialog={this.handleShowPlanDialog}
-            onCancelPlanDialog={this.handleShowCancelPlanDialog}/>
+            onCancelPlanDialog={() => this.showDialog('cancelProductionPlan')}/>
         </InnerToolbar>
 
         <Container>
@@ -412,7 +403,7 @@ export default Radium(React.createClass({
                   plan={this.state.profile.subscription.plan}
                   isNewSubscription={Store.isNewSubscription()}
                   onPlanDialog={this.handleShowPlanDialog}
-                  onDeleteSubscription={this.handleDeleteSubscription}/>
+                  onDeleteSubscription={() => Actions.cancelNewPlan(this.state.subscriptions._items)}/>
               </div>
             </div>
             <div

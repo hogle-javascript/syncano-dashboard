@@ -23,7 +23,7 @@ export default Radium(({selectedIcon, onIconChange}) => {
     }
   });
 
-  const genIconItem = (icon) => {
+  const renderIconItem = (icon) => {
     let styles = getStyles().item;
 
     if (icon === selectedIcon) {
@@ -36,13 +36,13 @@ export default Radium(({selectedIcon, onIconChange}) => {
         id={icon}
         className={`synicon-${icon}`}
         style={styles}
-        onClick={() => onIconChange({icon})} />
+        onClick={() => onIconChange(icon)} />
     );
   };
 
   return (
     <div style={getStyles().container}>
-      {IconStore.getIconPickerIcons().map((icon) => genIconItem(icon))}
+      {IconStore.getIconPickerIcons().map((icon) => renderIconItem(icon))}
     </div>
   );
 });

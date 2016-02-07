@@ -19,7 +19,6 @@ import DataList from './DataViewsList';
 import DataDialog from './DataViewDialog';
 
 export default React.createClass({
-
   displayName: 'Data',
 
   mixins: [
@@ -34,11 +33,6 @@ export default React.createClass({
   componentDidMount() {
     console.info('Data::componentDidMount');
     Actions.fetch();
-  },
-
-  uncheckAll() {
-    console.info('Data::uncheckAll');
-    Actions.uncheckAll();
   },
 
   showDataViewDialog() {

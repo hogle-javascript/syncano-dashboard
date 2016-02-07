@@ -88,8 +88,8 @@ export default React.createClass({
         key={`profile-invitations-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showAcceptDialog={this.showDialog.bind(null, 'acceptInvitationsDialog', item)}
-        showDeclineDialog={this.showDialog.bind(null, 'declineInvitationsDialog', item)}
+        showAcceptDialog={() => this.showDialog('acceptInvitationsDialog', item)}
+        showDeclineDialog={() => this.showDialog('declineInvitationsDialog', item)}
         />
     );
   },
@@ -116,11 +116,11 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Accept an Invitation"
                 multipleItemsText="Accept Invitations"
-                onTouchTap={this.showDialog.bind(null, 'acceptInvitationsDialog')}/>
+                onTouchTap={() => this.showDialog('acceptInvitationsDialog')}/>
               <Lists.MenuItem
                 singleItemText="Decline an Invitation"
                 multipleItemsText="Decline Invitations"
-                onTouchTap={this.showDialog.bind(null, 'declineInvitationsDialog')}/>
+                onTouchTap={() => this.showDialog('declineInvitationsDialog')}/>
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
