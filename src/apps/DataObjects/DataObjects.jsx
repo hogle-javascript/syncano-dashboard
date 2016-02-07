@@ -43,7 +43,7 @@ export default React.createClass({
     this.hideDialogs(nextState.hideDialogs);
 
     if (!nextState.selectedRows && this.refs.table) {
-      this.refs.table.setState({selectedRows: []});
+      this.refs.table.setState({selectedRows: [], allRowsSelected: false});
     }
   },
 
