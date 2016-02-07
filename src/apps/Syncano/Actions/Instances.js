@@ -42,13 +42,13 @@ export default {
     this.Connection
       .Instances
       .rename(name, {new_name: newName})
-      .then(
+      .then(() => {
         this.Connection
           .Instances
           .update(newName, payload)
           .then(this.completed)
-          .catch(this.failure)
-      )
+          .catch(this.failure);
+      })
       .catch(this.failure);
   },
 
