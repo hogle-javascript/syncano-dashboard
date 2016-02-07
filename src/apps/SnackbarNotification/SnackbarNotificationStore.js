@@ -13,11 +13,21 @@ export default Reflux.createStore({
     this.snackbar = null;
   },
 
-  set(snackbar) {
+  set(newConfig) {
     console.log('SnackbarNotificationStore::set');
 
-    snackbar.key = snackbar.key || Date.now();
-    snackbar.open = true;
+    let snackbar = {
+      key: Date.now(),
+      autoHideDuration: 3000,
+      open: true
+    };
+
+    Object.assign(snackbar, newConfig);
+
+    if (snackbar.delay) {
+      delete snackbar.autoHideDuration;
+    }
+
     this.snackbar = snackbar;
     this.trigger({snackbar: this.snackbar});
   },
@@ -33,5 +43,4 @@ export default Reflux.createStore({
     // Small debounce
     setTimeout(() => this.trigger({snackbar: this.snackbar}), 150);
   }
-
 });

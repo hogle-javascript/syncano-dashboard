@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import {Snackbar} from 'syncano-material-ui';
 
+import Actions from './SnackbarNotificationActions';
 import Store from './SnackbarNotificationStore';
 
 export default React.createClass({
@@ -45,12 +46,6 @@ export default React.createClass({
     }
   },
 
-  handleRequestClose() {
-    this.setState({
-      open: false
-    });
-  },
-
   render() {
     let snackbar = this.state.snackbar;
 
@@ -65,9 +60,9 @@ export default React.createClass({
         message={snackbar.message}
         action={snackbar.action}
         autoHideDuration={snackbar.autoHideDuration}
-        onActionTouchTap={(snackbar.onActionTouchTap) ? () => snackbar.onActionTouchTap() : null}
+        onActionTouchTap={snackbar.onActionTouchTap}
         open={snackbar.open}
-        onRequestClose={this.handleRequestClose}
+        onRequestClose={Actions.dismiss}
         style={snackbar.style}/>
     );
   }

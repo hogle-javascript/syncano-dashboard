@@ -63,16 +63,12 @@ export default Radium(React.createClass({
     };
   },
 
-  handleResetClick() {
-    Actions.resetKey();
-  },
-
   handleSuccessfullValidation() {
     Actions.changePassword(this.state);
   },
 
   render() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     return (
       <div>
@@ -85,14 +81,13 @@ export default Radium(React.createClass({
               <div className="col-xs-10">
                 <Clipboard
                   copyText={this.state.account_key}
-                  snackbarText="API key copied to the clipboard"
-                  snackbarAutoHideDuration={3000}
+                  onCopy={() => this.setSnackbarNotification({message: 'API key copied to the clipboard'})}
                   text="COPY"
                   type="button"/>
                 <FlatButton
                   label="RESET"
                   primary={true}
-                  onClick={this.handleResetClick}/>
+                  onClick={Actions.resetKey}/>
               </div>
             </div>
           </div>
