@@ -33,18 +33,16 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('Data::componentDidMount');
-    this.fetch();
+    Actions.fetch();
   },
 
   showCodeBoxDialog() {
     Actions.showDialog();
   },
 
-  fetch() {
-    Actions.fetch();
-  },
-
   render() {
+    const {items, hideDialogs, isLoading} = this.state;
+
     return (
       <div>
         <CodeBoxDialog />
@@ -58,9 +56,9 @@ export default React.createClass({
         <Container>
           <CodeBoxesList
             name="CodeBox Sockets"
-            isLoading={this.state.isLoading}
-            items={this.state.items}
-            hideDialogs={this.state.hideDialogs}
+            isLoading={isLoading}
+            items={items}
+            hideDialogs={hideDialogs}
             emptyItemHandleClick={this.showCodeBoxDialog}
             emptyItemContent="Create a CodeBox Socket"/>
         </Container>

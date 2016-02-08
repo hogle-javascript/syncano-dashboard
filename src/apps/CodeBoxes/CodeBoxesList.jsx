@@ -52,7 +52,7 @@ export default React.createClass({
         key={`codeboxes-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'removeCodeBoxDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('removeCodeBoxDialog', item)} />
     );
   },
 
@@ -97,7 +97,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a CodeBox Socket"
                 multipleItemsText="Delete CodeBox Sockets"
-                onTouchTap={this.showDialog.bind(null, 'removeCodeBoxDialog')}/>
+                onTouchTap={() => this.showDialog('removeCodeBoxDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

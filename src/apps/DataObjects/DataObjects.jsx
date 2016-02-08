@@ -113,10 +113,6 @@ export default React.createClass({
     }];
   },
 
-  showDataObjectDialog() {
-    Actions.showDialog();
-  },
-
   showDataObjectEditDialog(cellNumber) {
     let dataObject = Store.getSelectedRowObj(cellNumber);
 
@@ -201,14 +197,14 @@ export default React.createClass({
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-plus"
             tooltip="Add Data Objects"
-            onClick={this.showDataObjectDialog}/>
+            onClick={() => Actions.showDialog()}/>
 
           <IconButton
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-delete"
             tooltip="Delete Data Objects"
             disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
-            onTouchTap={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
+            onTouchTap={() => this.showDialog('deleteDataObjectDialog')} />
 
           <ColumnsFilterMenu
             columns={Store.getTableColumns()}

@@ -20,10 +20,6 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  handleClassDropdownClick(item) {
-    Actions.setClickedClass(item);
-  },
-
   handleItemNameClick(className) {
     console.info('ClassesListItem::handleItemClick');
     this.transitionTo('classes-data-objects', {
@@ -59,7 +55,7 @@ export default React.createClass({
           keyName="name"
           handleIconClick={this.props.onIconClick}>
           <Truncate
-            onClick={this.handleItemNameClick.bind(null, item.name)}
+            onClick={() => this.handleItemNameClick(item.name)}
             style={{cursor: 'pointer'}}
             text={item.name}/>
         </Column.CheckIcon>
@@ -83,15 +79,11 @@ export default React.createClass({
           {objectsCount}
         </Column.ID>
         <Column.Date date={item.created_at}/>
-        <Column.Menu handleClick={this.handleClassDropdownClick.bind(null, item)}>
+        <Column.Menu handleClick={() => Actions.setClickedClass(item)}>
           <MenuItem
             className="dropdown-item-edit-class"
-            onTouchTap={this.redirectToEditClassView.bind(null, item.name)}
+            onTouchTap={() => this.redirectToEditClassView(item.name)}
             primaryText="Edit a Class"/>
-          <MenuItem
-            className="dropdown-item-customize-class"
-            onTouchTap={this.props.showCustomizeDialog}
-            primaryText="Customize a Class"/>
           <MenuItem
             className="dropdown-item-delete-class"
             disabled={item.protectedFromDelete}

@@ -59,7 +59,7 @@ export default React.createClass({
         key={`triggers-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'removeTriggerDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('removeTriggerDialog', item)} />
     );
   },
 
@@ -95,7 +95,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Trigger Socket"
                 multipleItemsText="Delete Trigger Sockets"
-                onTouchTap={this.showDialog.bind(null, 'removeTriggerDialog')}/>
+                onTouchTap={() => this.showDialog('removeTriggerDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

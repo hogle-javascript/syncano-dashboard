@@ -156,13 +156,13 @@ export default React.createClass({
               style={{fontSize: 25, marginTop: 5}}
               iconClassName="synicon-pencil"
               tooltip="Edit Solution"
-              onTouchTap={CreateDialogActions.showDialog.bind(null, this.state.item)}/>
+              onTouchTap={() => CreateDialogActions.showDialog(this.state.item)}/>
             <IconButton
               style={{fontSize: 25, marginTop: 5}}
               iconClassName="synicon-delete"
               tooltip="Delete Solution"
               tooltipPosition="bottom-left"
-              onTouchTap={this.showDialog.bind(null, 'deleteCreateDialog')}/>
+              onTouchTap={() => this.showDialog('deleteCreateDialog')} />
           </Show>
         </InnerToolbar>
 

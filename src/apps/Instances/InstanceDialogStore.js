@@ -6,6 +6,7 @@ import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 // Stores & Actions
 import Actions from './InstanceDialogActions';
 import InstancesActions from './InstancesActions';
+import InstancesStore from './InstancesStore';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -18,7 +19,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       name: null,
-      isLoading: false
+      isLoading: false,
+      metadata: {}
     };
   },
 
@@ -83,6 +85,34 @@ export default Reflux.createStore({
   },
 
   onUpdateInstanceFailure() {
+    this.trigger({isLoading: false});
+  },
+
+  onRenameInstance() {
+    this.trigger({isLoading: true});
+  },
+
+  onRenameInstanceCompleted() {
+    this.dismissDialog();
+    InstancesActions.fetchInstances();
+    InstancesStore.redirectToInstancesList();
+  },
+
+  onRenameInstanceFailure() {
+    this.trigger({isLoading: false});
+  },
+
+  onRenameAndUpdateInstance() {
+    this.trigger({isLoading: true});
+  },
+
+  onRenameAndUpdateInstanceCompleted() {
+    this.dismissDialog();
+    InstancesActions.fetchInstances();
+    InstancesStore.redirectToInstancesList();
+  },
+
+  onRenameAndUpdateInstanceFailure() {
     this.trigger({isLoading: false});
   }
 });

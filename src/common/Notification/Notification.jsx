@@ -27,7 +27,8 @@ export default React.createClass({
       fontSize: 18,
       lineHeight: 1,
       color: 'inherit',
-      verticalAlign: 'middle'
+      verticalAlign: 'middle',
+      display: 'inline-flex'
     };
 
     return this.mergeStyles(styles, this.props.style);

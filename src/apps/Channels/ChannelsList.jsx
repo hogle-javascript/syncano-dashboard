@@ -52,7 +52,7 @@ export default React.createClass({
         key={`channels-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'deleteChannelDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('deleteChannelDialog', item)} />
     );
   },
 
@@ -93,7 +93,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Channel Socket"
                 multipleItemsText="Delete Channel Sockets"
-                onTouchTap={this.showDialog.bind(null, 'deleteChannelDialog')}/>
+                onTouchTap={() => this.showDialog('deleteChannelDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
