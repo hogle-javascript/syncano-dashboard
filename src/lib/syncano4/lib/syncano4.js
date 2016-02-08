@@ -1776,7 +1776,7 @@ var Syncano = (function () {
 
     getBillingUsage: function (type, callbackOK, callbackError) {
       if (!type) {
-        type = 'hourly';
+        type = 'daily';
       }
       return this.request('GET', 'v1/usage/' + type + '/', {}, callbackOK, callbackError);
     },
