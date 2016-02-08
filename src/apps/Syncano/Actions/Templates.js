@@ -17,10 +17,10 @@ export default {
       .catch(this.failure);
   },
 
-  render(params) {
+  render(templateName, context = {}) {
     this.Connection
       .Templates
-      .render(params.name, {context: params.payload})
+      .render(templateName, {context})
       .then(this.completed)
       .catch(this.failure);
   },

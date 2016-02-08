@@ -145,10 +145,11 @@ var Syncano = (function() {
 
     request.onload = function() {
       if (request.status >= 200 && request.status <= 299) {
-        var data = '';
+        var data = request.responseText;
         try {
           data = JSON.parse(request.responseText);
-        } catch (e) {};
+        } catch (e) {
+        };
         params.success(data);
       } else {
         params.error(request);
@@ -1425,7 +1426,7 @@ var Syncano = (function() {
         throw new Error('Not connected to any instance');
       }
 
-      return this.request('POST', linksObject.instance_templates + name + '/render', params, callbackOK, callbackError);
+      return this.request('POST', linksObject.instance_templates + name + '/render/', params, callbackOK, callbackError);
     },
 
 

@@ -16,6 +16,8 @@ export default Radium(React.createClass({
 
   propTypes: {
     trace: React.PropTypes.string,
+    floatingLabelText: React.PropTypes.string,
+    hintText: React.PropTypes.string,
     loading: React.PropTypes.bool
   },
 
@@ -43,6 +45,13 @@ export default Radium(React.createClass({
     return {
       panelCollapsed: true,
       payloadValue: '{"abc": 123}'
+    };
+  },
+
+  getDefaultProps() {
+    return {
+      floatingLabelText: 'Payload',
+      hintText: 'Type in your payload here e.g. {"my_argument": "test123}'
     };
   },
 
@@ -83,6 +92,7 @@ export default Radium(React.createClass({
   render() {
     let styles = this.getStyles();
     let trace = null;
+    let {floatingLabelText, hintText} = this.props;
 
     if (this.state.panelCollapsed) {
       trace = (
@@ -107,8 +117,8 @@ export default Radium(React.createClass({
             ref="payloadField"
             value={this.state.payloadValue}
             fullWidth={true}
-            hintText={`Type in your payload here e.g. {"my_argument": "test123}`}
-            floatingLabelText="Payload"
+            hintText={hintText}
+            floatingLabelText={floatingLabelText}
             onBlur={this.handleFormValidation}
             errorText={this.getValidationMessages('payloadValue').join(' ')}/>
         </Paper>

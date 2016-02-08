@@ -35,13 +35,13 @@ export default React.createClass({
     return [{
       dialog: Dialog.Delete,
       params: {
-        key: 'removeCodeBoxDialog',
-        ref: 'removeCodeBoxDialog',
-        title: 'Delete a CodeBox Socket',
+        key: 'removeTemplateDialog',
+        ref: 'removeTemplateDialog',
+        title: 'Delete a Template Socket',
         handleConfirm: Actions.removeTemplates,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
-        groupName: 'CodeBox Socket'
+        groupName: 'Template Socket'
       }
     }];
   },
@@ -52,7 +52,7 @@ export default React.createClass({
         key={`template-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'removeCodeBoxDialog', item)}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeTemplateDialog', item)}/>
     );
   },
 
@@ -64,7 +64,7 @@ export default React.createClass({
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
-            className="col-xs-12"
+            className="col-xs-16"
             primary={true}
             columnName="CHECK_ICON"
             handleClick={this.props.handleTitleClick}>
@@ -73,11 +73,6 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
-            Name
-          </Column.ColumnHeader>
-          <Column.ColumnHeader
-            columnName="DESC"
-            className="col-xs-6">
             Content type
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
@@ -87,7 +82,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Template Socket"
                 multipleItemsText="Delete Template Sockets"
-                onTouchTap={this.showDialog.bind(null, 'removeCodeBoxDialog')}/>
+                onTouchTap={this.showDialog.bind(null, 'removeTemplateDialog')}/>
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

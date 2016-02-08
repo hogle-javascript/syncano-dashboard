@@ -16,6 +16,7 @@ import SnackbarNotification from './SnackbarNotification';
 import Snippet from './Snippet';
 import Snippets from './Snippets';
 import Solutions from './Solutions';
+import Template from './Template';
 import Templates from './Templates';
 import Traces from './Traces';
 import Triggers from './Triggers';
@@ -40,6 +41,7 @@ export default {
   Snippet,
   Snippets,
   Solutions,
+  Template,
   Templates,
   Traces,
   Triggers,

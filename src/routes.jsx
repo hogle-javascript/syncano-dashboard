@@ -32,6 +32,7 @@ import Data from './apps/Data';
 import Users from './apps/Users/Users';
 import Channels from './apps/Channels/Channels';
 import Sockets from './apps/Sockets';
+import Template from './apps/Template';
 import Templates from './apps/Templates';
 import Triggers from './apps/Triggers';
 import Schedules from './apps/Schedules';
@@ -218,9 +219,20 @@ export default (
         {/* Templates */}
         <Route
           name="templates"
-          handler={Templates}
-          path="templates"
-          />
+          path="templates">
+          <Route
+            name="template"
+            handler={Template}
+            path=":templateName">
+            <Route
+              name="template-edit"
+              handler={Template.Edit}
+              path="edit"
+              />
+            <DefaultRoute handler={Template.Edit}/>
+          </Route>
+          <DefaultRoute handler={Templates}/>
+        </Route>
 
         {/* Snippets */}
         <Route
