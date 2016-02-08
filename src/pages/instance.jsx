@@ -96,6 +96,9 @@ export default React.createClass({
               <LinkListItem
                 routeName="snippets"
                 primaryText="Snippets"/>
+              <LinkListItem
+                routeName="apns-devices"
+                primaryText="Push Devices"/>
             </List>
             <Divider/>
             <List

@@ -40,7 +40,7 @@ export default () => {
     <div>
       <div
         style={styles.illustration}
-        dangerouslySetInnerHTML={{__html: require('../../assets/img/illustration-mobile.svg')}}>
+        dangerouslySetInnerHTML={{__html: require('./illustration-mobile.svg')}}>
       </div>
       <p style={styles.headline}>
         Please use a Desktop or Tablet browser.

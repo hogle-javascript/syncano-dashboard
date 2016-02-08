@@ -2,6 +2,7 @@ import ColorIconPicker from './ColorIconPicker';
 import ConversionPixel from './ConversionPixel';
 import Dialog from './Dialog';
 import Dropdown from './Dropdown';
+import DropZone from './DropZone';
 import Editor from './Editor';
 import Icon from './Icon';
 import InnerToolbar from './InnerToolbar';
@@ -17,6 +18,7 @@ export default {
   ConversionPixel,
   Dialog,
   Dropdown,
+  DropZone,
   Editor,
   Icon,
   InnerToolbar,
