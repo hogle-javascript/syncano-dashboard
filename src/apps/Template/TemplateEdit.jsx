@@ -13,7 +13,6 @@ import {
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './TemplateAutosaveMixin';
-import TemplateConstants from './TemplateConstants';
 
 // Stores and Actions
 import Actions from './TemplateActions';
@@ -21,7 +20,7 @@ import Store from './TemplateStore';
 
 // Components
 import {FlatButton, Styles, Checkbox} from 'syncano-material-ui';
-import {Show, CharacterCounter, Loading} from 'syncano-components';
+import {Show, Loading} from 'syncano-components';
 import {Dialog, Editor, Notification} from '../../common';
 
 export default React.createClass({
@@ -129,7 +128,6 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let charactersCount = this.refs.editorContent ? this.refs.editorContent.editor.getValue().length : 0;
 
     return (
       <div>
@@ -143,10 +141,6 @@ export default React.createClass({
               onChange={this.handleOnSourceChange}
               onLoad={this.clearAutosaveTimer}
               value={this.state.template.content}/>
-            <CharacterCounter
-              charactersCountWarn={TemplateConstants.charactersCountWarn}
-              characters={charactersCount}
-              maxCharacters={TemplateConstants.maxCharactersCount}/>
             <Show if={this.getValidationMessages('content').length > 0}>
               <div style={styles.notification}>
                 <Notification type="error">
@@ -167,7 +161,7 @@ export default React.createClass({
               <Editor.Panel
                 ref="contextPanel"
                 onError={Actions.setPayloadValidator}
-                handleChange={Actions.setPayloadValue}
+                handleChange={Actions.setContext}
                 trace={this.state.renderedTemplate}
                 payloadValue={this.state.template.context}
                 floatingLabelText="Context"

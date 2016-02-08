@@ -105,9 +105,9 @@ export default React.createClass({
 
   renderTabs() {
     let styles = this.getStyles();
-    let snippet = this.state.currentSnippet;
+    let template = this.state.template;
 
-    if (snippet !== null) {
+    if (template.name) {
       return (
         <Tabs
           initialSelectedIndex={this.getActiveSubTabIndex()}
