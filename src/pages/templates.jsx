@@ -2,11 +2,11 @@ import React from 'react';
 import Router from 'react-router';
 
 // Stores and Action
-import SnippetsActions from '../apps/Snippets/SnippetsActions';
+import TemplatesActions from '../apps/Templates/TemplatesActions';
 
 export default React.createClass({
 
-  displayName: 'SnippetsPage',
+  displayName: 'TemplatesPage',
 
   contextTypes: {
     router: React.PropTypes.func
@@ -18,8 +18,8 @@ export default React.createClass({
   ],
 
   componentDidMount() {
-    console.debug('SnippetsPage::componentDidMount');
-    SnippetsActions.fetch();
+    console.debug('TemplatesPage::componentDidMount');
+    TemplatesActions.fetch();
   },
 
   render() {

@@ -16,6 +16,7 @@ import PushDevices from './PushDevices';
 import PushNotifications from './PushNotifications';
 import Solutions from './Solutions';
 import Schedules from './Schedules';
+import Templates from './Templates';
 import Triggers from './Triggers';
 import Groups from './Groups';
 import Users from './Users';
@@ -43,5 +44,6 @@ export default {
   Triggers,
   Groups,
   Users,
-  Usage
+  Usage,
+  Templates
 };
