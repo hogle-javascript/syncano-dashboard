@@ -118,11 +118,6 @@ export default React.createClass({
             label="Edit"
             route="template-edit"
             onActive={this.handleTabActive}/>
-          <Tab
-            style={styles.tab}
-            label="Context"
-            route="template-context"
-            onActive={this.handleTabActive}/>
         </Tabs>
       );
     }
