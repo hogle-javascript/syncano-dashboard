@@ -13,6 +13,7 @@ import DataObjects from './DataObjects';
 import Instances from './Instances';
 import Profile from './Profile';
 import PushDevices from './PushDevices';
+import PushNotifications from './PushNotifications';
 import Solutions from './Solutions';
 import Schedules from './Schedules';
 import Templates from './Templates';
@@ -37,6 +38,7 @@ export default {
   Instances,
   Profile,
   PushDevices,
+  PushNotifications,
   Solutions,
   Schedules,
   Triggers,

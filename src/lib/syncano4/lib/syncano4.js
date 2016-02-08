@@ -16,8 +16,8 @@ if (typeof __webpack_require__ === 'function') {
   isWebpack = true;
 }
 
-var reqfun = (function(s) {
-  return function(s) {
+var reqfun = (function (s) {
+  return function (s) {
     return eval('require("' + s + '");');
   };
 })();
@@ -26,21 +26,24 @@ if (isNode) {
   var Request = reqfun('request');
 }
 
-var Syncano = (function() {
+var Syncano = (function () {
   /*
-    define dummy console if not present in the system
-  */
+   define dummy console if not present in the system
+   */
   if (typeof console === 'undefined') {
     console = {
-      log: function() {},
-      error: function() {},
-      warning: function() {}
+      log: function () {
+      },
+      error: function () {
+      },
+      warning: function () {
+      }
     };
   }
 
   /*
-    private variables
-  */
+   private variables
+   */
 
   // base url of all requests - will be changed in final version
   var baseURL = 'https://api.syncano.io/';
@@ -60,8 +63,8 @@ var Syncano = (function() {
   var tempInstance = null;
 
   /********************
-    PRIVATE METHODS
-  *********************/
+   PRIVATE METHODS
+   *********************/
   function normalizeUrl(url) {
     var baseUrl = url.substr(0, 8);
     if (baseUrl === 'https://') {
@@ -80,15 +83,15 @@ var Syncano = (function() {
   }
 
   /*
-    Parses obj and search for obj.links.
-    If found, copies them to private linksObject with given prefix and removes from obj.
-    All existing links will be overwritten
-    Returns:
-      linksObject
-  */
+   Parses obj and search for obj.links.
+   If found, copies them to private linksObject with given prefix and removes from obj.
+   All existing links will be overwritten
+   Returns:
+   linksObject
+   */
   function saveLinks(prefix, obj) {
     if (obj.links) {
-      Object.keys(obj.links).forEach(function(key) {
+      Object.keys(obj.links).forEach(function (key) {
         linksObject[prefix + '_' + key] = obj.links[key];
       });
     }
@@ -143,13 +146,12 @@ var Syncano = (function() {
       }
     }
 
-    request.onload = function() {
+    request.onload = function () {
       if (request.status >= 200 && request.status <= 299) {
         var data = request.responseText;
         try {
           data = JSON.parse(request.responseText);
-        } catch (e) {
-        };
+        } catch (e) {};
         params.success(data);
       } else {
         params.error(request);
@@ -201,7 +203,7 @@ var Syncano = (function() {
 
     if (params.type !== 'GET') {
       opt.headers['content-type'] = 'application/json;charset=UTF-8';
-      opt.headers['user-agent']   = 'syncano-nodejs-4.0';
+      opt.headers['user-agent'] = 'syncano-nodejs-4.0';
     }
 
     if (params.headers !== undefined) {
@@ -211,12 +213,14 @@ var Syncano = (function() {
       }
     }
 
-    Request(opt, function(error, response, body) {
+    Request(opt, function (error, response, body) {
       if (response.statusCode >= 200 && response.statusCode < 400) {
         var data = '';
         try {
           data = JSON.parse(body);
-        } catch (e) {};
+        } catch (e) {
+        }
+        ;
         params.success(data);
       } else {
         params.error({
@@ -235,13 +239,13 @@ var Syncano = (function() {
   }
 
   /*
-    Helper method to convert list of objects returned from Syncano to object
-  */
+   Helper method to convert list of objects returned from Syncano to object
+   */
   function createList(lib, data) {
     var List = {};
     for (var i = 0, len = data.objects.length; i < len; i++) {
       Object.defineProperty(data.objects[i], 'delete', {
-        value: function(callbackOK, callbackError) {
+        value: function (callbackOK, callbackError) {
           return lib.request('DELETE', this.links.self, {}, callbackOK, callbackError);
         },
         writable: false,
@@ -277,7 +281,7 @@ var Syncano = (function() {
       configurable: false
     });
     Object.defineProperty(List, 'at', {
-      value: function(idx) {
+      value: function (idx) {
         return List._items[idx];
       },
       writable: false,
@@ -285,7 +289,7 @@ var Syncano = (function() {
       configurable: false
     });
     Object.defineProperty(List, 'hasNextPage', {
-      value: function() {
+      value: function () {
         return data.next !== null;
       },
       writable: false,
@@ -293,7 +297,7 @@ var Syncano = (function() {
       configurable: false
     });
     Object.defineProperty(List, 'next', {
-      value: function() {
+      value: function () {
         return data.next;
       },
       writable: false,
@@ -301,7 +305,7 @@ var Syncano = (function() {
       configurable: false
     });
     Object.defineProperty(List, 'prev', {
-      value: function() {
+      value: function () {
         return data.prev;
       },
       writable: false,
@@ -309,7 +313,7 @@ var Syncano = (function() {
       configurable: false
     });
     Object.defineProperty(List, 'hasPrevPage', {
-      value: function() {
+      value: function () {
         return data.prev !== null;
       },
       writable: false,
@@ -317,7 +321,7 @@ var Syncano = (function() {
       configurable: false
     });
     Object.defineProperty(List, 'loadNextPage', {
-      value: function(callbackOK, callbackError) {
+      value: function (callbackOK, callbackError) {
         return lib.request('GET', data.next);
       },
       writable: false,
@@ -325,7 +329,7 @@ var Syncano = (function() {
       configurable: false
     });
     Object.defineProperty(List, 'loadPrevPage', {
-      value: function(callbackOK, callbackError) {
+      value: function (callbackOK, callbackError) {
         return lib.request('GET', data.prev);
       },
       writable: false,
@@ -337,7 +341,7 @@ var Syncano = (function() {
 
   function extendClassObject(lib, obj) {
     Object.defineProperty(obj, 'createDataObject', {
-      value: function(params, callbackOK, callbackError) {
+      value: function (params, callbackOK, callbackError) {
         return lib.createDataObject(obj.name, params, callbackOK, callbackError);
       },
       writable: false,
@@ -366,12 +370,12 @@ var Syncano = (function() {
       baseURL = _baseUrl;
     }
 
-    this.setApiKey = function(api_key) {
+    this.setApiKey = function (api_key) {
       setApiKey(api_key);
       return this;
     };
 
-    this.setBaseUrl = function(_baseUrl) {
+    this.setBaseUrl = function (_baseUrl) {
       baseURL = _baseUrl;
       return this;
     };
@@ -786,6 +790,15 @@ var Syncano = (function() {
      * @property {function} listDevices - shorcut to {@link Syncano#listDevices} method
      */
     this.PushNotifications = {
+      GCM: {
+        config: this.configGCMPushNotification.bind(this),
+        get: this.getGCMPushNotificationConfig.bind(this)
+      },
+      APNS: {
+        config: this.configAPNSPushNotification.bind(this),
+        get: this.getAPNSPushNotificationConfig.bind(this),
+        uploadCertificate: this.uploadAPNSCertificate.bind(this)
+      },
       Devices: {
         create: this.createDevice.bind(this),
         update: this.updateDevice.bind(this),
@@ -797,7 +810,7 @@ var Syncano = (function() {
 
   Syncano.prototype = {
 
-    setAlwaysAsync: function(value) {
+    setAlwaysAsync: function (value) {
       deferIsAlwaysAsync = value;
     },
 
@@ -810,7 +823,7 @@ var Syncano = (function() {
      * @param {string} [password] - used only if first parameter is email
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
-     * @returns {object}	promise
+     * @returns {object}  promise
      *
      * @example
      * var s = new Syncano('instance-name');
@@ -818,13 +831,13 @@ var Syncano = (function() {
      *     alert('connected');
      * });
      */
-    connect: function() {
+    connect: function () {
       var promise;
       if (arguments.length >= 2 && arguments[0].indexOf('@') > 0) {
         // arguments are: email and password and optional callbacks
         promise = this.authWithPassword.apply(this, arguments);
         if (tempInstance !== null) {
-          promise = promise.then(function() {
+          promise = promise.then(function () {
             return this.setInstance(tempInstance);
           }.bind(this));
         }
@@ -840,7 +853,7 @@ var Syncano = (function() {
       return promise;
     },
 
-    socialConnect: function(network, access_token, callbackOK, callbackError) {
+    socialConnect: function (network, access_token, callbackOK, callbackError) {
       if (network === 'google') {
         network = 'google-oauth2';
       }
@@ -863,12 +876,12 @@ var Syncano = (function() {
      *     alert('connected');
      * });
      */
-    authWithPassword: function(email, password, callbackOK, callbackError) {
+    authWithPassword: function (email, password, callbackOK, callbackError) {
       var params = {
         email: email,
         password: password
       };
-      return this.request('POST', 'v1/account/auth', params, function(res) {
+      return this.request('POST', 'v1/account/auth', params, function (res) {
         accountObject = res;
         setApiKey(res.account_key);
         typeof callbackOK === 'function' && callbackOK(res);
@@ -891,7 +904,7 @@ var Syncano = (function() {
      *     alert('connected');
      * });
      */
-    authWithApiKey: function(apiKey, callbackOK) {
+    authWithApiKey: function (apiKey, callbackOK) {
       setApiKey(apiKey);
       var deferred = Deferred();
       accountObject = {
@@ -911,8 +924,8 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    setInstance: function(instanceName, callbackOK, callbackError) {
-      return this.request('GET', 'v1/instances/' + instanceName, {}, function(result) {
+    setInstance: function (instanceName, callbackOK, callbackError) {
+      return this.request('GET', 'v1/instances/' + instanceName, {}, function (result) {
         instanceObject = result;
         saveLinks('instance', result);
         typeof callbackOK === 'function' && callbackOK(result);
@@ -925,7 +938,7 @@ var Syncano = (function() {
      * @method Syncano#getInfo
      * @return {object}
      */
-    getInfo: function() {
+    getInfo: function () {
       return {
         account: accountObject,
         instance: instanceObject,
@@ -934,8 +947,8 @@ var Syncano = (function() {
     },
 
     /*********************
-       INSTANCES METHODS
-    **********************/
+     INSTANCES METHODS
+     **********************/
     /**
      * Creates new instance using passed parameters.
      *
@@ -948,7 +961,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createInstance: function(params, callbackOK, callbackError) {
+    createInstance: function (params, callbackOK, callbackError) {
       if (typeof params === 'string') {
         params = {
           name: params
@@ -970,7 +983,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listInstances: function(params, callbackOK, callbackError) {
+    listInstances: function (params, callbackOK, callbackError) {
       params = params || {};
       return this.request('GET', 'v1/instances', params, callbackOK, callbackError);
     },
@@ -986,7 +999,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getInstance: function(name, callbackOK, callbackError) {
+    getInstance: function (name, callbackOK, callbackError) {
       if (typeof name === 'object') {
         name = name.name;
       }
@@ -1007,7 +1020,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeInstance: function(name, callbackOK, callbackError) {
+    removeInstance: function (name, callbackOK, callbackError) {
       if (typeof name === 'object') {
         name = name.name;
       }
@@ -1029,7 +1042,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeSharedInstance: function(name, adminId, callbackOK, callbackError) {
+    removeSharedInstance: function (name, adminId, callbackOK, callbackError) {
       if (typeof name === 'object') {
         name = name.name;
       }
@@ -1054,7 +1067,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateInstance: function(name, params, callbackOK, callbackError) {
+    updateInstance: function (name, params, callbackOK, callbackError) {
       if (typeof name === 'undefined' || name.length === 0) {
         throw new Error('Missing instance name');
       }
@@ -1074,7 +1087,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    renameInstance: function(name, params, callbackOK, callbackError) {
+    renameInstance: function (name, params, callbackOK, callbackError) {
       if (typeof name === 'undefined' || name.length === 0) {
         throw new Error('Missing instance name');
       }
@@ -1091,7 +1104,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listInstanceAdmins: function(name, params, callbackOK, callbackError) {
+    listInstanceAdmins: function (name, params, callbackOK, callbackError) {
       params = params || {};
       if (typeof name === 'object') {
         name = name.name;
@@ -1119,9 +1132,9 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    installSolution: function(solutionId, versionId, instanceName, callbackOK, callbackError) {
+    installSolution: function (solutionId, versionId, instanceName, callbackOK, callbackError) {
       var url = 'v1/marketplace/solutions/' + solutionId + '/versions/' + versionId + '/install/';
-      return this.request('POST', url, {instance : instanceName}, callbackOK, callbackError);
+      return this.request('POST', url, {instance: instanceName}, callbackOK, callbackError);
     },
 
     /**
@@ -1135,7 +1148,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    getSolution: function(id, callbackOK, callbackError) {
+    getSolution: function (id, callbackOK, callbackError) {
       return this.request('GET', 'v1/marketplace/solutions/' + id, {}, callbackOK, callbackError);
     },
 
@@ -1150,7 +1163,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    listSolutions: function(params, callbackOK, callbackError) {
+    listSolutions: function (params, callbackOK, callbackError) {
       params = params || {};
       return this.request('GET', 'v1/marketplace/solutions', params, callbackOK, callbackError);
     },
@@ -1166,7 +1179,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    listSolutionVersions: function(id, callbackOK, callbackError) {
+    listSolutionVersions: function (id, callbackOK, callbackError) {
       return this.request('GET', 'v1/marketplace/solutions/' + id + '/versions/', {}, callbackOK, callbackError);
     },
 
@@ -1180,7 +1193,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createSolution: function(params, callbackOK, callbackError) {
+    createSolution: function (params, callbackOK, callbackError) {
       return this.request('POST', 'v1/marketplace/solutions', params, callbackOK, callbackError);
     },
 
@@ -1194,7 +1207,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    updateSolution: function(id, params, callbackOK, callbackError) {
+    updateSolution: function (id, params, callbackOK, callbackError) {
       params.serialize = false;
       return this.request('PATCH', 'v1/marketplace/solutions/' + id, params, callbackOK, callbackError);
     },
@@ -1209,7 +1222,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeSolution: function(solutionId, callbackOK, callbackError) {
+    removeSolution: function (solutionId, callbackOK, callbackError) {
 
       return this.request('DELETE', 'v1/marketplace/solutions/' + solutionId + '/', {}, callbackOK, callbackError);
     },
@@ -1225,7 +1238,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createVersion: function(solutionId, params, callbackOK, callbackError) {
+    createVersion: function (solutionId, params, callbackOK, callbackError) {
       var url = 'v1/marketplace/solutions/' + solutionId + '/versions/create_from_instance/';
       return this.request('POST', url, params, callbackOK, callbackError);
     },
@@ -1241,7 +1254,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeVersion: function(versionId, solutionId, callbackOK, callbackError) {
+    removeVersion: function (versionId, solutionId, callbackOK, callbackError) {
       var url = 'v1/marketplace/solutions/' + solutionId + '/versions/' + versionId + '/';
       return this.request('DELETE', url, {}, callbackOK, callbackError);
     },
@@ -1257,7 +1270,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    starSolution: function(id, callbackOK, callbackError) {
+    starSolution: function (id, callbackOK, callbackError) {
       if (typeof id === 'object') {
         id = id.id;
       }
@@ -1278,7 +1291,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    unstarSolution: function(id, callbackOK, callbackError) {
+    unstarSolution: function (id, callbackOK, callbackError) {
       if (typeof id === 'object') {
         id = id.id;
       }
@@ -1298,7 +1311,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    listTags: function(callbackOK, callbackError) {
+    listTags: function (callbackOK, callbackError) {
       return this.request('GET', 'v1/marketplace/tags/', {}, callbackOK, callbackError);
     },
 
@@ -1433,6 +1446,7 @@ var Syncano = (function() {
     /*********************
        ADMIN METHODS
     **********************/
+
     /**
      * Returns all defined admins as a list
      *
@@ -1443,7 +1457,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listAdmins: function(params, callbackOK, callbackError) {
+    listAdmins: function (params, callbackOK, callbackError) {
       params = params || {};
       return this.genericList(params, 'instance_admins', callbackOK, callbackError);
     },
@@ -1459,7 +1473,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    updateAdmin: function(id, params, callbackOK, callbackError) {
+    updateAdmin: function (id, params, callbackOK, callbackError) {
       params = params || {};
       return this.request('PUT', linksObject.instance_admins + id, params, callbackOK, callbackError);
     },
@@ -1475,7 +1489,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    removeAdmin: function(id, callbackOK, callbackError) {
+    removeAdmin: function (id, callbackOK, callbackError) {
       if (typeof id === 'object') {
         id = id.id;
       }
@@ -1483,8 +1497,8 @@ var Syncano = (function() {
     },
 
     /*****************
-       CLASS METHODS
-    ******************/
+     CLASS METHODS
+     ******************/
     /**
      * Creates new class based on passed parameters
      *
@@ -1498,7 +1512,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createClass: function(params, callbackOK, callbackError) {
+    createClass: function (params, callbackOK, callbackError) {
       if (typeof linksObject.instance_classes === 'undefined') {
         throw new Error('Not connected to any instance');
       }
@@ -1506,7 +1520,7 @@ var Syncano = (function() {
       if (typeof params.schema !== 'string') {
         params.schema = params.schema.toString();
       }
-      return this.request('POST', linksObject.instance_classes, params, function(result) {
+      return this.request('POST', linksObject.instance_classes, params, function (result) {
         saveLinks('class_' + params.name, result);
         typeof callbackOK === 'function' && callbackOK(result);
       }.bind(this), callbackError);
@@ -1522,7 +1536,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listClasses: function(params, callbackOK, callbackError) {
+    listClasses: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_classes', callbackOK, callbackError);
     },
 
@@ -1537,7 +1551,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeClass: function(name, callbackOK, callbackError) {
+    removeClass: function (name, callbackOK, callbackError) {
       return this.genericRemove(name, 'instance_classes', callbackOK, callbackError);
     },
 
@@ -1552,8 +1566,8 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getClass: function(name, callbackOK, callbackError) {
-      return this.genericGet(name, 'instance_classes', function(obj) {
+    getClass: function (name, callbackOK, callbackError) {
+      return this.genericGet(name, 'instance_classes', function (obj) {
         extendClassObject(this, obj);
         if (typeof callbackOK === 'function') {
           callbackOK();
@@ -1574,7 +1588,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateClass: function(name, params, callbackOK, callbackError) {
+    updateClass: function (name, params, callbackOK, callbackError) {
       if (typeof linksObject.instance_classes === 'undefined') {
         throw new Error('Not connected to any instance');
       }
@@ -1593,8 +1607,8 @@ var Syncano = (function() {
     },
 
     /*******************
-       ACCOUNT METHODS
-    ********************/
+     ACCOUNT METHODS
+     ********************/
     /**
      * Registers new account
      *
@@ -1609,7 +1623,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createAccount: function(params, callbackOK, callbackError) {
+    createAccount: function (params, callbackOK, callbackError) {
       return this.request('POST', 'v1/account/register/', params, callbackOK, callbackError);
     },
 
@@ -1622,7 +1636,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getAccount: function(callbackOK, callbackError) {
+    getAccount: function (callbackOK, callbackError) {
       return this.request('GET', 'v1/account/', {}, callbackOK, callbackError);
     },
 
@@ -1639,7 +1653,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateAccount: function(params, callbackOK, callbackError) {
+    updateAccount: function (params, callbackOK, callbackError) {
       return this.request('PUT', 'v1/account/', params, callbackOK, callbackError);
     },
 
@@ -1655,7 +1669,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    changeAccountPassword: function(params, callbackOK, callbackError) {
+    changeAccountPassword: function (params, callbackOK, callbackError) {
       return this.request('POST', 'v1/account/password/', params, callbackOK, callbackError);
     },
 
@@ -1668,7 +1682,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    resetAccountKey: function(callbackOK, callbackError) {
+    resetAccountKey: function (callbackOK, callbackError) {
       return this.request('POST', 'v1/account/reset_key', {}, callbackOK, callbackError);
     },
 
@@ -1682,7 +1696,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    accountPasswordReset: function(email, callbackOK, callbackError) {
+    accountPasswordReset: function (email, callbackOK, callbackError) {
       return this.request('POST', 'v1/account/password/reset/', {email: email}, callbackOK, callbackError);
     },
 
@@ -1699,7 +1713,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    accountPasswordResetConfirm: function(params, callbackOK, callbackError) {
+    accountPasswordResetConfirm: function (params, callbackOK, callbackError) {
       return this.request('POST', 'v1/account/password/reset/confirm/', params, callbackOK, callbackError);
     },
 
@@ -1715,7 +1729,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    activateAccount: function(params, callbackOK, callbackError) {
+    activateAccount: function (params, callbackOK, callbackError) {
       return this.request('POST', 'v1/account/activate/', params, callbackOK, callbackError);
     },
 
@@ -1729,7 +1743,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    resendActivationEmail: function(email, callbackOK, callbackError) {
+    resendActivationEmail: function (email, callbackOK, callbackError) {
       if (typeof email === 'undefined') {
         throw new Error('Missing email address');
       }
@@ -1737,67 +1751,67 @@ var Syncano = (function() {
     },
 
     /***********************
-       BILLING METHODS
-    ************************/
+     BILLING METHODS
+     ************************/
 
-    getBillingProfile: function(callbackOK, callbackError) {
+    getBillingProfile: function (callbackOK, callbackError) {
       return this.request('GET', 'v1/billing/profile/', {}, callbackOK, callbackError);
     },
 
-    updateBillingProfile: function(params, callbackOK, callbackError) {
+    updateBillingProfile: function (params, callbackOK, callbackError) {
       return this.request('PUT', 'v1/billing/profile/', params, callbackOK, callbackError);
     },
 
-    getBillingCard: function(callbackOK, callbackError) {
+    getBillingCard: function (callbackOK, callbackError) {
       return this.request('GET', 'v1/billing/card/', {}, callbackOK, callbackError);
     },
 
-    updateBillingCard: function(token, callbackOK, callbackError) {
+    updateBillingCard: function (token, callbackOK, callbackError) {
       return this.request('POST', 'v1/billing/card/', {token: token}, callbackOK, callbackError);
     },
 
-    getBillingInvoices: function(callbackOK, callbackError) {
+    getBillingInvoices: function (callbackOK, callbackError) {
       return this.request('GET', 'v1/billing/invoices/', {}, callbackOK, callbackError);
     },
 
-    getBillingUsage: function(type, callbackOK, callbackError) {
+    getBillingUsage: function (type, callbackOK, callbackError) {
       if (!type) {
         type = 'hourly';
       }
       return this.request('GET', 'v1/usage/' + type + '/', {}, callbackOK, callbackError);
     },
 
-    getBillingPlans: function(callbackOK, callbackError) {
+    getBillingPlans: function (callbackOK, callbackError) {
       return this.request('GET', 'v1/billing/plans/', {}, callbackOK, callbackError);
     },
 
-    subscribeBillingPlan: function(planName, payload, callbackOK, callbackError) {
+    subscribeBillingPlan: function (planName, payload, callbackOK, callbackError) {
       return this.request('POST', 'v1/billing/plans/' + planName + '/subscribe', payload, callbackOK, callbackError);
     },
 
-    getSubscriptions: function(callbackOK, callbackError) {
+    getSubscriptions: function (callbackOK, callbackError) {
       return this.request('GET', 'v1/billing/subscriptions/', {}, callbackOK, callbackError);
     },
 
-    cancelSubscription: function(id, callbackOK, callbackError) {
+    cancelSubscription: function (id, callbackOK, callbackError) {
       return this.request('POST', 'v1/billing/subscriptions/' + id + '/cancel/', {}, callbackOK, callbackError);
     },
 
     /***********************
-       USAGE
-    ************************/
+     USAGE
+     ************************/
 
-    getHourlyUsage: function(params, callbackOK, callbackError) {
+    getHourlyUsage: function (params, callbackOK, callbackError) {
       return this.request('GET', 'v1/usage/hourly/', params || {}, callbackOK, callbackError);
     },
 
-    getDailyUsage: function(params, callbackOK, callbackError) {
+    getDailyUsage: function (params, callbackOK, callbackError) {
       return this.request('GET', 'v1/usage/daily/', params || {}, callbackOK, callbackError);
     },
 
     /***********************
-       DATA OBJECT METHODS
-    ************************/
+     DATA OBJECT METHODS
+     ************************/
     /**
      * Creates new data object within given class
      *
@@ -1809,7 +1823,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createDataObject: function(className, params, callbackOK, callbackError) {
+    createDataObject: function (className, params, callbackOK, callbackError) {
       if (typeof className === 'object') {
         params = className;
         className = className.class_name;
@@ -1836,7 +1850,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listDataObjects: function(className, params, callbackOK, callbackError) {
+    listDataObjects: function (className, params, callbackOK, callbackError) {
       if (typeof className === 'object') {
         className = className.name;
       }
@@ -1862,7 +1876,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeDataObject: function(className, params, callbackOK, callbackError) {
+    removeDataObject: function (className, params, callbackOK, callbackError) {
       if (typeof className === 'object') {
         params = className;
         className = className.class_name;
@@ -1896,7 +1910,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getDataObject: function(className, params, callbackOK, callbackError) {
+    getDataObject: function (className, params, callbackOK, callbackError) {
       if (typeof className === 'object') {
         params = className;
         className = className.class_name;
@@ -1929,7 +1943,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateDataObject: function(className, params, callbackOK, callbackError) {
+    updateDataObject: function (className, params, callbackOK, callbackError) {
       if (typeof className === 'object') {
         params = className;
         className = className.class_name;
@@ -1954,7 +1968,7 @@ var Syncano = (function() {
       return this.request('PATCH', methodName, params, callbackOK, callbackError);
     },
 
-    uploadFileDataObject: function(className, params, field, callbackOK, callbackError) {
+    uploadFileDataObject: function (className, params, field, callbackOK, callbackError) {
 
       if (typeof className === 'undefined') {
         throw new Error('Missing name of the class');
@@ -1964,13 +1978,13 @@ var Syncano = (function() {
       }
 
       var deferred = Deferred(),
-          formData = new FormData(),
-          url      = normalizeUrl(baseURL + linksObject.instance_classes + className + '/objects/' + params.id + '/'),
-          xhr      = new XMLHttpRequest();
+        formData = new FormData(),
+        url = normalizeUrl(baseURL + linksObject.instance_classes + className + '/objects/' + params.id + '/'),
+        xhr = new XMLHttpRequest();
 
       formData.append(field.name, field.file);
 
-      xhr.onload = function() {
+      xhr.onload = function () {
         deferred.resolve();
       };
 
@@ -1982,8 +1996,8 @@ var Syncano = (function() {
     },
 
     /********************
-       API KEYS METHODS
-    *********************/
+     API KEYS METHODS
+     *********************/
     /**
      * Creates new api key
      *
@@ -1994,7 +2008,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createApiKey: function(params, callbackOK, callbackError) {
+    createApiKey: function (params, callbackOK, callbackError) {
       params = params || {};
       if (typeof linksObject.instance_api_keys === 'undefined') {
         throw new Error('Not connected to any instance');
@@ -2012,7 +2026,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    updateApiKey: function(id, params, callbackOK, callbackError) {
+    updateApiKey: function (id, params, callbackOK, callbackError) {
       params = params || {};
       if (typeof linksObject.instance_api_keys === 'undefined') {
         throw new Error('Not connected to any instance');
@@ -2030,7 +2044,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listApiKeys: function(params, callbackOK, callbackError) {
+    listApiKeys: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_api_keys', callbackOK, callbackError);
     },
 
@@ -2045,7 +2059,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getApiKey: function(id, callbackOK, callbackError) {
+    getApiKey: function (id, callbackOK, callbackError) {
       return this.genericGet(id, 'instance_api_keys', callbackOK, callbackError);
     },
 
@@ -2060,7 +2074,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeApiKey: function(id, callbackOK, callbackError) {
+    removeApiKey: function (id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_api_keys', callbackOK, callbackError);
     },
 
@@ -2075,13 +2089,13 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    resetApiKey: function(id, params, callbackOK, callbackError) {
+    resetApiKey: function (id, params, callbackOK, callbackError) {
       return this.request('POST', linksObject.instance_api_keys + id + '/reset_key/', params, callbackOK, callbackError);
     },
 
     /*********************
-       USERS METHODS
-    **********************/
+     USERS METHODS
+     **********************/
     /**
      * Creates new user
      *
@@ -2094,7 +2108,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createUser: function(params, callbackOK, callbackError) {
+    createUser: function (params, callbackOK, callbackError) {
       params = params || {};
       if (typeof linksObject.instance_users === 'undefined') {
         throw new Error('Not connected to any instance');
@@ -2112,7 +2126,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listUsers: function(params, callbackOK, callbackError) {
+    listUsers: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_users', callbackOK, callbackError);
     },
 
@@ -2127,7 +2141,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getUser: function(id, callbackOK, callbackError) {
+    getUser: function (id, callbackOK, callbackError) {
       return this.genericGet(id, 'instance_users', callbackOK, callbackError);
     },
 
@@ -2145,7 +2159,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateUser: function(id, params, callbackOK, callbackError) {
+    updateUser: function (id, params, callbackOK, callbackError) {
       if (typeof id === 'object') {
         params = id;
         id = params.id;
@@ -2161,7 +2175,7 @@ var Syncano = (function() {
       delete params.username;
       delete params.password;
       if (Object.keys(params).length > 0) {
-        promise = promise.then(function(res) {
+        promise = promise.then(function (res) {
           var profileUrl = res.profile.links.self;
           return this.request('PATCH', profileUrl, params, callbackOK, callbackError);
         }.bind(this), callbackError);
@@ -2180,7 +2194,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeUser: function(id, callbackOK, callbackError) {
+    removeUser: function (id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_users', callbackOK, callbackError);
     },
 
@@ -2195,7 +2209,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    getUserGroups: function(id, callbackOK, callbackError) {
+    getUserGroups: function (id, callbackOK, callbackError) {
       return this.request('GET', linksObject.instance_users + id + '/groups/', callbackOK, callbackError);
     },
 
@@ -2211,7 +2225,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    addToGroup: function(id, groupId, callbackOK, callbackError) {
+    addToGroup: function (id, groupId, callbackOK, callbackError) {
 
       if (typeof groupId === 'undefined') {
         throw new Error('Missing group id');
@@ -2235,7 +2249,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    removeFromGroup: function(id, groupId, callbackOK, callbackError) {
+    removeFromGroup: function (id, groupId, callbackOK, callbackError) {
 
       if (typeof groupId === 'undefined') {
         throw new Error('Missing group id');
@@ -2248,8 +2262,8 @@ var Syncano = (function() {
     },
 
     /*********************
-       GROUPS METHODS
-    **********************/
+     GROUPS METHODS
+     **********************/
     /**
      * Creates new group
      *
@@ -2260,7 +2274,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createGroup: function(name, callbackOK, callbackError) {
+    createGroup: function (name, callbackOK, callbackError) {
       var params = {
         label: name
       };
@@ -2281,7 +2295,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    updateGroup: function(id, params, callbackOK, callbackError) {
+    updateGroup: function (id, params, callbackOK, callbackError) {
       if (typeof linksObject.instance_groups === 'undefined') {
         throw new Error('Not connected to any instance');
       }
@@ -2298,7 +2312,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listGroups: function(params, callbackOK, callbackError) {
+    listGroups: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_groups', callbackOK, callbackError);
     },
 
@@ -2313,7 +2327,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getGroup: function(id, callbackOK, callbackError) {
+    getGroup: function (id, callbackOK, callbackError) {
       return this.genericGet(id, 'instance_groups', callbackOK, callbackError);
     },
 
@@ -2328,7 +2342,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeGroup: function(id, callbackOK, callbackError) {
+    removeGroup: function (id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_groups', callbackOK, callbackError);
     },
 
@@ -2343,7 +2357,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    getGroupUsers: function(id, callbackOK, callbackError) {
+    getGroupUsers: function (id, callbackOK, callbackError) {
       return this.request('GET', linksObject.instance_groups + id + '/users/', callbackOK, callbackError);
     },
 
@@ -2358,7 +2372,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    addUserToGroup: function(params, callbackOK, callbackError) {
+    addUserToGroup: function (params, callbackOK, callbackError) {
       var groupId = params.group;
       delete params.group;
       if (typeof linksObject.instance_groups === 'undefined') {
@@ -2374,8 +2388,8 @@ var Syncano = (function() {
     },
 
     /*********************
-       CODEBOXES METHODS
-    **********************/
+     CODEBOXES METHODS
+     **********************/
     /**
      * Creates new codebox
      *
@@ -2390,7 +2404,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createCodeBox: function(params, callbackOK, callbackError) {
+    createCodeBox: function (params, callbackOK, callbackError) {
       if (typeof params !== 'object') {
         throw new Error('Missing parameters object');
       }
@@ -2413,7 +2427,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listCodeBoxes: function(params, callbackOK, callbackError) {
+    listCodeBoxes: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_codeboxes', callbackOK, callbackError);
     },
 
@@ -2427,7 +2441,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listCodeBoxRuntimes: function(params, callbackOK, callbackError) {
+    listCodeBoxRuntimes: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_runtimes', callbackOK, callbackError);
     },
 
@@ -2442,7 +2456,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getCodeBox: function(id, callbackOK, callbackError) {
+    getCodeBox: function (id, callbackOK, callbackError) {
       return this.genericGet(id, 'instance_codeboxes', callbackOK, callbackError);
     },
 
@@ -2462,7 +2476,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateCodeBox: function(id, params, callbackOK, callbackError) {
+    updateCodeBox: function (id, params, callbackOK, callbackError) {
       if (typeof id === 'object') {
         params = id;
         id = params.id;
@@ -2488,7 +2502,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeCodeBox: function(id, callbackOK, callbackError) {
+    removeCodeBox: function (id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_codeboxes', callbackOK, callbackError);
     },
 
@@ -2503,7 +2517,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    runCodeBox: function(codeboxId, params, callbackOK, callbackError) {
+    runCodeBox: function (codeboxId, params, callbackOK, callbackError) {
       if (typeof params !== 'object') {
         throw new Error('Missing parameters object');
       }
@@ -2524,7 +2538,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listCodeBoxTraces: function(codeboxId, params, callbackOK, callbackError) {
+    listCodeBoxTraces: function (codeboxId, params, callbackOK, callbackError) {
       if (typeof codeboxId === 'object') {
         codeboxId = codeboxId.id;
       }
@@ -2543,7 +2557,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getCodeBoxTrace: function(codeboxId, traceId, params, callbackOK, callbackError) {
+    getCodeBoxTrace: function (codeboxId, traceId, params, callbackOK, callbackError) {
       if (typeof codeboxId === 'object') {
         codeboxId = codeboxId.id;
       }
@@ -2554,8 +2568,8 @@ var Syncano = (function() {
     },
 
     /***********************
-       INVITATIONS METHODS
-    ************************/
+     INVITATIONS METHODS
+     ************************/
     /**
      * Invites new person to your instance
      *
@@ -2568,7 +2582,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createInvitation: function(params, callbackOK, callbackError) {
+    createInvitation: function (params, callbackOK, callbackError) {
       if (typeof params !== 'object') {
         throw new Error('Missing parameters object');
       }
@@ -2591,7 +2605,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    resendInvitation: function(id, callbackOK, callbackError) {
+    resendInvitation: function (id, callbackOK, callbackError) {
       if (typeof linksObject.instance_invitations === 'undefined') {
         throw new Error('Not connected to any instance');
       }
@@ -2608,7 +2622,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listInvitations: function(params, callbackOK, callbackError) {
+    listInvitations: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_invitations', callbackOK, callbackError);
     },
 
@@ -2623,7 +2637,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getInvitation: function(id, callbackOK, callbackError) {
+    getInvitation: function (id, callbackOK, callbackError) {
       return this.genericGet(id, 'instance_invitations', callbackOK, callbackError);
     },
 
@@ -2638,13 +2652,13 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeInvitation: function(id, callbackOK, callbackError) {
+    removeInvitation: function (id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_invitations', callbackOK, callbackError);
     },
 
     /*******************************
-       ACCOUNT INVITATIONS METHODS
-    *******************************/
+     ACCOUNT INVITATIONS METHODS
+     *******************************/
     /**
      * Invitions from other persons to their instances
      *
@@ -2656,7 +2670,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    listAccountInvitations: function(params, callbackOK, callbackError) {
+    listAccountInvitations: function (params, callbackOK, callbackError) {
       return this.request('GET', 'v1/account/invitations', params || {}, callbackOK, callbackError);
     },
 
@@ -2671,10 +2685,11 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    getAccountInvitation: function(invitationId, params, callbackOK, callbackError) {
+    getAccountInvitation: function (invitationId, params, callbackOK, callbackError) {
       if (typeof invitationId === 'object') {
         invitationId = invitationId.id;
-      };
+      }
+      ;
       return this.request('GET', 'v1/account/invitations/' + invitationId + '/', params || {}, callbackOK, callbackError);
     },
 
@@ -2689,10 +2704,11 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    removeAccountInvitation: function(invitationId, callbackOK, callbackError) {
+    removeAccountInvitation: function (invitationId, callbackOK, callbackError) {
       if (typeof invitationId === 'object') {
         invitationId = invitationId.id;
-      };
+      }
+      ;
       return this.request('DELETE', 'v1/account/invitations/' + invitationId + '/', {}, callbackOK, callbackError);
     },
 
@@ -2706,14 +2722,14 @@ var Syncano = (function() {
      * @returns {object} promise
      */
 
-    acceptAccountInvitation: function(invitationKey, callbackOK, callbackError) {
+    acceptAccountInvitation: function (invitationKey, callbackOK, callbackError) {
       var params = {invitation_key: invitationKey}
       return this.request('POST', 'v1/account/invitations/accept/', params, callbackOK, callbackError);
     },
 
     /********************
-       WEBHOOKS METHODS
-    *********************/
+     WEBHOOKS METHODS
+     *********************/
     /**
      * Creates new webhook.
      *
@@ -2726,7 +2742,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createWebHook: function(params, callbackOK, callbackError) {
+    createWebHook: function (params, callbackOK, callbackError) {
       if (typeof params !== 'object') {
         throw new Error('Missing parameters object');
       }
@@ -2749,7 +2765,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listWebHooks: function(params, callbackOK, callbackError) {
+    listWebHooks: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_webhooks', callbackOK, callbackError);
     },
 
@@ -2764,7 +2780,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getWebHook: function(id, callbackOK, callbackError) {
+    getWebHook: function (id, callbackOK, callbackError) {
       return this.genericGet(id, 'instance_webhooks', callbackOK, callbackError);
     },
 
@@ -2779,7 +2795,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeWebHook: function(id, callbackOK, callbackError) {
+    removeWebHook: function (id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_webhooks', callbackOK, callbackError);
     },
 
@@ -2794,7 +2810,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateWebHook: function(id, params, callbackOK, callbackError) {
+    updateWebHook: function (id, params, callbackOK, callbackError) {
 
       if (typeof id === 'undefined') {
         throw new Error('Missing webhook name');
@@ -2815,7 +2831,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    runWebHook: function(id, callbackOK, callbackError) {
+    runWebHook: function (id, callbackOK, callbackError) {
       if (typeof id === 'object') {
         id = id.slug;
       }
@@ -2839,7 +2855,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listWebHookTraces: function(webhookId, params, callbackOK, callbackError) {
+    listWebHookTraces: function (webhookId, params, callbackOK, callbackError) {
       if (typeof webhookId === 'object') {
         webhookId = webhookId.id;
       }
@@ -2858,7 +2874,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getWebHookTrace: function(webhookId, traceId, params, callbackOK, callbackError) {
+    getWebHookTrace: function (webhookId, traceId, params, callbackOK, callbackError) {
       if (typeof webhookId === 'object') {
         webhookId = webhookId.id;
       }
@@ -2869,8 +2885,8 @@ var Syncano = (function() {
     },
 
     /********************
-       DATAVIEWS METHODS
-    *********************/
+     DATAVIEWS METHODS
+     *********************/
     /**
      * Creates new DataView.
      *
@@ -2883,7 +2899,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createDataView: function(params, callbackOK, callbackError) {
+    createDataView: function (params, callbackOK, callbackError) {
       if (typeof params !== 'object') {
         throw new Error('Missing parameters object');
       }
@@ -2906,7 +2922,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listDataViews: function(params, callbackOK, callbackError) {
+    listDataViews: function (params, callbackOK, callbackError) {
       return this.request('GET', linksObject.instance_self + 'api/objects', params, callbackOK, callbackError);
     },
     //
@@ -2935,7 +2951,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeDataView: function(id, callbackOK, callbackError) {
+    removeDataView: function (id, callbackOK, callbackError) {
       return this.request('DELETE', linksObject.instance_self + 'api/objects/' + id + '/', callbackOK, callbackError);
     },
 
@@ -2950,7 +2966,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateDataView: function(id, params, callbackOK, callbackError) {
+    updateDataView: function (id, params, callbackOK, callbackError) {
       if (typeof id === 'undefined') {
         throw new Error('Missing DataView slug');
       }
@@ -3024,8 +3040,8 @@ var Syncano = (function() {
     //},
 
     /********************
-       TRIGGERS METHODS
-    *********************/
+     TRIGGERS METHODS
+     *********************/
     /**
      * Creates new trigger
      *
@@ -3040,7 +3056,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createTrigger: function(params, callbackOK, callbackError) {
+    createTrigger: function (params, callbackOK, callbackError) {
       if (typeof params !== 'object') {
         throw new Error('Missing parameters object');
       }
@@ -3066,7 +3082,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listTriggers: function(params, callbackOK, callbackError) {
+    listTriggers: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_triggers', callbackOK, callbackError);
     },
 
@@ -3081,7 +3097,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getTrigger: function(id, callbackOK, callbackError) {
+    getTrigger: function (id, callbackOK, callbackError) {
       return this.genericGet(id, 'instance_triggers', callbackOK, callbackError);
     },
 
@@ -3099,7 +3115,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateTrigger: function(id, params, callbackOK, callbackError) {
+    updateTrigger: function (id, params, callbackOK, callbackError) {
       if (typeof id === 'object') {
         id = id.id;
       }
@@ -3123,7 +3139,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeTrigger: function(id, callbackOK, callbackError) {
+    removeTrigger: function (id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_triggers', callbackOK, callbackError);
     },
 
@@ -3138,7 +3154,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listTriggerTraces: function(triggerId, params, callbackOK, callbackError) {
+    listTriggerTraces: function (triggerId, params, callbackOK, callbackError) {
       if (typeof triggerId === 'object') {
         triggerId = triggerId.id;
       }
@@ -3157,7 +3173,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getTriggerTrace: function(triggerId, traceId, params, callbackOK, callbackError) {
+    getTriggerTrace: function (triggerId, traceId, params, callbackOK, callbackError) {
       if (typeof triggerId === 'object') {
         triggerId = triggerId.id;
       }
@@ -3168,8 +3184,8 @@ var Syncano = (function() {
     },
 
     /********************
-       SCHEDULES METHODS
-    *********************/
+     SCHEDULES METHODS
+     *********************/
     /**
      * Creates new schedule
      *
@@ -3184,7 +3200,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createSchedule: function(params, callbackOK, callbackError) {
+    createSchedule: function (params, callbackOK, callbackError) {
       if (typeof params !== 'object') {
         throw new Error('Missing parameters object');
       }
@@ -3212,7 +3228,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    updateSchedule: function(id, params, callbackOK, callbackError) {
+    updateSchedule: function (id, params, callbackOK, callbackError) {
       if (typeof params !== 'object') {
         throw new Error('Missing parameters object');
       }
@@ -3235,7 +3251,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listSchedules: function(params, callbackOK, callbackError) {
+    listSchedules: function (params, callbackOK, callbackError) {
       return this.genericList(params, 'instance_schedules', callbackOK, callbackError);
     },
 
@@ -3250,7 +3266,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getSchedule: function(id, callbackOK, callbackError) {
+    getSchedule: function (id, callbackOK, callbackError) {
       return this.genericGet(id, 'instance_schedules', callbackOK, callbackError);
     },
 
@@ -3265,7 +3281,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeSchedule: function(id, callbackOK, callbackError) {
+    removeSchedule: function (id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_schedules', callbackOK, callbackError);
     },
 
@@ -3280,7 +3296,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listScheduleTraces: function(scheduleId, params, callbackOK, callbackError) {
+    listScheduleTraces: function (scheduleId, params, callbackOK, callbackError) {
       if (typeof scheduleId === 'object') {
         scheduleId = scheduleId.id;
       }
@@ -3299,7 +3315,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getScheduleTrace: function(scheduleId, traceId, params, callbackOK, callbackError) {
+    getScheduleTrace: function (scheduleId, traceId, params, callbackOK, callbackError) {
       if (typeof scheduleId === 'object') {
         scheduleId = scheduleId.id;
       }
@@ -3310,8 +3326,8 @@ var Syncano = (function() {
     },
 
     /********************
-       REALTIME METHODS
-    *********************/
+     REALTIME METHODS
+     *********************/
     /**
      * Creates new communication channel based on passed parameters
      *
@@ -3325,7 +3341,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createChannel: function(params, callbackOK, callbackError) {
+    createChannel: function (params, callbackOK, callbackError) {
       if (typeof linksObject.instance_self === 'undefined') {
         throw new Error('Not connected to any instance');
       }
@@ -3342,7 +3358,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listChannels: function(params, callbackOK, callbackError) {
+    listChannels: function (params, callbackOK, callbackError) {
       return this.request('GET', linksObject.instance_channels, params, callbackOK, callbackError);
     },
 
@@ -3357,7 +3373,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getChannel: function(name, callbackOK, callbackError) {
+    getChannel: function (name, callbackOK, callbackError) {
       return this.genericGet(name, 'instance_channels', callbackOK, callbackError);
     },
 
@@ -3372,7 +3388,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeChannel: function(name, callbackOK, callbackError) {
+    removeChannel: function (name, callbackOK, callbackError) {
       return this.genericRemove(name, 'instance_channels', callbackOK, callbackError);
     },
 
@@ -3390,7 +3406,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
-    updateChannel: function(channel, params, callbackOK, callbackError) {
+    updateChannel: function (channel, params, callbackOK, callbackError) {
       if (typeof channel === 'object') {
         channel = channel.name;
       }
@@ -3409,7 +3425,7 @@ var Syncano = (function() {
      * @param {string} name.name - when passed parameter is an object, we use its name property
      * @param {function} [callback] - method to call when data arrives
      */
-    channelListen: function(name, callback) {
+    channelListen: function (name, callback) {
       if (typeof name !== 'string') {
         name = name.name;
       }
@@ -3420,11 +3436,11 @@ var Syncano = (function() {
       (function poll() {
         $.ajax({
           url: url,
-          success: function(data) {
+          success: function (data) {
             callback(data);
           },
           dataType: "json",
-          complete: function(xhr) {
+          complete: function (xhr) {
             if (xhr.responseJSON && xhr.responseJSON.id) {
               url = [
                 normalizeUrl(baseURL + linksObject.instance_channels),
@@ -3450,7 +3466,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    publishToChannel: function(name, params, callbackOK, callbackError) {
+    publishToChannel: function (name, params, callbackOK, callbackError) {
       if (typeof name !== 'string') {
         name = name.name;
       }
@@ -3476,7 +3492,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    getChannelHistory: function(name, params, callbackOK, callbackError) {
+    getChannelHistory: function (name, params, callbackOK, callbackError) {
       params = params || {};
       if (typeof name !== 'string') {
         name = name.name;
@@ -3492,10 +3508,116 @@ var Syncano = (function() {
      PUSH NOIFICATIONS METHODS
      *********************/
     /**
+     * Configures new APNS Push Notification
+     *
+     * @method Syncano#configPushNotification
+     * @alias Syncano.PushNotifications.APNS.config
+     * @param {Object} params
+     * @param {string} params.development_certificate - name of the device
+     * @param {string} params.development_certificate_name - device's registration id
+     * @param {string} params.development_expiration_date - device's registration id
+     * @param {string} params.development_bundle_identifier - device's registration id
+     * @param {string} params.production_certificate - device's registration id
+     * @param {string} params.production_certificate_name - device's registration id
+     * @param {string} params.production_expiration_date - device's registration id
+     * @param {string} params.production_bundle_identifier - device's registration id
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    configAPNSPushNotification: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PUT', linksObject.instance_push_notifications + 'apns/config/', params, callbackOK, callbackError);
+    },
+
+    uploadAPNSCertificate: function (file, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+
+      var deferred = Deferred(),
+        formData = new FormData(),
+        url = normalizeUrl(baseURL + linksObject.instance_push_notifications + 'apns/config/'),
+        xhr = new XMLHttpRequest();
+
+      formData.append(file.name, file.file);
+
+      xhr.onload = function () {
+        deferred.resolve();
+      };
+
+      xhr.open('PUT', url, true);
+      xhr.setRequestHeader('Authorization', 'Token ' + apiKey);
+      xhr.send(formData);
+
+      return deferred.promise;
+    },
+
+    /**
+     * Returns APNS Push Notification config
+     *
+     * @method Syncano#getAPNSPushNotificationConfig
+     * @alias Syncano.PushNotifications.APNS.get
+     * @param {object} params - optional parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    getAPNSPushNotificationConfig: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      params = params || {};
+      var url = linksObject.instance_push_notifications + 'apns/config/';
+      return this.request('GET', url, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Configures new GCM Push Notification
+     *
+     * @method Syncano#configPushNotification
+     * @alias Syncano.PushNotifications.GCM.config
+     * @param {Object} params
+     * @param {string} params.production_api_key - name of the device
+     * @param {string} params.development_api_key - device's registration id
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    configGCMPushNotification: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PUT', linksObject.instance_push_notifications + 'gcm/config/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Returns GCM Push Notification config
+     *
+     * @method Syncano#getGCMPushNotificationConfig
+     * @alias Syncano.PushNotifications.GCM.get
+     * @param {object} params - optional parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    getGCMPushNotificationConfig: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      params = params || {};
+      var url = linksObject.instance_push_notifications + 'gcm/config/';
+      return this.request('GET', url, params, callbackOK, callbackError);
+    },
+
+    /**
      * Creates new Device based on passed parameters
      *
      * @method Syncano#createDevice
      * @alias Syncano.PushNotifications.Device.create
+     * @param {string} deviceType 'gcm' or 'apns'
      * @param {Object} params
      * @param {string} params.label - name of the device
      * @param {string} params.registration_id - device's registration id
@@ -3506,7 +3628,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    createDevice: function(deviceType, params, callbackOK, callbackError) {
+    createDevice: function (deviceType, params, callbackOK, callbackError) {
       if (typeof linksObject.instance_self === 'undefined') {
         throw new Error('Not connected to any instance');
       }
@@ -3528,7 +3650,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    updateDevice: function(deviceType, params, callbackOK, callbackError) {
+    updateDevice: function (deviceType, params, callbackOK, callbackError) {
       if (typeof linksObject.instance_self === 'undefined') {
         throw new Error('Not connected to any instance');
       }
@@ -3546,7 +3668,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    removeDevice: function(deviceType, registration_id, callbackOK, callbackError) {
+    removeDevice: function (deviceType, registration_id, callbackOK, callbackError) {
       return this.request('DELETE', linksObject.instance_push_notifications + deviceType + '/devices/' + registration_id + '/', {}, callbackOK, callbackError);
     },
 
@@ -3561,7 +3683,7 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
-    listDevices: function(deviceType, params, callbackOK, callbackError) {
+    listDevices: function (deviceType, params, callbackOK, callbackError) {
       if (typeof deviceType === 'object') {
         deviceType = deviceType.name;
       }
@@ -3572,12 +3694,12 @@ var Syncano = (function() {
     },
 
     /********************
-       GENERIC METHODS
-    *********************/
+     GENERIC METHODS
+     *********************/
     /*
-      These methods are used internally by other list*, get* and remove* methods
+     These methods are used internally by other list*, get* and remove* methods
      */
-    genericList: function(params, links_url, callbackOK, callbackError) {
+    genericList: function (params, links_url, callbackOK, callbackError) {
       params = params || {};
       var url = linksObject[links_url];
       if (typeof url === 'undefined') {
@@ -3586,7 +3708,7 @@ var Syncano = (function() {
       return this.request('GET', url, params, callbackOK, callbackError);
     },
 
-    genericGet: function(id, links_url, callbackOK, callbackError) {
+    genericGet: function (id, links_url, callbackOK, callbackError) {
       var url = linksObject[links_url];
       if (typeof url === 'undefined') {
         throw new Error('Not connected to any instance');
@@ -3600,7 +3722,7 @@ var Syncano = (function() {
       return this.request('GET', url + id, {}, callbackOK, callbackError);
     },
 
-    genericRemove: function(id, links_url, callbackOK, callbackError) {
+    genericRemove: function (id, links_url, callbackOK, callbackError) {
       var url = linksObject[links_url];
       if (typeof url === 'undefined') {
         throw new Error('Not connected to any instance');
@@ -3626,13 +3748,13 @@ var Syncano = (function() {
      * @param {object} headers -  - request headers
      * @returns {object} promise
      */
-    request: function(requestType, method, params, _callbackOK, _callbackError, headers) {
+    request: function (requestType, method, params, _callbackOK, _callbackError, headers) {
       var deferred = Deferred();
-      var callbackOK = function(result) {
+      var callbackOK = function (result) {
         typeof _callbackOK === 'function' && _callbackOK(result);
         deferred.resolve(result);
       };
-      var callbackError = function(error) {
+      var callbackError = function (error) {
         typeof _callbackError === 'function' && _callbackError(error);
         deferred.reject(error);
       };
@@ -3645,7 +3767,7 @@ var Syncano = (function() {
           params.serialize = true;
         }
         if (params.serialize) {
-          Object.keys(params).forEach(function(key) {
+          Object.keys(params).forEach(function (key) {
             if (Array.isArray(params[key])) {
               var arr = params[key];
               params[key] = arr.join('&' + key + '=')
@@ -3659,7 +3781,7 @@ var Syncano = (function() {
           data: params,
           headers: headers
         };
-        ajaxParams.success = function(data) {
+        ajaxParams.success = function (data) {
           if (typeof data === 'object' && typeof data.objects !== 'undefined' && typeof data.prev !== 'undefined' && typeof data.next !== 'undefined') {
             callbackOK(createList(this, data));
           } else {
@@ -3667,7 +3789,7 @@ var Syncano = (function() {
           }
         }.bind(this);
 
-        ajaxParams.error = function(xhr) {
+        ajaxParams.error = function (xhr) {
           var err = 'Error sending request: ' + method;
           if (xhr.responseText) {
             try {
@@ -3677,7 +3799,8 @@ var Syncano = (function() {
               }
             } catch (e) {
               err = xhr.responseText;
-            };
+            }
+            ;
           }
           callbackError(err);
         };
@@ -3704,7 +3827,7 @@ var Syncano = (function() {
    *   .addField('year_of_birth', 'integer').addFilterIndex()
    *   .toString();
    */
-  Syncano.Schema = function() {
+  Syncano.Schema = function () {
     this.data = [];
   };
 
@@ -3718,7 +3841,7 @@ var Syncano = (function() {
      * @param {string} target - if type equals 'reference', target describes className of the reference object
      * @return {object} this - Schema object
      */
-    addField: function(name, type, target) {
+    addField: function (name, type, target) {
       var rec = {
         name: name,
         type: type
@@ -3736,7 +3859,7 @@ var Syncano = (function() {
      * @method Syncano.Schema#addOrderIndex
      * @return {object} this - Schema object
      */
-    addOrderIndex: function() {
+    addOrderIndex: function () {
       this.data[this.data.length - 1]['order_index'] = true;
       return this;
     },
@@ -3747,7 +3870,7 @@ var Syncano = (function() {
      * @method Syncano.Schema#addFilterIndex
      * @return {object} this - Schema object
      */
-    addFilterIndex: function() {
+    addFilterIndex: function () {
       this.data[this.data.length - 1]['filter_index'] = true;
       return this;
     },
@@ -3758,7 +3881,7 @@ var Syncano = (function() {
      * @method Syncano.Schema#toString
      * @return {string}
      */
-    toString: function() {
+    toString: function () {
       return JSON.stringify(this.data);
     }
   };
@@ -3768,31 +3891,31 @@ var Syncano = (function() {
    * author Jonathan Gotti <jgotti at jgotti dot net>
    * https://github.com/malko/D.js/blob/master/lib/D.js
    */
-  var Deferred = (function(undef) {
+  var Deferred = (function (undef) {
     "use strict";
 
-    var isFunc = function(f) {
+    var isFunc = function (f) {
         return (typeof f === 'function');
       },
-      isArray = function(a) {
+      isArray = function (a) {
         return Array.isArray ? Array.isArray(a) : (a instanceof Array);
       },
-      isObjOrFunc = function(o) {
+      isObjOrFunc = function (o) {
         return !!(o && (typeof o).match(/function|object/));
       },
-      isNotVal = function(v) {
+      isNotVal = function (v) {
         return (v === false || v === undef || v === null);
       },
-      slice = function(a, offset) {
+      slice = function (a, offset) {
         return [].slice.call(a, offset);
       }
 
-    var nextTick = function(cb) {
+    var nextTick = function (cb) {
       setTimeout(cb, 0);
     };
 
     function rethrow(e) {
-      nextTick(function() {
+      nextTick(function () {
         throw e;
       });
     }
@@ -3807,7 +3930,7 @@ var Syncano = (function() {
 
     function promise_apply(fulfilled, failed) {
       return this.then(
-        function(a) {
+        function (a) {
           return isFunc(fulfilled) ? fulfilled.apply(null, isArray(a) ? a : [a]) : (defer.onlyFuncs ? a : fulfilled);
         }, failed || undef
       );
@@ -3817,16 +3940,17 @@ var Syncano = (function() {
       function _cb() {
         cb();
       }
+
       this.then(_cb, _cb);
       return this;
     }
 
     function promise_nodify(cb) {
       return this.then(
-        function(a) {
+        function (a) {
           return isFunc(cb) ? cb.apply(null, isArray(a) ? a.splice(0, 0, undefined) && a : [undefined, a]) : (defer.onlyFuncs ? a : cb);
         },
-        function(e) {
+        function (e) {
           return cb(e);
         }
       );
@@ -3834,25 +3958,25 @@ var Syncano = (function() {
 
     function promise_rethrow(failed) {
       return this.then(
-        undef, failed ? function(e) {
+        undef, failed ? function (e) {
           failed(e);
           throw e;
         } : rethrow
       );
     }
 
-    var defer = function(alwaysAsync) {
-      var alwaysAsyncFn = (undef !== alwaysAsync ? alwaysAsync : deferIsAlwaysAsync) ? nextTick : function(fn) {
+    var defer = function (alwaysAsync) {
+      var alwaysAsyncFn = (undef !== alwaysAsync ? alwaysAsync : deferIsAlwaysAsync) ? nextTick : function (fn) {
           fn();
         },
         status = 0,
         pendings = [],
         value,
         _promise = {
-          then: function(fulfilled, failed) {
+          then: function (fulfilled, failed) {
             var d = defer();
             pendings.push([
-              function(value) {
+              function (value) {
                 try {
                   if (isNotVal(fulfilled)) {
                     d.resolve(value);
@@ -3863,7 +3987,7 @@ var Syncano = (function() {
                   d.reject(e);
                 }
               },
-              function(err) {
+              function (err) {
                 if (isNotVal(failed) || ((!isFunc(failed)) && defer.onlyFuncs)) {
                   d.reject(err);
                 }
@@ -3889,16 +4013,16 @@ var Syncano = (function() {
           nodify: promise_nodify,
           rethrow: promise_rethrow,
 
-          isPending: function() {
+          isPending: function () {
             return status === 0;
           },
 
-          getStatus: function() {
+          getStatus: function () {
             return status;
           }
         };
 
-      _promise.toSource = _promise.toString = _promise.valueOf = function() {
+      _promise.toSource = _promise.toString = _promise.valueOf = function () {
         return value === undef ? this : value;
       };
 
@@ -3921,7 +4045,7 @@ var Syncano = (function() {
         var done = false;
 
         function once(f) {
-          return function(x) {
+          return function (x) {
             if (done) {
               return undefined;
             } else {
@@ -3930,6 +4054,7 @@ var Syncano = (function() {
             }
           };
         }
+
         if (status) {
           return this;
         }
@@ -3946,7 +4071,7 @@ var Syncano = (function() {
           once(_reject)(e);
           return this;
         }
-        alwaysAsyncFn(function() {
+        alwaysAsyncFn(function () {
           value = val;
           status = 1;
           execCallbacks();
@@ -3955,7 +4080,7 @@ var Syncano = (function() {
       }
 
       function _reject(Err) {
-        status || alwaysAsyncFn(function() {
+        status || alwaysAsyncFn(function () {
           try {
             throw (Err);
           } catch (e) {
@@ -3966,11 +4091,12 @@ var Syncano = (function() {
         });
         return this;
       }
+
       return {
         promise: _promise,
         resolve: _resolve,
         fulfill: _resolve // alias
-          ,
+        ,
         reject: _reject
       };
     };
@@ -3979,23 +4105,23 @@ var Syncano = (function() {
     defer.nextTick = nextTick;
     defer.onlyFuncs = true;
 
-    defer.resolved = defer.fulfilled = function(value) {
+    defer.resolved = defer.fulfilled = function (value) {
       return defer(true).resolve(value).promise;
     };
 
-    defer.rejected = function(reason) {
+    defer.rejected = function (reason) {
       return defer(true).reject(reason).promise;
     };
 
-    defer.wait = function(time) {
+    defer.wait = function (time) {
       var d = defer();
       setTimeout(d.resolve, time || 0);
       return d.promise;
     };
 
-    defer.delay = function(fn, delay) {
+    defer.delay = function (fn, delay) {
       var d = defer();
-      setTimeout(function() {
+      setTimeout(function () {
         try {
           d.resolve(isFunc(fn) ? fn.apply(null) : fn);
         } catch (e) {
@@ -4005,7 +4131,7 @@ var Syncano = (function() {
       return d.promise;
     };
 
-    defer.promisify = function(promise) {
+    defer.promisify = function (promise) {
       if (promise && isFunc(promise.then)) {
         return promise;
       }
@@ -4026,14 +4152,14 @@ var Syncano = (function() {
       if (!c) {
         d.resolve(args);
       } else {
-        var resolver = function(i) {
+        var resolver = function (i) {
           promises[i] = defer.promisify(promises[i]);
           promises[i].then(
-            function(v) {
+            function (v) {
               args[i] = returnPromises ? promises[i] : v;
               (--c) || d.resolve(args);
             },
-            function(e) {
+            function (e) {
               if (!returnPromises) {
                 d.reject(e);
               } else {
@@ -4051,7 +4177,7 @@ var Syncano = (function() {
     }
 
     function sequenceZenifier(promise, zenValue) {
-      return promise.then(isFunc(zenValue) ? zenValue : function() {
+      return promise.then(isFunc(zenValue) ? zenValue : function () {
         return zenValue;
       });
     }
@@ -4072,15 +4198,15 @@ var Syncano = (function() {
       return d.promise;
     }
 
-    defer.all = function() {
+    defer.all = function () {
       return multiPromiseResolver(arguments, false);
     };
 
-    defer.resolveAll = function() {
+    defer.resolveAll = function () {
       return multiPromiseResolver(arguments, true);
     };
 
-    defer.sequence = function() {
+    defer.sequence = function () {
       return sequencePromiseResolver(arguments);
     };
     return defer;

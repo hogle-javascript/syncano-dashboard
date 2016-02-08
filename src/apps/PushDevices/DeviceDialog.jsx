@@ -14,9 +14,9 @@ import {FlatButton, TextField, Toggle} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {Dialog} from '../../common';
 
-export default (displayName, Store, Actions) => {
+export default (type, Store, Actions) => {
   return React.createClass({
-    displayName,
+    displayName: `${type}Dialog`,
 
     mixins: [
       Reflux.connect(Store),
@@ -102,7 +102,7 @@ export default (displayName, Store, Actions) => {
         <Dialog
           key="dialog"
           ref="dialog"
-          title={`${title} a Device`}
+          title={`${title} a ${type} Device`}
           onRequestClose={this.handleCancel}
           open={this.state.open}
           actions={dialogStandardActions}>

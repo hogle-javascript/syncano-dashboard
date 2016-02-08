@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {DialogsMixin} from '../../mixins/';
+import {DialogsMixin, SnackbarNotificationMixin} from '../../mixins/';
 
 import Actions from './ApiKeysActions';
 
@@ -13,24 +13,12 @@ export default React.createClass({
   displayName: 'ApiKeysListItem',
 
   mixins: [
-    DialogsMixin
+    DialogsMixin,
+    SnackbarNotificationMixin
   ],
 
   render() {
-    let item = this.props.item;
-    let ignore_acl = null;
-    let allow_user_create = null;
-    let allow_anonymous_read = null;
-
-    if (item.ignore_acl) {
-      ignore_acl = <div>Ignore ACL</div>;
-    }
-    if (item.allow_user_create) {
-      allow_user_create = <div>Allow user creation</div>;
-    }
-    if (item.allow_anonymous_read) {
-      allow_anonymous_read = <div>Allow anonymous read</div>;
-    }
+    const {item} = this.props;
 
     return (
       <ColumnList.Item
@@ -45,11 +33,15 @@ export default React.createClass({
           <Truncate text={item.description}/>
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
-        <Column.Key color="black">{item.api_key}</Column.Key>
+        <Column.Key
+          color="black"
+          onCopy={() => this.setSnackbarNotification({message: 'API key copied to the clipboard'})}>
+          {item.api_key}
+        </Column.Key>
         <Column.Text>
-          {ignore_acl}
-          {allow_user_create}
-          {allow_anonymous_read}
+          {item.ignore_acl ? <div>Ignore ACL</div> : null}
+          {item.allow_user_create ? <div>Allow user creation</div> : null}
+          {item.allow_anonymous_read ? <div>Allow anonymous read</div> : null}
         </Column.Text>
         <Column.Date date={item.created_at}/>
         <Column.Menu>

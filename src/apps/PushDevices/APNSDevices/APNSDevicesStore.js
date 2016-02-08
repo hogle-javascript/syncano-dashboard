@@ -32,6 +32,11 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
+  getDevices() {
+    console.debug('APNSDevicesStore::getDevices');
+    return this.data.items;
+  },
+
   setDevices(devices) {
     console.debug('APNSDevicesStore::setDevices');
     this.data.items = devices;

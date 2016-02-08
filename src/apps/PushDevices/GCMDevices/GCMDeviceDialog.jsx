@@ -3,4 +3,4 @@ import Store from './GCMDeviceDialogStore';
 
 import DeviceDialog from '../DeviceDialog';
 
-export default DeviceDialog('GCMDialog', Store, Actions);
+export default DeviceDialog('GCM', Store, Actions);
