@@ -98,6 +98,12 @@ export default React.createClass({
     });
   },
 
+  getFieldTargetOptions() {
+    let options = ClassesStore.getClassesDropdown(true);
+
+    return _.filter(options, (option) => option.payload !== this.state.name);
+  },
+
   getSchema() {
     return JSON.stringify(this.state.fields.map((item) => {
       const schema = {
@@ -458,10 +464,10 @@ export default React.createClass({
                 <Show if={this.state.fieldType === 'reference'}>
                   <SelectFieldWrapper
                     name="fieldTarget"
-                    options={ClassesStore.getClassesDropdown(true)}
+                    options={this.getFieldTargetOptions()}
                     value={this.state.fieldTarget}
                     floatingLabelText='Target Class'
-                    onChange={this.setSelectFieldValue.bind(null, 'fieldTarget')}
+                    onChange={() => this.setSelectFieldValue('fieldTarget')}
                     errorText={this.getValidationMessages('fieldTarget').join(' ')}/>
                 </Show>
               </div>
