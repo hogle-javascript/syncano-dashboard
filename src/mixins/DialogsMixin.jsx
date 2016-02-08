@@ -20,14 +20,8 @@ export default {
     }
   },
 
-  removeEventFromArray() {
-    let newArray = _.dropRight(arguments);
-
-    return !_.isEmpty(newArray) ? newArray : null;
-  },
-
   showDialog(ref, ...args) {
-    this.refs[ref].show(this.removeEventFromArray(...args));
+    this.refs[ref].show(...args);
   },
 
   getDialogListLength(items) {

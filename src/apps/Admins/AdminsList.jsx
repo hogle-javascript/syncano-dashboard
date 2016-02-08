@@ -52,7 +52,7 @@ export default React.createClass({
         key={`admins-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'deleteAdminDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('deleteAdminDialog', item)} />
     );
   },
 
@@ -78,7 +78,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete an Admin"
                 multipleItemsText="Delete Admins"
-                onTouchTap={this.showDialog.bind(null, 'deleteAdminDialog')}/>
+                onTouchTap={() => this.showDialog('deleteAdminDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

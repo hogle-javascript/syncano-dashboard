@@ -19,6 +19,20 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Instances.update'
     },
+    renameInstance: {
+      asyncResult: true,
+      asyncForm: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Instances.rename'
+    },
+    renameAndUpdateInstance: {
+      asyncResult: true,
+      asyncForm: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Instances.renameAndUpdate'
+    },
     removeInstances: {
       asyncResult: true,
       loading: true,
@@ -27,7 +41,6 @@ export default CreateActions(
     }
   },
   {
-    withDialog: true,
-    withCheck: true
+    withDialog: true
   }
 );

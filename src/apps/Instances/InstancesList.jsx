@@ -11,7 +11,7 @@ import Store from './InstancesStore';
 
 import ListItem from './InstancesListItem';
 import {ColumnList} from 'syncano-components';
-import {Dialog, Lists, ColorIconPicker} from '../../common';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
@@ -31,42 +31,19 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleChangePalette(color, icon) {
-    console.info('Instances::handleChangePalette', color, icon);
-    let metadata = JSON.stringify({color, icon});
-
-    Actions.updateInstance(Store.getClickedItem().name, {metadata});
-    Actions.uncheckAll();
-  },
-
   initDialogs() {
-    let clickedItem = Store.getClickedItemIconColor();
-
-    return [
-      {
-        dialog: Dialog.Delete,
-        params: {
-          key: 'deleteInstanceDialog',
-          ref: 'deleteInstanceDialog',
-          title: 'Delete an Instance',
-          handleConfirm: Actions.removeInstances,
-          isLoading: this.props.isLoading,
-          items: Store.getCheckedItems(),
-          groupName: 'Instance'
-        }
-      },
-      {
-        dialog: ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: clickedItem.color,
-          initialIcon: clickedItem.icon,
-          handleClick: this.handleChangePalette
-        }
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'deleteInstanceDialog',
+        ref: 'deleteInstanceDialog',
+        title: 'Delete an Instance',
+        handleConfirm: Actions.removeInstances,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        groupName: 'Instance'
       }
-    ];
+    }];
   },
 
   renderItem(item) {
@@ -75,8 +52,7 @@ export default React.createClass({
         key={`instances-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'deleteInstanceDialog', item)}
-        showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}/>
+        showDeleteDialog={() => this.showDialog('deleteInstanceDialog', item)}/>
     );
   },
 
@@ -101,7 +77,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete an Instance"
                 multipleItemsText="Delete Instances"
-                onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
+                onTouchTap={() => this.showDialog('deleteInstanceDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

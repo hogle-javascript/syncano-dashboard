@@ -113,10 +113,6 @@ export default Radium(React.createClass({
     this.transitionTo('instance', {instanceName});
   },
 
-  showAddInstanceDialog() {
-    InstanceDialogActions.showDialog();
-  },
-
   renderAddInstanceItem() {
     let styles = this.getStyles();
     let icon = (
@@ -130,7 +126,7 @@ export default Radium(React.createClass({
         <ListItem
           primaryText="Add an Instance"
           leftIcon={icon}
-          onTouchTap={this.showAddInstanceDialog}/>
+          onTouchTap={() => InstanceDialogActions.showDialog()}/>
       </List>
     );
   },

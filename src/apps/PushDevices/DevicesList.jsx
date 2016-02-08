@@ -45,8 +45,8 @@ export default React.createClass({
         onIconClick={this.props.actions.checkItem}
         icon={this.props.listItemIcon}
         showEditDialog={this.props.actions.showDialog}
-        showDeleteDialog={this.showDialog.bind(null, 'deleteDeviceDialog', item)}
-        item={item}/>
+        showDeleteDialog={() => this.showDialog('deleteDeviceDialog', item)}
+        item={item} />
     );
   },
 
@@ -81,7 +81,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Device"
                 multipleItemsText="Delete Devices"
-                onTouchTap={this.showDialog.bind(null, 'deleteDeviceDialog')}/>
+                onTouchTap={() => this.showDialog('deleteDeviceDialog')} />
             </Lists.Menu>
           </ColumnList.Header>
             <Lists.List

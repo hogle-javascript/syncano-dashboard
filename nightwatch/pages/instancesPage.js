@@ -38,7 +38,7 @@ export default {
       selector: 'input[name=name]'
     },
     createModalDescriptionInput: {
-      selector: 'input[name=description]'
+      selector: 'textarea[name=description]'
     },
     confirmButton: {
       selector: '//span[text()="Confirm"]',

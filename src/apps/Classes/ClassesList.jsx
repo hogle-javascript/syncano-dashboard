@@ -12,7 +12,7 @@ import Store from './ClassesStore';
 
 import ListItem from './ClassesListItem';
 import {ColumnList, Loading} from 'syncano-components';
-import {Dialog, Lists, ColorIconPicker} from '../../common';
+import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
@@ -69,16 +69,7 @@ export default React.createClass({
     return item.protectedFromDelete;
   },
 
-  handleChangePalette(color, icon) {
-    console.info('Classes::handleChangePalette', color, icon);
-    let metadata = JSON.stringify({color, icon});
-
-    Actions.updateClass(Store.getClickedItem().name, {metadata});
-    Actions.uncheckAll();
-  },
-
   initDialogs() {
-    let clickedItem = Store.getClickedItemIconColor();
     let checkedClasses = Store.getCheckedItems();
     let classesAssociatedWithTriggers = this.getAssociatedClasses();
     let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
@@ -113,20 +104,7 @@ export default React.createClass({
       );
     }
 
-    return [
-      deleteDialog,
-      {
-        dialog: ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: clickedItem.color,
-          initialIcon: clickedItem.icon,
-          handleClick: this.handleChangePalette
-        }
-      }
-    ];
+    return [deleteDialog];
   },
 
   renderItem(item) {
@@ -135,8 +113,7 @@ export default React.createClass({
         key={`classes-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}
-        showDeleteDialog={this.showDialog.bind(null, 'deleteClassDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('deleteClassDialog', item)}/>
     );
   },
 
@@ -179,7 +156,7 @@ export default React.createClass({
                 singleItemText="Delete a Class"
                 multipleItemsText="Delete Classes"
                 disabled={someClassIsProtectedFromDelete}
-                onTouchTap={this.showDialog.bind(null, 'deleteClassDialog')}/>
+                onTouchTap={() => this.showDialog('deleteClassDialog')}/>
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

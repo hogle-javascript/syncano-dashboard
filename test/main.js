@@ -94,7 +94,6 @@ import './common/SyncanoTheme';
 import './common/CheckIcon/CheckIcon';
 import './common/Color/ColorStore';
 import './common/ColorIconPicker/ColorIconPicker';
-import './common/ColorIconPicker/ColorIconPickerDialog';
 import './common/ColumnList/ColName';
 import './common/ColumnList/ColNameDesc';
 import './common/ColumnList/ColumnListConstans';

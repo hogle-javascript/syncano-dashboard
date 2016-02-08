@@ -123,7 +123,7 @@ export default React.createClass({
         key={`snippets-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'deleteSnippetDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('deleteSnippetDialog', item)} />
     );
   },
 
@@ -149,7 +149,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Snippet"
                 multipleItemsText="Delete Snippets"
-                onTouchTap={this.showDialog.bind(null, 'deleteSnippetDialog')}/>
+                onTouchTap={() => this.showDialog('deleteSnippetDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

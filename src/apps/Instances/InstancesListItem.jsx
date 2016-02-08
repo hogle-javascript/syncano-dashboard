@@ -21,23 +21,9 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  handleItemClick(instanceName) {
-    this.transitionTo('instance', {instanceName});
-  },
-
-  handleClickItemDropdown(item) {
-    Actions.setClickedInstance(item);
-  },
-
-  showInstanceEditDialog(instance) {
-    InstanceDialogActions.showDialog(instance);
-  },
-
   render() {
-    let item = this.props.item;
-    let removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
-
-    item.metadata = item.metadata || {};
+    let {item} = this.props;
+    const removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
 
     return (
       <ColumnList.Item
@@ -51,21 +37,17 @@ export default React.createClass({
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
           <Truncate
-            onClick={this.handleItemClick.bind(null, item.name)}
+            onClick={() => this.transitionTo('instance', {instanceName: item.name})}
             style={{cursor: 'pointer'}}
             text={item.name}/>
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
-        <Column.Menu handleClick={this.handleClickItemDropdown.bind(null, item)}>
+        <Column.Menu handleClick={() => Actions.setClickedInstance(item)}>
           <MenuItem
             className="dropdown-item-instance-edit"
-            onTouchTap={this.showInstanceEditDialog.bind(null, item)}
+            onTouchTap={() => InstanceDialogActions.showDialog(item)}
             primaryText="Edit an Instance" />
-          <MenuItem
-            className="dropdown-item-customize"
-            onTouchTap={this.props.showCustomizeDialog}
-            primaryText="Customize an Instance" />
           <MenuItem
             className="dropdown-item-instance-delete"
             onTouchTap={this.props.showDeleteDialog}

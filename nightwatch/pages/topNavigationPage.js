@@ -45,7 +45,7 @@ export default {
       locateStrategy: 'xpath'
     },
     fox: {
-      selector: '//div[@id="menu-account--dropdown"]//img[contains(@style, "did-flip:true")]',
+      selector: '//div[@id="menu-account--dropdown"]//img',
       locateStrategy: 'xpath'
     }
   }

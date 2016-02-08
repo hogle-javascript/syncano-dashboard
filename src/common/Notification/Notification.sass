@@ -7,14 +7,12 @@
   overflow: hidden
 
 .notification
-  +margin-trailer(2)
-  +rhythm-borders(1px, 2)
-  +horizontal-borders(1px, 1.5)
+  padding: 7px 10px
   border: 1px solid
   border-radius: 2px
 
   &__content
-    +adjust-font-size-to(14px)
+    +adjust-font-size-to(12px)
     +display-flex
     vertical-align: middle
 
@@ -22,9 +20,12 @@
       min-width: 34px
 
   &.notification--warning
-    background-color: #FFF3E0
-    border-color: #FF9100
-    color: #FF9100
+    background-color: rgba(255, 203, 0, 0.1)
+    border-color: rgba(255, 203, 0, 0.3)
+    color: #c9a206
+
+    .notification__content__icon
+      color: #ffcc01
 
   &.notification--error
     background-color: #FCE4EC

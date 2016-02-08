@@ -53,7 +53,7 @@ export default Radium(React.createClass({
         key={`groups-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'removeGroupDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('removeGroupDialog', item)} />
     );
   },
 
@@ -82,7 +82,7 @@ export default Radium(React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Group"
                 multipleItemsText="Delete Groups"
-                onTouchTap={this.showDialog.bind(null, 'removeGroupDialog')}/>
+                onTouchTap={() => this.showDialog('removeGroupDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

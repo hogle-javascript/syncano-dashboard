@@ -22,8 +22,14 @@ export default React.createClass({
     };
   },
 
-  getConfirmArguments() {
-    return this.state.items ? this.state.items : this.props.items;
+  getItems() {
+    let items = this.state.items ? this.state.items : this.props.items;
+
+    if (!_.isArray(items)) {
+      items = [items];
+    }
+
+    return items;
   },
 
   getDialogList(items, paramName, associationFor) {
@@ -61,7 +67,7 @@ export default React.createClass({
 
   renderContent() {
     let {actionName, groupName, itemLabelName} = this.props;
-    let listItems = _.filter(this.getConfirmArguments(), (item) => _.isObject(item));
+    let listItems = this.getItems();
     let itemsCount = listItems.length;
 
     return (
@@ -73,7 +79,7 @@ export default React.createClass({
   },
 
   render() {
-    let {children, items, groupName, ...other} = this.props; // eslint-disable-line no-redeclare
+    let {children, ...other} = this.props; // eslint-disable-line no-redeclare
 
     return (
       <Dialog
@@ -86,10 +92,9 @@ export default React.createClass({
             label="Confirm"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={this.props.handleConfirm.bind(null, this.getConfirmArguments())}/>
+            onTouchTap={this.props.handleConfirm.bind(null, this.getItems())}/>
         ]}
         open={this.state.open}
-        modal={true}
         avoidResetState={true}
         {...other}>
         {children ? children : this.renderContent()}

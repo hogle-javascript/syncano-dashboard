@@ -47,7 +47,7 @@ export default React.createClass({
             primaryText="Add a User" />
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={Actions.showDialog.bind(null, item)}
+            onTouchTap={() => Actions.showDialog(item)}
             primaryText="Edit a Group" />
           <MenuItem
             className="dropdown-item-delete"

@@ -52,7 +52,7 @@ export default React.createClass({
         key={`data-views-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'removeDataViewDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('removeDataViewDialog', item)} />
     );
   },
 
@@ -87,7 +87,7 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Data Socket"
                 multipleItemsText="Delete Data Sockets"
-                onTouchTap={this.showDialog.bind(null, 'removeDataViewDialog')}/>
+                onTouchTap={() => this.showDialog('removeDataViewDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
