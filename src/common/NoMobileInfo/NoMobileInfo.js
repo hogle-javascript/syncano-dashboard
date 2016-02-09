@@ -1,26 +1,31 @@
 import React from 'react';
+import ReactFitText from 'react-fittext';
 
 export default () => {
   const styles = {
+    root: {
+      padding: '0 20px'
+    },
     illustration: {
       textAlign: 'center',
-      paddingTop: 70,
-      paddingBottom: 50
+      paddingTop: '2em',
+      paddingBottom: '1em',
+      margin: '0 auto',
+      maxWidth: 121,
+      minWidth: 102
     },
     headline: {
       textAlign: 'center',
-      fontSize: 28,
       fontWeight: 800,
-      lineHeight: '38px',
+      lineHeight: '1.35714285714286',
       color: '#1D2228',
-      paddingLeft: 15,
-      paddingRight: 15
+      marginBottom: '0.91em'
     },
     text: {
       textAlign: 'center',
       color: '#9B9B9B',
-      lineHeight: '19px',
-      paddingBottom: 50
+      lineHeight: '1.35714285714286',
+      paddingBottom: '1.6667em'
     },
     buttonContainer: {
       textAlign: 'center'
@@ -37,21 +42,33 @@ export default () => {
   };
 
   return (
-    <div>
+    <div style={styles.root}>
       <div
         style={styles.illustration}
         dangerouslySetInnerHTML={{__html: require('./illustration-mobile.svg')}}>
       </div>
-      <p style={styles.headline}>
-        Please use a Desktop or Tablet browser.
-      </p>
-      <p style={styles.text}>
-        The Syncano admin interface is not optimized for smartphones yet,
-        but we’re working on it.
-        <br/>
-        <br/>
-        Thank you for your patience.
-      </p>
+        <ReactFitText
+          compressor={1.5}
+          minFontSize={22}
+          maxFontSize={28}>
+        <p style={styles.headline}>
+          Please use a Desktop<br/>or Tablet browser.
+        </p>
+      </ReactFitText>
+      <ReactFitText
+        compressor={3}
+        minFontSize={12}
+        maxFontSize={14}>
+        <div>
+          <div style={styles.text}>
+            <div>The Syncano admin interface is not optimized</div>
+            <div>for smartphones yet, but we’re working on it.</div>
+          </div>
+          <div style={styles.text}>
+            Thank you for your patience.
+          </div>
+        </div>
+      </ReactFitText>
       <div style={styles.buttonContainer}>
         <a style={styles.button} href="https://www.syncano.io/">Go to our website</a>
       </div>
