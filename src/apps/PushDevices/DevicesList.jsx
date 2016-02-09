@@ -2,9 +2,14 @@ import React from 'react';
 
 import {DialogsMixin} from '../../mixins';
 
+import UsersActions from '../Users/UsersActions';
+import UsersStore from '../Users/UsersStore';
+
 import {ColumnList} from 'syncano-components';
 import {Container, Lists, Dialog} from '../../common';
 import ListItem from './DevicesListItem';
+import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
+import APNSSendMessageDialog from './APNSDevices/APNSSendMessageDialog';
 
 let Column = ColumnList.Column;
 
@@ -14,7 +19,13 @@ export default React.createClass({
   mixins: [DialogsMixin],
 
   getInitialState() {
-    return {};
+    return {
+      clickedDevice: null
+    };
+  },
+
+  componentWillMount() {
+    UsersActions.fetch();
   },
 
   componentWillUpdate(nextProps) {
@@ -38,15 +49,30 @@ export default React.createClass({
     }];
   },
 
+  showSendMessageDialog(item) {
+    const showSendMessageDialog = {
+      GCM: () => this.showDialog('GCMSendMessageDialog'),
+      APNS: () => this.showDialog('APNSSendMessageDialog')
+    };
+
+    this.setState({clickedDevice: item}, showSendMessageDialog[this.props.type]);
+  },
+
   renderItem(item) {
+    const userName = UsersStore.getUserById(item.user_id) ? UsersStore.getUserById(item.user_id).username : 'No user';
+
+    item.userName = userName;
+
     return (
       <ListItem
         key={`devices-list-item-${item.registration_id}`}
+        actions={this.props.actions}
         onIconClick={this.props.actions.checkItem}
         icon={this.props.listItemIcon}
-        showEditDialog={this.props.actions.showDialog}
+        showSendMessageDialog={() => this.showSendMessageDialog(item)}
+        showEditDialog={() => this.props.actions.showDialog(item)}
         showDeleteDialog={() => this.showDialog('deleteDeviceDialog', item)}
-        item={item} />
+        item={item}/>
     );
   },
 
@@ -55,6 +81,12 @@ export default React.createClass({
 
     return (
       <div>
+        <GCMSendMessageDialog
+          item={this.state.clickedDevice}
+          ref="GCMSendMessageDialog"/>
+        <APNSSendMessageDialog
+          item={this.state.clickedDevice}
+          ref="APNSSendMessageDialog"/>
         <Lists.Container>
           {this.getDialogs()}
           <ColumnList.Header>
@@ -81,12 +113,12 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Device"
                 multipleItemsText="Delete Devices"
-                onTouchTap={() => this.showDialog('deleteDeviceDialog')} />
+                onTouchTap={() => this.showDialog('deleteDeviceDialog')}/>
             </Lists.Menu>
           </ColumnList.Header>
-            <Lists.List
-              {...this.props}
-              renderItem={this.renderItem}/>
+          <Lists.List
+            {...this.props}
+            renderItem={this.renderItem}/>
         </Lists.Container>
       </div>
     );

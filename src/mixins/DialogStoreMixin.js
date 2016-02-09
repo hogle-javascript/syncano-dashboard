@@ -23,6 +23,7 @@ export default {
   },
 
   showDialog(instance, secondInstance) {
+    console.error(instance, secondInstance);
     console.debug('DialogStoreMixin::showDialog');
     let state = {_dialogVisible: true};
 

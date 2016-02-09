@@ -16,7 +16,7 @@ export default React.createClass({
 
   render() {
     let item = this.props.item;
-    let user = item.user_id ? item.user_id : 'no user';
+    let user = item.userName;
 
     return (
       <ColumnList.Item
@@ -48,12 +48,16 @@ export default React.createClass({
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={this.props.showEditDialog.bind(null, item)}
+            onTouchTap={this.props.showEditDialog}
             primaryText="Edit a Device"/>
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Device"/>
+          <MenuItem
+            className="dropdown-item-delete"
+            onTouchTap={this.props.showSendMessageDialog}
+            primaryText="Send Message"/>
         </Column.Menu>
       </ColumnList.Item>
     );

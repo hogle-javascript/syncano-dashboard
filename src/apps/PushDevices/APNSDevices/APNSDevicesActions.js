@@ -27,6 +27,12 @@ export default CreateActions(
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushDevices.removeAPNSDevices'
+    },
+    sendMessageToAPNS: {
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushDevices.sendMessageToAPNS'
     }
   },
   {

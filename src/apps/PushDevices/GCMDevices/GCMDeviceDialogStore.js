@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin} from '../../../mixins';
+import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin} from '../../../mixins';
 
 // Stores & Actions
 import Actions from './GCMDevicesActions';
@@ -10,7 +10,8 @@ export default Reflux.createStore({
   listenables: Actions,
   mixins: [
     StoreFormMixin,
-    DialogStoreMixin
+    DialogStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -26,17 +27,29 @@ export default Reflux.createStore({
   init() {
     this.data = this.getInitialState();
     this.listenToForms();
+    this.setLoadingStates();
   },
 
   onCreateDeviceCompleted() {
-    console.debug('DeviceDialogStore::onCreateDeviceCompleted');
+    console.debug('GCMDeviceDialogStore::onCreateDeviceCompleted');
     this.dismissDialog();
     Actions.fetchDevices();
   },
 
   onUpdateDeviceCompleted() {
-    console.debug('DeviceDialogStore::onUpdateDeviceCompleted');
+    console.debug('GCMDeviceDialogStore::onUpdateDeviceCompleted');
     this.dismissDialog();
     Actions.fetchDevices();
+  },
+
+  onSendMessageToGCM() {
+    console.debug('GCMDeviceDialogStore::onSendMessageToGCM');
+    console.error('sendMessageGCM');
+  },
+
+  onSendMessageToGCMCompleted() {
+    console.debug('GCMDeviceDialogStore::onSendMessageToGCMCompleted');
+    console.error('sendMessageGCMCOmpleted');
+    // this.dismissDialog();
   }
 });

@@ -24,6 +24,7 @@ export default React.createClass({
       <div>
         <GCMDialog />
         <Devices
+          type="GCM"
           listItemIcon="android"
           getChekcedItems={Store.getCheckedItems}
           actions={Actions}

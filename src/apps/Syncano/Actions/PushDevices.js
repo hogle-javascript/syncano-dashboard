@@ -10,6 +10,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+
   listAPNSDevices(params = {}) {
     _.defaults(params, {ordering: 'desc'});
     this.Connection
@@ -19,6 +20,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+
   createAPNSDevice(payload) {
     this.Connection
       .PushNotifications
@@ -27,6 +29,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+
   updateAPNSDevice(payload) {
     this.Connection
       .PushNotifications
@@ -35,6 +38,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+
   removeAPNSDevices(devices) {
     let promises = devices.map((device) => {
       return this.Connection
@@ -47,6 +51,7 @@ export default {
       .success(this.completed)
       .error(this.failure);
   },
+
   createGCMDevice(payload) {
     this.Connection
       .PushNotifications
@@ -55,6 +60,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+
   updateGCMDevice(payload) {
     this.Connection
       .PushNotifications
@@ -63,6 +69,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+
   removeGCMDevices(devices) {
     let promises = devices.map((device) => {
       return this.Connection
@@ -74,5 +81,13 @@ export default {
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
+  },
+
+  sendMessageToGCM() {
+    console.error('sendMessage');
+  },
+
+  sendMessageToAPNS() {
+    console.error('sendMessage');
   }
 };

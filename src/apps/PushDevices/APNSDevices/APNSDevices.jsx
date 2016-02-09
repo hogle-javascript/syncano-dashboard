@@ -24,6 +24,7 @@ export default React.createClass({
       <div>
         <APNSDialog />
         <Devices
+          type="APNS"
           listItemIcon="apple"
           getChekcedItems={Store.getCheckedItems}
           actions={Actions}
