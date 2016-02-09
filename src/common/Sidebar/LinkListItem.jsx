@@ -11,18 +11,26 @@ export default React.createClass({
 
   mixins: [
     State,
-    Navigation,
-    Utils
+    Navigation
   ],
 
   getStyles() {
     return {
       base: {
         fontSize: 14,
-        paddingLeft: 8
+        lineHeight: '18px',
+        color: '#4a4a4a'
       },
       active: {
         color: Styles.Colors.blue400
+      },
+      innerDivStyle: {
+        padding: '10px 20px'
+      },
+      nestedListStyle: {
+        paddingTop: 0,
+        paddingBottom: 0,
+        background: 'transparent'
       }
     };
   },
@@ -43,10 +51,11 @@ export default React.createClass({
 
     return (
       <ListItem
-        style={this.Styles.mergeStyles(styles.base, style, isActive && styles.active)}
+        style={Utils.Styles.mergeStyles(styles.base, style, isActive && styles.active)}
+        innerDivStyle={styles.innerDivStyle}
         onTouchTap={this.handleTouchTap.bind(null, routeName)}
-        desktop={true}
         href={this.getMenuItemHref(routeName)}
+        nestedListStyle={styles.nestedListStyle}
         {...other}/>
     );
   }

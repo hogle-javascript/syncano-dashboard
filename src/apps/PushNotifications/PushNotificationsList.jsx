@@ -20,11 +20,11 @@ export default React.createClass({
             handleClick={this.props.handleTitleClick}
             primary={true}
             columnName="DESC"
-            className="col-xs-18">
+            className="col-xs-12">
             {this.props.name}
           </Column.ColumnHeader>
           <Column.ColumnHeader
-            className="col-xs-18"
+            className="col-flex-1"
             columnName="DESC">
             Devices
           </Column.ColumnHeader>

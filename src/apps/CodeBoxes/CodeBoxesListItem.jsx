@@ -4,6 +4,7 @@ import {Link, State} from 'react-router';
 import {DialogsMixin} from '../../mixins';
 
 import Actions from './CodeBoxesActions';
+import SnippetsStore from '../Snippets/SnippetsStore';
 
 import {MenuItem} from 'syncano-material-ui';
 import {Color, ColumnList} from 'syncano-components';
@@ -22,6 +23,8 @@ export default React.createClass({
     let item = this.props.item;
     let publicString = item.public.toString();
     let link = item.public ? item.links['public-link'] : item.links.self;
+    let snippet = SnippetsStore.getSnippetById(item.codebox);
+    let snippetLabel = snippet ? snippet.label : '';
 
     return (
       <ColumnList.Item
@@ -44,22 +47,22 @@ export default React.createClass({
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
         <Column.Desc className="col-xs-4">
           <Link
+            to="snippet"
+            params={{
+              instanceName: this.getParams().instanceName,
+              snippetId: item.codebox
+            }}>
+            {snippetLabel}
+          </Link>
+        </Column.Desc>
+        <Column.Desc className="col-xs-4">
+          <Link
             to="codeBox-traces"
             params={{
               instanceName: this.getParams().instanceName,
               codeBoxName: item.name
             }}>
             Traces
-          </Link>
-        </Column.Desc>
-        <Column.Desc className="col-xs-4">
-          <Link
-            to="snippet"
-            params={{
-              instanceName: this.getParams().instanceName,
-              snippetId: item.codebox
-            }}>
-            {item.codebox}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-xs-3">{publicString}</Column.Desc>

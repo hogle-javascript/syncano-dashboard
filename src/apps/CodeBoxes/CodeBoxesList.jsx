@@ -78,12 +78,12 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-xs-4">
-            Traces
+            Snippet
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
             className="col-xs-4">
-            Snippet ID
+            Traces
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="KEY"
