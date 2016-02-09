@@ -55,7 +55,8 @@ export default Radium(React.createClass({
       },
       resendEmailText: {
         cursor: 'pointer',
-        color: Styles.Colors.lightBlueA700
+        color: Styles.Colors.lightBlueA700,
+        lineHeight: '48px'
       },
       menuItem: {
         whiteSpace: 'normal',
