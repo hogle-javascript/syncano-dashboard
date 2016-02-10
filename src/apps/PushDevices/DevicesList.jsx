@@ -49,15 +49,6 @@ export default React.createClass({
     }];
   },
 
-  showSendMessageDialog(item) {
-    const showSendMessageDialog = {
-      GCM: () => this.showDialog('GCMSendMessageDialog'),
-      APNS: () => this.showDialog('APNSSendMessageDialog')
-    };
-
-    this.setState({clickedDevice: item}, showSendMessageDialog[this.props.type]);
-  },
-
   renderItem(item) {
     const userName = UsersStore.getUserById(item.user_id) ? UsersStore.getUserById(item.user_id).username : 'No user';
 
@@ -69,7 +60,7 @@ export default React.createClass({
         actions={this.props.actions}
         onIconClick={this.props.actions.checkItem}
         icon={this.props.listItemIcon}
-        showSendMessageDialog={() => this.showSendMessageDialog(item)}
+        showSendMessageDialog={() => this.props.showSendMessagesDialog(item)}
         showEditDialog={() => this.props.actions.showDialog(item)}
         showDeleteDialog={() => this.showDialog('deleteDeviceDialog', item)}
         item={item}/>
@@ -81,12 +72,8 @@ export default React.createClass({
 
     return (
       <div>
-        <GCMSendMessageDialog
-          item={this.state.clickedDevice}
-          ref="GCMSendMessageDialog"/>
-        <APNSSendMessageDialog
-          item={this.state.clickedDevice}
-          ref="APNSSendMessageDialog"/>
+        <GCMSendMessageDialog />
+        <APNSSendMessageDialog />
         <Lists.Container>
           {this.getDialogs()}
           <ColumnList.Header>

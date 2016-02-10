@@ -767,11 +767,13 @@ var Syncano = (function () {
     this.PushNotifications = {
       GCM: {
         config: this.configGCMPushNotification.bind(this),
-        get: this.getGCMPushNotificationConfig.bind(this)
+        get: this.getGCMPushNotificationConfig.bind(this),
+        sendMessage: this.sendMessageToGCMDevice.bind(this)
       },
       APNS: {
         config: this.configAPNSPushNotification.bind(this),
         get: this.getAPNSPushNotificationConfig.bind(this),
+        sendMessage: this.sendMessageToAPNSDevice.bind(this),
         uploadCertificate: this.uploadAPNSCertificate.bind(this)
       },
       Devices: {
@@ -3402,6 +3404,29 @@ var Syncano = (function () {
     },
 
     /**
+     * Sends Push Notification message to specified GCM device
+     *
+     * @method Syncano#sendMessageToAPNSDevice
+     * @alias Syncano.PushNotifications.APNS.sendMessage
+     * @param {Object} params - JSON payload
+     * @param {string} registrationId - device's registration ID
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    sendMessageToAPNSDevice: function (registrationId, params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      if (typeof registrationId === 'undefined') {
+        throw new Error("Missing 'registrationId' param");
+      }
+      var url = linksObject.instance_push_notifications + 'apns/devices/' + registrationId + "/send_message/";
+
+      return this.request('POST', url, params, callbackOK, callbackError);
+    },
+
+    /**
      * Returns APNS Push Notification config
      *
      * @method Syncano#getAPNSPushNotificationConfig
@@ -3423,7 +3448,7 @@ var Syncano = (function () {
     /**
      * Configures new GCM Push Notification
      *
-     * @method Syncano#configPushNotification
+     * @method Syncano#configGCMPushNotification
      * @alias Syncano.PushNotifications.GCM.config
      * @param {Object} params
      * @param {string} params.production_api_key - name of the device
@@ -3437,6 +3462,30 @@ var Syncano = (function () {
         throw new Error('Not connected to any instance');
       }
       return this.request('PUT', linksObject.instance_push_notifications + 'gcm/config/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Sends Push Notification message to specified GCM device
+     *
+     * @method Syncano#sendMessageToGCMDevice
+     * @alias Syncano.PushNotifications.GCM.sendMessage
+     * @param {Object} params
+     * @param {string} params.registrationId - device's registration ID
+     * @param {string} params.content- JSON payload
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    sendMessageToGCMDevice: function (registrationId, params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      if (typeof registrationId === 'undefined') {
+        throw new Error("Missing 'registrationId' param");
+      }
+      var url = linksObject.instance_push_notifications + 'gcm/devices/' + registrationId + "/send_message/";
+
+      return this.request('POST', url, params, callbackOK, callbackError);
     },
 
     /**

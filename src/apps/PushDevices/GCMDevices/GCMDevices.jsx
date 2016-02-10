@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 
 import Store from './GCMDevicesStore';
 import Actions from './GCMDevicesActions';
+import SendMessagesActions from './GCMSendMessagesActions';
 
 import Devices from '../Devices';
 import GCMDialog from './GCMDeviceDialog';
@@ -28,6 +29,7 @@ export default React.createClass({
           listItemIcon="android"
           getChekcedItems={Store.getCheckedItems}
           actions={Actions}
+          showSendMessagesDialog={SendMessagesActions.showDialog}
           emptyItemHandleClick={Actions.showDialog}
           emptyItemContent="Add GCM Device"
           hideDialogs={this.state.hideDialogs}
