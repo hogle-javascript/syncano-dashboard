@@ -57,6 +57,7 @@ export default React.createClass({
     return (
       <ListItem
         key={`devices-list-item-${item.registration_id}`}
+        checkedItemsCount={this.props.getChekcedItems().length}
         actions={this.props.actions}
         onIconClick={this.props.actions.checkItem}
         icon={this.props.listItemIcon}
@@ -101,6 +102,10 @@ export default React.createClass({
                 singleItemText="Delete a Device"
                 multipleItemsText="Delete Devices"
                 onTouchTap={() => this.showDialog('deleteDeviceDialog')}/>
+              <Lists.MenuItem
+                singleItemText="Send message"
+                multipleItemsText="Send messages"
+                onTouchTap={this.props.showSendMessagesDialog}/>
             </Lists.Menu>
           </ColumnList.Header>
           <Lists.List

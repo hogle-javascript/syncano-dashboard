@@ -55,6 +55,7 @@ export default React.createClass({
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Device"/>
           <MenuItem
+            disabled={this.props.checkedItemsCount > 1}
             className="dropdown-item-delete"
             onTouchTap={this.props.showSendMessageDialog}
             primaryText="Send Message"/>

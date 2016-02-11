@@ -83,20 +83,20 @@ export default {
       .error(this.failure);
   },
 
-  sendMessageToGCM(registrationId, payload) {
+  sendMessagesToGCM(payload) {
     this.Connection
       .PushNotifications
       .GCM
-      .sendMessage(registrationId, payload)
+      .sendMessages(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  sendMessageToAPNS(registrationId, payload) {
+  sendMessagesToAPNS(payload) {
     this.Connection
       .PushNotifications
       .APNS
-      .sendMessage(registrationId, payload)
+      .sendMessages(payload)
       .then(this.completed)
       .catch(this.failure);
   }

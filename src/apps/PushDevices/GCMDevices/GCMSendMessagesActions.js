@@ -2,11 +2,11 @@ import CreateActions from '../../../utils/ActionsConstructor';
 
 export default CreateActions(
   {
-    sendMessageToGCM: {
+    sendMessagesToGCM: {
       asyncForm: true,
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.PushDevices.sendMessageToGCM'
+      method: 'Syncano.Actions.PushDevices.sendMessagesToGCM'
     }
   },
   {

@@ -2,11 +2,11 @@ import CreateActions from '../../../utils/ActionsConstructor';
 
 export default CreateActions(
   {
-    sendMessageToAPNS: {
+    sendMessagesToAPNS: {
       asyncForm: true,
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.PushDevices.sendMessageToAPNS'
+      method: 'Syncano.Actions.PushDevices.sendMessagesToAPNS'
     }
   },
   {

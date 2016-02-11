@@ -116,10 +116,12 @@ export default (store, props) => {
     },
 
     handleSendMessage() {
-      const deviceRegistrationId = this.state.registration_id;
+      const checkedItems = props.getCheckedItems().map((item) => item.registration_id);
+      const registrationIds = checkedItems.length > 0 ? checkedItems : [this.state.registration_id];
       let payload = {
         APNS: {
           content: {
+            registration_ids: registrationIds,
             environment: this.state.environment,
             aps: {
               alert: {
@@ -131,6 +133,7 @@ export default (store, props) => {
         },
         GCM: {
           content: {
+            registration_ids: registrationIds,
             environment: this.state.environment,
             notification: {
               title: this.state.appName,
@@ -145,10 +148,16 @@ export default (store, props) => {
         payload[props.type] = JSON.parse(this.state.JSONMessage);
       }
 
-      props.handleSendMessage(deviceRegistrationId, payload[props.type]);
+      console.error(checkedItems);
+
+      props.handleSendMessage(payload[props.type]);
     },
 
     handleEditSubmit() {
+      this.handleSendMessage();
+    },
+
+    handleAddSubmit() {
       this.handleSendMessage();
     },
 

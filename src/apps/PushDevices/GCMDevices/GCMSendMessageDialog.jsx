@@ -2,6 +2,7 @@ import React from 'react';
 
 import Actions from './GCMSendMessagesActions';
 import Store from './GCMSendMessageDialogStore';
+import DevicesStore from './GCMDevicesStore';
 
 import SendMessageDialog from '../SendMessageDialog';
 
@@ -10,7 +11,8 @@ let getPhoneIcon = () => {
 };
 const props = {
   type: 'GCM',
-  handleSendMessage: Actions.sendMessageToGCM,
+  getCheckedItems: DevicesStore.getCheckedItems,
+  handleSendMessage: Actions.sendMessagesToGCM,
   phoneIcon: getPhoneIcon()
 };
 

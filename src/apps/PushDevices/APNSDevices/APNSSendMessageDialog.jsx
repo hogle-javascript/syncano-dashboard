@@ -2,6 +2,7 @@ import React from 'react';
 
 import Actions from './APNSSendMessagesActions';
 import Store from './APNSSendMessagesDialogStore';
+import DevicesStore from './APNSDevicesStore';
 
 import SendMessageDialog from '../SendMessageDialog';
 
@@ -10,7 +11,8 @@ let getPhoneIcon = () => {
 };
 const props = {
   type: 'APNS',
-  handleSendMessage: Actions.sendMessageToAPNS,
+  getCheckedItems: DevicesStore.getCheckedItems,
+  handleSendMessage: Actions.sendMessagesToAPNS,
   phoneIcon: getPhoneIcon()
 };
 
