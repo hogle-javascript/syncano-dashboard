@@ -92,7 +92,12 @@ export default {
       .catch(this.failure);
   },
 
-  sendMessageToAPNS() {
-    console.error('sendMessage');
+  sendMessageToAPNS(registrationId, payload) {
+    this.Connection
+      .PushNotifications
+      .APNS
+      .sendMessage(registrationId, payload)
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

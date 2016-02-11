@@ -38,13 +38,5 @@ export default Reflux.createStore({
     console.debug('DeviceDialogStore::onUpdateDeviceCompleted');
     this.dismissDialog();
     Actions.fetchDevices();
-  },
-
-  onSendMessageToAPNS() {
-    console.error('sendMessageAPNS');
-  },
-
-  onSendMessageToAPNSCompleted() {
-    console.error('sendMessageAPNSCOmpleted');
   }
 });

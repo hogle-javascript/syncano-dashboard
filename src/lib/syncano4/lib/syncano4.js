@@ -3409,6 +3409,7 @@ var Syncano = (function () {
      * @method Syncano#sendMessageToAPNSDevice
      * @alias Syncano.PushNotifications.APNS.sendMessage
      * @param {Object} params - JSON payload
+     * @param {string} params.content- JSON payload
      * @param {string} registrationId - device's registration ID
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
@@ -3470,8 +3471,8 @@ var Syncano = (function () {
      * @method Syncano#sendMessageToGCMDevice
      * @alias Syncano.PushNotifications.GCM.sendMessage
      * @param {Object} params
-     * @param {string} params.registrationId - device's registration ID
      * @param {string} params.content- JSON payload
+     * @param {string} registrationId - device's registration ID
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
