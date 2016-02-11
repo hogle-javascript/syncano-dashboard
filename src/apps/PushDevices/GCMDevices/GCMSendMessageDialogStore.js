@@ -30,14 +30,8 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  onSendMessagesToGCM() {
-    console.debug('GCMDeviceDialogStore::onSendMessageToGCM');
-    console.error('sendMessageGCM');
-  },
-
   onSendMessagesToGCMCompleted() {
-    this.dismissDialog();
     console.debug('GCMDeviceDialogStore::onSendMessageToGCMCompleted');
-    console.error('sendMessageGCMCompleted');
+    this.dismissDialog();
   }
 });

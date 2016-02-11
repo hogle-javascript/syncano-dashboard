@@ -144,11 +144,8 @@ export default (store, props) => {
       };
 
       if (this.state.isJSONMessage) {
-        console.error(this.state.JSONMessage);
         payload[props.type] = JSON.parse(this.state.JSONMessage);
       }
-
-      console.error(checkedItems);
 
       props.handleSendMessage(payload[props.type]);
     },
@@ -260,7 +257,6 @@ export default (store, props) => {
     },
 
     render() {
-      console.error(this.state);
       const type = props.type;
       const isAPNS = type === 'APNS';
       const styles = this.getStyles();

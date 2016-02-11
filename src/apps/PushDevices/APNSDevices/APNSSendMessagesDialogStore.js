@@ -30,14 +30,8 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  onSendMessagesToAPNS() {
-    console.debug('APNSDeviceDialogStore::onSendMessageToAPNS');
-    console.error('sendMessageAPNS');
-  },
-
   onSendMessagesToAPNSCompleted() {
-    this.dismissDialog();
     console.debug('APNSDeviceDialogStore::onSendMessageToAPNSCompleted');
-    console.error('sendMessageAPNSCompleted');
+    this.dismissDialog();
   }
 });
