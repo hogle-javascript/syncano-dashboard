@@ -32,6 +32,7 @@ export default (store, props) => {
 
     getInitialState() {
       return {
+        isHeaderExpanded: false,
         isJSONMessage: false,
         JSONMessage: '',
         appName: 'App name',
@@ -42,24 +43,53 @@ export default (store, props) => {
 
     getStyles() {
       return {
+        sendDialogHeaderContainer: {
+          borderRadius: '4px',
+          borderTop: '1px solid ' + Styles.Colors.grey200,
+          borderRight: '1px solid ' + Styles.Colors.grey200,
+          borderLeft: '1px solid ' + Styles.Colors.grey200,
+          color: Styles.Colors.grey400
+        },
         greyBoxContainer: {
-          backgroundColor: Styles.Colors.grey50,
-          color: Styles.Colors.grey400,
-          border: '1px solid ' + Styles.Colors.grey200
+          borderBottom: '1px solid ' + Styles.Colors.grey200,
+          backgroundColor: Styles.Colors.grey100
         },
         sendDialogHeader: {
-          borderRadius: '4px',
+          margin: 0,
+          borderBottom: '1px solid ' + Styles.Colors.grey200,
           padding: '8px 6px',
           fontSize: 12
         },
-        sendDialogHeaderData: {
-          fontWeight: 600
+        sendDialogHeaderItem: {
+          fontWeight: 600,
+          margin: 0,
+          backgroundColor: Styles.Colors.grey50,
+          borderBottom: '1px solid ' + Styles.Colors.grey200,
+          padding: '8px 6px',
+          fontSize: 12
+        },
+        sendDialogHeaderEvenItem: {
+          backgroundColor: Styles.Colors.grey100
+        },
+        seeMoreVisible: {
+          color: Styles.Colors.blue500,
+          visibility: 'visible',
+          cursor: 'pointer',
+          ':hover': {
+            textDecoration: 'underline'
+          }
+        },
+        seeMoreHidden: {
+          visibility: 'hidden'
         },
         phoneContainer: {
           position: 'relative',
           lineHeight: '12px'
         },
         messagePreview: {
+          backgroundColor: Styles.Colors.grey50,
+          color: Styles.Colors.grey400,
+          border: '1px solid ' + Styles.Colors.grey200,
           padding: 4,
           display: 'flex',
           justifyContent: 'center',
@@ -176,6 +206,12 @@ export default (store, props) => {
       });
     },
 
+    toggleExpandHeader() {
+      this.setState({
+        isHeaderExpanded: !this.state.isHeaderExpanded
+      });
+    },
+
     updateJSONMessage(value) {
       this.setState({
         JSONMessage: value
@@ -256,11 +292,59 @@ export default (store, props) => {
       return field[type];
     },
 
+    renderCheckedItemsData() {
+      const styles = this.getStyles();
+      const state = this.state;
+      const checkedItems = props.getCheckedItems();
+      let itemNodes = [
+        <div
+          style={styles.sendDialogHeaderItem}
+          className="row">
+          <div className="col-sm-3">
+            1.
+          </div>
+          <div className="col-sm-8">
+            {state.userName}
+          </div>
+          <div className="col-sm-9">
+            {state.label}
+          </div>
+          <div className="col-sm-15">
+            {state.device_id}
+          </div>
+        </div>
+      ];
+
+      if (checkedItems.length > 0) {
+        itemNodes = checkedItems.map((item, index) => {
+          return (
+            <div
+              style={[styles.sendDialogHeaderItem, (index + 1) % 2 === 0 && styles.sendDialogHeaderEvenItem]}
+              className="row">
+              <div className="col-sm-3">
+                {`${index + 1}.`}
+              </div>
+              <div className="col-sm-8">
+                {item.userName}
+              </div>
+              <div className="col-sm-9">
+                {item.label}
+              </div>
+              <div className="col-sm-15">
+                {item.device_id}
+              </div>
+            </div>
+          );
+        });
+      }
+
+      return this.state.isHeaderExpanded ? itemNodes : itemNodes.slice(0, 3);
+    },
+
     render() {
       const type = props.type;
       const isAPNS = type === 'APNS';
       const styles = this.getStyles();
-      const state = this.state;
       const dialogStandardActions = [
         <FlatButton
           style={{marginRight: 10}}
@@ -281,42 +365,42 @@ export default (store, props) => {
           key='dialog'
           ref='dialog'
           title={this.renderDialogTitle()}
+          autoScrollBodyContent={true}
           autoDetectWindowHeight={true}
           repositionOnUpdate={false}
           actions={dialogStandardActions}
           actionsContainerClassName="vm-1-t"
           onRequestClose={this.handleCancel}
           open={this.state.open}>
-          <div style={this.mergeStyles(styles.greyBoxContainer, styles.sendDialogHeader)}>
-            <div className="row">
-              <div className="col-sm-10">
+          <div style={styles.sendDialogHeaderContainer}>
+            <div
+              style={styles.sendDialogHeader}
+              className="row">
+              <div className="col-sm-3">
+                No.
+              </div>
+              <div className="col-sm-8">
                 User
               </div>
-              <div className="col-sm-10">
+              <div className="col-sm-9">
                 Device label
               </div>
               <div className="col-sm-15">
                 Device UUID
               </div>
             </div>
-            <div
-              style={styles.sendDialogHeaderData}
-              className="row">
-              <div className="col-sm-10">
-                {state.userName}
-              </div>
-              <div className="col-sm-10">
-                {state.label}
-              </div>
-              <div className="col-sm-15">
-                {state.device_id}
-              </div>
-            </div>
+            {this.renderCheckedItemsData()}
+          </div>
+          <div
+            style={[styles.seeMoreHidden, props.getCheckedItems().length > 3 && styles.seeMoreVisible]}
+            onClick={this.toggleExpandHeader}
+            className="row align-center vp-2-t">
+            {this.state.isHeaderExpanded ? `SHOW LESS` : `SHOW MORE (${props.getCheckedItems().length - 3})`}
           </div>
           <div className="row hp-1-l hp-1-r vm-4-t">
             <div style={styles.phoneContainer}>
               {props.phoneIcon}
-              <div style={this.mergeStyles(styles.messagePreview, styles.greyBoxContainer)}>
+              <div style={styles.messagePreview}>
                 <div style={[styles.messageGCMCircle, isAPNS && styles.messageAPNSCircle]}></div>
                 <div
                   style={styles.messageTextContainer}
