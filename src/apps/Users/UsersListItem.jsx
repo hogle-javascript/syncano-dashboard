@@ -1,12 +1,10 @@
 import React from 'react';
 
-// Stores and Actions
 import Actions from './UsersActions';
 
-// Components
 import UserInfo from './UserInfo';
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
+import {ColumnList, Color} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
@@ -43,7 +41,8 @@ export default React.createClass({
     };
   },
 
-  toggleUserInfo() {
+  toggleUserInfo(event) {
+    event.preventDefault();
     this.setState({
       userInfoVisible: !this.state.userInfoVisible
     });
@@ -68,8 +67,8 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let item = this.props.item;
+    const {item, onIconClick, showDeleteDialog} = this.props;
+    const {userInfoVisible} = this.state;
 
     return (
       <div>
@@ -81,14 +80,15 @@ export default React.createClass({
             icon='account'
             background={Color.getColorByName('blue', 'xlight')}
             checked={item.checked}
-            handleIconClick={this.props.onIconClick}>
-            <Truncate
-              onClick={this.toggleUserInfo}
-              style={styles.showInfoItem}
-              text={item.username}/>
-          </Column.CheckIcon>
-          <Column.ID>{item.id}</Column.ID>
+            handleIconClick={onIconClick}
+            primaryText={item.username}
+            secondaryText={`ID: ${item.id}`}/>
           <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
+          <Column.Desc className="col-xs-4">
+            <a href="#" onClick={this.toggleUserInfo}>
+              {!userInfoVisible ? 'Show' : 'Hide'}
+            </a>
+          </Column.Desc>
           <Column.Date date={item.profile.updated_at}/>
           <Column.Date date={item.profile.created_at}/>
           <Column.Menu>
@@ -98,13 +98,13 @@ export default React.createClass({
               primaryText="Edit a User"/>
             <MenuItem
               className="dropdown-item-delete-user"
-              onTouchTap={this.props.showDeleteDialog}
+              onTouchTap={showDeleteDialog}
               primaryText="Delete a User"/>
           </Column.Menu>
         </ColumnList.Item>
         <div>
           <UserInfo
-            visible={this.state.userInfoVisible}
+            visible={userInfoVisible}
             user={item}/>
         </div>
       </div>

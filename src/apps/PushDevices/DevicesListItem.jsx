@@ -10,12 +10,10 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'DeviceListItem',
 
-  mixins: [
-    State
-  ],
+  mixins: [State],
 
   render() {
-    let item = this.props.item;
+    const {item, icon, onIconClick, showEditDialog, showDeleteDialog} = this.props;
     let user = item.user_id ? item.user_id : 'no user';
 
     return (
@@ -24,12 +22,12 @@ export default React.createClass({
         checked={item.checked}>
         <Column.CheckIcon
           id={item.registration_id}
-          icon={this.props.icon}
+          icon={icon}
           checked={item.checked}
           keyName="registration_id"
           background={Color.getColorByName('blue')}
-          handleIconClick={this.props.onIconClick}
-          className="col-xs-14">
+          handleIconClick={onIconClick}
+          primaryText={item.label}>
           <ColumnList.Link
             name={item.label}
             addBaseUrl={false}
@@ -48,11 +46,11 @@ export default React.createClass({
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={this.props.showEditDialog.bind(null, item)}
+            onTouchTap={() => showEditDialog(item)}
             primaryText="Edit a Device"/>
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Device"/>
         </Column.Menu>
       </ColumnList.Item>

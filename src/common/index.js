@@ -12,6 +12,7 @@ import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
 import Request from './Request';
 import Sidebar from './Sidebar';
+import TogglePanel from './TogglePanel';
 
 export default {
   ColorIconPicker,
@@ -27,5 +28,6 @@ export default {
   NoMobileInfo,
   Notification,
   Request,
-  Sidebar
+  Sidebar,
+  TogglePanel
 };

@@ -11,7 +11,7 @@ export default React.createClass({
   displayName: 'ChannelsListItem',
 
   render() {
-    let item = this.props.item;
+    const {item, onIconClick, showDeleteDialog} = this.props;
 
     return (
       <ColumnList.Item
@@ -24,13 +24,15 @@ export default React.createClass({
           keyName="name"
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
+          handleIconClick={onIconClick}
+          primaryText={item.name}
+          secondaryText={item.description}/>
+        <Column.Desc>
           <ColumnList.Link
             name={item.name}
             link={item.links.poll}
             tooltip="Copy Channel Socket url"/>
-        </Column.CheckIcon>
-        <Column.Desc>{item.description}</Column.Desc>
+        </Column.Desc>
         <Column.Desc className="col-xs-4 col-md-4">
           <div>
             <div>group: {item.group_permissions}</div>
@@ -48,7 +50,7 @@ export default React.createClass({
             primaryText="Edit a Channel Socket"/>
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Channel Socket"/>
         </Column.Menu>
       </ColumnList.Item>

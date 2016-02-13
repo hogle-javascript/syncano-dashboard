@@ -8,7 +8,7 @@ import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
 
 import {FlatButton, RaisedButton, TextField, Utils} from 'syncano-material-ui';
-import {Color, Loading} from 'syncano-components';
+import {Color} from 'syncano-components';
 import {Dialog, Icon, Notification, ColorIconPicker} from '../../common';
 
 export default React.createClass({
@@ -118,32 +118,14 @@ export default React.createClass({
     ];
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} an Instance`}
-        defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={open}
-        overlayStyle={{background: '#fff'}}
-        contentStyle={{transform: 'none', width: '100%', maxWidth: 998}}
         actions={dialogCustomActions}
-        repositionOnUpdate={false}
-        style={{padding: '136px 0 0px'}}
-        titleStyle={{paddingTop: 0}}
-        bodyStyle={{paddingTop: 35}}
-        actionsContainerStyle={{padding: '0 24px'}}
-        zDepth={0}>
-
-        <div style={{
-          position: 'fixed',
-          top: 40,
-          right: 40,
-          fontSize: 40,
-          color: '#b8c0c9',
-          cursor: 'pointer'
-        }} onClick={this.handleCancel}><i className="synicon-close"/></div>
-
+        isLoading={isLoading}>
         {this.renderFormNotifications()}
 
         <div className="row">
@@ -178,12 +160,7 @@ export default React.createClass({
               floatingLabelText="Description"/>
           </div>
         </div>
-        <Loading
-          type="linear"
-          position="top"
-          style={{position: 'fixed'}}
-          show={isLoading} />
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

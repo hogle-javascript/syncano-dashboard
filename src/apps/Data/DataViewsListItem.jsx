@@ -19,7 +19,7 @@ export default React.createClass({
   ],
 
   render() {
-    let item = this.props.item;
+    const {item, onIconClick, showDeleteDialog} = this.props;
 
     return (
       <ColumnList.Item
@@ -32,13 +32,15 @@ export default React.createClass({
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           keyName="name"
-          handleIconClick={this.props.onIconClick}>
+          handleIconClick={onIconClick}
+          primaryText={item.name}
+          secondaryText={item.description}/>
+        <Column.Desc className="col-flex-1">
           <ColumnList.Link
             name={item.name}
             link={item.links.self}
             tooltip="Copy Data Socket url"/>
-        </Column.CheckIcon>
-        <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
+        </Column.Desc>
         <Column.Desc className="col-xs-11">
           <Link to="classes-edit" params={{
             instanceName: this.getParams().instanceName,
@@ -54,7 +56,7 @@ export default React.createClass({
             primaryText="Edit a Data Socket" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Data Socket" />
         </Column.Menu>
       </ColumnList.Item>

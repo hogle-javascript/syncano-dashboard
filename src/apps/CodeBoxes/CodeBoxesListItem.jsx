@@ -7,7 +7,8 @@ import Actions from './CodeBoxesActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
 
 import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList} from 'syncano-components';
+import {Color, ColumnList, Truncate} from 'syncano-components';
+import Tooltip from './Tooltip';
 
 let Column = ColumnList.Column;
 
@@ -20,7 +21,7 @@ export default React.createClass({
   ],
 
   render() {
-    let item = this.props.item;
+    let {item, onIconClick, showDeleteDialog} = this.props;
     let publicString = item.public.toString();
     let link = item.public ? item.links['public-link'] : item.links.self;
     let snippet = SnippetsStore.getSnippetById(item.codebox);
@@ -38,13 +39,22 @@ export default React.createClass({
           keyName="name"
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
+          handleIconClick={onIconClick}
+          primaryText={
+            <div style={{display: 'flex'}}>
+              <Truncate text={item.name}/>
+              <Tooltip tooltip={`rzez nieznanego drukarza do wypełnienia tekstem próbnej książki.
+              Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym.
+              Spopularyzował się w latach 60. XX w. wraz z publikacją `}/>
+            </div>
+          }
+          secondaryText={item.description}/>
+        <Column.Desc className="col-flex-1">
           <ColumnList.Link
             name={item.name}
             link={link}
             tooltip="Copy CobeBox Socket url"/>
-        </Column.CheckIcon>
-        <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
+        </Column.Desc>
         <Column.Desc className="col-xs-4">
           <Link
             to="snippet"
@@ -73,7 +83,7 @@ export default React.createClass({
             primaryText="Edit a CodeBox Socket" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a CodeBox Socket" />
         </Column.Menu>
       </ColumnList.Item>

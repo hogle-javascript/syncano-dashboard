@@ -1,27 +1,23 @@
 import React from 'react';
 import {State, Link} from 'react-router';
 
-// Stores and Actions
 import Actions from './SchedulesActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
 
-// Components
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
+import {ColumnList, Color} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'SchedulesListItem',
 
-  mixins: [
-    State
-  ],
+  mixins: [State],
 
   render() {
-    let item = this.props.item;
-    let snippet = SnippetsStore.getSnippetById(item.codebox);
-    let snippetLabel = snippet ? snippet.label : '';
+    const {item, onIconClick, showDeleteDialog} = this.props;
+    const snippet = SnippetsStore.getSnippetById(item.codebox);
+    const snippetLabel = snippet ? snippet.label : '';
 
     return (
       <ColumnList.Item
@@ -32,13 +28,12 @@ export default React.createClass({
           icon="camera-timer"
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          <Truncate text={item.label}/>
-        </Column.CheckIcon>
-        <Column.ID>{item.id}</Column.ID>
+          handleIconClick={onIconClick}
+          primaryText={item.label}
+          secondaryText={`ID: ${item.id}`}/>
         <Column.Desc className="col-flex-1">{item.crontab}</Column.Desc>
         <Column.Desc className="col-sm-4">
-          <Link to="snippet-edit" params={{
+          <Link to="snippet" params={{
             instanceName: this.getParams().instanceName,
             snippetId: item.codebox
           }}>
@@ -61,7 +56,7 @@ export default React.createClass({
             primaryText="Edit a Schedule Socket" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Schedule Socket" />
         </Column.Menu>
       </ColumnList.Item>

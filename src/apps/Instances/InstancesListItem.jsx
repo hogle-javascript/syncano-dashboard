@@ -35,12 +35,13 @@ export default React.createClass({
           icon={item.metadata.icon}
           background={Color.getColorByName(item.metadata.color)}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          <Truncate
-            onClick={() => this.transitionTo('instance', {instanceName: item.name})}
-            style={{cursor: 'pointer'}}
-            text={item.name}/>
-        </Column.CheckIcon>
+          handleIconClick={this.props.onIconClick}
+          primaryText={
+            <Truncate
+              onClick={() => this.transitionTo('instance', {instanceName: item.name})}
+              style={{cursor: 'pointer'}}
+              text={item.name}/>
+          }/>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
         <Column.Menu handleClick={() => Actions.setClickedInstance(item)}>

@@ -9,13 +9,13 @@ import 'brace/mode/ruby';
 import 'brace/mode/golang';
 import 'brace/mode/swift';
 import 'brace/mode/php';
+import 'brace/mode/json';
 import 'brace/theme/tomorrow';
-
 
 export default React.createClass({
 
   propTypes: {
-    mode: React.PropTypes.oneOf(['python', 'javascript', 'ruby', 'golang', 'swift', 'php']),
+    mode: React.PropTypes.oneOf(['python', 'javascript', 'ruby', 'golang', 'swift', 'php', 'json']),
     theme: React.PropTypes.string,
     name: React.PropTypes.string,
     height: React.PropTypes.string,
@@ -35,7 +35,7 @@ export default React.createClass({
     return {
       name: 'brace-editor',
       mode: '',
-      theme: '',
+      theme: 'tomorrow',
       height: '500px',
       width: '100%',
       value: '',

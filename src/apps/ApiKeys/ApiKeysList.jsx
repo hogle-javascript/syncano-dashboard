@@ -86,9 +86,17 @@ export default React.createClass({
             primary={true}>
             {this.props.name}
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="KEY">Key</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="TEXT">Permissions</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DESC"/>
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-4">
+            ID
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="TEXT"
+            className="col-xs-8">
+            Permissions
+          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu

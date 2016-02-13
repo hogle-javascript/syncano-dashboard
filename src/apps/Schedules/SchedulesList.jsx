@@ -69,7 +69,6 @@ export default React.createClass({
             handleClick={this.props.handleTitleClick}>
             {this.props.name}
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-flex-1"
             columnName="DESC">

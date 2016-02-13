@@ -18,10 +18,6 @@ export default (name, item) => {
 
     getStyles() {
       return {
-        linksSection: {
-          color: '#9B9B9B',
-          fontSize: 12
-        },
         separator: {
           padding: '0 8px'
         },
@@ -44,32 +40,28 @@ export default (name, item) => {
             icon={item.icon}
             checkable={false}
             background={Color.getColorByName('blue')}
-            className="col-xs-12">
-            <div>
+            primaryText={item.label}
+            secondaryText={
               <div>
-                {item.label}
+                <span
+                  key="configuration"
+                  style={styles.linkItem}
+                  onClick={item.showConfigDialog}>
+                  Configuration
+                </span>
+                <span
+                  key="separator"
+                  style={styles.separator}>
+                  |
+                </span>
+                <span
+                  key="devices"
+                  onClick={() => this.transitionTo(item.devicesRoute, this.getParams())}
+                  style={styles.linkItem}>
+                  Devices
+                </span>
               </div>
-              <div style={styles.linksSection}>
-              <span
-                key="configuration"
-                style={styles.linkItem}
-                onClick={item.showConfigDialog}>
-                Configuration
-              </span>
-              <span
-                key="separator"
-                style={styles.separator}>
-                |
-              </span>
-              <span
-                key="devices"
-                onClick={() => this.transitionTo(item.devicesRoute, this.getParams())}
-                style={styles.linkItem}>
-                Devices
-              </span>
-              </div>
-            </div>
-          </Column.CheckIcon>
+            }/>
           <Column.Desc className="col-flex-1">
             {item.getDevices().length}
           </Column.Desc>

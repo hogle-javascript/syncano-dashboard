@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 import {Styles, Paper, FontIcon} from 'syncano-material-ui';
-import {ColumnList, Loading, Truncate, Trace} from 'syncano-components';
+import {ColumnList, Loading, Trace} from 'syncano-components';
 import {Lists} from '../../common';
 
 let Column = ColumnList.Column;
@@ -106,10 +106,9 @@ export default Radium(React.createClass({
             id={item.id.toString()}
             icon={status.icon}
             background={status.background}
-            checkable={false}>
-            <Truncate text={item.status}/>
-          </Column.CheckIcon>
-          <Column.ID>{item.id}</Column.ID>
+            checkable={false}
+            primaryText={item.status}
+            secondaryText={`ID: ${item.id}`}/>
           <Column.Desc>{duration}</Column.Desc>
           <Column.Date
             date={item.executed_at}
@@ -127,7 +126,6 @@ export default Radium(React.createClass({
       <Lists.List key="traces-list">
         <ColumnList.Header>
           <Column.ColumnHeader primary={true} columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Duration</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
         </ColumnList.Header>
