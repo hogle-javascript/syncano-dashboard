@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin} from '../../../mixins';
 
 // Stores & Actions
-import Actions from './GCMDevicesActions';
+import Actions from './GCMSendMessagesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -30,15 +30,8 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  onCreateDeviceCompleted() {
-    console.debug('GCMDeviceDialogStore::onCreateDeviceCompleted');
+  onSendMessagesToGCMCompleted() {
+    console.debug('GCMDeviceDialogStore::onSendMessageToGCMCompleted');
     this.dismissDialog();
-    Actions.fetchDevices();
-  },
-
-  onUpdateDeviceCompleted() {
-    console.debug('GCMDeviceDialogStore::onUpdateDeviceCompleted');
-    this.dismissDialog();
-    Actions.fetchDevices();
   }
 });
