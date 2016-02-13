@@ -44,6 +44,10 @@ export default {
       selector: `//div[text()="${utils.addSuffix('admin')}@syncano.com"]`,
       locateStrategy: 'xpath'
     },
+    adminInvoTableRow: {
+      selector: `//div[text()="invo@invo.com"]`,
+      locateStrategy: 'xpath'
+    },
     selectAdminTableRow: {
       selector: `//div[text()="${utils.addSuffix('admin')}@syncano.com"]/../preceding-sibling::div`,
       locateStrategy: 'xpath'

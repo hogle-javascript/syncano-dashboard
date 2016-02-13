@@ -13,8 +13,15 @@ export default React.createClass({
   mixins: [State],
 
   render() {
-    const {item, icon, onIconClick, showEditDialog, showDeleteDialog} = this.props;
-    let user = item.user_id ? item.user_id : 'no user';
+    const {
+      item,
+      icon,
+      onIconClick,
+      showEditDialog,
+      showDeleteDialog,
+      checkedItemsCount,
+      showSendMessageDialog
+    } = this.props;
 
     return (
       <ColumnList.Item
@@ -36,7 +43,7 @@ export default React.createClass({
             tooltip="Copy device ID"/>
         </Column.CheckIcon>
         <Column.Desc className="col-xs-13">
-          {user}
+          {item.userName}
         </Column.Desc>
         <Column.Desc>
           {item.is_active.toString()}
@@ -52,6 +59,11 @@ export default React.createClass({
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
             primaryText="Delete a Device"/>
+          <MenuItem
+            disabled={checkedItemsCount > 1}
+            className="dropdown-item-delete"
+            onTouchTap={showSendMessageDialog}
+            primaryText="Send Message"/>
         </Column.Menu>
       </ColumnList.Item>
     );

@@ -42,7 +42,6 @@ export default Reflux.createStore({
 
     const join = this.joinTrailing(
       Actions.fetchBillingProfile.completed,
-      Actions.fetchBillingUsage.completed,
       Actions.fetchBillingSubscriptions.completed,
       () => {
         join.stop();
@@ -53,7 +52,6 @@ export default Reflux.createStore({
     );
 
     Actions.fetchBillingProfile();
-    Actions.fetchBillingUsage();
     Actions.fetchBillingSubscriptions();
   },
 
@@ -184,11 +182,6 @@ export default Reflux.createStore({
   onFetchBillingProfileCompleted(payload) {
     this.data.isLoading = false;
     this.setProfile(payload);
-  },
-
-  onFetchBillingUsageCompleted(payload) {
-    this.data.isLoading = false;
-    this.setUsage(payload);
   },
 
   onFetchBillingSubscriptionsCompleted(payload) {

@@ -25,6 +25,7 @@ export default React.createClass({
     onChange: React.PropTypes.func,
     value: React.PropTypes.string,
     onLoad: React.PropTypes.func,
+    minLines: React.PropTypes.number,
     maxLines: React.PropTypes.number,
     readOnly: React.PropTypes.bool,
     highlightActiveLine: React.PropTypes.bool,
@@ -59,6 +60,7 @@ export default React.createClass({
     this.editor.on('change', this.onChange);
     this.editor.setValue(this.props.value);
     this.editor.renderer.setShowGutter(this.props.showGutter);
+    this.editor.setOption('minLines', this.props.minLines);
     this.editor.setOption('maxLines', this.props.maxLines);
     this.editor.setOption('readOnly', this.props.readOnly);
     this.editor.setOption('highlightActiveLine', this.props.highlightActiveLine);
