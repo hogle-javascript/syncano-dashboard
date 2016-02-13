@@ -12,7 +12,7 @@ export default {
   after: (client) => {
     client.end();
   },
-  'User adds an Administrator': (client) => {
+  'User invites an Administrator': (client) => {
     const email = utils.addSuffix('admin') + '@syncano.com';
     const adminsPage = client.page.adminsPage();
 
@@ -26,7 +26,7 @@ export default {
       .clickElement('@confirmButton')
       .waitForElementVisible('@adminEmailTableRow');
   },
-  'User deletes an Administrator': (client) => {
+  'User deletes an Administrator invitation': (client) => {
     const adminsPage = client.page.adminsPage();
 
     adminsPage
@@ -36,7 +36,7 @@ export default {
       .clickElement('@deleteButton')
       .waitForElementVisible('@deleteAdminModalTitle')
       .clickElement('@confirmButton')
-      .waitForElementVisible('@adminTableRow')
-      .waitForElementNotPresent('@adminEmailTableRow');
+      .waitForElementNotPresent('@adminEmailTableRow')
+      .waitForElementVisible('@adminInvoTableRow');
   }
 };
