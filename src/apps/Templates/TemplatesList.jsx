@@ -52,12 +52,13 @@ export default React.createClass({
         key={`template-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={this.showDialog.bind(null, 'removeTemplateDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('removeTemplateDialog', item)}/>
     );
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const {name, handleTitleClick, ...other} = this.props;
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Lists.Container>
@@ -67,8 +68,8 @@ export default React.createClass({
             className="col-xs-16"
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={this.props.handleTitleClick}>
-            {this.props.name}
+            handleClick={handleTitleClick}>
+            {name}
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
@@ -82,12 +83,12 @@ export default React.createClass({
               <Lists.MenuItem
                 singleItemText="Delete a Template Socket"
                 multipleItemsText="Delete Template Sockets"
-                onTouchTap={this.showDialog.bind(null, 'removeTemplateDialog')}/>
+                onTouchTap={() => this.showDialog('removeTemplateDialog')}/>
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
-          {...this.props}
+          {...other}
           key="templates-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

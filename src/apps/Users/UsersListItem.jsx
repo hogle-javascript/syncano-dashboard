@@ -94,7 +94,7 @@ export default React.createClass({
           <Column.Menu>
             <MenuItem
               className="dropdown-item-edit-user"
-              onTouchTap={Actions.showDialog.bind(null, item)}
+              onTouchTap={() => Actions.showDialog(item)}
               primaryText="Edit a User"/>
             <MenuItem
               className="dropdown-item-delete-user"

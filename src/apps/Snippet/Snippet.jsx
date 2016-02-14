@@ -10,11 +10,10 @@ import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
 import {RaisedButton, FontIcon, Checkbox} from 'syncano-material-ui';
-import {Container, Loading, Show, CharacterCounter} from 'syncano-components';
+import {Loading, Show} from 'syncano-components';
 import {Dialog, InnerToolbar, Editor, Notification, TogglePanel} from '../../common';
 import Traces from '../Traces';
-
-import SnippetConstants from './SnippetConstants';
+import SnippetConfig from './SnippetConfig';
 
 export default React.createClass({
   displayName: 'Snippet',
@@ -99,6 +98,7 @@ export default React.createClass({
   },
 
   handleRunSnippet() {
+    this.handleUpdate();
     if (this.state.isPayloadValid) {
       Actions.runSnippet({
         id: this.state.currentSnippet.id,
@@ -136,17 +136,14 @@ export default React.createClass({
     const {currentSnippet, lastTraceStatus, isLoading, lastTraceDuration, lastTraceResult} = this.state;
     let source = null;
     let editorMode = 'python';
-    let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
 
     if (currentSnippet) {
       source = currentSnippet.source;
       editorMode = Store.getEditorMode();
     }
 
-    console.error(this.state);
-
     return (
-      <div>
+      <div className="col-flex-1" style={{padding: 0, height: '100px', display: 'flex', flexDirection: 'column'}}>
         {this.getDialogs()}
         <InnerToolbar
           title={this.getToolbarTitle()}
@@ -175,11 +172,9 @@ export default React.createClass({
         <Loading show={isLoading || !currentSnippet}>
           <div className="row">
             <div className="col-flex-1" style={{borderRight: '1px solid rgba(224,224,224,.5)'}}>
-              <Container>
-                <CharacterCounter
-                  charactersCountWarn={SnippetConstants.charactersCountWarn}
-                  characters={charactersCount}
-                  maxCharacters={SnippetConstants.maxCharactersCount}/>
+              <TogglePanel
+                title="Code"
+                initialOpen={true}>
                 <Show if={this.getValidationMessages('source').length > 0}>
                   <div style={styles.notification}>
                     <Notification type="error">
@@ -192,26 +187,37 @@ export default React.createClass({
                   mode={editorMode}
                   onChange={this.handleOnSourceChange}
                   onLoad={this.clearAutosaveTimer}
-                  value={source}/>
-              </Container>
+                  value={source}
+                  maxLines="Infinity"/>
+              </TogglePanel>
             </div>
             <div className="col-flex-1" style={{padding: 0}}>
 
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
-                <TogglePanel title="Config">
-                  dupa
+                <TogglePanel
+                  title="Config"
+                  initialOpen={true}>
+                  <SnippetConfig/>
                 </TogglePanel>
               </div>
 
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
-                <TogglePanel title="Payload">
+                <TogglePanel
+                  title="Payload"
+                  initialOpen={true}>
                   <Editor
                     name="payload-editor"
                     ref="payloadSource"
                     mode="json"
-                    height="100px"
+                    height="200px"
                     onChange={(payload) => this.setState({payloadValue: payload})}
-                    value={`{\n    "abc": 123\n}`} />
+                    value={[
+                      '{',
+                      '    "language": "JSON",',
+                      '    "foo": "bar",',
+                      '    "trailing": "comma"',
+                      '}'
+                    ].join('\n')} />
                 </TogglePanel>
               </div>
 

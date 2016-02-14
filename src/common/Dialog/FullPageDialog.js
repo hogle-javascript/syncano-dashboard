@@ -1,16 +1,13 @@
 import React from 'react';
 import _ from 'lodash';
 import DialogMixin from '../../mixins/DialogMixin';
-import {Dialog, Utils} from 'syncano-material-ui';
+import {Dialog, IconButton} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 
 export default React.createClass({
   displayName: 'FullPageDialog',
 
-  mixins: [
-    Utils.Styles,
-    DialogMixin
-  ],
+  mixins: [DialogMixin],
 
   getDefaultProps() {
     return {
@@ -26,14 +23,18 @@ export default React.createClass({
       },
       closeButton: {
         position: 'fixed',
-        top: 40,
-        right: 40,
+        top: 20,
+        right: 20,
+        width: 64,
+        height: 64
+      },
+      closeButtonIcon: {
         fontSize: 40,
-        color: '#b8c0c9',
-        cursor: 'pointer'
+        color: '#b8c0c9'
       },
       overlay: {
-        background: '#fff'
+        background: '#fff',
+        zIndex: 0
       },
       content: {
         transform: 'none',
@@ -55,22 +56,9 @@ export default React.createClass({
     };
   },
 
-  renderCloseButton() {
-    const styles = this.getStyles();
-    const {onRequestClose} = this.props;
-
-    return (
-      <div
-        style={styles.closeButton}
-        onClick={onRequestClose}>
-        <i className="synicon-close" />
-      </div>
-    );
-  },
-
   render() {
     let styles = this.getStyles();
-    let {children, open, actions, isLoading, ...other} = this.props;
+    let {children, open, actions, isLoading, onRequestClose, ...other} = this.props;
 
     return (
       <Dialog
@@ -86,8 +74,15 @@ export default React.createClass({
         titleStyle={styles.title}
         bodyStyle={styles.body}
         actionsContainerStyle={styles.actionsContainer}
+        onRequestClose={onRequestClose}
         zDepth={0}>
-        {this.renderCloseButton()}
+
+        <IconButton
+          style={styles.closeButton}
+          iconStyle={styles.closeButtonIcon}
+          onTouchTap={onRequestClose}
+          iconClassName="synicon-close" />
+
         {children}
         <Loading
           type="linear"

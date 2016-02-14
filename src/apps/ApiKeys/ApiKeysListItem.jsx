@@ -55,7 +55,7 @@ export default React.createClass({
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={Actions.showDialog.bind(null, item)}
+            onTouchTap={() => Actions.showDialog(item)}
             primaryText="Edit an API Key" />
           <MenuItem
             onTouchTap={showResetDialog}

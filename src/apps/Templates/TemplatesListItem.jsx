@@ -20,14 +20,14 @@ export default React.createClass({
   ],
 
   handleItemClick(templateName) {
-    this.transitionTo('template-edit', {
+    this.transitionTo('template', {
       instanceName: this.getParams().instanceName,
       templateName
     });
   },
 
   render() {
-    let item = this.props.item;
+    const {item, onIconClick, showDeleteDialog} = this.props;
 
     return (
       <ColumnList.Item
@@ -41,23 +41,21 @@ export default React.createClass({
           keyName="name"
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-
+          handleIconClick={onIconClick}>
           <Truncate
-            onClick={this.handleItemClick.bind(null, item.name)}
+            onClick={() => this.handleItemClick(item.name)}
             text={item.name}
             style={{cursor: 'pointer'}}/>
-
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.content_type}</Column.Desc>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={Actions.showDialog.bind(null, item)}
+            onTouchTap={() => Actions.showDialog(item)}
             primaryText="Edit a Template Socket" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Template Socket" />
         </Column.Menu>
       </ColumnList.Item>
