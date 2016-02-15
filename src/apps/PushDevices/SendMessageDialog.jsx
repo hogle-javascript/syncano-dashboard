@@ -298,6 +298,7 @@ export default (store, props) => {
       const checkedItems = props.getCheckedItems();
       let itemNodes = [
         <div
+          key="clickedItem"
           style={styles.sendDialogHeaderItem}
           className="row">
           <div className="col-sm-3">
@@ -319,6 +320,7 @@ export default (store, props) => {
         itemNodes = checkedItems.map((item, index) => {
           return (
             <div
+              key={`item${item.registration_id}`}
               style={[styles.sendDialogHeaderItem, (index + 1) % 2 === 0 && styles.sendDialogHeaderEvenItem]}
               className="row">
               <div className="col-sm-3">
