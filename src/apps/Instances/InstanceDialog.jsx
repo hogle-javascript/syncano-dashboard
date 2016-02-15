@@ -113,6 +113,7 @@ export default React.createClass({
         key="confirm"
         label="Confirm"
         primary={true}
+        style={{marginLeft: 8}}
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
@@ -133,6 +134,7 @@ export default React.createClass({
         titleStyle={{paddingTop: 0}}
         bodyStyle={{paddingTop: 35}}
         actionsContainerStyle={{padding: '0 24px'}}
+        modal={true}
         zDepth={0}>
 
         <div style={{
