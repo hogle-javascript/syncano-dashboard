@@ -89,8 +89,7 @@ export default React.createClass({
         onIconClick={Actions.checkItem}
         item={item}
         showAcceptDialog={() => this.showDialog('acceptInvitationsDialog', item)}
-        showDeclineDialog={() => this.showDialog('declineInvitationsDialog', item)}
-        />
+        showDeclineDialog={() => this.showDialog('declineInvitationsDialog', item)} />
     );
   },
 
