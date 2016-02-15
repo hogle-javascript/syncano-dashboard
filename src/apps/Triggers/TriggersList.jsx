@@ -87,7 +87,16 @@ export default React.createClass({
             className="col-sm-4">
             Snippet
           </Column.ColumnHeader>
-          <Column.ColumnHeader className="col-sm-7" columnName="DESC">Signal</Column.ColumnHeader>
+          <Column.ColumnHeader
+            className="col-sm-4"
+            columnName="DESC">
+            Traces
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            className="col-sm-3"
+            columnName="DESC">
+            Signal
+          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
