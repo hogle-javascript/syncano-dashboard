@@ -1,8 +1,8 @@
 import React from 'react';
 import {List} from 'syncano-material-ui';
-import ListSubHeader from './ListSubHeader';
+import ListSubheader from './ListSubheader';
 
-export default ({subHeader, children}) => {
+export default ({subheader, children}) => {
   const styles = {
     list: {
       paddingTop: 0,
@@ -13,7 +13,7 @@ export default ({subHeader, children}) => {
 
   return (
     <div>
-      <ListSubHeader text={subHeader}/>
+      <ListSubheader text={subheader}/>
       <List style={styles.list}>
         {children}
       </List>

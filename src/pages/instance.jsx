@@ -50,7 +50,7 @@ export default React.createClass({
             </Sticky>
             <Sidebar.List
               key="General"
-              subHeader="General">
+              subheader="General">
               <Sidebar.LinkListItem
                 key="Sockets"
                 routeName="sockets"
@@ -92,7 +92,7 @@ export default React.createClass({
             </Sidebar.List>
             <Sidebar.List
               key="Components"
-              subHeader="Components">
+              subheader="Components">
               <Sidebar.LinkListItem
                 key="Users"
                 routeName="users"
@@ -112,7 +112,7 @@ export default React.createClass({
             </Sidebar.List>
             <Sidebar.List
               key="Settings"
-              subHeader="Settings">
+              subheader="Settings">
               <Sidebar.LinkListItem
                 key="General"
                 routeName="instance-edit"

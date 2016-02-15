@@ -40,7 +40,7 @@ export default {
       locateStrategy: 'xpath'
     },
     general: {
-      selector: '//div[@class=" col-flex-0 left-nav"]//div[text()="General"]',
+      selector: '//div[@class=" col-flex-0 left-nav"]//a//div[text()="General"]',
       locateStrategy: 'xpath'
     },
     administrators: {
