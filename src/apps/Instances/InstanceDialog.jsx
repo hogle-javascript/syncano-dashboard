@@ -112,7 +112,7 @@ export default React.createClass({
       <RaisedButton
         key="confirm"
         label="Confirm"
-        primary={true}
+        secondary={true}
         style={{marginLeft: 8}}
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
