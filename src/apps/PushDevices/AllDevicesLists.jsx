@@ -1,10 +1,9 @@
 import React from 'react';
-import Radium from 'radium';
 
 import APNSDevices from './APNSDevices/APNSDevices';
 import GCMDevices from './GCMDevices/GCMDevices';
 
-export default Radium(React.createClass({
+export default React.createClass({
 
   displayName: 'AllDevicesLists',
 
@@ -28,4 +27,4 @@ export default Radium(React.createClass({
       </div>
     );
   }
-}));
+});
