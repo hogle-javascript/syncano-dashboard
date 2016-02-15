@@ -169,14 +169,6 @@ export default React.createClass({
             emptyItemHandleClick={CodeBoxes.Actions.showDialog}
             emptyItemContent="Create a CodeBox Socket"/>
 
-          <Channels.List
-            name="Channel Sockets"
-            isLoading={this.state.channels.isLoading}
-            items={this.state.channels.items}
-            handleTitleClick={() => this.handleListTitleClick('channels')}
-            emptyItemHandleClick={Channels.Actions.showDialog}
-            emptyItemContent="Create a Channel Socket"/>
-
           <Triggers.List
             name="Trigger Sockets"
             isLoading={this.state.triggers.isLoading}
@@ -193,11 +185,18 @@ export default React.createClass({
             emptyItemHandleClick={Schedules.Actions.showDialog}
             emptyItemContent="Create a Schedule Socket"/>
 
+          <Channels.List
+            name="Channel Sockets"
+            isLoading={this.state.channels.isLoading}
+            items={this.state.channels.items}
+            handleTitleClick={() => this.handleListTitleClick('channels')}
+            emptyItemHandleClick={Channels.Actions.showDialog}
+            emptyItemContent="Create a Channel Socket"/>
+
           <PushNotifications.List
             name="Push Notification Sockets"
             handleTitleClick={() => this.handleListTitleClick('apns-devices')}
             items={this.getPushNotificationsItems()}/>
-
         </Loading>
       </div>
     );

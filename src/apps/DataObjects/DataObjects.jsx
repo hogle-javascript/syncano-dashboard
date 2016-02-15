@@ -204,7 +204,13 @@ export default React.createClass({
             iconClassName="synicon-delete"
             tooltip="Delete Data Objects"
             disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
-            onTouchTap={() => this.showDialog('deleteDataObjectDialog')} />
+            onTouchTap={() => this.showDialog('deleteDataObjectDialog')}/>
+
+          <IconButton
+            style={{fontSize: 25, marginTop: 5}}
+            iconClassName="synicon-refresh"
+            tooltip="Reload Data Objects"
+            onTouchTap={() => Actions.fetch()}/>
 
           <ColumnsFilterMenu
             columns={Store.getTableColumns()}

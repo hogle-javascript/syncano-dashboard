@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils & Mixins
 import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../mixins';
@@ -35,6 +36,14 @@ export default Reflux.createStore({
 
   refreshData() {
     Actions.fetchUsers();
+  },
+
+  getItems() {
+    return this.data.items;
+  },
+
+  getUserById(userId) {
+    return _.filter(this.data.items, {id: userId}).length > 0 ? _.filter(this.data.items, {id: userId})[0] : null;
   },
 
   setUsers(users) {

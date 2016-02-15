@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 
 import Store from './APNSDevicesStore';
 import Actions from './APNSDevicesActions';
+import SendMessagesActions from './APNSSendMessagesActions';
 
 import {Container} from 'syncano-components';
 import DevicesList from '../DevicesList';
@@ -29,6 +30,7 @@ export default React.createClass({
           visibleItems={this.props.visibleItems}
           getChekcedItems={Store.getCheckedItems}
           actions={Actions}
+          showSendMessagesDialog={SendMessagesActions.showDialog}
           emptyItemHandleClick={Actions.showDialog}
           emptyItemContent="Add APNS Device"
           hideDialogs={this.state.hideDialogs}

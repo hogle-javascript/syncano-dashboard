@@ -229,13 +229,6 @@ export default Radium(React.createClass({
                   Docs
                 </a>
               </li>
-              <li style={styles.toolbarListItem}>
-                <a
-                  href="http://ideas.syncano.io"
-                  target="_blank">
-                  Ideas
-                </a>
-              </li>
             </ul>
           </ToolbarGroup>
         </Toolbar>

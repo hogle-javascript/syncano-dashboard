@@ -53,7 +53,19 @@ export default React.createClass({
             {snippetLabel}
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-sm-7">{item.signal}</Column.Desc>
+        <Column.Desc className="col-xs-4">
+          <Link
+            to="trigger-traces"
+            params={{
+              instanceName: this.getParams().instanceName,
+              triggerId: item.id
+            }}>
+            Traces
+          </Link>
+        </Column.Desc>
+        <Column.Desc className="col-sm-3">
+          {item.signal}
+        </Column.Desc>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

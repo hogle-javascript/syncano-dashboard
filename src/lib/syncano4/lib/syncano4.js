@@ -219,8 +219,7 @@ var Syncano = (function () {
         try {
           data = JSON.parse(body);
         } catch (e) {
-        }
-        ;
+        };
         params.success(data);
       } else {
         params.error({
@@ -792,11 +791,13 @@ var Syncano = (function () {
     this.PushNotifications = {
       GCM: {
         config: this.configGCMPushNotification.bind(this),
-        get: this.getGCMPushNotificationConfig.bind(this)
+        get: this.getGCMPushNotificationConfig.bind(this),
+        sendMessages: this.sendMessageToGCMDevices.bind(this)
       },
       APNS: {
         config: this.configAPNSPushNotification.bind(this),
         get: this.getAPNSPushNotificationConfig.bind(this),
+        sendMessages: this.sendMessageToAPNSDevices.bind(this),
         uploadCertificate: this.uploadAPNSCertificate.bind(this)
       },
       Devices: {
@@ -2688,8 +2689,7 @@ var Syncano = (function () {
     getAccountInvitation: function (invitationId, params, callbackOK, callbackError) {
       if (typeof invitationId === 'object') {
         invitationId = invitationId.id;
-      }
-      ;
+      };
       return this.request('GET', 'v1/account/invitations/' + invitationId + '/', params || {}, callbackOK, callbackError);
     },
 
@@ -2707,8 +2707,7 @@ var Syncano = (function () {
     removeAccountInvitation: function (invitationId, callbackOK, callbackError) {
       if (typeof invitationId === 'object') {
         invitationId = invitationId.id;
-      }
-      ;
+      };
       return this.request('DELETE', 'v1/account/invitations/' + invitationId + '/', {}, callbackOK, callbackError);
     },
 
@@ -3556,6 +3555,30 @@ var Syncano = (function () {
     },
 
     /**
+     * Sends Push Notification message to specified GCM device
+     *
+     * @method Syncano#sendMessageToAPNSDevices
+     * @alias Syncano.PushNotifications.APNS.sendMessage
+     * @param {Object} params - JSON payload
+     * @param {string} params.content- JSON payload
+     * @param {array} params.content.registration_ids - device's registration ID
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    sendMessageToAPNSDevices: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      if (typeof params.content.registration_ids === 'undefined') {
+        throw new Error("Missing 'registrationIds' param");
+      }
+      var url = linksObject.instance_push_notifications + 'apns/messages/';
+
+      return this.request('POST', url, params, callbackOK, callbackError);
+    },
+
+    /**
      * Returns APNS Push Notification config
      *
      * @method Syncano#getAPNSPushNotificationConfig
@@ -3577,7 +3600,7 @@ var Syncano = (function () {
     /**
      * Configures new GCM Push Notification
      *
-     * @method Syncano#configPushNotification
+     * @method Syncano#configGCMPushNotification
      * @alias Syncano.PushNotifications.GCM.config
      * @param {Object} params
      * @param {string} params.production_api_key - name of the device
@@ -3591,6 +3614,30 @@ var Syncano = (function () {
         throw new Error('Not connected to any instance');
       }
       return this.request('PUT', linksObject.instance_push_notifications + 'gcm/config/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Sends Push Notification message to specified GCM device
+     *
+     * @method Syncano#sendMessageToGCMDevices
+     * @alias Syncano.PushNotifications.GCM.sendMessage
+     * @param {Object} params
+     * @param {string} params.content- JSON payload
+     * @param {array} params.content.registration_ids - device's registration ID
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    sendMessageToGCMDevices: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      if (typeof params.content.registration_ids === 'undefined') {
+        throw new Error("Missing 'registrationId' param");
+      }
+      var url = linksObject.instance_push_notifications + 'gcm/messages/';
+
+      return this.request('POST', url, params, callbackOK, callbackError);
     },
 
     /**
@@ -3799,8 +3846,7 @@ var Syncano = (function () {
               }
             } catch (e) {
               err = xhr.responseText;
-            }
-            ;
+            };
           }
           callbackError(err);
         };

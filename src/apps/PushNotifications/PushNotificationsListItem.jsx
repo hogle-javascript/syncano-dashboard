@@ -44,7 +44,7 @@ export default (name, item) => {
             icon={item.icon}
             checkable={false}
             background={Color.getColorByName('blue')}
-            className="col-xs-18">
+            className="col-xs-12">
             <div>
               <div>
                 {item.label}
@@ -70,7 +70,7 @@ export default (name, item) => {
               </div>
             </div>
           </Column.CheckIcon>
-          <Column.Desc className="col-xs-16">
+          <Column.Desc className="col-flex-1">
             {item.getDevices().length}
           </Column.Desc>
           <Column.Menu>
