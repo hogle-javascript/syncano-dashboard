@@ -4,7 +4,8 @@ import Reflux from 'reflux';
 import Store from './APNSDevicesStore';
 import Actions from './APNSDevicesActions';
 
-import Devices from '../Devices';
+import {Container} from 'syncano-components';
+import DevicesList from '../DevicesList';
 import APNSDialog from './APNSDeviceDialog';
 
 export default React.createClass({
@@ -21,10 +22,11 @@ export default React.createClass({
 
   render() {
     return (
-      <div>
+      <Container>
         <APNSDialog />
-        <Devices
-          listItemIcon="apple"
+        <DevicesList
+          type="apns"
+          visibleItems={this.props.visibleItems}
           getChekcedItems={Store.getCheckedItems}
           actions={Actions}
           emptyItemHandleClick={Actions.showDialog}
@@ -32,7 +34,7 @@ export default React.createClass({
           hideDialogs={this.state.hideDialogs}
           isLoading={this.state.isLoading}
           items={this.state.items}/>
-      </div>
+      </Container>
     );
   }
 });
