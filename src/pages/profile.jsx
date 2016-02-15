@@ -13,7 +13,7 @@ export default React.createClass({
         <Sidebar>
           <Sidebar.List
             key="Main Settings"
-            subeader="Main Settings">
+            subheader="Main Settings">
             <Sidebar.LinkListItem
               key="Profile"
               routeName="profile-settings"

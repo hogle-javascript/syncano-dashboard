@@ -43,7 +43,7 @@ export default {
       locateStrategy: 'xpath'
     },
     codeBoxSocketItemTraces: {
-      selector: '//div[text()="webhook_description"]/following-sibling::div[1]/a',
+      selector: '//div[text()="webhook_description"]/following-sibling::div[2]/a',
       locateStrategy: 'xpath'
     },
     addCodeBoxModalTitle: {
