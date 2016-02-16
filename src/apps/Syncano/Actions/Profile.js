@@ -21,6 +21,14 @@ export default {
       .catch(this.failure);
   },
 
+  setPassword(payload) {
+    this.Connection
+      .Accounts
+      .setPassword(payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   getUser(token) {
     this.Connection
       .setApiKey(token)
