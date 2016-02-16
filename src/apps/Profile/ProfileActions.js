@@ -13,6 +13,12 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Profile.changePassword'
   },
+  setPassword: {
+    asyncResult: true,
+    asyncForm: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Profile.setPassword'
+  },
   fetchBillingProfile: {
     asyncResult: true,
     children: ['completed', 'failure'],

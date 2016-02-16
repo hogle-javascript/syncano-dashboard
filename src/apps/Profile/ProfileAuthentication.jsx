@@ -6,6 +6,7 @@ import {FormMixin, SnackbarNotificationMixin} from '../../mixins';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
+import SessionStore from '../Session/SessionStore';
 
 import {TextField, FlatButton, RaisedButton} from 'syncano-material-ui';
 import {Clipboard, Container} from 'syncano-components';
@@ -21,17 +22,24 @@ export default Radium(React.createClass({
     SnackbarNotificationMixin
   ],
 
-  validatorConstraints: {
-    current_password: {
-      presence: true
-    },
-    newPassword: {
-      presence: true
-    },
-    confirmNewPassword: {
-      presence: true,
-      equality: 'newPassword'
+  validatorConstraints: () => {
+    let constraints = {
+      newPassword: {
+        presence: true
+      },
+      confirmNewPassword: {
+        presence: true,
+        equality: 'newPassword'
+      }
+    };
+
+    if (SessionStore.getUser().has_password) {
+      constraints.current_password = {
+        presence: true
+      };
     }
+
+    return constraints;
   },
 
   getStyles() {
@@ -69,6 +77,8 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
+    const user = SessionStore.getUser();
+    const hasPassword = user && user.has_password ? user.has_password : null;
 
     return (
       <div>
@@ -100,16 +110,18 @@ export default Radium(React.createClass({
                   acceptCharset="UTF-8"
                   method="post">
                   {this.renderFormNotifications()}
-                  <TextField
-                    ref="currentPassword"
-                    type="password"
-                    valueLink={this.linkState('current_password')}
-                    errorText={this.getValidationMessages('current_password').join(' ')}
-                    name="currentPassword"
-                    floatingLabelText="Current password"
-                    autoComplete="currentPassword"
-                    hintText="Current password"
-                    fullWidth={true} />
+                  {hasPassword
+                    ? <TextField
+                        ref="currentPassword"
+                        type="password"
+                        valueLink={this.linkState('current_password')}
+                        errorText={this.getValidationMessages('current_password').join(' ')}
+                        name="currentPassword"
+                        floatingLabelText="Current password"
+                        autoComplete="currentPassword"
+                        hintText="Current password"
+                        fullWidth={true} />
+                    : null}
                   <TextField
                     ref="newPassword"
                     type="password"
