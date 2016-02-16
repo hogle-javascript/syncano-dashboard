@@ -219,9 +219,11 @@ export default (store, props) => {
     },
 
     renderDialogTitle() {
+      const type = props.type === 'APNS' ? 'iOS' : 'Android';
+
       return (
-        <CommonDialog.TitleWithIcon iconClassName="synicon-android">
-          Send Message To Android Device
+        <CommonDialog.TitleWithIcon iconClassName={`synicon-${props.type === 'APNS' ? 'apple' : 'android'}`}>
+          {`Send Message To ${type} Device`}
         </CommonDialog.TitleWithIcon>
       );
     },
