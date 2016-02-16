@@ -396,6 +396,7 @@ var Syncano = (function () {
       get: this.getAccount.bind(this),
       update: this.updateAccount.bind(this),
       changePassword: this.changeAccountPassword.bind(this),
+      setPassword: this.setAccountPassword.bind(this),
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
@@ -1672,6 +1673,21 @@ var Syncano = (function () {
      */
     changeAccountPassword: function (params, callbackOK, callbackError) {
       return this.request('POST', 'v1/account/password/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Use to set a password, if your account doesn't have one - e.g. when it was created using social platform
+     * like GitHub. Requires an Account Key.
+     *
+     * @method Syncano#setAccountPassword
+     * @alias Syncano.Accounts.setPassword
+     * @param {string} password - new password
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    setAccountPassword: function(password, callbackOK, callbackError) {
+      return this.request('POST', 'v1/account/password/set/', {password: password}, callbackOK, callbackError);
     },
 
     /**

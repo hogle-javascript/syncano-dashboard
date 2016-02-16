@@ -106,7 +106,7 @@ module.exports = {
     leftMenuPage.clickElement('@users');
     usersPage.waitForElementPresent('@user');
   },
-  'User goes to CodeBox Socket Traces View': (client) => {
+  'User goes to Script Socket Traces View': (client) => {
     const socketsPage = client.page.socketsPage();
     const codeBoxTracesPage = client.page.codeBoxTracesPage();
 

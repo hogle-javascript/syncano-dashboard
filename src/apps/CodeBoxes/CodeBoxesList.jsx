@@ -16,8 +16,7 @@ import {Dialog, Lists} from '../../common';
 let Column = ColumnList.Column;
 
 export default React.createClass({
-
-  displayName: 'CodeBoxesList',
+  displayName: 'ScriptSocketsList',
 
   mixins: [
     Router.State,
@@ -35,13 +34,13 @@ export default React.createClass({
     return [{
       dialog: Dialog.Delete,
       params: {
-        key: 'removeCodeBoxDialog',
-        ref: 'removeCodeBoxDialog',
-        title: 'Delete a CodeBox Socket',
+        key: 'removeScriptSocketDialog',
+        ref: 'removeScriptSocketDialog',
+        title: 'Delete a Script Socket',
         handleConfirm: Actions.removeCodeBoxes,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
-        groupName: 'CodeBox Socket'
+        groupName: 'Script Socket'
       }
     }];
   },
@@ -49,10 +48,10 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        key={`codeboxes-list-item-${item.name}`}
+        key={`script-sockets-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeCodeBoxDialog', item)} />
+        showDeleteDialog={() => this.showDialog('removeScriptSocketDialog', item)} />
     );
   },
 
@@ -95,15 +94,15 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Lists.MenuItem
-                singleItemText="Delete a CodeBox Socket"
-                multipleItemsText="Delete CodeBox Sockets"
-                onTouchTap={() => this.showDialog('removeCodeBoxDialog')} />
+                singleItemText="Delete a Script Socket"
+                multipleItemsText="Delete Script Sockets"
+                onTouchTap={() => this.showDialog('removeScriptSocketDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          key="codeboxes-list"
+          key="script-sockets-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );
