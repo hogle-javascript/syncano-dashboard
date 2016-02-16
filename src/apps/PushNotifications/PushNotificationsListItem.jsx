@@ -44,7 +44,7 @@ export default (name, item) => {
             icon={item.icon}
             checkable={false}
             background={Color.getColorByName('blue')}
-            className="col-xs-12">
+            className="col-xs-16">
             <div>
               <div>
                 {item.label}

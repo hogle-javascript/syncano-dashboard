@@ -39,7 +39,7 @@ export default React.createClass({
   togglePopover(event) {
     this.setState({
       popoverVisible: !this.state.popoverVisible,
-      anchorEl: event.currentTarget
+      anchorElement: event.currentTarget
     });
   },
 
@@ -55,7 +55,7 @@ export default React.createClass({
           style={{padding: '8px 0'}}
           onRequestClose={this.hidePopover}
           open={this.state.popoverVisible}
-          anchorEl={this.state.anchorEl}
+          anchorEl={this.state.anchorElement}
           anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}>
           <ListItem

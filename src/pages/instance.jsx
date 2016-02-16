@@ -88,7 +88,7 @@ export default React.createClass({
                     routeName="push-notifications"
                     primaryText="Push Notifications"
                   />
-                ]} />
+                ]}/>
             </Sidebar.List>
             <Sidebar.List
               key="Components"
@@ -106,9 +106,23 @@ export default React.createClass({
                 routeName="snippets"
                 primaryText="Snippets"/>
               <Sidebar.LinkListItem
-                key="Push Devices"
-                routeName="apns-devices"
-                primaryText="Push Devices"/>
+                key="pushDevices"
+                routeName="all-devices"
+                primaryText="Push Devices"
+                initiallyOpen={true}
+                autoGenerateNestedIndicator={false}
+                nestedItems={[
+                  <Sidebar.NestedLinkListItem
+                    key="iOSDevices"
+                    routeName="apns-devices"
+                    primaryText="iOS Devices"
+                  />,
+                  <Sidebar.NestedLinkListItem
+                    key="androidDevices"
+                    routeName="gcm-devices"
+                    primaryText="Android Devices"
+                  />
+                ]}/>
             </Sidebar.List>
             <Sidebar.List
               key="Settings"

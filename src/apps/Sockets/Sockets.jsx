@@ -10,7 +10,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Components
 import {Container, Loading, Socket} from 'syncano-components';
 import {InnerToolbar, Dialog} from '../../common';
-import {FlatButton} from 'syncano-material-ui';
+import {FlatButton, Popover, FontIcon, MenuItem, Styles} from 'syncano-material-ui';
 
 // Apps
 import Data from '../Data';
@@ -37,6 +37,8 @@ export default React.createClass({
     Reflux.connect(Schedules.Store, 'schedules'),
     Reflux.connect(Triggers.Store, 'triggers'),
     Reflux.connect(CodeBoxes.Store, 'codeboxes'),
+    Reflux.connect(PushNotifications.APNSStore, 'APNSPushNotifications'),
+    Reflux.connect(PushNotifications.GCMStore, 'GCMPushNotifications'),
 
     DialogsMixin,
     InstanceTabsMixin,
@@ -51,17 +53,30 @@ export default React.createClass({
     }
   },
 
+  getInitialState() {
+    return {
+      popoverVisible: false
+    };
+  },
+
   componentDidMount() {
     console.info('Data::componentDidMount');
     this.fetch();
   },
 
   getPushNotificationsItems() {
-    return [PushNotifications.APNSListItem, PushNotifications.GCMListItem];
+    const isGCMConfigured = PushNotifications.GCMStore.hasConfig();
+    const isAPNSConfigured = PushNotifications.APNSStore.hasConfig();
+    const items = [
+      isGCMConfigured ? PushNotifications.GCMListItem : null,
+      isAPNSConfigured ? PushNotifications.APNSListItem : null
+    ];
+
+    return _.compact(items);
   },
 
   isViewLoading() {
-    let loadingStates = Object.keys(this.state).map((key) => {
+    let loadingStates = _.without(_.keys(this.state), 'APNSPushNotifications', 'GCMPushNotifications').map((key) => {
       if (this.state[key].hasOwnProperty('isLoading')) {
         return this.state[key].isLoading;
       }
@@ -71,7 +86,7 @@ export default React.createClass({
   },
 
   hasAnyItem() {
-    return _.keys(this.state)
+    return _.without(_.keys(this.state), 'APNSPushNotifications', 'GCMPushNotifications')
       .filter((socketName) => _.has(this.state[socketName], 'items'))
       .some((socketName) => this.state[socketName].items.length > 0);
   },
@@ -80,6 +95,19 @@ export default React.createClass({
     let instanceName = this.getParams().instanceName;
 
     this.transitionTo(routeName, {instanceName});
+  },
+
+  togglePopover(event) {
+    this.setState({
+      popoverVisible: !this.state.popoverVisible,
+      anchorElement: event.currentTarget
+    });
+  },
+
+  hidePopover() {
+    this.setState({
+      popoverVisible: false
+    });
   },
 
   fetch() {
@@ -120,6 +148,56 @@ export default React.createClass({
     ];
   },
 
+  configurePushNotification(type) {
+    const config = {
+      gcm: PushNotifications.GCMActions.showDialog,
+      apns: PushNotifications.APNSActions.showDialog
+    };
+
+    config[type]();
+    this.hidePopover();
+  },
+
+  renderPopover() {
+    const androidIcon = (
+      <FontIcon
+        style={{color: Styles.Colors.green400, marginTop: '4px !important'}}
+        className="synicon-android"/>
+    );
+    const appleIcon = (
+      <FontIcon
+        style={{color: Styles.Colors.black, marginTop: '2px !important'}}
+        className="synicon-apple"/>
+    );
+
+    return (
+      <Popover
+        style={{padding: '8px 0'}}
+        onRequestClose={this.hidePopover}
+        open={this.state.popoverVisible}
+        anchorEl={this.state.anchorElement}
+        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}>
+        <MenuItem
+          disabled={PushNotifications.GCMStore.hasConfig()}
+          leftIcon={androidIcon}
+          onTouchTap={() => this.configurePushNotification('gcm')}>
+          <div>
+            Android Device
+          </div>
+        </MenuItem>
+        <MenuItem
+          disabled={PushNotifications.APNSStore.hasConfig()}
+          leftIcon={appleIcon}
+          onTouchTap={() => this.configurePushNotification('apns')}>
+          <div>
+            iOS Device
+          </div>
+        </MenuItem>
+      </Popover>
+    );
+  },
+
   renderToolbar() {
     if (!this.hasAnyItem() || this.isViewLoading()) {
       return <InnerToolbar title="Sockets"/>;
@@ -131,7 +209,9 @@ export default React.createClass({
           <Socket.Data onTouchTap={Data.Actions.showDialog}/>
           <Socket.CodeBox onTouchTap={CodeBoxes.Actions.showDialog}/>
           <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
-          <Socket.Push onTouchTap={() => this.transitionTo('apns-devices', this.getParams())}/>
+          <Socket.Push
+            ref="pushSocket"
+            onTouchTap={this.togglePopover}/>
           <Socket.Trigger onTouchTap={Triggers.Actions.showDialog}/>
           <Socket.Schedule
             onTouchTap={Schedules.Actions.showDialog}
@@ -213,6 +293,7 @@ export default React.createClass({
         <PushNotifications.APNSConfigDialog />
         <PushNotifications.GCMConfigDialog />
 
+        {this.renderPopover()}
         {this.getDialogs()}
         {this.renderToolbar()}
         <Container>
