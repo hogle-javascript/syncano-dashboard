@@ -10,7 +10,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Components
 import {Container, Loading, Socket} from 'syncano-components';
 import {InnerToolbar, Dialog} from '../../common';
-import {FlatButton, Popover, FontIcon, MenuItem, Styles} from 'syncano-material-ui';
+import {FlatButton, Popover, FontIcon, MenuItem, Styles, Utils} from 'syncano-material-ui';
 
 // Apps
 import Data from '../Data';
@@ -62,6 +62,22 @@ export default React.createClass({
   componentDidMount() {
     console.info('Data::componentDidMount');
     this.fetch();
+  },
+
+  getStyles() {
+    return {
+      androidIcon: {
+        color: Styles.Colors.green400,
+        marginTop: '4px !important'
+      },
+      appleIcon: {
+        color: Styles.Colors.black,
+        marginTop: '2px !important'
+      },
+      disabledIcon: {
+        color: Styles.Colors.grey400
+      }
+    };
   },
 
   getPushNotificationsItems() {
@@ -159,14 +175,17 @@ export default React.createClass({
   },
 
   renderPopover() {
+    const hasGCMConfig = PushNotifications.GCMStore.hasConfig();
+    const hasAPNSConfig = PushNotifications.APNSStore.hasConfig();
+    const styles = this.getStyles();
     const androidIcon = (
       <FontIcon
-        style={{color: Styles.Colors.green400, marginTop: '4px !important'}}
+        style={Utils.Styles.mergeStyles(styles.androidIcon, hasGCMConfig && styles.disabledIcon)}
         className="synicon-android"/>
     );
     const appleIcon = (
       <FontIcon
-        style={{color: Styles.Colors.black, marginTop: '2px !important'}}
+        style={Utils.Styles.mergeStyles(styles.appleIcon, hasAPNSConfig && styles.disabledIcon)}
         className="synicon-apple"/>
     );
 
@@ -303,5 +322,3 @@ export default React.createClass({
     );
   }
 });
-
-
