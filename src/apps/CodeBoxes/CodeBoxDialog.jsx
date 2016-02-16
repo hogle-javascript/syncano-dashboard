@@ -15,7 +15,7 @@ import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
-  displayName: 'CodeBoxDialog',
+  displayName: 'ScriptSocketDialog',
 
   mixins: [
     Reflux.connect(DialogStore),
@@ -29,13 +29,13 @@ export default React.createClass({
     },
     codebox: {
       presence: {
-        message: `^Snippet can't be blank`
+        message: `^Script can't be blank`
       }
     }
   },
 
   handleDialogShow() {
-    console.info('CodeBoxDialog::handleDialogShow');
+    console.info('ScriptSocketDialog::handleDialogShow');
     SnippetsActions.fetch();
   },
 
@@ -81,9 +81,9 @@ export default React.createClass({
 
     return (
       <Dialog
-        key='dialog'
-        ref='dialog'
-        title={`${title} a CodeBox Socket`}
+        key="dialog"
+        ref="dialog"
+        title={`${title} a Script Socket`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
         open={this.state.open}
@@ -96,7 +96,7 @@ export default React.createClass({
           disabled={this.hasEditMode()}
           valueLink={this.linkState('name')}
           errorText={this.getValidationMessages('name').join(' ')}
-          hintText="Name of the CodeBox"
+          hintText="Name of the Script Socket"
           floatingLabelText="Name"/>
         <TextField
           ref="description"
@@ -104,7 +104,7 @@ export default React.createClass({
           fullWidth={true}
           valueLink={this.linkState('description')}
           errorText={this.getValidationMessages('description').join(' ')}
-          hintText="Description of the CodeBox"
+          hintText="Description of the Script Socket"
           floatingLabelText="Description"/>
         <SelectFieldWrapper
           name="snippet"
@@ -118,7 +118,7 @@ export default React.createClass({
           onToggle={this.handleToogle}
           style={{marginTop: 20}}
           defaultToggled={this.state.public}
-          label='Make this CodeBox public?'/>
+          label='Make this Script Socket public?'/>
       </Dialog>
     );
   }

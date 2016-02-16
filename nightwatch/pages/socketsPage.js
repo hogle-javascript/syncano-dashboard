@@ -47,7 +47,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalTitle: {
-      selector: '//h3[text()="Create a CodeBox Socket"]',
+      selector: '//h3[text()="Create a Script Socket"]',
       locateStrategy: 'xpath'
     },
     modalNameInput: {
@@ -75,11 +75,11 @@ export default {
       locateStrategy: 'xpath'
     },
     deleteCodeBoxModalTitle: {
-      selector: '//h3[text()="Delete a CodeBox Socket"]',
+      selector: '//h3[text()="Delete a Script Socket"]',
       locateStrategy: 'xpath'
     },
     editCodeBoxModalTitle: {
-      selector: '//h3[text()="Edit a CodeBox Socket"]',
+      selector: '//h3[text()="Edit a Script Socket"]',
       locateStrategy: 'xpath'
     },
     dataListItem: {

@@ -12,7 +12,7 @@ export default {
   after(client) {
     client.end();
   },
-  'User adds a CodeBox Socket': (client) => {
+  'User adds a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const codeBox = Utils.addSuffix('codeBox');
 
@@ -26,7 +26,7 @@ export default {
       .clickElement('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },
-  'User edits a CodeBox Socket': (client) => {
+  'User edits a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const edited = Utils.addSuffix('edited');
 
@@ -43,7 +43,7 @@ export default {
 
     socketsPage.verify.containsText('@codeBoxTableRowDescription', edited);
   },
-  'User deletes a CodeBox Socket': (client) => {
+  'User deletes a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
     socketsPage

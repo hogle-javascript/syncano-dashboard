@@ -162,12 +162,12 @@ export default React.createClass({
             emptyItemContent="Create a Data Socket"/>
 
           <CodeBoxes.List
-            name="CodeBox Sockets"
+            name="Script Sockets"
             isLoading={this.state.codeboxes.isLoading}
             items={this.state.codeboxes.items}
             handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
             emptyItemHandleClick={CodeBoxes.Actions.showDialog}
-            emptyItemContent="Create a CodeBox Socket"/>
+            emptyItemContent="Create a Script Socket"/>
 
           <Triggers.List
             name="Trigger Sockets"
