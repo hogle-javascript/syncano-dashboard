@@ -4,8 +4,8 @@ import Actions from './ChannelsActions';
 
 import {SnackbarNotificationMixin} from '../../mixins';
 
-import {MenuItem, FontIcon} from 'syncano-material-ui';
-import {Color, ColumnList, Clipboard, Truncate, Tooltip} from 'syncano-components';
+import {MenuItem} from 'syncano-material-ui';
+import {Color, ColumnList, Clipboard} from 'syncano-components';
 
 const Column = ColumnList.Column;
 
@@ -35,17 +35,9 @@ export default React.createClass({
               copyText={item.links.poll}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Channel Socket url copied!'
-              })}>
-              <Tooltip tooltip="Copy Channel Socket url">
-                <div style={{display: 'flex'}}>
-                  <Truncate text={item.links.poll}/>
-                  <FontIcon
-                    color="#b8c0c9"
-                    style={{fontSize: 16}}
-                    className="synicon-link-variant" />
-                </div>
-              </Tooltip>
-            </Clipboard>
+              })}
+              tooltip="Copy Channel Socket url"
+              type="link" />
           }/>
         <Column.Desc className="col-flex-1">
           <div>

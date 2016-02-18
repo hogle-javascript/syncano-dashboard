@@ -5,8 +5,8 @@ import Actions from './DataViewsActions';
 
 import {SnackbarNotificationMixin} from '../../mixins';
 
-import {MenuItem, FontIcon} from 'syncano-material-ui';
-import {Color, ColumnList, Truncate, Clipboard, Tooltip} from 'syncano-components';
+import {MenuItem} from 'syncano-material-ui';
+import {Color, ColumnList, Clipboard} from 'syncano-components';
 
 const Column = ColumnList.Column;
 
@@ -40,17 +40,9 @@ export default React.createClass({
               copyText={item.links.self}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Data Socket url copied!'
-              })}>
-              <Tooltip tooltip="Copy Data Socket url">
-                <div style={{display: 'flex'}}>
-                  <Truncate text={item.links.self}/>
-                  <FontIcon
-                    color="#b8c0c9"
-                    style={{fontSize: 16}}
-                    className="synicon-link-variant" />
-                </div>
-              </Tooltip>
-            </Clipboard>
+              })}
+              type="link"
+              tooltip="Copy Data Socket url" />
           }/>
         <Column.Desc className="col-flex-1">
           <Link to="classes-edit" params={{

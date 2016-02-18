@@ -1,21 +1,18 @@
 import React from 'react';
 
-import {DialogsMixin, SnackbarNotificationMixin} from '../../mixins/';
+import {SnackbarNotificationMixin} from '../../mixins/';
 
 import Actions from './ApiKeysActions';
 
-import {MenuItem, FontIcon} from 'syncano-material-ui';
-import {Clipboard, Truncate, ColumnList, Color} from 'syncano-components';
+import {MenuItem} from 'syncano-material-ui';
+import {Clipboard, ColumnList, Color} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ApiKeysListItem',
 
-  mixins: [
-    DialogsMixin,
-    SnackbarNotificationMixin
-  ],
+  mixins: [SnackbarNotificationMixin],
 
   render() {
     const {item, showResetDialog, showDeleteDialog, onIconClick} = this.props;
@@ -34,19 +31,14 @@ export default React.createClass({
           secondaryText={
             <Clipboard
               text={item.api_key}
-              onCopy={() => this.setSnackbarNotification({message: 'API key copied to the clipboard'})}>
-              <div style={{display: 'flex', cursor: 'pointer'}}>
-                <Truncate text={item.api_key} />
-                <FontIcon
-                 className="synicon-link-variant"
-                 color="#9b9b9b"
-                 style={{fontSize: 15, paddingLeft: 10}}/>
-             </div>
-            </Clipboard>
+              onCopy={() => this.setSnackbarNotification({
+                message: 'API key copied to the clipboard'
+              })}
+              tooltip="Copy API key"
+              type="link" />
           }/>
-        <Column.Desc/>
-        <Column.ID className="col-xs-4">{item.id}</Column.ID>
-        <Column.Text className="col-xs-8">
+        <Column.ID className="col-flex-1">{item.id}</Column.ID>
+        <Column.Text className="col-flex-1">
           {item.ignore_acl ? <div>Ignore ACL</div> : null}
           {item.allow_user_create ? <div>Allow user creation</div> : null}
           {item.allow_anonymous_read ? <div>Allow anonymous read</div> : null}

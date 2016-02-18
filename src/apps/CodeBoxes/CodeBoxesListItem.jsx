@@ -6,8 +6,8 @@ import {SnackbarNotificationMixin} from '../../mixins';
 import Actions from './CodeBoxesActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
 
-import {MenuItem, FontIcon} from 'syncano-material-ui';
-import {Color, ColumnList, Truncate, Clipboard, Tooltip} from 'syncano-components';
+import {MenuItem} from 'syncano-material-ui';
+import {Color, ColumnList, Clipboard} from 'syncano-components';
 
 const Column = ColumnList.Column;
 
@@ -45,17 +45,9 @@ export default React.createClass({
               copyText={link}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Script Socket url copied!'
-              })}>
-              <Tooltip tooltip="Copy Script Socket url">
-                <div style={{display: 'flex'}}>
-                  <Truncate text={item.links.self}/>
-                  <FontIcon
-                    color="#b8c0c9"
-                    style={{fontSize: 16}}
-                    className="synicon-link-variant" />
-                </div>
-              </Tooltip>
-            </Clipboard>
+              })}
+              tooltip="Copy Script Socket url"
+              type="link" />
           }/>
         <Column.Desc className="col-flex-1">
           <Link

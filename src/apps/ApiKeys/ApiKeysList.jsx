@@ -86,15 +86,14 @@ export default React.createClass({
             primary={true}>
             {this.props.name}
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DESC"/>
           <Column.ColumnHeader
             columnName="ID"
-            className="col-xs-4">
+            className="col-flex-1">
             ID
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="TEXT"
-            className="col-xs-8">
+            className="col-flex-1">
             Permissions
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>

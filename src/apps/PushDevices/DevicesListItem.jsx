@@ -1,16 +1,16 @@
 import React from 'react';
-import {State} from 'react-router';
 
-// Components
+import {SnackbarNotificationMixin} from '../../mixins';
+
 import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList} from 'syncano-components';
+import {Color, ColumnList, Clipboard} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'DeviceListItem',
 
-  mixins: [State],
+  mixins: [SnackbarNotificationMixin],
 
   render() {
     const {
@@ -34,14 +34,16 @@ export default React.createClass({
           keyName="registration_id"
           background={Color.getColorByName('blue')}
           handleIconClick={onIconClick}
-          primaryText={item.label}>
-          <ColumnList.Link
-            name={item.label}
-            addBaseUrl={false}
-            link={item.device_id}
-            snackbar="Device ID copied to the clipboard"
-            tooltip="Copy device ID"/>
-        </Column.CheckIcon>
+          primaryText={item.label}
+          secondaryText={
+            <Clipboard
+              copyText={item.device_id}
+              onCopy={() => this.setSnackbarNotification({
+                message: 'Device ID copied to the clipboard!'
+              })}
+              tooltip="Copy device ID"
+              type="link" />
+          }/>
         <Column.Desc className="col-xs-13">
           {item.userName}
         </Column.Desc>
