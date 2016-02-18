@@ -2,13 +2,17 @@ import React from 'react';
 
 import Actions from './ChannelsActions';
 
-import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList} from 'syncano-components';
+import {SnackbarNotificationMixin} from '../../mixins';
 
-let Column = ColumnList.Column;
+import {MenuItem, FontIcon} from 'syncano-material-ui';
+import {Color, ColumnList, Clipboard, Truncate, Tooltip} from 'syncano-components';
+
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ChannelsListItem',
+
+  mixins: [SnackbarNotificationMixin],
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
@@ -26,23 +30,36 @@ export default React.createClass({
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.name}
-          secondaryText={item.description}/>
-        <Column.Desc>
-          <ColumnList.Link
-            name={item.name}
-            link={item.links.poll}
-            tooltip="Copy Channel Socket url"/>
-        </Column.Desc>
-        <Column.Desc className="col-xs-4 col-md-4">
+          secondaryText={
+            <Clipboard
+              copyText={item.links.poll}
+              onCopy={() => this.setSnackbarNotification({
+                message: 'Channel Socket url copied!'
+              })}>
+              <Tooltip tooltip="Copy Channel Socket url">
+                <div style={{display: 'flex'}}>
+                  <Truncate text={item.links.poll}/>
+                  <FontIcon
+                    color="#b8c0c9"
+                    style={{fontSize: 16}}
+                    className="synicon-link-variant" />
+                </div>
+              </Tooltip>
+            </Clipboard>
+          }/>
+        <Column.Desc className="col-flex-1">
           <div>
             <div>group: {item.group_permissions}</div>
             <div>other: {item.other_permissions}</div>
           </div>
         </Column.Desc>
-        <Column.Desc className="col-xs-4 col-md-4">{item.type}</Column.Desc>
-        <Column.Desc className="col-xs-3 col-md-3">
+        <Column.Desc className="col-flex-1">
+          {item.type}
+        </Column.Desc>
+        <Column.Desc className="col-flex-1">
           {item.custom_publish ? 'Yes' : 'No'}
         </Column.Desc>
+        <Column.Desc className="col-flex-1"/>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

@@ -31,8 +31,7 @@ export default React.createClass({
           handleIconClick={onIconClick}
           primaryText={item.label}
           secondaryText={`ID: ${item.id}`}/>
-        <Column.Desc className="col-flex-1">{item.crontab}</Column.Desc>
-        <Column.Desc className="col-sm-4">
+        <Column.Desc className="col-flex-1">
           <Link to="snippet" params={{
             instanceName: this.getParams().instanceName,
             snippetId: item.codebox
@@ -40,7 +39,7 @@ export default React.createClass({
             {snippetLabel}
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-sm-4">
+        <Column.Desc className="col-flex-1">
           <Link to="schedule-traces" params={{
             instanceName: this.getParams().instanceName,
             scheduleId: item.id
@@ -48,7 +47,12 @@ export default React.createClass({
             Traces
           </Link>
         </Column.Desc>
-        <Column.Date className="col-sm-3" date={item.scheduled_next}/>
+        <Column.Desc className="col-flex-1">
+          {item.crontab}
+        </Column.Desc>
+        <Column.Date
+          className="col-flex-1"
+          date={item.scheduled_next} />
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

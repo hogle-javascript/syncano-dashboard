@@ -1,23 +1,22 @@
 import React from 'react';
 import {Link, State} from 'react-router';
 
-import {DialogsMixin} from '../../mixins';
+import {SnackbarNotificationMixin} from '../../mixins';
 
 import Actions from './CodeBoxesActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
 
-import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList, Truncate} from 'syncano-components';
-import Tooltip from './Tooltip';
+import {MenuItem, FontIcon} from 'syncano-material-ui';
+import {Color, ColumnList, Truncate, Clipboard, Tooltip} from 'syncano-components';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'CodeBoxesListItem',
 
   mixins: [
     State,
-    DialogsMixin
+    SnackbarNotificationMixin
   ],
 
   render() {
@@ -40,22 +39,25 @@ export default React.createClass({
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={onIconClick}
-          primaryText={
-            <div style={{display: 'flex'}}>
-              <Truncate text={item.name}/>
-              <Tooltip tooltip={`rzez nieznanego drukarza do wypełnienia tekstem próbnej książki.
-              Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym.
-              Spopularyzował się w latach 60. XX w. wraz z publikacją `}/>
-            </div>
-          }
-          secondaryText={item.description}/>
+          primaryText={item.name}
+          secondaryText={
+            <Clipboard
+              copyText={link}
+              onCopy={() => this.setSnackbarNotification({
+                message: 'Script Socket url copied!'
+              })}>
+              <Tooltip tooltip="Copy Script Socket url">
+                <div style={{display: 'flex'}}>
+                  <Truncate text={item.links.self}/>
+                  <FontIcon
+                    color="#b8c0c9"
+                    style={{fontSize: 16}}
+                    className="synicon-link-variant" />
+                </div>
+              </Tooltip>
+            </Clipboard>
+          }/>
         <Column.Desc className="col-flex-1">
-          <ColumnList.Link
-            name={item.name}
-            link={link}
-            tooltip="Copy CobeBox Socket url"/>
-        </Column.Desc>
-        <Column.Desc className="col-xs-4">
           <Link
             to="snippet"
             params={{
@@ -65,7 +67,7 @@ export default React.createClass({
             {snippetLabel}
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-xs-4">
+        <Column.Desc className="col-flex-1">
           <Link
             to="codeBox-traces"
             params={{
@@ -75,7 +77,8 @@ export default React.createClass({
             Traces
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-xs-3">{publicString}</Column.Desc>
+        <Column.Desc className="col-flex-1">{publicString}</Column.Desc>
+        <Column.Desc className="col-flex-1"/>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

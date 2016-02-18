@@ -1,21 +1,21 @@
 import React from 'react';
 import {Link, State} from 'react-router';
 
-import {DialogsMixin} from '../../mixins';
-
 import Actions from './DataViewsActions';
 
-import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList} from 'syncano-components';
+import {SnackbarNotificationMixin} from '../../mixins';
 
-let Column = ColumnList.Column;
+import {MenuItem, FontIcon} from 'syncano-material-ui';
+import {Color, ColumnList, Truncate, Clipboard, Tooltip} from 'syncano-components';
+
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'DataViewsListItem',
 
   mixins: [
     State,
-    DialogsMixin
+    SnackbarNotificationMixin
   ],
 
   render() {
@@ -34,14 +34,25 @@ export default React.createClass({
           keyName="name"
           handleIconClick={onIconClick}
           primaryText={item.name}
-          secondaryText={item.description}/>
+          primaryTextTooltip={item.description}
+          secondaryText={
+            <Clipboard
+              copyText={item.links.self}
+              onCopy={() => this.setSnackbarNotification({
+                message: 'Data Socket url copied!'
+              })}>
+              <Tooltip tooltip="Copy Data Socket url">
+                <div style={{display: 'flex'}}>
+                  <Truncate text={item.links.self}/>
+                  <FontIcon
+                    color="#b8c0c9"
+                    style={{fontSize: 16}}
+                    className="synicon-link-variant" />
+                </div>
+              </Tooltip>
+            </Clipboard>
+          }/>
         <Column.Desc className="col-flex-1">
-          <ColumnList.Link
-            name={item.name}
-            link={item.links.self}
-            tooltip="Copy Data Socket url"/>
-        </Column.Desc>
-        <Column.Desc className="col-xs-11">
           <Link to="classes-edit" params={{
             instanceName: this.getParams().instanceName,
             className: item.class

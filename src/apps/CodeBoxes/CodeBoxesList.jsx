@@ -69,26 +69,25 @@ export default React.createClass({
             handleClick={this.props.handleTitleClick}>
             {this.props.name}
           </Column.ColumnHeader>
+
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
-            Description
-          </Column.ColumnHeader>
-          <Column.ColumnHeader
-            columnName="DESC"
-            className="col-xs-4">
             Snippet
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-4">
+            className="col-flex-1">
             Traces
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="KEY"
-            className="col-xs-3">
+            className="col-flex-1">
             Public
           </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-flex-1"/>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}

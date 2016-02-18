@@ -80,20 +80,20 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
-            Class
-          </Column.ColumnHeader>
-          <Column.ColumnHeader
-            columnName="DESC"
-            className="col-sm-4">
             Snippet
           </Column.ColumnHeader>
           <Column.ColumnHeader
-            className="col-sm-4"
+            className="col-flex-1"
             columnName="DESC">
             Traces
           </Column.ColumnHeader>
           <Column.ColumnHeader
-            className="col-sm-3"
+            columnName="DESC"
+            className="col-flex-1">
+            Class
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            className="col-flex-1"
             columnName="DESC">
             Signal
           </Column.ColumnHeader>
