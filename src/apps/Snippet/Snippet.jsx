@@ -10,8 +10,8 @@ import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
 import {RaisedButton, FontIcon, Checkbox} from 'syncano-material-ui';
-import {Loading, Show} from 'syncano-components';
-import {Dialog, InnerToolbar, Editor, Notification, TogglePanel} from '../../common';
+import {Loading, Show, TogglePanel} from 'syncano-components';
+import {Dialog, InnerToolbar, Editor, Notification} from '../../common';
 import Traces from '../Traces';
 import SnippetConfig from './SnippetConfig';
 
