@@ -47,7 +47,7 @@ export default React.createClass({
       <div>
         <CodeBoxDialog />
 
-        <InnerToolbar title="CodeBox Sockets">
+        <InnerToolbar title="Script Sockets">
           <Socket.CodeBox
             tooltipPosition="bottom-left"
             onTouchTap={this.showCodeBoxDialog}/>
@@ -55,12 +55,12 @@ export default React.createClass({
 
         <Container>
           <CodeBoxesList
-            name="CodeBox Sockets"
+            name="Script Sockets"
             isLoading={isLoading}
             items={items}
             hideDialogs={hideDialogs}
             emptyItemHandleClick={this.showCodeBoxDialog}
-            emptyItemContent="Create a CodeBox Socket"/>
+            emptyItemContent="Create a Script Socket"/>
         </Container>
       </div>
     );

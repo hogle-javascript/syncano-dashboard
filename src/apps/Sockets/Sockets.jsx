@@ -172,12 +172,12 @@ export default React.createClass({
 
           <Show if={this.state.codeboxes.items.length > 0}>
             <CodeBoxes.List
-              name="CodeBox Sockets"
+              name="Script Sockets"
               isLoading={this.state.codeboxes.isLoading}
               items={this.state.codeboxes.items}
               handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
               emptyItemHandleClick={CodeBoxes.Actions.showDialog}
-              emptyItemContent="Create a CodeBox Socket"/>
+              emptyItemContent="Create a Script Socket"/>
           </Show>
 
           <Show if={this.state.triggers.items.length > 0}>
@@ -213,7 +213,7 @@ export default React.createClass({
           <Show if={this.state.APNSPushNotifications.items.concat(this.state.GCMPushNotifications.items).length > 0}>
             <PushNotifications.List
               name="Push Notification Sockets"
-              handleTitleClick={() => this.handleListTitleClick('apns-devices')}
+              handleTitleClick={() => this.handleListTitleClick('push-notification-config')}
               items={this.state.APNSPushNotifications.items.concat(this.state.GCMPushNotifications.items)}/>
           </Show>
         </Loading>
