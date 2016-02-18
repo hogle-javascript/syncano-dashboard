@@ -7,6 +7,7 @@ import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 
 import {Socket} from 'syncano-components';
+import Popover from '../PushNotifications/ConfigPushNotificationsPopover';
 
 export default React.createClass({
   displayName: 'SocketsEmpty',
@@ -82,13 +83,18 @@ export default React.createClass({
 
         {/* eslint-disable no-inline-comments */}
 
-        {/* <Socket.EmptyListItem
-         addTooltip="Create a Push Notification"
-         handleAdd={this.showPushNotificationAddDialog}
-         socketName="Push"
-         title="Send Push Notifications">
-         Instantly message your mobile users with timely and relevant content.
-         </Socket.EmptyListItem> */}
+        <Socket.EmptyListItem
+          addTooltip="Configure a Push Notification"
+          handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
+          socketName="Push"
+          title="Send Push Notifications">
+          <div style={styles.socketDescription}>
+            Instantly message your mobile users with timely and relevant content.
+          </div>
+
+        </Socket.EmptyListItem>
+
+        <Popover ref="popover"/>
 
         {/* eslint-enable no-inline-comments */}
 

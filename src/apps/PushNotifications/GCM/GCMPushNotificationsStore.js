@@ -1,17 +1,21 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils & Mixins
-import {WaitForStoreMixin, StoreLoadingMixin} from '../../../mixins';
+import {WaitForStoreMixin, StoreLoadingMixin, StoreHelpersMixin} from '../../../mixins';
 
 // Stores & Actions
 import Actions from './GCMPushNotificationsActions';
+import DevicesActions from '../../PushDevices/GCMDevices/GCMDevicesActions';
+import DevicesStore from '../../PushDevices/GCMDevices/GCMDevicesStore';
 import SessionActions from '../../Session/SessionActions';
 
 export default Reflux.createStore({
   listenables: Actions,
   mixins: [
     WaitForStoreMixin,
-    StoreLoadingMixin
+    StoreLoadingMixin,
+    StoreHelpersMixin
   ],
 
   getInitialState() {
@@ -24,6 +28,7 @@ export default Reflux.createStore({
   init() {
     this.data = this.getInitialState();
     this.waitFor(
+      DevicesActions.fetchDevices.completed,
       SessionActions.setInstance,
       this.refreshData
     );
@@ -34,11 +39,9 @@ export default Reflux.createStore({
     Actions.fetchGCMPushNotificationConfig();
   },
 
-  hasConfig() {
-    const items = this.data.items;
-
+  hasConfig(items = this.data.items) {
     if (items.length > 0) {
-      return items[0].development_api_key || items[0].production_api_key;
+      return !_.isEmpty(items[0].development_api_key) || !_.isEmpty(items[0].production_api_key);
     }
 
     return false;
@@ -46,7 +49,12 @@ export default Reflux.createStore({
 
   onFetchGCMPushNotificationConfigCompleted(items) {
     console.debug('GCMPushNotificationsStore::onFetchGCMPushNotificationConfigCompleted');
-    this.data.items = [items];
-    this.trigger(this.data);
+    this.data.items = [items].map((item) => {
+      item.name = 'GCM';
+      item.hasConfig = this.hasConfig([items]);
+      item.devicesCount = DevicesStore.getDevices().length;
+
+      return item;
+    });
   }
 });

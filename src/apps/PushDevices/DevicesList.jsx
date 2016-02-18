@@ -87,7 +87,7 @@ export default React.createClass({
   renderMoreLink() {
     const styles = this.getStyles();
 
-    if (this.isActive('all-devices')) {
+    if (this.isActive('all-push-notification-devices')) {
       return (
         <span
           onClick={() => this.transitionTo(`${this.props.type}-devices`, this.getParams())}

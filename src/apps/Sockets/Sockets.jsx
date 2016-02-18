@@ -8,9 +8,10 @@ import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
-import {Container, Loading, Socket} from 'syncano-components';
+import {Container, Loading, Socket, Show} from 'syncano-components';
 import {InnerToolbar, Dialog} from '../../common';
-import {FlatButton, Popover, FontIcon, MenuItem, Styles, Utils} from 'syncano-material-ui';
+import Popover from '../PushNotifications/ConfigPushNotificationsPopover';
+import {FlatButton} from 'syncano-material-ui';
 
 // Apps
 import Data from '../Data';
@@ -39,6 +40,8 @@ export default React.createClass({
     Reflux.connect(CodeBoxes.Store, 'codeboxes'),
     Reflux.connect(PushNotifications.APNSStore, 'APNSPushNotifications'),
     Reflux.connect(PushNotifications.GCMStore, 'GCMPushNotifications'),
+    Reflux.connect(PushDevices.GCMStore, 'GCMDevices'),
+    Reflux.connect(PushDevices.APNSStore, 'APNSDevices'),
 
     DialogsMixin,
     InstanceTabsMixin,
@@ -53,46 +56,13 @@ export default React.createClass({
     }
   },
 
-  getInitialState() {
-    return {
-      popoverVisible: false
-    };
-  },
-
   componentDidMount() {
     console.info('Data::componentDidMount');
     this.fetch();
   },
 
-  getStyles() {
-    return {
-      androidIcon: {
-        color: Styles.Colors.green400,
-        marginTop: '4px !important'
-      },
-      appleIcon: {
-        color: Styles.Colors.black,
-        marginTop: '2px !important'
-      },
-      disabledIcon: {
-        color: Styles.Colors.grey400
-      }
-    };
-  },
-
-  getPushNotificationsItems() {
-    const isGCMConfigured = PushNotifications.GCMStore.hasConfig();
-    const isAPNSConfigured = PushNotifications.APNSStore.hasConfig();
-    const items = [
-      isGCMConfigured ? PushNotifications.GCMListItem : null,
-      isAPNSConfigured ? PushNotifications.APNSListItem : null
-    ];
-
-    return _.compact(items);
-  },
-
   isViewLoading() {
-    let loadingStates = _.without(_.keys(this.state), 'APNSPushNotifications', 'GCMPushNotifications').map((key) => {
+    let loadingStates = _.keys(this.state).map((key) => {
       if (this.state[key].hasOwnProperty('isLoading')) {
         return this.state[key].isLoading;
       }
@@ -113,19 +83,6 @@ export default React.createClass({
     this.transitionTo(routeName, {instanceName});
   },
 
-  togglePopover(event) {
-    this.setState({
-      popoverVisible: !this.state.popoverVisible,
-      anchorElement: event.currentTarget
-    });
-  },
-
-  hidePopover() {
-    this.setState({
-      popoverVisible: false
-    });
-  },
-
   fetch() {
     Data.Actions.fetch();
     Snippets.Actions.fetch();
@@ -136,6 +93,8 @@ export default React.createClass({
     CodeBoxes.Actions.fetch();
     PushDevices.APNSActions.fetch();
     PushDevices.GCMActions.fetch();
+    PushNotifications.APNSActions.fetch();
+    PushNotifications.GCMActions.fetch();
   },
 
   initDialogs() {
@@ -164,73 +123,22 @@ export default React.createClass({
     ];
   },
 
-  configurePushNotification(type) {
-    const config = {
-      gcm: PushNotifications.GCMActions.showDialog,
-      apns: PushNotifications.APNSActions.showDialog
-    };
-
-    config[type]();
-    this.hidePopover();
-  },
-
-  renderPopover() {
-    const hasGCMConfig = PushNotifications.GCMStore.hasConfig();
-    const hasAPNSConfig = PushNotifications.APNSStore.hasConfig();
-    const styles = this.getStyles();
-    const androidIcon = (
-      <FontIcon
-        style={Utils.Styles.mergeStyles(styles.androidIcon, hasGCMConfig && styles.disabledIcon)}
-        className="synicon-android"/>
-    );
-    const appleIcon = (
-      <FontIcon
-        style={Utils.Styles.mergeStyles(styles.appleIcon, hasAPNSConfig && styles.disabledIcon)}
-        className="synicon-apple"/>
-    );
-
-    return (
-      <Popover
-        style={{padding: '8px 0'}}
-        onRequestClose={this.hidePopover}
-        open={this.state.popoverVisible}
-        anchorEl={this.state.anchorElement}
-        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-        targetOrigin={{horizontal: 'right', vertical: 'top'}}>
-        <MenuItem
-          disabled={PushNotifications.GCMStore.hasConfig()}
-          leftIcon={androidIcon}
-          onTouchTap={() => this.configurePushNotification('gcm')}>
-          <div>
-            Android Device
-          </div>
-        </MenuItem>
-        <MenuItem
-          disabled={PushNotifications.APNSStore.hasConfig()}
-          leftIcon={appleIcon}
-          onTouchTap={() => this.configurePushNotification('apns')}>
-          <div>
-            iOS Device
-          </div>
-        </MenuItem>
-      </Popover>
-    );
-  },
-
   renderToolbar() {
     if (!this.hasAnyItem() || this.isViewLoading()) {
       return <InnerToolbar title="Sockets"/>;
     }
+    const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
 
     return (
       <InnerToolbar title="Sockets">
         <div style={{paddingTop: 4}}>
+          <Popover ref="pushSocketPopover"/>
           <Socket.Data onTouchTap={Data.Actions.showDialog}/>
           <Socket.CodeBox onTouchTap={CodeBoxes.Actions.showDialog}/>
           <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
           <Socket.Push
-            ref="pushSocket"
-            onTouchTap={this.togglePopover}/>
+            tooltip="Configure Push Notification Socket"
+            onTouchTap={togglePopover}/>
           <Socket.Trigger onTouchTap={Triggers.Actions.showDialog}/>
           <Socket.Schedule
             onTouchTap={Schedules.Actions.showDialog}
@@ -252,50 +160,62 @@ export default React.createClass({
     return (
       <div style={{clear: 'both', height: '100%'}}>
         <Loading show={this.isViewLoading()}>
-          <Data.List
-            name="Data Sockets"
-            isLoading={this.state.dataviews.isLoading}
-            items={this.state.dataviews.items}
-            handleTitleClick={() => this.handleListTitleClick('data')}
-            emptyItemHandleClick={Data.Actions.showDialog}
-            emptyItemContent="Create a Data Socket"/>
+          <Show if={this.state.dataviews.items.length > 0}>
+            <Data.List
+              name="Data Sockets"
+              isLoading={this.state.dataviews.isLoading}
+              items={this.state.dataviews.items}
+              handleTitleClick={() => this.handleListTitleClick('data')}
+              emptyItemHandleClick={Data.Actions.showDialog}
+              emptyItemContent="Create a Data Socket"/>
+          </Show>
 
-          <CodeBoxes.List
-            name="CodeBox Sockets"
-            isLoading={this.state.codeboxes.isLoading}
-            items={this.state.codeboxes.items}
-            handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
-            emptyItemHandleClick={CodeBoxes.Actions.showDialog}
-            emptyItemContent="Create a CodeBox Socket"/>
+          <Show if={this.state.codeboxes.items.length > 0}>
+            <CodeBoxes.List
+              name="CodeBox Sockets"
+              isLoading={this.state.codeboxes.isLoading}
+              items={this.state.codeboxes.items}
+              handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
+              emptyItemHandleClick={CodeBoxes.Actions.showDialog}
+              emptyItemContent="Create a CodeBox Socket"/>
+          </Show>
 
-          <Triggers.List
-            name="Trigger Sockets"
-            isLoading={this.state.triggers.isLoading}
-            items={this.state.triggers.items}
-            handleTitleClick={() => this.handleListTitleClick('triggers')}
-            emptyItemHandleClick={Triggers.Actions.showDialog}
-            emptyItemContent="Create a Trigger Socket"/>
+          <Show if={this.state.triggers.items.length > 0}>
+            <Triggers.List
+              name="Trigger Sockets"
+              isLoading={this.state.triggers.isLoading}
+              items={this.state.triggers.items}
+              handleTitleClick={() => this.handleListTitleClick('triggers')}
+              emptyItemHandleClick={Triggers.Actions.showDialog}
+              emptyItemContent="Create a Trigger Socket"/>
+          </Show>
 
-          <Schedules.List
-            name="Schedule Sockets"
-            isLoading={this.state.schedules.isLoading}
-            items={this.state.schedules.items}
-            handleTitleClick={() => this.handleListTitleClick('schedules')}
-            emptyItemHandleClick={Schedules.Actions.showDialog}
-            emptyItemContent="Create a Schedule Socket"/>
+          <Show if={this.state.schedules.items.length > 0}>
+            <Schedules.List
+              name="Schedule Sockets"
+              isLoading={this.state.schedules.isLoading}
+              items={this.state.schedules.items}
+              handleTitleClick={() => this.handleListTitleClick('schedules')}
+              emptyItemHandleClick={Schedules.Actions.showDialog}
+              emptyItemContent="Create a Schedule Socket"/>
+          </Show>
 
-          <Channels.List
-            name="Channel Sockets"
-            isLoading={this.state.channels.isLoading}
-            items={this.state.channels.items}
-            handleTitleClick={() => this.handleListTitleClick('channels')}
-            emptyItemHandleClick={Channels.Actions.showDialog}
-            emptyItemContent="Create a Channel Socket"/>
+          <Show if={this.state.channels.items.length > 0}>
+            <Channels.List
+              name="Channel Sockets"
+              isLoading={this.state.channels.isLoading}
+              items={this.state.channels.items}
+              handleTitleClick={() => this.handleListTitleClick('channels')}
+              emptyItemHandleClick={Channels.Actions.showDialog}
+              emptyItemContent="Create a Channel Socket"/>
+          </Show>
 
-          <PushNotifications.List
-            name="Push Notification Sockets"
-            handleTitleClick={() => this.handleListTitleClick('apns-devices')}
-            items={this.getPushNotificationsItems()}/>
+          <Show if={this.state.APNSPushNotifications.items.concat(this.state.GCMPushNotifications.items).length > 0}>
+            <PushNotifications.List
+              name="Push Notification Sockets"
+              handleTitleClick={() => this.handleListTitleClick('apns-devices')}
+              items={this.state.APNSPushNotifications.items.concat(this.state.GCMPushNotifications.items)}/>
+          </Show>
         </Loading>
       </div>
     );
@@ -312,7 +232,6 @@ export default React.createClass({
         <PushNotifications.APNSConfigDialog />
         <PushNotifications.GCMConfigDialog />
 
-        {this.renderPopover()}
         {this.getDialogs()}
         {this.renderToolbar()}
         <Container>

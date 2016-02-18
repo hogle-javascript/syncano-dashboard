@@ -10,6 +10,8 @@ import Header from './Header';
 import Instances from './Instances';
 import Profile from './Profile';
 import ProfileInvitations from './ProfileInvitations';
+import PushDevices from './PushDevices';
+import PushNotifications from './PushNotifications';
 import Schedules from './Schedules';
 import Session from './Session';
 import SnackbarNotification from './SnackbarNotification';
@@ -35,6 +37,8 @@ export default {
   Instances,
   Profile,
   ProfileInvitations,
+  PushDevices,
+  PushNotifications,
   Schedules,
   Session,
   SnackbarNotification,

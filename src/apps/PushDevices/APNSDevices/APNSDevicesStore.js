@@ -40,6 +40,7 @@ export default Reflux.createStore({
   setDevices(devices) {
     console.debug('APNSDevicesStore::setDevices');
     this.data.items = devices;
+    // console.error('APNSSTORE: ', this.data.items);
     this.trigger(this.data);
   },
 

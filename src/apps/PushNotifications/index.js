@@ -1,3 +1,4 @@
+import PushNotifications from './PushNotifications';
 import PushNotificationsList from './PushNotificationsList';
 import PushNotificationsListItem from './PushNotificationsListItem';
 import APNSPushNotificationsListItem from './APNS/APNSPushNotificationsListItem';
@@ -10,8 +11,6 @@ import GCMPushNotificationsActions from './GCM/GCMPushNotificationsActions';
 import GCMPushNotificationsStore from './GCM/GCMPushNotificationsStore';
 import GCMConfigDialog from './GCM/GCMConfigDialog';
 import GCMDialogStore from './GCM/GCMConfigDialogStore';
-
-let PushNotifications = {};
 
 PushNotifications.List = PushNotificationsList;
 PushNotifications.ListItem = PushNotificationsListItem;

@@ -107,7 +107,7 @@ export default React.createClass({
                 primaryText="Snippets"/>
               <Sidebar.LinkListItem
                 key="pushDevices"
-                routeName="all-devices"
+                routeName="all-push-notification-devices"
                 primaryText="Push Devices"
                 initiallyOpen={true}
                 autoGenerateNestedIndicator={false}
