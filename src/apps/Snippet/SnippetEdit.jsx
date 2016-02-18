@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {Navigation, State} from 'react-router';
-import SnippetConstants from './SnippetConstants';
 
 // Utils
 import {
@@ -21,7 +20,7 @@ import Store from './SnippetStore';
 
 // Components
 import {FlatButton, Styles, Checkbox} from 'syncano-material-ui';
-import {Show, CharacterCounter, Loading} from 'syncano-components';
+import {Show, Loading} from 'syncano-components';
 import {Dialog, Editor, Notification} from '../../common';
 
 export default React.createClass({
@@ -130,7 +129,6 @@ export default React.createClass({
     let source = null;
     let snippet = this.state.currentSnippet;
     let editorMode = 'python';
-    let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
     let traceStyle =
       this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
 
@@ -157,10 +155,6 @@ export default React.createClass({
               onChange={this.handleOnSourceChange}
               onLoad={this.clearAutosaveTimer}
               value={source}/>
-            <CharacterCounter
-              charactersCountWarn={SnippetConstants.charactersCountWarn}
-              characters={charactersCount}
-              maxCharacters={SnippetConstants.maxCharactersCount}/>
             <Show if={this.getValidationMessages('source').length > 0}>
               <div style={styles.notification}>
                 <Notification type="error">
