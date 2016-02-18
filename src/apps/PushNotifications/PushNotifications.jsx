@@ -50,13 +50,6 @@ export default React.createClass({
             name="Push Notification Sockets"
             items={items}/>
         </Container>
-        <button onClick={() => {
-          APNSPushNotificationsActions.fetchAPNSPushNotificationConfig();
-          GCMPushNotificationsActions.fetchGCMPushNotificationConfig();
-          PushDevices.GCMActions.fetchDevices();
-          PushDevices.APNSActions.fetchDevices();
-        }}>click
-        </button>
       </div>
     );
   }

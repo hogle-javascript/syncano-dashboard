@@ -9,19 +9,16 @@ let Column = ColumnList.Column;
 
 export default (props) => {
   const renderItem = (item) => {
-    if (item.name === 'APNS') {
-      return (
-        <APNSListItem
-          key={`${item.name}pushNotificationListItem`}
-          item={item}/>
-      );
-    }
-
-    return (
-      <GCMListItem
+    const listItem = {
+      APNS: <APNSListItem
+        key={`${item.name}pushNotificationListItem`}
+        item={item}/>,
+      GCM: <GCMListItem
         key={`${item.name}pushNotificationListItem`}
         item={item}/>
-    );
+    };
+
+    return listItem[item.name];
   };
 
   return (

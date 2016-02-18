@@ -61,6 +61,13 @@ export default React.createClass({
     this.fetch();
   },
 
+  getPushNotificationItems() {
+    const APNSItems = _.filter(this.state.APNSPushNotifications.items, 'hasConfig');
+    const GCMItems = _.filter(this.state.GCMPushNotifications.items, 'hasConfig');
+
+    return APNSItems.concat(GCMItems);
+  },
+
   isViewLoading() {
     let loadingStates = _.keys(this.state).map((key) => {
       if (this.state[key].hasOwnProperty('isLoading')) {
@@ -210,11 +217,11 @@ export default React.createClass({
               emptyItemContent="Create a Channel Socket"/>
           </Show>
 
-          <Show if={this.state.APNSPushNotifications.items.concat(this.state.GCMPushNotifications.items).length > 0}>
+          <Show if={this.getPushNotificationItems().length > 0}>
             <PushNotifications.List
               name="Push Notification Sockets"
               handleTitleClick={() => this.handleListTitleClick('push-notification-config')}
-              items={this.state.APNSPushNotifications.items.concat(this.state.GCMPushNotifications.items)}/>
+              items={this.getPushNotificationItems()}/>
           </Show>
         </Loading>
       </div>
