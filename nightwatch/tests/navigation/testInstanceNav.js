@@ -64,32 +64,17 @@ module.exports = {
     scriptsPage.clickElement('@scriptListItem');
     scriptEditPage.waitForElementPresent('@scriptEditView');
   },
-  'User goes to Script config view': (client) => {
-    const leftMenuPage = client.page.leftMenuPage();
-    const scriptsPage = client.page.scriptsPage();
-    const scriptEditPage = client.page.scriptEditPage();
-
-    leftMenuPage.clickElement('@scripts');
-    scriptsPage.clickElement('@scriptListItem');
-    scriptEditPage
-      .clickElement('@config')
-      .waitForElementPresent('@configKeyField')
-      .waitForElementPresent('@configValueField')
-      .waitForElementPresent('@configAddFieldButton')
-      .verify.containsText('@configKeyField', '')
-      .verify.containsText('@configValueField', '');
-  },
-  'User goes to Script traces view': (client) => {
-    const leftMenuPage = client.page.leftMenuPage();
-    const scriptsPage = client.page.scriptsPage();
-    const scriptEditPage = client.page.scriptEditPage();
-
-    leftMenuPage.clickElement('@scripts');
-    scriptsPage.clickElement('@scriptListItem');
-    scriptEditPage
-      .clickElement('@traces')
-      .waitForElementPresent('@tracesEmpty');
-  },
+  // 'User goes to Script traces view': (client) => {
+  //   const leftMenuPage = client.page.leftMenuPage();
+  //   const scriptsPage = client.page.scriptsPage();
+  //   const scriptEditPage = client.page.scriptEditPage();
+  //
+  //   leftMenuPage.clickElement('@scripts');
+  //   scriptsPage.clickElement('@scriptListItem');
+  //   scriptEditPage
+  //     .clickElement('@traces')
+  //     .waitForElementPresent('@tracesEmpty');
+  // },
   'User goes to Data Objects View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const classesPage = client.page.classesPage();

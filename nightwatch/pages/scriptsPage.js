@@ -1,7 +1,7 @@
 export default {
   elements: {
     scriptListItem: {
-      selector: '//div[text()="script"]',
+      selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     }
   }

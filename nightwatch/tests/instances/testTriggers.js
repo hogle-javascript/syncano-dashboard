@@ -21,7 +21,7 @@ export default {
       .clickElement('@addTriggerButton')
       .waitForElementPresent('@addTriggerModalTitle')
       .fillInput('@addTriggerModalLabel', suffix)
-      .selectDropdownValue('@addTriggerModalScript', 'script')
+      .selectDropdownValue('@addTriggerModalScript', 'snippet')
       .selectDropdownValue('@addTriggerModalSignal', 'create')
       .selectDropdownValue('@addTriggerModalClass', 'user_profile')
       .clickElement('@confirm')
