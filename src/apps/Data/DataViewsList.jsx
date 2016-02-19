@@ -73,6 +73,11 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
+            Description
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-flex-3">
             Class
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">

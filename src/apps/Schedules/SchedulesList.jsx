@@ -70,6 +70,11 @@ export default React.createClass({
             {this.props.name}
           </Column.ColumnHeader>
           <Column.ColumnHeader
+            className="col-flex-1"
+            columnName="DATE">
+            Next run
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
             Snippet
@@ -83,11 +88,6 @@ export default React.createClass({
             className="col-flex-1"
             columnName="DESC">
             Crontab
-          </Column.ColumnHeader>
-          <Column.ColumnHeader
-            className="col-flex-1"
-            columnName="DATE">
-            Next run
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu

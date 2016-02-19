@@ -36,6 +36,14 @@ export default React.createClass({
           handleIconClick={this.props.onIconClick}
           primaryText={item.label}/>
         <Column.Desc className="col-flex-1">
+          <Link to="classes-edit" params={{
+            instanceName: this.getParams().instanceName,
+            className: item.class
+          }}>
+            {item.class}
+          </Link>
+        </Column.Desc>
+        <Column.Desc className="col-flex-1">
           <Link to="snippet" params={{
             instanceName: this.getParams().instanceName,
             snippetId: item.codebox
@@ -51,14 +59,6 @@ export default React.createClass({
               triggerId: item.id
             }}>
             Traces
-          </Link>
-        </Column.Desc>
-        <Column.Desc className="col-flex-1">
-          <Link to="classes-edit" params={{
-            instanceName: this.getParams().instanceName,
-            className: item.class
-          }}>
-            {item.class}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">

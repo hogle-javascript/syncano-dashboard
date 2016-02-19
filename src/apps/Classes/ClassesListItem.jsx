@@ -56,14 +56,14 @@ export default React.createClass({
           handleIconClick={onIconClick}
           primaryText={item.name}
           secondaryText={item.description}/>
-        <Column.Desc>
+        <Column.Desc className="col-flex-1">
           {objectsCount}
           <IconButton
             onTouchTap={() => this.redirectToClassDataObjects(item.name)}
             iconClassName="synicon-table"
             iconStyle={{color: Styles.Colors.blue400, fontSize: 18, verticalAlign: 'bottom'}} />
         </Column.Desc>
-        <Column.ID className="col-xs-3 col-md-3">
+        <Column.ID className="col-flex-1">
           <Link
             to="users"
             params={{
@@ -72,7 +72,7 @@ export default React.createClass({
             {item.group}
           </Link>
         </Column.ID>
-        <Column.Desc className="col-xs-6 col-md-6">
+        <Column.Desc className="col-flex-1">
           <div>
             <div>group: {item.group_permissions}</div>
             <div>other: {item.other_permissions}</div>

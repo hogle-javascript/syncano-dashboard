@@ -50,6 +50,9 @@ export default React.createClass({
               type="link" />
           }/>
         <Column.Desc className="col-flex-1">
+          {item.description}
+        </Column.Desc>
+        <Column.Desc className="col-flex-1">
           <Link
             to="snippet"
             params={{
@@ -70,7 +73,6 @@ export default React.createClass({
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">{publicString}</Column.Desc>
-        <Column.Desc className="col-flex-1"/>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

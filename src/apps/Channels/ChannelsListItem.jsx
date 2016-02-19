@@ -40,6 +40,9 @@ export default React.createClass({
               type="link" />
           }/>
         <Column.Desc className="col-flex-1">
+          {item.description}
+        </Column.Desc>
+        <Column.Desc className="col-flex-1">
           <div>
             <div>group: {item.group_permissions}</div>
             <div>other: {item.other_permissions}</div>
@@ -51,7 +54,6 @@ export default React.createClass({
         <Column.Desc className="col-flex-1">
           {item.custom_publish ? 'Yes' : 'No'}
         </Column.Desc>
-        <Column.Desc className="col-flex-1"/>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

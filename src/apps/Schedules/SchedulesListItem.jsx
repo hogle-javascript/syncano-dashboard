@@ -31,6 +31,9 @@ export default React.createClass({
           handleIconClick={onIconClick}
           primaryText={item.label}
           secondaryText={`ID: ${item.id}`}/>
+        <Column.Date
+          className="col-flex-1"
+          date={item.scheduled_next} />
         <Column.Desc className="col-flex-1">
           <Link to="snippet" params={{
             instanceName: this.getParams().instanceName,
@@ -50,9 +53,6 @@ export default React.createClass({
         <Column.Desc className="col-flex-1">
           {item.crontab}
         </Column.Desc>
-        <Column.Date
-          className="col-flex-1"
-          date={item.scheduled_next} />
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

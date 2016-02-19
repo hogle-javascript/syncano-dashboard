@@ -5,7 +5,7 @@ export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/classes`,
   elements: {
     classesListMenu: {
-      selector: '//div[@class="classes-list"]/div[1]/div[@class=" col-menu"]//button',
+      selector: '//div[@class="classes-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     selectAll: {
@@ -17,7 +17,7 @@ export default {
       locateStrategy: 'xpath'
     },
     classItemDropdown: {
-      selector: `//div[text()="${utils.addSuffix('class')}"]/../../following-sibling::div[@class=" col-menu"]//button`,
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../../../following-sibling::div[@class="col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -83,18 +83,18 @@ export default {
       locateStrategy: 'xpath'
     },
     selectUserClass: {
-      selector: '//div[text()="user_profile"]/../preceding-sibling::div/span',
+      selector: '//div[text()="user_profile"]/../../preceding-sibling::div/span',
       locateStrategy: 'xpath'
     },
     userClassDropDown: {
-      selector: '//div[text()="user_profile"]/../../../div[@class=" col-menu"]//button',
+      selector: '//div[text()="user_profile"]/../../../../div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     classToSelect: {
       selector: '.synicon-checkbox-blank-outline'
     },
     classTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('class')}"]/../../following-sibling::div[1]`,
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../following-sibling::div[1]/div`,
       locateStrategy: 'xpath'
     },
     classTableName: {

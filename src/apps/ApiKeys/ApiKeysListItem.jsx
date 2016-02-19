@@ -30,7 +30,7 @@ export default React.createClass({
           primaryText={item.description}
           secondaryText={
             <Clipboard
-              text={item.api_key}
+              copyText={item.api_key}
               onCopy={() => this.setSnackbarNotification({
                 message: 'API key copied to the clipboard'
               })}
