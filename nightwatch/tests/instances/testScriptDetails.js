@@ -1,5 +1,5 @@
 module.exports = {
-  tags: ['snippets'],
+  tags: ['scripts'],
   before(client) {
     const loginPage = client.page.loginPage();
 
@@ -10,30 +10,30 @@ module.exports = {
   after(client) {
     client.end();
   },
-  'User goes to Snippet edit view': (client) => {
+  'User goes to Script edit view': (client) => {
     const socketsPage = client.page.socketsPage();
     const leftMenuPage = client.page.leftMenuPage();
-    const snippetsPage = client.page.snippetsPage();
-    const snippetEditPage = client.page.snippetEditPage();
+    const scriptsPage = client.page.scriptsPage();
+    const scriptEditPage = client.page.scriptEditPage();
 
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
-    leftMenuPage.clickElement('@snippets');
-    snippetsPage.clickElement('@snippetListItem');
-    snippetEditPage.waitForElementPresent('@snippetEditView');
+    leftMenuPage.clickElement('@scripts');
+    scriptsPage.clickElement('@scriptListItem');
+    scriptEditPage.waitForElementPresent('@scriptEditView');
   }
-  //'User goes to Snippet traces view': (client) => {
+  //'User goes to Script traces view': (client) => {
   //  const instancesPage = client.page.instancesPage();
   //  const socketsPage = client.page.socketsPage();
   //  const leftMenuPage = client.page.leftMenuPage();
-  //  const snippetsPage = client.page.snippetsPage();
-  //  const snippetEditPage = client.page.snippetEditPage();
+  //  const scriptsPage = client.page.scriptsPage();
+  //  const scriptEditPage = client.page.scriptEditPage();
   //
   //  client.url(instancesPage.url);
   //  instancesPage.clickElement('@instancesTableName');
   //  socketsPage.waitForElementPresent('@codeBoxSocketItem');
-  //  leftMenuPage.clickElement('@snippets');
-  //  snippetsPage.clickElement('@snippetListItem');
-  //  snippetEditPage.clickElement('@traces');
-  //  snippetEditPage.waitForElementPresent('@tracesEmpty');
+  //  leftMenuPage.clickElement('@scripts');
+  //  scriptsPage.clickElement('@scriptListItem');
+  //  scriptEditPage.clickElement('@traces');
+  //  scriptEditPage.waitForElementPresent('@tracesEmpty');
   //}
 };

@@ -2,22 +2,22 @@ import Globals from '../../globals';
 import Syncano from 'syncano';
 
 export default {
-  tags: ['snippets'],
+  tags: ['scripts'],
   before(client) {
     const syncano = new Syncano({accountKey: Globals.tempAccountKey, baseUrl: 'https://api.syncano.rocks'});
     const loginPage = client.page.loginPage();
 
-    const snippetOptions = {
-      label: 'snippet',
+    const scriptOptions = {
+      label: 'script',
       source: 'print "foo"',
       runtime_name: 'python'
     };
     const codeBoxOptions = {
       name: null,
-      snippet: null
+      script: null
     };
 
-    syncano.instance(Globals.tempInstanceName).codebox().add(snippetOptions).then((success) => {
+    syncano.instance(Globals.tempInstanceName).codebox().add(scriptOptions).then((success) => {
       codeBoxOptions.codebox = success.id;
       for (let i = 0; i < 3; i += 1) {
         codeBoxOptions.name = `codeBox_${i.toString()}`;

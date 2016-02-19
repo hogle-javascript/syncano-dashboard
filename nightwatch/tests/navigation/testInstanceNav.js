@@ -55,23 +55,23 @@ module.exports = {
     leftMenuPage.clickElement('@classes');
     classesPage.waitForElementPresent('@userProfileClassName');
   },
-  'User goes to Snippets edit view': (client) => {
+  'User goes to Scripts edit view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
-    const snippetsPage = client.page.snippetsPage();
-    const snippetEditPage = client.page.snippetEditPage();
+    const scriptsPage = client.page.scriptsPage();
+    const scriptEditPage = client.page.scriptEditPage();
 
-    leftMenuPage.clickElement('@snippets');
-    snippetsPage.clickElement('@snippetListItem');
-    snippetEditPage.waitForElementPresent('@snippetEditView');
+    leftMenuPage.clickElement('@scripts');
+    scriptsPage.clickElement('@scriptListItem');
+    scriptEditPage.waitForElementPresent('@scriptEditView');
   },
-  'User goes to Snippet config view': (client) => {
+  'User goes to Script config view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
-    const snippetsPage = client.page.snippetsPage();
-    const snippetEditPage = client.page.snippetEditPage();
+    const scriptsPage = client.page.scriptsPage();
+    const scriptEditPage = client.page.scriptEditPage();
 
-    leftMenuPage.clickElement('@snippets');
-    snippetsPage.clickElement('@snippetListItem');
-    snippetEditPage
+    leftMenuPage.clickElement('@scripts');
+    scriptsPage.clickElement('@scriptListItem');
+    scriptEditPage
       .clickElement('@config')
       .waitForElementPresent('@configKeyField')
       .waitForElementPresent('@configValueField')
@@ -79,14 +79,14 @@ module.exports = {
       .verify.containsText('@configKeyField', '')
       .verify.containsText('@configValueField', '');
   },
-  'User goes to Snippet traces view': (client) => {
+  'User goes to Script traces view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
-    const snippetsPage = client.page.snippetsPage();
-    const snippetEditPage = client.page.snippetEditPage();
+    const scriptsPage = client.page.scriptsPage();
+    const scriptEditPage = client.page.scriptEditPage();
 
-    leftMenuPage.clickElement('@snippets');
-    snippetsPage.clickElement('@snippetListItem');
-    snippetEditPage
+    leftMenuPage.clickElement('@scripts');
+    scriptsPage.clickElement('@scriptListItem');
+    scriptEditPage
       .clickElement('@traces')
       .waitForElementPresent('@tracesEmpty');
   },

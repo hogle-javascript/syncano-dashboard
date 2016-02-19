@@ -1,7 +1,7 @@
 export default {
   elements: {
-    snippetListItem: {
-      selector: '//div[text()="snippet"]',
+    scriptListItem: {
+      selector: '//div[text()="script"]',
       locateStrategy: 'xpath'
     }
   }

@@ -56,8 +56,8 @@ export default {
       selector: '//div[@class="class-dropdown"]',
       locateStrategy: 'xpath'
     },
-    addTriggerModalSnippet: {
-      selector: '//div[@class="snippet-dropdown"]',
+    addTriggerModalScript: {
+      selector: '//div[@class="script-dropdown"]',
       locateStrategy: 'xpath'
     },
     triggerTableRow: {

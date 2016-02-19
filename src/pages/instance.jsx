@@ -96,9 +96,9 @@ export default React.createClass({
                 routeName="classes"
                 primaryText="Classes" />
               <Sidebar.LinkListItem
-                key="Snippets"
-                routeName="snippets"
-                primaryText="Snippets"/>
+                key="Scripts"
+                routeName="scripts"
+                primaryText="Scripts"/>
               <Sidebar.LinkListItem
                 key="Push Devices"
                 routeName="apns-devices"

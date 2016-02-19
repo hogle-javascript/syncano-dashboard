@@ -21,8 +21,8 @@ export default {
         params
       },
       {
-        label: 'Snippets',
-        route: 'snippets',
+        label: 'Scripts',
+        route: 'scripts',
         params
       },
       {

@@ -40,7 +40,7 @@ export default Reflux.createStore({
         views: [],
         classes: [],
         codeboxes: [],
-        snippets: [],
+        scripts: [],
         triggers: [],
         schedules: [],
         channels: []
@@ -50,7 +50,7 @@ export default Reflux.createStore({
         views: [],
         classes: {},
         codeboxes: [],
-        snippets: {},
+        scripts: {},
         triggers: {},
         schedules: {},
         channels: {}
@@ -140,7 +140,7 @@ export default Reflux.createStore({
       Actions.fetchDataViews.completed,
       Actions.fetchCodeBoxes.completed,
       Actions.fetchTriggers.completed,
-      Actions.fetchSnippets.completed,
+      Actions.fetchScripts.completed,
       Actions.fetchSchedules.completed,
       Actions.fetchChannels.completed,
       () => {
@@ -153,7 +153,7 @@ export default Reflux.createStore({
     Actions.fetchDataViews();
     Actions.fetchCodeBoxes();
     Actions.fetchTriggers();
-    Actions.fetchSnippets();
+    Actions.fetchScripts();
     Actions.fetchSchedules();
     Actions.fetchChannels();
   },
@@ -182,8 +182,8 @@ export default Reflux.createStore({
     this.data.instanceData.channels = this.saveListFromSyncano(obj);
   },
 
-  onFetchSnippetsCompleted(obj) {
-    this.data.instanceData.snippets = this.saveListFromSyncano(obj);
+  onFetchScriptsCompleted(obj) {
+    this.data.instanceData.scripts = this.saveListFromSyncano(obj);
   },
 
   onCreateVersionCompleted() {

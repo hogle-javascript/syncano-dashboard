@@ -7,7 +7,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 import Actions from './TriggersActions';
 import Store from './TriggersStore';
-import SnippetsActions from '../Snippets/SnippetsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 
 import {Container, Socket} from 'syncano-components';
 import {InnerToolbar} from '../../common';
@@ -29,7 +29,7 @@ export default React.createClass({
 
   componentWillMount() {
     Actions.fetch();
-    SnippetsActions.fetch();
+    ScriptsActions.fetch();
   },
 
   showTriggerDialog() {
