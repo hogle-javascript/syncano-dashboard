@@ -16,7 +16,7 @@ import {FlatButton} from 'syncano-material-ui';
 import Data from '../Data';
 import Channels from '../Channels';
 import Classes from '../Classes';
-import Snippets from '../Snippets';
+import Scripts from '../Scripts';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
 import CodeBoxes from '../CodeBoxes';
@@ -84,7 +84,7 @@ export default React.createClass({
 
   fetch() {
     Data.Actions.fetch();
-    Snippets.Actions.fetch();
+    Scripts.Actions.fetch();
     Channels.Actions.fetch();
     Classes.Actions.fetch();
     Schedules.Actions.fetch();

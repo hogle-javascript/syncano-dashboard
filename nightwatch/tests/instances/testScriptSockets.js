@@ -22,7 +22,7 @@ export default {
       .clickElement('@addCodeBoxButton')
       .waitForElementVisible('@addCodeBoxModalTitle')
       .fillInput('@modalNameInput', codeBox)
-      .selectDropdownValue('@addCodeBoxModalSnippetDropdown', 'snippet')
+      .selectDropdownValue('@addCodeBoxModalScriptDropdown', 'snippet')
       .clickElement('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },

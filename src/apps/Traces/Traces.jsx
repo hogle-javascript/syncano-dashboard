@@ -25,7 +25,7 @@ export default Radium(React.createClass({
   displayName: 'Traces',
 
   propTypes: {
-    tracesFor: React.PropTypes.oneOf(['codeBox', 'snippet', 'trigger', 'schedule']),
+    tracesFor: React.PropTypes.oneOf(['codeBox', 'script', 'trigger', 'schedule']),
     objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
   },
 
@@ -40,7 +40,7 @@ export default Radium(React.createClass({
 
   getDefaultProps() {
     return {
-      tracesFor: 'snippet',
+      tracesFor: 'script',
       showHeader: false
     };
   },
@@ -55,7 +55,7 @@ export default Radium(React.createClass({
         position: 'relative',
         top: '35px'
       },
-      snippetsList: {
+      scriptsList: {
         top: '-45px'
       }
     };
@@ -67,9 +67,9 @@ export default Radium(React.createClass({
         route: 'codeBoxes',
         backLabel: 'Go back to Data Views'
       },
-      snippet: {
-        route: 'snippets',
-        backLabel: 'Go back to Snippets list'
+      script: {
+        route: 'scripts',
+        backLabel: 'Go back to Scripts list'
       },
       trigger: {
         route: 'triggers',
@@ -83,8 +83,8 @@ export default Radium(React.createClass({
   },
 
   getTracesFor() {
-    if (this.props.tracesFor === 'snippet') {
-      return 'Snippet';
+    if (this.props.tracesFor === 'script') {
+      return 'Script';
     }
 
     return _.capitalize(this.props.tracesFor);
@@ -117,7 +117,7 @@ export default Radium(React.createClass({
           title={toolbarTitleText}
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}/>
-        <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>
+        <div style={[styles.list, this.isActive('script-traces') && styles.scriptsList]}>
           <Container>
             <TracesList
               tracesFor={this.props.tracesFor}

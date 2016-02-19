@@ -2,7 +2,7 @@ import React from 'react';
 import {State, Link} from 'react-router';
 
 import Actions from './SchedulesActions';
-import SnippetsStore from '../Snippets/SnippetsStore';
+import ScriptsStore from '../Scripts/ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Color} from 'syncano-components';
@@ -16,8 +16,8 @@ export default React.createClass({
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
-    const snippet = SnippetsStore.getSnippetById(item.codebox);
-    const snippetLabel = snippet ? snippet.label : '';
+    const script = ScriptsStore.getScriptById(item.codebox);
+    const scriptLabel = script ? script.label : '';
 
     return (
       <ColumnList.Item
@@ -35,11 +35,11 @@ export default React.createClass({
           className="col-flex-1"
           date={item.scheduled_next} />
         <Column.Desc className="col-flex-1">
-          <Link to="snippet" params={{
+          <Link to="script" params={{
             instanceName: this.getParams().instanceName,
-            snippetId: item.codebox
+            scriptId: item.codebox
           }}>
-            {snippetLabel}
+            {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">

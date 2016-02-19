@@ -5,8 +5,8 @@ import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 
 // Stores & Actions
 import Actions from './CodeBoxesActions';
-import SnippetsActions from '../Snippets/SnippetsActions';
-import SnippetsStore from '../Snippets/SnippetsStore';
+import ScriptsActions from '../Scripts/ScriptsActions';
+import ScriptsStore from '../Scripts/ScriptsStore';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -20,7 +20,7 @@ export default Reflux.createStore({
       label: '',
       signal: '',
       class: '',
-      snippets: [
+      scripts: [
         {
           payload: '',
           text: 'Loading...'
@@ -31,17 +31,17 @@ export default Reflux.createStore({
 
   init() {
     this.listenToForms();
-    this.listenTo(SnippetsActions.setSnippets, this.getSnippetDropdown);
+    this.listenTo(ScriptsActions.setScripts, this.getScriptDropdown);
   },
 
-  getSnippetDropdown() {
-    console.debug('DataViewDialogStore::getSnippetDropdown');
-    let snippets = SnippetsStore.getSnippetsDropdown();
+  getScriptDropdown() {
+    console.debug('DataViewDialogStore::getScriptDropdown');
+    let scripts = ScriptsStore.getScriptsDropdown();
 
-    if (snippets.length === 0) {
-      snippets = [{payload: '', text: 'No Snippets, add one first'}];
+    if (scripts.length === 0) {
+      scripts = [{payload: '', text: 'No Scripts, add one first'}];
     }
-    this.trigger({snippets});
+    this.trigger({scripts});
   },
 
   onCreateCodeBoxCompleted() {

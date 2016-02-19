@@ -5,8 +5,8 @@ import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 
 // Stores & Actions
 import SchedulesActions from './SchedulesActions';
-import SnippetsActions from '../Snippets/SnippetsActions';
-import SnippetsStore from '../Snippets/SnippetsStore';
+import ScriptsActions from '../Scripts/ScriptsActions';
+import ScriptsStore from '../Scripts/ScriptsStore';
 
 export default Reflux.createStore({
   listenables: SchedulesActions,
@@ -46,8 +46,8 @@ export default Reflux.createStore({
     return {
       label: null,
       crontab: null,
-      snippet: null,
-      snippets: [
+      script: null,
+      scripts: [
         {payload: '', text: 'Loading...'}
       ]
     };
@@ -55,18 +55,18 @@ export default Reflux.createStore({
 
   init() {
     this.listenToForms();
-    this.listenTo(SnippetsActions.setSnippets, this.getSnippetsDropdown);
+    this.listenTo(ScriptsActions.setScripts, this.getScriptsDropdown);
   },
 
-  getSnippetsDropdown() {
-    console.debug('ScheduleDialogStore::getSnippetsDropdown');
-    let snippets = SnippetsStore.getSnippetsDropdown();
+  getScriptsDropdown() {
+    console.debug('ScheduleDialogStore::getScriptsDropdown');
+    let scripts = ScriptsStore.getScriptsDropdown();
 
-    if (snippets.length === 0) {
-      snippets = [{payload: '', text: 'No Snippets, add one first'}];
+    if (scripts.length === 0) {
+      scripts = [{payload: '', text: 'No Scripts, add one first'}];
     }
 
-    this.trigger({snippets});
+    this.trigger({scripts});
   },
 
   getCrontabDropdown() {

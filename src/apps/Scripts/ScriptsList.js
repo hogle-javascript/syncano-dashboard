@@ -8,18 +8,18 @@ import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
-import Actions from './SnippetsActions';
-import Store from './SnippetsStore';
+import Actions from './ScriptsActions';
+import Store from './ScriptsStore';
 
 // Components
-import ListItem from './SnippetsListItem';
+import ListItem from './ScriptsListItem';
 import {ColumnList, Loading} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-  displayName: 'SnippetsList',
+  displayName: 'ScriptsList',
 
   mixins: [
     Router.State,
@@ -31,19 +31,19 @@ export default React.createClass({
   ],
 
   componentWillUpdate(nextProps) {
-    console.info('Snippets::componentWillUpdate');
+    console.info('Scripts::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  getAssociatedSnippets(associatedWith) {
-    let checkedSnippets = Store.getCheckedItems();
+  getAssociatedScripts(associatedWith) {
+    let checkedScripts = Store.getCheckedItems();
 
-    let associatedSnippets = _.filter(checkedSnippets, (snippet) => {
-      snippet[associatedWith] = _.pluck(_.filter(this.state[associatedWith], 'snippet', snippet.id), 'label');
-      return snippet[associatedWith].length > 0;
+    let associatedScripts = _.filter(checkedScripts, (script) => {
+      script[associatedWith] = _.pluck(_.filter(this.state[associatedWith], 'script', script.id), 'label');
+      return script[associatedWith].length > 0;
     });
 
-    return associatedSnippets;
+    return associatedScripts;
   },
 
   getAssociationsList(associationsFor, associatedItems) {
@@ -76,34 +76,34 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedSnippets = Store.getCheckedItems();
-    let snippetsAssociatedWithTriggers = this.getAssociatedSnippets('triggers');
-    let snippetsAssociatedWithSchedules = this.getAssociatedSnippets('schedules');
-    let snippetsNotAssociated = _.difference(_.difference(checkedSnippets, snippetsAssociatedWithSchedules),
-      snippetsAssociatedWithTriggers);
+    let checkedScripts = Store.getCheckedItems();
+    let scriptsAssociatedWithTriggers = this.getAssociatedScripts('triggers');
+    let scriptsAssociatedWithSchedules = this.getAssociatedScripts('schedules');
+    let scriptsNotAssociated = _.difference(_.difference(checkedScripts, scriptsAssociatedWithSchedules),
+      scriptsAssociatedWithTriggers);
 
     let deleteDialog = {
       dialog: Dialog.Delete,
       params: {
-        key: 'deleteSnippetDialog',
-        ref: 'deleteSnippetDialog',
-        title: 'Delete a Snippet',
-        handleConfirm: Actions.removeSnippets,
+        key: 'deleteScriptDialog',
+        ref: 'deleteScriptDialog',
+        title: 'Delete a Script',
+        handleConfirm: Actions.removeScripts,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         itemLabelName: 'label',
-        groupName: 'Snippet'
+        groupName: 'Script'
       }
     };
 
-    if (snippetsAssociatedWithSchedules.length > 0 || snippetsAssociatedWithTriggers.length > 0) {
-      let associatedWithSchedulesList = this.getAssociationsList('schedules', snippetsAssociatedWithSchedules);
-      let associatedWithTriggersList = this.getAssociationsList('triggers', snippetsAssociatedWithTriggers);
-      let notAssociatedList = this.getAssociationsList('notAssociated', snippetsNotAssociated);
+    if (scriptsAssociatedWithSchedules.length > 0 || scriptsAssociatedWithTriggers.length > 0) {
+      let associatedWithSchedulesList = this.getAssociationsList('schedules', scriptsAssociatedWithSchedules);
+      let associatedWithTriggersList = this.getAssociationsList('triggers', scriptsAssociatedWithTriggers);
+      let notAssociatedList = this.getAssociationsList('notAssociated', scriptsNotAssociated);
 
       deleteDialog.params.children = [
-        `Some of checked Snippets are associated with Schedules or Triggers. Do you really want to delete
-        ${Store.getDeleteItemsPhrase('Snippet')}?`,
+        `Some of checked Scripts are associated with Schedules or Triggers. Do you really want to delete
+        ${Store.getDeleteItemsPhrase('Script')}?`,
         notAssociatedList,
         associatedWithSchedulesList,
         associatedWithTriggersList,
@@ -120,10 +120,10 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        key={`snippets-list-item-${item.id}`}
+        key={`scripts-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteSnippetDialog', item)} />
+        showDeleteDialog={() => this.showDialog('deleteScriptDialog', item)} />
     );
   },
 
@@ -146,15 +146,15 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Lists.MenuItem
-                singleItemText="Delete a Snippet"
-                multipleItemsText="Delete Snippets"
-                onTouchTap={() => this.showDialog('deleteSnippetDialog')} />
+                singleItemText="Delete a Script"
+                multipleItemsText="Delete Scripts"
+                onTouchTap={() => this.showDialog('deleteScriptDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          key="snippets-list"
+          key="scripts-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

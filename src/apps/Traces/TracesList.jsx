@@ -48,7 +48,7 @@ export default Radium(React.createClass({
   },
 
   toggleTrace(traceId) {
-    console.info('SnippetsTraces::toggleTrace', traceId);
+    console.info('ScriptsTraces::toggleTrace', traceId);
     const visibleTraceId = this.state.visibleTraceId !== traceId ? traceId : null;
 
     this.setState({visibleTraceId});
@@ -137,8 +137,8 @@ export default Radium(React.createClass({
   renderEmptyContent() {
     let styles = this.getStyles();
     let tracesFor = {
-      snippet: {
-        name: 'Snippet',
+      script: {
+        name: 'Script',
         icon: 'synicon-package-variant'
       },
       codeBox: {

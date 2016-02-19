@@ -19,7 +19,7 @@ export default Reflux.createStore({
     return {
       label: '',
       crontab: '',
-      snippet: '',
+      script: '',
       class: '',
       page_size: 50,
       fields: '',

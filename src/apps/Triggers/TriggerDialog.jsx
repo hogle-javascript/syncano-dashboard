@@ -7,7 +7,7 @@ import {DialogMixin, FormMixin} from '../../mixins';
 // Stores and Actions
 import Actions from './TriggersActions';
 import Store from './TriggerDialogStore';
-import SnippetsActions from '../Snippets/SnippetsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
@@ -36,14 +36,14 @@ export default React.createClass({
     },
     codebox: {
       presence: {
-        message: `^Snippet can't be blank`
+        message: `^Script can't be blank`
       }
     }
   },
 
   handleDialogShow() {
     console.info('TriggerDialog::handleDialogShow');
-    SnippetsActions.fetch();
+    ScriptsActions.fetch();
     ClassesActions.fetch();
   },
 
@@ -114,8 +114,8 @@ export default React.createClass({
             onChange={this.setSelectFieldValue.bind(null, 'class')}
             errorText={this.getValidationMessages('class').join(' ')}/>
           <SelectFieldWrapper
-            name="snippet"
-            options={this.state.snippets}
+            name="script"
+            options={this.state.scripts}
             value={this.state.codebox}
             onChange={this.setSelectFieldValue.bind(null, 'codebox')}
             errorText={this.getValidationMessages('codebox').join(' ')}/>

@@ -40,7 +40,7 @@ export default Reflux.createStore({
 
   fetchCurrentItem() {
     let fetch = {
-      snippet: Actions.fetchCurrentSnippet,
+      script: Actions.fetchCurrentScript,
       codeBox: Actions.fetchCurrentCodeBox,
       trigger: Actions.fetchCurrentTrigger,
       schedule: Actions.fetchCurrentSchedule
@@ -51,7 +51,7 @@ export default Reflux.createStore({
 
   fetchTraces() {
     let fetch = {
-      snippet: Actions.fetchSnippetTraces,
+      script: Actions.fetchScriptTraces,
       codeBox: Actions.fetchCodeBoxTraces,
       trigger: Actions.fetchTriggerTraces,
       schedule: Actions.fetchScheduleTraces
@@ -80,8 +80,8 @@ export default Reflux.createStore({
     this.trigger({currentObjectName: currentObjName});
   },
 
-  onFetchSnippetTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchSnippetTracesCompleted', tracesObj);
+  onFetchScriptTracesCompleted(tracesObj) {
+    console.debug('TracesStore::onFetchScriptTracesCompleted', tracesObj);
     this.setTraces(tracesObj._items);
   },
 
@@ -100,8 +100,8 @@ export default Reflux.createStore({
     this.setTraces(tracesObj._items);
   },
 
-  onFetchCurrentSnippetCompleted(currentObj) {
-    console.debug('TracesStore::onFetchCurrentSnippetCompleted', currentObj);
+  onFetchCurrentScriptCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentScriptCompleted', currentObj);
     this.saveCurrentObj(currentObj.label);
   },
 

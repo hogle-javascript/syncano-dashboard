@@ -5,8 +5,8 @@ import Reflux from 'reflux';
 import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
-import Actions from './SnippetsActions';
-import Store from './SnippetDialogStore';
+import Actions from './ScriptsActions';
+import Store from './ScriptDialogStore';
 
 // Components
 import {TextField, FlatButton} from 'syncano-material-ui';
@@ -14,7 +14,7 @@ import {Loading, SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
-  displayName: 'SnippetDialog',
+  displayName: 'ScriptDialog',
 
   mixins: [
     Reflux.connect(Store),
@@ -32,12 +32,12 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    console.info('SnippetDialog::handleDialogShow');
-    Actions.fetchSnippetRuntimes();
+    console.info('ScriptDialog::handleDialogShow');
+    Actions.fetchScriptRuntimes();
   },
 
   handleEditSubmit() {
-    Actions.updateSnippet(this.state.id, {
+    Actions.updateScript(this.state.id, {
       label: this.state.label,
       description: this.state.description,
       runtime_name: this.state.runtime_name
@@ -45,7 +45,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createSnippet({
+    Actions.createScript({
       label: this.state.label,
       description: this.state.description,
       runtime_name: this.state.runtime_name
@@ -72,7 +72,7 @@ export default React.createClass({
       <Dialog
         key="dialog"
         ref="dialog"
-        title={`${title} a Snippet`}
+        title={`${title} a Script`}
         actions={dialogStandardActions}
         onRequestClose={this.handleCancel}
         open={this.state.open}
@@ -85,8 +85,8 @@ export default React.createClass({
             errorText={this.getValidationMessages('label').join(' ')}
             name='label'
             style={{width: 500}}
-            hintText='Short name for your Snippet'
-            floatingLabelText='Label of a Snippet'/>
+            hintText='Short name for your Script'
+            floatingLabelText='Label of a Script'/>
           <TextField
             ref='description'
             name='description'
@@ -94,8 +94,8 @@ export default React.createClass({
             errorText={this.getValidationMessages('description').join(' ')}
             style={{width: 500}}
             multiLine={true}
-            hintText='Multiline Snippet description (optional)'
-            floatingLabelText='Description of a Snippet'/>
+            hintText='Multiline Script description (optional)'
+            floatingLabelText='Description of a Script'/>
           <SelectFieldWrapper
             name="runtime_name"
             options={this.state.runtimes}
