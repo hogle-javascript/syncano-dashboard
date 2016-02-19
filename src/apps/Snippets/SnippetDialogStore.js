@@ -39,7 +39,7 @@ export default Reflux.createStore({
   onCreateSnippetCompleted(resp) {
     console.debug('SnippetsStore::onCreateSnippetCompleted');
     this.dismissDialog();
-    SessionStore.getRouter().transitionTo('snippet-edit', {
+    SessionStore.getRouter().transitionTo('snippet', {
       instanceName: SessionStore.getInstance().name,
       snippetId: resp.id
     });

@@ -18,7 +18,7 @@ export default React.createClass({
   ],
 
   handleItemClick(itemId) {
-    this.transitionTo('snippet-edit', {
+    this.transitionTo('snippet', {
       instanceName: this.getParams().instanceName,
       snippetId: itemId
     });
@@ -38,13 +38,14 @@ export default React.createClass({
           icon={runtime.icon}
           background={runtime.color}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          <Truncate
-            onClick={this.handleItemClick.bind(null, item.id)}
-            text={item.label}
-            style={{cursor: 'pointer'}}/>
-        </Column.CheckIcon>
-        <Column.ID>{item.id}</Column.ID>
+          handleIconClick={this.props.onIconClick}
+          primaryText={
+            <Truncate
+              onClick={this.handleItemClick.bind(null, item.id)}
+              text={item.label}
+              style={{cursor: 'pointer'}}/>
+          }
+          secondaryText={`ID: ${item.id}`}/>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
         <Column.Menu>

@@ -93,16 +93,6 @@ export default Reflux.createStore({
     this.data.currentSnippet = null;
   },
 
-  setPayloadValue(payload) {
-    this.data.payloadValue = payload;
-    this.trigger(this.data);
-  },
-
-  onSetPayloadValidator(value) {
-    this.data.isPayloadValid = typeof value === 'undefined';
-    this.trigger(this.data);
-  },
-
   onFetchSnippetCompleted(snippet) {
     console.debug('SnippetStore::onFetchSnippetCompleted');
     this.data.snippetConfig = this.mapConfig(snippet.config);

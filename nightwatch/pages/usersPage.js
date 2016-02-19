@@ -5,7 +5,7 @@ export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/users`,
   elements: {
     usersListMenu: {
-      selector: '//div[@class="users-list"]/div[1]/div[@class=" col-menu"]//button',
+      selector: '//div[@class="users-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     user: {
@@ -37,7 +37,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectUserTableRow: {
-      selector: `//div[text()="${utils.addSuffix('user')}"]/../../..//span[@class="synicon-dots-vertical"]`,
+      selector: `//div[text()="${utils.addSuffix('user')}"]/../../../..//span[@class="synicon-dots-vertical"]`,
       locateStrategy: 'xpath'
     },
     deleteButton: {
@@ -65,7 +65,7 @@ export default {
       locateStrategy: 'xpath'
     },
     groupTableRowDropdown: {
-      selector: `//div[text()="${utils.addSuffix('group')}"]/../../following-sibling::div[2]//button`,
+      selector: `//div[text()="${utils.addSuffix('group')}"]/../../../following-sibling::div//button`,
       locateStrategy: 'xpath'
     },
     deleteButtonDropdown: {
@@ -81,7 +81,7 @@ export default {
       locateStrategy: 'xpath'
     },
     userList: {
-      selector: '//div[@class="col-lg-27"]//div[@class=" col-xs-10"]',
+      selector: '//div[@class="col-lg-27"]//div[@class="col-xs-12"]',
       locateStrategy: 'xpath'
     },
     groupList: {

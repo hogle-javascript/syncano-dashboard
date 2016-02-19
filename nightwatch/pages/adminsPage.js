@@ -9,7 +9,7 @@ export default {
       locateStrategy: 'xpath'
     },
     adminsListMenu: {
-      selector: '//div[@class="admins-invitations-list"]/div[1]/div[@class=" col-menu"]//button',
+      selector: '//div[@class="admins-invitations-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     deleteButton: {
@@ -49,7 +49,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectAdminTableRow: {
-      selector: `//div[text()="${utils.addSuffix('admin')}@syncano.com"]/../preceding-sibling::div`,
+      selector: `//div[text()="${utils.addSuffix('admin')}@syncano.com"]/../../preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     adminTableRow: {

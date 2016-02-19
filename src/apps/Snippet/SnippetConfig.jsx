@@ -10,7 +10,7 @@ import {MousetrapMixin, DialogsMixin, FormMixin, SnackbarNotificationMixin} from
 import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
-import {FlatButton, Utils, TextField, IconButton, RaisedButton} from 'syncano-material-ui';
+import {FlatButton, Utils, TextField, IconButton} from 'syncano-material-ui';
 import {Show, SelectFieldWrapper} from 'syncano-components';
 import {Dialog, Notification} from '../../common';
 
@@ -63,10 +63,11 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       field: {
-        margin: '6px 14px'
       },
       deleteIcon: {
-        padding: '24px 12px 0'
+        width: 64,
+        display: 'flex',
+        alignItems: 'center'
       },
       buttonsSection: {
         margin: '30px 60px 0'
@@ -253,7 +254,7 @@ export default Radium(React.createClass({
             label="Continue editing"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={this.handleCancel.bind(null, 'unsavedDataWarn')}/>
+            onTouchTap={() => this.handleCancel('unsavedDataWarn')}/>
         ],
         modal: true,
         children: "You're leaving Snippet Config with unsaved changes. Are you sure you want to continue?"
@@ -273,42 +274,50 @@ export default Radium(React.createClass({
         <div
           className="row align-center"
           key={index}>
-          <TextField
-            key={`fieldKey${index}`}
-            ref={`fieldKey${index}`}
-            hintText="Key"
-            floatingLabelText="Key"
-            defaultValue={field.key}
-            value={this.state.snippetConfig[index].key}
-            style={styles.field}
-            onChange={this.handleUpdateKey.bind(this, field.key, index)}/>
-          <TextField
-            key={`fieldValue${index}`}
-            ref={`fieldValue${index}`}
-            hintText="Value"
-            floatingLabelText="Value"
-            defaultValue={field.value}
-            value={this.state.snippetConfig[index].value}
-            style={styles.field}
-            onChange={this.handleUpdateKey.bind(this, field.key, index)}/>
-          <SelectFieldWrapper
-            key={`fieldType${index}`}
-            ref={`fieldType${index}`}
-            name="configValueType"
-            hintText="Value Type"
-            floatingLabelText="Value Type"
-            options={Store.getSnippetConfigValueTypes()}
-            value={this.state.snippetConfig[index].type}
-            onTouchTap={this.handleSelectFieldClick}
-            onChange={this.handleTypeFieldChange.bind(null, index)}
-            errorText={this.getValidationMessages('config_value_type').join(' ')}
-            fullWidth={false}
-            style={styles.field}/>
-          <div style={styles.deleteIcon}>
+          <div className="col-flex-1">
+            <TextField
+              key={`fieldKey${index}`}
+              ref={`fieldKey${index}`}
+              hintText="Key"
+              floatingLabelText="Key"
+              defaultValue={field.key}
+              value={this.state.snippetConfig[index].key}
+              style={styles.field}
+              fullWidth={true}
+              onChange={() => this.handleUpdateKey(field.key, index)}/>
+          </div>
+          <div className="col-flex-1">
+            <TextField
+              key={`fieldValue${index}`}
+              ref={`fieldValue${index}`}
+              hintText="Value"
+              floatingLabelText="Value"
+              defaultValue={field.value}
+              value={this.state.snippetConfig[index].value}
+              style={styles.field}
+              fullWidth={true}
+              onChange={() => this.handleUpdateKey(field.key, index)}/>
+          </div>
+          <div className="col-flex-1">
+            <SelectFieldWrapper
+              key={`fieldType${index}`}
+              ref={`fieldType${index}`}
+              name="configValueType"
+              hintText="Value Type"
+              floatingLabelText="Value Type"
+              options={Store.getSnippetConfigValueTypes()}
+              value={this.state.snippetConfig[index].type}
+              onTouchTap={this.handleSelectFieldClick}
+              onChange={() => this.handleTypeFieldChange(index)}
+              errorText={this.getValidationMessages('config_value_type').join(' ')}
+              fullWidth={true}
+              style={styles.field}/>
+          </div>
+          <div className="col-flex-0" style={styles.deleteIcon}>
             <IconButton
               iconClassName="synicon-close"
               tooltip="Delete key"
-              onClick={this.handleDeleteKey.bind(this, index)}/>
+              onClick={() => this.handleDeleteKey(index)}/>
           </div>
         </div>
       );
@@ -325,37 +334,48 @@ export default Radium(React.createClass({
         key="form"
         className="row align-center"
         onSubmit={this.handleAddField}>
-        <TextField
-          className="config-input-key"
-          ref="newFieldKey"
-          key="newFieldKey"
-          hintText="Key"
-          floatingLabelText="Key"
-          defaultValue=""
-          style={styles.field}/>
-        <TextField
-          className="config-input-value"
-          ref="newFieldValue"
-          key="newFieldValue"
-          hintText="Value"
-          floatingLabelText="Value"
-          defaultValue=""
-          style={styles.field}/>
-        <SelectFieldWrapper
-          key="newFieldType"
-          ref="newFieldType"
-          name="configValueType"
-          hintText="Value Type"
-          floatingLabelText="Value Type"
-          options={Store.getSnippetConfigValueTypes()}
-          value={this.state.config_value_type}
-          onChange={this.setSelectFieldValue.bind(null, 'config_value_type')}
-          errorText={this.getValidationMessages('config_value_type').join(' ')}
-          fullWidth={false}
-          style={styles.field}/>
-        <div style={styles.deleteIcon}>
+        <div className="col-flex-1">
+          <TextField
+            className="config-input-key"
+            ref="newFieldKey"
+            key="newFieldKey"
+            hintText="Key"
+            floatingLabelText="Key"
+            defaultValue=""
+            fullWidth={true}
+            style={styles.field}/>
+        </div>
+        <div className="col-flex-1">
+          <TextField
+            className="config-input-value"
+            ref="newFieldValue"
+            key="newFieldValue"
+            hintText="Value"
+            floatingLabelText="Value"
+            defaultValue=""
+            fullWidth={true}
+            style={styles.field}/>
+        </div>
+        <div className="col-flex-1">
+          <SelectFieldWrapper
+            key="newFieldType"
+            ref="newFieldType"
+            name="configValueType"
+            hintText="Value Type"
+            floatingLabelText="Value Type"
+            options={Store.getSnippetConfigValueTypes()}
+            value={this.state.config_value_type}
+            onChange={this.setSelectFieldValue.bind(null, 'config_value_type')}
+            errorText={this.getValidationMessages('config_value_type').join(' ')}
+            fullWidth={true}
+            style={styles.field}/>
+        </div>
+        <div
+          className="col-flex-0"
+          style={styles.deleteIcon}>
           <IconButton
             className="add-field-button"
+            iconStyle={{color: '#d2d2d2'}}
             iconClassName="synicon-plus"
             tooltip="Add field"
             type="submit"/>
@@ -376,18 +396,6 @@ export default Radium(React.createClass({
         {this.getDialogs()}
         {this.renderFields()}
         {this.renderNewFieldSection()}
-        <div
-          className="row align-right"
-          style={styles.buttonsSection}>
-          <FlatButton
-            label="Cancel"
-            onClick={this.handleCancelChanges}/>
-          <RaisedButton
-            label="Save"
-            style={styles.saveButton}
-            secondary={true}
-            onTouchTap={this.handleFormValidation}/>
-        </div>
         <Show if={this.getValidationMessages('config').length > 0}>
           <div style={styles.notification}>
             <Notification type="error">

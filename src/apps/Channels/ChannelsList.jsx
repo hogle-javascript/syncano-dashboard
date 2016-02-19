@@ -70,20 +70,24 @@ export default React.createClass({
             handleClick={this.props.handleTitleClick}>
             {this.props.name}
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-4">
+            className="col-flex-1">
+            Description
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-flex-1">
             Permissions
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-4">
+            className="col-flex-1">
             Type
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-3">
+            className="col-flex-1">
             Custom publish
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">

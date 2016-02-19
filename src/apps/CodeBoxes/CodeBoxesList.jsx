@@ -76,17 +76,17 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-4">
+            className="col-flex-1">
             Snippet
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-4">
+            className="col-flex-1">
             Traces
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="KEY"
-            className="col-xs-3">
+            className="col-flex-1">
             Public
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">

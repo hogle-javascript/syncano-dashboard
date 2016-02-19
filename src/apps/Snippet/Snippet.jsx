@@ -1,22 +1,21 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 import HeaderMixin from '../Header/HeaderMixin';
-import {InstanceTabsMixin, SnackbarNotificationMixin} from '../../mixins';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import {DialogsMixin, FormMixin, InstanceTabsMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
+import AutosaveMixin from './SnippetAutosaveMixin';
 
 import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
-import {Tabs, Tab} from 'syncano-material-ui';
-import {Container, Socket} from 'syncano-components';
-import {InnerToolbar} from '../../common';
-
-let RouteHandler = Router.RouteHandler;
+import {RaisedButton, FontIcon, Checkbox} from 'syncano-material-ui';
+import {Loading, Show, TogglePanel} from 'syncano-components';
+import {Dialog, InnerToolbar, Editor, Notification} from '../../common';
+import Traces from '../Traces';
+import SnippetConfig from './SnippetConfig';
 
 export default React.createClass({
-
   displayName: 'Snippet',
 
   contextTypes: {
@@ -24,61 +23,48 @@ export default React.createClass({
   },
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-    LinkedStateMixin,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
     HeaderMixin,
     InstanceTabsMixin,
-    SnackbarNotificationMixin
+    SnackbarNotificationMixin,
+    AutosaveMixin,
+    FormMixin,
+    MousetrapMixin,
+    DialogsMixin
   ],
+
+  autosaveAttributeName: 'snippetSourceAutosave',
+
+  componentDidMount() {
+    Actions.fetch();
+    this.bindShortcut(['command+s', 'ctrl+s'], () => {
+      this.handleUpdate();
+      return false;
+    });
+  },
 
   componentWillUnmount() {
     Store.clearCurrentSnippet();
   },
 
-  getActiveSubTabIndex() {
-    let index = 0;
-
-    this.getTabsData().some((item, i) => {
-      if (this.isActive(item.route, item.params, item.query)) {
-        index = i;
-        return true;
-      }
-    });
-
-    return index;
-  },
-
   getStyles() {
     return {
-      subTabsHeader: {
-        backgroundColor: 'transparent'
+      autosaveCheckbox: {
+        marginTop: 16,
+        whiteSpace: 'nowrap'
       },
-      tabs: {
-        padding: '0 20%',
-        borderBottom: '1px solid #DDDDDD'
+      notification: {
+        marginTop: 20
       },
-      tab: {
-        color: '#444'
+      lastResultContainer: {
+        position: 'fixed',
+        bottom: 20,
+        right: 20
       }
     };
-  },
-
-  getTabsData() {
-    return [
-      {
-        label: 'Edit',
-        route: 'snippet-edit'
-      }, {
-        label: 'Config',
-        route: 'snippet-config'
-      }, {
-        label: 'Traces',
-        route: 'snippet-traces'
-      }
-    ];
   },
 
   getToolbarTitle() {
@@ -87,14 +73,32 @@ export default React.createClass({
     return currentSnippet ? `Snippet: ${currentSnippet.label} (id: ${currentSnippet.id})` : '';
   },
 
-  handleTabActive(tab) {
-    this.transitionTo(tab.props.route, {
-      snippetId: this.state.currentSnippet.id,
-      instanceName: this.getParams().instanceName
+  isSaved() {
+    if (this.state.currentSnippet && this.refs.editorSource) {
+      let initialSnippetSource = this.state.currentSnippet.source;
+      let currentSnippetSource = this.refs.editorSource.editor.getValue();
+
+      return initialSnippetSource === currentSnippetSource;
+    }
+  },
+
+  handleUpdate() {
+    let source = this.refs.editorSource.editor.getValue();
+
+    this.clearAutosaveTimer();
+    Actions.updateSnippet(this.state.currentSnippet.id, {source});
+    this.setSnackbarNotification({
+      message: 'Saving...'
     });
   },
 
+  handleOnSourceChange() {
+    this.resetForm();
+    this.runAutoSave();
+  },
+
   handleRunSnippet() {
+    this.handleUpdate();
     if (this.state.isPayloadValid) {
       Actions.runSnippet({
         id: this.state.currentSnippet.id,
@@ -108,60 +112,138 @@ export default React.createClass({
     }
   },
 
-  renderTabs() {
-    let styles = this.getStyles();
-    let snippet = this.state.currentSnippet;
-
-    if (snippet !== null) {
-      return (
-        <Tabs
-          initialSelectedIndex={this.getActiveSubTabIndex()}
-          tabItemContainerStyle={styles.subTabsHeader}
-          style={styles.tabs}>
-          <Tab
-            style={styles.tab}
-            label="Edit"
-            route="snippet-edit"
-            onActive={this.handleTabActive}/>
-          <Tab
-            style={styles.tab}
-            label="Config"
-            route="snippet-config"
-            onActive={this.handleTabActive}/>
-          <Tab
-            style={styles.tab}
-            label="Traces"
-            route="snippet-traces"
-            onActive={this.handleTabActive}/>
-        </Tabs>
-      );
-    }
-  },
-
-  renderRunButton() {
-    return (
-      <Socket
-        iconClassName="synicon-play-circle"
-        iconStyle={{color: this.context.muiTheme.rawTheme.palette.accent2Color}}
-        tooltip="Click here to execute Snippet"
-        onTouchTap={this.handleRunSnippet}/>
-    );
+  initDialogs() {
+    return [{
+      dialog: Dialog.FullPage,
+      params: {
+        key: 'scriptTraces',
+        ref: 'scriptTraces',
+        title: 'Traces for',
+        actions: [],
+        onRequestClose: () => this.handleCancel('scriptTraces'),
+        avoidResetState: true,
+        children: <Traces.List
+                    isLoading={this.state.isLoading}
+                    tracesFor="snippet"
+                    name="Traces"
+                    items={this.state.traces}/>
+      }
+    }];
   },
 
   render() {
+    const styles = this.getStyles();
+    const {currentSnippet, lastTraceStatus, isLoading, lastTraceDuration, lastTraceResult} = this.state;
+    let source = null;
+    let editorMode = 'python';
+
+    if (currentSnippet) {
+      source = currentSnippet.source;
+      editorMode = Store.getEditorMode();
+    }
+
     return (
-      <div>
+      <div className="col-flex-1" style={{padding: 0, height: '100px', display: 'flex', flexDirection: 'column'}}>
+        {this.getDialogs()}
         <InnerToolbar
           title={this.getToolbarTitle()}
           backFallback={() => this.transitionTo('snippets', this.getParams())}
           forceBackFallback={true}
           backButtonTooltip="Go back to Snippets list">
-          {this.isActive('snippet-edit') ? this.renderRunButton() : null}
+          <div style={{display: 'inline-block', float: 'left'}}>
+            <Checkbox
+              ref="autosaveCheckbox"
+              name="autosaveCheckbox"
+              label="Autosave"
+              style={styles.autosaveCheckbox}
+              defaultChecked={this.isAutosaveEnabled()}
+              onCheck={this.saveCheckboxState}/>
+          </div>
+          <RaisedButton
+            label="TRACES"
+            onTouchTap={() => this.showDialog('scriptTraces')}/>
+          <RaisedButton
+            label="RUN"
+            secondary={true}
+            style={{marginLeft: 0, marginRight: 0}}
+            icon={<FontIcon className="synicon-play"/>}
+            onTouchTap={this.handleRunSnippet}/>
         </InnerToolbar>
+        <Loading show={isLoading || !currentSnippet}>
+          <div className="row">
+            <div className="col-flex-1" style={{borderRight: '1px solid rgba(224,224,224,.5)'}}>
+              <TogglePanel
+                title="Code"
+                initialOpen={true}>
+                <Show if={this.getValidationMessages('source').length > 0}>
+                  <div style={styles.notification}>
+                    <Notification type="error">
+                      {this.getValidationMessages('source').join(' ')}
+                    </Notification>
+                  </div>
+                </Show>
+                <Editor
+                  ref="editorSource"
+                  mode={editorMode}
+                  onChange={this.handleOnSourceChange}
+                  onLoad={this.clearAutosaveTimer}
+                  value={source}
+                  maxLines="Infinity"/>
+              </TogglePanel>
+            </div>
+            <div className="col-flex-1" style={{padding: 0}}>
 
-        <Container.Tabs tabs={this.renderTabs()}>
-          <RouteHandler/>
-        </Container.Tabs>
+              <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
+                <TogglePanel
+                  title="Config"
+                  initialOpen={true}>
+                  <SnippetConfig/>
+                </TogglePanel>
+              </div>
+
+              <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
+                <TogglePanel
+                  title="Payload"
+                  initialOpen={true}>
+                  <Editor
+                    name="payload-editor"
+                    ref="payloadSource"
+                    mode="json"
+                    height="200px"
+                    onChange={(payload) => this.setState({payloadValue: payload})}
+                    value={[
+                      '{',
+                      '    "language": "JSON",',
+                      '    "foo": "bar",',
+                      '    "trailing": "comma"',
+                      '}'
+                    ].join('\n')} />
+                </TogglePanel>
+              </div>
+
+              <div>
+                <TogglePanel
+                  title="Result"
+                  initialOpen={true}>
+                  <div style={{
+                    color: '#121212',
+                    fontFamily: 'Ubuntu Mono',
+                    fontSize: 14
+                  }}>
+                    {lastTraceResult}
+                  </div>
+                </TogglePanel>
+              </div>
+            </div>
+            <Show if={lastTraceDuration && lastTraceStatus}>
+              <div style={styles.lastResultContainer}>
+                <Notification type={lastTraceStatus === 'success' ? 'info' : 'error'}>
+                  {`Last run status: ${lastTraceStatus} Duration: ${lastTraceDuration}ms`}
+                </Notification>
+              </div>
+            </Show>
+          </div>
+        </Loading>
       </div>
     );
   }

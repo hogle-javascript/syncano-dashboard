@@ -3,7 +3,7 @@ import React from 'react';
 import {DialogsMixin} from '../../mixins';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
+import {ColumnList, Color} from 'syncano-components';
 
 export default React.createClass({
   displayName: 'AdminsInvitationsListItem',
@@ -11,7 +11,7 @@ export default React.createClass({
   mixins: [DialogsMixin],
 
   render() {
-    let item = this.props.item;
+    const {item, onIconClick, showResendDialog, showDeleteDialog} = this.props;
 
     return (
       <ColumnList.Item
@@ -23,18 +23,18 @@ export default React.createClass({
           icon='account'
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          <Truncate text={item.email}/>
-        </ColumnList.Column.CheckIcon>
-        <ColumnList.Column.Desc>{item.role}</ColumnList.Column.Desc>
+          handleIconClick={onIconClick}
+          primaryText={item.email}/>
+        <ColumnList.Column.Desc/>
+        <ColumnList.Column.Text>{item.role}</ColumnList.Column.Text>
         <ColumnList.Column.Date date={item.created_at}/>
         <ColumnList.Column.Menu>
           <MenuItem
-            onTouchTap={this.props.showResendDialog}
+            onTouchTap={showResendDialog}
             className="dropdown-item-resend-invitation"
             primaryText="Resend an Invitation" />
           <MenuItem
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             className="dropdown-item-remove-invitation"
             primaryText="Delete an Invitation" />
         </ColumnList.Column.Menu>

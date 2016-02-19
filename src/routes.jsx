@@ -242,23 +242,7 @@ export default (
           <Route
             name="snippet"
             handler={Snippet}
-            path=":snippetId">
-            <Route
-              name="snippet-traces"
-              handler={Snippet.Traces}
-              path="traces"
-              />
-            <Route
-              name="snippet-edit"
-              handler={Snippet.Edit}
-              path="edit"
-              />
-            <Route
-              name="snippet-config"
-              handler={Snippet.Config}
-              path="config"/>
-            <DefaultRoute handler={Snippet.Edit}/>
-          </Route>
+            path=":snippetId"/>
           <DefaultRoute handler={Snippets}/>
         </Route>
         <Route

@@ -91,13 +91,15 @@ export default Radium(React.createClass({
               <div className="col-xs-10">
                 <Clipboard
                   copyText={this.state.account_key}
-                  onCopy={() => this.setSnackbarNotification({message: 'API key copied to the clipboard'})}
-                  text="COPY"
-                  type="button"/>
+                  onCopy={() => this.setSnackbarNotification({
+                    message: 'API key copied to the clipboard'
+                  })}
+                  label="COPY"
+                  type="button" />
                 <FlatButton
                   label="RESET"
                   primary={true}
-                  onClick={Actions.resetKey}/>
+                  onClick={Actions.resetKey} />
               </div>
             </div>
           </div>
