@@ -2,6 +2,7 @@ import React from 'react';
 
 import Actions from './ChannelsActions';
 
+import {Link, State} from 'react-router';
 import {MenuItem} from 'syncano-material-ui';
 import {Color, ColumnList} from 'syncano-components';
 
@@ -9,6 +10,10 @@ let Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ChannelsListItem',
+
+  mixins: [
+    State
+  ],
 
   render() {
     let item = this.props.item;
@@ -38,6 +43,16 @@ export default React.createClass({
           </div>
         </Column.Desc>
         <Column.Desc className="col-xs-4 col-md-4">{item.type}</Column.Desc>
+        <Column.Desc className="col-xs-4">
+          <Link
+            to="channel-history"
+            params={{
+              instanceName: this.getParams().instanceName,
+              channelName: item.name
+            }}>
+            History
+          </Link>
+        </Column.Desc>
         <Column.Desc className="col-xs-3 col-md-3">
           {item.custom_publish ? 'Yes' : 'No'}
         </Column.Desc>

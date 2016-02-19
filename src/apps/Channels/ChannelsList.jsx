@@ -83,6 +83,11 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
+            className="col-xs-4">
+            History
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
             className="col-xs-3">
             Custom publish
           </Column.ColumnHeader>
