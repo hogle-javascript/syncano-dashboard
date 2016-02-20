@@ -1,8 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {Styles, Paper, FontIcon} from 'syncano-material-ui';
-import {ColumnList, Loading, Truncate, Trace} from 'syncano-components';
+import {Paper} from 'syncano-material-ui';
+import {ColumnList} from 'syncano-components';
 import {Lists} from '../../common';
 
 let Column = ColumnList.Column;
@@ -18,7 +18,7 @@ export default Radium(React.createClass({
 
   getInitialState() {
     return {
-      visibleTraceId: null
+      visibleMessageId: null
     };
   },
 
@@ -43,22 +43,43 @@ export default Radium(React.createClass({
         color: 'rgba(0, 0, 0, 0.67)',
         fontSize: 34,
         margin: 0
+      },
+      payloadResult: {
+        padding: '25px',
+        color: 'white',
+        whiteSpace: 'pre',
+        font: `12px/normal 'Monaco', monospace`,
+        backgroundColor: '#4C4A43'
       }
     };
   },
 
-  toggleTrace(traceId) {
-    console.info('SnippetsTraces::toggleTrace', traceId);
-    const visibleTraceId = this.state.visibleTraceId !== traceId ? traceId : null;
+  toggleChannelMessage(messageId) {
+    console.info('ChannelHistory::toggleMessage', messageId);
+    const visibleMessageId = this.state.visibleMessageId !== messageId ? messageId : null;
 
-    this.setState({visibleTraceId});
+    this.setState({visibleMessageId});
+  },
+
+  renderPayload(item) {
+    let styles = this.getStyles();
+    const noPayload = 'No payload was passed in this message.';
+    const payloadPrettyPrint = JSON.stringify(item.payload, null, 2);
+    const payload = Object.keys(item.payload).length === 0 ? noPayload : payloadPrettyPrint;
+
+    return (
+      <div>
+        <div style={styles.payloadResult}>
+          <div>{payload}</div>
+        </div>
+      </div>
+    );
   },
 
   renderItem(item) {
-    let duration = item.duration !== null ? item.duration + 'ms' : 'not executed';
     let styles = this.getStyles();
 
-    if (item.id === this.state.visibleTraceId) {
+    if (item.id === this.state.visibleMessageId) {
       styles.traceResult = {
         maxHeight: '500px',
         marginBottom: 15,
@@ -69,87 +90,35 @@ export default Radium(React.createClass({
         margin: '15px 0 0'
       };
     }
-
-    console.log('dsfasd:', item);
     return (
       <Paper
         key={item.id}
         zDepth={1}
         style={styles.trace}>
         <ColumnList.Item
-          checked={item.checked}
           id={item.id}
           zDepth={0}
-          handleClick={this.toggleTrace.bind(null, item.id)}>
+          handleClick={this.toggleChannelMessage.bind(null, item.id)}>
           <Column.ID>{item.id}</Column.ID>
-          <Column.Desc>{duration}</Column.Desc>
-          <Column.Date
-            date={item.executed_at}
-            ifInvalid={item.status}/>
+          <Column.Date date={item.created_at}/>
         </ColumnList.Item>
         <div style={styles.traceResult}>
-          <Trace.Result result={item.result}/>
+          {this.renderPayload(item)}
         </div>
       </Paper>
     );
   },
 
-  renderList() {
+  render() {
     return (
       <Lists.List key="traces-list">
         <ColumnList.Header>
           <Column.ColumnHeader primary={true} columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
           <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DESC">Duration</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="Date">Created</Column.ColumnHeader>
         </ColumnList.Header>
         {this.props.items.map((item) => this.renderItem(item))}
       </Lists.List>
-    );
-  },
-
-  renderEmptyContent() {
-    let styles = this.getStyles();
-    let tracesFor = {
-      snippet: {
-        name: 'Snippet',
-        icon: 'synicon-package-variant'
-      },
-      codeBox: {
-        name: 'CodeBox',
-        icon: 'synicon-arrow-up-bold'
-      },
-      trigger: {
-        name: 'Trigger',
-        icon: 'synicon-arrow-up-bold'
-      },
-      schedule: {
-        name: 'Schedule',
-        icon: 'synicon-camera-timer'
-      },
-      channel: {
-        name: 'Channel',
-        icon: 'synicon-camera-timer'
-      }
-    };
-
-    return (
-      <div style={styles.noHistoryContainer}>
-        <FontIcon
-          style={styles.noHistoryIcon}
-          className='synicon-camera-timer'/>
-        <p style={styles.noHistoryText}>There is no no traces for this {tracesFor[this.props.tracesFor].name} yet</p>
-      </div>
-    );
-  },
-
-  render() {
-    return (
-      <Lists.Container>
-        <Loading show={this.props.isLoading}>
-          {this.props.items.length > 0 ? this.renderList() : this.renderEmptyContent()}
-        </Loading>
-      </Lists.Container>
     );
   }
 }));

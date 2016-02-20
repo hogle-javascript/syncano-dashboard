@@ -21,10 +21,9 @@ import TracesList from './ChannelHistoryList';
 
 export default Radium(React.createClass({
 
-  displayName: 'Traces',
+  displayName: 'Channel History',
 
   propTypes: {
-    tracesFor: React.PropTypes.oneOf(['codeBox', 'snippet', 'trigger', 'schedule', 'channel']),
     objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
   },
 
@@ -39,13 +38,12 @@ export default Radium(React.createClass({
 
   getDefaultProps() {
     return {
-      tracesFor: 'channel',
       showHeader: false
     };
   },
 
   componentDidMount() {
-    Actions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
+    Actions.setCurrentObjectId(this.props.objectId);
   },
 
   getStyles() {
@@ -76,7 +74,6 @@ export default Radium(React.createClass({
         <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>
           <Container>
             <TracesList
-              tracesFor={this.props.tracesFor}
               name="Traces"
               items={this.state.items}/>
           </Container>
