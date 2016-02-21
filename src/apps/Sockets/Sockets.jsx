@@ -127,7 +127,7 @@ export default React.createClass({
 
     return (
       <InnerToolbar title="Sockets">
-        <div style={{paddingTop: 4}}>
+        <div>
           <Socket.Data onTouchTap={Data.Actions.showDialog}/>
           <Socket.CodeBox onTouchTap={CodeBoxes.Actions.showDialog}/>
           <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
