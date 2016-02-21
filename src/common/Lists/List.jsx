@@ -13,10 +13,8 @@ export default React.createClass({
       return this.props.children;
     }
 
-    let items = this.props.items.map((item, index) => this.props.renderItem(item, index));
-
-    if (items.length > 0) {
-      return items;
+    if (this.props.items.length > 0) {
+      return this.props.items.map((item, index) => this.props.renderItem(item, index));
     }
 
     return (
