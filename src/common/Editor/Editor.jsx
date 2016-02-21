@@ -26,7 +26,7 @@ export default React.createClass({
     value: React.PropTypes.string,
     onLoad: React.PropTypes.func,
     minLines: React.PropTypes.number,
-    maxLines: React.PropTypes.number,
+    maxLines: React.PropTypes.node,
     readOnly: React.PropTypes.bool,
     highlightActiveLine: React.PropTypes.bool,
     showPrintMargin: React.PropTypes.bool
