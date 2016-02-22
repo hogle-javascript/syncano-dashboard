@@ -10,7 +10,7 @@ import DialogStore from './CodeBoxDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {TextField, Toggle, FlatButton} from 'syncano-material-ui';
+import {TextField, Toggle, FlatButton, RaisedButton} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -71,16 +71,17 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <FlatButton
+      <RaisedButton
         key="confirm"
         label="Confirm"
-        primary={true}
+        secondary={true}
+        style={{marginLeft: 10}}
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Script Socket`}
@@ -119,7 +120,7 @@ export default React.createClass({
           style={{marginTop: 20}}
           defaultToggled={this.state.public}
           label='Make this Script Socket public?'/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });
