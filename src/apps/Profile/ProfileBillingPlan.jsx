@@ -4,7 +4,7 @@ import Radium from 'radium';
 import Moment from 'moment';
 import _ from 'lodash';
 
-import {FormMixin, DialogsMixin, IsLoadingMixin} from '../../mixins';
+import {FormMixin, DialogsMixin} from '../../mixins';
 
 import Store from './ProfileBillingPlanStore';
 import Actions from './ProfileBillingPlanActions.js';
@@ -12,7 +12,7 @@ import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
 import {FlatButton, IconButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
-import {Billing, Container} from 'syncano-components';
+import {Billing, Container, Loading} from 'syncano-components';
 import {Dialog, InnerToolbar, Color} from '../../common';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
@@ -24,7 +24,6 @@ export default Radium(React.createClass({
   mixins: [
     FormMixin,
     DialogsMixin,
-    IsLoadingMixin(),
     Reflux.connect(Store),
     Reflux.connect(PlanDialogStore)
   ],
@@ -348,9 +347,13 @@ export default Radium(React.createClass({
     );
   },
 
-  renderLoaded() {
+  render() {
     const styles = this.getStyles();
     const {subscriptions} = this.state;
+
+    if (this.state.isLoading) {
+      return <Loading show={true} />;
+    }
 
     if (subscriptions && subscriptions.length === 0) {
       return (
