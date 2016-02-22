@@ -64,6 +64,7 @@ export default React.createClass({
   },
 
   render() {
+    const {name, handleTitleClick, ...other} = this.props;
     let checkedItems = Store.getNumberOfChecked();
 
     return (
@@ -73,10 +74,9 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={this.props.handleTitleClick}>
-            {this.props.name}
+            handleClick={handleTitleClick}>
+            {name}
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
@@ -84,16 +84,16 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-sm-4">
-            Snippet
+            className="col-flex-1">
+            Script
           </Column.ColumnHeader>
           <Column.ColumnHeader
-            className="col-sm-4"
+            className="col-flex-1"
             columnName="DESC">
             Traces
           </Column.ColumnHeader>
           <Column.ColumnHeader
-            className="col-sm-3"
+            className="col-flex-1"
             columnName="DESC">
             Signal
           </Column.ColumnHeader>
@@ -109,7 +109,7 @@ export default React.createClass({
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
-          {...this.props}
+          {...other}
           key="triggers-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

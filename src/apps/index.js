@@ -15,8 +15,8 @@ import PushNotifications from './PushNotifications';
 import Schedules from './Schedules';
 import Session from './Session';
 import SnackbarNotification from './SnackbarNotification';
-import Snippet from './Snippet';
-import Snippets from './Snippets';
+import Script from './Script';
+import Scripts from './Scripts';
 import Solutions from './Solutions';
 import Template from './Template';
 import Templates from './Templates';
@@ -42,8 +42,8 @@ export default {
   Schedules,
   Session,
   SnackbarNotification,
-  Snippet,
-  Snippets,
+  Script,
+  Scripts,
   Solutions,
   Template,
   Templates,

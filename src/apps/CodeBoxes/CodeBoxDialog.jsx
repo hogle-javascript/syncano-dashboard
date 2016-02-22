@@ -7,7 +7,7 @@ import {DialogMixin, FormMixin} from '../../mixins';
 // Stores and Actions
 import Actions from './CodeBoxesActions';
 import DialogStore from './CodeBoxDialogStore';
-import SnippetsActions from '../Snippets/SnippetsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
 import {TextField, Toggle, FlatButton} from 'syncano-material-ui';
@@ -36,7 +36,7 @@ export default React.createClass({
 
   handleDialogShow() {
     console.info('ScriptSocketDialog::handleDialogShow');
-    SnippetsActions.fetch();
+    ScriptsActions.fetch();
   },
 
   handleAddSubmit() {
@@ -107,8 +107,8 @@ export default React.createClass({
           hintText="Description of the Script Socket"
           floatingLabelText="Description"/>
         <SelectFieldWrapper
-          name="snippet"
-          options={this.state.snippets}
+          name="script"
+          options={this.state.scripts}
           value={this.state.codebox}
           onChange={this.setSelectFieldValue.bind(null, 'codebox')}
           errorText={this.getValidationMessages('codebox').join(' ')}/>

@@ -5,11 +5,11 @@ export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/schedules`,
   elements: {
     schedulesListMenu: {
-      selector: '//div[@class="schedules-list"]/div[1]/div[@class=" col-menu"]//button',
+      selector: '//div[@class="schedules-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     scheduleDropdown: {
-      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../../following-sibling::div[@class=" col-menu"]//button`,
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../../../following-sibling::div[@class="col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -44,8 +44,8 @@ export default {
       selector: '//input[@name="label"]',
       locateStrategy: 'xpath'
     },
-    addScheduleModalSnippet: {
-      selector: '//div[@class="snippet-dropdown"]',
+    addScheduleModalScript: {
+      selector: '//div[@class="script-dropdown"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {
@@ -57,11 +57,11 @@ export default {
       locateStrategy: 'xpath'
     },
     selectScheduleTableRow: {
-      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../preceding-sibling::div`,
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../../preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     cronTabScheduleTableRow: {
-      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../parent::div/following-sibling::div[text()="*/5 * * * *"]`,
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../../parent::div/following-sibling::div[text()="*/5 * * * *"]`,
       locateStrategy: 'xpath'
     },
     deleteScheduleModalTitle: {

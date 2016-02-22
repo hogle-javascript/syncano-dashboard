@@ -21,7 +21,7 @@ export default {
       .clickElement('@addScheduleButton')
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInput('@addScheduleModalLabel', suffix)
-      .selectDropdownValue('@addScheduleModalSnippet', 'snippet')
+      .selectDropdownValue('@addScheduleModalScript', 'snippet')
       .selectDropdownValue('@addScheduleModalCronTab', 'Run once a year at midnight')
       .clickElement('@confirm')
       .waitForElementPresent('@scheduleTableRow');

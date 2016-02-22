@@ -44,12 +44,10 @@ export default React.createClass({
           icon={this.props.icon}
           checkable={false}
           background={Color.getColorByName('blue')}
-          className="col-sm-20">
-          <div>
+          className="col-sm-20"
+          primaryText={this.props.label}
+          secondaryText={
             <div>
-              {this.props.label}
-            </div>
-            <div style={styles.linksSection}>
               <span
                 key="configuration"
                 style={styles.linkItem}
@@ -68,8 +66,7 @@ export default React.createClass({
                 Devices
               </span>
             </div>
-          </div>
-        </Column.CheckIcon>
+          }/>
         <Column.Desc className="col-sm-8">
           {item ? item.hasConfig.toString() : null}
         </Column.Desc>

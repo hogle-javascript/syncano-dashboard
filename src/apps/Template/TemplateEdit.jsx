@@ -107,7 +107,7 @@ export default React.createClass({
       params: {
         key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
-        title: 'Unsaved Snippet source',
+        title: 'Unsaved Script source',
         actions: [
           <FlatButton
             label="Just leave"
@@ -121,7 +121,7 @@ export default React.createClass({
         ],
         avoidResetState: true,
         modal: true,
-        children: "You're leaving Snippet Editor with unsaved changes. Are you sure you want to continue?"
+        children: "You're leaving Script Editor with unsaved changes. Are you sure you want to continue?"
       }
     }];
   },

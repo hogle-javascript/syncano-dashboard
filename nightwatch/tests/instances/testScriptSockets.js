@@ -1,7 +1,7 @@
 import Utils from '../../utils';
 
 export default {
-  tags: ['codeBoxSockets'],
+  tags: ['scriptSockets'],
   before(client) {
     const loginPage = client.page.loginPage();
 
@@ -22,7 +22,7 @@ export default {
       .clickElement('@addCodeBoxButton')
       .waitForElementVisible('@addCodeBoxModalTitle')
       .fillInput('@modalNameInput', codeBox)
-      .selectDropdownValue('@addCodeBoxModalSnippetDropdown', 'snippet')
+      .selectDropdownValue('@addCodeBoxModalScriptDropdown', 'snippet')
       .clickElement('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },

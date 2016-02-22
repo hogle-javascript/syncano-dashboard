@@ -8,7 +8,7 @@ import ClassesPage from './pages/classes';
 import DashboardPage from './pages/dashboard';
 import InstancePage from './pages/instance';
 import ProfilePage from './pages/profile';
-import SnippetsPage from './pages/snippets';
+import ScriptsPage from './pages/scripts';
 import NotFoundPage from './pages/notfound';
 import PushDevicesPage from './pages/pushDevices';
 
@@ -26,8 +26,8 @@ import Solutions from './apps/Solutions';
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
 import CodeBoxes from './apps/CodeBoxes';
-import Snippet from './apps/Snippet';
-import Snippets from './apps/Snippets';
+import Script from './apps/Script';
+import Scripts from './apps/Scripts';
 import DataObjects from './apps/DataObjects/DataObjects';
 import Data from './apps/Data';
 import Users from './apps/Users/Users';
@@ -235,35 +235,22 @@ export default (
           <DefaultRoute handler={Templates}/>
         </Route>
 
-        {/* Snippets */}
+        {/* Scripts */}
         <Route
-          name="snippets"
-          handler={SnippetsPage}
-          path="snippets">
+          name="scripts"
+          handler={ScriptsPage}
+          path="scripts">
           <Route
-            name="snippet"
-            handler={Snippet}
-            path=":snippetId">
-            <Route
-              name="snippet-traces"
-              handler={Snippet.Traces}
-              path="traces"/>
-            <Route
-              name="snippet-edit"
-              handler={Snippet.Edit}
-              path="edit"/>
-            <Route
-              name="snippet-config"
-              handler={Snippet.Config}
-              path="config"/>
-            <DefaultRoute handler={Snippet.Edit}/>
-          </Route>
-          <DefaultRoute handler={Snippets}/>
+            name="script"
+            handler={Script}
+            path=":scriptId"/>
+          <DefaultRoute handler={Scripts}/>
         </Route>
         <Route
-          name="snippets-add"
-          handler={Snippets}
-          path="snippets/:action"/>
+          name="scripts-add"
+          handler={Scripts}
+          path="scripts/:action"
+          />
 
         {/* Data Objects */}
         <Route

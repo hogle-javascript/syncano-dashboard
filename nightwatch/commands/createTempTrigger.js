@@ -9,7 +9,7 @@ exports.command = (callback) => {
     label: 'trigger',
     signal: 'post_create',
     class: 'user_profile',
-    snippet: Globals.tempSnippetId
+    script: Globals.tempScriptId
   };
 
   new Syncano({accountKey, baseUrl})

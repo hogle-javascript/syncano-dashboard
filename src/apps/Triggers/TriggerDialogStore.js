@@ -5,9 +5,9 @@ import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 
 // Stores & Actions
 import TriggersActions from './TriggersActions';
-import SnippetsActions from '../Snippets/SnippetsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 import ClassesActions from '../Classes/ClassesActions';
-import SnippetsStore from '../Snippets/SnippetsStore';
+import ScriptsStore from '../Scripts/ScriptsStore';
 import ClassesStore from '../Classes/ClassesStore';
 
 export default Reflux.createStore({
@@ -40,7 +40,7 @@ export default Reflux.createStore({
       classes: [
         {payload: '', text: 'Loading...'}
       ],
-      snippets: [
+      scripts: [
         {payload: '', text: 'Loading...'}
       ]
     };
@@ -49,7 +49,7 @@ export default Reflux.createStore({
   init() {
     this.listenToForms();
     this.joinTrailing(
-      SnippetsActions.setSnippets,
+      ScriptsActions.setScripts,
       ClassesActions.setClasses,
       this.getDropdowns
     );
@@ -62,12 +62,12 @@ export default Reflux.createStore({
   getDropdowns() {
     console.debug('TriggerDialogStore::getDropdowns');
     let dropdowns = {
-      snippets: SnippetsStore.getSnippetsDropdown(),
+      scripts: ScriptsStore.getScriptsDropdown(),
       classes: ClassesStore.getClassesDropdown()
     };
 
-    if (dropdowns.snippets.length === 0) {
-      dropdowns.snippets = [{payload: '', text: 'No Snippets, add one first'}];
+    if (dropdowns.scripts.length === 0) {
+      dropdowns.scripts = [{payload: '', text: 'No Scripts, add one first'}];
     }
 
     if (dropdowns.classes.length === 0) {

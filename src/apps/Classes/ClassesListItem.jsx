@@ -6,8 +6,8 @@ import {DialogsMixin} from '../../mixins';
 import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
-import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
+import {MenuItem, IconButton, Styles} from 'syncano-material-ui';
+import {ColumnList, Color} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
@@ -20,7 +20,7 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  handleItemNameClick(className) {
+  redirectToClassDataObjects(className) {
     console.info('ClassesListItem::handleItemClick');
     this.transitionTo('classes-data-objects', {
       instanceName: this.getParams().instanceName,
@@ -38,9 +38,9 @@ export default React.createClass({
   },
 
   render() {
-    let item = this.props.item;
-    let objectsCount = item.objects_count < 1000 ? item.objects_count : `~ ${item.objects_count}`;
-    let metadata = item.metadata;
+    const {item, onIconClick, showDeleteDialog} = this.props;
+    const objectsCount = item.objects_count < 1000 ? item.objects_count : `~ ${item.objects_count}`;
+    const metadata = item.metadata;
 
     return (
       <ColumnList.Item
@@ -53,14 +53,17 @@ export default React.createClass({
           background={Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
           checked={item.checked}
           keyName="name"
-          handleIconClick={this.props.onIconClick}>
-          <Truncate
-            onClick={() => this.handleItemNameClick(item.name)}
-            style={{cursor: 'pointer'}}
-            text={item.name}/>
-        </Column.CheckIcon>
-        <Column.Desc>{item.description}</Column.Desc>
-        <Column.ID className="col-xs-3 col-md-3">
+          handleIconClick={onIconClick}
+          primaryText={item.name}
+          secondaryText={item.description}/>
+        <Column.Desc className="col-flex-1">
+          {objectsCount}
+          <IconButton
+            onTouchTap={() => this.redirectToClassDataObjects(item.name)}
+            iconClassName="synicon-table"
+            iconStyle={{color: Styles.Colors.blue400, fontSize: 18, verticalAlign: 'bottom'}} />
+        </Column.Desc>
+        <Column.ID className="col-flex-1">
           <Link
             to="users"
             params={{
@@ -69,15 +72,12 @@ export default React.createClass({
             {item.group}
           </Link>
         </Column.ID>
-        <Column.Desc className="col-xs-6 col-md-6">
+        <Column.Desc className="col-flex-1">
           <div>
             <div>group: {item.group_permissions}</div>
             <div>other: {item.other_permissions}</div>
           </div>
         </Column.Desc>
-        <Column.ID className="col-xs-4 col-md-4">
-          {objectsCount}
-        </Column.ID>
         <Column.Date date={item.created_at}/>
         <Column.Menu handleClick={() => Actions.setClickedClass(item)}>
           <MenuItem
@@ -87,7 +87,7 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-delete-class"
             disabled={item.protectedFromDelete}
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Class"/>
         </Column.Menu>
       </ColumnList.Item>

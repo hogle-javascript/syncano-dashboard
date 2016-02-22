@@ -1,45 +1,43 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
-  setCurrentSnippetTraces: {},
-  setCurrentSnippetId: {},
-  setCurrentSnippet: {},
-  setPayloadValidator: {},
-  setPayloadValue: {},
+  setCurrentScriptTraces: {},
+  setCurrentScriptId: {},
+  setCurrentScript: {},
   fetch: {},
 
-  runSnippetWithUpdate: {
+  runScriptWithUpdate: {
     asyncResult: true,
     loading: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Snippets.runWithUpdate'
+    method: 'Syncano.Actions.Scripts.runWithUpdate'
   },
 
-  fetchSnippet: {
+  fetchScript: {
     asyncResult: true,
     loading: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Snippets.get'
+    method: 'Syncano.Actions.Scripts.get'
   },
 
-  updateSnippet: {
+  updateScript: {
     asyncResult: true,
     asyncForm: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Snippets.update'
+    method: 'Syncano.Actions.Scripts.update'
   },
 
-  runSnippet: {
+  runScript: {
     asyncResult: true,
     loading: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Snippets.run'
+    method: 'Syncano.Actions.Scripts.run'
   },
 
-  fetchSnippetTraces: {
+  fetchScriptTraces: {
     asyncResult: true,
     loading: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Snippets.listTraces'
+    method: 'Syncano.Actions.Scripts.listTraces'
   }
 });
