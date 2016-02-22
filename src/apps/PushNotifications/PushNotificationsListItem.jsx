@@ -34,7 +34,7 @@ export default React.createClass({
   },
 
   render() {
-    const item = this.props.item;
+    const {item} = this.props;
     const styles = this.getStyles();
 
     return (
