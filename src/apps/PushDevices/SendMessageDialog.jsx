@@ -15,7 +15,7 @@ import {
   Utils,
   Styles
 } from 'syncano-material-ui';
-import {Loading, CharacterCounter, Show} from 'syncano-components';
+import {Loading, Show} from 'syncano-components';
 import {Dialog as CommonDialog, Editor, Notification} from '../../common';
 
 export default (store, props) => {
@@ -229,22 +229,14 @@ export default (store, props) => {
     renderMessageFields() {
       if (this.state.isJSONMessage) {
         return (
-          <div>
-            <CharacterCounter
-              text="JSON Editor"
-              position="right"
-              charactersCountWarn={-1}
-              maxCharacters={4096}
-              characters={this.state.JSONMessage.length}/>
-            <Editor
-              ref="JSONMessage"
-              minLines={16}
-              maxLines={16}
-              onChange={this.updateJSONMessage}
-              mode="javascript"
-              theme="tomorow"
-              value={this.state.JSONMessage}/>
-          </div>
+          <Editor
+            ref="JSONMessage"
+            minLines={16}
+            maxLines={16}
+            onChange={this.updateJSONMessage}
+            mode="javascript"
+            theme="tomorow"
+            value={this.state.JSONMessage}/>
         );
       }
 
