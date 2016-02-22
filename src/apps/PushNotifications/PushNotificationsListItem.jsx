@@ -35,7 +35,7 @@ export default (name, item) => {
 
       return (
         <ColumnList.Item key={item.name}>
-          <Column.CheckIcon
+          <Column.CheckIcon.Socket
             id={`push-notification${item.label}`}
             withCircle={false}
             iconClassName="socket-push"

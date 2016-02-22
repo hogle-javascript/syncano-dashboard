@@ -31,10 +31,9 @@ export default React.createClass({
         checked={item.checked}
         id={item.name}
         key={item.name}>
-        <Column.CheckIcon
+        <Column.CheckIcon.Socket
           className="col-xs-12"
           id={item.name.toString()}
-          withCircle={false}
           iconClassName='socket-codebox'
           iconColor={Color.getColorByName('red', 'light')}
           keyName="name"

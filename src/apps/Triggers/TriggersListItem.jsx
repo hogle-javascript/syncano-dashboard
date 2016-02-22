@@ -28,9 +28,8 @@ export default React.createClass({
       <ColumnList.Item
         checked={item.checked}
         key={item.id}>
-        <Column.CheckIcon
+        <Column.CheckIcon.Socket
           id={item.id.toString()}
-          withCircle={false}
           iconClassName="socket-trigger"
           iconColor={Styles.Colors.amberA200}
           checked={item.checked}

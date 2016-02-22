@@ -35,7 +35,7 @@ export default React.createClass({
         id={item.id}>
         <Column.CheckIcon
           id={item.id.toString()}
-          icon={runtime.icon}
+          iconClassName={runtime.icon}
           background={runtime.color}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}

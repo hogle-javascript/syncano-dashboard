@@ -37,7 +37,7 @@ export default React.createClass({
         <ColumnList.Column.CheckIcon
           className="col-xs-25 col-md-20"
           id={item.id.toString()}
-          icon='account'
+          iconClassName='account'
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={onIconClick}
