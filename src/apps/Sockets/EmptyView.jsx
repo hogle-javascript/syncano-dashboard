@@ -38,10 +38,6 @@ export default React.createClass({
     };
   },
 
-  showPushNotificationAddDialog() {
-    console.info('EmptyView::showPushNotificationAddDialog');
-  },
-
   render() {
     let styles = this.getStyles();
 
@@ -81,8 +77,6 @@ export default React.createClass({
           </div>
         </Socket.EmptyListItem>
 
-        {/* eslint-disable no-inline-comments */}
-
         <Socket.EmptyListItem
           addTooltip="Configure a Push Notification"
           handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
@@ -91,12 +85,9 @@ export default React.createClass({
           <div style={styles.socketDescription}>
             Instantly message your mobile users with timely and relevant content.
           </div>
-
         </Socket.EmptyListItem>
 
         <Popover ref="popover"/>
-
-        {/* eslint-enable no-inline-comments */}
 
         <Socket.EmptyListItem
           addTooltip="Create a Trigger"
