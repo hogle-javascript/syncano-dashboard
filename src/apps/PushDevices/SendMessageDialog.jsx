@@ -219,9 +219,11 @@ export default (store, props) => {
     },
 
     renderDialogTitle() {
+      const type = props.type === 'APNS' ? 'iOS' : 'Android';
+
       return (
-        <CommonDialog.TitleWithIcon iconClassName="synicon-android">
-          Send Message To Android Device
+        <CommonDialog.TitleWithIcon iconClassName={`synicon-${props.type === 'APNS' ? 'apple' : 'android'}`}>
+          {`Send Message To ${type} Device`}
         </CommonDialog.TitleWithIcon>
       );
     },
@@ -290,6 +292,7 @@ export default (store, props) => {
       const checkedItems = props.getCheckedItems();
       let itemNodes = [
         <div
+          key="clickedItem"
           style={styles.sendDialogHeaderItem}
           className="row">
           <div className="col-sm-3">
@@ -311,6 +314,7 @@ export default (store, props) => {
         itemNodes = checkedItems.map((item, index) => {
           return (
             <div
+              key={`item${item.registration_id}`}
               style={[styles.sendDialogHeaderItem, (index + 1) % 2 === 0 && styles.sendDialogHeaderEvenItem]}
               className="row">
               <div className="col-sm-3">

@@ -13,12 +13,14 @@ export default CreateActions(
     createDevice: {
       asyncForm: true,
       asyncResult: true,
+      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushDevices.createAPNSDevice'
     },
     updateDevice: {
       asyncForm: true,
       asyncResult: true,
+      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushDevices.updateAPNSDevice'
     },

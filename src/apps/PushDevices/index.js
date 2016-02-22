@@ -1,4 +1,4 @@
-import Devices from './Devices';
+import AllDevicesLists from './AllDevicesLists';
 import APNSDevices from './APNSDevices/APNSDevices';
 import GCMDevices from './GCMDevices/GCMDevices';
 import DevicesList from './DevicesList';
@@ -13,8 +13,11 @@ import APNSDevicesStore from './APNSDevices/APNSDevicesStore';
 import GCMDeviceDialogStore from './GCMDevices/GCMDeviceDialogStore';
 import APNSDeviceDialogStore from './APNSDevices/APNSDeviceDialogStore';
 
+let Devices = {};
+
 Devices.APNS = APNSDevices;
 Devices.GCM = GCMDevices;
+Devices.AllDevices = AllDevicesLists;
 Devices.List = DevicesList;
 Devices.ListItem = DevicesListItem;
 Devices.APNSActions = APNSDevicesActions;

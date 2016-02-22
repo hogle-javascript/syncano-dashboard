@@ -69,6 +69,7 @@ export default React.createClass({
     let styles = this.getStyles();
     let dialogStandardActions = [
       <FlatButton
+        style={{marginRight: 10}}
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
