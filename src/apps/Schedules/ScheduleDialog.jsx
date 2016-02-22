@@ -10,7 +10,7 @@ import Store from './ScheduleDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {FlatButton, TextField} from 'syncano-material-ui';
+import {FlatButton, RaisedButton, TextField} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -66,16 +66,17 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <FlatButton
+      <RaisedButton
         key="confirm"
         label="Confirm"
-        primary={true}
+        secondary={true}
+        style={{marginLeft: 10}}
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Schedule Socket`}
@@ -106,7 +107,7 @@ export default React.createClass({
             onChange={this.setSelectFieldValue.bind(null, 'crontab')}
             errorText={this.getValidationMessages('crontab').join(' ')}/>
         </div>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

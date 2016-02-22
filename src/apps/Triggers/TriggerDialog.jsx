@@ -11,7 +11,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
-import {TextField, FlatButton} from 'syncano-material-ui';
+import {TextField, FlatButton, RaisedButton} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -74,16 +74,17 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <FlatButton
+      <RaisedButton
         key="confirm"
         label="Confirm"
-        primary={true}
+        secondary={true}
+        style={{marginLeft: 10}}
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Trigger Socket`}
@@ -120,7 +121,7 @@ export default React.createClass({
             onChange={this.setSelectFieldValue.bind(null, 'codebox')}
             errorText={this.getValidationMessages('codebox').join(' ')}/>
         </div>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });
