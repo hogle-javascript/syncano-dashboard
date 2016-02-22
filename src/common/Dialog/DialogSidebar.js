@@ -3,8 +3,9 @@ import React from 'react';
 export default ({children}) => {
   const styles = {
     root: {
-      width: 226,
-      paddingTop: 16
+      width: 238,
+      paddingTop: 16,
+      paddingRight: 20
     },
     content: {
       background: 'rgba(184, 192, 201, 0.1)',
