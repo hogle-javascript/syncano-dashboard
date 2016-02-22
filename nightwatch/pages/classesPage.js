@@ -75,7 +75,7 @@ export default {
       locateStrategy: 'xpath'
     },
     userClassListItem: {
-      selector: '//div[text()="user_profile"]',
+      selector: '//div[text()="user_profile"]/../../../following-sibling::div/button',
       locateStrategy: 'xpath'
     },
     selectClass: {

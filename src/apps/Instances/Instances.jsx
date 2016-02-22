@@ -84,7 +84,7 @@ export default React.createClass({
             emptyItemHandleClick={this.showInstanceDialog}
             emptyItemContent="Create an instance" />
 
-          <Show if={this.state.items !== [] && Store.getOtherInstances().length && !this.state.isLoading}>
+          <Show if={this.state.items.length > 0 && Store.getOtherInstances().length > 0 && !this.state.isLoading}>
             <SharedInstancesList
               ref="otherInstancesList"
               name="Shared with me"

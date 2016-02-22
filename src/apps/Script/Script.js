@@ -4,19 +4,19 @@ import {State, Navigation} from 'react-router';
 
 import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin, FormMixin, InstanceTabsMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
-import AutosaveMixin from './SnippetAutosaveMixin';
+import AutosaveMixin from './ScriptAutosaveMixin';
 
-import Store from './SnippetStore';
-import Actions from './SnippetActions';
+import Store from './ScriptStore';
+import Actions from './ScriptActions';
 
 import {RaisedButton, FontIcon, Checkbox} from 'syncano-material-ui';
 import {Loading, Show, TogglePanel} from 'syncano-components';
 import {Dialog, InnerToolbar, Editor, Notification} from '../../common';
 import Traces from '../Traces';
-import SnippetConfig from './SnippetConfig';
+import ScriptConfig from './ScriptConfig';
 
 export default React.createClass({
-  displayName: 'Snippet',
+  displayName: 'Script',
 
   contextTypes: {
     muiTheme: React.PropTypes.object
@@ -36,7 +36,7 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  autosaveAttributeName: 'snippetSourceAutosave',
+  autosaveAttributeName: 'scriptSourceAutosave',
 
   componentDidMount() {
     Actions.fetch();
@@ -47,7 +47,7 @@ export default React.createClass({
   },
 
   componentWillUnmount() {
-    Store.clearCurrentSnippet();
+    Store.clearCurrentScript();
   },
 
   getStyles() {
@@ -68,17 +68,17 @@ export default React.createClass({
   },
 
   getToolbarTitle() {
-    let currentSnippet = this.state.currentSnippet;
+    let currentScript = this.state.currentScript;
 
-    return currentSnippet ? `Snippet: ${currentSnippet.label} (id: ${currentSnippet.id})` : '';
+    return currentScript ? `Script: ${currentScript.label} (id: ${currentScript.id})` : '';
   },
 
   isSaved() {
-    if (this.state.currentSnippet && this.refs.editorSource) {
-      let initialSnippetSource = this.state.currentSnippet.source;
-      let currentSnippetSource = this.refs.editorSource.editor.getValue();
+    if (this.state.currentScript && this.refs.editorSource) {
+      let initialScriptSource = this.state.currentScript.source;
+      let currentScriptSource = this.refs.editorSource.editor.getValue();
 
-      return initialSnippetSource === currentSnippetSource;
+      return initialScriptSource === currentScriptSource;
     }
   },
 
@@ -86,7 +86,7 @@ export default React.createClass({
     let source = this.refs.editorSource.editor.getValue();
 
     this.clearAutosaveTimer();
-    Actions.updateSnippet(this.state.currentSnippet.id, {source});
+    Actions.updateScript(this.state.currentScript.id, {source});
     this.setSnackbarNotification({
       message: 'Saving...'
     });
@@ -97,16 +97,16 @@ export default React.createClass({
     this.runAutoSave();
   },
 
-  handleRunSnippet() {
+  handleRunScript() {
     this.handleUpdate();
     if (this.state.isPayloadValid) {
-      Actions.runSnippet({
-        id: this.state.currentSnippet.id,
+      Actions.runScript({
+        id: this.state.currentScript.id,
         payload: this.state.payloadValue
       });
     } else {
       this.setSnackbarNotification({
-        message: "Can't run Snippet with invalid payload",
+        message: "Can't run Script with invalid payload",
         autoHideDuration: 3000
       });
     }
@@ -124,7 +124,7 @@ export default React.createClass({
         avoidResetState: true,
         children: <Traces.List
                     isLoading={this.state.isLoading}
-                    tracesFor="snippet"
+                    tracesFor="script"
                     name="Traces"
                     items={this.state.traces}/>
       }
@@ -133,12 +133,12 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {currentSnippet, lastTraceStatus, isLoading, lastTraceDuration, lastTraceResult} = this.state;
+    const {currentScript, lastTraceStatus, isLoading, lastTraceDuration, lastTraceResult} = this.state;
     let source = null;
     let editorMode = 'python';
 
-    if (currentSnippet) {
-      source = currentSnippet.source;
+    if (currentScript) {
+      source = currentScript.source;
       editorMode = Store.getEditorMode();
     }
 
@@ -147,9 +147,9 @@ export default React.createClass({
         {this.getDialogs()}
         <InnerToolbar
           title={this.getToolbarTitle()}
-          backFallback={() => this.transitionTo('snippets', this.getParams())}
+          backFallback={() => this.transitionTo('scripts', this.getParams())}
           forceBackFallback={true}
-          backButtonTooltip="Go back to Snippets list">
+          backButtonTooltip="Go back to Scripts list">
           <div style={{display: 'inline-block', float: 'left'}}>
             <Checkbox
               ref="autosaveCheckbox"
@@ -167,9 +167,9 @@ export default React.createClass({
             secondary={true}
             style={{marginLeft: 0, marginRight: 0}}
             icon={<FontIcon className="synicon-play"/>}
-            onTouchTap={this.handleRunSnippet}/>
+            onTouchTap={this.handleRunScript}/>
         </InnerToolbar>
-        <Loading show={isLoading || !currentSnippet}>
+        <Loading show={isLoading || !currentScript}>
           <div className="row">
             <div className="col-flex-1" style={{borderRight: '1px solid rgba(224,224,224,.5)'}}>
               <TogglePanel
@@ -197,7 +197,7 @@ export default React.createClass({
                 <TogglePanel
                   title="Config"
                   initialOpen={true}>
-                  <SnippetConfig/>
+                  <ScriptConfig/>
                 </TogglePanel>
               </div>
 

@@ -58,8 +58,8 @@ export default {
       selector: '//input[@name="description"]',
       locateStrategy: 'xpath'
     },
-    addCodeBoxModalSnippetDropdown: {
-      selector: '//div[@class="snippet-dropdown"]',
+    addCodeBoxModalScriptDropdown: {
+      selector: '//div[@class="script-dropdown"]',
       locateStrategy: 'xpath'
     },
     codeBoxTableRow: {

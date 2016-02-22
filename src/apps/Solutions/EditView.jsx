@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import {DialogsMixin, IsLoadingMixin} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import InstancesActions from '../Instances/InstancesActions';
@@ -18,7 +18,7 @@ import InstallDialogActions from './InstallDialogActions';
 // Components
 import Header from '../../apps/Header';
 import {FontIcon, IconButton, RaisedButton, Avatar} from 'syncano-material-ui';
-import {Container, Solutions, Show} from 'syncano-components';
+import {Container, Solutions, Show, Loading} from 'syncano-components';
 import {Dialog, InnerToolbar} from '../../common';
 import VersionsList from './VersionsList';
 
@@ -32,10 +32,7 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-
     DialogsMixin,
-    IsLoadingMixin(),
-
     Reflux.connect(Store)
   ],
 
@@ -135,12 +132,12 @@ export default React.createClass({
     });
   },
 
-  renderLoaded() {
+  render() {
     let styles = this.getStyles();
     let item = this.state.item;
 
     return (
-      <div>
+      <Loading show={this.state.isLoading}>
         {this.getDialogs()}
 
         <Header logo={true}/>
@@ -244,7 +241,7 @@ export default React.createClass({
             </div>
           </div>
         </Container>
-      </div>
+      </Loading>
     );
   }
 });

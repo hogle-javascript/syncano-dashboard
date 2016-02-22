@@ -7,10 +7,10 @@ import {DialogMixin, FormMixin} from '../../mixins';
 // Stores and Actions
 import Actions from './SchedulesActions';
 import Store from './ScheduleDialogStore';
-import SnippetsActions from '../Snippets/SnippetsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {FlatButton, TextField} from 'syncano-material-ui';
+import {FlatButton, RaisedButton, TextField} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -37,7 +37,7 @@ export default React.createClass({
 
   handleDialogShow() {
     console.info('ScheduleDialog::handleDialogShow');
-    SnippetsActions.fetch();
+    ScriptsActions.fetch();
   },
 
   handleAddSubmit() {
@@ -66,16 +66,17 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <FlatButton
+      <RaisedButton
         key="confirm"
         label="Confirm"
-        primary={true}
+        secondary={true}
+        style={{marginLeft: 10}}
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Schedule Socket`}
@@ -93,8 +94,8 @@ export default React.createClass({
             errorText={this.getValidationMessages('label').join(' ')}
             floatingLabelText="Label of the schedule"/>
           <SelectFieldWrapper
-            name="snippet"
-            options={this.state.snippets}
+            name="script"
+            options={this.state.scripts}
             value={this.state.codebox}
             onChange={this.setSelectFieldValue.bind(null, 'codebox')}
             errorText={this.getValidationMessages('codebox').join(' ')}/>
@@ -106,7 +107,7 @@ export default React.createClass({
             onChange={this.setSelectFieldValue.bind(null, 'crontab')}
             errorText={this.getValidationMessages('crontab').join(' ')}/>
         </div>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

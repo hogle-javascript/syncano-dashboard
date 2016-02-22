@@ -2,11 +2,11 @@ import React from 'react';
 import Router from 'react-router';
 
 // Stores and Action
-import SnippetsActions from '../apps/Snippets/SnippetsActions';
+import ScriptsActions from '../apps/Scripts/ScriptsActions';
 
 export default React.createClass({
 
-  displayName: 'SnippetsPage',
+  displayName: 'ScriptsPage',
 
   contextTypes: {
     router: React.PropTypes.func
@@ -18,8 +18,8 @@ export default React.createClass({
   ],
 
   componentDidMount() {
-    console.debug('SnippetsPage::componentDidMount');
-    SnippetsActions.fetch();
+    console.debug('ScriptsPage::componentDidMount');
+    ScriptsActions.fetch();
   },
 
   render() {

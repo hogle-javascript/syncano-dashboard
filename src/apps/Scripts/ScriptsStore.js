@@ -4,7 +4,7 @@ import D from 'd.js';
 import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
-import Actions from './SnippetsActions';
+import Actions from './ScriptsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -40,7 +40,7 @@ export default Reflux.createStore({
       triggers: [],
       schedules: [],
 
-      currentSnippetId: null,
+      currentScriptId: null,
 
       AddDialogVisible: true,
       availableRuntimes: null,
@@ -61,23 +61,23 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.setLoadingStates();
-    this.listenTo(Actions.setCurrentSnippetId, this.fetchTraces);
+    this.listenTo(Actions.setCurrentScriptId, this.fetchTraces);
   },
 
   fetchTraces() {
-    console.debug('SnippetsStore::fetchTraces');
-    if (this.data.currentSnippetId === null) {
+    console.debug('ScriptsStore::fetchTraces');
+    if (this.data.currentScriptId === null) {
       return;
     }
-    Actions.fetchSnippetTraces(this.data.currentSnippetId);
+    Actions.fetchScriptTraces(this.data.currentScriptId);
   },
 
   getItems() {
     return this.data.items;
   },
 
-  getEditorMode(snippet) {
-    return this.langMap[snippet.runtime_name];
+  getEditorMode(script) {
+    return this.langMap[script.runtime_name];
   },
 
   getRuntimeColorIcon(runtimeName) {
@@ -86,7 +86,7 @@ export default Reflux.createStore({
     return this.runtimeColors[runtime];
   },
 
-  getSnippetsDropdown() {
+  getScriptsDropdown() {
     return this.data.items.map((item) => {
       return {
         payload: item.id,
@@ -95,15 +95,15 @@ export default Reflux.createStore({
     });
   },
 
-  getCurrentSnippet() {
-    if (!this.data.currentSnippetId) {
+  getCurrentScript() {
+    if (!this.data.currentScriptId) {
       return null;
     }
 
     let currentItem = null;
 
     this.data.items.some((item) => {
-      if (item.id.toString() === this.data.currentSnippetId.toString()) {
+      if (item.id.toString() === this.data.currentScriptId.toString()) {
         currentItem = item;
         return true;
       }
@@ -111,34 +111,34 @@ export default Reflux.createStore({
     return currentItem;
   },
 
-  getSnippetById(id) {
-    let snippet = null;
+  getScriptById(id) {
+    let script = null;
 
     this.data.items.some((item) => {
       if (item.id.toString() === id.toString()) {
-        snippet = item;
+        script = item;
         return true;
       }
     });
-    return snippet;
+    return script;
   },
 
-  getSnippetIndex(id) {
-    let snippetIndex = null;
+  getScriptIndex(id) {
+    let scriptIndex = null;
 
     this.data.items.some((item, index) => {
       if (item.id.toString() === id.toString()) {
-        snippetIndex = index;
+        scriptIndex = index;
         return true;
       }
     });
-    return snippetIndex;
+    return scriptIndex;
   },
 
   refreshData() {
-    console.debug('SnippetsStore::refreshData');
+    console.debug('ScriptsStore::refreshData');
     D.all([
-      Actions.fetchSnippets(),
+      Actions.fetchScripts(),
       Actions.fetchTriggers(),
       Actions.fetchSchedules()
     ]).then(() => {
@@ -147,40 +147,40 @@ export default Reflux.createStore({
     });
   },
 
-  setSnippets(items) {
+  setScripts(items) {
     this.data.items = items;
     this.trigger(this.data);
   },
 
-  setSnippetTraces(items) {
+  setScriptTraces(items) {
     this.data.traces = Object.keys(items).sort().map((key) => items[key]);
     this.trigger(this.data);
   },
 
-  onSetCurrentSnippetId(snippetId) {
-    console.debug('SnippetsStore::onSetCurrentSnippetId', snippetId);
-    this.data.currentSnippetId = snippetId;
+  onSetCurrentScriptId(scriptId) {
+    console.debug('ScriptsStore::onSetCurrentScriptId', scriptId);
+    this.data.currentScriptId = scriptId;
     this.trigger(this.data);
   },
 
-  onRemoveSnippetsCompleted() {
-    console.debug('SnippetsStore::onRemoveSnippetsCompleted');
+  onRemoveScriptsCompleted() {
+    console.debug('ScriptsStore::onRemoveScriptsCompleted');
     this.data.hideDialogs = true;
     this.refreshData();
   },
 
-  onFetchSnippetsCompleted(snippets) {
-    console.debug('SnippetsStore::onFetchSnippetsCompleted');
-    Actions.setSnippets(snippets._items);
+  onFetchScriptsCompleted(scripts) {
+    console.debug('ScriptsStore::onFetchScriptsCompleted');
+    Actions.setScripts(scripts._items);
   },
 
   onFetchTriggersCompleted(triggers) {
-    console.debug('SnippetsStore::onFetchTriggersCompleted');
+    console.debug('ScriptsStore::onFetchTriggersCompleted');
     this.setItems(triggers, 'triggers');
   },
 
   onFetchSchedulesCompleted(schedules) {
-    console.debug('SnippetsStore::onFetchSchedulesCompleted');
+    console.debug('ScriptsStore::onFetchSchedulesCompleted');
     this.setItems(schedules, 'schedules');
   },
 
@@ -188,24 +188,24 @@ export default Reflux.createStore({
     this.data[itemsType] = Object.keys(items).map((key) => items[key]);
   },
 
-  onRunSnippet() {
-    console.debug('SnippetsStore::onRunSnippet');
+  onRunScript() {
+    console.debug('ScriptsStore::onRunScript');
     this.trigger(this.data);
   },
 
-  onRunSnippetCompleted(trace) {
-    console.debug('SnippetsStore::onRunSnippetCompleted');
+  onRunScriptCompleted(trace) {
+    console.debug('ScriptsStore::onRunScriptCompleted');
     this.data.lastTrace = trace;
-    Actions.fetchSnippetTrace(this.data.currentSnippetId, trace.id);
+    Actions.fetchScriptTrace(this.data.currentScriptId, trace.id);
   },
 
-  onFetchSnippetTraceCompleted(trace) {
-    console.debug('SnippetsStore::onFetchSnippetTrace');
+  onFetchScriptTraceCompleted(trace) {
+    console.debug('ScriptsStore::onFetchScriptTrace');
     if (trace.status === 'pending') {
-      let snippetId = this.data.currentSnippetId;
+      let scriptId = this.data.currentScriptId;
 
       setTimeout(() => {
-        Actions.fetchSnippetTrace(snippetId, trace.id);
+        Actions.fetchScriptTrace(scriptId, trace.id);
       }, 300);
     } else {
       this.data.lastTraceResult = trace.result;
@@ -213,8 +213,8 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchSnippetTracesCompleted(items) {
-    console.debug('SnippetsStore::onFetchSnippetTraces');
-    Actions.setSnippetTraces(items);
+  onFetchScriptTracesCompleted(items) {
+    console.debug('ScriptsStore::onFetchScriptTraces');
+    Actions.setScriptTraces(items);
   }
 });

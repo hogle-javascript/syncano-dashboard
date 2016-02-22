@@ -23,8 +23,8 @@ export default {
       selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Classes"]',
       locateStrategy: 'xpath'
     },
-    snippets: {
-      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Snippets"]',
+    scripts: {
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Scripts"]',
       locateStrategy: 'xpath'
     },
     users: {

@@ -5,7 +5,7 @@ import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
-import Actions from './SnippetsActions';
+import Actions from './ScriptsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -28,7 +28,7 @@ export default Reflux.createStore({
     this.listenToForms();
   },
 
-  setSnippetRuntimes(payload) {
+  setScriptRuntimes(payload) {
     let runtimes = Object.keys(payload).map((runtime) => {
       return {payload: runtime, text: runtime};
     });
@@ -36,23 +36,23 @@ export default Reflux.createStore({
     this.trigger({runtimes});
   },
 
-  onCreateSnippetCompleted(resp) {
-    console.debug('SnippetsStore::onCreateSnippetCompleted');
+  onCreateScriptCompleted(resp) {
+    console.debug('ScriptsStore::onCreateScriptCompleted');
     this.dismissDialog();
-    SessionStore.getRouter().transitionTo('snippet', {
+    SessionStore.getRouter().transitionTo('script', {
       instanceName: SessionStore.getInstance().name,
-      snippetId: resp.id
+      scriptId: resp.id
     });
   },
 
-  onUpdateSnippetCompleted() {
-    console.debug('SnippetDialogStore::onUpdateSnippetCompleted');
+  onUpdateScriptCompleted() {
+    console.debug('ScriptDialogStore::onUpdateScriptCompleted');
     this.dismissDialog();
-    Actions.fetchSnippets();
+    Actions.fetchScripts();
   },
 
-  onFetchSnippetRuntimesCompleted(runtimes) {
-    console.debug('SnippetDialogStore::onFetchSnippetRuntimesCompleted');
-    Actions.setSnippetRuntimes(runtimes);
+  onFetchScriptRuntimesCompleted(runtimes) {
+    console.debug('ScriptDialogStore::onFetchScriptRuntimesCompleted');
+    Actions.setScriptRuntimes(runtimes);
   }
 });

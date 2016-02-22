@@ -1,12 +1,12 @@
 import React from 'react';
+import Radium from 'radium';
 import {History} from 'react-router';
 import Sticky from 'react-stickydiv';
 
 import {Store as SessionStore} from '../../apps/Session';
 import {Toolbar, ToolbarGroup, ToolbarTitle, IconButton} from 'syncano-material-ui';
 
-export default React.createClass({
-
+export default Radium(React.createClass({
   displayName: 'InnerToolbar',
 
   propTypes: {
@@ -28,7 +28,9 @@ export default React.createClass({
         zIndex: 6
       },
       toolbarRight: {
-        height: '100%'
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center'
       }
     };
   },
@@ -92,4 +94,4 @@ export default React.createClass({
       </Sticky>
     );
   }
-});
+}));

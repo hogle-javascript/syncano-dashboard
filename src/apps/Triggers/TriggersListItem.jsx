@@ -4,7 +4,7 @@ import {Link, State} from 'react-router';
 import {DialogsMixin} from '../../mixins';
 
 import Actions from './TriggersActions';
-import SnippetsStore from '../Snippets/SnippetsStore';
+import ScriptsStore from '../Scripts/ScriptsStore';
 
 import {MenuItem, Styles} from 'syncano-material-ui';
 import {ColumnList} from 'syncano-components';
@@ -21,8 +21,8 @@ export default React.createClass({
 
   render() {
     const {item} = this.props;
-    const snippet = SnippetsStore.getSnippetById(item.codebox);
-    const snippetLabel = snippet ? snippet.label : '';
+    const script = ScriptsStore.getScriptById(item.codebox);
+    const scriptLabel = script ? script.label : '';
 
     return (
       <ColumnList.Item
@@ -45,11 +45,11 @@ export default React.createClass({
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">
-          <Link to="snippet" params={{
+          <Link to="script" params={{
             instanceName: this.getParams().instanceName,
-            snippetId: item.codebox
+            scriptId: item.codebox
           }}>
-            {snippetLabel}
+            {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">

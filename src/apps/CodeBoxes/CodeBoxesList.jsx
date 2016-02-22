@@ -77,7 +77,7 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
-            Snippet
+            Script
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"

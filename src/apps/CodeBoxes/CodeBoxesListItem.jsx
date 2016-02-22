@@ -4,7 +4,7 @@ import {Link, State} from 'react-router';
 import {SnackbarNotificationMixin} from '../../mixins';
 
 import Actions from './CodeBoxesActions';
-import SnippetsStore from '../Snippets/SnippetsStore';
+import ScriptsStore from '../Scripts/ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
 import {Color, ColumnList, Clipboard} from 'syncano-components';
@@ -23,8 +23,8 @@ export default React.createClass({
     let {item, onIconClick, showDeleteDialog} = this.props;
     let publicString = item.public.toString();
     let link = item.public ? item.links['public-link'] : item.links.self;
-    let snippet = SnippetsStore.getSnippetById(item.codebox);
-    let snippetLabel = snippet ? snippet.label : '';
+    let script = ScriptsStore.getScriptById(item.codebox);
+    let scriptLabel = script ? script.label : '';
 
     return (
       <ColumnList.Item
@@ -55,12 +55,12 @@ export default React.createClass({
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link
-            to="snippet"
+            to="script"
             params={{
               instanceName: this.getParams().instanceName,
-              snippetId: item.codebox
+              scriptId: item.codebox
             }}>
-            {snippetLabel}
+            {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">

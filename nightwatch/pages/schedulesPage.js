@@ -44,8 +44,8 @@ export default {
       selector: '//input[@name="label"]',
       locateStrategy: 'xpath'
     },
-    addScheduleModalSnippet: {
-      selector: '//div[@class="snippet-dropdown"]',
+    addScheduleModalScript: {
+      selector: '//div[@class="script-dropdown"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {

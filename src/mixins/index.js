@@ -4,7 +4,6 @@ import DialogsMixin from './DialogsMixin';
 import DialogStoreMixin from './DialogStoreMixin';
 import FormMixin from './FormMixin';
 import InstanceTabsMixin from './InstanceTabsMixin';
-import IsLoadingMixin from './IsLoadingMixin';
 import MousetrapMixin from './MousetrapMixin';
 import SnackbarNotificationMixin from './SnackbarNotificationMixin';
 import StoreFormMixin from './StoreFormMixin';
@@ -18,7 +17,6 @@ export {DialogsMixin};
 export {DialogStoreMixin};
 export {FormMixin};
 export {InstanceTabsMixin};
-export {IsLoadingMixin};
 export {MousetrapMixin};
 export {SnackbarNotificationMixin};
 export {StoreFormMixin};
@@ -33,7 +31,6 @@ export default {
   DialogStoreMixin,
   FormMixin,
   InstanceTabsMixin,
-  IsLoadingMixin,
   MousetrapMixin,
   SnackbarNotificationMixin,
   StoreFormMixin,

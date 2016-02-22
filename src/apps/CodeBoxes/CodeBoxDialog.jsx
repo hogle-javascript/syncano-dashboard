@@ -7,10 +7,10 @@ import {DialogMixin, FormMixin} from '../../mixins';
 // Stores and Actions
 import Actions from './CodeBoxesActions';
 import DialogStore from './CodeBoxDialogStore';
-import SnippetsActions from '../Snippets/SnippetsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {TextField, Toggle, FlatButton} from 'syncano-material-ui';
+import {TextField, Toggle, FlatButton, RaisedButton} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -36,7 +36,7 @@ export default React.createClass({
 
   handleDialogShow() {
     console.info('ScriptSocketDialog::handleDialogShow');
-    SnippetsActions.fetch();
+    ScriptsActions.fetch();
   },
 
   handleAddSubmit() {
@@ -71,16 +71,17 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <FlatButton
+      <RaisedButton
         key="confirm"
         label="Confirm"
-        primary={true}
+        secondary={true}
+        style={{marginLeft: 10}}
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Script Socket`}
@@ -107,8 +108,8 @@ export default React.createClass({
           hintText="Description of the Script Socket"
           floatingLabelText="Description"/>
         <SelectFieldWrapper
-          name="snippet"
-          options={this.state.snippets}
+          name="script"
+          options={this.state.scripts}
           value={this.state.codebox}
           onChange={this.setSelectFieldValue.bind(null, 'codebox')}
           errorText={this.getValidationMessages('codebox').join(' ')}/>
@@ -119,7 +120,7 @@ export default React.createClass({
           style={{marginTop: 20}}
           defaultToggled={this.state.public}
           label='Make this Script Socket public?'/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });
