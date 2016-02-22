@@ -8,8 +8,9 @@ import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
-import {Container, Loading, Socket} from 'syncano-components';
+import {Container, Loading, Socket, Show} from 'syncano-components';
 import {InnerToolbar, Dialog} from '../../common';
+import Popover from '../PushNotifications/ConfigPushNotificationsPopover';
 import {FlatButton} from 'syncano-material-ui';
 
 // Apps
@@ -37,6 +38,10 @@ export default React.createClass({
     Reflux.connect(Schedules.Store, 'schedules'),
     Reflux.connect(Triggers.Store, 'triggers'),
     Reflux.connect(CodeBoxes.Store, 'codeboxes'),
+    Reflux.connect(PushNotifications.APNSStore, 'APNSPushNotifications'),
+    Reflux.connect(PushNotifications.GCMStore, 'GCMPushNotifications'),
+    Reflux.connect(PushDevices.GCMStore, 'GCMDevices'),
+    Reflux.connect(PushDevices.APNSStore, 'APNSDevices'),
 
     DialogsMixin,
     InstanceTabsMixin,
@@ -56,12 +61,15 @@ export default React.createClass({
     this.fetch();
   },
 
-  getPushNotificationsItems() {
-    return [PushNotifications.APNSListItem, PushNotifications.GCMListItem];
+  getPushNotificationItems() {
+    const APNSItems = _.filter(this.state.APNSPushNotifications.items, 'hasConfig');
+    const GCMItems = _.filter(this.state.GCMPushNotifications.items, 'hasConfig');
+
+    return APNSItems.concat(GCMItems);
   },
 
   isViewLoading() {
-    let loadingStates = Object.keys(this.state).map((key) => {
+    let loadingStates = _.keys(this.state).map((key) => {
       if (this.state[key].hasOwnProperty('isLoading')) {
         return this.state[key].isLoading;
       }
@@ -71,7 +79,7 @@ export default React.createClass({
   },
 
   hasAnyItem() {
-    return _.keys(this.state)
+    return _.without(_.keys(this.state), 'APNSPushNotifications', 'GCMPushNotifications')
       .filter((socketName) => _.has(this.state[socketName], 'items'))
       .some((socketName) => this.state[socketName].items.length > 0);
   },
@@ -92,6 +100,8 @@ export default React.createClass({
     CodeBoxes.Actions.fetch();
     PushDevices.APNSActions.fetch();
     PushDevices.GCMActions.fetch();
+    PushNotifications.APNSActions.fetch();
+    PushNotifications.GCMActions.fetch();
   },
 
   initDialogs() {
@@ -124,14 +134,18 @@ export default React.createClass({
     if (!this.hasAnyItem() || this.isViewLoading()) {
       return <InnerToolbar title="Sockets"/>;
     }
+    const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
 
     return (
       <InnerToolbar title="Sockets">
-        <div>
+        <div style={{paddingTop: 4}}>
+          <Popover ref="pushSocketPopover"/>
           <Socket.Data onTouchTap={Data.Actions.showDialog}/>
           <Socket.CodeBox onTouchTap={CodeBoxes.Actions.showDialog}/>
           <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
-          <Socket.Push onTouchTap={() => this.transitionTo('apns-devices', this.getParams())}/>
+          <Socket.Push
+            tooltip="Configure Push Notification Socket"
+            onTouchTap={togglePopover}/>
           <Socket.Trigger onTouchTap={Triggers.Actions.showDialog}/>
           <Socket.Schedule
             onTouchTap={Schedules.Actions.showDialog}
@@ -153,50 +167,62 @@ export default React.createClass({
     return (
       <div style={{clear: 'both', height: '100%'}}>
         <Loading show={this.isViewLoading()}>
-          <Data.List
-            name="Data Sockets"
-            isLoading={this.state.dataviews.isLoading}
-            items={this.state.dataviews.items}
-            handleTitleClick={() => this.handleListTitleClick('data')}
-            emptyItemHandleClick={Data.Actions.showDialog}
-            emptyItemContent="Create a Data Socket"/>
+          <Show if={this.state.dataviews.items.length > 0}>
+            <Data.List
+              name="Data Sockets"
+              isLoading={this.state.dataviews.isLoading}
+              items={this.state.dataviews.items}
+              handleTitleClick={() => this.handleListTitleClick('data')}
+              emptyItemHandleClick={Data.Actions.showDialog}
+              emptyItemContent="Create a Data Socket"/>
+          </Show>
 
-          <CodeBoxes.List
-            name="Script Sockets"
-            isLoading={this.state.codeboxes.isLoading}
-            items={this.state.codeboxes.items}
-            handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
-            emptyItemHandleClick={CodeBoxes.Actions.showDialog}
-            emptyItemContent="Create a Script Socket"/>
+          <Show if={this.state.codeboxes.items.length > 0}>
+            <CodeBoxes.List
+              name="Script Sockets"
+              isLoading={this.state.codeboxes.isLoading}
+              items={this.state.codeboxes.items}
+              handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
+              emptyItemHandleClick={CodeBoxes.Actions.showDialog}
+              emptyItemContent="Create a Script Socket"/>
+          </Show>
 
-          <Triggers.List
-            name="Trigger Sockets"
-            isLoading={this.state.triggers.isLoading}
-            items={this.state.triggers.items}
-            handleTitleClick={() => this.handleListTitleClick('triggers')}
-            emptyItemHandleClick={Triggers.Actions.showDialog}
-            emptyItemContent="Create a Trigger Socket"/>
+          <Show if={this.state.triggers.items.length > 0}>
+            <Triggers.List
+              name="Trigger Sockets"
+              isLoading={this.state.triggers.isLoading}
+              items={this.state.triggers.items}
+              handleTitleClick={() => this.handleListTitleClick('triggers')}
+              emptyItemHandleClick={Triggers.Actions.showDialog}
+              emptyItemContent="Create a Trigger Socket"/>
+          </Show>
 
-          <Schedules.List
-            name="Schedule Sockets"
-            isLoading={this.state.schedules.isLoading}
-            items={this.state.schedules.items}
-            handleTitleClick={() => this.handleListTitleClick('schedules')}
-            emptyItemHandleClick={Schedules.Actions.showDialog}
-            emptyItemContent="Create a Schedule Socket"/>
+          <Show if={this.state.schedules.items.length > 0}>
+            <Schedules.List
+              name="Schedule Sockets"
+              isLoading={this.state.schedules.isLoading}
+              items={this.state.schedules.items}
+              handleTitleClick={() => this.handleListTitleClick('schedules')}
+              emptyItemHandleClick={Schedules.Actions.showDialog}
+              emptyItemContent="Create a Schedule Socket"/>
+          </Show>
 
-          <Channels.List
-            name="Channel Sockets"
-            isLoading={this.state.channels.isLoading}
-            items={this.state.channels.items}
-            handleTitleClick={() => this.handleListTitleClick('channels')}
-            emptyItemHandleClick={Channels.Actions.showDialog}
-            emptyItemContent="Create a Channel Socket"/>
+          <Show if={this.state.channels.items.length > 0}>
+            <Channels.List
+              name="Channel Sockets"
+              isLoading={this.state.channels.isLoading}
+              items={this.state.channels.items}
+              handleTitleClick={() => this.handleListTitleClick('channels')}
+              emptyItemHandleClick={Channels.Actions.showDialog}
+              emptyItemContent="Create a Channel Socket"/>
+          </Show>
 
-          <PushNotifications.List
-            name="Push Notification Sockets"
-            handleTitleClick={() => this.handleListTitleClick('apns-devices')}
-            items={this.getPushNotificationsItems()}/>
+          <Show if={this.getPushNotificationItems().length > 0}>
+            <PushNotifications.List
+              name="Push Notification Sockets"
+              handleTitleClick={() => this.handleListTitleClick('push-notification-config')}
+              items={this.getPushNotificationItems()}/>
+          </Show>
         </Loading>
       </div>
     );
@@ -222,5 +248,3 @@ export default React.createClass({
     );
   }
 });
-
-

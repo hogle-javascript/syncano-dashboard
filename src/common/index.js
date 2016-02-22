@@ -10,6 +10,7 @@ import Lists from './Lists';
 import Logo from './Logo';
 import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
+import Popover from './Popover';
 import Request from './Request';
 import Sidebar from './Sidebar';
 
@@ -26,6 +27,7 @@ export default {
   Logo,
   NoMobileInfo,
   Notification,
+  Popover,
   Request,
   Sidebar
 };
