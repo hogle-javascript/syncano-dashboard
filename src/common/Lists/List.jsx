@@ -24,7 +24,6 @@ export default React.createClass({
     );
   },
 
-
   render() {
     return (
       <Loading show={this.props.isLoading}>

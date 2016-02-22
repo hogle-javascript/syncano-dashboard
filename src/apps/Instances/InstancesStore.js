@@ -161,7 +161,6 @@ export default Reflux.createStore({
       }
       return instances[key];
     });
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
