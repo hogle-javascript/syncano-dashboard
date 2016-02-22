@@ -4,8 +4,8 @@ import {State, Link} from 'react-router';
 import Actions from './SchedulesActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
 
-import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from 'syncano-components';
+import {MenuItem, Styles} from 'syncano-material-ui';
+import {ColumnList} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
@@ -25,8 +25,9 @@ export default React.createClass({
         key={item.id}>
         <Column.CheckIcon
           id={item.id.toString()}
-          icon="camera-timer"
-          background={Color.getColorByName('blue', 'xlight')}
+          withCircle={false}
+          iconClassName="socket-schedule"
+          iconColor={Styles.Colors.lime400}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.label}

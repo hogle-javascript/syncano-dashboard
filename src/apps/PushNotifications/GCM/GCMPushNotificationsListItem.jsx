@@ -8,7 +8,6 @@ let item = {
   label: 'Google Cloud Messaging (GCM)',
   getDevices: GCMDevicesStore.getDevices,
   devicesRoute: 'gcm-devices',
-  icon: 'android',
   showConfigDialog: GCMPushNotificationsActions.showDialog
 };
 

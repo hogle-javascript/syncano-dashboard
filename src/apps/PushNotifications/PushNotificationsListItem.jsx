@@ -37,9 +37,10 @@ export default (name, item) => {
         <ColumnList.Item key={item.name}>
           <Column.CheckIcon
             id={`push-notification${item.label}`}
-            icon={item.icon}
+            withCircle={false}
+            iconClassName="socket-push"
+            iconColor={Color.getColorByName('indigo', 'light')}
             checkable={false}
-            background={Color.getColorByName('blue')}
             primaryText={item.label}
             secondaryText={
               <div>

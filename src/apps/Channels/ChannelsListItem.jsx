@@ -24,9 +24,10 @@ export default React.createClass({
         <Column.CheckIcon
           className="col-xs-12"
           id={item.name}
-          icon={'bullhorn'}
+          withCircle={false}
+          iconClassName="socket-channel"
+          iconColor={Color.getColorByName('blue', 'light')}
           keyName="name"
-          background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.name}

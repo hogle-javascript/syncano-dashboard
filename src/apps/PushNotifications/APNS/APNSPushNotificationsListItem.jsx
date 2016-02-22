@@ -8,7 +8,6 @@ let item = {
   label: 'Apple Push Notification service (APNs)',
   getDevices: APNSDevicesStore.getDevices,
   devicesRoute: 'apns-devices',
-  icon: 'apple',
   showConfigDialog: APNSPushNotificationsActions.showDialog
 };
 
