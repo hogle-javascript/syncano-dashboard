@@ -4,10 +4,10 @@ import {Link, State} from 'react-router';
 import {DialogsMixin} from '../../mixins';
 
 import Actions from './TriggersActions';
-import SnippetsStore from '../Snippets/SnippetsStore';
+import ScriptsStore from '../Scripts/ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
+import {ColumnList, Color} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
@@ -20,9 +20,9 @@ export default React.createClass({
   ],
 
   render() {
-    let item = this.props.item;
-    let snippet = SnippetsStore.getSnippetById(item.codebox);
-    let snippetLabel = snippet ? snippet.label : '';
+    const {item} = this.props;
+    const script = ScriptsStore.getScriptById(item.codebox);
+    const scriptLabel = script ? script.label : '';
 
     return (
       <ColumnList.Item
@@ -33,10 +33,8 @@ export default React.createClass({
           icon='arrow-up-bold'
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          <Truncate text={item.label}/>
-        </Column.CheckIcon>
-        <Column.ID>{item.id}</Column.ID>
+          handleIconClick={this.props.onIconClick}
+          primaryText={item.label}/>
         <Column.Desc className="col-flex-1">
           <Link to="classes-edit" params={{
             instanceName: this.getParams().instanceName,
@@ -45,15 +43,15 @@ export default React.createClass({
             {item.class}
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-sm-4">
-          <Link to="snippet-edit" params={{
+        <Column.Desc className="col-flex-1">
+          <Link to="script" params={{
             instanceName: this.getParams().instanceName,
-            snippetId: item.codebox
+            scriptId: item.codebox
           }}>
-            {snippetLabel}
+            {scriptLabel}
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-xs-4">
+        <Column.Desc className="col-flex-1">
           <Link
             to="trigger-traces"
             params={{
@@ -63,7 +61,7 @@ export default React.createClass({
             Traces
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-sm-3">
+        <Column.Desc className="col-flex-1">
           {item.signal}
         </Column.Desc>
         <Column.Menu>

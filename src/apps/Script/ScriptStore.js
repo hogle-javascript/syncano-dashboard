@@ -5,7 +5,7 @@ import {StoreFormMixin, WaitForStoreMixin, SnackbarNotificationMixin} from '../.
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import Actions from './SnippetActions';
+import Actions from './ScriptActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -25,7 +25,7 @@ export default Reflux.createStore({
     php: 'php'
   },
 
-  snippetConfigValueTypes: [
+  scriptConfigValueTypes: [
     {
       payload: 'string',
       text: 'String'
@@ -38,8 +38,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      currentSnippet: null,
-      snippetConfig: null,
+      currentScript: null,
+      scriptConfig: null,
       isPayloadValid: true,
 
       traces: [],
@@ -61,9 +61,9 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('SnippetStore::refreshData');
-    Actions.fetchSnippet(SessionStore.getRouter().getCurrentParams().snippetId);
-    Actions.fetchSnippetTraces(SessionStore.getRouter().getCurrentParams().snippetId);
+    console.debug('ScriptStore::refreshData');
+    Actions.fetchScript(SessionStore.getRouter().getCurrentParams().scriptId);
+    Actions.fetchScriptTraces(SessionStore.getRouter().getCurrentParams().scriptId);
   },
 
   mapConfig(originalConfig) {
@@ -84,69 +84,59 @@ export default Reflux.createStore({
     return _.sortBy(config, 'key');
   },
 
-  getCurrentSnippet() {
-    console.debug('SnippetStore::getCurrentSnippet');
-    return this.data.currentSnippet;
+  getCurrentScript() {
+    console.debug('ScriptStore::getCurrentScript');
+    return this.data.currentScript;
   },
 
-  clearCurrentSnippet() {
-    this.data.currentSnippet = null;
+  clearCurrentScript() {
+    this.data.currentScript = null;
   },
 
-  setPayloadValue(payload) {
-    this.data.payloadValue = payload;
+  onFetchScriptCompleted(script) {
+    console.debug('ScriptStore::onFetchScriptCompleted');
+    this.data.scriptConfig = this.mapConfig(script.config);
+    this.data.currentScript = script;
     this.trigger(this.data);
   },
 
-  onSetPayloadValidator(value) {
-    this.data.isPayloadValid = typeof value === 'undefined';
-    this.trigger(this.data);
-  },
-
-  onFetchSnippetCompleted(snippet) {
-    console.debug('SnippetStore::onFetchSnippetCompleted');
-    this.data.snippetConfig = this.mapConfig(snippet.config);
-    this.data.currentSnippet = snippet;
-    this.trigger(this.data);
-  },
-
-  onRunSnippetWithUpdateCompleted() {
-    console.debug('SnippetStore::onRunSnippetWithUpdateCompleted');
+  onRunScriptWithUpdateCompleted() {
+    console.debug('ScriptStore::onRunScriptWithUpdateCompleted');
     this.refreshData();
   },
 
   getEditorMode() {
-    let currentSnippet = this.data.currentSnippet;
+    let currentScript = this.data.currentScript;
 
-    return currentSnippet ? this.langMap[currentSnippet.runtime_name] : 'python';
+    return currentScript ? this.langMap[currentScript.runtime_name] : 'python';
   },
 
   fetchTraces() {
-    console.debug('SnippetStore::fetchTraces');
-    if (this.data.currentSnippetId === null) {
+    console.debug('ScriptStore::fetchTraces');
+    if (this.data.currentScriptId === null) {
       return;
     }
-    Actions.fetchSnippetTraces(this.data.currentSnippet.id);
+    Actions.fetchScriptTraces(this.data.currentScript.id);
   },
 
-  onFetchSnippetTracesCompleted(traces) {
-    console.debug('SnippetStore::onFetchSnippetTracesCompleted');
+  onFetchScriptTracesCompleted(traces) {
+    console.debug('ScriptStore::onFetchScriptTracesCompleted');
     this.data.traces = traces._items;
     this.data.isLoading = false;
-    this.getSnippetLastTraceResult();
+    this.getScriptLastTraceResult();
   },
 
-  onRunSnippetCompleted() {
-    console.debug('SnippetStore::onRunSnippetCompleted');
+  onRunScriptCompleted() {
+    console.debug('ScriptStore::onRunScriptCompleted');
     this.refreshData();
   },
 
-  getSnippetLastTraceResult() {
-    console.debug('SnippetStore::getSnippetLastTraceResult', this.data.traces);
+  getScriptLastTraceResult() {
+    console.debug('ScriptStore::getScriptLastTraceResult', this.data.traces);
     this.data.lastTraceResult = null;
     this.data.lastTraceStatus = null;
     this.data.lastTraceDuration = null;
-    if (this.data.traces.length > 0) {
+    if (this.data.traces && this.data.traces.length > 0) {
       let lastTrace = this.data.traces[0];
 
       if (lastTrace.status !== 'success' && lastTrace.status !== 'failure') {
@@ -167,17 +157,17 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  getSnippetConfigValueTypes() {
-    return this.snippetConfigValueTypes;
+  getScriptConfigValueTypes() {
+    return this.scriptConfigValueTypes;
   },
 
-  onUpdateSnippetCompleted(snippet) {
-    this.data.currentSnippet = snippet;
+  onUpdateScriptCompleted(script) {
+    this.data.currentScript = script;
     this.dismissSnackbarNotification();
     this.refreshData();
   },
 
-  onUpdateSnippetFailure() {
+  onUpdateScriptFailure() {
     this.dismissSnackbarNotification();
   }
 });

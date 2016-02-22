@@ -1,17 +1,17 @@
 import _ from 'lodash';
 
 export default {
-  get(snippetId) {
+  get(scriptId) {
     this.Connection
       .CodeBoxes
-      .get(snippetId)
+      .get(scriptId)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(snippetId, params) {
+  update(scriptId, params) {
     this.Connection
-      .CodeBoxes.update(snippetId, params)
+      .CodeBoxes.update(scriptId, params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -23,13 +23,13 @@ export default {
       .catch(this.failure);
   },
 
-  runWithUpdate(snippetId, updateParams, payload) {
+  runWithUpdate(scriptId, updateParams, payload) {
     this.Connection
-      .CodeBoxes.update(snippetId, updateParams)
+      .CodeBoxes.update(scriptId, updateParams)
       .then(
       this.Connection
         .CodeBoxes
-        .run(snippetId, payload)
+        .run(scriptId, payload)
         .then(this.completed)
         .catch(this.failure)
     )
@@ -65,16 +65,16 @@ export default {
       .error(this.failure);
   },
 
-  getTrace(snippetId, traceId) {
+  getTrace(scriptId, traceId) {
     this.Connection
-      .CodeBoxes.trace(traceId, snippetId, {})
+      .CodeBoxes.trace(traceId, scriptId, {})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  listTraces(snippetId) {
+  listTraces(scriptId) {
     this.Connection
-      .CodeBoxes.traces(snippetId, {ordering: 'desc'})
+      .CodeBoxes.traces(scriptId, {ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   },

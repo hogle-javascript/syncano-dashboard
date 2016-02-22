@@ -70,11 +70,6 @@ export default Radium(React.createClass({
             className="col-flex-1">
             {this.props.name}
           </Column.ColumnHeader>
-          <Column.ColumnHeader
-            className="col-sm-4"
-            columnName="ID">
-            ID
-          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}

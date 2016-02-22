@@ -1,6 +1,6 @@
 export default {
   elements: {
-    snippetEditView: {
+    scriptEditView: {
       selector: '#brace-editor'
     },
     config: {

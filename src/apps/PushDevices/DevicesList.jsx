@@ -80,8 +80,7 @@ export default React.createClass({
           <ColumnList.Header>
             <Column.ColumnHeader
               primary={true}
-              columnName="CHECK_ICON"
-              className="col-xs-14">
+              columnName="CHECK_ICON">
               Device
             </Column.ColumnHeader>
             <Column.ColumnHeader

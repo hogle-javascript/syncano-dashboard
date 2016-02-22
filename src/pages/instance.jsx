@@ -61,33 +61,27 @@ export default React.createClass({
                   <Sidebar.NestedLinkListItem
                     key="Data"
                     routeName="data"
-                    primaryText="Data"
-                  />,
+                    primaryText="Data" />,
                   <Sidebar.NestedLinkListItem
-                    key="CodeBox"
+                    key="Script"
                     routeName="codeBoxes"
-                    primaryText="CodeBox"
-                  />,
+                    primaryText="Script" />,
                   <Sidebar.NestedLinkListItem
                     key="Trigger"
                     routeName="triggers"
-                    primaryText="Trigger"
-                  />,
+                    primaryText="Trigger" />,
                   <Sidebar.NestedLinkListItem
                     key="Schedule"
                     routeName="schedules"
-                    primaryText="Schedule"
-                  />,
+                    primaryText="Schedule" />,
                   <Sidebar.NestedLinkListItem
                     key="Channel"
                     routeName="channels"
-                    primaryText="Channel"
-                  />,
+                    primaryText="Channel" />,
                   <Sidebar.NestedLinkListItem
                     key="Push Notifications"
                     routeName="push-notifications"
-                    primaryText="Push Notifications"
-                  />
+                    primaryText="Push Notifications" />
                 ]} />
             </Sidebar.List>
             <Sidebar.List
@@ -96,19 +90,19 @@ export default React.createClass({
               <Sidebar.LinkListItem
                 key="Users"
                 routeName="users"
-                primaryText="Users & Groups"/>
+                primaryText="Users & Groups" />
               <Sidebar.LinkListItem
                 key="Classes"
                 routeName="classes"
-                primaryText="Classes"/>
+                primaryText="Classes" />
               <Sidebar.LinkListItem
-                key="Snippets"
-                routeName="snippets"
-                primaryText="Snippets"/>
+                key="Scripts"
+                routeName="scripts"
+                primaryText="Scripts"/>
               <Sidebar.LinkListItem
                 key="Push Devices"
                 routeName="apns-devices"
-                primaryText="Push Devices"/>
+                primaryText="Push Devices" />
             </Sidebar.List>
             <Sidebar.List
               key="Settings"
@@ -116,15 +110,15 @@ export default React.createClass({
               <Sidebar.LinkListItem
                 key="General"
                 routeName="instance-edit"
-                primaryText="General"/>
+                primaryText="General" />
               <Sidebar.LinkListItem
                 key="Administrators"
                 routeName="admins"
-                primaryText="Administrators"/>
+                primaryText="Administrators" />
               <Sidebar.LinkListItem
                 key="API keys"
                 routeName="api-keys"
-                primaryText="API keys"/>
+                primaryText="API keys" />
             </Sidebar.List>
           </Sidebar>
           <div className="col-flex-1">

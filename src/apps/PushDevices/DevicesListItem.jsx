@@ -1,22 +1,27 @@
 import React from 'react';
-import {State} from 'react-router';
 
-// Components
+import {SnackbarNotificationMixin} from '../../mixins';
+
 import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList} from 'syncano-components';
+import {Color, ColumnList, Clipboard} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'DeviceListItem',
 
-  mixins: [
-    State
-  ],
+  mixins: [SnackbarNotificationMixin],
 
   render() {
-    let item = this.props.item;
-    let user = item.userName;
+    const {
+      item,
+      icon,
+      onIconClick,
+      showEditDialog,
+      showDeleteDialog,
+      checkedItemsCount,
+      showSendMessageDialog
+    } = this.props;
 
     return (
       <ColumnList.Item
@@ -24,21 +29,23 @@ export default React.createClass({
         checked={item.checked}>
         <Column.CheckIcon
           id={item.registration_id}
-          icon={this.props.icon}
+          icon={icon}
           checked={item.checked}
           keyName="registration_id"
           background={Color.getColorByName('blue')}
-          handleIconClick={this.props.onIconClick}
-          className="col-xs-14">
-          <ColumnList.Link
-            name={item.label}
-            addBaseUrl={false}
-            link={item.device_id}
-            snackbar="Device ID copied to the clipboard"
-            tooltip="Copy device ID"/>
-        </Column.CheckIcon>
+          handleIconClick={onIconClick}
+          primaryText={item.label}
+          secondaryText={
+            <Clipboard
+              copyText={item.device_id}
+              onCopy={() => this.setSnackbarNotification({
+                message: 'Device ID copied to the clipboard!'
+              })}
+              tooltip="Copy device ID"
+              type="link" />
+          }/>
         <Column.Desc className="col-xs-13">
-          {user}
+          {item.userName}
         </Column.Desc>
         <Column.Desc>
           {item.is_active.toString()}
@@ -48,16 +55,16 @@ export default React.createClass({
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={this.props.showEditDialog}
+            onTouchTap={() => showEditDialog(item)}
             primaryText="Edit a Device"/>
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Device"/>
           <MenuItem
-            disabled={this.props.checkedItemsCount > 1}
+            disabled={checkedItemsCount > 1}
             className="dropdown-item-delete"
-            onTouchTap={this.props.showSendMessageDialog}
+            onTouchTap={showSendMessageDialog}
             primaryText="Send Message"/>
         </Column.Menu>
       </ColumnList.Item>

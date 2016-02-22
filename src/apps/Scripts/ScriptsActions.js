@@ -3,16 +3,16 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 export default CreateActions(
   {
     fetch: {},
-    setSnippets: {},
-    setSnippetTraces: {},
-    setSnippetRuntimes: {},
-    setCurrentSnippetId: {},
+    setScripts: {},
+    setScriptTraces: {},
+    setScriptRuntimes: {},
+    setCurrentScriptId: {},
 
-    fetchSnippets: {
+    fetchScripts: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Snippets.list'
+      method: 'Syncano.Actions.Scripts.list'
     },
     fetchTriggers: {
       asyncResult: true,
@@ -24,51 +24,51 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Schedules.list'
     },
-    createSnippet: {
+    createScript: {
       asyncForm: true,
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Snippets.create'
+      method: 'Syncano.Actions.Scripts.create'
 
     },
-    updateSnippet: {
+    updateScript: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Snippets.update'
+      method: 'Syncano.Actions.Scripts.update'
 
     },
-    runSnippet: {
+    runScript: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Snippets.run'
+      method: 'Syncano.Actions.Scripts.run'
 
     },
-    removeSnippets: {
+    removeScripts: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Snippets.remove'
+      method: 'Syncano.Actions.Scripts.remove'
 
     },
-    fetchSnippetTrace: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Snippets.getTrace'
-
-    },
-    fetchSnippetTraces: {
+    fetchScriptTrace: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Snippets.listTraces'
+      method: 'Syncano.Actions.Scripts.getTrace'
 
     },
-    fetchSnippetRuntimes: {
+    fetchScriptTraces: {
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Scripts.listTraces'
+
+    },
+    fetchScriptRuntimes: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Snippets.listRuntimes'
+      method: 'Syncano.Actions.Scripts.listRuntimes'
     }
   },
   {

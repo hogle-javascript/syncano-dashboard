@@ -2,10 +2,10 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
   setCurrentObjectId: {},
-  fetchSnippetTraces: {
+  fetchScriptTraces: {
     asyncResult: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Snippets.listTraces'
+    method: 'Syncano.Actions.Scripts.listTraces'
   },
 
   fetchCodeBoxTraces: {
@@ -26,10 +26,10 @@ export default CreateActions({
     method: 'Syncano.Actions.Schedules.listTraces'
   },
 
-  fetchCurrentSnippet: {
+  fetchCurrentScript: {
     asyncResult: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Snippets.get'
+    method: 'Syncano.Actions.Scripts.get'
   },
 
   fetchCurrentCodeBox: {

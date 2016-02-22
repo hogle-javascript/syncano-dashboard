@@ -17,7 +17,7 @@ export default {
       locateStrategy: 'xpath'
     },
     apiKeysListMenu: {
-      selector: '//div[@class="api-keys-list"]/div[1]/div[@class=" col-menu"]//button',
+      selector: '//div[@class="api-keys-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     apiKeysListItem: {
@@ -42,11 +42,11 @@ export default {
       locateStrategy: 'xpath'
     },
     selectApiKey: {
-      selector: `//div[text()="${utils.addSuffix('')}"]/../preceding-sibling::div//span`,
+      selector: `//div[text()="${utils.addSuffix('')}"]/../../preceding-sibling::div//span`,
       locateStrategy: 'xpath'
     },
     apiKeyValue: {
-      selector: `//div[text()="${utils.addSuffix('')}"]/../../following-sibling::div[2]/div[1]`,
+      selector: `//div[text()="${utils.addSuffix('')}"]/../following-sibling::div/div/div/div/div/div`,
       locateStrategy: 'xpath'
     },
     deleteButton: {

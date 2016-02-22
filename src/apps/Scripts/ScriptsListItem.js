@@ -1,8 +1,8 @@
 import React from 'react';
 import {State, Navigation} from 'react-router';
 
-import Actions from './SnippetsActions';
-import Store from './SnippetsStore';
+import Actions from './ScriptsActions';
+import Store from './ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Truncate} from 'syncano-components';
@@ -10,7 +10,7 @@ import {ColumnList, Truncate} from 'syncano-components';
 let Column = ColumnList.Column;
 
 export default React.createClass({
-  displayName: 'SnippetsListItem',
+  displayName: 'ScriptsListItem',
 
   mixins: [
     State,
@@ -18,9 +18,9 @@ export default React.createClass({
   ],
 
   handleItemClick(itemId) {
-    this.transitionTo('snippet-edit', {
+    this.transitionTo('script', {
       instanceName: this.getParams().instanceName,
-      snippetId: itemId
+      scriptId: itemId
     });
   },
 
@@ -38,24 +38,25 @@ export default React.createClass({
           icon={runtime.icon}
           background={runtime.color}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          <Truncate
-            onClick={this.handleItemClick.bind(null, item.id)}
-            text={item.label}
-            style={{cursor: 'pointer'}}/>
-        </Column.CheckIcon>
-        <Column.ID>{item.id}</Column.ID>
+          handleIconClick={this.props.onIconClick}
+          primaryText={
+            <Truncate
+              onClick={this.handleItemClick.bind(null, item.id)}
+              text={item.label}
+              style={{cursor: 'pointer'}}/>
+          }
+          secondaryText={`ID: ${item.id}`}/>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
         <Column.Menu>
           <MenuItem
-            className="dropdown-item-snippet-edit"
+            className="dropdown-item-script-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit a Snippet" />
+            primaryText="Edit a Script" />
           <MenuItem
-            className="dropdown-item-snippet-delete"
+            className="dropdown-item-script-delete"
             onTouchTap={this.props.showDeleteDialog}
-            primaryText="Delete a Snippet" />
+            primaryText="Delete a Script" />
         </Column.Menu>
       </ColumnList.Item>
     );

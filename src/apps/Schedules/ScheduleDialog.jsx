@@ -7,7 +7,7 @@ import {DialogMixin, FormMixin} from '../../mixins';
 // Stores and Actions
 import Actions from './SchedulesActions';
 import Store from './ScheduleDialogStore';
-import SnippetsActions from '../Snippets/SnippetsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
 import {FlatButton, TextField} from 'syncano-material-ui';
@@ -37,7 +37,7 @@ export default React.createClass({
 
   handleDialogShow() {
     console.info('ScheduleDialog::handleDialogShow');
-    SnippetsActions.fetch();
+    ScriptsActions.fetch();
   },
 
   handleAddSubmit() {
@@ -93,8 +93,8 @@ export default React.createClass({
             errorText={this.getValidationMessages('label').join(' ')}
             floatingLabelText="Label of the schedule"/>
           <SelectFieldWrapper
-            name="snippet"
-            options={this.state.snippets}
+            name="script"
+            options={this.state.scripts}
             value={this.state.codebox}
             onChange={this.setSelectFieldValue.bind(null, 'codebox')}
             errorText={this.getValidationMessages('codebox').join(' ')}/>
