@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import {StoreFormMixin} from '../../mixins';
+import {StoreFormMixin, SnackbarNotificationMixin} from '../../mixins';
 
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
@@ -10,7 +10,10 @@ import Actions from './ProfileActions';
 export default Reflux.createStore({
   listenables: Actions,
 
-  mixins: [StoreFormMixin],
+  mixins: [
+    StoreFormMixin,
+    SnackbarNotificationMixin
+  ],
 
   getInitialState() {
     let account_key = SessionStore.getUser({}).account_key;
@@ -38,8 +41,10 @@ export default Reflux.createStore({
   },
 
   onChangePasswordCompleted() {
+    this.setSnackbarNotification({
+      message: 'Password changed successfully'
+    });
     this.trigger({
-      feedback: 'Password changed successfully',
       current_password: null,
       newPassword: null,
       confirmNewPassword: null
@@ -47,8 +52,10 @@ export default Reflux.createStore({
   },
 
   onSetPasswordCompleted() {
+    this.setSnackbarNotification({
+      message: 'Password changed successfully'
+    });
     this.trigger({
-      feedback: 'Password changed successfully',
       current_password: null,
       newPassword: null,
       confirmNewPassword: null
