@@ -35,7 +35,7 @@ export default React.createClass({
 
   render() {
     const item = this.props.item;
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     return (
       <ColumnList.Item key={this.props.label}>

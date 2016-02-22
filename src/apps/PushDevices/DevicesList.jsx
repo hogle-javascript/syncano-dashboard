@@ -1,5 +1,6 @@
 import React from 'react';
 import {Navigation, State} from 'react-router';
+import Radium from 'radium';
 
 import {DialogsMixin} from '../../mixins';
 import {Styles} from 'syncano-material-ui';
@@ -15,7 +16,7 @@ import APNSSendMessageDialog from './APNSDevices/APNSSendMessageDialog';
 
 let Column = ColumnList.Column;
 
-export default React.createClass({
+export default Radium(React.createClass({
   displayName: 'DevicesList',
 
   mixins: [
@@ -184,4 +185,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}));
