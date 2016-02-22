@@ -65,16 +65,18 @@ export default Radium(React.createClass({
   render() {
     const styles = this.getStyles();
 
+    console.error(this.props);
+
     return (
       <div>
         <InnerToolbar
-          title='Channel History'
+          title={'Channel History for ' + this.props.objectId}
           backFallback={this.handleBackClick}
           backButtonTooltip='Go back to Channels list'/>
         <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>
           <Container>
             <TracesList
-              name="Traces"
+              name="Channel History"
               items={this.state.items}/>
           </Container>
         </div>

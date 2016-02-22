@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 import {Paper} from 'syncano-material-ui';
-import {ColumnList} from 'syncano-components';
+import {ColumnList, Color} from 'syncano-components';
 import {Lists} from '../../common';
 
 let Column = ColumnList.Column;
@@ -76,8 +76,21 @@ export default Radium(React.createClass({
     );
   },
 
+  renderMeta(item) {
+    const type = `Type: ${item.metadata.type}`;
+    const className = `Class: ${item.metadata.class}`;
+    const meta = 'class' in item.metadata ? `${type}; ${className}` : type;
+
+    return (
+      <div>
+          <div>{meta}</div>
+      </div>
+    );
+  },
+
   renderItem(item) {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
+    const room = typeof item.room === 'object' ? 'None' : item.room;
 
     if (item.id === this.state.visibleMessageId) {
       styles.traceResult = {
@@ -99,8 +112,19 @@ export default Radium(React.createClass({
           id={item.id}
           zDepth={0}
           handleClick={this.toggleChannelMessage.bind(null, item.id)}>
-          <Column.ID>{item.id}</Column.ID>
-          <Column.Date date={item.created_at}/>
+          <Column.CheckIcon
+            className="col-sm-6"
+            id={item.name}
+            icon={'bullhorn'}
+            keyName="name"
+            checkable={false}
+            background={Color.getColorByName('blue', 'xlight')}
+            handleIconClick={this.toggleChannelMessage.bind(null, item.id)}/>
+          <Column.ID className="col-sm-6">{item.id}</Column.ID>
+          <Column.Desc className="col-sm-6">{room}</Column.Desc>
+          <Column.Desc className="col-sm-6">{item.action}</Column.Desc>
+          <Column.Desc className="col-sm-6">{this.renderMeta(item)}</Column.Desc>
+          <Column.Date className="col-flex-1" date={item.created_at}/>
         </ColumnList.Item>
         <div style={styles.traceResult}>
           {this.renderPayload(item)}
@@ -111,14 +135,23 @@ export default Radium(React.createClass({
 
   render() {
     return (
-      <Lists.List key="traces-list">
+      <div>
         <ColumnList.Header>
-          <Column.ColumnHeader primary={true} columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="Date">Created</Column.ColumnHeader>
+          <Column.ColumnHeader
+            className="col-sm-6"
+            primary={true}
+            columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
+          <Column.ColumnHeader className="col-sm-6" columnName="ID">ID</Column.ColumnHeader>
+          <Column.ColumnHeader className="col-sm-6" columnName="Desc">Room</Column.ColumnHeader>
+          <Column.ColumnHeader className="col-sm-6" columnName="Desc">Action</Column.ColumnHeader>
+          <Column.ColumnHeader className="col-sm-6" columnName="Desc">Metadata</Column.ColumnHeader>
+          <Column.ColumnHeader className="col-flex-1" columnName="Date">Created</Column.ColumnHeader>
         </ColumnList.Header>
-        {this.props.items.map((item) => this.renderItem(item))}
-      </Lists.List>
+        <Lists.List
+          items={this.props.items}
+          renderItem={this.renderItem}
+          key="channel-history-list"/>
+      </div>
     );
   }
 }));
