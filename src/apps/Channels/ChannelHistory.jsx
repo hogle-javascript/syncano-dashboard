@@ -16,12 +16,12 @@ import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
-import TracesList from './ChannelHistoryList';
+import ChannelHistoryList from './ChannelHistoryList';
 
 
 export default Radium(React.createClass({
 
-  displayName: 'Channel History',
+  displayName: 'ChannelHistory',
 
   propTypes: {
     objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
@@ -65,8 +65,6 @@ export default Radium(React.createClass({
   render() {
     const styles = this.getStyles();
 
-    console.error(this.props);
-
     return (
       <div>
         <InnerToolbar
@@ -75,9 +73,10 @@ export default Radium(React.createClass({
           backButtonTooltip='Go back to Channels list'/>
         <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>
           <Container>
-            <TracesList
+            <ChannelHistoryList
               name="Channel History"
-              items={this.state.items}/>
+              items={this.state.items}
+              isLoading={this.state.isLoading}/>
           </Container>
         </div>
       </div>

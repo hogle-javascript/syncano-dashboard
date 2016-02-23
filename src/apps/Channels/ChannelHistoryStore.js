@@ -1,5 +1,6 @@
 import Reflux from 'reflux';
 
+import {StoreLoadingMixin} from '../../mixins';
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
@@ -8,11 +9,12 @@ import Actions from './ChannelHistoryActions';
 export default Reflux.createStore({
   listenables: Actions,
 
+  mixins: [StoreLoadingMixin],
+
   getInitialState() {
     return {
       items: [],
       objectId: null,
-      tracesFor: null,
       isLoading: true,
       currentObjectName: null
     };
@@ -27,13 +29,14 @@ export default Reflux.createStore({
         SessionActions.setInstance,
         this.refreshData
     );
+    this.setLoadingStates();
   },
 
   refreshData() {
     console.debug('ChannelHistoryStore::refreshData', this.data);
 
     if (SessionStore.instance && this.data.objectId) {
-      this.fetchTraces();
+      this.fetchChannelHistory();
       this.fetchCurrentItem();
     }
   },
@@ -42,33 +45,31 @@ export default Reflux.createStore({
     Actions.fetchCurrentChannel(this.data.objectId);
   },
 
-  fetchTraces() {
+  fetchChannelHistory() {
     Actions.fetchChannelListHistory(this.data.objectId);
   },
 
-  onSetCurrentObjectId(ObjectId, tracesFor) {
-    console.debug('ChannelHistoryStore::onSetCurrentObjectId', ObjectId, tracesFor);
+  onSetCurrentObjectId(ObjectId) {
+    console.debug('ChannelHistoryStore::onSetCurrentObjectId', ObjectId);
     this.data.objectId = ObjectId;
-    this.data.tracesFor = tracesFor;
     this.refreshData();
   },
 
-  setTraces(traces) {
+  setChannelHistory(channelHistory) {
     console.debug('ChannelHistoryStore::setTraces');
-    this.data.items = traces;
-    this.data.isLoading = false;
+    this.data.items = channelHistory;
     this.trigger(this.data);
   },
 
   saveCurrentObj(currentObjName) {
     console.debug('ChannelHistoryStore::saveCurrentObj', currentObjName);
     this.data.currentObjectName = currentObjName;
-    this.trigger({currentObjectName: currentObjName});
+    this.trigger(this.data);
   },
 
-  onFetchChannelListHistoryCompleted(tracesObj) {
-    console.debug('ChannelHistoryStore::onFetchChannelListHistoryCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+  onFetchChannelListHistoryCompleted(channelHistoryObj) {
+    console.debug('ChannelHistoryStore::onFetchChannelListHistoryCompleted', channelHistoryObj);
+    this.setChannelHistory(channelHistoryObj._items);
   },
 
   onFetchCurrentChannelCompleted(channelName) {

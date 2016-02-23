@@ -14,7 +14,7 @@ import ChannelHistory from './ChannelHistory';
 
 export default React.createClass({
 
-  displayName: 'TriggerTraces',
+  displayName: 'ChannelHistory',
 
   mixins: [
     Router.State,
@@ -29,8 +29,7 @@ export default React.createClass({
 
     return (
       <ChannelHistory
-        objectId={channelName}
-        tracesFor='channel'/>
+        objectId={channelName}/>
     );
   }
 });

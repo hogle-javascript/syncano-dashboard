@@ -5,6 +5,7 @@ export default CreateActions({
   fetchChannelListHistory: {
     asyncResult: true,
     children: ['completed', 'failure'],
+    loading: true,
     method: 'Syncano.Actions.Channels.getHistory'
   },
 
