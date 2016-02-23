@@ -79,9 +79,12 @@ export default React.createClass({
   },
 
   hasAnyItem() {
-    return _.without(_.keys(this.state), 'APNSPushNotifications', 'GCMPushNotifications')
+    const haveSocketsItems = _.without(_.keys(this.state), 'APNSPushNotifications', 'GCMPushNotifications')
       .filter((socketName) => _.has(this.state[socketName], 'items'))
       .some((socketName) => this.state[socketName].items.length > 0);
+    const isPushSocketConfigured = PushNotifications.APNSStore.hasConfig() || PushNotifications.GCMStore.hasConfig();
+
+    return isPushSocketConfigured || haveSocketsItems;
   },
 
   handleListTitleClick(routeName) {
