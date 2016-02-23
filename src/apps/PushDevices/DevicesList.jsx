@@ -150,11 +150,11 @@ export default Radium(React.createClass({
           <ColumnList.Header>
             <Column.ColumnHeader
               columnName="CHECK_ICON"
-              className="col-xs-14">
+              className="col-sm-14">
               Device
             </Column.ColumnHeader>
             <Column.ColumnHeader
-              className="col-xs-13"
+              className="col-sm-13"
               columnName="DESC">
               User
             </Column.ColumnHeader>
