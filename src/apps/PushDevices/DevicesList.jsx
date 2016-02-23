@@ -43,10 +43,7 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       listTitleContainer: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '10px 20px 16px 8px'
+        padding: '16px 8px'
       },
       listTitle: {
         fontSize: 18
@@ -85,34 +82,6 @@ export default Radium(React.createClass({
     return items;
   },
 
-  renderMoreLink() {
-    const styles = this.getStyles();
-
-    if (this.isActive('all-push-notification-devices')) {
-      return (
-        <span
-          onClick={() => this.transitionTo(`${this.props.type}-devices`, this.getParams())}
-          key={`${this.props.type}-list`}
-          style={styles.moreLink}>More devices</span>
-      );
-    }
-  },
-
-  renderListHeader() {
-    const styles = this.getStyles();
-    const titleText = {
-      apns: 'iOS Devices',
-      gcm: 'Android Devices'
-    };
-
-    return (
-      <div style={styles.listTitleContainer}>
-        <span style={styles.listTitle}>{titleText[this.props.type]}</span>
-        {this.renderMoreLink()}
-      </div>
-    );
-  },
-
   renderItem(item) {
     const icon = {
       apns: 'apple',
@@ -137,12 +106,26 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let checkedItems = this.props.getChekcedItems().length;
-    let {items, ...other} = this.props;
+    const styles = this.getStyles();
+    const checkedItems = this.props.getChekcedItems().length;
+    const {items, ...other} = this.props;
+    const titleText = {
+      apns: 'iOS Devices',
+      gcm: 'Android Devices'
+    };
+    const moreLink = (
+      <span
+        className="row align-center vp-3-t"
+        onClick={() => this.transitionTo(`${this.props.type}-devices`, this.getParams())}
+        key={`${this.props.type}-list`}
+        style={styles.moreLink}>MORE DEVICES</span>
+    );
 
     return (
       <div>
-        {this.renderListHeader()}
+        <div style={styles.listTitleContainer}>
+          <span style={styles.listTitle}>{titleText[this.props.type]}</span>
+        </div>
         <GCMSendMessageDialog />
         <APNSSendMessageDialog />
         <Lists.Container>
@@ -150,11 +133,11 @@ export default Radium(React.createClass({
           <ColumnList.Header>
             <Column.ColumnHeader
               columnName="CHECK_ICON"
-              className="col-xs-14">
+              className="col-sm-14">
               Device
             </Column.ColumnHeader>
             <Column.ColumnHeader
-              className="col-xs-13"
+              className="col-sm-13"
               columnName="DESC">
               User
             </Column.ColumnHeader>
@@ -181,6 +164,7 @@ export default Radium(React.createClass({
             {...other}
             items={this.sliceItems(items)}
             renderItem={this.renderItem}/>
+          {this.isActive('all-push-notification-devices') && !this.props.isLoading ? moreLink : null}
         </Lists.Container>
       </div>
     );

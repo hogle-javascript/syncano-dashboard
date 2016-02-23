@@ -65,13 +65,8 @@ export default Reflux.createStore({
   },
 
   onConfigAPNSPushNotificationCompleted() {
-    console.error('succes');
     console.debug('APNSConfigDialogStore::onConfigAPNSPushNotification');
     this.dismissDialog();
     this.refreshData();
-  },
-
-  onConfigAPNSPushNotificationFailure() {
-    console.error('failed');
   }
 });

@@ -47,15 +47,15 @@ export default React.createClass({
           Start building your app here
         </div>
         <div style={styles.subtitle}>
-          Pick a functionality you need and start building your API
+          Pick the functionality you need and start building your API
         </div>
         <Socket.EmptyListItem
-          addTooltip="Create a Data View"
+          addTooltip="Create a Data Endpoint"
           handleAdd={DataViewsActions.showDialog}
           socketName="Data"
-          title="Add Data">
+          title="Add Data Endpoints">
           <div style={styles.socketDescription}>
-            Place your objects and manage data templates on Syncano.
+            Place your objects and manage how your data is returned from Syncano.
           </div>
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
@@ -71,12 +71,11 @@ export default React.createClass({
           addTooltip="Create a CodeBox"
           handleAdd={CodeBoxesActions.showDialog}
           socketName="CodeBox"
-          title="Write CodeBoxes™">
+          title="Create Script Endpoints">
           <div style={styles.socketDescription}>
-            Run scripts on our servers and use them for business logic.
+            Run Scripts on our servers and use them for business logic.
           </div>
         </Socket.EmptyListItem>
-
         <Socket.EmptyListItem
           addTooltip="Configure a Push Notification"
           handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
@@ -86,16 +85,14 @@ export default React.createClass({
             Instantly message your mobile users with timely and relevant content.
           </div>
         </Socket.EmptyListItem>
-
         <Popover ref="popover"/>
-
         <Socket.EmptyListItem
           addTooltip="Create a Trigger"
           handleAdd={TriggersActions.showDialog}
           socketName="Trigger"
           title="Configure Triggers">
           <div style={styles.socketDescription}>
-            Execute a CodeBox™ when your data is created, updated or deleted.
+            Execute a Script when your data is created, updated or deleted.
           </div>
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
@@ -104,7 +101,7 @@ export default React.createClass({
           socketName="Schedule"
           title="Create Schedules">
           <div style={styles.socketDescription}>
-            Plan events and run codeboxes at desired times.
+            Plan events and run Scripts at desired times.
           </div>
         </Socket.EmptyListItem>
       </div>

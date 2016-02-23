@@ -30,6 +30,7 @@ export default React.createClass({
         <Column.CheckIcon
           id={item.registration_id}
           iconClassName={icon}
+          className="col-sm-14"
           checked={item.checked}
           keyName="registration_id"
           background={Color.getColorByName('blue')}
@@ -44,7 +45,7 @@ export default React.createClass({
               tooltip="Copy device ID"
               type="link" />
           }/>
-        <Column.Desc className="col-xs-13">
+        <Column.Desc className="col-sm-13">
           {item.userName}
         </Column.Desc>
         <Column.Desc>
