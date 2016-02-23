@@ -15,7 +15,7 @@ import {
   Utils,
   Styles
 } from 'syncano-material-ui';
-import {Loading, CharacterCounter, Show} from 'syncano-components';
+import {Loading, Show} from 'syncano-components';
 import {Dialog as CommonDialog, Editor, Notification} from '../../common';
 
 export default (store, props) => {
@@ -219,9 +219,11 @@ export default (store, props) => {
     },
 
     renderDialogTitle() {
+      const type = props.type === 'APNS' ? 'iOS' : 'Android';
+
       return (
-        <CommonDialog.TitleWithIcon iconClassName="synicon-android">
-          Send Message To Android Device
+        <CommonDialog.TitleWithIcon iconClassName={`synicon-${props.type === 'APNS' ? 'apple' : 'android'}`}>
+          {`Send Message To ${type} Device`}
         </CommonDialog.TitleWithIcon>
       );
     },
@@ -229,22 +231,14 @@ export default (store, props) => {
     renderMessageFields() {
       if (this.state.isJSONMessage) {
         return (
-          <div>
-            <CharacterCounter
-              text="JSON Editor"
-              position="right"
-              charactersCountWarn={-1}
-              maxCharacters={4096}
-              characters={this.state.JSONMessage.length}/>
-            <Editor
-              ref="JSONMessage"
-              minLines={16}
-              maxLines={16}
-              onChange={this.updateJSONMessage}
-              mode="javascript"
-              theme="tomorow"
-              value={this.state.JSONMessage}/>
-          </div>
+          <Editor
+            ref="JSONMessage"
+            minLines={16}
+            maxLines={16}
+            onChange={this.updateJSONMessage}
+            mode="javascript"
+            theme="tomorow"
+            value={this.state.JSONMessage}/>
         );
       }
 
@@ -298,6 +292,7 @@ export default (store, props) => {
       const checkedItems = props.getCheckedItems();
       let itemNodes = [
         <div
+          key="clickedItem"
           style={styles.sendDialogHeaderItem}
           className="row">
           <div className="col-sm-3">
@@ -319,6 +314,7 @@ export default (store, props) => {
         itemNodes = checkedItems.map((item, index) => {
           return (
             <div
+              key={`item${item.registration_id}`}
               style={[styles.sendDialogHeaderItem, (index + 1) % 2 === 0 && styles.sendDialogHeaderEvenItem]}
               className="row">
               <div className="col-sm-3">

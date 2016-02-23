@@ -3,6 +3,19 @@
 *, *:after, *:before
   box-sizing: border-box
 
+html,
+body
+  height: 100%
+
+body > iframe
+  height: 0
+  position: absolute
+  bottom: -1
+  left: 0
+
+#app
+  height: 100%
+
 a,
 a:visited
   color: $blue

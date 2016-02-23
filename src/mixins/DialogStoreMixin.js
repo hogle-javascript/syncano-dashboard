@@ -8,7 +8,7 @@ export default {
   },
 
   isInstanceObject(object) {
-    return !_.isUndefined(object) && !this.isEvent(object);
+    return !_.isUndefined(object) && !_.isNull(object) && !this.isEvent(object);
   },
 
   getInitialState() {

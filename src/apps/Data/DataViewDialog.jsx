@@ -11,7 +11,7 @@ import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 // Components
-import {TextField, FlatButton, Toggle, Checkbox} from 'syncano-material-ui';
+import {TextField, FlatButton, RaisedButton, Toggle, Checkbox} from 'syncano-material-ui';
 import {SelectFieldWrapper, Show} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -176,10 +176,11 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <FlatButton
+      <RaisedButton
         key="confirm"
         label="Confirm"
-        primary={true}
+        secondary={true}
+        style={{marginLeft: 10}}
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
@@ -193,7 +194,7 @@ export default React.createClass({
     }
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Data Socket`}
@@ -244,7 +245,7 @@ export default React.createClass({
             {options}
           </div>
         </div>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

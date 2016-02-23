@@ -5,7 +5,8 @@ import Store from './GCMDevicesStore';
 import Actions from './GCMDevicesActions';
 import SendMessagesActions from './GCMSendMessagesActions';
 
-import Devices from '../Devices';
+import {Container} from 'syncano-components';
+import DevicesList from '../DevicesList';
 import GCMDialog from './GCMDeviceDialog';
 
 export default React.createClass({
@@ -22,11 +23,11 @@ export default React.createClass({
 
   render() {
     return (
-      <div>
+      <Container>
         <GCMDialog />
-        <Devices
-          type="GCM"
-          listItemIcon="android"
+        <DevicesList
+          type="gcm"
+          visibleItems={this.props.visibleItems}
           getChekcedItems={Store.getCheckedItems}
           actions={Actions}
           showSendMessagesDialog={SendMessagesActions.showDialog}
@@ -35,7 +36,7 @@ export default React.createClass({
           hideDialogs={this.state.hideDialogs}
           isLoading={this.state.isLoading}
           items={this.state.items}/>
-      </div>
+      </Container>
     );
   }
 });

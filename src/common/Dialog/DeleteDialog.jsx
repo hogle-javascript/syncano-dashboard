@@ -96,6 +96,7 @@ export default React.createClass({
         ]}
         open={this.state.open}
         avoidResetState={true}
+        modal={true}
         {...other}>
         {children ? children : this.renderContent()}
         <Loading

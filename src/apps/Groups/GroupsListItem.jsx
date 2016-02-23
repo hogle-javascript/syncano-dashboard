@@ -6,7 +6,7 @@ import Actions from './GroupsActions';
 import UserActions from '../Users/UsersActions';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
+import {ColumnList, Color} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
@@ -17,14 +17,8 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  showUserDialog(group) {
-    /* eslint-disable */
-    UserActions.showDialog(undefined, group);
-    /* eslint-enable */
-  },
-
   render() {
-    let item = this.props.item;
+    const {item, onIconClick, showDeleteDialog} = this.props;
 
     return (
       <ColumnList.Item
@@ -35,15 +29,14 @@ export default React.createClass({
           icon='arrow-up-bold'
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}
-          className="col-flex-1">
-          <Truncate text={item.label}/>
-        </Column.CheckIcon>
-        <Column.ID className="col-sm-4">{item.id}</Column.ID>
+          handleIconClick={onIconClick}
+          className="col-flex-1"
+          primaryText={item.label}
+          secondaryText={`ID: ${item.id}`}/>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-add"
-            onTouchTap={this.showUserDialog.bind(null, item)}
+            onTouchTap={() => UserActions.showDialog(null, item)}
             primaryText="Add a User" />
           <MenuItem
             className="dropdown-item-edit"
@@ -51,7 +44,7 @@ export default React.createClass({
             primaryText="Edit a Group" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Group" />
         </Column.Menu>
       </ColumnList.Item>

@@ -20,13 +20,12 @@ export default (type, Store, Actions) => {
 
     mixins: [
       Reflux.connect(Store),
-      Reflux.connect(UsersStore, 'users'),
       DialogMixin,
       FormMixin
     ],
 
     validatorConstraints() {
-      let users = this.state.users.items.map((user) => user.id.toString());
+      let users = UsersStore.getItems().map((user) => user.id.toString());
       let validatorObj = {
         label: {
           presence: true
@@ -50,7 +49,7 @@ export default (type, Store, Actions) => {
       return validatorObj;
     },
 
-    componentWillMount() {
+    componentDidMount() {
       UsersActions.fetch();
     },
 
@@ -58,7 +57,7 @@ export default (type, Store, Actions) => {
       return {
         label: this.state.label,
         registration_id: this.state.registration_id,
-        user_id: this.state.user_id,
+        user_id: this.state.user_id === '' ? null : this.state.user_id,
         device_id: this.state.device_id,
         is_active: this.state.is_active
       };

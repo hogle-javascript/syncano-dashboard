@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {MenuItem, Styles} from 'syncano-material-ui';
-import {ColumnList, Truncate} from 'syncano-components';
+import {ColumnList} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
@@ -20,9 +20,8 @@ export default React.createClass({
           icon='account'
           background={Styles.Colors.blue500}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          <Truncate text={item.instance}/>
-        </Column.CheckIcon>
+          handleIconClick={this.props.onIconClick}
+          primaryText={item.instance}/>
         <Column.Desc>{item.inviter}</Column.Desc>
         <Column.Desc>{item.role}</Column.Desc>
         <Column.Date date={item.created_at}/>

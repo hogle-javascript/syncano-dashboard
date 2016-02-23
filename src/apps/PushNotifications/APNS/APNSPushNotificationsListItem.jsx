@@ -1,15 +1,16 @@
-import PushNotificationListItem from '../PushNotificationsListItem';
+import React from 'react';
 
-import APNSDevicesStore from '../../PushDevices/APNSDevices/APNSDevicesStore';
-import APNSPushNotificationsActions from '../APNS/APNSPushNotificationsActions';
+import APNSPushNotificationsActions from './APNSPushNotificationsActions';
 
-let item = {
-  name: 'APNS',
-  label: 'Apple Push Notification service (APNs)',
-  getDevices: APNSDevicesStore.getDevices,
-  devicesRoute: 'apns-devices',
-  icon: 'apple',
-  showConfigDialog: APNSPushNotificationsActions.showDialog
+import PushNotificationsListItem from '../PushNotificationsListItem';
+
+export default (props) => {
+  return (
+    <PushNotificationsListItem
+      {...props}
+      label="Apple Push Notification service (APNs)"
+      devicesRoute="apns-devices"
+      icon="apple"
+      showConfigDialog={APNSPushNotificationsActions.showDialog}/>
+  );
 };
-
-export default PushNotificationListItem('APNS', item);

@@ -58,8 +58,8 @@ export default {
       selector: '//input[@name="description"]',
       locateStrategy: 'xpath'
     },
-    addCodeBoxModalSnippetDropdown: {
-      selector: '//div[@class="snippet-dropdown"]',
+    addCodeBoxModalScriptDropdown: {
+      selector: '//div[@class="script-dropdown"]',
       locateStrategy: 'xpath'
     },
     codeBoxTableRow: {
@@ -71,7 +71,7 @@ export default {
       locateStrategy: 'xpath'
     },
     codeBoxTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../../following-sibling::div[1]`,
+      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     deleteCodeBoxModalTitle: {
@@ -145,11 +145,11 @@ export default {
       locateStrategy: 'xpath'
     },
     channelTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('channel')}"]/../../../../following-sibling::div[1]`,
+      selector: `//div[text()="${utils.addSuffix('channel')}"]/../../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     channelSocketDropDown: {
-      selector: `//div[text()="${utils.addSuffix('channel')}"]/../../../../..//button`,
+      selector: `//div[text()="${utils.addSuffix('channel')}"]/../../../..//button`,
       locateStrategy: 'xpath'
     }
   }

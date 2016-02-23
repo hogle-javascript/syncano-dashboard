@@ -1,30 +1,30 @@
 import React from 'react';
 import {Link, State} from 'react-router';
 
-import {DialogsMixin} from '../../mixins';
+import {SnackbarNotificationMixin} from '../../mixins';
 
 import Actions from './CodeBoxesActions';
-import SnippetsStore from '../Snippets/SnippetsStore';
+import ScriptsStore from '../Scripts/ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList} from 'syncano-components';
+import {Color, ColumnList, Clipboard} from 'syncano-components';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'CodeBoxesListItem',
 
   mixins: [
     State,
-    DialogsMixin
+    SnackbarNotificationMixin
   ],
 
   render() {
-    let item = this.props.item;
+    let {item, onIconClick, showDeleteDialog} = this.props;
     let publicString = item.public.toString();
     let link = item.public ? item.links['public-link'] : item.links.self;
-    let snippet = SnippetsStore.getSnippetById(item.codebox);
-    let snippetLabel = snippet ? snippet.label : '';
+    let script = ScriptsStore.getScriptById(item.codebox);
+    let scriptLabel = script ? script.label : '';
 
     return (
       <ColumnList.Item
@@ -38,24 +38,31 @@ export default React.createClass({
           keyName="name"
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          <ColumnList.Link
-            name={item.name}
-            link={link}
-            tooltip="Copy CobeBox Socket url"/>
-        </Column.CheckIcon>
-        <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-4">
+          handleIconClick={onIconClick}
+          primaryText={item.name}
+          secondaryText={
+            <Clipboard
+              copyText={link}
+              onCopy={() => this.setSnackbarNotification({
+                message: 'Script Socket url copied!'
+              })}
+              tooltip="Copy Script Socket url"
+              type="link" />
+          }/>
+        <Column.Desc className="col-flex-1">
+          {item.description}
+        </Column.Desc>
+        <Column.Desc className="col-flex-1">
           <Link
-            to="snippet"
+            to="script"
             params={{
               instanceName: this.getParams().instanceName,
-              snippetId: item.codebox
+              scriptId: item.codebox
             }}>
-            {snippetLabel}
+            {scriptLabel}
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-xs-4">
+        <Column.Desc className="col-flex-1">
           <Link
             to="codeBox-traces"
             params={{
@@ -65,7 +72,7 @@ export default React.createClass({
             Traces
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-xs-3">{publicString}</Column.Desc>
+        <Column.Desc className="col-flex-1">{publicString}</Column.Desc>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
@@ -73,7 +80,7 @@ export default React.createClass({
             primaryText="Edit a Script Socket" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Script Socket" />
         </Column.Menu>
       </ColumnList.Item>

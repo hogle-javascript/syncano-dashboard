@@ -1,25 +1,25 @@
 import React from 'react';
 import {Link, State} from 'react-router';
 
-import {DialogsMixin} from '../../mixins';
-
 import Actions from './DataViewsActions';
 
-import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList} from 'syncano-components';
+import {SnackbarNotificationMixin} from '../../mixins';
 
-let Column = ColumnList.Column;
+import {MenuItem} from 'syncano-material-ui';
+import {Color, ColumnList, Clipboard} from 'syncano-components';
+
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'DataViewsListItem',
 
   mixins: [
     State,
-    DialogsMixin
+    SnackbarNotificationMixin
   ],
 
   render() {
-    let item = this.props.item;
+    const {item, onIconClick, showDeleteDialog} = this.props;
 
     return (
       <ColumnList.Item
@@ -32,14 +32,22 @@ export default React.createClass({
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           keyName="name"
-          handleIconClick={this.props.onIconClick}>
-          <ColumnList.Link
-            name={item.name}
-            link={item.links.self}
-            tooltip="Copy Data Socket url"/>
-        </Column.CheckIcon>
-        <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-11">
+          handleIconClick={onIconClick}
+          primaryText={item.name}
+          primaryTextTooltip={item.description}
+          secondaryText={
+            <Clipboard
+              copyText={item.links.self}
+              onCopy={() => this.setSnackbarNotification({
+                message: 'Data Socket url copied!'
+              })}
+              type="link"
+              tooltip="Copy Data Socket url" />
+          }/>
+        <Column.Desc className="col-flex-1">
+          {item.description}
+        </Column.Desc>
+        <Column.Desc className="col-flex-3">
           <Link to="classes-edit" params={{
             instanceName: this.getParams().instanceName,
             className: item.class
@@ -54,7 +62,7 @@ export default React.createClass({
             primaryText="Edit a Data Socket" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Data Socket" />
         </Column.Menu>
       </ColumnList.Item>

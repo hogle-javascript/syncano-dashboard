@@ -5,7 +5,7 @@ export default {
       selector: '.logo-white'
     },
     solutions: {
-      selector: '//ul[@class=" toolbar-list"]/li[1]/a',
+      selector: '//ul[@class="toolbar-list"]/li[1]/a',
       locateStrategy: 'xpath'
     },
     account: {
@@ -37,7 +37,7 @@ export default {
       locateStrategy: 'xpath'
     },
     menuNotifications: {
-      selector: '//ul[@class=" toolbar-list"]//li[@id="menu-notifications"]',
+      selector: '//ul[@class="toolbar-list"]//li[@id="menu-notifications"]',
       locateStrategy: 'xpath'
     },
     notificationsDropdown: {

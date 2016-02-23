@@ -7,11 +7,11 @@ import {DialogMixin, FormMixin} from '../../mixins';
 // Stores and Actions
 import Actions from './TriggersActions';
 import Store from './TriggerDialogStore';
-import SnippetsActions from '../Snippets/SnippetsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
-import {TextField, FlatButton} from 'syncano-material-ui';
+import {TextField, FlatButton, RaisedButton} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -36,14 +36,14 @@ export default React.createClass({
     },
     codebox: {
       presence: {
-        message: `^Snippet can't be blank`
+        message: `^Script can't be blank`
       }
     }
   },
 
   handleDialogShow() {
     console.info('TriggerDialog::handleDialogShow');
-    SnippetsActions.fetch();
+    ScriptsActions.fetch();
     ClassesActions.fetch();
   },
 
@@ -74,16 +74,17 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-      <FlatButton
+      <RaisedButton
         key="confirm"
         label="Confirm"
-        primary={true}
+        secondary={true}
+        style={{marginLeft: 10}}
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Trigger Socket`}
@@ -114,13 +115,13 @@ export default React.createClass({
             onChange={this.setSelectFieldValue.bind(null, 'class')}
             errorText={this.getValidationMessages('class').join(' ')}/>
           <SelectFieldWrapper
-            name="snippet"
-            options={this.state.snippets}
+            name="script"
+            options={this.state.scripts}
             value={this.state.codebox}
             onChange={this.setSelectFieldValue.bind(null, 'codebox')}
             errorText={this.getValidationMessages('codebox').join(' ')}/>
         </div>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

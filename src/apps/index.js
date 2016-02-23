@@ -10,11 +10,13 @@ import Header from './Header';
 import Instances from './Instances';
 import Profile from './Profile';
 import ProfileInvitations from './ProfileInvitations';
+import PushDevices from './PushDevices';
+import PushNotifications from './PushNotifications';
 import Schedules from './Schedules';
 import Session from './Session';
 import SnackbarNotification from './SnackbarNotification';
-import Snippet from './Snippet';
-import Snippets from './Snippets';
+import Script from './Script';
+import Scripts from './Scripts';
 import Solutions from './Solutions';
 import Template from './Template';
 import Templates from './Templates';
@@ -35,11 +37,13 @@ export default {
   Instances,
   Profile,
   ProfileInvitations,
+  PushDevices,
+  PushNotifications,
   Schedules,
   Session,
   SnackbarNotification,
-  Snippet,
-  Snippets,
+  Script,
+  Scripts,
   Solutions,
   Template,
   Templates,

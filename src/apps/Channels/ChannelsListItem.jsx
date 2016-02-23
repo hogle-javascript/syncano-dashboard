@@ -3,20 +3,20 @@ import React from 'react';
 import Actions from './ChannelsActions';
 
 import {Link, State} from 'react-router';
-import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList} from 'syncano-components';
+import {SnackbarNotificationMixin} from '../../mixins';
 
-let Column = ColumnList.Column;
+import {MenuItem} from 'syncano-material-ui';
+import {Color, ColumnList, Clipboard} from 'syncano-components';
+
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ChannelsListItem',
 
-  mixins: [
-    State
-  ],
+  mixins: [SnackbarNotificationMixin, State],
 
   render() {
-    let item = this.props.item;
+    const {item, onIconClick, showDeleteDialog} = this.props;
 
     return (
       <ColumnList.Item
@@ -29,21 +29,30 @@ export default React.createClass({
           keyName="name"
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          <ColumnList.Link
-            name={item.name}
-            link={item.links.poll}
-            tooltip="Copy Channel Socket url"/>
-        </Column.CheckIcon>
-        <Column.Desc>{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-4 col-md-4">
+          handleIconClick={onIconClick}
+          primaryText={item.name}
+          secondaryText={
+            <Clipboard
+              copyText={item.links.poll}
+              onCopy={() => this.setSnackbarNotification({
+                message: 'Channel Socket url copied!'
+              })}
+              tooltip="Copy Channel Socket url"
+              type="link" />
+          }/>
+        <Column.Desc className="col-flex-1">
+          {item.description}
+        </Column.Desc>
+        <Column.Desc className="col-flex-1">
           <div>
             <div>group: {item.group_permissions}</div>
             <div>other: {item.other_permissions}</div>
           </div>
         </Column.Desc>
-        <Column.Desc className="col-xs-4 col-md-4">{item.type}</Column.Desc>
-        <Column.Desc className="col-xs-4">
+        <Column.Desc className="col-flex-1">
+          {item.type}
+        </Column.Desc>
+        <Column.Desc className="col-flex-1">
           <Link
             to="channel-history"
             params={{
@@ -53,7 +62,7 @@ export default React.createClass({
             History
           </Link>
         </Column.Desc>
-        <Column.Desc className="col-xs-3 col-md-3">
+        <Column.Desc className="col-flex-1">
           {item.custom_publish ? 'Yes' : 'No'}
         </Column.Desc>
         <Column.Menu>
@@ -63,7 +72,7 @@ export default React.createClass({
             primaryText="Edit a Channel Socket"/>
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Channel Socket"/>
         </Column.Menu>
       </ColumnList.Item>

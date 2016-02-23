@@ -1,15 +1,17 @@
-import PushNotificationListItem from '../PushNotificationsListItem';
+import React from 'react';
 
-import GCMDevicesStore from '../../PushDevices/GCMDevices/GCMDevicesStore';
-import GCMPushNotificationsActions from '../GCM/GCMPushNotificationsActions';
+import GCMPushNotificationsActions from './GCMPushNotificationsActions';
 
-let item = {
-  name: 'GCM',
-  label: 'Google Cloud Messaging (GCM)',
-  getDevices: GCMDevicesStore.getDevices,
-  devicesRoute: 'gcm-devices',
-  icon: 'android',
-  showConfigDialog: GCMPushNotificationsActions.showDialog
+import PushNotificationsListItem from '../PushNotificationsListItem';
+
+export default (props) => {
+  return (
+    <PushNotificationsListItem
+      {...props}
+      name="GCM"
+      label="Google Cloud Messaging (GCM)"
+      devicesRoute="gcm-devices"
+      icon="android"
+      showConfigDialog={GCMPushNotificationsActions.showDialog}/>
+  );
 };
-
-export default PushNotificationListItem('GCM', item);
