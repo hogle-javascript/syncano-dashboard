@@ -8,16 +8,12 @@ export default {
       .catch(this.failure);
   },
 
-  configAPNSPushNotification(params = {}, file) {
+  configAPNSPushNotification(params = {}) {
     this.Connection
       .PushNotifications
       .APNS
       .config(params)
-      .then(() => {
-        this.Connection.PushNotifications.APNS.uploadCertificate(file)
-          .then(this.completed)
-          .catch(this.failure);
-      })
+      .then(this.completed)
       .catch(this.failure);
   },
 

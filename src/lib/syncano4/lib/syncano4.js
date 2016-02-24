@@ -798,8 +798,7 @@ var Syncano = (function () {
       APNS: {
         config: this.configAPNSPushNotification.bind(this),
         get: this.getAPNSPushNotificationConfig.bind(this),
-        sendMessages: this.sendMessageToAPNSDevices.bind(this),
-        uploadCertificate: this.uploadAPNSCertificate.bind(this)
+        sendMessages: this.sendMessageToAPNSDevices.bind(this)
       },
       Devices: {
         create: this.createDevice.bind(this),
@@ -3544,23 +3543,24 @@ var Syncano = (function () {
       if (typeof linksObject.instance_self === 'undefined') {
         throw new Error('Not connected to any instance');
       }
-      return this.request('PUT', linksObject.instance_push_notifications + 'apns/config/', params, callbackOK, callbackError);
-    },
-
-    uploadAPNSCertificate: function (file, callbackOK, callbackError) {
-      if (typeof linksObject.instance_self === 'undefined') {
-        throw new Error('Not connected to any instance');
-      }
 
       var deferred = Deferred(),
         formData = new FormData(),
         url = normalizeUrl(baseURL + linksObject.instance_push_notifications + 'apns/config/'),
         xhr = new XMLHttpRequest();
 
-      formData.append(file.name, file.file);
+      Object.keys(params).forEach(function(key) {
+        formData.append(key, params[key]);
+      });
 
       xhr.onload = function () {
-        deferred.resolve();
+        var response = JSON.parse(xhr.responseText);
+
+        if (xhr.status >= 200 && xhr.status <= 299) {
+          deferred.resolve(response);
+        } else {
+          deferred.reject(response);
+        }
       };
 
       xhr.open('PUT', url, true);

@@ -6,7 +6,6 @@ import _ from 'lodash';
 // Utils
 import {DialogMixin, FormMixin} from '../../../mixins';
 
-
 // Stores and Actions
 import Actions from './APNSPushNotificationsActions';
 import Store from './APNSConfigDialogStore';
@@ -17,12 +16,10 @@ import {
   RaisedButton,
   IconButton,
   TextField,
-  SelectField,
-  MenuItem,
   Styles
 } from 'syncano-material-ui';
-import {Loading, Show} from 'syncano-components';
-import {Dialog, DropZone, Notification} from '../../../common';
+import {Loading} from 'syncano-components';
+import {Dialog, DropZone} from '../../../common';
 
 export default Radium(React.createClass({
   displayName: 'APNSConfigDialog',
@@ -34,12 +31,14 @@ export default Radium(React.createClass({
   ],
 
   validatorConstraints() {
-    let certificateType = this.state.certificateType;
+    let certificateTypes = this.state.certificateType;
     let validator = {};
 
-    validator[`${certificateType}_certificate_name`] = {length: {maximum: 200}};
-    validator[`${certificateType}_bundle_identifier`] = {length: {maximum: 200}};
-    validator[`${certificateType}_certificate`] = {presence: {message: "Certificate can't be blank"}};
+    _.forEach(certificateTypes, (certificateType) => {
+      validator[`${certificateType}_certificate_name`] = {length: {maximum: 200}};
+      validator[`${certificateType}_bundle_identifier`] = {length: {maximum: 200}};
+      validator[`${certificateType}_certificate`] = {presence: {message: "Certificate can't be blank"}};
+    });
 
     return validator;
   },
@@ -90,53 +89,54 @@ export default Radium(React.createClass({
     };
   },
 
-  onDrop(file) {
-    let cert = file;
+  onDrop(file, type) {
+    let certificate = file;
 
     if (_.isArray(file)) {
-      cert = file[0];
+      certificate = file[0];
     }
 
-    let state = {
-      development_certificate_name: cert.name,
-      development_certificate: {file: cert, name: 'development_certificate'},
-      production_certificate_name: cert.name,
-      production_certificate: {file: cert, name: 'production_certificate'}
+    const state = {
+      development: {
+        development_certificate_name: certificate.name,
+        development_certificate: certificate
+      },
+      production: {
+        production_certificate_name: certificate.name,
+        production_certificate: certificate
+      }
     };
 
-    this.setState(state);
-  },
-
-  isDevelopment() {
-    return this.state.certificateType === 'development';
+    this.setState(state[type]);
   },
 
   handleAddSubmit() {
     const state = this.state;
-    const certificateType = this.state.certificateType;
-    let params = {};
+    let params = {
+      production_certificate_name: state.production_certificate_name,
+      production_certificate: state.production_certificate,
+      production_bundle_identifier: state.production_bundle_identifier,
+      production_expiration_date: state.production_expiration_date,
+      development_certificate_name: state.development_certificate_name,
+      development_certificate: state.development_certificate,
+      development_expiration_date: state.production_expiration_date,
+      development_bundle_identifier: state.development_bundle_identifier
+    };
 
-    _.keys(state)
-      .filter((key) => _.includes(key, certificateType))
-      .forEach((properKey) => params[properKey] = state[properKey]);
-
-    let file = params[`${certificateType}_certificate`];
-
-    delete params[`${certificateType}_certificate`];
-    Actions.configAPNSPushNotification(params, file);
-  },
-
-  handleCertificateTypeChange(event, index, value) {
-    this.setState({
-      certificateType: value
+    _.forEach(params, (value, key) => {
+      if (_.isEmpty(value)) {
+        delete params[key];
+      }
     });
+    console.error(params);
+    Actions.configAPNSPushNotification(params);
   },
 
-  clearCertificate() {
+  clearCertificate(type) {
     let state = this.state;
 
     _.keys(state).forEach((key) => {
-      if (_.includes(key, ['development']) || _.includes(key, ['production'])) {
+      if (_.includes(key, [type])) {
         state[key] = null;
       }
     });
@@ -144,28 +144,17 @@ export default Radium(React.createClass({
     this.setState(state);
   },
 
-  renderDropzoneDescription() {
+  renderDropzoneDescription(type) {
     const styles = this.getStyles();
-    const certificateType = this.state.certificateType;
     const state = this.state;
-    const dropdownItems = [
-      <MenuItem
-        key="dropdown-production"
-        value="production"
-        primaryText="Production"/>,
-      <MenuItem
-        key="dropdown-development"
-        value="development"
-        primaryText="Development"/>
-    ];
 
-    if (state.development_certificate || state.production_certificate) {
+    if (state[`${type}_certificate`]) {
       return (
         <div
           className="row"
           style={styles.dropzoneWithFileContainer}>
           <IconButton
-            onTouchTap={this.clearCertificate}
+            onTouchTap={() => this.clearCertificate(type)}
             style={styles.closeIcon}
             iconStyle={styles.closeIconColor}
             tooltip="Remove cerificate"
@@ -176,34 +165,33 @@ export default Radium(React.createClass({
               <div className="col-xs-23">
                 <TextField
                   fullWidth={true}
-                  valueLink={this.linkState(`${certificateType}_certificate_name`)}
-                  defaultValue={state[`${certificateType}_certificate_name`]}
-                  errorText={this.getValidationMessages(`${certificateType}_certificate_name`).join(' ')}
+                  valueLink={this.linkState(`${type}_certificate_name`)}
+                  defaultValue={state[`${type}_certificate_name`]}
+                  errorText={this.getValidationMessages(`${type}_certificate_name`).join(' ')}
                   floatingLabelText="Apple Push Notification Certificate Name"/>
               </div>
               <div className="col-xs-12">
-                <SelectField
+                <TextField
+                  underlineShow={false}
+                  disabled={true}
                   autoWidth={true}
                   fullWidth={true}
-                  value={certificateType}
-                  onChange={this.handleCertificateTypeChange}
-                  floatingLabelText="Type">
-                  {dropdownItems}
-                </SelectField>
+                  value={type.charAt(0).toUpperCase() + type.slice(1)}
+                  floatingLabelText="Type"/>
               </div>
             </div>
             <div className="row align-middle">
               <div className="col-xs-23">
                 <TextField
                   fullWidth={true}
-                  valueLink={this.linkState(`${certificateType}_bundle_identifier`)}
-                  defaultValue={state[`${certificateType}_bundle_identifier`]}
-                  errorText={this.getValidationMessages(`${certificateType}_bundle_identifier`).join(' ')}
+                  valueLink={this.linkState(`${type}_bundle_identifier`)}
+                  defaultValue={state[`${type}_bundle_identifier`]}
+                  errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}
                   floatingLabelText="Bundle Identifier"/>
               </div>
               <div className="col-xs-12">
                 <div style={styles.certificateType}>Expiration Date</div>
-                {state[`${certificateType}_expiration_date`]}
+                {state[`${type}_expiration_date`]}
               </div>
             </div>
           </div>
@@ -213,6 +201,10 @@ export default Radium(React.createClass({
   },
 
   render() {
+    if (!_.isEmpty(this.state.errors)) {
+      console.error(this.state.errors);
+    }
+
     let styles = this.getStyles();
     let dialogStandardActions = [
       <FlatButton
@@ -239,34 +231,42 @@ export default Radium(React.createClass({
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}>
-        {this.renderFormNotifications()}
-        <div className="row align-center hp-2-l hp-2-r">
-          <div dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
+        <div className="row align-center hp-2-l hp-2-r vm-2-b">
+          <div
+            className="align-middle"
+            dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
           <div className="col-flex-1">
             <DropZone
+              certificateType="development"
               isLoading={this.state.isCertLoading}
-              handleButtonClick={this.onDrop}
-              onDrop={this.onDrop}
+              handleButtonClick={(file) => this.onDrop(file, 'development')}
+              onDrop={(file) => this.onDrop(file, 'development')}
               disableClick={true}
               withButton={true}
               uploadButtonLabel="UPLOAD .p12 CERTIFICATE">
-              {this.renderDropzoneDescription()}
+              {this.renderDropzoneDescription('development')}
             </DropZone>
+            <div className="vm-2-t">
+              <DropZone
+                certificateType="production"
+                isLoading={this.state.isCertLoading}
+                handleButtonClick={(file) => this.onDrop(file, 'production')}
+                onDrop={(file) => this.onDrop(file, 'production')}
+                disableClick={true}
+                withButton={true}
+                uploadButtonLabel="UPLOAD .p12 CERTIFICATE">
+                {this.renderDropzoneDescription('production')}
+              </DropZone>
+            </div>
             <div className="vm-4-t">
               If you don't have any certificates generated yet read
               <a
                 style={styles.GDClink}
                 href="https://developer.apple.com/membercenter"> here</a> to get them.
             </div>
-            <Show if={this.getValidationMessages(`${this.state.certificateType}_certificate`).length > 0}>
-              <div className="vm-2-t">
-                <Notification type="error">
-                  {this.getValidationMessages(`${this.state.certificateType}_certificate`).join(' ')}
-                </Notification>
-              </div>
-            </Show>
           </div>
         </div>
+        {this.renderFormNotifications()}
         <Loading
           type="linear"
           position="bottom"

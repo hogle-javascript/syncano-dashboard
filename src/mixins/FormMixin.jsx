@@ -8,7 +8,6 @@ import Notification from '../common/Notification/Notification';
 
 validate.moment = require('moment');
 
-
 export default {
   linkState(key) {
     // We don't want to call render here
@@ -36,11 +35,15 @@ export default {
   },
 
   renderFormErrorFeedback() {
-    if (!this.state.errors || typeof this.state.errors.feedback === 'undefined') {
+    if (_.isEmpty(this.state.errors) && typeof this.state.errors.feedback === 'undefined') {
       return false;
     }
 
-    return <Notification type="error">{this.state.errors.feedback}</Notification>;
+    return (
+      <Notification type="error">
+        {this.state.errors.feedback || this.getValidationMessages().join(' ')}
+      </Notification>
+    );
   },
 
   renderFormFeedback() {
