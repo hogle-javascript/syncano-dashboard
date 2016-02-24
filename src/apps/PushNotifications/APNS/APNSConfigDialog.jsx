@@ -18,8 +18,8 @@ import {
   TextField,
   Styles
 } from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
-import {Dialog, DropZone} from '../../../common';
+import {Loading, Show} from 'syncano-components';
+import {Dialog, DropZone, Notification} from '../../../common';
 
 export default Radium(React.createClass({
   displayName: 'APNSConfigDialog',
@@ -31,13 +31,24 @@ export default Radium(React.createClass({
   ],
 
   validatorConstraints() {
-    let certificateTypes = this.state.certificateType;
+    let certificateTypes = this.state.certificateTypes;
     let validator = {};
 
     _.forEach(certificateTypes, (certificateType) => {
-      validator[`${certificateType}_certificate_name`] = {length: {maximum: 200}};
-      validator[`${certificateType}_bundle_identifier`] = {length: {maximum: 200}};
-      validator[`${certificateType}_certificate`] = {presence: {message: "Certificate can't be blank"}};
+      if (this.state[`${certificateType}_certificate`]) {
+        validator[`${certificateType}_certificate_name`] = {
+          presence: true,
+          length: {
+            maximum: 200
+          }
+        };
+        validator[`${certificateType}_bundle_identifier`] = {
+          presence: true,
+          length: {
+            maximum: 200
+          }
+        };
+      }
     });
 
     return validator;
@@ -159,7 +170,7 @@ export default Radium(React.createClass({
             tooltip="Remove cerificate"
             iconClassName="synicon-close"/>
           <div className="col-flex-1">
-            <div style={styles.dropzoneWithFileTitle}>Current certificate</div>
+            <div style={styles.dropzoneWithFileTitle}>{type.charAt(0).toUpperCase() + type.slice(1)} certificate</div>
             <div className="row align-middle">
               <div className="col-xs-23">
                 <TextField
@@ -199,6 +210,29 @@ export default Radium(React.createClass({
     }
   },
 
+  renderCertificateErrors() {
+    const certificateTypes = this.state.certificateTypes;
+    const fields = _.map(certificateTypes, (type) => {
+      return (
+        <Show
+          key={`certificateError${type}`}
+          if={this.getValidationMessages(`${type}_certificate`).length > 0}>
+          <div className="vm-2-t">
+            <Notification type="error">
+              {this.getValidationMessages(`${type}_certificate`).join(' ')}
+            </Notification>
+          </div>
+        </Show>
+      );
+    });
+
+    return (
+      <div>
+        {fields}
+      </div>
+    );
+  },
+
   render() {
     let styles = this.getStyles();
     let dialogStandardActions = [
@@ -220,15 +254,16 @@ export default Radium(React.createClass({
       <Dialog
         key='dialog'
         ref='dialog'
+        contentStyle={{maxWidth: 840}}
         title="Configure Push Notification Socket - APNS"
         autoDetectWindowHeight={true}
         actions={dialogStandardActions}
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}>
-        <div className="row align-center hp-2-l hp-2-r vm-2-b">
+        <div className="row align-center hp-2-l hp-2-r vm-2-b align-middle">
           <div
-            className="align-middle"
+            className="hm-2-r"
             dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
           <div className="col-flex-1">
             <DropZone
@@ -261,7 +296,7 @@ export default Radium(React.createClass({
             </div>
           </div>
         </div>
-        {this.renderFormNotifications()}
+        {this.renderCertificateErrors()}
         <Loading
           type="linear"
           position="bottom"

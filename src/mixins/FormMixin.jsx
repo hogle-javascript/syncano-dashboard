@@ -35,15 +35,11 @@ export default {
   },
 
   renderFormErrorFeedback() {
-    if (_.isEmpty(this.state.errors) && typeof this.state.errors.feedback === 'undefined') {
+    if (!this.state.errors || typeof this.state.errors.feedback === 'undefined') {
       return false;
     }
 
-    return (
-      <Notification type="error">
-        {this.state.errors.feedback || this.getValidationMessages().join(' ')}
-      </Notification>
-    );
+    return <Notification type="error">{this.state.errors.feedback}</Notification>;
   },
 
   renderFormFeedback() {
