@@ -39,7 +39,6 @@ export default {
   },
 
   handleFormFailure(payload) {
-    console.error(payload);
     console.log('StoreFormMixin::handleFormFailure');
     let state = this.getInitialFormState();
 

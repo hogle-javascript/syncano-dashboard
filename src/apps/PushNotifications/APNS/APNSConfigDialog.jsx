@@ -128,7 +128,6 @@ export default Radium(React.createClass({
         delete params[key];
       }
     });
-    console.error(params);
     Actions.configAPNSPushNotification(params);
   },
 
@@ -201,10 +200,6 @@ export default Radium(React.createClass({
   },
 
   render() {
-    if (!_.isEmpty(this.state.errors)) {
-      console.error(this.state.errors);
-    }
-
     let styles = this.getStyles();
     let dialogStandardActions = [
       <FlatButton
