@@ -1,10 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router';
 import Radium from 'radium';
 
-import Sticky from 'react-stickydiv';
 import {Utils} from 'syncano-material-ui';
-import Logo from '../Logo';
 
 export default Radium(React.createClass({
   displayName: 'Sidebar',
@@ -15,9 +12,9 @@ export default Radium(React.createClass({
 
   mixins: [Utils.Styles],
 
-  getDefaultProps() {
+  getInitialState() {
     return {
-      logoCentered: false
+      collapsed: false
     };
   },
 
@@ -27,6 +24,9 @@ export default Radium(React.createClass({
         width: 256,
         zIndex: 11,
         paddingRight: 0
+      },
+      collapsed: {
+        width: 62
       },
       background: {
         background: '#fcfcfc',
@@ -39,8 +39,8 @@ export default Radium(React.createClass({
         borderRight: '1px solid #eee'
       },
       content: {
-        position: 'fixed',
         width: 256,
+        paddingBottom: 56,
         maxHeight: '100%',
         overflow: 'auto'
       },
@@ -51,12 +51,6 @@ export default Radium(React.createClass({
         display: 'flex',
         alignItems: 'center'
       },
-      logo: {
-        width: 120
-      },
-      logoCentered: {
-        justifyContent: 'center'
-      },
       contentStretched: {
         width: '100%'
       }
@@ -64,25 +58,17 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let {children, style, logoCentered, ...other} = this.props;
+    const styles = this.getStyles();
+    const {children, style, ...other} = this.props;
+    const {collapsed} = this.state;
 
     return (
       <div
         className="col-flex-0 left-nav"
-        style={this.mergeStyles(style, styles.root)}
+        style={this.mergeStyles(style, styles.root, collapsed && styles.collapsed)}
         {...other}>
-        <div style={styles.background}></div>
-        <div style={[styles.content, logoCentered && styles.contentStretched]}>
-          <Sticky>
-            <div className="col-flex-1" style={[styles.topToolbar, logoCentered && styles.logoCentered]}>
-              <Link to="app">
-                <Logo
-                  style={styles.logo}
-                  className="logo-white"/>
-              </Link>
-            </div>
-          </Sticky>
+        <div style={this.mergeStyles(styles.background, collapsed && styles.collapsed)}></div>
+        <div style={this.mergeStyles(styles.content, collapsed && styles.collapsed)}>
           {children}
         </div>
       </div>

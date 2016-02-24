@@ -2,10 +2,11 @@ import React from 'react';
 import {State, Navigation, RouteHandler} from 'react-router';
 
 // Stores and Action
+import SessionStore from '../apps/Session/SessionStore';
 import SessionActions from '../apps/Session/SessionActions';
+import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 
 import Sticky from 'react-stickydiv';
-import Header from '../apps/Header';
 import {List} from 'syncano-material-ui';
 import {Sidebar} from '../common';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown';
@@ -56,6 +57,7 @@ export default React.createClass({
                 routeName="sockets"
                 primaryText="Sockets"
                 initiallyOpen={true}
+                iconClassName="synicon-hexagon-outline"
                 autoGenerateNestedIndicator={false}
                 nestedItems={[
                   <Sidebar.NestedLinkListItem
@@ -90,53 +92,57 @@ export default React.createClass({
               <Sidebar.LinkListItem
                 key="Users"
                 routeName="users"
+                iconClassName="synicon-account-multiple"
                 primaryText="Users & Groups" />
               <Sidebar.LinkListItem
                 key="Classes"
                 routeName="classes"
+                iconClassName="synicon-layers"
                 primaryText="Classes" />
               <Sidebar.LinkListItem
                 key="Scripts"
                 routeName="scripts"
+                iconClassName="synicon-code-tags"
                 primaryText="Scripts"/>
               <Sidebar.LinkListItem
                 key="pushDevices"
                 routeName="all-push-notification-devices"
                 primaryText="Push Devices"
+                iconClassName="synicon-cellphone-iphone"
                 initiallyOpen={true}
                 autoGenerateNestedIndicator={false}
                 nestedItems={[
                   <Sidebar.NestedLinkListItem
                     key="iOSDevices"
                     routeName="apns-devices"
-                    primaryText="iOS Devices"
-                  />,
+                    primaryText="iOS Devices" />,
                   <Sidebar.NestedLinkListItem
                     key="androidDevices"
                     routeName="gcm-devices"
-                    primaryText="Android Devices"
-                  />
+                    primaryText="Android Devices" />
                 ]}/>
             </Sidebar.List>
             <Sidebar.List
               key="Settings"
               subheader="Settings">
-              <Sidebar.LinkListItem
+              <Sidebar.ListItem
                 key="General"
-                routeName="instance-edit"
-                primaryText="General" />
+                iconClassName="synicon-settings"
+                primaryText="General"
+                onTouchTap={() => InstanceDialogActions.showDialog(SessionStore.getInstance())}/>
               <Sidebar.LinkListItem
                 key="Administrators"
                 routeName="admins"
+                iconClassName="synicon-account-star-variant"
                 primaryText="Administrators" />
               <Sidebar.LinkListItem
                 key="API keys"
                 routeName="api-keys"
+                iconClassName="synicon-key-variant"
                 primaryText="API keys" />
             </Sidebar.List>
           </Sidebar>
           <div className="col-flex-1">
-            <Header />
             <RouteHandler />
           </div>
         </div>

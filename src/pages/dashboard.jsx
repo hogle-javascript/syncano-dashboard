@@ -5,6 +5,7 @@ import {Grid, Breakpoint} from 'react-responsive-grid';
 import SessionStore from '../apps/Session/SessionStore';
 import AuthConstants from '../apps/Account/AuthConstants';
 
+import Header from '../apps/Header/Header';
 import {ConversionPixel, Sidebar, NoMobileInfo} from '../common';
 
 export default React.createClass({
@@ -45,6 +46,7 @@ export default React.createClass({
       <div>
         <Grid>
           <Breakpoint minWidth={768} widthMethod="componentWidth">
+            <Header/>
             <RouteHandler />
           </Breakpoint>
           <Breakpoint maxWidth={767} widthMethod="componentWidth">

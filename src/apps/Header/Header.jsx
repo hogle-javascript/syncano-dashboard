@@ -19,7 +19,6 @@ import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 import './Header.sass';
 
 export default Radium(React.createClass({
-
   displayName: 'Header',
 
   contextTypes: {
@@ -34,12 +33,6 @@ export default Radium(React.createClass({
     State,
     Utils.Styles
   ],
-
-  getDefaultProps() {
-    return {
-      logo: false
-    };
-  },
 
   componentDidMount() {
     SessionStore.getInstance();
@@ -96,20 +89,20 @@ export default Radium(React.createClass({
       <List>
         <ListItem
           leftAvatar={this.renderIconButton()}
-          onTouchTap={this.handleAccountClick}
+          onTouchTap={() => this.transitionTo('profile-settings')}
           primaryText={`${user.first_name} ${user.last_name}`}
           secondaryText={user.email}/>
         <Divider/>
         <ListItem
-          onTouchTap={this.handleInstancesListClick}
+          onTouchTap={() => this.transitionTo('instances')}
           leftIcon={instancesListIcon}
           primaryText="Instances list"/>
         <ListItem
-          onTouchTap={this.handleBillingClick}
+          onTouchTap={() => this.transitionTo('profile-billing-plan')}
           leftIcon={billingIcon}
           primaryText="Billing"/>
         <ListItem
-          onTouchTap={this.handleLogout}
+          onTouchTap={SessionActions.logout}
           style={styles.logoutDropdownItem}
           leftIcon={logoutIcon}
           primaryText="Logout"/>
@@ -133,26 +126,6 @@ export default Radium(React.createClass({
     this.setState({gravatarUrl: fallBackAvatar});
   },
 
-  handleInstancesListClick() {
-    this.transitionTo('instances');
-  },
-
-  handleTabActive(tab) {
-    this.transitionTo(tab.props.route, tab.props.params);
-  },
-
-  handleAccountClick() {
-    this.transitionTo('profile-settings');
-  },
-
-  handleLogout() {
-    SessionActions.logout();
-  },
-
-  handleBillingClick() {
-    this.transitionTo('profile-billing-plan');
-  },
-
   renderIconButton() {
     return (
       <Avatar
@@ -161,27 +134,19 @@ export default Radium(React.createClass({
     );
   },
 
-  renderLogo() {
-    let styles = this.getStyles();
-
-    return (
-      <ToolbarGroup style={styles.logotypeContainer}>
-        <Link to="app">
-          <Logo
-            style={styles.logo}
-            className="logo-white"/>
-        </Link>
-      </ToolbarGroup>
-    );
-  },
-
   render() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     return (
       <Sticky zIndex={12}>
         <Toolbar style={styles.topToolbar}>
-          {this.props.logo ? this.renderLogo() : null}
+          <ToolbarGroup style={styles.logotypeContainer}>
+            <Link to="app">
+              <Logo
+                style={styles.logo}
+                className="logo-white"/>
+            </Link>
+          </ToolbarGroup>
           <ToolbarGroup
             float="right"
             style={{marginLeft: 100, height: '100%'}}>
