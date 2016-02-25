@@ -151,13 +151,13 @@ export default Radium(React.createClass({
               checkedItemsCount={checkedItems}
               actions={this.props.actions}>
               <Lists.MenuItem
-                singleItemText="Delete a Device"
-                multipleItemsText="Delete Devices"
-                onTouchTap={() => this.showDialog('deleteDeviceDialog')}/>
-              <Lists.MenuItem
                 singleItemText="Send message"
                 multipleItemsText="Send messages"
                 onTouchTap={this.props.showSendMessagesDialog}/>
+              <Lists.MenuItem
+                singleItemText="Delete a Device"
+                multipleItemsText="Delete Devices"
+                onTouchTap={() => this.showDialog('deleteDeviceDialog')}/>
             </Lists.Menu>
           </ColumnList.Header>
           <Lists.List

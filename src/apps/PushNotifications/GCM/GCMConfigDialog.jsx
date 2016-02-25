@@ -9,7 +9,7 @@ import Actions from './GCMPushNotificationsActions';
 import Store from './GCMConfigDialogStore';
 
 // Components
-import {FlatButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
+import {TextField, Styles} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {Dialog} from '../../../common';
 
@@ -66,24 +66,15 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let dialogStandardActions = [
-      <FlatButton
-        style={{marginRight: 10}}
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        type="submit"
-        label="Confirm"
-        secondary={true}
-        onTouchTap={this.handleFormValidation}/>
-    ];
+    const styles = this.getStyles();
+    const dialogStandardActions = (
+      <Dialog.StandardButtons
+        handleCancel={this.handleCancel}
+        handleConfirm={this.handleFormValidation}/>
+    );
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key='dialog'
         ref='dialog'
         title="Configure Push Notification Socket - GCM"
@@ -123,7 +114,7 @@ export default React.createClass({
           type='linear'
           position='bottom'
           show={this.state.isLoading}/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

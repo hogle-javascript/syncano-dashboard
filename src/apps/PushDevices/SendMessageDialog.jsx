@@ -5,9 +5,6 @@ import Radium from 'radium';
 import {DialogMixin, FormMixin} from '../../mixins';
 
 import {
-  Dialog,
-  FlatButton,
-  RaisedButton,
   TextField,
   Toggle,
   SelectField,
@@ -16,7 +13,7 @@ import {
   Styles
 } from 'syncano-material-ui';
 import {Loading, Show} from 'syncano-components';
-import {Dialog as CommonDialog, Editor, Notification} from '../../common';
+import {Dialog, Editor, Notification} from '../../common';
 
 export default (store, props) => {
   return Radium(React.createClass({
@@ -115,13 +112,10 @@ export default (store, props) => {
           height: 11,
           borderRadius: '2px'
         },
-        GCMAppNameContainer: {
+        appNameContainer: {
           display: 'flex',
           justifyContent: 'space-between',
           paddingBottom: 4
-        },
-        APNSAppNameContainer: {
-          justifyContent: 'flx-start'
         },
         GCMAppName: {
           fontWeight: 700,
@@ -222,9 +216,9 @@ export default (store, props) => {
       const type = props.type === 'APNS' ? 'iOS' : 'Android';
 
       return (
-        <CommonDialog.TitleWithIcon iconClassName={`synicon-${props.type === 'APNS' ? 'apple' : 'android'}`}>
+        <Dialog.TitleWithIcon iconClassName={`synicon-${props.type === 'APNS' ? 'apple' : 'android'}`}>
           {`Send Message To ${type} Device`}
-        </CommonDialog.TitleWithIcon>
+        </Dialog.TitleWithIcon>
       );
     },
 
@@ -341,23 +335,14 @@ export default (store, props) => {
       const type = props.type;
       const isAPNS = type === 'APNS';
       const styles = this.getStyles();
-      const dialogStandardActions = [
-        <FlatButton
-          style={{marginRight: 10}}
-          key="cancel"
-          label="Cancel"
-          onTouchTap={this.handleCancel}
-          ref="cancel"/>,
-        <RaisedButton
-          key="confirm"
-          type="submit"
-          label="Confirm"
-          secondary={true}
-          onTouchTap={this.handleFormValidation}/>
-      ];
+      const dialogStandardActions = (
+        <Dialog.StandardButtons
+          handleCancel={this.handleCancel}
+          handleConfirm={this.handleFormValidation}/>
+      );
 
       return (
-        <Dialog
+        <Dialog.FullPage
           key='dialog'
           ref='dialog'
           title={this.renderDialogTitle()}
@@ -401,7 +386,7 @@ export default (store, props) => {
                 <div
                   style={styles.messageTextContainer}
                   className="col-sm-30">
-                  <div style={[styles.GCMAppNameContainer, isAPNS && styles.APNSAppNameContainer]}>
+                  <div style={styles.appNameContainer}>
                     <div style={[styles.messageText, styles.GCMAppName, isAPNS && styles.APNSAppName]}>
                       {this.state.appName}
                     </div>
@@ -441,7 +426,7 @@ export default (store, props) => {
             type="linear"
             position="bottom"
             show={this.state.isLoading}/>
-        </Dialog>
+        </Dialog.FullPage>
       );
     }
   }));

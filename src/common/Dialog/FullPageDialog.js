@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import DialogMixin from '../../mixins/DialogMixin';
-import {Dialog, IconButton} from 'syncano-material-ui';
+import {Dialog, IconButton, Utils} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 
 export default React.createClass({
@@ -66,7 +66,7 @@ export default React.createClass({
         open={_.isBoolean(open) ? open : this.state.open}
         style={styles.style}
         overlayStyle={styles.overlay}
-        contentStyle={styles.content}
+        contentStyle={Utils.Styles.mergeStyles(styles.content, this.props.contentStyle)}
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}

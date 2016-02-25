@@ -10,7 +10,7 @@ import UsersStore from '../Users/UsersStore';
 import UsersActions from '../Users/UsersActions';
 
 // Components
-import {FlatButton, TextField, Toggle} from 'syncano-material-ui';
+import {TextField, Toggle} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -25,7 +25,7 @@ export default (type, Store, Actions) => {
     ],
 
     validatorConstraints() {
-      let users = UsersStore.getItems().map((user) => user.id.toString());
+      const users = UsersStore.getItems().map((user) => user.id.toString());
       let validatorObj = {
         label: {
           presence: true
@@ -82,23 +82,15 @@ export default (type, Store, Actions) => {
     },
 
     render() {
-      let title = this.hasEditMode() ? 'Edit' : 'Create';
-      let dialogStandardActions = [
-        <FlatButton
-          key="cancel"
-          label="Cancel"
-          onTouchTap={this.handleCancel}
-          ref="cancel"/>,
-        <FlatButton
-          key="confirm"
-          label="Confirm"
-          primary={true}
-          onTouchTap={this.handleFormValidation}
-          ref="submit"/>
-      ];
+      const title = this.hasEditMode() ? 'Edit' : 'Create';
+      const dialogStandardActions = (
+        <Dialog.StandardButtons
+          handleCancel={this.handleCancel}
+          handleConfirm={this.handleFormValidation}/>
+      );
 
       return (
-        <Dialog
+        <Dialog.FullPage
           key="dialog"
           ref="dialog"
           title={`${title} a ${type} Device`}
@@ -137,7 +129,7 @@ export default (type, Store, Actions) => {
               errorText={this.getValidationMessages('device_id').join(' ')}
               floatingLabelText="Device ID"/>
 
-            <div className="vm-4-t">
+            <div className="vm-4-t col-sm-7">
               <Toggle
                 ref="is_active"
                 key="is_active"
@@ -150,7 +142,7 @@ export default (type, Store, Actions) => {
             type="linear"
             position="bottom"
             show={this.state.isLoading}/>
-        </Dialog>
+        </Dialog.FullPage>
       );
     }
   });

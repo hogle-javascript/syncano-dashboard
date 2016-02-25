@@ -12,8 +12,6 @@ import Store from './APNSConfigDialogStore';
 
 // Components
 import {
-  FlatButton,
-  RaisedButton,
   IconButton,
   TextField,
   Styles
@@ -31,7 +29,7 @@ export default Radium(React.createClass({
   ],
 
   validatorConstraints() {
-    let certificateTypes = this.state.certificateTypes;
+    const certificateTypes = this.state.certificateTypes;
     let validator = {};
 
     _.forEach(certificateTypes, (certificateType) => {
@@ -234,24 +232,15 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let dialogStandardActions = [
-      <FlatButton
-        style={{marginRight: 10}}
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        type="submit"
-        label="Confirm"
-        secondary={true}
-        onTouchTap={this.handleFormValidation}/>
-    ];
+    const styles = this.getStyles();
+    const dialogStandardActions = (
+      <Dialog.StandardButtons
+        handleCancel={this.handleCancel}
+        handleConfirm={this.handleFormValidation}/>
+    );
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key='dialog'
         ref='dialog'
         contentStyle={{maxWidth: 840}}
@@ -261,7 +250,7 @@ export default Radium(React.createClass({
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}>
-        <div className="row align-center hp-2-l hp-2-r vm-2-b align-middle">
+        <div className="row align-center hp-2-l hp-2-r vm-2-b">
           <div
             className="hm-2-r"
             dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
@@ -301,7 +290,7 @@ export default Radium(React.createClass({
           type="linear"
           position="bottom"
           show={this.state.isLoading}/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 }));

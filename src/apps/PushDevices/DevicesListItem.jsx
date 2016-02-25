@@ -25,7 +25,7 @@ export default React.createClass({
 
     return (
       <ColumnList.Item
-        key={item.device_id}
+        key={item.registration_id}
         checked={item.checked}>
         <Column.CheckIcon
           id={item.registration_id}
