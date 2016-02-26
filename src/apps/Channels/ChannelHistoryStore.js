@@ -36,17 +36,9 @@ export default Reflux.createStore({
     console.debug('ChannelHistoryStore::refreshData', this.data);
 
     if (SessionStore.instance && this.data.objectId) {
-      this.fetchChannelHistory();
-      this.fetchCurrentItem();
+      Actions.fetchChannelHistory(this.data.objectId);
+      Actions.fetchCurrentChannel(this.data.objectId);
     }
-  },
-
-  fetchCurrentItem() {
-    Actions.fetchCurrentChannel(this.data.objectId);
-  },
-
-  fetchChannelHistory() {
-    Actions.fetchChannelListHistory(this.data.objectId);
   },
 
   onSetCurrentObjectId(ObjectId) {
@@ -67,8 +59,8 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchChannelListHistoryCompleted(channelHistoryObj) {
-    console.debug('ChannelHistoryStore::onFetchChannelListHistoryCompleted', channelHistoryObj);
+  onFetchChannelHistoryCompleted(channelHistoryObj) {
+    console.debug('ChannelHistoryStore::onFetchChannelHistoryCompleted', channelHistoryObj);
     this.setChannelHistory(channelHistoryObj._items);
   },
 
