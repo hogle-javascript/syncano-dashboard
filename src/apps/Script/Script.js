@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 import {State, Navigation} from 'react-router';
 
 import HeaderMixin from '../Header/HeaderMixin';
@@ -44,6 +45,8 @@ export default React.createClass({
       this.handleUpdate();
       return false;
     });
+
+    this.runScript = _.debounce(Actions.runScript, 500, {leading: true});
   },
 
   componentWillUnmount() {
@@ -100,7 +103,7 @@ export default React.createClass({
   handleRunScript() {
     this.handleUpdate();
     if (this.state.isPayloadValid) {
-      Actions.runScript({
+      this.runScript({
         id: this.state.currentScript.id,
         payload: this.state.payloadValue
       });
