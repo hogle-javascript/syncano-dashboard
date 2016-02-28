@@ -80,14 +80,16 @@ export default {
   ],
 
   fieldTypes: [
-    'string',
-    'text',
-    'integer',
-    'float',
+    'array',
     'boolean',
     'datetime',
     'file',
-    'reference'
+    'float',
+    'integer',
+    'object',
+    'reference',
+    'string',
+    'text'
   ],
 
   PROTECTED_FROM_EDIT_CLASS_NAMES: [
