@@ -287,8 +287,14 @@ export default (
         {/* Channels */}
         <Route
           name="channels"
-          handler={Channels}
-          path="channels"/>
+          path="channels">
+          <Route
+            name='channel-history'
+            handler={Channels.HistoryMessages}
+            path=':channelName/history'/>
+
+          <DefaultRoute handler={Channels}/>
+        </Route>
 
         {/* Users */}
         <Route
