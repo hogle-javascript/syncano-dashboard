@@ -1,15 +1,17 @@
 import Reflux from 'reflux';
 import D from 'd.js';
 
-import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
+import {StoreHelpersMixin, CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
+import SocketsActions from '../Sockets/SocketsActions';
 import Actions from './ScriptsActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: [Actions, SocketsActions],
 
   mixins: [
+    StoreHelpersMixin,
     CheckListStoreMixin,
     StoreLoadingMixin,
     WaitForStoreMixin
@@ -169,9 +171,14 @@ export default Reflux.createStore({
     this.refreshData();
   },
 
+  onFetchSocketsCompleted(sockets) {
+    console.debug('ScriptsStore::onFetchSocketsCompleted');
+    Actions.setScripts(this.saveListFromSyncano(sockets.scripts));
+  },
+
   onFetchScriptsCompleted(scripts) {
     console.debug('ScriptsStore::onFetchScriptsCompleted');
-    Actions.setScripts(scripts._items);
+    Actions.setScripts(this.saveListFromSyncano(scripts));
   },
 
   onFetchTriggersCompleted(triggers) {
