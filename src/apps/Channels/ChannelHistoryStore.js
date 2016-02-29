@@ -14,9 +14,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: [],
-      objectId: null,
-      isLoading: true,
-      currentObjectName: null
+      channelName: null,
+      isLoading: true
     };
   },
 
@@ -35,38 +34,30 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('ChannelHistoryStore::refreshData', this.data);
 
-    if (SessionStore.instance && this.data.objectId) {
-      Actions.fetchChannelHistory(this.data.objectId);
-      Actions.fetchCurrentChannel(this.data.objectId);
+    if (SessionStore.instance && this.data.channelName) {
+      Actions.fetchChannelHistory(this.data.channelName);
     }
   },
 
-  onSetCurrentObjectId(ObjectId) {
-    console.debug('ChannelHistoryStore::onSetCurrentObjectId', ObjectId);
-    this.data.objectId = ObjectId;
-    this.refreshData();
+  onSetCurrentChannelName(channelName) {
+    console.debug('ChannelHistoryStore::onSetCurrentChannelName', channelName);
+    this.data.channelName = channelName;
+    this.trigger(this.data);
   },
 
   setChannelHistory(channelHistory) {
-    console.debug('ChannelHistoryStore::setTraces');
+    console.debug('ChannelHistoryStore::setChannelHistory');
     this.data.items = channelHistory;
     this.trigger(this.data);
   },
 
-  saveCurrentObj(currentObjName) {
-    console.debug('ChannelHistoryStore::saveCurrentObj', currentObjName);
-    this.data.currentObjectName = currentObjName;
-    this.trigger(this.data);
+  onFetchChannelHistory(channelName) {
+    Actions.setCurrentChannelName(channelName);
   },
 
   onFetchChannelHistoryCompleted(channelHistoryObj) {
     console.debug('ChannelHistoryStore::onFetchChannelHistoryCompleted', channelHistoryObj);
     this.setChannelHistory(channelHistoryObj._items);
-  },
-
-  onFetchCurrentChannelCompleted(channelName) {
-    console.debug('ChannelHistoryStore::onFetchCurrentChannelCompleted', channelName);
-    this.saveCurrentObj(channelName.name);
   }
 
 });

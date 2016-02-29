@@ -24,7 +24,7 @@ export default Radium(React.createClass({
   displayName: 'ChannelHistory',
 
   propTypes: {
-    objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
+    channelName: React.PropTypes.string
   },
 
   mixins: [
@@ -43,7 +43,7 @@ export default Radium(React.createClass({
   },
 
   componentDidMount() {
-    Actions.setCurrentObjectId(this.props.objectId);
+    Actions.fetchChannelHistory(this.props.channelName);
   },
 
   getStyles() {
@@ -68,7 +68,7 @@ export default Radium(React.createClass({
     return (
       <div>
         <InnerToolbar
-          title={'Channel History for ' + this.props.objectId}
+          title={'Channel History for ' + this.props.channelName}
           backFallback={this.handleBackClick}
           backButtonTooltip='Go back to Channels list'/>
         <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>

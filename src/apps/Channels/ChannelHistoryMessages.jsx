@@ -28,8 +28,7 @@ export default React.createClass({
     let channelName = this.getParams().channelName;
 
     return (
-      <ChannelHistory
-        objectId={channelName}/>
+      <ChannelHistory channelName={channelName}/>
     );
   }
 });

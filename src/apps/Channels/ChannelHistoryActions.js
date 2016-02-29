@@ -1,7 +1,7 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
-  setCurrentObjectId: {},
+  setCurrentChannelName: {},
   fetchChannelHistory: {
     asyncResult: true,
     children: ['completed', 'failure'],
