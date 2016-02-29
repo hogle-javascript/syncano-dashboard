@@ -29,7 +29,7 @@ export default React.createClass({
         checked={item.checked}>
         <Column.CheckIcon
           id={item.registration_id}
-          icon={icon}
+          iconClassName={icon}
           className="col-sm-14"
           checked={item.checked}
           keyName="registration_id"
