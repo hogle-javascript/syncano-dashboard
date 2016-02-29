@@ -5,10 +5,6 @@ import Reflux from 'reflux';
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
 
-// Stores and Actions
-import UsersStore from '../Users/UsersStore';
-import UsersActions from '../Users/UsersActions';
-
 // Components
 import {TextField, Toggle} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
@@ -25,32 +21,16 @@ export default (type, Store, Actions) => {
     ],
 
     validatorConstraints() {
-      const users = UsersStore.getItems().map((user) => user.id.toString());
       let validatorObj = {
         label: {
           presence: true
         },
         registration_id: {
           presence: true
-        },
-        user_id: {
-          numericality: true,
-          inclusion: {
-            within: users,
-            message: '^There is no user with id %{value}'
-          }
         }
       };
 
-      if (!users || users.length === 0) {
-        validatorObj.user_id.inclusion.message = "^You don't have any users yet. Please add some first.";
-      }
-
       return validatorObj;
-    },
-
-    componentDidMount() {
-      UsersActions.fetch();
     },
 
     getParams() {

@@ -117,12 +117,12 @@ export default (store, props) => {
           justifyContent: 'space-between',
           paddingBottom: 4
         },
-        GCMAppName: {
+        gcmAppName: {
           fontWeight: 700,
           WebkitLineClamp: 1,
           maxWidth: 70
         },
-        APNSAppName: {
+        apnsAppName: {
           paddingRight: 4
         },
         messageText: {
@@ -387,7 +387,7 @@ export default (store, props) => {
                   style={styles.messageTextContainer}
                   className="col-sm-30">
                   <div style={styles.appNameContainer}>
-                    <div style={[styles.messageText, styles.GCMAppName, isAPNS && styles.APNSAppName]}>
+                    <div style={[styles.messageText, styles.gcmAppName, isAPNS && styles.apnsAppName]}>
                       {this.state.appName}
                     </div>
                     <div>

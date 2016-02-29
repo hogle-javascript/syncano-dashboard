@@ -283,9 +283,9 @@ export default Radium(React.createClass({
                 style={styles.GDClink}
                 href="https://developer.apple.com/membercenter"> here</a> to get them.
             </div>
+            {this.renderCertificateErrors()}
           </div>
         </div>
-        {this.renderCertificateErrors()}
         <Loading
           type="linear"
           position="bottom"

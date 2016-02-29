@@ -3554,7 +3554,11 @@ var Syncano = (function () {
       });
 
       xhr.onload = function () {
-        var response = JSON.parse(xhr.responseText);
+        var response = xhr.responseText;
+
+        try {
+          response = JSON.parse(xhr.responseText);
+        } catch (e) {};
 
         if (xhr.status >= 200 && xhr.status <= 299) {
           deferred.resolve(response);
