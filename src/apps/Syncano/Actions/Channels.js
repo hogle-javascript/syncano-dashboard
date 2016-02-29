@@ -30,5 +30,21 @@ export default {
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
+  },
+
+  get(channelName) {
+    this.Connection
+      .Channels
+      .get(channelName)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  getHistory(channelName) {
+    this.Connection
+      .Channels
+      .getHistory(channelName, {ordering: 'desc'})
+      .then(this.completed)
+      .catch(this.failure);
   }
 };
