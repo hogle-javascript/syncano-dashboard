@@ -31,12 +31,12 @@ export default React.createClass({
         checked={item.checked}
         id={item.name}
         key={item.name}>
-        <Column.CheckIcon
+        <Column.CheckIcon.Socket
           className="col-xs-12"
           id={item.name.toString()}
-          icon='arrow-up-bold'
+          iconClassName='socket-codebox'
+          iconColor={Color.getColorByName('red', 'light')}
           keyName="name"
-          background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.name}

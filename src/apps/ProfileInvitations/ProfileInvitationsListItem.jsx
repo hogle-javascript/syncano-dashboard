@@ -17,7 +17,7 @@ export default React.createClass({
         key={item.id}>
         <Column.CheckIcon
           id={item.id.toString()}
-          icon='account'
+          iconClassName='account'
           background={Styles.Colors.blue500}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}
