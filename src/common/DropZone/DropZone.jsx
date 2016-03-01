@@ -34,8 +34,8 @@ export default React.createClass({
         }
       },
       dropZoneDescription: {
-        lineHeight: '24px',
-        maxWidth: 150,
+        lineHeight: '36px',
+        maxWidth: 350,
         textAlign: 'center',
         fontSize: '24px'
       },
@@ -69,7 +69,7 @@ export default React.createClass({
           style={styles.uploadIcon}
           className="synicon-cloud-upload"/>
         <div>
-          Drag & Drop to upload
+          {`Drag & Drop to upload ${this.props.certificateType} certificate`}
         </div>
       </div>
     );

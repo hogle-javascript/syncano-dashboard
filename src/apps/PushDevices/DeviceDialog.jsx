@@ -5,12 +5,8 @@ import Reflux from 'reflux';
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
 
-// Stores and Actions
-import UsersStore from '../Users/UsersStore';
-import UsersActions from '../Users/UsersActions';
-
 // Components
-import {FlatButton, TextField, Toggle} from 'syncano-material-ui';
+import {TextField, Toggle} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -25,32 +21,16 @@ export default (type, Store, Actions) => {
     ],
 
     validatorConstraints() {
-      let users = UsersStore.getItems().map((user) => user.id.toString());
       let validatorObj = {
         label: {
           presence: true
         },
         registration_id: {
           presence: true
-        },
-        user_id: {
-          numericality: true,
-          inclusion: {
-            within: users,
-            message: '^There is no user with id %{value}'
-          }
         }
       };
 
-      if (!users || users.length === 0) {
-        validatorObj.user_id.inclusion.message = "^You don't have any users yet. Please add some first.";
-      }
-
       return validatorObj;
-    },
-
-    componentDidMount() {
-      UsersActions.fetch();
     },
 
     getParams() {
@@ -82,29 +62,20 @@ export default (type, Store, Actions) => {
     },
 
     render() {
-      let title = this.hasEditMode() ? 'Edit' : 'Create';
-      let dialogStandardActions = [
-        <FlatButton
-          key="cancel"
-          label="Cancel"
-          onTouchTap={this.handleCancel}
-          ref="cancel"/>,
-        <FlatButton
-          key="confirm"
-          label="Confirm"
-          primary={true}
-          onTouchTap={this.handleFormValidation}
-          ref="submit"/>
-      ];
+      const title = this.hasEditMode() ? 'Edit' : 'Create';
 
       return (
-        <Dialog
+        <Dialog.FullPage
           key="dialog"
           ref="dialog"
           title={`${title} a ${type} Device`}
           onRequestClose={this.handleCancel}
           open={this.state.open}
-          actions={dialogStandardActions}>
+          actions={
+            <Dialog.StandardButtons
+              handleCancel={this.handleCancel}
+              handleConfirm={this.handleFormValidation}/>
+          }>
           <div>
             {this.renderFormNotifications()}
             <TextField
@@ -137,7 +108,9 @@ export default (type, Store, Actions) => {
               errorText={this.getValidationMessages('device_id').join(' ')}
               floatingLabelText="Device ID"/>
 
-            <div className="vm-4-t">
+            <div
+              style={{width: 180}}
+              className="vm-4-t">
               <Toggle
                 ref="is_active"
                 key="is_active"
@@ -150,7 +123,7 @@ export default (type, Store, Actions) => {
             type="linear"
             position="bottom"
             show={this.state.isLoading}/>
-        </Dialog>
+        </Dialog.FullPage>
       );
     }
   });

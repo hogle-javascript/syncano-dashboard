@@ -14,6 +14,12 @@ export default Reflux.createStore({
     StoreLoadingMixin
   ],
 
+  config: {
+    type: 'GCM',
+    icon: 'synicon-android',
+    device: 'Android'
+  },
+
   getInitialState() {
     return {
       label: null,
@@ -28,6 +34,10 @@ export default Reflux.createStore({
     this.data = this.getInitialState();
     this.listenToForms();
     this.setLoadingStates();
+  },
+
+  getConfig() {
+    return this.config;
   },
 
   onSendMessagesToGCMCompleted() {
