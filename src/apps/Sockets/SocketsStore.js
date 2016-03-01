@@ -84,7 +84,7 @@ export default Reflux.createStore({
     this.data.channels = this.saveListFromSyncano(sockets.channels);
     this.data.gcmPushNotifications = gcmItems;
     this.data.apnsPushNotifications = apnsItems;
-    this.data.hasAnyItem = _.filter(this.data, (value) => _.isArray(value) && value.length > 0).length > 0;
+    this.data.hasAnyItem = _.some(this.data, (value) => value.length);
 
     this.trigger(this.data);
   }
