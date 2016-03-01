@@ -14,6 +14,7 @@ import Instances from './Instances';
 import Profile from './Profile';
 import PushDevices from './PushDevices';
 import PushNotifications from './PushNotifications';
+import Sockets from './Sockets';
 import Solutions from './Solutions';
 import Schedules from './Schedules';
 import Templates from './Templates';
@@ -39,6 +40,7 @@ export default {
   Profile,
   PushDevices,
   PushNotifications,
+  Sockets,
   Solutions,
   Schedules,
   Triggers,

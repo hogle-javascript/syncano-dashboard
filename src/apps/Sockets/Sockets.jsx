@@ -3,6 +3,10 @@ import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
+// Stores & Actions
+import Actions from './SocketsActions';
+import Store from './SocketsStore';
+
 // Utils
 import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
@@ -16,12 +20,9 @@ import {FlatButton} from 'syncano-material-ui';
 // Apps
 import Data from '../Data';
 import Channels from '../Channels';
-import Classes from '../Classes';
-import Scripts from '../Scripts';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
 import CodeBoxes from '../CodeBoxes';
-import PushDevices from '../PushDevices';
 import PushNotifications from '../PushNotifications';
 import EmptyView from './EmptyView';
 
@@ -33,15 +34,7 @@ export default React.createClass({
     State,
     Navigation,
 
-    Reflux.connect(Channels.Store, 'channels'),
-    Reflux.connect(Data.Store, 'dataviews'),
-    Reflux.connect(Schedules.Store, 'schedules'),
-    Reflux.connect(Triggers.Store, 'triggers'),
-    Reflux.connect(CodeBoxes.Store, 'codeboxes'),
-    Reflux.connect(PushNotifications.APNSStore, 'APNSPushNotifications'),
-    Reflux.connect(PushNotifications.GCMStore, 'GCMPushNotifications'),
-    Reflux.connect(PushDevices.GCMStore, 'GCMDevices'),
-    Reflux.connect(PushDevices.APNSStore, 'APNSDevices'),
+    Reflux.connect(Store, 'sockets'),
 
     DialogsMixin,
     InstanceTabsMixin,
@@ -58,53 +51,21 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('Data::componentDidMount');
-    this.fetch();
+    Actions.fetch();
   },
 
   getPushNotificationItems() {
-    const APNSItems = _.filter(this.state.APNSPushNotifications.items, 'hasConfig');
-    const GCMItems = _.filter(this.state.GCMPushNotifications.items, 'hasConfig');
+    const {sockets} = this.state;
+    const APNSItems = _.filter(sockets.gcmPushNotifications, 'hasConfig');
+    const GCMItems = _.filter(sockets.apnsPushNotifications, 'hasConfig');
 
     return APNSItems.concat(GCMItems);
-  },
-
-  isViewLoading() {
-    let loadingStates = _.keys(this.state).map((key) => {
-      if (this.state[key].hasOwnProperty('isLoading')) {
-        return this.state[key].isLoading;
-      }
-    });
-
-    return _.includes(loadingStates, true);
-  },
-
-  hasAnyItem() {
-    const haveSocketsItems = _.without(_.keys(this.state), 'APNSPushNotifications', 'GCMPushNotifications')
-      .filter((socketName) => _.has(this.state[socketName], 'items'))
-      .some((socketName) => this.state[socketName].items.length > 0);
-    const isPushSocketConfigured = PushNotifications.APNSStore.hasConfig() || PushNotifications.GCMStore.hasConfig();
-
-    return isPushSocketConfigured || haveSocketsItems;
   },
 
   handleListTitleClick(routeName) {
     let instanceName = this.getParams().instanceName;
 
     this.transitionTo(routeName, {instanceName});
-  },
-
-  fetch() {
-    Data.Actions.fetch();
-    Scripts.Actions.fetch();
-    Channels.Actions.fetch();
-    Classes.Actions.fetch();
-    Schedules.Actions.fetch();
-    Triggers.Actions.fetch();
-    CodeBoxes.Actions.fetch();
-    PushDevices.APNSActions.fetch();
-    PushDevices.GCMActions.fetch();
-    PushNotifications.APNSActions.fetch();
-    PushNotifications.GCMActions.fetch();
   },
 
   initDialogs() {
@@ -134,10 +95,12 @@ export default React.createClass({
   },
 
   renderToolbar() {
-    if (!this.hasAnyItem() || this.isViewLoading()) {
+    const {sockets} = this.state;
+    const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
+
+    if (!sockets.hasAnyItem || sockets.isLoading) {
       return <InnerToolbar title="Sockets"/>;
     }
-    const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
 
     return (
       <InnerToolbar title="Sockets">
@@ -159,9 +122,11 @@ export default React.createClass({
   },
 
   renderLists() {
-    if (!this.hasAnyItem()) {
+    const {sockets} = this.state;
+
+    if (!sockets.hasAnyItem) {
       return (
-        <Loading show={this.isViewLoading()}>
+        <Loading show={sockets.isLoading}>
           <EmptyView />
         </Loading>
       );
@@ -169,58 +134,53 @@ export default React.createClass({
 
     return (
       <div style={{clear: 'both', height: '100%'}}>
-        <Loading show={this.isViewLoading()}>
-          <Show if={this.state.dataviews.items.length > 0}>
+        <Loading show={sockets.isLoading}>
+          <Show if={sockets.data.length}>
             <Data.List
               name="Data Sockets"
-              isLoading={this.state.dataviews.isLoading}
-              items={this.state.dataviews.items}
+              items={sockets.data}
               handleTitleClick={() => this.handleListTitleClick('data')}
               emptyItemHandleClick={Data.Actions.showDialog}
               emptyItemContent="Create a Data Socket"/>
           </Show>
 
-          <Show if={this.state.codeboxes.items.length > 0}>
+          <Show if={sockets.scripts.length}>
             <CodeBoxes.List
               name="Script Sockets"
-              isLoading={this.state.codeboxes.isLoading}
-              items={this.state.codeboxes.items}
+              items={sockets.scripts}
               handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
               emptyItemHandleClick={CodeBoxes.Actions.showDialog}
               emptyItemContent="Create a Script Socket"/>
           </Show>
 
-          <Show if={this.state.triggers.items.length > 0}>
+          <Show if={sockets.triggers.length}>
             <Triggers.List
               name="Trigger Sockets"
-              isLoading={this.state.triggers.isLoading}
-              items={this.state.triggers.items}
+              items={sockets.triggers}
               handleTitleClick={() => this.handleListTitleClick('triggers')}
               emptyItemHandleClick={Triggers.Actions.showDialog}
               emptyItemContent="Create a Trigger Socket"/>
           </Show>
 
-          <Show if={this.state.schedules.items.length > 0}>
+          <Show if={sockets.schedules.length}>
             <Schedules.List
               name="Schedule Sockets"
-              isLoading={this.state.schedules.isLoading}
-              items={this.state.schedules.items}
+              items={sockets.schedules}
               handleTitleClick={() => this.handleListTitleClick('schedules')}
               emptyItemHandleClick={Schedules.Actions.showDialog}
               emptyItemContent="Create a Schedule Socket"/>
           </Show>
 
-          <Show if={this.state.channels.items.length > 0}>
+          <Show if={sockets.channels.length}>
             <Channels.List
               name="Channel Sockets"
-              isLoading={this.state.channels.isLoading}
-              items={this.state.channels.items}
+              items={sockets.channels}
               handleTitleClick={() => this.handleListTitleClick('channels')}
               emptyItemHandleClick={Channels.Actions.showDialog}
               emptyItemContent="Create a Channel Socket"/>
           </Show>
 
-          <Show if={this.getPushNotificationItems().length > 0}>
+          <Show if={this.getPushNotificationItems().length}>
             <PushNotifications.List
               name="Push Notification Sockets"
               handleTitleClick={() => this.handleListTitleClick('push-notification-config')}
