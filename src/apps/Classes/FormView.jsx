@@ -467,7 +467,7 @@ export default React.createClass({
                     options={this.getFieldTargetOptions()}
                     value={this.state.fieldTarget}
                     floatingLabelText='Target Class'
-                    onChange={() => this.setSelectFieldValue('fieldTarget')}
+                    onChange={this.setSelectFieldValue.bind(null, 'fieldTarget')}
                     errorText={this.getValidationMessages('fieldTarget').join(' ')}/>
                 </Show>
               </div>
