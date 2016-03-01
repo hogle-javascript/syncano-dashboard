@@ -29,7 +29,7 @@ export default Radium(React.createClass({
   ],
 
   validatorConstraints() {
-    const certificateTypes = this.state.certificateTypes;
+    const {certificateTypes} = this.state;
     let validator = {};
 
     _.forEach(certificateTypes, (certificateType) => {
@@ -128,7 +128,7 @@ export default Radium(React.createClass({
       production_expiration_date: state.production_expiration_date,
       development_certificate_name: state.development_certificate_name,
       development_certificate: state.development_certificate,
-      development_expiration_date: state.production_expiration_date,
+      development_expiration_date: state.development_expiration_date,
       development_bundle_identifier: state.development_bundle_identifier
     };
 
@@ -141,15 +141,22 @@ export default Radium(React.createClass({
   },
 
   clearCertificate(type) {
-    let state = this.state;
-
-    _.keys(state).forEach((key) => {
-      if (_.includes(key, [type])) {
-        state[key] = null;
+    const keys = {
+      production: {
+        production_certificate_name: null,
+        production_certificate: null,
+        production_bundle_identifier: null,
+        production_expiration_date: null
+      },
+      development: {
+        development_certificate_name: null,
+        development_certificate: null,
+        development_expiration_date: null,
+        development_bundle_identifier: null
       }
-    });
+    };
 
-    this.setState(state);
+    this.setState(keys[type]);
   },
 
   renderDropzoneDescription(type) {
@@ -168,7 +175,7 @@ export default Radium(React.createClass({
             tooltip="Remove cerificate"
             iconClassName="synicon-close"/>
           <div className="col-flex-1">
-            <div style={styles.dropzoneWithFileTitle}>{type.charAt(0).toUpperCase() + type.slice(1)} certificate</div>
+            <div style={styles.dropzoneWithFileTitle}>{_.capitalize(type)} certificate</div>
             <div className="row align-middle">
               <div className="col-xs-23">
                 <TextField
@@ -184,7 +191,7 @@ export default Radium(React.createClass({
                   disabled={true}
                   autoWidth={true}
                   fullWidth={true}
-                  value={type.charAt(0).toUpperCase() + type.slice(1)}
+                  value={_.capitalize(type)}
                   floatingLabelText="Type"/>
               </div>
             </div>
@@ -208,9 +215,33 @@ export default Radium(React.createClass({
     }
   },
 
+  renderDropZones() {
+    const {certificateTypes} = this.state;
+
+    return certificateTypes.map((type) => {
+      return (
+        <div
+          key={`dropzone${type}`}
+          style={[type === 'production' && {marginTop: 16}]}>
+          <DropZone
+            certificateType={type}
+            isLoading={this.state.isCertLoading}
+            handleButtonClick={(file) => this.onDrop(file, type)}
+            onDrop={(file) => this.onDrop(file, type)}
+            disableClick={true}
+            withButton={true}
+            uploadButtonLabel="UPLOAD .p12 CERTIFICATE">
+            {this.renderDropzoneDescription(type)}
+          </DropZone>
+        </div>
+      );
+    });
+  },
+
   renderCertificateErrors() {
-    const certificateTypes = this.state.certificateTypes;
-    const fields = _.map(certificateTypes, (type) => {
+    const {certificateTypes} = this.state;
+
+    return _.map(certificateTypes, (type) => {
       return (
         <Show
           key={`certificateError${type}`}
@@ -223,60 +254,32 @@ export default Radium(React.createClass({
         </Show>
       );
     });
-
-    return (
-      <div>
-        {fields}
-      </div>
-    );
   },
 
   render() {
     const styles = this.getStyles();
-    const dialogStandardActions = (
-      <Dialog.StandardButtons
-        handleCancel={this.handleCancel}
-        handleConfirm={this.handleFormValidation}/>
-    );
 
     return (
       <Dialog.FullPage
-        key='dialog'
-        ref='dialog'
-        contentStyle={{maxWidth: 840}}
+        key="dialog"
+        ref="dialog"
+        contentWidth="medium"
         title="Configure Push Notification Socket - APNS"
         autoDetectWindowHeight={true}
-        actions={dialogStandardActions}
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
-        open={this.state.open}>
+        open={this.state.open}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div className="row align-center hp-2-l hp-2-r vm-2-b">
           <div
             className="hm-2-r"
             dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
           <div className="col-flex-1">
-            <DropZone
-              certificateType="development"
-              isLoading={this.state.isCertLoading}
-              handleButtonClick={(file) => this.onDrop(file, 'development')}
-              onDrop={(file) => this.onDrop(file, 'development')}
-              disableClick={true}
-              withButton={true}
-              uploadButtonLabel="UPLOAD .p12 CERTIFICATE">
-              {this.renderDropzoneDescription('development')}
-            </DropZone>
-            <div className="vm-2-t">
-              <DropZone
-                certificateType="production"
-                isLoading={this.state.isCertLoading}
-                handleButtonClick={(file) => this.onDrop(file, 'production')}
-                onDrop={(file) => this.onDrop(file, 'production')}
-                disableClick={true}
-                withButton={true}
-                uploadButtonLabel="UPLOAD .p12 CERTIFICATE">
-                {this.renderDropzoneDescription('production')}
-              </DropZone>
-            </div>
+            {this.renderDropZones()}
             <div className="vm-4-t">
               If you don't have any certificates generated yet read
               <a

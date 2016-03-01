@@ -1,20 +1,19 @@
 import React from 'react';
-
 import {FlatButton, RaisedButton} from 'syncano-material-ui';
 
-export default (props) => {
+export default ({handleCancel, handleConfirm}) => {
   return (
     <div>
       <FlatButton
-        style={{marginRight: 20}}
+        style={{marginRight: 10}}
         key="cancel"
         label="Cancel"
-        onTouchTap={props.handleCancel}/>
+        onTouchTap={handleCancel}/>
       <RaisedButton
         key="confirm"
         label="Confirm"
         secondary={true}
-        onTouchTap={props.handleConfirm}/>
+        onTouchTap={handleConfirm}/>
     </div>
   );
 };

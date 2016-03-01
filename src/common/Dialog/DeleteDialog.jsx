@@ -81,26 +81,26 @@ export default React.createClass({
   },
 
   render() {
-    let {children, ...other} = this.props; // eslint-disable-line no-redeclare
-    const dialogActions = (
-      <StandardButtons
-        handleCancel={this.dismiss}
-        handleConfirm={() => this.props.handleConfirm(this.getItems())}/>
-    );
+    let {children, ...other} = this.props;
 
     return (
       <Dialog
+        {...other}
         onRequestClose={this.dismiss}
-        contentStyle={{maxWidth: 500, paddingTop: 120}}
-        actions={dialogActions}
+        contentWidth="small"
+        contentStyle={{paddingTop: 120}}
         open={this.state.open}
         avoidResetState={true}
         modal={true}
-        {...other}>
+        actions={
+          <StandardButtons
+            handleCancel={this.dismiss}
+            handleConfirm={() => this.props.handleConfirm(this.getItems())}/>
+        }>
         <div className="row">
-            <FontIcon
-              style={{fontSize: 60, color: Styles.Colors.grey500}}
-              className="synicon-delete col-sm-7"/>
+          <FontIcon
+            style={{fontSize: 60, color: Styles.Colors.grey500}}
+            className="synicon-delete col-sm-7"/>
           <div className="vm-1-t">
             {children ? children : this.renderContent()}
           </div>

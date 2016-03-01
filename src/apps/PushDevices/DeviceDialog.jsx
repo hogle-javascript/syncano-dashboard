@@ -63,11 +63,6 @@ export default (type, Store, Actions) => {
 
     render() {
       const title = this.hasEditMode() ? 'Edit' : 'Create';
-      const dialogStandardActions = (
-        <Dialog.StandardButtons
-          handleCancel={this.handleCancel}
-          handleConfirm={this.handleFormValidation}/>
-      );
 
       return (
         <Dialog.FullPage
@@ -76,7 +71,11 @@ export default (type, Store, Actions) => {
           title={`${title} a ${type} Device`}
           onRequestClose={this.handleCancel}
           open={this.state.open}
-          actions={dialogStandardActions}>
+          actions={
+            <Dialog.StandardButtons
+              handleCancel={this.handleCancel}
+              handleConfirm={this.handleFormValidation}/>
+          }>
           <div>
             {this.renderFormNotifications()}
             <TextField
@@ -109,7 +108,9 @@ export default (type, Store, Actions) => {
               errorText={this.getValidationMessages('device_id').join(' ')}
               floatingLabelText="Device ID"/>
 
-            <div className="vm-4-t col-sm-7">
+            <div
+              style={{width: 180}}
+              className="vm-4-t">
               <Toggle
                 ref="is_active"
                 key="is_active"

@@ -4,21 +4,14 @@ import Radium from 'radium';
 
 import {DialogMixin, FormMixin} from '../../mixins';
 
-import {
-  TextField,
-  Toggle,
-  SelectField,
-  MenuItem,
-  Utils,
-  Styles
-} from 'syncano-material-ui';
+import {TextField, Toggle, SelectField, MenuItem, Utils, Styles} from 'syncano-material-ui';
 import {Loading, Show} from 'syncano-components';
 import {Dialog, Editor, Notification} from '../../common';
 
 export default (store, props) => {
   return Radium(React.createClass({
 
-    displayName: `${props.type}SendMessageDialog`,
+    displayName: `${store.getConfig().type}SendMessageDialog`,
 
     mixins: [
       Reflux.connect(store),
@@ -140,6 +133,7 @@ export default (store, props) => {
     },
 
     handleSendMessage() {
+      const type = store.getConfig().type;
       const checkedItems = props.getCheckedItems().map((item) => item.registration_id);
       const registrationIds = checkedItems.length > 0 ? checkedItems : [this.state.registration_id];
       let payload = {
@@ -168,10 +162,10 @@ export default (store, props) => {
       };
 
       if (this.state.isJSONMessage) {
-        payload[props.type] = JSON.parse(this.state.JSONMessage);
+        payload[type] = JSON.parse(this.state.JSONMessage);
       }
 
-      props.handleSendMessage(payload[props.type]);
+      props.handleSendMessage(payload[type]);
     },
 
     handleEditSubmit() {
@@ -212,27 +206,19 @@ export default (store, props) => {
       });
     },
 
-    renderDialogTitle() {
-      const type = props.type === 'APNS' ? 'iOS' : 'Android';
-
-      return (
-        <Dialog.TitleWithIcon iconClassName={`synicon-${props.type === 'APNS' ? 'apple' : 'android'}`}>
-          {`Send Message To ${type} Device`}
-        </Dialog.TitleWithIcon>
-      );
-    },
-
     renderMessageFields() {
       if (this.state.isJSONMessage) {
         return (
-          <Editor
-            ref="JSONMessage"
-            minLines={16}
-            maxLines={16}
-            onChange={this.updateJSONMessage}
-            mode="javascript"
-            theme="tomorow"
-            value={this.state.JSONMessage}/>
+          <div className="vm-3-t">
+            <Editor
+              ref="JSONMessage"
+              minLines={16}
+              maxLines={16}
+              onChange={this.updateJSONMessage}
+              mode="javascript"
+              theme="tomorow"
+              value={this.state.JSONMessage}/>
+          </div>
         );
       }
 
@@ -252,32 +238,6 @@ export default (store, props) => {
             floatingLabelText="Push notification Text"/>
         </div>
       );
-    },
-
-    renderCertificateTypeField(type) {
-      const field = {
-        GCM: <SelectField
-          floatingLabelText="Certificate type"
-          autoWidth={true}
-          fullWidth={true}
-          value={this.state.environment}
-          onChange={this.handleChangeDropdown}>
-          <MenuItem
-            value="development"
-            primaryText="Development"/>
-          <MenuItem
-            value="production"
-            primaryText="Production"/>
-        </SelectField>,
-        APNS: <div className="vm-3-t">
-          <Toggle
-            label="Use Sandbox"
-            onToggle={this.toggleSandbox}
-            toggled={this.state.environment === 'development'}/>
-        </div>
-      };
-
-      return field[type];
     },
 
     renderCheckedItemsData() {
@@ -332,27 +292,51 @@ export default (store, props) => {
     },
 
     render() {
-      const type = props.type;
-      const isAPNS = type === 'APNS';
+      const config = store.getConfig();
+      const isAPNS = config.type === 'APNS';
       const styles = this.getStyles();
-      const dialogStandardActions = (
-        <Dialog.StandardButtons
-          handleCancel={this.handleCancel}
-          handleConfirm={this.handleFormValidation}/>
-      );
+      const field = {
+        GCM: <SelectField
+          floatingLabelText="Certificate type"
+          autoWidth={true}
+          fullWidth={true}
+          value={this.state.environment}
+          onChange={this.handleChangeDropdown}>
+          <MenuItem
+            value="development"
+            primaryText="Development"/>
+          <MenuItem
+            value="production"
+            primaryText="Production"/>
+        </SelectField>,
+        APNS: <div className="vm-3-t">
+          <Toggle
+            label="Use Sandbox"
+            onToggle={this.toggleSandbox}
+            toggled={this.state.environment === 'development'}/>
+        </div>
+      };
 
       return (
         <Dialog.FullPage
-          key='dialog'
-          ref='dialog'
-          title={this.renderDialogTitle()}
+          key="dialog"
+          ref="dialog"
+          title={
+            <Dialog.TitleWithIcon iconClassName={config.icon}>
+              {`Send Message To ${config.device} Device`}
+            </Dialog.TitleWithIcon>
+          }
           autoScrollBodyContent={true}
           autoDetectWindowHeight={true}
           repositionOnUpdate={false}
-          actions={dialogStandardActions}
           actionsContainerClassName="vm-1-t"
           onRequestClose={this.handleCancel}
-          open={this.state.open}>
+          open={this.state.open}
+          actions={
+            <Dialog.StandardButtons
+              handleCancel={this.handleCancel}
+              handleConfirm={this.handleFormValidation}/>
+          }>
           <div style={styles.sendDialogHeaderContainer}>
             <div
               style={styles.sendDialogHeader}
@@ -403,7 +387,7 @@ export default (store, props) => {
             <div className="col-flex-1 hm-3-l">
               <div className="row align-middle">
                 <div className="col-sm-17">
-                  {this.renderCertificateTypeField(type)}
+                  {field[config.type]}
                 </div>
                 <div className="col-sm-18 vm-3-t">
                   <Toggle

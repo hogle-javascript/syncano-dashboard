@@ -11,7 +11,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      actions: []
+      actions: [],
+      contentWidth: 'large'
     };
   },
 
@@ -38,8 +39,7 @@ export default React.createClass({
       },
       content: {
         transform: 'none',
-        width: '100%',
-        maxWidth: 998
+        width: '100%'
       },
       title: {
         paddingTop: 0
@@ -57,8 +57,19 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let {children, open, actions, isLoading, onRequestClose, ...other} = this.props;
+    const styles = this.getStyles();
+    const {contentWidth, children, open, actions, isLoading, onRequestClose, ...other} = this.props;
+    const maxWidths = {
+      small: {
+        maxWidth: 500
+      },
+      medium: {
+        maxWidth: 840
+      },
+      large: {
+        maxWidth: 998
+      }
+    };
 
     return (
       <Dialog
@@ -66,7 +77,7 @@ export default React.createClass({
         open={_.isBoolean(open) ? open : this.state.open}
         style={styles.style}
         overlayStyle={styles.overlay}
-        contentStyle={Utils.Styles.mergeStyles(styles.content, this.props.contentStyle)}
+        contentStyle={Utils.Styles.mergeStyles(styles.content, maxWidths[contentWidth], this.props.contentStyle)}
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}

@@ -67,21 +67,20 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const dialogStandardActions = (
-      <Dialog.StandardButtons
-        handleCancel={this.handleCancel}
-        handleConfirm={this.handleFormValidation}/>
-    );
 
     return (
       <Dialog.FullPage
-        key='dialog'
-        ref='dialog'
+        key="dialog"
+        ref="dialog"
         title="Configure Push Notification Socket - GCM"
-        actions={dialogStandardActions}
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
-        open={this.state.open}>
+        open={this.state.open}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div className="row align-center hp-2-l hp-2-r">
           <div dangerouslySetInnerHTML={{__html: require('./phone-android.svg')}}>
           </div>
@@ -111,8 +110,8 @@ export default React.createClass({
           </div>
         </div>
         <Loading
-          type='linear'
-          position='bottom'
+          type="linear"
+          position="bottom"
           show={this.state.isLoading}/>
       </Dialog.FullPage>
     );
