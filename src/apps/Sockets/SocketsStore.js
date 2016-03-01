@@ -25,6 +25,7 @@ export default Reflux.createStore({
       gcmPushNotifications: [],
       apnsPushNotifications: [],
 
+      hasAnyItem: false,
       isLoading: true
     };
   },
@@ -83,6 +84,7 @@ export default Reflux.createStore({
     this.data.channels = this.saveListFromSyncano(sockets.channels);
     this.data.gcmPushNotifications = gcmItems;
     this.data.apnsPushNotifications = apnsItems;
+    this.data.hasAnyItem = _.filter(this.data, (value) => _.isArray(value) && value.length > 0).length > 0;
 
     this.trigger(this.data);
   }

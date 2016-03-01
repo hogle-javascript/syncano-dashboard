@@ -55,17 +55,11 @@ export default React.createClass({
   },
 
   getPushNotificationItems() {
-    const APNSItems = _.filter(this.state.sockets.gcmPushNotifications, 'hasConfig');
-    const GCMItems = _.filter(this.state.sockets.apnsPushNotifications, 'hasConfig');
+    const {sockets} = this.state;
+    const APNSItems = _.filter(sockets.gcmPushNotifications, 'hasConfig');
+    const GCMItems = _.filter(sockets.apnsPushNotifications, 'hasConfig');
 
     return APNSItems.concat(GCMItems);
-  },
-
-  hasAnyItem() {
-    const socketsWithItems = _.keys(this.state.sockets)
-      .filter((key) => _.isArray(this.state.sockets[key]) && this.state.sockets[key].length > 0);
-
-    return socketsWithItems.length > 0;
   },
 
   handleListTitleClick(routeName) {
@@ -101,10 +95,12 @@ export default React.createClass({
   },
 
   renderToolbar() {
-    if (!this.hasAnyItem() || this.state.sockets.isLoading) {
+    const {sockets} = this.state;
+    const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
+
+    if (!sockets.hasAnyItem || sockets.isLoading) {
       return <InnerToolbar title="Sockets"/>;
     }
-    const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
 
     return (
       <InnerToolbar title="Sockets">
@@ -126,9 +122,11 @@ export default React.createClass({
   },
 
   renderLists() {
-    if (!this.hasAnyItem()) {
+    const {sockets} = this.state;
+
+    if (!sockets.hasAnyItem) {
       return (
-        <Loading show={this.state.sockets.isLoading}>
+        <Loading show={sockets.isLoading}>
           <EmptyView />
         </Loading>
       );
@@ -136,53 +134,53 @@ export default React.createClass({
 
     return (
       <div style={{clear: 'both', height: '100%'}}>
-        <Loading show={this.state.sockets.isLoading}>
-          <Show if={this.state.sockets.data.length > 0}>
+        <Loading show={sockets.isLoading}>
+          <Show if={sockets.data.length}>
             <Data.List
               name="Data Sockets"
-              items={this.state.sockets.data}
+              items={sockets.data}
               handleTitleClick={() => this.handleListTitleClick('data')}
               emptyItemHandleClick={Data.Actions.showDialog}
               emptyItemContent="Create a Data Socket"/>
           </Show>
 
-          <Show if={this.state.sockets.scripts.length > 0}>
+          <Show if={sockets.scripts.length}>
             <CodeBoxes.List
               name="Script Sockets"
-              items={this.state.sockets.scripts}
+              items={sockets.scripts}
               handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
               emptyItemHandleClick={CodeBoxes.Actions.showDialog}
               emptyItemContent="Create a Script Socket"/>
           </Show>
 
-          <Show if={this.state.sockets.triggers.length > 0}>
+          <Show if={sockets.triggers.length}>
             <Triggers.List
               name="Trigger Sockets"
-              items={this.state.sockets.triggers}
+              items={sockets.triggers}
               handleTitleClick={() => this.handleListTitleClick('triggers')}
               emptyItemHandleClick={Triggers.Actions.showDialog}
               emptyItemContent="Create a Trigger Socket"/>
           </Show>
 
-          <Show if={this.state.sockets.schedules.length > 0}>
+          <Show if={sockets.schedules.length}>
             <Schedules.List
               name="Schedule Sockets"
-              items={this.state.sockets.schedules}
+              items={sockets.schedules}
               handleTitleClick={() => this.handleListTitleClick('schedules')}
               emptyItemHandleClick={Schedules.Actions.showDialog}
               emptyItemContent="Create a Schedule Socket"/>
           </Show>
 
-          <Show if={this.state.sockets.channels.length > 0}>
+          <Show if={sockets.channels.length}>
             <Channels.List
               name="Channel Sockets"
-              items={this.state.sockets.channels}
+              items={sockets.channels}
               handleTitleClick={() => this.handleListTitleClick('channels')}
               emptyItemHandleClick={Channels.Actions.showDialog}
               emptyItemContent="Create a Channel Socket"/>
           </Show>
 
-          <Show if={this.getPushNotificationItems().length > 0}>
+          <Show if={this.getPushNotificationItems().length}>
             <PushNotifications.List
               name="Push Notification Sockets"
               handleTitleClick={() => this.handleListTitleClick('push-notification-config')}

@@ -65,23 +65,23 @@ export default React.createClass({
                   <Sidebar.NestedLinkListItem
                     key="Script"
                     routeName="codeBoxes"
-                    primaryText="Scripts" />,
+                    primaryText="Script" />,
                   <Sidebar.NestedLinkListItem
                     key="Trigger"
                     routeName="triggers"
-                    primaryText="Triggers" />,
+                    primaryText="Trigger" />,
                   <Sidebar.NestedLinkListItem
                     key="Schedule"
                     routeName="schedules"
-                    primaryText="Schedules" />,
+                    primaryText="Schedule" />,
                   <Sidebar.NestedLinkListItem
                     key="Channel"
                     routeName="channels"
-                    primaryText="Channels" />,
+                    primaryText="Channel" />,
                   <Sidebar.NestedLinkListItem
                     key="Push Notifications"
                     routeName="push-notifications"
-                    primaryText="Push Notifications" />
+                    primaryText="Push Notification" />
                 ]} />
             </Sidebar.List>
             <Sidebar.List
