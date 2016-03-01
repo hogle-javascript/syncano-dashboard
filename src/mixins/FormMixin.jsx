@@ -8,7 +8,6 @@ import Notification from '../common/Notification/Notification';
 
 validate.moment = require('moment');
 
-
 export default {
   linkState(key) {
     // We don't want to call render here

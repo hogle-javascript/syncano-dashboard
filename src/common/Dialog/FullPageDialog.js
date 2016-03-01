@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import DialogMixin from '../../mixins/DialogMixin';
-import {Dialog, IconButton} from 'syncano-material-ui';
+import {Dialog, IconButton, Utils} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 
 export default React.createClass({
@@ -11,7 +11,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      actions: []
+      actions: [],
+      contentWidth: 'large'
     };
   },
 
@@ -38,8 +39,7 @@ export default React.createClass({
       },
       content: {
         transform: 'none',
-        width: '100%',
-        maxWidth: 998
+        width: '100%'
       },
       title: {
         paddingTop: 0
@@ -56,9 +56,19 @@ export default React.createClass({
     };
   },
 
+  getContentWidth(width) {
+    const contentWidths = {
+      small: 500,
+      medium: 840,
+      large: 998
+    };
+
+    return {maxWidth: contentWidths[width]};
+  },
+
   render() {
-    let styles = this.getStyles();
-    let {children, open, actions, isLoading, onRequestClose, ...other} = this.props;
+    const styles = this.getStyles();
+    const {contentWidth, contentStyle, children, open, actions, isLoading, onRequestClose, ...other} = this.props;
 
     return (
       <Dialog
@@ -66,7 +76,7 @@ export default React.createClass({
         open={_.isBoolean(open) ? open : this.state.open}
         style={styles.style}
         overlayStyle={styles.overlay}
-        contentStyle={styles.content}
+        contentStyle={Utils.Styles.mergeStyles(styles.content, this.getContentWidth(contentWidth), contentStyle)}
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}
@@ -81,14 +91,14 @@ export default React.createClass({
           style={styles.closeButton}
           iconStyle={styles.closeButtonIcon}
           onTouchTap={onRequestClose}
-          iconClassName="synicon-close" />
+          iconClassName="synicon-close"/>
 
         {children}
         <Loading
           type="linear"
           position="top"
           style={styles.loading}
-          show={isLoading} />
+          show={isLoading}/>
       </Dialog>
     );
   }

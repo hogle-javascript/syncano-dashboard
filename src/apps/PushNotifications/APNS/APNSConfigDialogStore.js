@@ -19,8 +19,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
+      certificateTypes: ['development', 'production'],
       isCertLoading: true,
-      certificateType: 'development',
       development_certificate: null,
       development_certificate_name: null,
       development_expiration_date: null,

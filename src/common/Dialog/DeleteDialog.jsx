@@ -2,8 +2,10 @@ import React from 'react';
 import pluralize from 'pluralize';
 import _ from 'lodash';
 
-import {FlatButton, Dialog} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
+import {FontIcon, Styles} from 'syncano-material-ui';
+import Dialog from './FullPageDialog';
+import StandardButtons from './DialogStandardButtons';
 
 export default React.createClass({
   displayName: 'DeleteDialog',
@@ -66,9 +68,9 @@ export default React.createClass({
   },
 
   renderContent() {
-    let {actionName, groupName, itemLabelName} = this.props;
-    let listItems = this.getItems();
-    let itemsCount = listItems.length;
+    const {actionName, groupName, itemLabelName} = this.props;
+    const listItems = this.getItems();
+    const itemsCount = listItems.length;
 
     return (
       <div>
@@ -79,26 +81,30 @@ export default React.createClass({
   },
 
   render() {
-    let {children, ...other} = this.props; // eslint-disable-line no-redeclare
+    let {children, ...other} = this.props;
 
     return (
       <Dialog
-        actions={[
-          <FlatButton
-            label="Cancel"
-            secondary={true}
-            onTouchTap={this.dismiss}/>,
-          <FlatButton
-            label="Confirm"
-            primary={true}
-            keyboardFocused={true}
-            onTouchTap={this.props.handleConfirm.bind(null, this.getItems())}/>
-        ]}
+        onRequestClose={this.dismiss}
+        contentWidth="small"
+        contentStyle={{paddingTop: 120}}
         open={this.state.open}
         avoidResetState={true}
         modal={true}
+        actions={
+          <StandardButtons
+            handleCancel={this.dismiss}
+            handleConfirm={() => this.props.handleConfirm(this.getItems())}/>
+        }
         {...other}>
-        {children ? children : this.renderContent()}
+        <div className="row">
+          <FontIcon
+            style={{fontSize: 60, color: Styles.Colors.grey500}}
+            className="synicon-delete col-sm-7"/>
+          <div className="vm-1-t col-sm-28">
+            {children ? children : this.renderContent()}
+          </div>
+        </div>
         <Loading
           type="linear"
           position="bottom"

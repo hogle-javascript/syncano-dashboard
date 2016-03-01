@@ -9,7 +9,7 @@ import Actions from './GCMPushNotificationsActions';
 import Store from './GCMConfigDialogStore';
 
 // Components
-import {FlatButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
+import {TextField, Styles} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {Dialog} from '../../../common';
 
@@ -66,31 +66,21 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let dialogStandardActions = [
-      <FlatButton
-        style={{marginRight: 10}}
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        type="submit"
-        label="Confirm"
-        secondary={true}
-        onTouchTap={this.handleFormValidation}/>
-    ];
+    const styles = this.getStyles();
 
     return (
-      <Dialog
-        key='dialog'
-        ref='dialog'
+      <Dialog.FullPage
+        key="dialog"
+        ref="dialog"
         title="Configure Push Notification Socket - GCM"
-        actions={dialogStandardActions}
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
-        open={this.state.open}>
+        open={this.state.open}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div className="row align-center hp-2-l hp-2-r">
           <div dangerouslySetInnerHTML={{__html: require('./phone-android.svg')}}>
           </div>
@@ -120,10 +110,10 @@ export default React.createClass({
           </div>
         </div>
         <Loading
-          type='linear'
-          position='bottom'
+          type="linear"
+          position="bottom"
           show={this.state.isLoading}/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });
