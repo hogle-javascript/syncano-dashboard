@@ -25,11 +25,11 @@ export default React.createClass({
       <ColumnList.Item
         checked={item.checked}
         key={item.name}>
-        <Column.CheckIcon
+        <Column.CheckIcon.Socket
           className="col-xs-12"
           id={item.name}
-          icon='table'
-          background={Color.getColorByName('blue', 'xlight')}
+          iconClassName="socket-data"
+          iconColor={Color.getColorByName('green', 'light')}
           checked={item.checked}
           keyName="name"
           handleIconClick={onIconClick}

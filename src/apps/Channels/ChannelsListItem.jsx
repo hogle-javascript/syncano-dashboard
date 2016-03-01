@@ -2,6 +2,7 @@ import React from 'react';
 
 import Actions from './ChannelsActions';
 
+import {Link, State} from 'react-router';
 import {SnackbarNotificationMixin} from '../../mixins';
 
 import {MenuItem} from 'syncano-material-ui';
@@ -12,7 +13,7 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'ChannelsListItem',
 
-  mixins: [SnackbarNotificationMixin],
+  mixins: [SnackbarNotificationMixin, State],
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
@@ -21,12 +22,12 @@ export default React.createClass({
       <ColumnList.Item
         checked={item.checked}
         key={item.name}>
-        <Column.CheckIcon
+        <Column.CheckIcon.Socket
           className="col-xs-12"
           id={item.name}
-          icon={'bullhorn'}
+          iconClassName="socket-channel"
+          iconColor={Color.getColorByName('blue', 'light')}
           keyName="name"
-          background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.name}
@@ -50,6 +51,16 @@ export default React.createClass({
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           {item.type}
+        </Column.Desc>
+        <Column.Desc className="col-flex-1">
+          <Link
+            to="channel-history"
+            params={{
+              instanceName: this.getParams().instanceName,
+              channelName: item.name
+            }}>
+            History
+          </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           {item.custom_publish ? 'Yes' : 'No'}

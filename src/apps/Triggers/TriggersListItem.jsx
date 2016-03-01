@@ -6,8 +6,8 @@ import {DialogsMixin} from '../../mixins';
 import Actions from './TriggersActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
-import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from 'syncano-components';
+import {MenuItem, Styles} from 'syncano-material-ui';
+import {ColumnList} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
@@ -28,10 +28,10 @@ export default React.createClass({
       <ColumnList.Item
         checked={item.checked}
         key={item.id}>
-        <Column.CheckIcon
+        <Column.CheckIcon.Socket
           id={item.id.toString()}
-          icon='arrow-up-bold'
-          background={Color.getColorByName('blue', 'xlight')}
+          iconClassName="socket-trigger"
+          iconColor={Styles.Colors.amberA200}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}
           primaryText={item.label}/>

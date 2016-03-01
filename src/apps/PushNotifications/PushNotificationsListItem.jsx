@@ -39,11 +39,11 @@ export default React.createClass({
 
     return (
       <ColumnList.Item key={this.props.label}>
-        <Column.CheckIcon
+        <Column.CheckIcon.Socket
           id={`push-notification${this.props.label}`}
-          icon={this.props.icon}
+          iconClassName="socket-push"
           checkable={false}
-          background={Color.getColorByName('blue')}
+          iconColor={Color.getColorByName('indigo', 'light')}
           className="col-sm-20"
           primaryText={this.props.label}
           secondaryText={
