@@ -291,10 +291,7 @@ export default (store, props) => {
       return this.state.isHeaderExpanded ? itemNodes : itemNodes.slice(0, 3);
     },
 
-    render() {
-      const config = store.getConfig();
-      const isAPNS = config.type === 'APNS';
-      const styles = this.getStyles();
+    renderCertificateTypeFields(type) {
       const field = {
         GCM: <SelectField
           floatingLabelText="Certificate type"
@@ -316,6 +313,14 @@ export default (store, props) => {
             toggled={this.state.environment === 'development'}/>
         </div>
       };
+
+      return field[type];
+    },
+
+    render() {
+      const config = store.getConfig();
+      const isAPNS = config.type === 'APNS';
+      const styles = this.getStyles();
 
       return (
         <Dialog.FullPage
@@ -387,7 +392,7 @@ export default (store, props) => {
             <div className="col-flex-1 hm-3-l">
               <div className="row align-middle">
                 <div className="col-sm-17">
-                  {field[config.type]}
+                  {this.renderCertificateTypeFields(config.type)}
                 </div>
                 <div className="col-sm-18 vm-3-t">
                   <Toggle
