@@ -80,7 +80,7 @@ export default Reflux.createStore({
               return title;
             },
             name: (name) => {
-              return {api: 'API calls', cbx: 'Script runs'}[name];
+              return {api: 'API calls', cbx: 'Script seconds'}[name];
             },
             value: (value) => d3.format('$')(_.round(value, 5))
           }

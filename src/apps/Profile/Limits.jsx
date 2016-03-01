@@ -9,7 +9,7 @@ export default React.createClass({
       <div className="row">
         <div className="col-md-9" style={{whiteSpace: 'nowrap'}}>
           <div>API calls</div>
-          <div>Script runs</div>
+          <div>Script seconds</div>
         </div>
         <div className="col-md-9" style={{textAlign: 'right'}}>
           <div><strong>{parseInt(this.props.data.api.included, 10).toLocaleString()}/month</strong></div>
@@ -25,7 +25,7 @@ export default React.createClass({
         <Show if={this.props.data.api.overage && this.props.data.cbx.overage}>
           <div className="col-md-9" style={{paddingLeft: 3}}>
             <div style={{whiteSpace: 'nowrap'}}>per extra call</div>
-            <div style={{whiteSpace: 'nowrap'}}>per extra run</div>
+            <div style={{whiteSpace: 'nowrap'}}>per extra second</div>
           </div>
         </Show>
       </div>
