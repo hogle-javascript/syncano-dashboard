@@ -218,7 +218,7 @@ export default Radium(React.createClass({
   renderDropZones() {
     const {certificateTypes} = this.state;
 
-    return certificateTypes.map((type) => {
+    return _.map(certificateTypes, (type) => {
       return (
         <div
           key={`dropzone${type}`}

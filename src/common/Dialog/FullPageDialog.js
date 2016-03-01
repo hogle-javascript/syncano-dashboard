@@ -56,20 +56,19 @@ export default React.createClass({
     };
   },
 
+  getContentWidth(width) {
+    const contentWidths = {
+      small: 500,
+      medium: 840,
+      large: 998
+    };
+
+    return {maxWidth: contentWidths[width]};
+  },
+
   render() {
     const styles = this.getStyles();
-    const {contentWidth, children, open, actions, isLoading, onRequestClose, ...other} = this.props;
-    const maxWidths = {
-      small: {
-        maxWidth: 500
-      },
-      medium: {
-        maxWidth: 840
-      },
-      large: {
-        maxWidth: 998
-      }
-    };
+    const {contentWidth, contentStyle, children, open, actions, isLoading, onRequestClose, ...other} = this.props;
 
     return (
       <Dialog
@@ -77,7 +76,7 @@ export default React.createClass({
         open={_.isBoolean(open) ? open : this.state.open}
         style={styles.style}
         overlayStyle={styles.overlay}
-        contentStyle={Utils.Styles.mergeStyles(styles.content, maxWidths[contentWidth], this.props.contentStyle)}
+        contentStyle={Utils.Styles.mergeStyles(styles.content, this.getContentWidth(contentWidth), contentStyle)}
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}
@@ -92,14 +91,14 @@ export default React.createClass({
           style={styles.closeButton}
           iconStyle={styles.closeButtonIcon}
           onTouchTap={onRequestClose}
-          iconClassName="synicon-close" />
+          iconClassName="synicon-close"/>
 
         {children}
         <Loading
           type="linear"
           position="top"
           style={styles.loading}
-          show={isLoading} />
+          show={isLoading}/>
       </Dialog>
     );
   }

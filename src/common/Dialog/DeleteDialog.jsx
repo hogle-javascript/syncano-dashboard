@@ -85,7 +85,6 @@ export default React.createClass({
 
     return (
       <Dialog
-        {...other}
         onRequestClose={this.dismiss}
         contentWidth="small"
         contentStyle={{paddingTop: 120}}
@@ -96,12 +95,13 @@ export default React.createClass({
           <StandardButtons
             handleCancel={this.dismiss}
             handleConfirm={() => this.props.handleConfirm(this.getItems())}/>
-        }>
+        }
+        {...other}>
         <div className="row">
           <FontIcon
             style={{fontSize: 60, color: Styles.Colors.grey500}}
             className="synicon-delete col-sm-7"/>
-          <div className="vm-1-t">
+          <div className="vm-1-t col-sm-28">
             {children ? children : this.renderContent()}
           </div>
         </div>
