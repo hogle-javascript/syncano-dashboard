@@ -1,6 +1,7 @@
 import 'd3';
 import 'syncano-c3/c3.css';
 import c3 from 'syncano-c3';
+import _ from 'lodash';
 
 import React from 'react';
 import Reflux from 'reflux';
@@ -27,25 +28,54 @@ export default Radium(React.createClass({
   componentDidUpdate() {
     console.log('ProfileBillingChart::componentDidUpdate');
 
-    if (this.state.isLoading === true || typeof this.chart !== 'undefined') {
+    if (this.state.isLoading === true || typeof this.charts !== 'undefined') {
       return;
     }
 
-    let config = this.state.chart;
+    this.charts = true;
 
-    config.bindto = this.refs.chart;
-    config.size = {height: 300};
-    this.chart = c3.generate(config);
+    _.map(this.state.charts, (config, name) => {
+      config.bindto = this.refs[`chart-${name}`];
+      config.size = {height: 300};
+      this.chart = c3.generate(config);
+    });
+  },
+
+  getStyles() {
+    return {
+      holder: {
+        paddingTop: 16,
+        paddingBottom: 8,
+        paddingRight: 10,
+        background: '#F5F5F5'
+      },
+      heading: {
+        fontSize: '1.3em',
+        padding: '24px 12px'
+      }
+    };
   },
 
   render() {
-    return (
-      <div style={{paddingTop: 16, paddingBottom: 8, paddingRight: 10, background: '#F5F5F5'}}>
+    const styles = this.getStyles();
+    const charts = _.map(this.state.charts, (config, name) => {
+      return (
         <div
-          ref="chart"
-          className="col chart">
+          key={`chart-${name}`}
+          className="row">
+          <div style={styles.heading}>
+            {config.title}
+          </div>
+
+          <div
+            ref={`chart-${name}`}
+            className="col chart">
+          </div>
         </div>
-      </div>
-    );
+      );
+    });
+
+    return <div>{charts}</div>;
   }
+
 }));

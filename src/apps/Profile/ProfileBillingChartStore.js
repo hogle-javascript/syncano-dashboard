@@ -19,78 +19,12 @@ export default Reflux.createStore({
   },
 
   getInitialState() {
-    let today = this.getToday();
-    let allDates = this.getAllDates();
-    let xColumn = ['x'].concat(allDates);
-
     return {
       isLoading: true,
-      chart: {
-        data: {
-          x: 'x',
-          columns: [xColumn],
-          types: {},
-          groups: [[]],
-          colors: {
-            api: '#77D8F6',
-            cbx: '#FFD78E'
-          }
-        },
-        point: {
-          show: false
-        },
-        axis: {
-          x: {
-            label: 'Day of the month',
-            type: 'timeseries',
-            tick: {
-              fit: true,
-              format: '%b %d'
-            }
-          },
-          y: {
-            label: 'Cost ($)',
-            type: 'indexed',
-            tick: {
-              format: (x) => {
-                return x / 2 ? x : null;
-              },
-              fit: true
-            },
-            show: true
-          }
-        },
-        grid: {
-          x: {
-            lines: [
-              {value: today, text: 'Today', position: 'start'}
-            ]
-          },
-          y: {lines: []}
-        },
-        tooltip: {
-          format: {
-            title: (input) => {
-              let title = moment(input).format('MMM DD');
-              let date = moment(input).format(this.format);
-
-              if (date > today) {
-                title = `Prediction for ${title}`;
-              }
-              return title;
-            },
-            name: (name) => {
-              return {api: 'API calls', cbx: 'Script seconds'}[name];
-            },
-            value: (value) => d3.format('$')(_.round(value, 5))
-          }
-        },
-        regions: [{
-          start: today,
-          end: _.last(allDates),
-          class: 'predictions'
-        }],
-        legend: {show: false}
+      charts: {
+        api: this.getInitialChartState(),
+        cbx: this.getInitialChartState(),
+        total: this.getInitialChartState()
       },
       profile: {
         subscription: {}
@@ -108,6 +42,81 @@ export default Reflux.createStore({
     };
   },
 
+  getInitialChartState() {
+    let today = this.getToday();
+    let allDates = this.getAllDates();
+    let xColumn = ['x'].concat(allDates);
+
+    return {
+      data: {
+        x: 'x',
+        columns: [xColumn],
+        types: {},
+        groups: [[]],
+        colors: {
+          api: '#77D8F6',
+          cbx: '#FFD78E',
+          total: '#66bb6a'
+        }
+      },
+      point: {
+        show: false
+      },
+      axis: {
+        x: {
+          label: 'Day of the month',
+          type: 'timeseries',
+          tick: {
+            fit: true,
+            format: '%b %d'
+          }
+        },
+        y: {
+          label: 'Cost ($)',
+          type: 'indexed',
+          tick: {
+            format: (x) => {
+              return x / 2 ? x : null;
+            },
+            fit: true
+          },
+          show: true
+        }
+      },
+      grid: {
+        x: {
+          lines: [
+            {value: today, text: 'Today', position: 'start'}
+          ]
+        },
+        y: {lines: []}
+      },
+      tooltip: {
+        format: {
+          title: (input) => {
+            let title = moment(input).format('MMM DD');
+            let date = moment(input).format(this.format);
+
+            if (date > today) {
+              title = `Prediction for ${title}`;
+            }
+            return title;
+          },
+          name: (name) => {
+            return {api: 'API calls', cbx: 'Script seconds', total: 'Total'}[name];
+          },
+          value: (value) => d3.format('$')(_.round(value, 5))
+        }
+      },
+      regions: [{
+        start: today,
+        end: _.last(allDates),
+        class: 'predictions'
+      }],
+      legend: {show: false}
+    };
+  },
+
   prepareChartData(joinProfiles, joinUsages) {
     let profile = _.first(joinProfiles);
     let usage = _.first(joinUsages);
@@ -120,7 +129,7 @@ export default Reflux.createStore({
     let plan = subscription.plan || null;
     let pricing = subscription.pricing;
     let usageAmount = {api: 0, cbx: 0};
-    let columns = {api: {}, cbx: {}};
+    let columns = {api: {}, cbx: {}, total: {}};
 
     if (_.isEmpty(pricing)) {
       // $5.25
@@ -139,32 +148,23 @@ export default Reflux.createStore({
       let amount = pricing[_usage.source].overage * _usage.value;
 
       columns[_usage.source][_usage.date] = amount;
+      columns.total[_usage.date] = (columns.total[_usage.date] || 0) + amount;
       usageAmount[_usage.source] += amount;
     });
 
     this.fillBlanks(columns);
     this.objectToArray(columns);
 
-    _.forEach(columns, (values, name) => {
-      state.chart.data.columns.push([name].concat(values));
-      state.chart.data.groups[0].push(name);
-      state.chart.data.types[name] = 'area';
-    });
-
     state.covered = _.reduce(pricing, (result, value, key) => {
       let amount = value.included * value.overage;
 
       result.amount += amount;
+      result.total.amount += amount;
       result[key] = _.extend({}, value, {amount});
       return result;
-    }, {amount: 0});
+    }, {amount: 0, total: {amount: 0}});
 
     state.covered.amount = _.round(state.covered.amount, 0);
-    state.chart.grid.y.lines.push({
-      value: state.covered.amount,
-      text: 'Covered by plan',
-      position: 'middle'
-    });
 
     state.overage = _.reduce(pricing, (result, value, key) => {
       let covered = state.covered[key];
@@ -172,17 +172,23 @@ export default Reflux.createStore({
       let included = _.round(amount / value.overage);
 
       result.amount += amount;
+      result.total.amount += amount;
       result[key] = result[key] = _.extend({}, value, {amount, included});
       return result;
-    }, {amount: 0});
+    }, {amount: 0, total: {amount: 0}});
 
-    if (plan !== 'builder' && _.last(state.chart.data.columns[1]) < 6 && _.last(state.chart.data.columns[2]) < 6) {
-      state.chart.axis.y.max = state.covered.amount + (0.1 * state.covered.amount);
-    }
-
-    if (plan === 'builder' && _.last(state.chart.data.columns[1]) < 0.5 && _.last(state.chart.data.columns[2]) < 0.5) {
-      state.chart.axis.y.max = 0.5;
-    }
+    _.forEach(columns, (values, name) => {
+      state.charts[name].title = {api: 'API calls', cbx: 'Script seconds', total: 'Total'}[name];
+      state.charts[name].data.columns.push([name].concat(values));
+      state.charts[name].data.groups[0].push(name);
+      state.charts[name].data.types[name] = 'area';
+      state.charts[name].axis.y.max = (state.covered[name].amount + state.overage[name].amount) * 1.1;
+      state.charts[name].grid.y.lines.push({
+        value: state.covered[name].amount,
+        text: 'Current plan',
+        position: 'middle'
+      });
+    });
 
     PlanActions.setOverage(state.overage);
     PlanActions.setChartLegend({
