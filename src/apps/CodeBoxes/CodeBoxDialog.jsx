@@ -10,7 +10,7 @@ import DialogStore from './CodeBoxDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {TextField, Toggle, FlatButton, RaisedButton} from 'syncano-material-ui';
+import {TextField, Toggle} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -64,21 +64,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        label="Confirm"
-        secondary={true}
-        style={{marginLeft: 10}}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
 
     return (
       <Dialog.FullPage
@@ -88,7 +74,11 @@ export default React.createClass({
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
         open={this.state.open}
-        modal={true}>
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         {this.renderFormNotifications()}
         <TextField
           ref="name"

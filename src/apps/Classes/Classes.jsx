@@ -18,7 +18,6 @@ import {InnerToolbar} from '../../common';
 import ClassesList from './ClassesList';
 
 export default React.createClass({
-
   displayName: 'Classes',
 
   mixins: [
