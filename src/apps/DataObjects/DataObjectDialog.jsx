@@ -576,31 +576,22 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let editTitle = 'Edit a Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')';
+    let editTitle = `Edit a Data Object #${this.state.id} (${DataObjectsStore.getCurrentClassName()})`;
     let addTitle = 'Add a Data Object';
     let title = this.hasEditMode() ? editTitle : addTitle;
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <FlatButton
-        key="confirm"
-        label="Confirm"
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={title}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        actions={dialogStandardActions}>
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         {this.renderFormNotifications()}
         <div className="row">
           <div className="col-xs-20">
@@ -617,7 +608,7 @@ export default React.createClass({
           type="linear"
           position="bottom"
           show={this.state.isLoading} />
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });
