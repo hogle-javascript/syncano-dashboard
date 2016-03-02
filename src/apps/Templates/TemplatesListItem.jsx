@@ -41,11 +41,13 @@ export default React.createClass({
           keyName="name"
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={onIconClick}>
-          <Truncate
-            onClick={() => this.handleItemClick(item.name)}
-            text={item.name}
-            style={{cursor: 'pointer'}}/>
+          handleIconClick={onIconClick}
+          primaryText={
+            <Truncate
+              onClick={() => this.handleItemClick(item.name)}
+              text={item.name}
+              style={{cursor: 'pointer'}}/>
+          }>
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.content_type}</Column.Desc>
         <Column.Menu>

@@ -10,7 +10,6 @@ let getPhoneIcon = () => {
   return <div dangerouslySetInnerHTML={{__html: require('./phone-android-empty-screen.svg')}}></div>;
 };
 const props = {
-  type: 'GCM',
   getCheckedItems: DevicesStore.getCheckedItems,
   handleSendMessage: Actions.sendMessagesToGCM,
   phoneIcon: getPhoneIcon()

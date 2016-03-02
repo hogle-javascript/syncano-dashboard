@@ -17,9 +17,9 @@ export default {
       if (action.asyncResult === true && action.loading === true) {
         const predicate = (n) => _.isFunction(this[n]);
         const trigger = {
-          action: _.some([name, _.camelCase(`on ${name}`)], predicate),
-          completed: _.some([_.camelCase(`on ${name} completed`), _.camelCase(`${name} completed`)], predicate),
-          failure: _.some([_.camelCase(`on ${name} failure`), _.camelCase(`${name} failure`)], predicate)
+          action: !_.some([name, _.camelCase(`on ${name}`)], predicate),
+          completed: !_.some([_.camelCase(`on ${name} completed`), _.camelCase(`${name} completed`)], predicate),
+          failure: !_.some([_.camelCase(`on ${name} failure`), _.camelCase(`${name} failure`)], predicate)
         };
 
         this.listenTo(action, () => this.setLoading(true, trigger.action));
