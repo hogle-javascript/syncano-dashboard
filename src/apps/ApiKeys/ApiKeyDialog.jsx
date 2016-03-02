@@ -9,7 +9,7 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeyDialogStore';
 
 // Components
-import {FlatButton, Toggle, TextField} from 'syncano-material-ui';
+import {Toggle, TextField} from 'syncano-material-ui';
 import {Dialog} from '../../common';
 
 export default React.createClass({
@@ -47,31 +47,23 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Generate';
-    let submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <FlatButton
-        key="confirm"
-        label={submitLabel}
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
+    const title = this.hasEditMode() ? 'Edit' : 'Generate';
+    const submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} an API Key`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        actions={dialogStandardActions}>
+        actions={
+          <Dialog.StandardButtons
+            submitLabel={submitLabel}
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         {this.renderFormNotifications()}
         <TextField
           ref="description"
@@ -99,7 +91,7 @@ export default React.createClass({
           defaultToggled={this.state.allow_anonymous_read}
           onToggle={this.handleToogle}
           label="Anonymous usage?"/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });
