@@ -12,7 +12,7 @@ import UsersActions from './UsersActions';
 import {GroupsStore} from './../Groups';
 
 // Components
-import {TextField, FlatButton} from 'syncano-material-ui';
+import {TextField} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -105,19 +105,6 @@ export default React.createClass({
       group.value = group.id.toString();
       return group;
     });
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <FlatButton
-        key="confirm"
-        label="Confirm"
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
 
     if (selectValueSource && _.isArray(selectValueSource.value)) {
       selectValue = selectValueSource.value.map((value) => value.id).join(',');
@@ -132,7 +119,11 @@ export default React.createClass({
         title={`${title} a User`}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        actions={dialogStandardActions}>
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div>
           {this.renderFormNotifications()}
           <TextField
