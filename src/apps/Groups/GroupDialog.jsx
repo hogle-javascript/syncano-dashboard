@@ -9,12 +9,11 @@ import Actions from './GroupsActions';
 import Store from './GroupDialogStore';
 
 // Components
-import {TextField, FlatButton} from 'syncano-material-ui';
+import {TextField} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
-
   displayName: 'GroupDialog',
 
   mixins: [
@@ -34,36 +33,27 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    Actions.updateGroup(this.state.id, {
-      label: this.state.label
-    });
+    const {id, label} = this.state;
+
+    Actions.updateGroup(id, {label});
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <FlatButton
-        key="confirm"
-        label="Confirm"
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
 
     return (
       <Dialog
-        key='dialog'
+        key="dialog"
         ref="dialog"
         title={`${title} a Group`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        actions={dialogStandardActions}>
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         {this.renderFormNotifications()}
         <TextField
           ref="label"
