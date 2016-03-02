@@ -28,7 +28,7 @@ import EmptyView from './EmptyView';
 
 export default React.createClass({
 
-  displayName: 'Data',
+  displayName: 'Sockets',
 
   mixins: [
     State,
@@ -50,8 +50,12 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    console.info('Data::componentDidMount');
+    console.info('Sockets::componentDidMount');
     Actions.fetch();
+  },
+
+  componentWillUnmount() {
+    Actions.clearSockets();
   },
 
   getPushNotificationItems() {
@@ -124,11 +128,9 @@ export default React.createClass({
   renderLists() {
     const {sockets} = this.state;
 
-    if (!sockets.hasAnyItem) {
+    if (!sockets.hasAnyItem && !sockets.isLoading) {
       return (
-        <Loading show={sockets.isLoading}>
-          <EmptyView />
-        </Loading>
+        <EmptyView />
       );
     }
 
