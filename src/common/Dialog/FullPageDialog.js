@@ -56,8 +56,8 @@ export default React.createClass({
     };
   },
 
-  getContentSize(width) {
-    const contentSizes = {
+  getContentConfig(size) {
+    const config = {
       small: {
         paddingTop: 120,
         maxWidth: 500
@@ -70,7 +70,7 @@ export default React.createClass({
       }
     };
 
-    return contentSizes[width];
+    return config[size];
   },
 
   render() {
@@ -83,7 +83,7 @@ export default React.createClass({
         open={_.isBoolean(open) ? open : this.state.open}
         style={styles.style}
         overlayStyle={styles.overlay}
-        contentStyle={Utils.Styles.mergeStyles(styles.content, this.getContentSize(contentSize), contentStyle)}
+        contentStyle={Utils.Styles.mergeStyles(styles.content, this.getContentConfig(contentSize), contentStyle)}
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}
