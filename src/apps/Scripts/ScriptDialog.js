@@ -9,7 +9,7 @@ import Actions from './ScriptsActions';
 import Store from './ScriptDialogStore';
 
 // Components
-import {TextField, FlatButton} from 'syncano-material-ui';
+import {TextField} from 'syncano-material-ui';
 import {Loading, SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -54,29 +54,24 @@ export default React.createClass({
 
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <FlatButton
-        key="confirm"
-        label="Confirm"
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
+    const submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
+    const {isLoading} = this.state;
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Script`}
-        actions={dialogStandardActions}
+        actions={
+          <Dialog.StandardButtons
+            submitLabel={submitLabel}
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        contentStyle={{padding: '8px 0 0 0'}}>
+        contentStyle={{padding: '8px 0 0 0'}}
+        isLoading={isLoading}>
         <div>
           {this.renderFormNotifications()}
           <TextField
@@ -108,7 +103,7 @@ export default React.createClass({
           type='linear'
           position='bottom'
           show={this.state.isLoading}/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });
