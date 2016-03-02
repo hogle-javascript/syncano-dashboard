@@ -424,7 +424,7 @@ export default Radium(React.createClass({
             <div
               className="col-flex-1 vp-1-b"
               style={styles.heading}>
-              See how it works with your <strong>current usage</strong>:
+              See how it works with your <strong>current plan</strong>:
             </div>
           </div>
 

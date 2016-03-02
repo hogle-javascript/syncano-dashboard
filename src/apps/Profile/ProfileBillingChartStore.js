@@ -162,7 +162,7 @@ export default Reflux.createStore({
     state.covered.amount = _.round(state.covered.amount, 0);
     state.chart.grid.y.lines.push({
       value: state.covered.amount,
-      text: 'Covered by plan',
+      text: 'Current plan',
       position: 'middle'
     });
 
