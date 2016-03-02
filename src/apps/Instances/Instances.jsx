@@ -8,7 +8,6 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
-import Header from '../Header';
 import {Container, Show, Socket} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
@@ -64,8 +63,6 @@ export default React.createClass({
     return (
       <div>
         <InstanceDialog />
-
-        <Header logo={true}/>
 
         <InnerToolbar title="Instances">
           <Socket

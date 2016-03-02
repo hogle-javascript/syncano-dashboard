@@ -185,12 +185,11 @@ export default Radium(React.createClass({
       left: 0
     };
     let iconName = currentInstance.metadata.icon ? currentInstance.metadata.icon : defaultIcon;
-    let icon = 'synicon-' + iconName;
 
     return (
       <div style={styles.dropdownIcon}>
         <FontIcon
-          className={icon}
+          className={`synicon-${iconName}`}
           style={this.mergeStyles(styles.dropdownInstanceIcon, iconStyle)}/>
         <div style={styles.dropdownText}>
           {currentInstance.name}

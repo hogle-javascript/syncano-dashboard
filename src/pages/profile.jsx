@@ -1,7 +1,6 @@
 import React from 'react';
 import {RouteHandler} from 'react-router';
 
-import Header from '../apps/Header';
 import {Sidebar} from '../common';
 
 export default React.createClass({
@@ -49,7 +48,6 @@ export default React.createClass({
           </Sidebar.List>
         </Sidebar>
         <div className="col-flex-1">
-          <Header />
           <RouteHandler />
         </div>
       </div>

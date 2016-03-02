@@ -1,10 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router';
 import Radium from 'radium';
 
-import Sticky from 'react-stickydiv';
 import {Utils} from 'syncano-material-ui';
-import Logo from '../Logo';
 
 export default Radium(React.createClass({
   displayName: 'Sidebar',
@@ -14,12 +11,6 @@ export default Radium(React.createClass({
   },
 
   mixins: [Utils.Styles],
-
-  getDefaultProps() {
-    return {
-      logoCentered: false
-    };
-  },
 
   getStyles() {
     return {
@@ -39,8 +30,8 @@ export default Radium(React.createClass({
         borderRight: '1px solid #eee'
       },
       content: {
-        position: 'fixed',
         width: 256,
+        paddingBottom: 56,
         maxHeight: '100%',
         overflow: 'auto'
       },
@@ -51,12 +42,6 @@ export default Radium(React.createClass({
         display: 'flex',
         alignItems: 'center'
       },
-      logo: {
-        width: 120
-      },
-      logoCentered: {
-        justifyContent: 'center'
-      },
       contentStretched: {
         width: '100%'
       }
@@ -64,8 +49,8 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let {children, style, logoCentered, ...other} = this.props;
+    const styles = this.getStyles();
+    const {children, style, ...other} = this.props;
 
     return (
       <div
@@ -73,16 +58,7 @@ export default Radium(React.createClass({
         style={this.mergeStyles(style, styles.root)}
         {...other}>
         <div style={styles.background}></div>
-        <div style={[styles.content, logoCentered && styles.contentStretched]}>
-          <Sticky>
-            <div className="col-flex-1" style={[styles.topToolbar, logoCentered && styles.logoCentered]}>
-              <Link to="app">
-                <Logo
-                  style={styles.logo}
-                  className="logo-white"/>
-              </Link>
-            </div>
-          </Sticky>
+        <div style={styles.content}>
           {children}
         </div>
       </div>

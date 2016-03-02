@@ -9,7 +9,7 @@ export default (props) => {
       lineHeight: '16px'
     },
     innerDivStyle: {
-      padding: '8px 20px',
+      padding: '8px 20px 8px 48px',
       marginLeft: 20
     }
   };
