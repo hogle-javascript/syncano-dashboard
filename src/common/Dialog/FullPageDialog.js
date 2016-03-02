@@ -56,19 +56,26 @@ export default React.createClass({
     };
   },
 
-  getContentWidth(width) {
-    const contentWidths = {
-      small: 500,
-      medium: 840,
-      large: 998
+  getContentConfig(size) {
+    const config = {
+      small: {
+        paddingTop: 120,
+        maxWidth: 500
+      },
+      medium: {
+        maxWidth: 840
+      },
+      large: {
+        maxWidth: 998
+      }
     };
 
-    return {maxWidth: contentWidths[width]};
+    return config[size];
   },
 
   render() {
     const styles = this.getStyles();
-    const {contentWidth, contentStyle, children, open, actions, isLoading, onRequestClose, ...other} = this.props;
+    const {contentSize, contentStyle, children, open, actions, isLoading, onRequestClose, ...other} = this.props;
 
     return (
       <Dialog
@@ -76,7 +83,7 @@ export default React.createClass({
         open={_.isBoolean(open) ? open : this.state.open}
         style={styles.style}
         overlayStyle={styles.overlay}
-        contentStyle={Utils.Styles.mergeStyles(styles.content, this.getContentWidth(contentWidth), contentStyle)}
+        contentStyle={Utils.Styles.mergeStyles(styles.content, this.getContentConfig(contentSize), contentStyle)}
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}

@@ -10,7 +10,7 @@ import AdminsInvitationsActions from './AdminsInvitationsActions';
 import Store from './AdminDialogStore';
 
 // Components
-import {TextField, FlatButton} from 'syncano-material-ui';
+import {TextField} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -51,29 +51,22 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Invite';
     let submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <FlatButton
-        key="confirm"
-        label={submitLabel}
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} an Administrator`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        actions={dialogStandardActions}>
+        contentSize="small"
+        actions={
+          <Dialog.StandardButtons
+            submitLabel={submitLabel}
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         {this.renderFormNotifications()}
         <TextField
           ref="email"
@@ -85,13 +78,14 @@ export default React.createClass({
           hintText="Email of the administrator"
           floatingLabelText="Email"/>
         <SelectFieldWrapper
+          style={{width: 200}}
           name="role"
           floatingLabelText="Role of the administrator"
           options={Store.getRoles()}
           value={this.state.role}
           onChange={this.setSelectFieldValue.bind(null, 'role')}
           errorText={this.getValidationMessages('role').join(' ')}/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

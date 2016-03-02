@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlatButton, RaisedButton} from 'syncano-material-ui';
 
-export default ({handleCancel, handleConfirm}) => {
+export default ({handleCancel, handleConfirm, submitLabel = 'Confirm'}) => {
   return (
     <div>
       <FlatButton
@@ -11,7 +11,7 @@ export default ({handleCancel, handleConfirm}) => {
         onTouchTap={handleCancel}/>
       <RaisedButton
         key="confirm"
-        label="Confirm"
+        label={submitLabel}
         secondary={true}
         onTouchTap={handleConfirm}/>
     </div>

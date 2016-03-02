@@ -86,8 +86,7 @@ export default React.createClass({
     return (
       <Dialog
         onRequestClose={this.dismiss}
-        contentWidth="small"
-        contentStyle={{paddingTop: 120}}
+        contentSize="small"
         open={this.state.open}
         avoidResetState={true}
         modal={true}

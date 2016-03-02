@@ -28,7 +28,7 @@ export default React.createClass({
         <Column.Menu>
           <MenuItem
             className="dropdown-item-invitation-accept"
-            onTouchTap={this.props.showAcceptDialog}
+            onTouchTap={() => this.props.showAcceptDialog(item)}
             primaryText="Accept Invitation"/>
           <MenuItem
             className="dropdown-item-invitation-decline"

@@ -8,7 +8,6 @@ import Actions from './ProfileInvitationsActions';
 import Store from './ProfileInvitationsStore';
 
 // Components
-import {FlatButton, MenuItem} from 'syncano-material-ui';
 import {ColumnList} from 'syncano-components';
 import {Container, Dialog, Lists} from '../../common';
 import ListItem from './ProfileInvitationsListItem';
@@ -38,43 +37,29 @@ export default React.createClass({
   initDialogs() {
     return [
       {
-        dialog: Dialog,
+        dialog: Dialog.FullPage,
         params: {
+          contentWidth: 'small',
           key: 'acceptInvitationsDialog',
           ref: 'acceptInvitationsDialog',
           title: 'Accept an Invitation',
-          actions: [
-            <FlatButton
-              label="Cancel"
-              secondary={true}
-              onTouchTap={this.handleCancel.bind(null, 'acceptInvitationsDialog')}/>,
-            <FlatButton
-              label="Confirm"
-              primary={true}
-              keyboardFocused={true}
-              onTouchTap={this.handleAccept}/>
-          ],
+          actions: <Dialog.StandardButtons
+                     handleCancel={() => this.handleCancel('acceptInvitationsDialog')}
+                     handleConfirm={this.handleAccept}/>,
           modal: true,
           children: `Do you really want to accept ${Store.getDeleteItemsPhrase('Invitation')}?`
         }
       },
       {
-        dialog: Dialog,
+        dialog: Dialog.FullPage,
         params: {
+          contentWidth: 'small',
           key: 'declineInvitationsDialog',
           ref: 'declineInvitationsDialog',
           title: 'Decline an Invitation',
-          actions: [
-            <FlatButton
-              label="Cancel"
-              secondary={true}
-              onTouchTap={this.handleCancel.bind(null, 'declineInvitationsDialog')}/>,
-            <FlatButton
-              label="Confirm"
-              primary={true}
-              keyboardFocused={true}
-              onTouchTap={this.handleDecline}/>
-          ],
+          actions: <Dialog.StandardButtons
+                     handleCancel={() => this.handleCancel('declineInvitationsDialog')}
+                     handleConfirm={this.handleDecline}/>,
           modal: true,
           children: `Do you really want to decline ${Store.getDeleteItemsPhrase('Invitation')}?`
         }
