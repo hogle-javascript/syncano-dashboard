@@ -101,7 +101,7 @@ export default Radium(React.createClass({
     console.info('Header::handleResendEmail');
     AuthActions.resendActivationEmail(this.state.user.email);
     this.setSnackbarNotification({
-      message: 'Activation e-mail was send',
+      message: 'Activation e-mail was sent',
       autoHideDuration: 3000
     });
     this.hasLastInvitation();
