@@ -33,12 +33,6 @@ export default Radium(React.createClass({
     InstancesStore.fetch();
   },
 
-  getDefaultProps() {
-    return {
-      collapsed: false
-    };
-  },
-
   getStyles() {
     return {
       root: {
@@ -47,9 +41,6 @@ export default Radium(React.createClass({
         paddingBottom: 2,
         paddingLeft: 24,
         backgroundColor: '#F2F2F2'
-      },
-      rootCollapsed: {
-        paddingLeft: 15
       },
       dropdownInstanceIcon: {
         left: 20,
@@ -195,14 +186,6 @@ export default Radium(React.createClass({
     };
     let iconName = currentInstance.metadata.icon ? currentInstance.metadata.icon : defaultIcon;
 
-    if (this.props.collapsed) {
-      return (
-        <FontIcon
-          className={`synicon-${iconName}`}
-          style={this.mergeStyles(styles.dropdownInstanceIcon, iconStyle)}/>
-      );
-    }
-
     return (
       <div style={styles.dropdownIcon}>
         <FontIcon
@@ -226,7 +209,7 @@ export default Radium(React.createClass({
     }
 
     return (
-      <div style={this.mergeStyles(styles.root, this.props.collapsed && styles.rootCollapsed)}>
+      <div style={styles.root}>
         <IconMenu
           ref="instancesDropdown"
           onItemTouchTap={this.closeDropdown}
