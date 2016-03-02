@@ -11,7 +11,7 @@ import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 // Components
-import {TextField, FlatButton, RaisedButton, Toggle, Checkbox} from 'syncano-material-ui';
+import {TextField, Toggle, Checkbox} from 'syncano-material-ui';
 import {SelectFieldWrapper, Show} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -169,22 +169,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        label="Confirm"
-        secondary={true}
-        style={{marginLeft: 10}}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
-
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
     let fields = null;
     let options = null;
 
@@ -199,9 +184,12 @@ export default React.createClass({
         ref="dialog"
         title={`${title} a Data Socket`}
         defaultOpen={this.props.defaultOpen}
-        actions={dialogStandardActions}
         open={this.state.open}
-        modal={true}>
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         {this.renderFormNotifications()}
         <div>Main settings</div>
         <div className="row">
