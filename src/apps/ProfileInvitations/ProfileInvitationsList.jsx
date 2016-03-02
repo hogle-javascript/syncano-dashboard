@@ -24,44 +24,34 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleAccept() {
-    console.info('ProfileInvitations::handleAccept');
-    Actions.acceptInvitations(Store.getCheckedItems());
-  },
-
-  handleDecline() {
-    console.info('ProfileInvitations::handleDecline');
-    Actions.declineInvitations(Store.getCheckedItems());
-  },
-
   initDialogs() {
     return [
       {
-        dialog: Dialog.FullPage,
+        dialog: Dialog.Delete,
         params: {
-          contentWidth: 'small',
           key: 'acceptInvitationsDialog',
           ref: 'acceptInvitationsDialog',
           title: 'Accept an Invitation',
-          actions: <Dialog.StandardButtons
-                     handleCancel={() => this.handleCancel('acceptInvitationsDialog')}
-                     handleConfirm={this.handleAccept}/>,
-          modal: true,
-          children: `Do you really want to accept ${Store.getDeleteItemsPhrase('Invitation')}?`
+          handleConfirm: Actions.acceptInvitations,
+          isLoading: this.props.isLoading,
+          items: Store.getCheckedItems(),
+          actionName: 'accept',
+          itemLabelName: 'inviter',
+          groupName: 'Invitation'
         }
       },
       {
-        dialog: Dialog.FullPage,
+        dialog: Dialog.Delete,
         params: {
-          contentWidth: 'small',
           key: 'declineInvitationsDialog',
           ref: 'declineInvitationsDialog',
           title: 'Decline an Invitation',
-          actions: <Dialog.StandardButtons
-                     handleCancel={() => this.handleCancel('declineInvitationsDialog')}
-                     handleConfirm={this.handleDecline}/>,
-          modal: true,
-          children: `Do you really want to decline ${Store.getDeleteItemsPhrase('Invitation')}?`
+          handleConfirm: Actions.declineInvitations,
+          isLoading: this.props.isLoading,
+          items: Store.getCheckedItems(),
+          actionName: 'decline',
+          itemLabelName: 'inviter',
+          groupName: 'Invitation'
         }
       }
     ];
@@ -79,7 +69,7 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Lists.Container>
