@@ -10,7 +10,7 @@ import Store from './ScheduleDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {FlatButton, RaisedButton, TextField} from 'syncano-material-ui';
+import {TextField} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -41,39 +41,19 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createSchedule({
-      label: this.state.label,
-      crontab: this.state.crontab,
-      codebox: this.state.codebox
-    });
+    const {label, crontab, codebox} = this.state;
+
+    Actions.createSchedule({label, crontab, codebox});
   },
 
   handleEditSubmit() {
-    Actions.updateSchedule(
-      this.state.id, {
-        label: this.state.label,
-        crontab: this.state.crontab,
-        codebox: this.state.codebox
-      }
-    );
+    const {id, label, crontab, codebox} = this.state;
+
+    Actions.updateSchedule(id, {label, crontab, codebox});
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        label="Confirm"
-        secondary={true}
-        style={{marginLeft: 10}}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
 
     return (
       <Dialog.FullPage
@@ -83,7 +63,11 @@ export default React.createClass({
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        actions={dialogStandardActions}>
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div>
           {this.renderFormNotifications()}
           <TextField
