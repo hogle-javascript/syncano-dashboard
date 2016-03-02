@@ -10,7 +10,6 @@ import Store from './GroupDialogStore';
 
 // Components
 import {TextField} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
@@ -49,6 +48,7 @@ export default React.createClass({
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
+        isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
@@ -63,10 +63,6 @@ export default React.createClass({
           errorText={this.getValidationMessages('label').join(' ')}
           hintText="Name of the group"
           floatingLabelText="Group Name"/>
-        <Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading}/>
       </Dialog>
     );
   }

@@ -61,6 +61,7 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={this.state.open}
         contentSize="small"
+        isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
             submitLabel={submitLabel}

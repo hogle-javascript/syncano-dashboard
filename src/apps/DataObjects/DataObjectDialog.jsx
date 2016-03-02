@@ -15,7 +15,7 @@ import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
 import {TextField, FlatButton, IconButton, DatePicker, TimePicker} from 'syncano-material-ui';
-import {Loading, SelectFieldWrapper} from 'syncano-components';
+import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
@@ -587,6 +587,7 @@ export default React.createClass({
         title={title}
         onRequestClose={this.handleCancel}
         open={this.state.open}
+        isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
@@ -604,10 +605,6 @@ export default React.createClass({
             {this.renderCustomFields()}
           </div>
         </div>
-        <Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading} />
       </Dialog.FullPage>
     );
   }

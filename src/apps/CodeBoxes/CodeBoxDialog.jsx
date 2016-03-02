@@ -73,6 +73,7 @@ export default React.createClass({
         title={`${title} a Script Socket`}
         defaultOpen={this.props.defaultOpen}
         open={this.state.open}
+        isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}

@@ -63,6 +63,7 @@ export default React.createClass({
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
+        isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}

@@ -314,13 +314,13 @@ export default React.createClass({
     );
 
     return (
-      <Dialog
-        key='dialog'
+      <Dialog.FullPage
+        key="dialog"
         ref="dialog"
-        contentStyle={{maxWidth: 850, padding: 0}}
         defaultOpen={this.props.defaultOpen}
         actions={dialogCustomActions}
         open={this.state.open}
+        isLoading={this.state.isLoading}
         onRequestClose={this.handleDismiss}>
         <div>
           <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
@@ -379,11 +379,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading}/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

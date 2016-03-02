@@ -5,7 +5,7 @@ import Radium from 'radium';
 import {DialogMixin, FormMixin} from '../../mixins';
 
 import {TextField, Toggle, SelectField, MenuItem, Utils, Styles} from 'syncano-material-ui';
-import {Loading, Show} from 'syncano-components';
+import {Show} from 'syncano-components';
 import {Dialog, Editor, Notification} from '../../common';
 
 export default (store, props) => {
@@ -333,10 +333,10 @@ export default (store, props) => {
           }
           autoScrollBodyContent={true}
           autoDetectWindowHeight={true}
-          repositionOnUpdate={false}
           actionsContainerClassName="vm-1-t"
           onRequestClose={this.handleCancel}
           open={this.state.open}
+          isLoading={this.state.isLoading}
           actions={
             <Dialog.StandardButtons
               handleCancel={this.handleCancel}
@@ -411,10 +411,6 @@ export default (store, props) => {
               </Notification>
             </div>
           </Show>
-          <Loading
-            type="linear"
-            position="bottom"
-            show={this.state.isLoading}/>
         </Dialog.FullPage>
       );
     }
