@@ -55,7 +55,8 @@ export default Reflux.createStore({
         groups: [[]],
         colors: {
           api: '#77D8F6',
-          cbx: '#FFD78E'
+          cbx: '#FFD78E',
+          total: '#66bb6a'
         }
       },
       point: {
