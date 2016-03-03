@@ -82,7 +82,7 @@ export default React.createClass({
                     primaryText="Channel" />,
                   <Sidebar.NestedLinkListItem
                     key="Push Notifications"
-                    routeName="push-notifications"
+                    routeName="push-notification-config"
                     primaryText="Push Notification" />
                 ]} />
             </Sidebar.List>
