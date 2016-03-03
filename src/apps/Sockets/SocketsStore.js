@@ -60,7 +60,6 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('SocketsStore::refreshData');
-    console.error('socketsstore refresh');
     Actions.fetchSockets();
   },
 
