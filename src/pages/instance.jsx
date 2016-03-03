@@ -24,7 +24,7 @@ export default React.createClass({
     Navigation
   ],
 
-  componentWillMount() {
+  componentDidMount() {
     console.debug('Instance::componentWillMount');
     const params = this.getParams();
 

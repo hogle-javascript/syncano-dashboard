@@ -4,6 +4,7 @@ import Router from 'react-router';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
+import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
@@ -34,7 +35,7 @@ export default React.createClass({
     if (this.getParams().action === 'add') {
       this.showDialog('addInstanceDialog');
     }
-    Store.fetch();
+    Actions.fetch();
   },
 
   showInstanceDialog() {
