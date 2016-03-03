@@ -33,7 +33,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdown: {
-      selector: '//div[@class="role-dropdown"]',
+      selector: '//div[@name="role"]',
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdownRead: {
@@ -49,7 +49,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectAdminTableRow: {
-      selector: `//div[text()="${utils.addSuffix('admin')}@syncano.com"]/../../preceding-sibling::div`,
+      selector: `//div[text()="${utils.addSuffix('admin')}@syncano.com"]/../../../following-sibling::div//span[@class="synicon-dots-vertical"]`,
       locateStrategy: 'xpath'
     },
     adminTableRow: {

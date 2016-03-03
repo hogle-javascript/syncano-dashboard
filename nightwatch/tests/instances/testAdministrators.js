@@ -21,8 +21,8 @@ export default {
       .waitForElementVisible('@adminsListItem')
       .clickElement('@addAdminButton')
       .waitForElementVisible('@addAdminModalTitle')
-      .selectDropdownValue('@addAdminModalRoleDropdown', 'read')
       .fillInput('@addAdminModalEmailInput', email)
+      .selectDropdownValue('@addAdminModalRoleDropdown', 'read')
       .clickElement('@confirmButton')
       .waitForElementVisible('@adminEmailTableRow');
   },
@@ -32,7 +32,6 @@ export default {
     adminsPage
       .navigate()
       .clickElement('@selectAdminTableRow')
-      .clickElement('@adminsListMenu')
       .clickElement('@deleteButton')
       .waitForElementVisible('@deleteAdminModalTitle')
       .clickElement('@confirmButton')
