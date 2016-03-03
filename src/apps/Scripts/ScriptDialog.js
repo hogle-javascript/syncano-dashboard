@@ -54,7 +54,6 @@ export default React.createClass({
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Create';
-    const submitLabel = this.hasEditMode() ? 'Edit' : 'Confirm';
     const {isLoading, runtimes, runtime_name, open} = this.state;
 
     return (
@@ -64,7 +63,6 @@ export default React.createClass({
         title={`${title} a Script`}
         actions={
           <Dialog.StandardButtons
-            submitLabel={submitLabel}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
