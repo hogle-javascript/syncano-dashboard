@@ -83,7 +83,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectUserClass: {
-      selector: '//div[text()="user_profile"]/../../preceding-sibling::div/span',
+      selector: '//div[text()="user_profile"]/../../../button//span',
       locateStrategy: 'xpath'
     },
     userClassDropDown: {
@@ -91,7 +91,8 @@ export default {
       locateStrategy: 'xpath'
     },
     classToSelect: {
-      selector: '.synicon-checkbox-blank-outline'
+      selector: '//span[@class="synicon-checkbox-blank-outline"]',
+      locateStrategy: 'xpath'
     },
     classTableRowDescription: {
       selector: `//div[text()="${utils.addSuffix('class')}"]/../following-sibling::div[1]/div`,
@@ -125,7 +126,8 @@ export default {
       locateStrategy: 'xpath'
     },
     checkboxSelected: {
-      selector: '.synicon-checkbox-marked-outline'
+      selector: '//span[@class="synicon-checkbox-marked-outline"]',
+      locateStrategy: 'xpath'
     }
   }
 };
