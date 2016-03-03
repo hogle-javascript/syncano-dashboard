@@ -48,7 +48,6 @@ export default React.createClass({
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Generate';
-    const submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
 
     return (
       <Dialog.FullPage
@@ -61,7 +60,6 @@ export default React.createClass({
         isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
-            submitLabel={submitLabel}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }>
