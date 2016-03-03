@@ -10,7 +10,7 @@ import Store from './ScriptDialogStore';
 
 // Components
 import {TextField} from 'syncano-material-ui';
-import {Loading, SelectFieldWrapper} from 'syncano-components';
+import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
@@ -53,9 +53,9 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    const submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
-    const {isLoading} = this.state;
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
+    const submitLabel = this.hasEditMode() ? 'Edit' : 'Confirm';
+    const {isLoading, runtimes, runtime_name, open} = this.state;
 
     return (
       <Dialog.FullPage
@@ -69,8 +69,7 @@ export default React.createClass({
             handleConfirm={this.handleFormValidation}/>
         }
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        contentStyle={{padding: '8px 0 0 0'}}
+        open={open}
         isLoading={isLoading}>
         <div>
           {this.renderFormNotifications()}
@@ -93,16 +92,12 @@ export default React.createClass({
             floatingLabelText='Description of a Script'/>
           <SelectFieldWrapper
             name="runtime_name"
-            options={this.state.runtimes}
-            value={this.state.runtime_name}
+            options={runtimes}
+            value={runtime_name}
             floatingLabelText='Runtime environment'
             onChange={this.setSelectFieldValue.bind(null, 'runtime_name')}
             errorText={this.getValidationMessages('runtime_name').join(' ')}/>
         </div>
-        <Loading
-          type='linear'
-          position='bottom'
-          show={this.state.isLoading}/>
       </Dialog.FullPage>
     );
   }
