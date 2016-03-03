@@ -48,7 +48,7 @@ export default Radium(React.createClass({
         padding: '0px 0px 48px'
       },
       contentRow: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         alignItems: 'center'
       },
       accountKey: {
@@ -72,7 +72,11 @@ export default Radium(React.createClass({
   },
 
   handleSuccessfullValidation() {
-    Actions.changePassword(this.state);
+    if (!SessionStore.getUser().has_password) {
+      Actions.setPassword(this.state.newPassword);
+    } else {
+      Actions.changePassword(this.state);
+    }
   },
 
   render() {
