@@ -8,24 +8,8 @@ export default {
       selector: '//div[@class="classes-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
-    selectAll: {
-      selector: '//div[text()="Select All"]',
-      locateStrategy: 'xpath'
-    },
     deleteClasses: {
       selector: '//div[text()="Delete Classes"]',
-      locateStrategy: 'xpath'
-    },
-    classItemDropdown: {
-      selector: `//div[text()="${utils.addSuffix('class')}"]/../../../following-sibling::div[@class="col-menu"]//button`,
-      locateStrategy: 'xpath'
-    },
-    editDropdownItem: {
-      selector: '//span[@class="dropdown-item-edit-class"]',
-      locateStrategy: 'xpath'
-    },
-    deleteDropdownItem: {
-      selector: '//span[@class="dropdown-item-delete-class"]',
       locateStrategy: 'xpath'
     },
     addClassButton: {
@@ -37,10 +21,6 @@ export default {
     },
     createModalFieldNameInput: {
       selector: 'input[name=fieldName]'
-    },
-    createModalDropdown: {
-      selector: '//label[text()="Type"]',
-      locateStrategy: 'xpath'
     },
     createModalDropdownType: {
       selector: '//div[@class="fieldType-dropdown"]',
@@ -56,12 +36,6 @@ export default {
       selector: '//span[text()="Add"]',
       locateStrategy: 'xpath'
     },
-    editButton: {
-      selector: '.synicon-pencil'
-    },
-    multipleSelectButton: {
-      selector: '.synicon-checkbox-multiple-marked-outline'
-    },
     classTableRows: {
       selector: '//div[@class="classes-list"]/div[2]/div',
       locateStrategy: 'xpath'
@@ -72,14 +46,6 @@ export default {
     },
     userProfileClassName: {
       selector: '//div[@class="classes-list"]//div[text()="user_profile"]',
-      locateStrategy: 'xpath'
-    },
-    userClassListItem: {
-      selector: '//div[text()="user_profile"]/../../../following-sibling::div/button',
-      locateStrategy: 'xpath'
-    },
-    selectClass: {
-      selector: `//div[text()="${utils.addSuffix('class')}"]/../div[1]/span`,
       locateStrategy: 'xpath'
     },
     selectUserClass: {
@@ -105,9 +71,6 @@ export default {
     inactiveDeleteButton: {
       selector: '//div[text()="Delete a Class"]/..',
       locateStrategy: 'xpath'
-    },
-    deleteButton: {
-      selector: '.synicon-delete'
     },
     confirmDeleteButton: {
       selector: '//span[text()="Confirm"]',
