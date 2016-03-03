@@ -5,6 +5,13 @@ import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixi
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './SocketsActions';
+import DataActions from '../Data/DataViewsActions';
+import ScriptsActions from '../CodeBoxes/CodeBoxesActions';
+import TriggersActions from '../Triggers/TriggersActions';
+import SchedulesActions from '../Schedules/SchedulesActions';
+import ChannelsActions from '../Channels/ChannelsActions';
+import APNSActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
+import GCMActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -31,17 +38,34 @@ export default Reflux.createStore({
   },
 
   init() {
+    const listenables = [
+      DataActions.createDataView.completed, DataActions.updateDataView.completed, DataActions.removeDataViews.completed,
+      ScriptsActions.createCodeBox.completed, ScriptsActions.updateCodeBox.completed,
+      ScriptsActions.removeCodeBoxes.completed, TriggersActions.createTrigger.completed,
+      TriggersActions.updateTrigger.completed, TriggersActions.removeTriggers.completed,
+      SchedulesActions.createSchedule.completed, SchedulesActions.updateSchedule.completed,
+      SchedulesActions.removeSchedules.completed, ChannelsActions.createChannel.completed,
+      ChannelsActions.updateChannel.completed, ChannelsActions.removeChannels.completed,
+      APNSActions.configAPNSPushNotification.completed, GCMActions.configGCMPushNotification.completed
+    ];
+
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setInstance,
       this.refreshData
     );
     this.setLoadingStates();
+    _.forEach(listenables, (listenable) => this.listenTo(listenable, this.refreshData));
   },
 
   refreshData() {
     console.debug('SocketsStore::refreshData');
     Actions.fetchSockets();
+  },
+
+  clearSockets() {
+    this.data = this.getInitialState();
+    this.trigger(this.data);
   },
 
   hasGCMConfig(items) {

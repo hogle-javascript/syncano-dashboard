@@ -204,7 +204,7 @@ export default Radium(React.createClass({
     let instance = SessionStore.instance;
     let instancesList = InstancesStore.getAllInstances();
 
-    if (!instance || !instancesList || !instancesList.length > 0) {
+    if (!instance || !instancesList.length) {
       return null;
     }
 
