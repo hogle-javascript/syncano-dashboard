@@ -14,13 +14,13 @@ export default {
   },
   'Administrator adds a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
-    const suffix = utils.addSuffix('schedule');
+    const schedule = utils.addSuffix('schedule');
 
     schedulesPage
       .navigate()
       .clickElement('@addScheduleButton')
       .waitForElementPresent('@addScheduleModalTitle')
-      .fillInput('@addScheduleModalLabel', suffix)
+      .fillInput('@addScheduleModalLabel', schedule)
       .selectDropdownValue('@addScheduleModalScript', 'snippet')
       .selectDropdownValue('@addScheduleModalCronTab', 'Run once a year at midnight')
       .clickElement('@confirm')
@@ -28,10 +28,11 @@ export default {
   },
   'Administrator edits a Schedule Socket Crontab': (client) => {
     const schedulesPage = client.page.schedulesPage();
+    const schedule = utils.addSuffix('schedule');
 
     schedulesPage
       .navigate()
-      .clickListItemDropdown('@scheduleDropdown', 'Edit')
+      .clickListItemDropdown(schedule, 'Edit')
       .waitForElementVisible('@editScheduleModalTitle')
       .selectDropdownValue('@addScheduleModalCronTab', 'Run every 5 minutes')
       .clickElement('@confirm')
@@ -39,12 +40,11 @@ export default {
   },
   'Administrator deletes a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
+    const schedule = utils.addSuffix('schedule');
 
     schedulesPage
       .navigate()
-      .clickElement('@selectScheduleTableRow')
-      .clickElement('@schedulesListMenu')
-      .clickElement('@schedulesDeleteButton')
+      .clickListItemDropdown(schedule, 'Delete')
       .waitForElementPresent('@deleteScheduleModalTitle')
       .clickElement('@confirm')
       .waitForElementNotPresent('@selectScheduleTableRow');

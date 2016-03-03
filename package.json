@@ -127,7 +127,7 @@
     "clean": "gulp clean",
     "oauth-server": "node oauth-server.js",
     "eslint": "eslint src --quiet --ext .js --ext .jsx",
-    "e2e": "nightwatch -e 1280x1024 --suiteRetries 1 --tag administrators",
+    "e2e": "nightwatch -e 1280x1024 --suiteRetries 1 --tag schedules",
     "e2e-instances": "nightwatch -e 1280x1024 -g instances --suiteRetries 1 --skiptags snippets",
     "e2e-navigation": "nightwatch -e 1280x1024 -g navigation --suiteRetries 1",
     "e2e-settings": "nightwatch -e 1280x1024 -g settings --suiteRetries 1",
