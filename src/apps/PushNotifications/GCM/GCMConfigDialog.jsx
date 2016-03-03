@@ -76,6 +76,7 @@ export default React.createClass({
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}
+        isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
@@ -109,10 +110,6 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading}/>
       </Dialog.FullPage>
     );
   }

@@ -7,7 +7,7 @@ import {DialogMixin, FormMixin} from '../../mixins';
 import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
 
-import {FlatButton, RaisedButton, TextField, Utils} from 'syncano-material-ui';
+import {TextField, Utils} from 'syncano-material-ui';
 import {Color} from 'syncano-components';
 import {Dialog, Icon, Notification, ColorIconPicker} from '../../common';
 
@@ -103,20 +103,6 @@ export default React.createClass({
   render() {
     const {open, metadata, notificationShowed, isLoading} = this.state;
     const title = this.hasEditMode() ? 'Update' : 'Create';
-    const dialogCustomActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        label="Confirm"
-        secondary={true}
-        style={{marginLeft: 8}}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
 
     return (
       <Dialog.FullPage
@@ -125,10 +111,13 @@ export default React.createClass({
         title={`${title} an Instance`}
         onRequestClose={this.handleCancel}
         open={open}
-        actions={dialogCustomActions}
-        isLoading={isLoading}>
+        isLoading={isLoading}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         {this.renderFormNotifications()}
-
         <div className="row">
           <div className="col-flex-0" style={{width: 226}}>
             <ColorIconPicker

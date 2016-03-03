@@ -10,8 +10,8 @@ import Actions from './ChannelsActions';
 import Store from './ChannelDialogStore';
 
 // Components
-import {TextField, FlatButton, RaisedButton, Toggle} from 'syncano-material-ui';
-import {Loading, SelectFieldWrapper} from 'syncano-components';
+import {TextField, Toggle} from 'syncano-material-ui';
+import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
@@ -60,31 +60,21 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        label="Confirm"
-        secondary={true}
-        onTouchTap={this.handleFormValidation}
-        style={{marginLeft: 10}}
-        ref="submit"/>
-    ];
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Channel Socket`}
-        actions={dialogStandardActions}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        contentStyle={{padding: '8px 0 0 0'}}>
+        isLoading={this.state.isLoading}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         {this.renderFormNotifications()}
         <div className="row">
           <Dialog.Sidebar>
@@ -190,10 +180,6 @@ export default React.createClass({
             </Dialog.ContentSection>
           </Dialog.Content>
         </div>
-        <Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading} />
       </Dialog.FullPage>
     );
   }

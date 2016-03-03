@@ -12,8 +12,7 @@ import UsersActions from './UsersActions';
 import {GroupsStore} from './../Groups';
 
 // Components
-import {TextField, FlatButton} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
+import {TextField} from 'syncano-material-ui';
 import {Dialog} from '../../common';
 
 import 'react-select/dist/react-select.min.css';
@@ -105,19 +104,6 @@ export default React.createClass({
       group.value = group.id.toString();
       return group;
     });
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <FlatButton
-        key="confirm"
-        label="Confirm"
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
 
     if (selectValueSource && _.isArray(selectValueSource.value)) {
       selectValue = selectValueSource.value.map((value) => value.id).join(',');
@@ -127,12 +113,17 @@ export default React.createClass({
 
     return (
       <Dialog
-        key='dialog'
-        ref='dialog'
+        key="dialog"
+        ref="dialog"
         title={`${title} a User`}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        actions={dialogStandardActions}>
+        isLoading={this.state.isLoading}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div>
           {this.renderFormNotifications()}
           <TextField
@@ -158,10 +149,6 @@ export default React.createClass({
             placeholder='User groups'
             options={allGroups}
             onChange={this.handleSelectFieldChange} />
-          <Loading
-            type="linear"
-            position="bottom"
-            show={this.state.isLoading} />
         </div>
       </Dialog>
     );
