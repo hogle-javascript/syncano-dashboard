@@ -12,7 +12,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       actions: [],
-      contentWidth: 'large'
+      contentSize: 'large'
     };
   },
 
