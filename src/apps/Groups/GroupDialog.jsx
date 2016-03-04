@@ -45,7 +45,6 @@ export default React.createClass({
         key="dialog"
         ref="dialog"
         title={`${title} a Group`}
-        defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
         isLoading={this.state.isLoading}

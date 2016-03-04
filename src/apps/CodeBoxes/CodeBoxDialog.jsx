@@ -71,7 +71,6 @@ export default React.createClass({
         key="dialog"
         ref="dialog"
         title={`${title} a Script Socket`}
-        defaultOpen={this.props.defaultOpen}
         open={this.state.open}
         isLoading={this.state.isLoading}
         actions={
