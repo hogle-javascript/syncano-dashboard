@@ -3,8 +3,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 import {State, Navigation} from 'react-router';
 
-import HeaderMixin from '../Header/HeaderMixin';
-import {DialogsMixin, FormMixin, InstanceTabsMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
+import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
 import AutosaveMixin from './ScriptAutosaveMixin';
 
 import Store from './ScriptStore';
@@ -28,8 +27,6 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    HeaderMixin,
-    InstanceTabsMixin,
     SnackbarNotificationMixin,
     AutosaveMixin,
     FormMixin,

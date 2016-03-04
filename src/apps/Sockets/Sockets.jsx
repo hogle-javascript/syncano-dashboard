@@ -8,8 +8,7 @@ import Actions from './SocketsActions';
 import Store from './SocketsStore';
 
 // Utils
-import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
+import {DialogsMixin} from '../../mixins';
 
 // Components
 import {Container, Loading, Socket, Show} from 'syncano-components';
@@ -27,7 +26,6 @@ import PushNotifications from '../PushNotifications';
 import EmptyView from './EmptyView';
 
 export default React.createClass({
-
   displayName: 'Sockets',
 
   mixins: [
@@ -35,10 +33,7 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store, 'sockets'),
-
-    DialogsMixin,
-    InstanceTabsMixin,
-    HeaderMixin
+    DialogsMixin
   ],
 
   statics: {

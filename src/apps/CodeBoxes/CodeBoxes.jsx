@@ -2,10 +2,6 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 
-// Utils
-import {InstanceTabsMixin} from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
-
 // Stores and Actions
 import Actions from './CodeBoxesActions';
 import Store from './CodeBoxesStore';
@@ -18,17 +14,13 @@ import {InnerToolbar} from '../../common';
 import CodeBoxesList from './CodeBoxesList';
 import CodeBoxDialog from './CodeBoxDialog';
 
-
 export default React.createClass({
-
   displayName: 'Data',
 
   mixins: [
     Router.State,
     Router.Navigation,
-    Reflux.connect(Store),
-    InstanceTabsMixin,
-    HeaderMixin
+    Reflux.connect(Store)
   ],
 
   componentDidMount() {

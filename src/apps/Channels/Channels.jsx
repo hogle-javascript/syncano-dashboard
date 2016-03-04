@@ -3,8 +3,7 @@ import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 
 // Utils
-import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import Actions from './ChannelsActions';
@@ -27,9 +26,7 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    DialogsMixin,
-    InstanceTabsMixin,
-    HeaderMixin
+    DialogsMixin
   ],
 
   componentDidMount() {

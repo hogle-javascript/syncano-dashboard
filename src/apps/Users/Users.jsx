@@ -2,10 +2,6 @@ import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 
-// Utils
-import {InstanceTabsMixin} from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
-
 import Actions from './UsersActions';
 import Store from './UsersStore';
 import {GroupsActions, GroupsStore, GroupsList, GroupDialog} from './../Groups';
@@ -27,9 +23,7 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store, 'users'),
-    Reflux.connect(GroupsStore, 'groups'),
-    InstanceTabsMixin,
-    HeaderMixin
+    Reflux.connect(GroupsStore, 'groups')
   ],
 
   componentDidMount() {

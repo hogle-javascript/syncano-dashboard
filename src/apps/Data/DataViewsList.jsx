@@ -2,7 +2,6 @@ import React from 'react';
 import Router from 'react-router';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
@@ -20,10 +19,9 @@ export default React.createClass({
   displayName: 'DataViewsList',
 
   mixins: [
-    DialogsMixin,
-    HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    DialogsMixin
   ],
 
   componentWillUpdate(nextProps) {

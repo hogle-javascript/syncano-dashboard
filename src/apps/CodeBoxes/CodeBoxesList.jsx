@@ -2,7 +2,6 @@ import React from 'react';
 import Router from 'react-router';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin} from '../../mixins';
 
 import Actions from './CodeBoxesActions';
@@ -21,7 +20,6 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    HeaderMixin,
     DialogsMixin
   ],
 

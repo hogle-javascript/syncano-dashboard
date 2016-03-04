@@ -5,7 +5,7 @@ import Reflux from 'reflux';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
-import Header from '../Header';
+import {Header} from '../Header';
 import {IconButton, Styles} from 'syncano-material-ui';
 import {Tour} from 'syncano-components';
 
@@ -42,7 +42,7 @@ export default React.createClass({
     const styles = this.getStyles();
 
     function toggleAccountMenu() {
-      Header.Actions.toggleAccountMenu();
+      // Header.Actions.toggleAccountMenu();
     }
 
     return [

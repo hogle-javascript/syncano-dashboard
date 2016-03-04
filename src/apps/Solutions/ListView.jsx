@@ -2,17 +2,12 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 
-// Utils
-import HeaderMixin from '../Header/HeaderMixin';
-
 // Stores and Actions
-
 import Store from './ListViewStore';
 import Actions from './ListViewActions';
 import SessionStore from '../Session/SessionStore';
 
 // Components
-import Header from '../../apps/Header';
 import {Styles, List, ListItem, Divider} from 'syncano-material-ui';
 import {Container, Loading, Tags, Show, Socket, Solutions} from 'syncano-components';
 import {InnerToolbar, Sidebar} from '../../common';
@@ -23,14 +18,11 @@ import InstallDialog from './InstallDialog';
 import InstallDialogActions from './InstallDialogActions';
 
 export default React.createClass({
-
   displayName: 'Solutions',
 
   mixins: [
     Router.State,
     Router.Navigation,
-
-    HeaderMixin,
     Reflux.connect(Store)
   ],
 
@@ -47,44 +39,8 @@ export default React.createClass({
     };
   },
 
-  handleChangeFilter(filter) {
-    Actions.setFilter(filter);
-  },
-
-  handleInstallClick(solutionId) {
-    InstallDialogActions.showDialogWithPreFetch(solutionId);
-  },
-
-  handleSeeMoreClick(solutionId) {
-    this.transitionTo('solutions-edit', {solutionId});
-  },
-
-  handleTagClick(tag) {
-    Actions.selectOneTag(tag);
-  },
-
-  handleResetTagsSelection() {
-    Actions.resetTagsSelection();
-  },
-
-  handleToggleTagSelection(name) {
-    Actions.toggleTagSelection(name);
-  },
-
-  handleUnstarClick(solutionId) {
-    Actions.unstarSolution(solutionId);
-  },
-
-  handleStarClick(solutionId) {
-    Actions.starSolution(solutionId);
-  },
-
-  showSolutionDialog() {
-    CreateDialogActions.showDialog();
-  },
-
   render() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     return (
       <div id='solutions'>
@@ -94,41 +50,40 @@ export default React.createClass({
               <ListItem
                 innerDivStyle={this.state.filter === 'public' ? styles.listItemChecked : {}}
                 primaryText="All solutions"
-                onTouchTap={this.handleChangeFilter.bind(this, 'public')}/>
+                onTouchTap={() => Actions.setFilter('public')}/>
               <Divider />
               <ListItem
                 innerDivStyle={this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
                 primaryText="Favorite"
-                onTouchTap={this.handleChangeFilter.bind(this, 'starred_by_me')}/>
+                onTouchTap={() => Actions.setFilter('starred_by_me')}/>
               <ListItem
                 innerDivStyle={this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
                 primaryText="My solutions"
-                onTouchTap={this.handleChangeFilter.bind(this, 'created_by_me')}/>
+                onTouchTap={() => Actions.setFilter('created_by_me')}/>
             </List>
             <Tags.List
               items={this.state.tags}
               selectedItems={this.state.selectedTags}
-              toggleTagSelection={this.handleToggleTagSelection}
+              toggleTagSelection={(name) => Actions.toggleTagSelection(name)}
               resetTagsSelection={Actions.resetTagsSelection}/>
           </Sidebar>
           <div className="col-flex-1">
-            <Header/>
             <InnerToolbar>
               <Show if={SessionStore.hasFriendlyUser()}>
                 <Socket
                   tooltip="Click here to create a Solution"
-                  onTouchTap={this.showSolutionDialog}/>
+                  onTouchTap={CreateDialogActions.showDialog}/>
               </Show>
             </InnerToolbar>
             <Container>
               <Loading show={!this.state.items}>
                 <Solutions.List
                   items={this.state.items}
-                  onInstall={this.handleInstallClick}
-                  onSeeMore={this.handleSeeMoreClick}
-                  onTagClick={this.handleTagClick}
-                  onUnstar={this.handleUnstarClick}
-                  onStar={this.handleStarClick}/>
+                  onInstall={(solutionId) => InstallDialogActions.showDialogWithPreFetch(solutionId)}
+                  onSeeMore={(solutionId) => this.transitionTo('solutions-edit', {solutionId})}
+                  onTagClick={(tag) => Actions.selectOneTag(tag)}
+                  onUnstar={(solutionId) => Actions.unstarSolution(solutionId)}
+                  onStar={(solutionId) => Actions.starSolution(solutionId)} />
               </Loading>
             </Container>
           </div>

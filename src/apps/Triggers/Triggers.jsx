@@ -2,9 +2,6 @@ import React from 'react';
 import {State, Navigation} from 'react-router';
 import Reflux from 'reflux';
 
-import {InstanceTabsMixin} from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
-
 import Actions from './TriggersActions';
 import Store from './TriggersStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
@@ -22,9 +19,7 @@ export default React.createClass({
     State,
     Navigation,
 
-    Reflux.connect(Store),
-    InstanceTabsMixin,
-    HeaderMixin
+    Reflux.connect(Store)
   ],
 
   componentWillMount() {
