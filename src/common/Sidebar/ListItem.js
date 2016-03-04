@@ -22,10 +22,10 @@ export default React.createClass({
         color: '#4a4a4a'
       },
       innerDivStyle: {
-        padding: '10px 20px'
+        padding: '11px 20px 9px'
       },
       withIcon: {
-        padding: '10px 20px 10px 48px'
+        padding: '11px 20px 9px 48px'
       },
       iconStyle: {
         fontSize: 18,
