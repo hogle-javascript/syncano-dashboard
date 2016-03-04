@@ -111,6 +111,7 @@ export default React.createClass({
           <AutoComplete
             ref="crontab"
             floatingLabelText="Crontab"
+            hintText="Choose option from the dropdown or type your own crontab"
             filter={AutoComplete.noFilter}
             animated={false}
             fullWidth={true}
