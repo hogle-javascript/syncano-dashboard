@@ -41,9 +41,10 @@ export default React.createClass({
     const title = this.hasEditMode() ? 'Edit' : 'Create';
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
+        contentSize="small"
         title={`${title} a Group`}
         onRequestClose={this.handleCancel}
         open={this.state.open}
@@ -62,7 +63,7 @@ export default React.createClass({
           errorText={this.getValidationMessages('label').join(' ')}
           hintText="Name of the group"
           floatingLabelText="Group Name"/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

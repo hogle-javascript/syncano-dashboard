@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
@@ -46,6 +47,36 @@ export default React.createClass({
     this.setState(state);
   },
 
+  renderToggles() {
+    const toggles = {
+      acl: {
+        name: 'ignore_acl',
+        label: 'Ignore ACL?'
+      },
+      registration: {
+        name: 'allow_user_create',
+        label: 'User registration?'
+      },
+      usage: {
+        name: 'allow_anonymous_read',
+        label: 'Anonymous usage?'
+      }
+    };
+
+    return _.map(toggles, (value) => {
+      return (
+        <div className="vp-2-b">
+          <Toggle
+            ref={value.name}
+            name={value.name}
+            defaultToggled={this.state[value.name]}
+            onToggle={this.handleToogle}
+            label={value.label}/>
+        </div>
+      );
+    });
+  },
+
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Generate';
 
@@ -71,24 +102,7 @@ export default React.createClass({
           errorText={this.getValidationMessages('description').join(' ')}
           floatingLabelText="Description of an API Key"
           className="vm-3-b"/>
-        <Toggle
-          ref="ignore_acl"
-          name="ignore_acl"
-          defaultToggled={this.state.ignore_acl}
-          onToggle={this.handleToogle}
-          label="Ignore ACL?"/>
-        <Toggle
-          ref="allow_user_create"
-          name="allow_user_create"
-          defaultToggled={this.state.allow_user_create}
-          onToggle={this.handleToogle}
-          label="User registration?"/>
-        <Toggle
-          ref="allow_anonymous_read"
-          name="allow_anonymous_read"
-          defaultToggled={this.state.allow_anonymous_read}
-          onToggle={this.handleToogle}
-          label="Anonymous usage?"/>
+        {this.renderToggles()}
       </Dialog.FullPage>
     );
   }
