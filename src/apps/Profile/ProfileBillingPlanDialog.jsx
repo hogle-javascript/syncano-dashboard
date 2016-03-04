@@ -317,7 +317,6 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        defaultOpen={this.props.defaultOpen}
         actions={dialogCustomActions}
         open={this.state.open}
         isLoading={this.state.isLoading}

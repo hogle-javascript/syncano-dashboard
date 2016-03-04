@@ -71,7 +71,6 @@ export default React.createClass({
         key='dialog'
         ref='dialog'
         title={`${title} a Template Socket`}
-        defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
         open={this.state.open}
         modal={true}>

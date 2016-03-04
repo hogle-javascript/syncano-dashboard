@@ -136,7 +136,6 @@ export default React.createClass({
         key='dialog'
         ref="dialog"
         title={title}
-        defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
         actions={dialogCustomActions}>

@@ -56,7 +56,6 @@ export default React.createClass({
         key="dialog"
         ref="dialog"
         title={`${title} an Administrator`}
-        defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
         contentSize="small"

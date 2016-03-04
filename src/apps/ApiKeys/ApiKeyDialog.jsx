@@ -54,7 +54,6 @@ export default React.createClass({
         key="dialog"
         ref="dialog"
         title={`${title} an API Key`}
-        defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
         isLoading={this.state.isLoading}
