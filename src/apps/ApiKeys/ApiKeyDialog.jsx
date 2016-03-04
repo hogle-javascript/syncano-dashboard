@@ -49,29 +49,22 @@ export default React.createClass({
 
   renderToggles() {
     const toggles = {
-      acl: {
-        name: 'ignore_acl',
-        label: 'Ignore ACL?'
-      },
-      registration: {
-        name: 'allow_user_create',
-        label: 'User registration?'
-      },
-      usage: {
-        name: 'allow_anonymous_read',
-        label: 'Anonymous usage?'
-      }
+      ignore_acl: 'Ignore ACL?',
+      allow_user_create: 'User registration?',
+      allow_anonymous_read: 'Anonymous usage?'
     };
 
-    return _.map(toggles, (value) => {
+    return _.map(toggles, (value, key) => {
       return (
-        <div className="vp-2-b">
+        <div
+          key={key}
+          className="vp-2-b">
           <Toggle
-            ref={value.name}
-            name={value.name}
-            defaultToggled={this.state[value.name]}
+            ref={key}
+            name={key}
+            defaultToggled={this.state[key]}
             onToggle={this.handleToogle}
-            label={value.label}/>
+            label={value}/>
         </div>
       );
     });
