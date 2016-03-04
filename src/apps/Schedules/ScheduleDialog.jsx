@@ -54,11 +54,11 @@ export default React.createClass({
   },
 
   handleCrontabChange(value) {
-    this.setState({crontab: value}
+    this.setState({crontab: value});
   },
 
   handleCrontabOpen() {
-    this.refs.crontab._open()
+    this.refs.crontab._open();
   },
 
   renderCrontabDataSource() {
