@@ -4,10 +4,6 @@ import Router from 'react-router';
 import Radium from 'radium';
 import _ from 'lodash';
 
-// Utils
-import HeaderMixin from '../Header/HeaderMixin';
-import {InstanceTabsMixin} from '../../mixins';
-
 // Stores and Actions
 import Store from './TracesStore';
 import Actions from './TracesActions';
@@ -21,7 +17,6 @@ import TracesList from './TracesList';
 
 
 export default Radium(React.createClass({
-
   displayName: 'Traces',
 
   propTypes: {
@@ -33,9 +28,7 @@ export default Radium(React.createClass({
     Router.Navigation,
     Router.State,
 
-    Reflux.connect(Store),
-    HeaderMixin,
-    InstanceTabsMixin
+    Reflux.connect(Store)
   ],
 
   getDefaultProps() {

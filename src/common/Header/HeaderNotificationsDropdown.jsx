@@ -3,10 +3,10 @@ import Reflux from 'reflux';
 import {Navigation, State} from 'react-router';
 import Radium from 'radium';
 
-import AuthActions from '../Account/AuthActions';
-import HeaderStore from './HeaderStore';
-import ProfileInvitationsStore from '../ProfileInvitations/ProfileInvitationsStore';
-import ProfileInvitationsActions from '../ProfileInvitations/ProfileInvitationsActions';
+import AuthActions from '../../apps/Account/AuthActions';
+import SessionStore from '../../apps/Session/SessionStore';
+import ProfileInvitationsStore from '../../apps/ProfileInvitations/ProfileInvitationsStore';
+import ProfileInvitationsActions from '../../apps/ProfileInvitations/ProfileInvitationsActions';
 
 import {Utils, Styles, FontIcon, FlatButton, MenuItem, Divider, Badge, IconButton, IconMenu} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
@@ -22,13 +22,18 @@ export default Radium(React.createClass({
   },
 
   mixins: [
-    Reflux.connect(HeaderStore),
     Reflux.connect(ProfileInvitationsStore, 'accountInvitations'),
     Navigation,
     State,
     SnackbarNotificationMixin,
     Utils.Styles
   ],
+
+  getInitialState() {
+    return {
+      user: SessionStore.getUser({})
+    };
+  },
 
   componentDidMount() {
     ProfileInvitationsActions.fetch();

@@ -2,7 +2,6 @@ import React from 'react';
 import Router from 'react-router';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
@@ -20,7 +19,6 @@ export default React.createClass({
   displayName: 'ApiKeysList',
 
   mixins: [
-    HeaderMixin,
     Router.State,
     Router.Navigation,
     DialogsMixin

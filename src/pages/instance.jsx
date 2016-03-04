@@ -9,7 +9,7 @@ import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 import Sticky from 'react-stickydiv';
 import {List} from 'syncano-material-ui';
 import {Sidebar} from '../common';
-import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown';
+import HeaderInstancesDropdown from '../common/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
 
 export default React.createClass({

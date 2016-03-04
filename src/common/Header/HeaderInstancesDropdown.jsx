@@ -3,11 +3,10 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
 
-import HeaderStore from './HeaderStore';
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
-import InstancesStore from '../Instances/InstancesStore';
-import InstanceDialogActions from '../Instances/InstanceDialogActions';
+import SessionActions from '../../apps/Session/SessionActions';
+import SessionStore from '../../apps/Session/SessionStore';
+import InstancesStore from '../../apps/Instances/InstancesStore';
+import InstanceDialogActions from '../../apps/Instances/InstanceDialogActions';
 
 import {Utils, FontIcon, List, ListItem, IconMenu} from 'syncano-material-ui';
 import {ColumnList, Color, Show} from 'syncano-components';
@@ -21,7 +20,6 @@ export default Radium(React.createClass({
   },
 
   mixins: [
-    Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
     Router.Navigation,
     Router.State,

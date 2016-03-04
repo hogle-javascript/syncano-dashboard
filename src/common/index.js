@@ -4,6 +4,7 @@ import Dialog from './Dialog';
 import Dropdown from './Dropdown';
 import DropZone from './DropZone';
 import Editor from './Editor';
+import Header from './Header';
 import Icon from './Icon';
 import InnerToolbar from './InnerToolbar';
 import Lists from './Lists';
@@ -21,6 +22,7 @@ export default {
   Dropdown,
   DropZone,
   Editor,
+  Header,
   Icon,
   InnerToolbar,
   Lists,

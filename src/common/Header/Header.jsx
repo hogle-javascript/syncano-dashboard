@@ -5,15 +5,14 @@ import {Navigation, State, Link} from 'react-router';
 import Gravatar from 'gravatar';
 
 // Stores & Actions
-import HeaderStore from './HeaderStore';
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
-import InstancesStore from '../Instances/InstancesStore';
+import SessionActions from '../../apps/Session/SessionActions';
+import SessionStore from '../../apps/Session/SessionStore';
+import InstancesStore from '../../apps/Instances/InstancesStore';
 
 // Components
 import Sticky from 'react-stickydiv';
 import {Utils, FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'syncano-material-ui';
-import {Logo} from '../../common';
+import Logo from '../Logo';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
 import './Header.sass';
@@ -27,7 +26,6 @@ export default Radium(React.createClass({
   },
 
   mixins: [
-    Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
     Navigation,
     State,

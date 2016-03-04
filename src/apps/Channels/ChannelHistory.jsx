@@ -3,10 +3,6 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
 
-// Utils
-import HeaderMixin from '../Header/HeaderMixin';
-import {InstanceTabsMixin} from '../../mixins';
-
 // Stores and Actions
 import Store from './ChannelHistoryStore';
 import Actions from './ChannelHistoryActions';
@@ -20,7 +16,6 @@ import ChannelHistoryList from './ChannelHistoryList';
 
 
 export default Radium(React.createClass({
-
   displayName: 'ChannelHistory',
 
   propTypes: {
@@ -31,9 +26,7 @@ export default Radium(React.createClass({
     Router.Navigation,
     Router.State,
 
-    Reflux.connect(Store),
-    HeaderMixin,
-    InstanceTabsMixin
+    Reflux.connect(Store)
   ],
 
   getDefaultProps() {

@@ -4,7 +4,7 @@ import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
-import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
+import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -21,7 +21,6 @@ import ColumnsFilterMenu from './ColumnsFilterMenu';
 import DataObjectDialog from './DataObjectDialog';
 
 export default React.createClass({
-
   displayName: 'DataObjects',
 
   mixins: [
@@ -29,8 +28,7 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    DialogsMixin,
-    InstanceTabsMixin
+    DialogsMixin
   ],
 
   componentDidMount() {

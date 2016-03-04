@@ -5,7 +5,6 @@ import Actions from './AdminsInvitationsActions';
 import Store from './AdminsInvitationsStore';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin} from '../../mixins';
 
 // Components
@@ -21,7 +20,6 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    HeaderMixin,
     DialogsMixin
   ],
 
