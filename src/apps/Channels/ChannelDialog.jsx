@@ -111,7 +111,7 @@ export default React.createClass({
                   disabled={this.hasEditMode()}
                   fullWidth={true}
                   hintText="Short name for your Channel Socket"
-                  floatingLabelText="Name of a Channel Socket" />
+                  floatingLabelText="Name" />
               </div>
               <div className="col-flex-1">
                 <SelectFieldWrapper

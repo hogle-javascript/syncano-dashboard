@@ -112,10 +112,11 @@ export default React.createClass({
     }
 
     return (
-      <Dialog
+      <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a User`}
+        contentSize="small"
         onRequestClose={this.handleCancel}
         open={this.state.open}
         isLoading={this.state.isLoading}
@@ -150,7 +151,7 @@ export default React.createClass({
             options={allGroups}
             onChange={this.handleSelectFieldChange} />
         </div>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

@@ -79,11 +79,12 @@ export default React.createClass({
                   <Sidebar.NestedLinkListItem
                     key="Channel"
                     routeName="channels"
-                    primaryText="Channel" />,
-                  <Sidebar.NestedLinkListItem
-                    key="Push Notifications"
+                    primaryText="Channel" />
+
+                  /* <Sidebar.NestedLinkListItem
+                    key="Push Notification"
                     routeName="push-notification-config"
-                    primaryText="Push Notification" />
+                    primaryText="Push Notification" /> */
                 ]} />
             </Sidebar.List>
             <Sidebar.List
@@ -104,7 +105,10 @@ export default React.createClass({
                 routeName="scripts"
                 iconClassName="synicon-code-tags"
                 primaryText="Scripts"/>
-              <Sidebar.LinkListItem
+
+              {
+
+              /* <Sidebar.LinkListItem
                 key="pushDevices"
                 routeName="all-push-notification-devices"
                 primaryText="Push Devices"
@@ -120,7 +124,8 @@ export default React.createClass({
                     key="androidDevices"
                     routeName="gcm-devices"
                     primaryText="Android Devices" />
-                ]}/>
+                ]}/> */
+              }
             </Sidebar.List>
             <Sidebar.List
               key="Settings"
