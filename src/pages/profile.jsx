@@ -47,7 +47,7 @@ export default React.createClass({
               primaryText="Billing address"/>
           </Sidebar.List>
         </Sidebar>
-        <div className="col-flex-1">
+        <div className="col-flex-1" style={{maxWidth: 'calc(100% - 256px)'}}>
           <RouteHandler />
         </div>
       </div>
