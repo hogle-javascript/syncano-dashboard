@@ -1,19 +1,21 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
-import D from 'd.js';
+import Bluebird from 'bluebird';
 
 // Utils & Mixins
 import Constans from '../../constants/Constants';
-import {CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../mixins';
+import {StoreHelpersMixin, CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './ClassesActions';
+import SocketsActions from '../Sockets/SocketsActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: [Actions, SocketsActions],
 
   mixins: [
+    StoreHelpersMixin,
     CheckListStoreMixin,
     WaitForStoreMixin,
     StoreLoadingMixin
@@ -40,7 +42,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('ClassesStore::refreshData');
-    D.all([
+    Bluebird.all([
       Actions.fetchClasses(),
       Actions.fetchTriggers()
     ]).then(() => {
@@ -185,6 +187,11 @@ export default Reflux.createStore({
 
   onUpdateClassCompleted() {
     this.refreshData();
+  },
+
+  onFetchSocketsCompleted(sockets) {
+    console.debug('ScriptsStore::onFetchSocketsCompleted');
+    Actions.setClasses(sockets.scripts);
   },
 
   onFetchClassesCompleted(items) {

@@ -21,16 +21,16 @@ export default {
   remove(items) {
     let promises = items.map((item) => this.Connection.Invitations.remove(item.id));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Bluebird.all(promises)
+      .then(this.completed)
       .error(this.failure);
   },
 
   resend(items) {
     let promises = items.map((item) => this.Connection.Invitations.resend(item.id));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Bluebird.all(promises)
+      .then(this.completed)
       .error(this.failure);
   }
 };

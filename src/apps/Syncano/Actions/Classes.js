@@ -37,8 +37,8 @@ export default {
   remove(classnames) {
     let promises = classnames.map((classname) => this.Connection.Classes.remove(classname));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Bluebird.all(promises)
+      .then(this.completed)
       .error(this.failure);
   }
 };

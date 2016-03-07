@@ -27,10 +27,10 @@ export default {
   },
 
   remove(dataviews) {
-    let promises = dataviews.map((dataview) => this.Connection.DataViews.remove(dataview.name));
+    let promises = _.map(dataviews, (dataview) => this.Connection.DataViews.remove(dataview.name));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Bluebird.all(promises)
+      .then(this.completed)
       .error(this.failure);
   }
 };

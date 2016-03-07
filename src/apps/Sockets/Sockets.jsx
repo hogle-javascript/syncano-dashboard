@@ -95,7 +95,7 @@ export default React.createClass({
 
   renderToolbar() {
     const {sockets} = this.state;
-    const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
+    // const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
 
     if (!sockets.hasAnyItem || sockets.isLoading) {
       return <InnerToolbar title="Sockets"/>;
@@ -108,9 +108,14 @@ export default React.createClass({
           <Socket.Data onTouchTap={Data.Actions.showDialog}/>
           <Socket.CodeBox onTouchTap={CodeBoxes.Actions.showDialog}/>
           <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
-          <Socket.Push
+
+          {
+
+            /* <Socket.Push
             tooltip="Configure Push Notification Socket"
-            onTouchTap={togglePopover}/>
+            onTouchTap={togglePopover}/> */
+          }
+
           <Socket.Trigger onTouchTap={Triggers.Actions.showDialog}/>
           <Socket.Schedule
             onTouchTap={Schedules.Actions.showDialog}

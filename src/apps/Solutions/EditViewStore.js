@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import URL from 'url';
-import D from 'd.js';
+import Bluebird from 'bluebird';
 
 // Utils & Mixins
 import {StoreFormMixin, WaitForStoreMixin} from '../../mixins';
@@ -45,7 +45,7 @@ export default Reflux.createStore({
     console.debug('SolutionsEditStore::refreshData');
     let solutionId = SessionStore.router.getCurrentParams().solutionId;
 
-    D.all([
+    Bluebird.all([
       Actions.fetchSolution(solutionId),
       Actions.fetchSolutionVersions(solutionId)
     ]).then(() => {

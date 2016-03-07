@@ -1,5 +1,6 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
+import Bluebird from 'bluebird';
 
 import Connection from '../apps/Session/Connection';
 import Syncano from '../apps/Syncano';
@@ -7,7 +8,7 @@ import Syncano from '../apps/Syncano';
 let Libraries = {Syncano};
 let Context = {
   Connection: Connection.get(),
-  D: Connection.D
+  Bluebird
 };
 
 export default (actions = {}, options = {withDialog: false, withCheck: false}) => {

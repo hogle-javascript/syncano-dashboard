@@ -16,7 +16,7 @@ export default {
       this.Connection.CodeBoxes.list(params)
     ];
 
-    this.D.all(promises)
+    this.Bluebird.all(promises)
       .then((sockets) => {
         return {
           data: sockets[0],
@@ -28,10 +28,11 @@ export default {
           apnsPushNotifications: sockets[6],
           gcmDevices: sockets[7],
           apnsDevices: sockets[8],
-          scripts: sockets[9]
+          scripts: sockets[9],
+          classes: sockets[10]
         };
       })
-      .success(this.completed)
-      .error(this.failure);
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

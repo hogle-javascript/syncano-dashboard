@@ -60,6 +60,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('SocketsStore::refreshData');
+    console.error('refresh Socketstore');
     Actions.fetchSockets();
   },
 
@@ -92,6 +93,10 @@ export default Reflux.createStore({
 
       return item;
     }).filter((item) => item.hasConfig);
+  },
+
+  onFetchSocketsFailure(err) {
+    console.error(err);
   },
 
   onFetchSocketsCompleted(sockets) {

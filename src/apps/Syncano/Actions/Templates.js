@@ -49,8 +49,8 @@ export default {
   remove(names) {
     let promises = names.map((name) => this.Connection.Templates.remove(name));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Bluebird.all(promises)
+      .then(this.completed)
       .error(this.failure);
   }
 };

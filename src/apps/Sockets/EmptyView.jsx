@@ -76,15 +76,20 @@ export default React.createClass({
             Run Scripts on our servers and use them for business logic.
           </div>
         </Socket.EmptyListItem>
-        <Socket.EmptyListItem
-          addTooltip="Configure a Push Notification"
-          handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
-          socketName="Push"
-          title="Send Push Notifications">
-          <div style={styles.socketDescription}>
-            Instantly message your mobile users with timely and relevant content.
-          </div>
-        </Socket.EmptyListItem>
+        {
+
+          /*
+           <Socket.EmptyListItem
+           addTooltip="Configure a Push Notification"
+           handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
+           socketName="Push"
+           title="Send Push Notifications">
+           <div style={styles.socketDescription}>
+           Instantly message your mobile users with timely and relevant content.
+           </div>
+           </Socket.EmptyListItem>
+           */
+        }
         <Popover ref="popover"/>
         <Socket.EmptyListItem
           addTooltip="Create a Trigger"
