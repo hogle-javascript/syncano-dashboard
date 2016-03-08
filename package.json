@@ -9,7 +9,7 @@
     "url": "https://github.com/Syncano/syncano-dashboard.git"
   },
   "engines": {
-    "node": "4.2.1",
+    "node": "4.2.2",
     "npm": "3.3.10"
   },
   "dependencies": {
