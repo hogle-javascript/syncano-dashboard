@@ -102,7 +102,7 @@ export default React.createClass({
           </Dialog.Sidebar>
           <Dialog.Content>
             <Dialog.ContentSection>
-              <div className="col-md-12">
+              <div className="col-md-20">
                 <TextField
                   ref="name"
                   valueLink={this.linkState('name')}
