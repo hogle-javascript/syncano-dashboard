@@ -16,7 +16,7 @@ export default {
       this.Connection.CodeBoxes.list(params)
     ];
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then((sockets) => {
         return {
           data: sockets[0],

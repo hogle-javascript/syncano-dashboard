@@ -29,7 +29,7 @@ export default {
   remove(ids) {
     let promises = ids.map((id) => this.Connection.Groups.remove(id));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },

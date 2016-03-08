@@ -29,7 +29,7 @@ export default {
           return this.Connection.DataObjects.uploadFile(payload.className, createdItem, file);
         });
 
-        this.Bluebird.all(promises)
+        this.Promise.all(promises)
           .then(this.completed)
           .error(this.failure);
       })
@@ -45,7 +45,7 @@ export default {
           return this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file);
         });
 
-        this.Bluebird.all(promises)
+        this.Promise.all(promises)
           .then(this.completed)
           .error(this.failure);
       })
@@ -55,7 +55,7 @@ export default {
   remove(className, dataobjects) {
     let promises = dataobjects.map((dataobject) => this.Connection.DataObjects.remove(className, dataobject));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },

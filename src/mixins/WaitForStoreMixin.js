@@ -44,6 +44,9 @@ export default {
     this._fetchCallback = callback;
     args.push(this.fetch);
     listenMethod.apply(this, args);
-  }
+  },
 
+  clearFetchState() {
+    this._shouldFetch = false;
+  }
 };

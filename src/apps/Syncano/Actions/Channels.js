@@ -27,7 +27,7 @@ export default {
   remove(names) {
     let promises = names.map((id) => this.Connection.Channels.remove(id));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },

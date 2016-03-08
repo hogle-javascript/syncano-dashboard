@@ -37,7 +37,7 @@ export default {
   remove(ids) {
     let promises = ids.map((id) => this.Connection.Triggers.remove(id));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },

@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
-import Bluebird from 'bluebird';
+import Promise from 'bluebird';
 
 // Utils & Mixins
 import Constans from '../../constants/Constants';
@@ -42,7 +42,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('ClassesStore::refreshData');
-    Bluebird.all([
+    Promise.all([
       Actions.fetchClasses(),
       Actions.fetchTriggers()
     ]).then(() => {

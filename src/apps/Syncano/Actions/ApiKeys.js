@@ -39,7 +39,7 @@ export default {
   reset(apiKeys) {
     let promises = apiKeys.map((apiKey) => this.Connection.ApiKeys.reset(apiKey.id));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   }

@@ -39,7 +39,7 @@ export default {
       return this.Connection.Schedules.remove(schedule.id);
     });
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },

@@ -21,7 +21,7 @@ export default {
   remove(admins) {
     let promises = admins.map((admin) => this.Connection.Admins.remove(admin));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   }

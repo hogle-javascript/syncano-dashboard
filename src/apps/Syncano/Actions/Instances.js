@@ -55,7 +55,7 @@ export default {
   remove(names) {
     let promises = _.map(names, this.Connection.Instances.remove);
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },
@@ -63,7 +63,7 @@ export default {
   removeShared(names, adminId) {
     let promises = _.map(names, (name) => this.Connection.Instances.removeShared(name, adminId));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },

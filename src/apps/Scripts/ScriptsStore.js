@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-import Bluebird from 'bluebird';
+import Promise from 'bluebird';
 
 import {StoreHelpersMixin, CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
 
@@ -139,7 +139,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('ScriptsStore::refreshData');
-    Bluebird.all([
+    Promise.all([
       Actions.fetchScripts(),
       Actions.fetchTriggers(),
       Actions.fetchSchedules()

@@ -21,7 +21,7 @@ export default {
   remove(items) {
     let promises = items.map((item) => this.Connection.Invitations.remove(item.id));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },
@@ -29,7 +29,7 @@ export default {
   resend(items) {
     let promises = items.map((item) => this.Connection.Invitations.resend(item.id));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   }

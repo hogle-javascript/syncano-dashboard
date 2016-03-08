@@ -21,7 +21,7 @@ export default {
         .then((user) => {
           let addUserToGroups = userGroupsArray.map((group) => this.Connection.Users.addToGroup(user.id, group.id));
 
-          this.Bluebird.all(addUserToGroups)
+          this.Promise.all(addUserToGroups)
             .then(this.completed)
             .error(this.failure);
         })
@@ -48,7 +48,7 @@ export default {
         let removeUserFromGroups = removedGroups.map((group) => this.Connection.Users.removeFromGroup(id, group));
         let promises = removeUserFromGroups.concat(addUserToGroups);
 
-        this.Bluebird.all(promises)
+        this.Promise.all(promises)
           .then(this.completed)
           .error(this.failure);
       })
@@ -58,7 +58,7 @@ export default {
   remove(users) {
     let promises = users.map((user) => this.Connection.Users.remove(user.id));
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },

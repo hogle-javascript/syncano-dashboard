@@ -47,7 +47,7 @@ export default {
         .remove('apns', device.registration_id);
     });
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },
@@ -78,7 +78,7 @@ export default {
         .remove('gcm', device.registration_id);
     });
 
-    this.Bluebird.all(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },

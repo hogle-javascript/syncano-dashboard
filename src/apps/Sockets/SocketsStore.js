@@ -65,6 +65,7 @@ export default Reflux.createStore({
 
   clearSockets() {
     this.data = this.getInitialState();
+    this.clearFetchState();
     this.trigger(this.data);
   },
 
@@ -85,7 +86,7 @@ export default Reflux.createStore({
   },
 
   getPushNotificationsItems(items, type, devicesCount) {
-    return items.map((item) => {
+    return _.map(items, (item) => {
       item.name = type;
       item.hasConfig = type === 'GCM' ? this.hasGCMConfig(items) : this.hasAPNSConfig(items);
       item.devicesCount = devicesCount;

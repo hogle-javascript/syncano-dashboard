@@ -94,7 +94,7 @@ export default {
   cancelSubscriptions(ids) {
     let promises = ids.map((id) => this.Connection.Billing.cancelSubscription(id));
 
-    return this.Bluebird.all(promises)
+    return this.Promise.all(promises)
             .then(this.completed)
             .error(this.failure);
   },
