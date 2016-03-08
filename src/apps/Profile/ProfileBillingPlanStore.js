@@ -84,7 +84,7 @@ export default Reflux.createStore({
   getBuilderLimits() {
     return {
       api: {included: '100000'},
-      cbx: {included: '1000'}
+      cbx: {included: '20000'}
     };
   },
 

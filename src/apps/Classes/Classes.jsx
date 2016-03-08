@@ -14,6 +14,7 @@ import {Container, Socket} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
+import ClassDialog from './ClassDialog';
 import ClassesList from './ClassesList';
 
 export default React.createClass({
@@ -31,17 +32,19 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  redirectToAddClassView() {
-    this.transitionTo('classes-add', this.getParams());
+  showClassDialog() {
+    Actions.showDialog();
   },
 
   render() {
     return (
       <div>
+        <ClassDialog/>
+
         <InnerToolbar title="Classes">
           <Socket
             tooltip="Create a Class"
-            onTouchTap={this.redirectToAddClassView}/>
+            onTouchTap={this.showClassDialog}/>
         </InnerToolbar>
 
         <Container>
@@ -50,7 +53,7 @@ export default React.createClass({
             items={this.state.items}
             triggers={this.state.triggers}
             hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.redirectToAddClassView}
+            emptyItemHandleClick={this.showClassDialog}
             emptyItemContent="Create a Class"/>
         </Container>
       </div>

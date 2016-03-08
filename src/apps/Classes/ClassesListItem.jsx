@@ -4,7 +4,6 @@ import {Link, State, Navigation} from 'react-router';
 import {DialogsMixin} from '../../mixins';
 
 import Actions from './ClassesActions';
-import Store from './ClassesStore';
 
 import {MenuItem, IconButton, Styles} from 'syncano-material-ui';
 import {ColumnList, Color} from 'syncano-components';
@@ -25,15 +24,6 @@ export default React.createClass({
     this.transitionTo('classes-data-objects', {
       instanceName: this.getParams().instanceName,
       className
-    });
-  },
-
-  redirectToEditClassView(className) {
-    let classNameParam = className || Store.getCheckedItem().name;
-
-    this.transitionTo('classes-edit', {
-      instanceName: this.getParams().instanceName,
-      className: classNameParam
     });
   },
 
@@ -82,7 +72,7 @@ export default React.createClass({
         <Column.Menu handleClick={() => Actions.setClickedClass(item)}>
           <MenuItem
             className="dropdown-item-edit-class"
-            onTouchTap={() => this.redirectToEditClassView(item.name)}
+            onTouchTap={() => Actions.showDialog(item)}
             primaryText="Edit a Class"/>
           <MenuItem
             className="dropdown-item-delete-class"

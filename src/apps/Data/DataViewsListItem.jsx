@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link, State} from 'react-router';
 
 import Actions from './DataViewsActions';
 
@@ -13,10 +12,7 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'DataViewsListItem',
 
-  mixins: [
-    State,
-    SnackbarNotificationMixin
-  ],
+  mixins: [SnackbarNotificationMixin],
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
@@ -48,12 +44,7 @@ export default React.createClass({
           {item.description}
         </Column.Desc>
         <Column.Desc className="col-flex-3">
-          <Link to="classes-edit" params={{
-            instanceName: this.getParams().instanceName,
-            className: item.class
-          }}>
-            {item.class}
-          </Link>
+          {item.class}
         </Column.Desc>
         <Column.Menu>
           <MenuItem

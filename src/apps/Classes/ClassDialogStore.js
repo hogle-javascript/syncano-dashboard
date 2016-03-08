@@ -1,16 +1,19 @@
 import Reflux from 'reflux';
 
-import {StoreFormMixin, WaitForStoreMixin} from '../../mixins';
+import {StoreFormMixin, DialogStoreMixin, WaitForStoreMixin} from '../../mixins';
 
-import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
-import Actions from './FormViewActions';
+import Actions from './ClassesActions';
 
 export default Reflux.createStore({
-  listenables: [Actions, SessionActions],
+  listenables: [
+    Actions,
+    SessionActions
+  ],
 
   mixins: [
     StoreFormMixin,
+    DialogStoreMixin,
     WaitForStoreMixin
   ],
 
@@ -31,11 +34,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    const router = SessionStore.getRouter();
-
-    if (router !== null && router.getCurrentParams().className) {
-      Actions.getClass(router.getCurrentParams().className);
-    }
+    Actions.fetchClasses();
   },
 
   onSetInstance() {
@@ -47,16 +46,14 @@ export default Reflux.createStore({
   },
 
   onCreateClassCompleted() {
-    SessionStore.getRouter().transitionTo(
-      'classes',
-      SessionStore.getRouter().getCurrentParams()
-    );
+    console.debug('ClassDialogStore::onCreateClassCompleted');
+    this.dismissDialog();
+    this.refreshData();
   },
 
   onUpdateClassCompleted() {
-    SessionStore.getRouter().transitionTo(
-      'classes',
-      SessionStore.getRouter().getCurrentParams()
-    );
+    console.debug('ClassDialogStore::onUpdateClassCompleted');
+    this.dismissDialog();
+    this.refreshData();
   }
 });
