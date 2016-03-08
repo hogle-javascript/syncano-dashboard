@@ -118,7 +118,7 @@ export default React.createClass({
       params: {
         key: 'scriptTraces',
         ref: 'scriptTraces',
-        title: 'Traces for',
+        title: `Traces for ${this.getToolbarTitle()}`,
         actions: [],
         onRequestClose: () => this.handleCancel('scriptTraces'),
         avoidResetState: true,

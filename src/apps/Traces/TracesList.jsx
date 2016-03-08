@@ -104,12 +104,13 @@ export default Radium(React.createClass({
           handleClick={this.toggleTrace.bind(null, item.id)}>
           <Column.CheckIcon
             id={item.id.toString()}
-            icon={status.icon}
+            className="col-flex-1"
+            iconClassName={status.icon}
             background={status.background}
             checkable={false}
             primaryText={item.status}
             secondaryText={`ID: ${item.id}`}/>
-          <Column.Desc>{duration}</Column.Desc>
+          <Column.Desc className="col-flex-1">{duration}</Column.Desc>
           <Column.Date
             date={item.executed_at}
             ifInvalid={item.status}/>
@@ -125,8 +126,17 @@ export default Radium(React.createClass({
     return (
       <Lists.List key="traces-list">
         <ColumnList.Header>
-          <Column.ColumnHeader primary={true} columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DESC">Duration</Column.ColumnHeader>
+          <Column.ColumnHeader
+            primary={true}
+            columnName="ICON_NAME"
+            className="col-flex-1">
+            {this.props.name}
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-flex-1">
+            Duration
+          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
         </ColumnList.Header>
         {this.props.items.map((item) => this.renderItem(item))}
