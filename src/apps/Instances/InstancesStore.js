@@ -168,7 +168,7 @@ export default Reflux.createStore({
     let router = SessionStore.getRouter();
     let activeRouteName = router.getCurrentRoutes()[router.getCurrentRoutes().length - 1].name;
 
-    if (typeof activeRouteName !== 'undefined' && activeRouteName !== 'instances') {
+    if (!_.isUndefined(activeRouteName) && activeRouteName !== 'instances' || _.isUndefined(activeRouteName)) {
       SessionStore.getRouter().transitionTo('instances');
     }
   },

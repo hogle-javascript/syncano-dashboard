@@ -114,5 +114,11 @@ export default Reflux.createStore({
 
   onRenameAndUpdateInstanceFailure() {
     this.trigger({isLoading: false});
+  },
+
+  onRemoveInstancesCompleted() {
+    this.dismissDialog();
+    InstancesActions.fetchInstances();
+    InstancesStore.redirectToInstancesList();
   }
 });

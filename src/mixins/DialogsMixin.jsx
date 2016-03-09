@@ -2,9 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 
 export default {
-  getDialogs() {
-    let dialogs = this.initDialogs();
-
+  getDialogs(dialogs = this.initDialogs()) {
     return dialogs.map((dialog) => React.createElement(dialog.dialog, dialog.params));
   },
 
