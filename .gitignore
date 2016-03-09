@@ -27,3 +27,4 @@ dist/
 # Reports by nightwatchjs
 reports/
 bin/
+.jshintrc

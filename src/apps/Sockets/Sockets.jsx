@@ -46,11 +46,13 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('Sockets::componentDidMount');
-    Actions.fetch();
+    Actions.addSocketsListeners();
+    _.debounce(Actions.fetch, 1000)();
   },
 
   componentWillUnmount() {
     Actions.clearSockets();
+    Actions.removeSocketsListeners();
   },
 
   getPushNotificationItems() {
