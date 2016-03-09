@@ -20,8 +20,8 @@ export default {
     } else {
       let promises = items.map((item) => this.Connection.AccountInvitations.accept(item.key));
 
-      this.D.all(promises)
-        .success(this.completed)
+      this.Promise.all(promises)
+        .then(this.completed)
         .error(this.failure);
     }
   },
@@ -29,8 +29,8 @@ export default {
   decline(items) {
     let promises = items.map((item) => this.Connection.AccountInvitations.remove(item.id));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Promise.all(promises)
+      .then(this.completed)
       .error(this.failure);
   }
 };

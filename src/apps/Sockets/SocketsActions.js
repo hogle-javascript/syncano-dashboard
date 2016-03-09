@@ -5,6 +5,8 @@ export default CreateActions(
     fetch: {},
     setSockets: {},
     clearSockets: {},
+    addSocketsListeners: {},
+    removeSocketsListeners: {},
 
     fetchSockets: {
       asyncResult: true,

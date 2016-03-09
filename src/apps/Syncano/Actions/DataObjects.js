@@ -29,8 +29,8 @@ export default {
           return this.Connection.DataObjects.uploadFile(payload.className, createdItem, file);
         });
 
-        this.D.all(promises)
-          .success(this.completed)
+        this.Promise.all(promises)
+          .then(this.completed)
           .error(this.failure);
       })
       .catch(this.failure);
@@ -45,8 +45,8 @@ export default {
           return this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file);
         });
 
-        this.D.all(promises)
-          .success(this.completed)
+        this.Promise.all(promises)
+          .then(this.completed)
           .error(this.failure);
       })
       .catch(this.failure);
@@ -55,8 +55,8 @@ export default {
   remove(className, dataobjects) {
     let promises = dataobjects.map((dataobject) => this.Connection.DataObjects.remove(className, dataobject));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Promise.all(promises)
+      .then(this.completed)
       .error(this.failure);
   },
 

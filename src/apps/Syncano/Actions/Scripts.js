@@ -60,8 +60,8 @@ export default {
   remove(ids) {
     let promises = ids.map((id) => this.Connection.CodeBoxes.remove(id));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Promise.all(promises)
+      .then(this.completed)
       .error(this.failure);
   },
 

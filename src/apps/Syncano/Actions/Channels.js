@@ -27,8 +27,8 @@ export default {
   remove(names) {
     let promises = names.map((id) => this.Connection.Channels.remove(id));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Promise.all(promises)
+      .then(this.completed)
       .error(this.failure);
   },
 

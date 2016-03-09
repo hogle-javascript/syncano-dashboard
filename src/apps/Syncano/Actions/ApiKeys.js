@@ -1,4 +1,3 @@
-import D from 'd.js';
 import _ from 'lodash';
 
 export default {
@@ -40,8 +39,8 @@ export default {
   reset(apiKeys) {
     let promises = apiKeys.map((apiKey) => this.Connection.ApiKeys.reset(apiKey.id));
 
-    D.all(promises)
-      .success(this.completed)
+    this.Promise.all(promises)
+      .then(this.completed)
       .error(this.failure);
   }
 };
