@@ -50,12 +50,10 @@ export default Reflux.createStore({
   },
 
   onRemoveApiKeysCompleted() {
-    this.data.hideDialogs = true;
     this.refreshData();
   },
 
   onResetApiKeyCompleted() {
-    this.data.hideDialogs = true;
     this.refreshData();
   }
 });

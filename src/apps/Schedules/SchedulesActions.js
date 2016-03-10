@@ -23,6 +23,8 @@ export default CreateActions(
       method: 'Syncano.Actions.Schedules.update'
     },
     removeSchedules: {
+      loading: true,
+      closingDialogs: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Schedules.remove'

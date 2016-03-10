@@ -11,11 +11,15 @@ export default CreateActions(
       method: 'Syncano.Actions.AccountInvitations.list'
     },
     acceptInvitations: {
+      loading: true,
+      closingDialogs: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.AccountInvitations.accept'
     },
     declineInvitations: {
+      loading: true,
+      closingDialogs: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.AccountInvitations.decline'

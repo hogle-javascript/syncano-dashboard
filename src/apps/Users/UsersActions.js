@@ -23,6 +23,8 @@ export default CreateActions(
       method: 'Syncano.Actions.Users.update'
     },
     removeUsers: {
+      loading: true,
+      closingDialogs: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.remove'

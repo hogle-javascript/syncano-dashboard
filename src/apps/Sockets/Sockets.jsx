@@ -64,13 +64,13 @@ export default React.createClass({
   },
 
   handleListTitleClick(routeName) {
-    let instanceName = this.getParams().instanceName;
+    const instanceName = this.getParams().instanceName;
 
     this.transitionTo(routeName, {instanceName});
   },
 
   initDialogs() {
-    let params = this.getParams();
+    const params = this.getParams();
 
     return [
       {

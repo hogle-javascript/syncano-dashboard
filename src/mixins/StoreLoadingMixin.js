@@ -15,6 +15,7 @@ export default {
   bindLoadingListeners(listenable) {
     _.forEach(listenable, (action, name) => {
       if (action.asyncResult === true && action.loading === true) {
+        const hideDialogs = action.closingDialogs;
         const predicate = (n) => _.isFunction(this[n]);
         const trigger = {
           action: !_.some([name, _.camelCase(`on ${name}`)], predicate),
@@ -23,13 +24,13 @@ export default {
         };
 
         this.listenTo(action, () => this.setLoading(true, trigger.action));
-        this.listenTo(action.completed, () => this.setLoading(false, trigger.completed));
+        this.listenTo(action.completed, () => this.setLoading(false, trigger.completed, hideDialogs));
         this.listenTo(action.failure, () => this.setLoading(false, trigger.failure));
       }
     });
   },
 
-  setLoading(state = true, trigger = true) {
+  setLoading(state = true, trigger = true, hideDialogs = false) {
     if (this.data.isLoading === state) {
       return;
     }
@@ -37,11 +38,11 @@ export default {
     console.debug('StoreLoadingMixin::setLoading', state);
     this.data.isLoading = state;
 
-    if (trigger === true) {
-      if (state === false) {
-        this.data.hideDialogs = true;
-      }
+    if (hideDialogs) {
+      this.data.hideDialogs = true;
+    }
 
+    if (trigger) {
       this.trigger(this.data);
     }
   }

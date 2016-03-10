@@ -35,10 +35,10 @@ export default React.createClass({
   },
 
   getDialogList(items, paramName, associationFor) {
-    let listItems = items.map((item) => {
-      let isAssociated = (item.triggers && item.triggers.length > 0) || (item.schedules && item.schedules.length > 0);
-      let triggersAssociation = item.triggers ? ` (${item.triggers.join(', ')})` : '';
-      let schedulesAssociation = item.schedules ? ` (${item.schedules.join(', ')})` : '';
+    const listItems = items.map((item) => {
+      const isAssociated = (item.triggers && item.triggers.length > 0) || (item.schedules && item.schedules.length > 0);
+      const triggersAssociation = item.triggers ? ` (${item.triggers.join(', ')})` : '';
+      const schedulesAssociation = item.schedules ? ` (${item.schedules.join(', ')})` : '';
       let association = '';
 
       if (isAssociated && associationFor === 'triggers') {
@@ -81,7 +81,7 @@ export default React.createClass({
   },
 
   render() {
-    let {children, ...other} = this.props;
+    const {children, ...other} = this.props;
 
     return (
       <Dialog

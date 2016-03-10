@@ -23,6 +23,8 @@ export default CreateActions(
       method: 'Syncano.Actions.Groups.update'
     },
     removeGroups: {
+      loading: true,
+      closingDialogs: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Groups.remove'

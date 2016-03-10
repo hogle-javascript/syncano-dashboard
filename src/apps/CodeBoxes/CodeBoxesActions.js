@@ -23,6 +23,8 @@ export default CreateActions(
       method: 'Syncano.Actions.CodeBoxes.update'
     },
     removeCodeBoxes: {
+      loading: true,
+      closingDialogs: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CodeBoxes.remove'
