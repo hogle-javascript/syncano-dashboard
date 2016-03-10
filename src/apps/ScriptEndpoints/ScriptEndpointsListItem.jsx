@@ -3,7 +3,7 @@ import {Link, State} from 'react-router';
 
 import {SnackbarNotificationMixin} from '../../mixins';
 
-import Actions from './CodeBoxesActions';
+import Actions from './ScriptEndpointsActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
@@ -12,7 +12,7 @@ import {Color, ColumnList, Clipboard} from 'syncano-components';
 const Column = ColumnList.Column;
 
 export default React.createClass({
-  displayName: 'CodeBoxesListItem',
+  displayName: 'ScriptEndpointsListItem',
 
   mixins: [
     State,
@@ -26,6 +26,7 @@ export default React.createClass({
     let script = ScriptsStore.getScriptById(item.codebox);
     let scriptLabel = script ? script.label : '';
 
+    console.error(item);
     return (
       <ColumnList.Item
         checked={item.checked}
@@ -34,7 +35,7 @@ export default React.createClass({
         <Column.CheckIcon.Socket
           className="col-xs-12"
           id={item.name.toString()}
-          iconClassName='socket-codebox'
+          iconClassName='socket-script-endpoint'
           iconColor={Color.getColorByName('red', 'light')}
           keyName="name"
           checked={item.checked}
@@ -44,9 +45,9 @@ export default React.createClass({
             <Clipboard
               copyText={link}
               onCopy={() => this.setSnackbarNotification({
-                message: 'Script Socket url copied!'
+                message: 'Script Endpoint url copied!'
               })}
-              tooltip="Copy Script Socket url"
+              tooltip="Copy Script Endpoint url"
               type="link" />
           }/>
         <Column.Desc className="col-flex-1">
@@ -64,10 +65,10 @@ export default React.createClass({
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link
-            to="codeBox-traces"
+            to="scriptEndpoint-traces"
             params={{
               instanceName: this.getParams().instanceName,
-              codeBoxName: item.name
+              scriptEndpointName: item.name
             }}>
             Traces
           </Link>
@@ -77,11 +78,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit a Script Socket" />
+            primaryText="Edit a Script Endpoint" />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete a Script Socket" />
+            primaryText="Delete a Script Endpoint" />
         </Column.Menu>
       </ColumnList.Item>
     );

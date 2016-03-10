@@ -24,7 +24,7 @@ import Solutions from './apps/Solutions';
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
 import Classes from './apps/Classes';
-import CodeBoxes from './apps/CodeBoxes';
+import ScriptEndpoints from './apps/ScriptEndpoints';
 import Script from './apps/Script';
 import Scripts from './apps/Scripts';
 import DataObjects from './apps/DataObjects/DataObjects';
@@ -190,19 +190,19 @@ export default (
             to="push-notification-config"/>
         </Route>
 
-        {/* CodeBoxes */}
+        {/* ScriptEndpoints */}
         <Route
-          name="codeBoxes"
-          path="codeboxes">
+          name="scriptEndpoints"
+          path="scriptEndpoints">
 
 
-          {/* CodeBox Traces */}
+          {/* ScriptEndpoints Traces */}
           <Route
-            name='codeBox-traces'
-            handler={CodeBoxes.Traces}
-            path=':codeBoxName/traces'/>
+            name='scriptEndpoint-traces'
+            handler={ScriptEndpoints.Traces}
+            path=':scriptEndpointName/traces'/>
 
-          <DefaultRoute handler={CodeBoxes}/>
+          <DefaultRoute handler={ScriptEndpoints}/>
 
         </Route>
 

@@ -21,7 +21,7 @@ import Data from '../Data';
 import Channels from '../Channels';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
-import CodeBoxes from '../CodeBoxes';
+import ScriptEndpoints from '../ScriptEndpoints';
 import PushNotifications from '../PushNotifications';
 import EmptyView from './EmptyView';
 
@@ -108,7 +108,7 @@ export default React.createClass({
         <div>
           <Popover ref="pushSocketPopover"/>
           <Socket.Data onTouchTap={Data.Actions.showDialog}/>
-          <Socket.CodeBox onTouchTap={CodeBoxes.Actions.showDialog}/>
+          <Socket.ScriptEndpoint onTouchTap={ScriptEndpoints.Actions.showDialog}/>
           <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
 
           {
@@ -149,12 +149,12 @@ export default React.createClass({
           </Show>
 
           <Show if={sockets.scripts.length}>
-            <CodeBoxes.List
-              name="Script Sockets"
+            <ScriptEndpoints.List
+              name="Script Endpoints"
               items={sockets.scripts}
-              handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
-              emptyItemHandleClick={CodeBoxes.Actions.showDialog}
-              emptyItemContent="Create a Script Socket"/>
+              handleTitleClick={() => this.handleListTitleClick('scriptEndpoints')}
+              emptyItemHandleClick={ScriptEndpoints.Actions.showDialog}
+              emptyItemContent="Create a Script Endpoint"/>
           </Show>
 
           <Show if={sockets.triggers.length}>
@@ -198,7 +198,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <CodeBoxes.Dialog />
+        <ScriptEndpoints.Dialog />
         <Data.Dialog />
         <Schedules.Dialog />
         <Triggers.Dialog />

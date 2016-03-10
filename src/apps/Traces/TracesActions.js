@@ -8,10 +8,10 @@ export default CreateActions({
     method: 'Syncano.Actions.Scripts.listTraces'
   },
 
-  fetchCodeBoxTraces: {
+  fetchScriptEndpointTraces: {
     asyncResult: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.CodeBoxes.listTraces'
+    method: 'Syncano.Actions.ScriptEndpoints.listTraces'
   },
 
   fetchTriggerTraces: {
@@ -32,10 +32,10 @@ export default CreateActions({
     method: 'Syncano.Actions.Scripts.get'
   },
 
-  fetchCurrentCodeBox: {
+  fetchCurrentScriptEndpoint: {
     asyncResult: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.CodeBoxes.get'
+    method: 'Syncano.Actions.ScriptEndpoints.get'
   },
 
   fetchCurrentTrigger: {

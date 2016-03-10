@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 
 // Stores & Actions
-import Actions from './CodeBoxesActions';
+import Actions from './ScriptEndpointsActions';
 import ScriptsActions from '../Scripts/ScriptsActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
@@ -44,15 +44,15 @@ export default Reflux.createStore({
     this.trigger({scripts});
   },
 
-  onCreateCodeBoxCompleted() {
-    console.debug('CodeBoxDialogStore::onCreateCodeBoxCompleted');
+  onCreateScriptEndpointCompleted() {
+    console.debug('ScriptEndpointsDialogStore::onCreateScriptEndpointCompleted');
     this.dismissDialog();
-    Actions.fetchCodeBoxes();
+    Actions.fetchScriptEndpoints();
   },
 
-  onUpdateCodeBoxCompleted() {
-    console.debug('CodeBoxDialogStore::onUpdateCodeBoxCompleted');
+  onUpdateScriptEndpointCompleted() {
+    console.debug('ScriptEndpointDialogStore::onUpdateScriptEndpointCompleted');
     this.dismissDialog();
-    Actions.fetchCodeBoxes();
+    Actions.fetchScriptEndpoints();
   }
 });
