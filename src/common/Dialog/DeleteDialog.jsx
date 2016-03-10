@@ -41,7 +41,7 @@ export default React.createClass({
 
   getDialogList(items, paramName, associationFor) {
     const listItems = items.map((item) => {
-      const isAssociated = (item.triggers && item.triggers.length > 0) || (item.schedules && item.schedules.length > 0);
+      const isAssociated = (item.triggers && item.triggers.length) || (item.schedules && item.schedules.length);
       const triggersAssociation = item.triggers ? ` (${item.triggers.join(', ')})` : '';
       const schedulesAssociation = item.schedules ? ` (${item.schedules.join(', ')})` : '';
       let association = '';
@@ -65,11 +65,13 @@ export default React.createClass({
   },
 
   handleConfirm() {
-    this.props.handleConfirm(this.getItems());
-    if (_.isFunction(this.props.handleConfirm.completed)) {
-      this.listenTo(this.props.handleConfirm.completed, () => {
+    const {handleConfirm} = this.props;
+
+    handleConfirm(this.getItems());
+    if (_.isFunction(handleConfirm.completed)) {
+      this.listenTo(handleConfirm.completed, () => {
         this.dismiss();
-        this.stopListeningTo(this.props.handleConfirm.completed);
+        this.stopListeningTo(handleConfirm.completed);
       });
     }
   },
@@ -103,7 +105,6 @@ export default React.createClass({
         onRequestClose={this.dismiss}
         contentSize="small"
         open={this.state.open}
-        avoidResetState={true}
         modal={true}
         actions={
           <StandardButtons

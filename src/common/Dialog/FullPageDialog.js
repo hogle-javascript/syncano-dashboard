@@ -63,6 +63,7 @@ export default React.createClass({
         maxWidth: 500
       },
       medium: {
+        paddingTop: 80,
         maxWidth: 840
       },
       large: {

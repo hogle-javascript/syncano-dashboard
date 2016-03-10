@@ -121,7 +121,6 @@ export default React.createClass({
         title: `Traces for ${this.getToolbarTitle()}`,
         actions: [],
         onRequestClose: () => this.handleCancel('scriptTraces'),
-        avoidResetState: true,
         children: <Traces.List
                     isLoading={this.state.isLoading}
                     tracesFor="script"
