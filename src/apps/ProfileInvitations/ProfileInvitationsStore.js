@@ -73,7 +73,6 @@ export default Reflux.createStore({
     }
 
     InstancesActions.fetch();
-    this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
