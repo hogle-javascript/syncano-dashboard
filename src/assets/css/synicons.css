@@ -3865,19 +3865,19 @@
 	content: "\E3C1";
 }
 
-.synicon-socket-codebox:before {
+.synicon-socket-data:before {
 	content: "\E3C2";
 }
 
-.synicon-socket-data:before {
+.synicon-socket-push:before {
 	content: "\E3C3";
 }
 
-.synicon-socket-push:before {
+.synicon-socket-schedule:before {
 	content: "\E3C4";
 }
 
-.synicon-socket-schedule:before {
+.synicon-socket-script-endpoint:before {
 	content: "\E3C5";
 }
 

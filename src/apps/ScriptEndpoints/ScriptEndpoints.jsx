@@ -3,19 +3,20 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Stores and Actions
-import Actions from './CodeBoxesActions';
-import Store from './CodeBoxesStore';
+import Actions from './ScriptEndpointsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
+import Store from './ScriptEndpointsStore';
 
 // Components
 import {Container, Socket} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
-import CodeBoxesList from './CodeBoxesList';
-import CodeBoxDialog from './CodeBoxDialog';
+import ScriptEndpointsList from './ScriptEndpointsList';
+import ScriptEndpointDialog from './ScriptEndpointDialog';
 
 export default React.createClass({
-  displayName: 'Data',
+  displayName: 'ScriptEndpoints',
 
   mixins: [
     Router.State,
@@ -26,9 +27,10 @@ export default React.createClass({
   componentDidMount() {
     console.info('Data::componentDidMount');
     Actions.fetch();
+    ScriptsActions.fetch();
   },
 
-  showCodeBoxDialog() {
+  showScriptEndpointDialog() {
     Actions.showDialog();
   },
 
@@ -37,22 +39,22 @@ export default React.createClass({
 
     return (
       <div>
-        <CodeBoxDialog />
+        <ScriptEndpointDialog />
 
-        <InnerToolbar title="Script Sockets">
-          <Socket.CodeBox
+        <InnerToolbar title="Script Endpoints">
+          <Socket.ScriptEndpoint
             tooltipPosition="bottom-left"
-            onTouchTap={this.showCodeBoxDialog}/>
+            onTouchTap={this.showScriptEndpointDialog}/>
         </InnerToolbar>
 
         <Container>
-          <CodeBoxesList
-            name="Script Sockets"
+          <ScriptEndpointsList
+            name="Script Endpoints"
             isLoading={isLoading}
             items={items}
             hideDialogs={hideDialogs}
-            emptyItemHandleClick={this.showCodeBoxDialog}
-            emptyItemContent="Create a Script Socket"/>
+            emptyItemHandleClick={this.showScriptEndpointDialog}
+            emptyItemContent="Create a Script Endpoint"/>
         </Container>
       </div>
     );

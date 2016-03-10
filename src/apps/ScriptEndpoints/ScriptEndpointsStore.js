@@ -5,7 +5,7 @@ import {CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../m
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import Actions from './CodeBoxesActions';
+import Actions from './ScriptEndpointsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -32,25 +32,25 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  setCodeBoxes(items) {
+  setScriptEndpoints(items) {
     this.data.items = items;
     this.trigger(this.data);
   },
 
-  getCodeBoxes(empty) {
+  getScriptEndpoints(empty) {
     return this.data.items || empty || null;
   },
 
   refreshData() {
-    Actions.fetchCodeBoxes();
+    Actions.fetchScriptEndpoints();
   },
 
-  onFetchCodeBoxesCompleted(items) {
-    console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
-    Actions.setCodeBoxes(items._items);
+  onFetchScriptEndpointsCompleted(items) {
+    console.debug('ScriptEndpointsStore::onFetchScriptEndpointsCompleted');
+    Actions.setScriptEndpoints(items._items);
   },
 
-  onRemoveCodeBoxesCompleted() {
+  onRemoveScriptEndpointsCompleted() {
     this.refreshData();
   }
 });

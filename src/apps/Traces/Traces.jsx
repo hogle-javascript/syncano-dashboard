@@ -20,7 +20,7 @@ export default Radium(React.createClass({
   displayName: 'Traces',
 
   propTypes: {
-    tracesFor: React.PropTypes.oneOf(['codeBox', 'script', 'trigger', 'schedule']),
+    tracesFor: React.PropTypes.oneOf(['scriptEndpoint', 'script', 'trigger', 'schedule']),
     objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
   },
 
@@ -34,7 +34,8 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       tracesFor: 'script',
-      showHeader: false
+      showHeader: false,
+      hasHeaderId: true
     };
   },
 
@@ -56,9 +57,9 @@ export default Radium(React.createClass({
 
   getConfig() {
     return {
-      codeBox: {
-        route: 'codeBoxes',
-        backLabel: 'Go back to Data Views'
+      scriptEndpoint: {
+        route: 'scriptEndpoints',
+        backLabel: 'Go back to Script Endpoints list'
       },
       script: {
         route: 'scripts',
@@ -76,18 +77,19 @@ export default Radium(React.createClass({
   },
 
   getTracesFor() {
-    if (this.props.tracesFor === 'script') {
-      return 'Script';
+    if (this.props.tracesFor === 'scriptEndpoint') {
+      return 'Script Endpoint';
     }
 
     return _.capitalize(this.props.tracesFor);
   },
 
   getToolbarTitleText() {
-    let tracesFor = this.getTracesFor();
+    const tracesFor = this.getTracesFor();
+    const toolbarIdText = this.props.hasHeaderId ? `(id: ${this.props.objectId})` : '';
 
     if (this.state.currentObjectName) {
-      return `${tracesFor}: ${this.state.currentObjectName} (id: ${this.props.objectId})`;
+      return `${tracesFor}: ${this.state.currentObjectName} ${toolbarIdText}`;
     }
 
     return '';
@@ -102,7 +104,7 @@ export default Radium(React.createClass({
   render() {
     const styles = this.getStyles();
     const config = this.getConfig();
-    let toolbarTitleText = this.getToolbarTitleText();
+    const toolbarTitleText = this.getToolbarTitleText();
 
     return (
       <div>

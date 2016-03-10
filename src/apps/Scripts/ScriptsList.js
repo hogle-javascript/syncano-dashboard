@@ -144,8 +144,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Lists.MenuItem
-                singleItemText="Delete a Script Socket"
-                multipleItemsText="Delete Script Sockets"
+                singleItemText="Delete a Script Endpoint"
+                multipleItemsText="Delete Script Endpoints"
                 onTouchTap={() => this.showDialog('deleteScriptDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>

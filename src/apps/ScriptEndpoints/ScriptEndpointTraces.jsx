@@ -9,7 +9,7 @@ import Store from '../Traces/TracesStore';
 import Traces from '../Traces';
 
 export default React.createClass({
-  displayName: 'CodeBoxTraces',
+  displayName: 'ScriptEndpointTraces',
 
   mixins: [
     Router.State,
@@ -18,12 +18,13 @@ export default React.createClass({
   ],
 
   render() {
-    let codeBoxName = this.getParams().codeBoxName;
+    let scriptEndpointName = this.getParams().scriptEndpointName;
 
     return (
       <Traces
-        objectId={codeBoxName}
-        tracesFor='codeBox'/>
+        objectId={scriptEndpointName}
+        hasHeaderId={false}
+        tracesFor='scriptEndpoint'/>
     );
   }
 });

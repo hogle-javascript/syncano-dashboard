@@ -151,8 +151,8 @@ export default Radium(React.createClass({
         name: 'Script',
         icon: 'synicon-package-variant'
       },
-      codeBox: {
-        name: 'CodeBox',
+      scriptEndpoint: {
+        name: 'Script Endpoint',
         icon: 'synicon-arrow-up-bold'
       },
       trigger: {
