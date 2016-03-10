@@ -4,6 +4,7 @@ import Router from 'react-router';
 
 // Pages
 import AppPage from './pages/app';
+import ClassesPage from './pages/classes';
 import DashboardPage from './pages/dashboard';
 import InstancePage from './pages/instance';
 import ProfilePage from './pages/profile';
@@ -142,7 +143,7 @@ export default (
         {/* Classes */}
         <Route
           name="classes"
-          handler={Classes}
+          handler={ClassesPage}
           path="classes">
 
           <Route
