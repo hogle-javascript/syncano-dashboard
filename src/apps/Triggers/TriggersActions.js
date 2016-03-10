@@ -23,6 +23,7 @@ export default CreateActions(
       method: 'Syncano.Actions.Triggers.update'
     },
     removeTriggers: {
+      loading: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Triggers.remove'

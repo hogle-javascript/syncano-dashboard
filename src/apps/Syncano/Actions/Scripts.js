@@ -46,12 +46,26 @@ export default {
   },
 
   create(payload) {
+    let source = '';
+    const comment = {
+      python: '#',
+      javascript: '//',
+      ruby: '#',
+      golang: '//',
+      swift: '//',
+      php: '//'
+    }[payload.runtime_name];
+
+    if (comment) {
+      source = `${comment} Start coding!`;
+    }
+
     this.Connection
       .CodeBoxes.create({
         runtime_name: payload.runtime_name,
         label: payload.label,
         description: payload.description,
-        source: '# Start coding!'
+        source
       })
       .then(this.completed)
       .catch(this.failure);

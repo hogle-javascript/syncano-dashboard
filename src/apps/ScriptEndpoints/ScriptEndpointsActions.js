@@ -23,6 +23,7 @@ export default CreateActions(
       method: 'Syncano.Actions.ScriptEndpoints.update'
     },
     removeScriptEndpoints: {
+      loading: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.ScriptEndpoints.remove'

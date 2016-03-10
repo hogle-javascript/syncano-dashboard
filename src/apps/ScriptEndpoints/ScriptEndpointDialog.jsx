@@ -114,4 +114,3 @@ export default React.createClass({
     );
   }
 });
-

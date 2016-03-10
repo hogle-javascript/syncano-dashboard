@@ -111,20 +111,21 @@ export default Radium(React.createClass({
   // Dialogs config
   initDialogs() {
     return [{
-      dialog: Dialog,
+      dialog: Dialog.FullPage,
       params: {
+        onRequestClose: this.handleCancelCancelProductionPlan,
+        contentSize: 'medium',
         key: 'cancelProductionPlan',
         ref: 'cancelProductionPlan',
         title: 'Cancel Production Plan',
         actions: [
-          <FlatButton
-            label="No, I want to keep my plan."
+          <RaisedButton
+            style={{marginRight: 10}}
             secondary={true}
+            label="No, I want to keep my plan."
             onTouchTap={this.handleCancelCancelProductionPlan}/>,
           <FlatButton
             label="Yes, I want to cancel."
-            primary={true}
-            keyboardFocused={true}
             onTouchTap={this.handleCancelProductionPlan}/>
         ],
         modal: true,
@@ -378,9 +379,7 @@ export default Radium(React.createClass({
     return (
       <div>
         {this.getDialogs()}
-        <PlanDialog
-          onDismiss={this.handlePlanDialogDismiss}
-          avoidResetState={true}/>
+        <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
 
         <InnerToolbar title={<div>Your plan:
           <span style={styles.planTitleText}><strong> {Store.getPlanName()}</strong></span></div>}>
@@ -447,5 +446,3 @@ export default Radium(React.createClass({
     );
   }
 }));
-
-

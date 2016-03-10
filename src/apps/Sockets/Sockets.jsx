@@ -64,13 +64,13 @@ export default React.createClass({
   },
 
   handleListTitleClick(routeName) {
-    let instanceName = this.getParams().instanceName;
+    const instanceName = this.getParams().instanceName;
 
     this.transitionTo(routeName, {instanceName});
   },
 
   initDialogs() {
-    let params = this.getParams();
+    const params = this.getParams();
 
     return [
       {
@@ -78,7 +78,6 @@ export default React.createClass({
         params: {
           key: 'prolongDialog',
           ref: 'prolongDialog',
-          avoidResetState: true,
           title: 'Prolong instance lifetime',
           children: `You've canceled the archiving of your instance ${params.instanceName}.
           Close this dialog to continue working with your instance.`,

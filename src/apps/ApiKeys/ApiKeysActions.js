@@ -23,11 +23,13 @@ export default CreateActions(
       method: 'Syncano.Actions.ApiKeys.update'
     },
     removeApiKeys: {
+      loading: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.ApiKeys.remove'
     },
     resetApiKey: {
+      loading: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.ApiKeys.reset'

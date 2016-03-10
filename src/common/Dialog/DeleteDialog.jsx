@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import pluralize from 'pluralize';
 import _ from 'lodash';
 
@@ -9,6 +10,10 @@ import StandardButtons from './DialogStandardButtons';
 
 export default React.createClass({
   displayName: 'DeleteDialog',
+
+  mixins: [
+    Reflux.ListenerMixin
+  ],
 
   getDefaultProps() {
     return {
@@ -35,10 +40,10 @@ export default React.createClass({
   },
 
   getDialogList(items, paramName, associationFor) {
-    let listItems = items.map((item) => {
-      let isAssociated = (item.triggers && item.triggers.length > 0) || (item.schedules && item.schedules.length > 0);
-      let triggersAssociation = item.triggers ? ` (${item.triggers.join(', ')})` : '';
-      let schedulesAssociation = item.schedules ? ` (${item.schedules.join(', ')})` : '';
+    const listItems = items.map((item) => {
+      const isAssociated = (item.triggers && item.triggers.length) || (item.schedules && item.schedules.length);
+      const triggersAssociation = item.triggers ? ` (${item.triggers.join(', ')})` : '';
+      const schedulesAssociation = item.schedules ? ` (${item.schedules.join(', ')})` : '';
       let association = '';
 
       if (isAssociated && associationFor === 'triggers') {
@@ -57,6 +62,18 @@ export default React.createClass({
     });
 
     return <ul>{listItems}</ul>;
+  },
+
+  handleConfirm() {
+    const {handleConfirm} = this.props;
+
+    handleConfirm(this.getItems());
+    if (_.isFunction(handleConfirm.completed)) {
+      this.listenTo(handleConfirm.completed, () => {
+        this.dismiss();
+        this.stopListeningTo(handleConfirm.completed);
+      });
+    }
   },
 
   dismiss() {
@@ -81,19 +98,18 @@ export default React.createClass({
   },
 
   render() {
-    let {children, ...other} = this.props;
+    const {children, ...other} = this.props;
 
     return (
       <Dialog
         onRequestClose={this.dismiss}
         contentSize="small"
         open={this.state.open}
-        avoidResetState={true}
         modal={true}
         actions={
           <StandardButtons
             handleCancel={this.dismiss}
-            handleConfirm={() => this.props.handleConfirm(this.getItems())}/>
+            handleConfirm={this.handleConfirm}/>
         }
         {...other}>
         <div className="row">

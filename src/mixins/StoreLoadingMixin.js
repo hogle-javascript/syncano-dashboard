@@ -37,11 +37,10 @@ export default {
     console.debug('StoreLoadingMixin::setLoading', state);
     this.data.isLoading = state;
 
-    if (trigger === true) {
-      if (state === false) {
+    if (trigger) {
+      if (!state) {
         this.data.hideDialogs = true;
       }
-
       this.trigger(this.data);
     }
   }

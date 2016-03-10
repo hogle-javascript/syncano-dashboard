@@ -121,7 +121,6 @@ export default React.createClass({
         title: `Traces for ${this.getToolbarTitle()}`,
         actions: [],
         onRequestClose: () => this.handleCancel('scriptTraces'),
-        avoidResetState: true,
         children: <Traces.List
                     isLoading={this.state.isLoading}
                     tracesFor="script"
@@ -213,9 +212,8 @@ export default React.createClass({
                     onChange={(payload) => this.setState({payloadValue: payload})}
                     value={[
                       '{',
-                      '    "language": "JSON",',
                       '    "foo": "bar",',
-                      '    "trailing": "comma"',
+                      '    "bar": "foo"',
                       '}'
                     ].join('\n')} />
                 </TogglePanel>

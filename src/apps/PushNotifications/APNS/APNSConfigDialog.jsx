@@ -259,7 +259,7 @@ export default Radium(React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        contentSize="medium"
+        contentSize="large"
         title="Configure Push Notification Socket - APNS"
         autoDetectWindowHeight={true}
         actionsContainerStyle={styles.actionsContainer}

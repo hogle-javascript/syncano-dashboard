@@ -116,9 +116,9 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getCheckedItems();
-    let checkedItemsCount = Store.getNumberOfChecked();
-    let someClassIsProtectedFromDelete = checkedItems.some(this.isProtectedFromDelete);
+    const checkedItems = Store.getCheckedItems();
+    const checkedItemsCount = Store.getNumberOfChecked();
+    const someClassIsProtectedFromDelete = checkedItems.some(this.isProtectedFromDelete);
 
     return (
       <Lists.Container className="classes-list">
