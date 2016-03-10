@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import pluralize from 'pluralize';
 import _ from 'lodash';
 
@@ -9,6 +10,10 @@ import StandardButtons from './DialogStandardButtons';
 
 export default React.createClass({
   displayName: 'DeleteDialog',
+
+  mixins: [
+    Reflux.ListenerMixin
+  ],
 
   getDefaultProps() {
     return {
@@ -59,6 +64,16 @@ export default React.createClass({
     return <ul>{listItems}</ul>;
   },
 
+  handleConfirm() {
+    this.props.handleConfirm(this.getItems());
+    if (_.isFunction(this.props.handleConfirm.completed)) {
+      this.listenTo(this.props.handleConfirm.completed, () => {
+        this.dismiss();
+        this.stopListeningTo(this.props.handleConfirm.completed);
+      });
+    }
+  },
+
   dismiss() {
     this.setState({open: false});
   },
@@ -93,7 +108,7 @@ export default React.createClass({
         actions={
           <StandardButtons
             handleCancel={this.dismiss}
-            handleConfirm={() => this.props.handleConfirm(this.getItems())}/>
+            handleConfirm={this.handleConfirm}/>
         }
         {...other}>
         <div className="row">

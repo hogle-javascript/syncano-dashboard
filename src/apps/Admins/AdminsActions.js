@@ -18,7 +18,6 @@ export default CreateActions(
     },
     removeAdmins: {
       loading: true,
-      closingDialogs: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Admins.remove'
