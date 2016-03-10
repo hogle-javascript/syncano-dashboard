@@ -212,9 +212,8 @@ export default React.createClass({
                     onChange={(payload) => this.setState({payloadValue: payload})}
                     value={[
                       '{',
-                      '    "language": "JSON",',
                       '    "foo": "bar",',
-                      '    "trailing": "comma"',
+                      '    "bar": "foo"',
                       '}'
                     ].join('\n')} />
                 </TogglePanel>
