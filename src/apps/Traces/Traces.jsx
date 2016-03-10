@@ -41,8 +41,6 @@ export default Radium(React.createClass({
 
   componentDidMount() {
     Actions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
-
-    console.error('traces:', this.getParams());
   },
 
   getStyles() {

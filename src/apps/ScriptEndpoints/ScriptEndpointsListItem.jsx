@@ -26,7 +26,6 @@ export default React.createClass({
     let script = ScriptsStore.getScriptById(item.codebox);
     let scriptLabel = script ? script.label : '';
 
-    console.error(item);
     return (
       <ColumnList.Item
         checked={item.checked}

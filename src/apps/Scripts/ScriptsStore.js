@@ -116,8 +116,6 @@ export default Reflux.createStore({
   getScriptById(id) {
     let script = null;
 
-    console.error(this.data);
-
     this.data.items.some((item) => {
       if (item.id.toString() === id.toString()) {
         script = item;
