@@ -199,9 +199,9 @@ export default (
 
           {/* ScriptEndpoints Traces */}
           <Route
-            name='scriptEndpoint-traces'
+            name="scriptEndpoint-traces"
             handler={ScriptEndpoints.Traces}
-            path=':scriptEndpointName/traces'/>
+            path=":scriptEndpointName/traces"/>
 
           <DefaultRoute handler={ScriptEndpoints}/>
 
