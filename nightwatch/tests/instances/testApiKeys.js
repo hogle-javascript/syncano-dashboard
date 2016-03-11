@@ -42,8 +42,7 @@ export default {
     });
     apiKeysPage
       .clickListItemDropdown(description, 'Reset')
-      .clickElement('@confirmButton')
-      .waitForElementPresent('@selectApiKey');
+      .clickElement('@confirmButton');
     client
       .pause(1000)
       .element('xpath', apiKeyValueElement, (result) => {
