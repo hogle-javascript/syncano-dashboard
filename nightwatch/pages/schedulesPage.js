@@ -49,7 +49,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {
-      selector: '//div[@class="crontab-dropdown"]',
+      selector: '//label[text()="Crontab"]/following-sibling::input',
       locateStrategy: 'xpath'
     },
     scheduleTableRow: {
@@ -74,6 +74,10 @@ export default {
     },
     runEvery5minutes: {
       selector: '//div[text()="Run every 5 minutes"]',
+      locateStrategy: 'xpath'
+    },
+    runOnceAYear: {
+      selector: '//div[text()="Run once a year at midnight"]',
       locateStrategy: 'xpath'
     }
   }

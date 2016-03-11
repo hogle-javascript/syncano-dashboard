@@ -22,7 +22,8 @@ export default {
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInput('@addScheduleModalLabel', schedule)
       .selectDropdownValue('@addScheduleModalScript', 'snippet')
-      .selectDropdownValue('@addScheduleModalCronTab', 'Run once a year at midnight')
+      .sendKeys('@addScheduleModalCronTab', 'R')
+      .clickElement('@runOnceAYear')
       .clickElement('@confirm')
       .waitForElementPresent('@scheduleTableRow');
   },
