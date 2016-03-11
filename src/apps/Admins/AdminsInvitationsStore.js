@@ -65,12 +65,10 @@ export default Reflux.createStore({
   },
 
   onRemoveInvitationCompleted() {
-    this.data.hideDialogs = true;
     this.refreshData();
   },
 
   onResendInvitationCompleted() {
-    this.data.hideDialogs = true;
     this.trigger(this.data);
     Actions.uncheckAll();
   }

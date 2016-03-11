@@ -5,8 +5,8 @@ import Reflux from 'reflux';
 import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
-import Actions from './CodeBoxesActions';
-import DialogStore from './CodeBoxDialogStore';
+import Actions from './ScriptEndpointsActions';
+import DialogStore from './ScriptEndpointDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
@@ -15,7 +15,7 @@ import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
-  displayName: 'ScriptSocketDialog',
+  displayName: 'ScriptEndpointDialog',
 
   mixins: [
     Reflux.connect(DialogStore),
@@ -35,12 +35,12 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    console.info('ScriptSocketDialog::handleDialogShow');
+    console.info('ScriptEndpointDialog::handleDialogShow');
     ScriptsActions.fetch();
   },
 
   handleAddSubmit() {
-    Actions.createCodeBox({
+    Actions.createScriptEndpoint({
       name: this.state.name,
       codebox: this.state.codebox,
       description: this.state.description,
@@ -49,7 +49,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    Actions.updateCodeBox(this.state.name, {
+    Actions.updateScriptEndpoint(this.state.name, {
       codebox: this.state.codebox,
       description: this.state.description,
       public: this.state.public
@@ -70,7 +70,8 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title={`${title} a Script Socket`}
+        title={`${title} a Script Endpoint`}
+        onRequestClose={this.handleCancel}
         open={this.state.open}
         isLoading={this.state.isLoading}
         actions={
@@ -86,7 +87,7 @@ export default React.createClass({
           disabled={this.hasEditMode()}
           valueLink={this.linkState('name')}
           errorText={this.getValidationMessages('name').join(' ')}
-          hintText="Name of the Script Socket"
+          hintText="Name of the Script Endpoint"
           floatingLabelText="Name"/>
         <TextField
           ref="description"
@@ -94,7 +95,7 @@ export default React.createClass({
           fullWidth={true}
           valueLink={this.linkState('description')}
           errorText={this.getValidationMessages('description').join(' ')}
-          hintText="Description of the Script Socket"
+          hintText="Description of the Script Endpoint"
           floatingLabelText="Description"/>
         <SelectFieldWrapper
           name="script"
@@ -108,9 +109,8 @@ export default React.createClass({
           onToggle={this.handleToogle}
           style={{marginTop: 20}}
           defaultToggled={this.state.public}
-          label='Make this Script Socket public?'/>
+          label='Make this Script Endpoint public?'/>
       </Dialog.FullPage>
     );
   }
 });
-

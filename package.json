@@ -43,7 +43,7 @@
     "react-tap-event-plugin": "0.2.2",
     "reflux": "0.3.0",
     "syncano-c3": "0.4.11-rc4",
-    "syncano-components": "0.0.28",
+    "syncano-components": "0.0.29",
     "syncano-material-ui": "0.14.4-2",
     "urijs": "1.17.1",
     "validate.js": "0.9.0"

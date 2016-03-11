@@ -8,7 +8,7 @@ import Channels from './Channels';
 import Classes from './Classes';
 import Scripts from './Scripts';
 import DataViews from './DataViews';
-import CodeBoxes from './CodeBoxes';
+import ScriptEndpoints from './ScriptEndpoints';
 import DataObjects from './DataObjects';
 import Instances from './Instances';
 import Profile from './Profile';
@@ -34,7 +34,7 @@ export default {
   Classes,
   Scripts,
   DataViews,
-  CodeBoxes,
+  ScriptEndpoints,
   DataObjects,
   Instances,
   Profile,

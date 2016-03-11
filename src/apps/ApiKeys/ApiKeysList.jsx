@@ -13,7 +13,7 @@ import ListItem from './ApiKeysListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ApiKeysList',
@@ -73,7 +73,7 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Lists.Container className="api-keys-list">
@@ -118,4 +118,3 @@ export default React.createClass({
     );
   }
 });
-

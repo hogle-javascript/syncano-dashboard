@@ -110,7 +110,6 @@ export default React.createClass({
             keyboardFocused={true}
             onTouchTap={() => this.handleCancel('unsavedDataWarn')}/>
         ],
-        avoidResetState: true,
         modal: true,
         children: "You're leaving Script Editor with unsaved changes. Are you sure you want to continue?"
       }
