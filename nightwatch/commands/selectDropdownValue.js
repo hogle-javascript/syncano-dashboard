@@ -8,7 +8,8 @@ exports.command = function selectDropdownValue(element, dropdownValue) {
     .mouseButtonClick()
     .waitForElementVisible(value)
     .pause(300)
-    .click(value);
+    .click(value)
+    .pause(500);
 
   return this;
 };

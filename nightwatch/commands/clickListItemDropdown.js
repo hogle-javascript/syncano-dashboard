@@ -2,8 +2,9 @@
 // 'dropdoownChoice' can be part of the name of the dropdown option like "Edit" or "Delete"
 
 exports.command = function(listItem, dropdownChoice) {
-  // if xpath pass else construct xpath
-  const listItemDropdown = listItem[0] === '/' ? listItem
+  // if xpath pass, else construct xpath
+  const isSelector = ['/', '('];
+  const listItemDropdown = isSelector.indexOf(listItem[0]) !== -1 ? listItem
   : `//div[text()="${listItem}"]/../../../following-sibling::div//span[@class="synicon-dots-vertical"]`;
   const choice = `//div[contains(text(), "${dropdownChoice}")]`;
 
