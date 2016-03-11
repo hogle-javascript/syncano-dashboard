@@ -2,10 +2,6 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 
-// Utils
-import HeaderMixin from '../Header/HeaderMixin';
-import {InstanceTabsMixin} from '../../mixins';
-
 // Stores & Actions
 import Store from '../Traces/TracesStore';
 
@@ -13,24 +9,22 @@ import Store from '../Traces/TracesStore';
 import Traces from '../Traces';
 
 export default React.createClass({
-
-  displayName: 'CodeBoxTraces',
+  displayName: 'ScriptEndpointTraces',
 
   mixins: [
     Router.State,
 
-    Reflux.connect(Store),
-    HeaderMixin,
-    InstanceTabsMixin
+    Reflux.connect(Store)
   ],
 
   render() {
-    let codeBoxName = this.getParams().codeBoxName;
+    let scriptEndpointName = this.getParams().scriptEndpointName;
 
     return (
       <Traces
-        objectId={codeBoxName}
-        tracesFor='codeBox'/>
+        objectId={scriptEndpointName}
+        hasHeaderId={false}
+        tracesFor='scriptEndpoint'/>
     );
   }
 });

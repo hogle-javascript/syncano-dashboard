@@ -3,6 +3,7 @@ import _ from 'lodash';
 import DialogMixin from '../../mixins/DialogMixin';
 import {Dialog, IconButton, Utils} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
+import DialogSidebar from './DialogSidebar';
 
 export default React.createClass({
   displayName: 'FullPageDialog',
@@ -12,7 +13,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       actions: [],
-      contentWidth: 'large'
+      contentSize: 'large'
     };
   },
 
@@ -63,6 +64,7 @@ export default React.createClass({
         maxWidth: 500
       },
       medium: {
+        paddingTop: 80,
         maxWidth: 840
       },
       large: {
@@ -75,7 +77,17 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {contentSize, contentStyle, children, open, actions, isLoading, onRequestClose, ...other} = this.props;
+    const {
+      contentSize,
+      contentStyle,
+      children,
+      open,
+      actions,
+      isLoading,
+      onRequestClose,
+      sidebar,
+      ...other
+    } = this.props;
 
     return (
       <Dialog
@@ -90,7 +102,7 @@ export default React.createClass({
         repositionOnUpdate={false}
         titleStyle={styles.title}
         bodyStyle={styles.body}
-        actionsContainerStyle={styles.actionsContainer}
+        actionsContainerStyle={Utils.Styles.mergeStyles(styles.actionsContainer, sidebar && {paddingLeft: 262})}
         onRequestClose={onRequestClose}
         zDepth={0}>
 
@@ -100,7 +112,13 @@ export default React.createClass({
           onTouchTap={onRequestClose}
           iconClassName="synicon-close"/>
 
-        {children}
+        <div className="row">
+          {sidebar ? <DialogSidebar>{sidebar}</DialogSidebar> : null}
+          <div className="col-flex-1">
+            {children}
+          </div>
+        </div>
+
         <Loading
           type="linear"
           position="top"

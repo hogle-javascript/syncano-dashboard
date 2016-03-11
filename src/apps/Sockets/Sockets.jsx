@@ -8,8 +8,7 @@ import Actions from './SocketsActions';
 import Store from './SocketsStore';
 
 // Utils
-import {DialogsMixin, InstanceTabsMixin} from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
+import {DialogsMixin} from '../../mixins';
 
 // Components
 import {Container, Loading, Socket, Show} from 'syncano-components';
@@ -22,23 +21,19 @@ import Data from '../Data';
 import Channels from '../Channels';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
-import CodeBoxes from '../CodeBoxes';
+import ScriptEndpoints from '../ScriptEndpoints';
 import PushNotifications from '../PushNotifications';
 import EmptyView from './EmptyView';
 
 export default React.createClass({
-
-  displayName: 'Data',
+  displayName: 'Sockets',
 
   mixins: [
     State,
     Navigation,
 
     Reflux.connect(Store, 'sockets'),
-
-    DialogsMixin,
-    InstanceTabsMixin,
-    HeaderMixin
+    DialogsMixin
   ],
 
   statics: {
@@ -50,8 +45,14 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    console.info('Data::componentDidMount');
-    Actions.fetch();
+    console.info('Sockets::componentDidMount');
+    Actions.addSocketsListeners();
+    _.debounce(Actions.fetch, 1000)();
+  },
+
+  componentWillUnmount() {
+    Actions.clearSockets();
+    Actions.removeSocketsListeners();
   },
 
   getPushNotificationItems() {
@@ -63,13 +64,13 @@ export default React.createClass({
   },
 
   handleListTitleClick(routeName) {
-    let instanceName = this.getParams().instanceName;
+    const instanceName = this.getParams().instanceName;
 
     this.transitionTo(routeName, {instanceName});
   },
 
   initDialogs() {
-    let params = this.getParams();
+    const params = this.getParams();
 
     return [
       {
@@ -77,7 +78,6 @@ export default React.createClass({
         params: {
           key: 'prolongDialog',
           ref: 'prolongDialog',
-          avoidResetState: true,
           title: 'Prolong instance lifetime',
           children: `You've canceled the archiving of your instance ${params.instanceName}.
           Close this dialog to continue working with your instance.`,
@@ -96,7 +96,7 @@ export default React.createClass({
 
   renderToolbar() {
     const {sockets} = this.state;
-    const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
+    // const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
 
     if (!sockets.hasAnyItem || sockets.isLoading) {
       return <InnerToolbar title="Sockets"/>;
@@ -107,11 +107,16 @@ export default React.createClass({
         <div>
           <Popover ref="pushSocketPopover"/>
           <Socket.Data onTouchTap={Data.Actions.showDialog}/>
-          <Socket.CodeBox onTouchTap={CodeBoxes.Actions.showDialog}/>
+          <Socket.ScriptEndpoint onTouchTap={ScriptEndpoints.Actions.showDialog}/>
           <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
-          <Socket.Push
+
+          {
+
+            /* <Socket.Push
             tooltip="Configure Push Notification Socket"
-            onTouchTap={togglePopover}/>
+            onTouchTap={togglePopover}/> */
+          }
+
           <Socket.Trigger onTouchTap={Triggers.Actions.showDialog}/>
           <Socket.Schedule
             onTouchTap={Schedules.Actions.showDialog}
@@ -124,11 +129,9 @@ export default React.createClass({
   renderLists() {
     const {sockets} = this.state;
 
-    if (!sockets.hasAnyItem) {
+    if (!sockets.hasAnyItem && !sockets.isLoading) {
       return (
-        <Loading show={sockets.isLoading}>
-          <EmptyView />
-        </Loading>
+        <EmptyView />
       );
     }
 
@@ -145,12 +148,12 @@ export default React.createClass({
           </Show>
 
           <Show if={sockets.scripts.length}>
-            <CodeBoxes.List
-              name="Script Sockets"
+            <ScriptEndpoints.List
+              name="Script Endpoints"
               items={sockets.scripts}
-              handleTitleClick={() => this.handleListTitleClick('codeBoxes')}
-              emptyItemHandleClick={CodeBoxes.Actions.showDialog}
-              emptyItemContent="Create a Script Socket"/>
+              handleTitleClick={() => this.handleListTitleClick('scriptEndpoints')}
+              emptyItemHandleClick={ScriptEndpoints.Actions.showDialog}
+              emptyItemContent="Create a Script Endpoint"/>
           </Show>
 
           <Show if={sockets.triggers.length}>
@@ -194,7 +197,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <CodeBoxes.Dialog />
+        <ScriptEndpoints.Dialog />
         <Data.Dialog />
         <Schedules.Dialog />
         <Triggers.Dialog />

@@ -2,9 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 
 export default {
-  getDialogs() {
-    let dialogs = this.initDialogs();
-
+  getDialogs(dialogs = this.initDialogs()) {
     return dialogs.map((dialog) => React.createElement(dialog.dialog, dialog.params));
   },
 
@@ -14,10 +12,6 @@ export default {
     let ref = _.isString(dialogRef) ? this.refs[dialogRef] : this.refs.dialog;
 
     ref.dismiss();
-
-    if (!ref.props.avoidResetState) {
-      this.resetDialogState();
-    }
   },
 
   showDialog(ref, ...args) {
@@ -29,10 +23,10 @@ export default {
   },
 
   getDialogList(items, paramName, associationFor) {
-    let listItems = items.map((item) => {
-      let isAssociated = (item.triggers && item.triggers.length > 0) || (item.schedules && item.schedules.length > 0);
-      let triggersAssociation = item.triggers ? ` (${item.triggers.join(', ')})` : '';
-      let schedulesAssociation = item.schedules ? ` (${item.schedules.join(', ')})` : '';
+    const listItems = items.map((item) => {
+      const isAssociated = (item.triggers && item.triggers.length) || (item.schedules && item.schedules.length);
+      const triggersAssociation = item.triggers ? ` (${item.triggers.join(', ')})` : '';
+      const schedulesAssociation = item.schedules ? ` (${item.schedules.join(', ')})` : '';
       let association = '';
 
       if (isAssociated && associationFor === 'triggers') {
@@ -59,4 +53,3 @@ export default {
     }
   }
 };
-

@@ -36,12 +36,7 @@ export default React.createClass({
           handleIconClick={this.props.onIconClick}
           primaryText={item.label}/>
         <Column.Desc className="col-flex-1">
-          <Link to="classes-edit" params={{
-            instanceName: this.getParams().instanceName,
-            className: item.class
-          }}>
-            {item.class}
-          </Link>
+          {item.class}
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link to="script" params={{

@@ -7,7 +7,6 @@ import {DialogMixin, FormMixin} from '../../mixins';
 
 // Components
 import {TextField, Toggle} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default (type, Store, Actions) => {
@@ -71,6 +70,7 @@ export default (type, Store, Actions) => {
           title={`${title} a ${type} Device`}
           onRequestClose={this.handleCancel}
           open={this.state.open}
+          isLoading={this.state.isLoading}
           actions={
             <Dialog.StandardButtons
               handleCancel={this.handleCancel}
@@ -119,10 +119,6 @@ export default (type, Store, Actions) => {
                 label="Active"/>
             </div>
           </div>
-          <Loading
-            type="linear"
-            position="bottom"
-            show={this.state.isLoading}/>
         </Dialog.FullPage>
       );
     }

@@ -60,9 +60,7 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
     const charts = _.map(this.state.charts, (config, name) => {
       return (
-        <div
-          key={`chart-${name}`}
-          className="row">
+        <div key={`chart-${name}`}>
           <div style={styles.heading}>
             {config.title}
           </div>

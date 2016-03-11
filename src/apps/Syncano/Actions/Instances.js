@@ -55,16 +55,16 @@ export default {
   remove(names) {
     let promises = _.map(names, this.Connection.Instances.remove);
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Promise.all(promises)
+      .then(this.completed)
       .error(this.failure);
   },
 
   removeShared(names, adminId) {
     let promises = _.map(names, (name) => this.Connection.Instances.removeShared(name, adminId));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Promise.all(promises)
+      .then(this.completed)
       .error(this.failure);
   },
 

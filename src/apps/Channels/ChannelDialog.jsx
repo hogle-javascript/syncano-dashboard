@@ -10,8 +10,8 @@ import Actions from './ChannelsActions';
 import Store from './ChannelDialogStore';
 
 // Components
-import {TextField, FlatButton, RaisedButton, Toggle} from 'syncano-material-ui';
-import {Loading, SelectFieldWrapper} from 'syncano-components';
+import {TextField, Toggle} from 'syncano-material-ui';
+import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
@@ -60,34 +60,23 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        label="Confirm"
-        secondary={true}
-        onTouchTap={this.handleFormValidation}
-        style={{marginLeft: 10}}
-        ref="submit"/>
-    ];
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Channel Socket`}
-        actions={dialogStandardActions}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        contentStyle={{padding: '8px 0 0 0'}}>
-        {this.renderFormNotifications()}
-        <div className="row">
-          <Dialog.Sidebar>
+        isLoading={this.state.isLoading}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
             <Dialog.SidebarSection>
               Channels are a way of providing realtime communication functionality in Syncano. Users can subscribe to
               Channels in order to get notifications about changes that happen to Data Objects connected to those
@@ -109,91 +98,86 @@ export default React.createClass({
                 <strong>Learn more</strong>
               </a>
             </Dialog.SidebarSection>
-          </Dialog.Sidebar>
-          <Dialog.Content>
-            <Dialog.ContentSection>
-              <div className="col-md-12">
-                <TextField
-                  ref="name"
-                  valueLink={this.linkState('name')}
-                  errorText={this.getValidationMessages('name').join(' ')}
-                  name="name"
-                  disabled={this.hasEditMode()}
-                  fullWidth={true}
-                  hintText="Short name for your Channel Socket"
-                  floatingLabelText="Name of a Channel Socket" />
-              </div>
-              <div className="col-flex-1">
-                <SelectFieldWrapper
-                  name="type"
-                  floatingLabelText="Channel type"
-                  options={ChannelsStore.getChannelTypesDropdown()}
-                  disabled={this.hasEditMode()}
-                  value={this.state.type}
-                  onChange={this.setSelectFieldValue.bind(null, 'type')}
-                  errorText={this.getValidationMessages('type').join(' ')}/>
-              </div>
-              <div className="col-flex-0">
-                <TextField
-                  ref="description"
-                  name="description"
-                  valueLink={this.linkState('description')}
-                  errorText={this.getValidationMessages('description').join(' ')}
-                  fullWidth={true}
-                  multiLine={true}
-                  maxRows={2}
-                  hintText="Description of a Channel Socket (optional)"
-                  floatingLabelText="Description of a Channel Socket" />
-              </div>
-            </Dialog.ContentSection>
-            <Dialog.ContentSection title="Permissions">
-              <div className="col-flex-1">
-                <TextField
-                  ref="group"
-                  name="group"
-                  fullWidth={true}
-                  errorText={this.getValidationMessages('group').join(' ')}
-                  hintText="ID of the Group"
-                  floatingLabelText="Group (ID)" />
-              </div>
-              <div className="col-flex-1">
-                <SelectFieldWrapper
-                  name="group_permissions"
-                  floatingLabelText="Group permissions"
-                  options={ChannelsStore.getChannelPermissionsDropdown()}
-                  value={this.state.group_permissions}
-                  onChange={this.setSelectFieldValue.bind(null, 'group_permissions')}
-                  errorText={this.getValidationMessages('group_permissions').join(' ')}/>
-              </div>
-              <div className="col-flex-1">
-                <SelectFieldWrapper
-                  name="other_permissions"
-                  floatingLabelText="Other permissions"
-                  options={ChannelsStore.getChannelPermissionsDropdown()}
-                  value={this.state.other_permissions}
-                  onChange={this.setSelectFieldValue.bind(null, 'other_permissions')}
-                  errorText={this.getValidationMessages('other_permissions').join(' ')}/>
-              </div>
-            </Dialog.ContentSection>
-            <Dialog.ContentSection last="true">
-              <div
-                className="col-flex-1"
-                style={{maxWidth: 320}}>
-                <Toggle
-                  ref="custom_publish"
-                  name="custom_publish"
-                  defaultToggled={this.state.custom_publish}
-                  onToggle={this.handleToogle}
-                  label="Custom publishing in this channel?"
-                  labelStyle={{fontSize: 15}}/>
-              </div>
-            </Dialog.ContentSection>
-          </Dialog.Content>
-        </div>
-        <Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading} />
+          </Dialog.SidebarBox>
+        }>
+        {this.renderFormNotifications()}
+        <Dialog.ContentSection>
+          <div className="col-md-20">
+            <TextField
+              ref="name"
+              valueLink={this.linkState('name')}
+              errorText={this.getValidationMessages('name').join(' ')}
+              name="name"
+              disabled={this.hasEditMode()}
+              fullWidth={true}
+              hintText="Short name for your Channel Socket"
+              floatingLabelText="Name" />
+          </div>
+          <div className="col-flex-1">
+            <SelectFieldWrapper
+              name="type"
+              floatingLabelText="Channel type"
+              options={ChannelsStore.getChannelTypesDropdown()}
+              disabled={this.hasEditMode()}
+              value={this.state.type}
+              onChange={this.setSelectFieldValue.bind(null, 'type')}
+              errorText={this.getValidationMessages('type').join(' ')}/>
+          </div>
+          <div className="col-flex-0">
+            <TextField
+              ref="description"
+              name="description"
+              valueLink={this.linkState('description')}
+              errorText={this.getValidationMessages('description').join(' ')}
+              fullWidth={true}
+              multiLine={true}
+              maxRows={2}
+              hintText="Description of a Channel Socket (optional)"
+              floatingLabelText="Description of a Channel Socket" />
+          </div>
+        </Dialog.ContentSection>
+        <Dialog.ContentSection title="Permissions">
+          <div className="col-flex-1">
+            <TextField
+              ref="group"
+              name="group"
+              fullWidth={true}
+              errorText={this.getValidationMessages('group').join(' ')}
+              hintText="ID of the Group"
+              floatingLabelText="Group (ID)" />
+          </div>
+          <div className="col-flex-1">
+            <SelectFieldWrapper
+              name="group_permissions"
+              floatingLabelText="Group permissions"
+              options={ChannelsStore.getChannelPermissionsDropdown()}
+              value={this.state.group_permissions}
+              onChange={this.setSelectFieldValue.bind(null, 'group_permissions')}
+              errorText={this.getValidationMessages('group_permissions').join(' ')}/>
+          </div>
+          <div className="col-flex-1">
+            <SelectFieldWrapper
+              name="other_permissions"
+              floatingLabelText="Other permissions"
+              options={ChannelsStore.getChannelPermissionsDropdown()}
+              value={this.state.other_permissions}
+              onChange={this.setSelectFieldValue.bind(null, 'other_permissions')}
+              errorText={this.getValidationMessages('other_permissions').join(' ')}/>
+          </div>
+        </Dialog.ContentSection>
+        <Dialog.ContentSection last="true">
+          <div
+            className="col-flex-1"
+            style={{maxWidth: 320}}>
+            <Toggle
+              ref="custom_publish"
+              name="custom_publish"
+              defaultToggled={this.state.custom_publish}
+              onToggle={this.handleToogle}
+              label="Custom publishing in this channel?"
+              labelStyle={{fontSize: 15}}/>
+          </div>
+        </Dialog.ContentSection>
       </Dialog.FullPage>
     );
   }

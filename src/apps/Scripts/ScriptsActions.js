@@ -46,6 +46,7 @@ export default CreateActions(
 
     },
     removeScripts: {
+      loading: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Scripts.remove'

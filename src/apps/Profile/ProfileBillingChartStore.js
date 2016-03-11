@@ -22,9 +22,9 @@ export default Reflux.createStore({
     return {
       isLoading: true,
       charts: {
+        total: this.getInitialChartState(),
         api: this.getInitialChartState(),
-        cbx: this.getInitialChartState(),
-        total: this.getInitialChartState()
+        cbx: this.getInitialChartState()
       },
       profile: {
         subscription: {}

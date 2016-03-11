@@ -9,7 +9,7 @@ import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 import Sticky from 'react-stickydiv';
 import {List} from 'syncano-material-ui';
 import {Sidebar} from '../common';
-import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown';
+import HeaderInstancesDropdown from '../common/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
 
 export default React.createClass({
@@ -25,7 +25,7 @@ export default React.createClass({
     Navigation
   ],
 
-  componentWillMount() {
+  componentDidMount() {
     console.debug('Instance::componentWillMount');
     const params = this.getParams();
 
@@ -65,9 +65,9 @@ export default React.createClass({
                     routeName="data"
                     primaryText="Data" />,
                   <Sidebar.NestedLinkListItem
-                    key="Script"
-                    routeName="codeBoxes"
-                    primaryText="Script" />,
+                    key="ScriptEndpoint"
+                    routeName="scriptEndpoints"
+                    primaryText="Script Endpoint" />,
                   <Sidebar.NestedLinkListItem
                     key="Trigger"
                     routeName="triggers"
@@ -79,11 +79,12 @@ export default React.createClass({
                   <Sidebar.NestedLinkListItem
                     key="Channel"
                     routeName="channels"
-                    primaryText="Channel" />,
-                  <Sidebar.NestedLinkListItem
-                    key="Push Notifications"
+                    primaryText="Channel" />
+
+                  /* <Sidebar.NestedLinkListItem
+                    key="Push Notification"
                     routeName="push-notification-config"
-                    primaryText="Push Notification" />
+                    primaryText="Push Notification" /> */
                 ]} />
             </Sidebar.List>
             <Sidebar.List
@@ -104,7 +105,10 @@ export default React.createClass({
                 routeName="scripts"
                 iconClassName="synicon-code-tags"
                 primaryText="Scripts"/>
-              <Sidebar.LinkListItem
+
+              {
+
+              /* <Sidebar.LinkListItem
                 key="pushDevices"
                 routeName="all-push-notification-devices"
                 primaryText="Push Devices"
@@ -120,7 +124,8 @@ export default React.createClass({
                     key="androidDevices"
                     routeName="gcm-devices"
                     primaryText="Android Devices" />
-                ]}/>
+                ]}/> */
+              }
             </Sidebar.List>
             <Sidebar.List
               key="Settings"
@@ -142,7 +147,7 @@ export default React.createClass({
                 primaryText="API keys" />
             </Sidebar.List>
           </Sidebar>
-          <div className="col-flex-1">
+          <div className="col-flex-1" style={{maxWidth: 'calc(100% - 256px)'}}>
             <RouteHandler />
           </div>
         </div>

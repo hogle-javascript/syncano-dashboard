@@ -2,7 +2,6 @@ import React from 'react';
 import Router from 'react-router';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
@@ -14,13 +13,12 @@ import ListItem from './ApiKeysListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ApiKeysList',
 
   mixins: [
-    HeaderMixin,
     Router.State,
     Router.Navigation,
     DialogsMixin
@@ -75,7 +73,7 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Lists.Container className="api-keys-list">
@@ -120,4 +118,3 @@ export default React.createClass({
     );
   }
 });
-

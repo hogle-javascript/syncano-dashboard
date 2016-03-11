@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 
-import HeaderMixin from '../Header/HeaderMixin';
-import {InstanceTabsMixin, SnackbarNotificationMixin} from '../../mixins';
+import {SnackbarNotificationMixin} from '../../mixins';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './TemplateStore';
@@ -29,14 +28,8 @@ export default React.createClass({
     LinkedStateMixin,
 
     Reflux.connect(Store),
-    HeaderMixin,
-    InstanceTabsMixin,
     SnackbarNotificationMixin
   ],
-
-  // componentWillUnmount() {
-  //   Store.clearCurrentSnippet();
-  // },
 
   getActiveSubTabIndex() {
     let index = 0;

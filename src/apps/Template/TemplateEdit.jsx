@@ -3,14 +3,7 @@ import Reflux from 'reflux';
 import {Navigation, State} from 'react-router';
 
 // Utils
-import {
-  DialogsMixin,
-  InstanceTabsMixin,
-  FormMixin,
-  MousetrapMixin,
-  SnackbarNotificationMixin
-} from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
+import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './TemplateAutosaveMixin';
 
@@ -32,10 +25,8 @@ export default React.createClass({
 
     Reflux.connect(Store),
     DialogsMixin,
-    InstanceTabsMixin,
     MousetrapMixin,
     FormMixin,
-    HeaderMixin,
     UnsavedDataMixin,
     AutosaveMixin,
     SnackbarNotificationMixin
@@ -119,7 +110,6 @@ export default React.createClass({
             keyboardFocused={true}
             onTouchTap={() => this.handleCancel('unsavedDataWarn')}/>
         ],
-        avoidResetState: true,
         modal: true,
         children: "You're leaving Script Editor with unsaved changes. Are you sure you want to continue?"
       }

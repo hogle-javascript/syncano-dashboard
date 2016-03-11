@@ -16,7 +16,6 @@ import CreateDialogActions from './CreateDialogActions';
 import InstallDialogActions from './InstallDialogActions';
 
 // Components
-import Header from '../../apps/Header';
 import {FontIcon, IconButton, RaisedButton, Avatar} from 'syncano-material-ui';
 import {Container, Solutions, Show, Loading} from 'syncano-components';
 import {Dialog, InnerToolbar} from '../../common';
@@ -139,8 +138,6 @@ export default React.createClass({
     return (
       <Loading show={this.state.isLoading}>
         {this.getDialogs()}
-
-        <Header logo={true}/>
 
         <CreateDialog/>
         <InstallDialog/>

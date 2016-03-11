@@ -4,7 +4,6 @@ import Router from 'react-router';
 import _ from 'lodash';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
@@ -26,7 +25,6 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    HeaderMixin,
     DialogsMixin
   ],
 
@@ -146,8 +144,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Lists.MenuItem
-                singleItemText="Delete a Script"
-                multipleItemsText="Delete Scripts"
+                singleItemText="Delete a Script Endpoint"
+                multipleItemsText="Delete Script Endpoints"
                 onTouchTap={() => this.showDialog('deleteScriptDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>

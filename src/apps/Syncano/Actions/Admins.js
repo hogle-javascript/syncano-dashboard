@@ -21,8 +21,8 @@ export default {
   remove(admins) {
     let promises = admins.map((admin) => this.Connection.Admins.remove(admin));
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Promise.all(promises)
+      .then(this.completed)
       .error(this.failure);
   }
 };

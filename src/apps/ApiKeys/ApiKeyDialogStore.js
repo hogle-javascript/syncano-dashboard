@@ -8,6 +8,7 @@ import Actions from './ApiKeysActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     StoreFormMixin,
     DialogStoreMixin

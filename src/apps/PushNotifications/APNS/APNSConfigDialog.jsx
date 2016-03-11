@@ -11,12 +11,8 @@ import Actions from './APNSPushNotificationsActions';
 import Store from './APNSConfigDialogStore';
 
 // Components
-import {
-  IconButton,
-  TextField,
-  Styles
-} from 'syncano-material-ui';
-import {Loading, Show} from 'syncano-components';
+import {IconButton, TextField, Styles} from 'syncano-material-ui';
+import {Show} from 'syncano-components';
 import {Dialog, DropZone, Notification} from '../../../common';
 
 export default Radium(React.createClass({
@@ -263,12 +259,13 @@ export default Radium(React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        contentSize="medium"
+        contentSize="large"
         title="Configure Push Notification Socket - APNS"
         autoDetectWindowHeight={true}
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}
+        isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
@@ -289,10 +286,6 @@ export default Radium(React.createClass({
             {this.renderCertificateErrors()}
           </div>
         </div>
-        <Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading}/>
       </Dialog.FullPage>
     );
   }

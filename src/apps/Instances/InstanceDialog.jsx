@@ -2,12 +2,12 @@ import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import {DialogMixin, FormMixin} from '../../mixins';
+import {DialogMixin, DialogsMixin, FormMixin} from '../../mixins';
 
 import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
 
-import {FlatButton, RaisedButton, TextField, Utils} from 'syncano-material-ui';
+import {TextField, FlatButton, Utils, Styles} from 'syncano-material-ui';
 import {Color} from 'syncano-components';
 import {Dialog, Icon, Notification, ColorIconPicker} from '../../common';
 
@@ -87,6 +87,21 @@ export default React.createClass({
     });
   },
 
+  initDialogs() {
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'deleteInstanceDialog',
+        ref: 'deleteInstanceDialog',
+        title: 'Delete an Instance',
+        handleConfirm: Actions.removeInstances,
+        isLoading: this.props.isLoading,
+        items: [this.state],
+        groupName: 'Instance'
+      }
+    }];
+  },
+
   extendSubmit() {
     this.props.handleSubmit();
     this.stopListeningTo(Actions.createInstance.completed);
@@ -103,20 +118,6 @@ export default React.createClass({
   render() {
     const {open, metadata, notificationShowed, isLoading} = this.state;
     const title = this.hasEditMode() ? 'Update' : 'Create';
-    const dialogCustomActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        label="Confirm"
-        secondary={true}
-        style={{marginLeft: 8}}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
 
     return (
       <Dialog.FullPage
@@ -125,42 +126,54 @@ export default React.createClass({
         title={`${title} an Instance`}
         onRequestClose={this.handleCancel}
         open={open}
-        actions={dialogCustomActions}
-        isLoading={isLoading}>
+        isLoading={isLoading}
+        actions={
+          <div>
+            {this.hasEditMode()
+              ? <FlatButton
+                  style={{float: 'left'}}
+                  labelStyle={{color: Styles.Colors.red400}}
+                  label="DELETE AN INSTANCE"
+                  onTouchTap={() => this.refs.deleteInstanceDialog.show()} />
+              : null
+            }
+            <Dialog.StandardButtons
+              handleCancel={this.handleCancel}
+              handleConfirm={this.handleFormValidation}/>
+          </div>
+        }
+        sidebar={
+          <ColorIconPicker
+            icon={metadata.icon}
+            color={metadata.color}
+            onIconChange={this.handleIconChange}
+            onColorChange={this.handleColorChange}/>
+        }>
+        {DialogsMixin.getDialogs(this.initDialogs())}
         {this.renderFormNotifications()}
-
-        <div className="row">
-          <div className="col-flex-0" style={{width: 226}}>
-            <ColorIconPicker
-              icon={metadata.icon}
-              color={metadata.color}
-              onIconChange={this.handleIconChange}
-              onColorChange={this.handleColorChange} />
-          </div>
-          <div className="col-flex-1">
-            <div className="vm-3-b">
-              <TextField
-                ref="name"
-                name="name"
-                fullWidth={true}
-                valueLink={this.linkState('name')}
-                errorText={this.getValidationMessages('name').join(' ')}
-                hintText="Short name for your Instance"
-                onFocus={this.handleInstanceNameFieldFocus}
-                floatingLabelText="Name"/>
-              {this.hasEditMode() && notificationShowed ? this.renderNotification() : null}
-            </div>
-            <TextField
-              ref="description"
-              name="description"
-              fullWidth={true}
-              multiLine={true}
-              valueLink={this.linkState('description')}
-              errorText={this.getValidationMessages('description').join(' ')}
-              hintText="Multiline description of Instance (optional)"
-              floatingLabelText="Description"/>
-          </div>
-        </div>
+        <Dialog.ContentSection>
+          <TextField
+            ref="name"
+            name="name"
+            fullWidth={true}
+            valueLink={this.linkState('name')}
+            errorText={this.getValidationMessages('name').join(' ')}
+            hintText="Short name for your Instance"
+            onFocus={this.handleInstanceNameFieldFocus}
+            floatingLabelText="Name"/>
+          {this.hasEditMode() && notificationShowed ? this.renderNotification() : null}
+        </Dialog.ContentSection>
+        <Dialog.ContentSection last={true}>
+          <TextField
+            ref="description"
+            name="description"
+            fullWidth={true}
+            multiLine={true}
+            valueLink={this.linkState('description')}
+            errorText={this.getValidationMessages('description').join(' ')}
+            hintText="Multiline description of Instance (optional)"
+            floatingLabelText="Description"/>
+        </Dialog.ContentSection>
       </Dialog.FullPage>
     );
   }

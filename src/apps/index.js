@@ -6,7 +6,6 @@ import Classes from './Classes';
 import Data from './Data';
 import DataObjects from './DataObjects';
 import Groups from './Groups';
-import Header from './Header';
 import Instances from './Instances';
 import Profile from './Profile';
 import ProfileInvitations from './ProfileInvitations';
@@ -33,7 +32,6 @@ export default {
   Data,
   DataObjects,
   Groups,
-  Header,
   Instances,
   Profile,
   ProfileInvitations,

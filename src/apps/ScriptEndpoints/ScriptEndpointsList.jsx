@@ -2,26 +2,24 @@ import React from 'react';
 import Router from 'react-router';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin} from '../../mixins';
 
-import Actions from './CodeBoxesActions';
-import Store from './CodeBoxesStore';
+import Actions from './ScriptEndpointsActions';
+import Store from './ScriptEndpointsStore';
 
 // Components
-import ListItem from './CodeBoxesListItem';
+import ListItem from './ScriptEndpointsListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
 let Column = ColumnList.Column;
 
 export default React.createClass({
-  displayName: 'ScriptSocketsList',
+  displayName: 'ScriptEndpointsList',
 
   mixins: [
     Router.State,
     Router.Navigation,
-    HeaderMixin,
     DialogsMixin
   ],
 
@@ -34,13 +32,13 @@ export default React.createClass({
     return [{
       dialog: Dialog.Delete,
       params: {
-        key: 'removeScriptSocketDialog',
-        ref: 'removeScriptSocketDialog',
-        title: 'Delete a Script Socket',
-        handleConfirm: Actions.removeCodeBoxes,
+        key: 'removeScriptEndpointDialog',
+        ref: 'removeScriptEndpointDialog',
+        title: 'Delete a Script Endpoint',
+        handleConfirm: Actions.removeScriptEndpoints,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
-        groupName: 'Script Socket'
+        groupName: 'Script Endpoint'
       }
     }];
   },
@@ -48,10 +46,10 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        key={`script-sockets-list-item-${item.name}`}
+        key={`script-endpoints-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeScriptSocketDialog', item)} />
+        showDeleteDialog={() => this.showDialog('removeScriptEndpointDialog', item)} />
     );
   },
 
@@ -94,15 +92,15 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Lists.MenuItem
-                singleItemText="Delete a Script Socket"
-                multipleItemsText="Delete Script Sockets"
-                onTouchTap={() => this.showDialog('removeScriptSocketDialog')} />
+                singleItemText="Delete a Script Endpoint"
+                multipleItemsText="Delete Script Endpoint"
+                onTouchTap={() => this.showDialog('removeScriptEndpointDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          key="script-sockets-list"
+          key="script-endpoints-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

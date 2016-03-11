@@ -2,10 +2,6 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 
-// Utils
-import HeaderMixin from '../Header/HeaderMixin';
-import {InstanceTabsMixin} from '../../mixins';
-
 // Stores & Actions
 import Store from './ChannelHistoryStore';
 
@@ -19,9 +15,7 @@ export default React.createClass({
   mixins: [
     Router.State,
 
-    Reflux.connect(Store),
-    HeaderMixin,
-    InstanceTabsMixin
+    Reflux.connect(Store)
   ],
 
   render() {

@@ -14,7 +14,6 @@ import PushDevicesPage from './pages/pushDevices';
 
 // Apps
 import Account from './apps/Account';
-import Classes from './apps/Classes';
 import Profile from './apps/Profile';
 
 // Apps for authenticated users
@@ -25,7 +24,8 @@ import Solutions from './apps/Solutions';
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
-import CodeBoxes from './apps/CodeBoxes';
+import Classes from './apps/Classes';
+import ScriptEndpoints from './apps/ScriptEndpoints';
 import Script from './apps/Script';
 import Scripts from './apps/Scripts';
 import DataObjects from './apps/DataObjects/DataObjects';
@@ -147,17 +147,6 @@ export default (
           path="classes">
 
           <Route
-            name="classes-add"
-            handler={Classes.FormView}
-            path="add"/>
-
-          <Route
-            name="classes-edit"
-            handler={Classes.FormView}
-            path=":className/edit"/>
-
-          {/* Classes - Data Objects */}
-          <Route
             name="classes-data-objects"
             handler={DataObjects}
             path=":className/objects"/>
@@ -202,19 +191,19 @@ export default (
             to="push-notification-config"/>
         </Route>
 
-        {/* CodeBoxes */}
+        {/* ScriptEndpoints */}
         <Route
-          name="codeBoxes"
-          path="codeboxes">
+          name="scriptEndpoints"
+          path="scriptEndpoints">
 
 
-          {/* CodeBox Traces */}
+          {/* ScriptEndpoints Traces */}
           <Route
-            name='codeBox-traces'
-            handler={CodeBoxes.Traces}
-            path=':codeBoxName/traces'/>
+            name="scriptEndpoint-traces"
+            handler={ScriptEndpoints.Traces}
+            path=":scriptEndpointName/traces"/>
 
-          <DefaultRoute handler={CodeBoxes}/>
+          <DefaultRoute handler={ScriptEndpoints}/>
 
         </Route>
 

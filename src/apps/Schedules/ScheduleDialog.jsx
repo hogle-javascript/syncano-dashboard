@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
@@ -10,7 +11,7 @@ import Store from './ScheduleDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {FlatButton, RaisedButton, TextField} from 'syncano-material-ui';
+import {AutoComplete, TextField} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -41,49 +42,57 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createSchedule({
-      label: this.state.label,
-      crontab: this.state.crontab,
-      codebox: this.state.codebox
-    });
+    const {label, crontab, codebox} = this.state;
+
+    Actions.createSchedule({label, crontab, codebox});
   },
 
   handleEditSubmit() {
-    Actions.updateSchedule(
-      this.state.id, {
-        label: this.state.label,
-        crontab: this.state.crontab,
-        codebox: this.state.codebox
-      }
-    );
+    const {id, label, crontab, codebox} = this.state;
+
+    Actions.updateSchedule(id, {label, crontab, codebox});
+  },
+
+  handleCrontabChange(value) {
+    this.setState({crontab: value});
+  },
+
+  handleCrontabOpen() {
+    this.refs.crontab._open();
+  },
+
+  renderCrontabDataSource() {
+    const crontabs = Store.getCrontabDropdown();
+
+    return _.map(crontabs, (crontab) => {
+      return {
+        text: crontab.payload,
+        value: (
+          <AutoComplete.Item
+            primaryText={crontab.text}
+            secondaryText={crontab.payload} />
+        )
+      };
+    });
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        label="Confirm"
-        secondary={true}
-        style={{marginLeft: 10}}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
+    const {open, isLoading, scripts, codebox, crontab} = this.state;
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Schedule Socket`}
-        defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        actions={dialogStandardActions}>
+        open={open}
+        isLoading={isLoading}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div>
           {this.renderFormNotifications()}
           <TextField
@@ -95,17 +104,23 @@ export default React.createClass({
             floatingLabelText="Label of the schedule"/>
           <SelectFieldWrapper
             name="script"
-            options={this.state.scripts}
-            value={this.state.codebox}
+            options={scripts}
+            value={codebox}
             onChange={this.setSelectFieldValue.bind(null, 'codebox')}
             errorText={this.getValidationMessages('codebox').join(' ')}/>
-          <SelectFieldWrapper
-            name="crontab"
-            options={Store.getCrontabDropdown()}
-            value={this.state.crontab}
-            floatingLabelText="CronTab"
-            onChange={this.setSelectFieldValue.bind(null, 'crontab')}
-            errorText={this.getValidationMessages('crontab').join(' ')}/>
+          <AutoComplete
+            ref="crontab"
+            floatingLabelText="Crontab"
+            hintText="Choose option from the dropdown or type your own crontab"
+            filter={AutoComplete.noFilter}
+            animated={false}
+            fullWidth={true}
+            searchText={crontab}
+            onNewRequest={this.handleCrontabChange}
+            onUpdateInput={this.handleCrontabChange}
+            dataSource={this.renderCrontabDataSource()}
+            errorText={this.getValidationMessages('crontab').join(' ')}
+            onTouchTap={this.handleCrontabOpen}/>
         </div>
       </Dialog.FullPage>
     );

@@ -17,6 +17,7 @@ export default CreateActions(
       method: 'Syncano.Actions.Admins.update'
     },
     removeAdmins: {
+      loading: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Admins.remove'

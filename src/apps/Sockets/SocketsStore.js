@@ -1,15 +1,23 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
+import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './SocketsActions';
+import DataActions from '../Data/DataViewsActions';
+import ScriptsActions from '../ScriptEndpoints/ScriptEndpointsActions';
+import TriggersActions from '../Triggers/TriggersActions';
+import SchedulesActions from '../Schedules/SchedulesActions';
+import ChannelsActions from '../Channels/ChannelsActions';
+import APNSActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
+import GCMActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
+    Reflux.ListenerMixin,
     StoreHelpersMixin,
     StoreLoadingMixin,
     WaitForStoreMixin
@@ -30,6 +38,17 @@ export default Reflux.createStore({
     };
   },
 
+  socketsListenables: [
+    DataActions.createDataView.completed, DataActions.updateDataView.completed, DataActions.removeDataViews.completed,
+    ScriptsActions.createScriptEndpoint.completed, ScriptsActions.updateScriptEndpoint.completed,
+    ScriptsActions.removeScriptEndpoints.completed, TriggersActions.createTrigger.completed,
+    TriggersActions.updateTrigger.completed, TriggersActions.removeTriggers.completed,
+    SchedulesActions.createSchedule.completed, SchedulesActions.updateSchedule.completed,
+    SchedulesActions.removeSchedules.completed, ChannelsActions.createChannel.completed,
+    ChannelsActions.updateChannel.completed, ChannelsActions.removeChannels.completed,
+    APNSActions.configAPNSPushNotification.completed, GCMActions.configGCMPushNotification.completed
+  ],
+
   init() {
     this.data = this.getInitialState();
     this.waitFor(
@@ -42,6 +61,19 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('SocketsStore::refreshData');
     Actions.fetchSockets();
+  },
+
+  addSocketsListeners() {
+    _.forEach(this.socketsListenables, (listenable) => this.listenTo(listenable, this.refreshData));
+  },
+
+  removeSocketsListeners() {
+    _.forEach(this.socketsListenables, (listenable) => this.stopListeningTo(listenable));
+  },
+
+  clearSockets() {
+    this.data = this.getInitialState();
+    this.trigger(this.data);
   },
 
   hasGCMConfig(items) {
@@ -61,7 +93,7 @@ export default Reflux.createStore({
   },
 
   getPushNotificationsItems(items, type, devicesCount) {
-    return items.map((item) => {
+    return _.map(items, (item) => {
       item.name = type;
       item.hasConfig = type === 'GCM' ? this.hasGCMConfig(items) : this.hasAPNSConfig(items);
       item.devicesCount = devicesCount;

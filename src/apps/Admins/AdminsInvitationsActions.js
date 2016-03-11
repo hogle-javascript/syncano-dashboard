@@ -18,11 +18,13 @@ export default CreateActions(
       method: 'Syncano.Actions.Invitations.create'
     },
     resendInvitation: {
+      loading: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Invitations.resend'
     },
     removeInvitation: {
+      loading: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Invitations.remove'

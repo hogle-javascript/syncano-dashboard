@@ -39,8 +39,8 @@ export default {
       return this.Connection.Schedules.remove(schedule.id);
     });
 
-    this.D.all(promises)
-      .success(this.completed)
+    this.Promise.all(promises)
+      .then(this.completed)
       .error(this.failure);
   },
 

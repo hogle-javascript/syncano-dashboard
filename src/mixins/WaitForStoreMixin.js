@@ -45,5 +45,4 @@ export default {
     args.push(this.fetch);
     listenMethod.apply(this, args);
   }
-
 };

@@ -23,6 +23,7 @@ export default CreateActions(
       method: 'Syncano.Actions.Channels.update'
     },
     removeChannels: {
+      loading: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Channels.remove'

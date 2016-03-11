@@ -11,7 +11,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
-import {TextField, FlatButton, RaisedButton} from 'syncano-material-ui';
+import {TextField} from 'syncano-material-ui';
 import {SelectFieldWrapper} from 'syncano-components';
 import {Dialog} from '../../common';
 
@@ -63,35 +63,26 @@ export default React.createClass({
         codebox: this.state.codebox,
         class: this.state.class,
         signal: this.state.signal
-      });
+      }
+    );
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <RaisedButton
-        key="confirm"
-        label="Confirm"
-        secondary={true}
-        style={{marginLeft: 10}}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
         title={`${title} a Trigger Socket`}
-        defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        actions={dialogStandardActions}>
+        isLoading={this.state.isLoading}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div>
           {this.renderFormNotifications()}
           <TextField

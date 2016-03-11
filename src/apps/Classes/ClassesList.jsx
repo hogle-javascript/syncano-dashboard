@@ -3,7 +3,6 @@ import Router from 'react-router';
 import _ from 'lodash';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
@@ -22,7 +21,6 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    HeaderMixin,
     DialogsMixin
   ],
 
@@ -118,9 +116,9 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getCheckedItems();
-    let checkedItemsCount = Store.getNumberOfChecked();
-    let someClassIsProtectedFromDelete = checkedItems.some(this.isProtectedFromDelete);
+    const checkedItems = Store.getCheckedItems();
+    const checkedItemsCount = Store.getNumberOfChecked();
+    const someClassIsProtectedFromDelete = checkedItems.some(this.isProtectedFromDelete);
 
     return (
       <Lists.Container className="classes-list">

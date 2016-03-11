@@ -3,8 +3,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 import {State, Navigation} from 'react-router';
 
-import HeaderMixin from '../Header/HeaderMixin';
-import {DialogsMixin, FormMixin, InstanceTabsMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
+import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
 import AutosaveMixin from './ScriptAutosaveMixin';
 
 import Store from './ScriptStore';
@@ -28,8 +27,6 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    HeaderMixin,
-    InstanceTabsMixin,
     SnackbarNotificationMixin,
     AutosaveMixin,
     FormMixin,
@@ -121,10 +118,9 @@ export default React.createClass({
       params: {
         key: 'scriptTraces',
         ref: 'scriptTraces',
-        title: 'Traces for',
+        title: `Traces for ${this.getToolbarTitle()}`,
         actions: [],
         onRequestClose: () => this.handleCancel('scriptTraces'),
-        avoidResetState: true,
         children: <Traces.List
                     isLoading={this.state.isLoading}
                     tracesFor="script"
@@ -216,9 +212,8 @@ export default React.createClass({
                     onChange={(payload) => this.setState({payloadValue: payload})}
                     value={[
                       '{',
-                      '    "language": "JSON",',
                       '    "foo": "bar",',
-                      '    "trailing": "comma"',
+                      '    "bar": "foo"',
                       '}'
                     ].join('\n')} />
                 </TogglePanel>
