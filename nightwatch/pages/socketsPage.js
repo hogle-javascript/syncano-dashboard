@@ -35,7 +35,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxButton: {
-      selector: '//span[@class="synicon-socket-codebox"]',
+      selector: '//span[@class="synicon-socket-script-endpoint"]',
       locateStrategy: 'xpath'
     },
     codeBoxSocketItem: {
@@ -47,7 +47,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalTitle: {
-      selector: '//h3[text()="Create a Script Socket"]',
+      selector: '//h3[text()="Create a Script Endpoint"]',
       locateStrategy: 'xpath'
     },
     modalNameInput: {
@@ -75,11 +75,11 @@ export default {
       locateStrategy: 'xpath'
     },
     deleteCodeBoxModalTitle: {
-      selector: '//h3[text()="Delete a Script Socket"]',
+      selector: '//h3[text()="Delete a Script Endpoint"]',
       locateStrategy: 'xpath'
     },
     editCodeBoxModalTitle: {
-      selector: '//h3[text()="Edit a Script Socket"]',
+      selector: '//h3[text()="Edit a Script Endpoint"]',
       locateStrategy: 'xpath'
     },
     dataListItem: {

@@ -30,8 +30,7 @@ export default {
     socketsPage
       .navigate()
       .waitForElementVisible('@channelSocketsListTitle')
-      .clickElement('@channelSocketDropDown')
-      .clickElement('@editDropdownItem')
+      .clickListItemDropdown(Utils.addSuffix('channel'), 'Edit')
       .waitForElementVisible('@editChannelModalTitle')
       .fillInput('@modalDescriptionInput', Utils.addSuffix('edit'))
       .clickElement('@confirmButton')
@@ -46,8 +45,7 @@ export default {
     socketsPage
       .navigate()
       .waitForElementVisible('@channelSocketsListTitle')
-      .clickElement('@channelSocketDropDown')
-      .clickElement('@deleteDropdownItem')
+      .clickListItemDropdown(Utils.addSuffix('channel'), 'Delete')
       .waitForElementVisible('@deleteChannelModalTitle')
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@selectChannelTableRow');
