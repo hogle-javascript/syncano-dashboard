@@ -33,7 +33,8 @@ export default React.createClass({
           primaryText={item.name}
           secondaryText={
             <Clipboard
-              copyText={item.links.poll}
+              text={item.links.poll}
+              copyText={`${SYNCANO_BASE_URL.slice(0, -1)}${item.links.poll}`}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Channel Socket url copied!'
               })}

@@ -42,7 +42,8 @@ export default React.createClass({
           primaryText={item.name}
           secondaryText={
             <Clipboard
-              copyText={link}
+              text={link}
+              copyText={`${SYNCANO_BASE_URL.slice(0, -1)}${link}`}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Script Endpoint url copied!'
               })}

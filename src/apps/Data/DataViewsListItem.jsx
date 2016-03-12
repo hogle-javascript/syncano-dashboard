@@ -33,7 +33,8 @@ export default React.createClass({
           primaryTextTooltip={item.description}
           secondaryText={
             <Clipboard
-              copyText={item.links.self}
+              text={item.links.self}
+              copyText={`${SYNCANO_BASE_URL.slice(0, -1)}${item.links.self}`}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Data Socket url copied!'
               })}
