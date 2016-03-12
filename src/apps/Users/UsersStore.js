@@ -7,9 +7,13 @@ import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../m
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './UsersActions';
+import GroupsActions from '../Groups/GroupsActions';
 
 export default Reflux.createStore({
-  listenables: [Actions],
+  listenables: [
+    Actions,
+    GroupsActions
+  ],
 
   mixins: [
     CheckListStoreMixin,
@@ -91,7 +95,7 @@ export default Reflux.createStore({
     this.refreshData();
   },
 
-  onSetActiveGroup() {
+  onFetchGroupsCompleted() {
     console.debug('UsersStore::onSetActiveGroup');
     this.refreshData();
   }
