@@ -1,13 +1,16 @@
 import Reflux from 'reflux';
 
-import {StoreFormMixin} from '../../mixins';
+import {StoreFormMixin, SnackbarNotificationMixin} from '../../mixins';
 
 import Actions from './ProfileActions';
 
 export default Reflux.createStore({
   listenables: Actions,
 
-  mixins: [StoreFormMixin],
+  mixins: [
+    StoreFormMixin,
+    SnackbarNotificationMixin
+  ],
 
   init() {
     this.listenToForms();
@@ -18,6 +21,8 @@ export default Reflux.createStore({
   },
 
   onUpdateBillingProfileCompleted() {
-    this.trigger({feedback: 'Billing address changed successfully.'});
+    this.setSnackbarNotification({
+      message: 'Billing address changed successfully'
+    });
   }
 });
