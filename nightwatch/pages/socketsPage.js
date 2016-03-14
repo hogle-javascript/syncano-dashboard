@@ -4,18 +4,6 @@ import globals from '../globals';
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/sockets`,
   elements: {
-    codeBoxSocketDropDown: {
-      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../../..//button`,
-      locateStrategy: 'xpath'
-    },
-    editDropdownItem: {
-      selector: '//span[@class="dropdown-item-edit"]',
-      locateStrategy: 'xpath'
-    },
-    deleteDropdownItem: {
-      selector: '//span[@class="dropdown-item-delete"]',
-      locateStrategy: 'xpath'
-    },
     instancesDropdown: {
       selector: '.instances-dropdown'
     },
@@ -24,14 +12,6 @@ export default {
     },
     confirmButton: {
       selector: '//span[text()="Confirm"]',
-      locateStrategy: 'xpath'
-    },
-    deleteButton: {
-      selector: '//span[@class="synicon-delete"]',
-      locateStrategy: 'xpath'
-    },
-    editButton: {
-      selector: '//span[@class="synicon-pencil"]',
       locateStrategy: 'xpath'
     },
     addCodeBoxButton: {
@@ -63,15 +43,11 @@ export default {
       locateStrategy: 'xpath'
     },
     codeBoxTableRow: {
-      selector: `//div[text()="${utils.addSuffix('codebox')}"]`,
-      locateStrategy: 'xpath'
-    },
-    selectCodeBoxTableRow: {
-      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../div[1]/span`,
+      selector: `//div[text()="${utils.addSuffix('script')}"]`,
       locateStrategy: 'xpath'
     },
     codeBoxTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../following-sibling::div[1]`,
+      selector: `//div[text()="${utils.addSuffix('script')}"]/../../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     deleteCodeBoxModalTitle: {

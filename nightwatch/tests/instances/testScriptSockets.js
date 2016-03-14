@@ -14,14 +14,14 @@ export default {
   },
   'User adds a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
-    const codeBox = Utils.addSuffix('codebox');
+    const script = Utils.addSuffix('script');
 
     socketsPage
       .navigate()
       .waitForElementVisible('@codeBoxSocketItem')
       .clickElement('@addCodeBoxButton')
       .waitForElementVisible('@addCodeBoxModalTitle')
-      .fillInput('@modalNameInput', codeBox)
+      .fillInput('@modalNameInput', script)
       .selectDropdownValue('@addCodeBoxModalScriptDropdown', 'snippet')
       .clickElement('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
@@ -33,7 +33,7 @@ export default {
     socketsPage
       .navigate()
       .waitForElementVisible('@codeBoxSocketItem')
-      .clickListItemDropdown(Utils.addSuffix('codebox'), 'Edit')
+      .clickListItemDropdown(Utils.addSuffix('script'), 'Edit')
       .waitForElementVisible('@editCodeBoxModalTitle')
       .fillInput('@modalDescriptionInput', edited)
       .clickElement('@confirmButton')
@@ -44,14 +44,14 @@ export default {
   },
   'User deletes a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
-    const edited = Utils.addSuffix('edited');
+    const script = Utils.addSuffix('script');
 
     socketsPage
       .navigate()
       .waitForElementVisible('@codeBoxSocketItem')
-      .clickListItemDropdown(edited, 'Delete')
+      .clickListItemDropdown(script, 'Delete')
       .waitForElementVisible('@deleteCodeBoxModalTitle')
       .clickElement('@confirmButton')
-      .waitForElementNotPresent('@selectCodeBoxTableRow');
+      .waitForElementNotPresent('@codeBoxTableRow');
   }
 };
