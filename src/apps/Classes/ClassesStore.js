@@ -98,7 +98,8 @@ export default Reflux.createStore({
         return true;
       }
     });
-    return classObj.schema;
+
+    return classObj ? classObj.schema : [];
   },
 
   getClassRelationFields(className) {
