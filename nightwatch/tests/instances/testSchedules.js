@@ -22,7 +22,7 @@ export default {
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInput('@addScheduleModalLabel', schedule)
       .selectDropdownValue('@addScheduleModalScript', 'snippet')
-      .sendKeys('@addScheduleModalCronTab', '0 0 1 1 *')
+      .sendKeys('@addScheduleModalCronTab', ['0 0 1 1 *', client.Keys.ENTER])
       .clickElement('@confirm')
       .waitForElementPresent('@scheduleTableRow');
   },
@@ -35,6 +35,7 @@ export default {
       .clickListItemDropdown(schedule, 'Edit')
       .waitForElementVisible('@editScheduleModalTitle')
       .selectDropdownValue('@addScheduleModalCronTab', 'Run every 5 minutes')
+      .sendKeys('@addScheduleModalCronTab', client.Keys.ENTER)
       .clickElement('@confirm')
       .waitForElementVisible('@cronTabScheduleTableRow');
   },

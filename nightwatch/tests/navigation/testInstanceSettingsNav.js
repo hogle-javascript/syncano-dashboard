@@ -1,7 +1,7 @@
 import path from 'path';
 
 module.exports = {
-  tags: ['navigation'],
+  tags: ['instanceNav'],
   before(client) {
     const loginPage = client.page.loginPage();
 
