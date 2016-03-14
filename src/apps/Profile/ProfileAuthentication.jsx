@@ -96,7 +96,7 @@ export default Radium(React.createClass({
                 <Clipboard
                   copyText={this.state.account_key}
                   onCopy={() => this.setSnackbarNotification({
-                    message: 'API key copied to the clipboard'
+                    message: 'Account key copied to the clipboard'
                   })}
                   label="COPY"
                   type="button" />

@@ -62,6 +62,10 @@ export default Radium(React.createClass({
         background: 'rgba(0,0,0,0.2)',
         icon: 'alert'
       },
+      processing: {
+        background: Styles.Colors.lightBlue500,
+        icon: 'play'
+      },
       pending: {
         background: Styles.Colors.lightBlue500,
         icon: 'timelapse'
@@ -79,6 +83,10 @@ export default Radium(React.createClass({
         icon: 'alert'
       }
     }[item.status];
+
+    if (item.status === 'processing') {
+      duration = 'processing';
+    }
 
     if (item.id === this.state.visibleTraceId) {
       styles.traceResult = {
@@ -176,10 +184,12 @@ export default Radium(React.createClass({
   },
 
   render() {
+    const {items, isLoading} = this.props;
+
     return (
       <Lists.Container>
-        <Loading show={this.props.isLoading}>
-          {this.props.items.length > 0 ? this.renderList() : this.renderEmptyContent()}
+        <Loading show={isLoading}>
+          {items.length ? this.renderList() : this.renderEmptyContent()}
         </Loading>
       </Lists.Container>
     );
