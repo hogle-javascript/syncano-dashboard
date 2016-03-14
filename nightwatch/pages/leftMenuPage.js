@@ -20,11 +20,11 @@ export default {
       locateStrategy: 'xpath'
     },
     classes: {
-      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Classes"]',
+      selector: '//span[@class="synicon-layers"]',
       locateStrategy: 'xpath'
     },
     scripts: {
-      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Scripts"]',
+      selector: '//span[@class="synicon-code-tags"]',
       locateStrategy: 'xpath'
     },
     users: {
