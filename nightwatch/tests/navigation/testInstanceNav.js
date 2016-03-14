@@ -32,15 +32,11 @@ module.exports = {
     client.saveScreenshot(fileNamePath, done);
   },
   'User goes to Sockets View': (client) => {
-    const instancesPage = client.page.instancesPage();
     const socketsPage = client.page.socketsPage();
     const channelsPage = client.page.channelsPage();
     const schedulesPage = client.page.schedulesPage();
     const triggersPage = client.page.triggersPage();
 
-    instancesPage
-      .navigate()
-      .clickElement('@instancesTableName');
     socketsPage
       .waitForElementPresent('@codeBoxSocketItem')
       .waitForElementPresent('@dataListItem');

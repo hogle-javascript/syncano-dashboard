@@ -22,8 +22,7 @@ export default {
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInput('@addScheduleModalLabel', schedule)
       .selectDropdownValue('@addScheduleModalScript', 'snippet')
-      .sendKeys('@addScheduleModalCronTab', 'R')
-      .clickElement('@runOnceAYear')
+      .sendKeys('@addScheduleModalCronTab', '0 0 1 1 *')
       .clickElement('@confirm')
       .waitForElementPresent('@scheduleTableRow');
   },
