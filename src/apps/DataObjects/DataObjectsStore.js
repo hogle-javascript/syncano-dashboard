@@ -73,6 +73,20 @@ export default Reflux.createStore({
           checked: false
         },
         {
+          id: 'channel',
+          name: 'Channel',
+          width: 90,
+          tooltip: 'Built-in property: Channel',
+          checked: false
+        },
+        {
+          id: 'channel_room',
+          name: 'Channel room',
+          width: 90,
+          tooltip: 'Built-in property: Channel room',
+          checked: false
+        },
+        {
           id: 'created_at',
           name: 'Created',
           width: 120,
