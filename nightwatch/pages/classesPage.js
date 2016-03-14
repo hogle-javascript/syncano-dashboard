@@ -52,6 +52,10 @@ export default {
       selector: '//div[text()="user_profile"]/../../../button//span',
       locateStrategy: 'xpath'
     },
+    userClassListItem: {
+      selector: '//div[text()="user_profile"]/../../../..//span[@class="synicon-table"]',
+      locateStrategy: 'xpath'
+    },
     userClassDropDown: {
       selector: '//div[text()="user_profile"]/../../../../div[@class="col-menu"]//button',
       locateStrategy: 'xpath'

@@ -38,6 +38,10 @@ export default {
       selector: '//input[@name="description"]',
       locateStrategy: 'xpath'
     },
+    channelModalDescriptionInput: {
+      selector: '//textarea[@name="description"]',
+      locateStrategy: 'xpath'
+    },
     addCodeBoxModalScriptDropdown: {
       selector: '//div[@class="script-dropdown"]',
       locateStrategy: 'xpath'

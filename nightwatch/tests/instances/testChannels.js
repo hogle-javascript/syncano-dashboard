@@ -32,7 +32,7 @@ export default {
       .waitForElementVisible('@channelSocketsListTitle')
       .clickListItemDropdown(Utils.addSuffix('channel'), 'Edit')
       .waitForElementVisible('@editChannelModalTitle')
-      .fillInput('@modalDescriptionInput', Utils.addSuffix('edit'))
+      .fillInput('@channelModalDescriptionInput', Utils.addSuffix('edit'))
       .clickElement('@confirmButton')
       .waitForElementVisible('@channelTableRow')
       .waitForElementVisible('@channelTableRowDescription');

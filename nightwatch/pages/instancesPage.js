@@ -53,7 +53,7 @@ export default {
       locateStrategy: 'xpath'
     },
     instancesTableName: {
-      selector: '(//div[@class="instances-list"]/div[2]/div/div[1]/div/div/div)[1]',
+      selector: '(//div[@class="instances-list"]//button/following-sibling::div/div/div)[1]',
       locateStrategy: 'xpath'
     },
     selectInstance: {
