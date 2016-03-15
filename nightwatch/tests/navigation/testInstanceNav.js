@@ -1,7 +1,7 @@
 import path from 'path';
 
 module.exports = {
-  tags: ['navigation'],
+  tags: ['instanceNav'],
   before(client) {
     const loginPage = client.page.loginPage();
 
@@ -87,11 +87,11 @@ module.exports = {
     leftMenuPage.clickElement('@users');
     usersPage.waitForElementPresent('@user');
   },
-  'User goes to Script Socket Traces View': (client) => {
-    const socketsPage = client.page.socketsPage();
-    const codeBoxTracesPage = client.page.codeBoxTracesPage();
+  'User goes to Script Endpoint Traces View': (client) => {
+    const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
 
-    socketsPage.clickElement('@codeBoxSocketItemTraces');
-    codeBoxTracesPage.waitForElementPresent('@codeBoxTracesEmptyView');
+    scriptEndpointTracesPage
+      .navigate()
+      .waitForElementPresent('@scriptEndpointTracesEmptyView');
   }
 };
