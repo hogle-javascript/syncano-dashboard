@@ -12,7 +12,7 @@ import ListItem from './SchedulesListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'SchedulesList',
@@ -28,7 +28,21 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
+  handleTitleClick() {
+    const instanceName = this.getParams().instanceName;
+
+    if (this.props.handleTitleClick) {
+      this.props.handleTitleClick();
+      return;
+    }
+
+    this.transitionTo('schedules', {instanceName});
+  },
+
   initDialogs() {
+    const {checkedItems} = this.props;
+    const checkedSchedules = checkedItems ? checkedItems : Store.getCheckedItems();
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -37,7 +51,7 @@ export default React.createClass({
         title: 'Delete a Schedule Socket',
         handleConfirm: Actions.removeSchedules,
         isLoading: this.props.isLoading,
-        items: Store.getCheckedItems(),
+        items: checkedSchedules,
         itemLabelName: 'label',
         groupName: 'Schedule'
       }
@@ -48,14 +62,15 @@ export default React.createClass({
     return (
       <ListItem
         key={`schedules-list-item-${item.id}`}
-        onIconClick={Actions.checkItem}
+        onIconClick={this.props.checkItem ? this.props.checkItem : Actions.checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('removeScheduleDialog', item)} />
     );
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const {handleSelectAll, handleUnselectAll, checkedItems} = this.props;
+    const checkedItemsCount = checkedItems ? checkedItems.length : Store.getNumberOfChecked();
 
     return (
       <Lists.Container className="schedules-list">
@@ -64,8 +79,8 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={this.props.handleTitleClick}>
-            {this.props.name}
+            handleClick={this.handleTitleClick}>
+            Schedule Sockets
           </Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-flex-1"
@@ -89,8 +104,9 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItems}
-              actions={Actions}>
+              checkedItemsCount={checkedItemsCount}
+              handleSelectAll={handleSelectAll ? handleSelectAll : Actions.selectAll}
+              handleUnselectAll={handleUnselectAll ? handleUnselectAll : Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Schedule Socket"
                 multipleItemsText="Delete Schedule Sockets"
@@ -100,10 +116,11 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemHandleClick={Actions.showDialog}
+          emptyItemContent="Create a Schedule Socket"
           key="schedules-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );
   }
 });
-

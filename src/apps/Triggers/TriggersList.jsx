@@ -12,7 +12,7 @@ import ListItem from './TriggersListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'TriggersList',
@@ -28,6 +28,17 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
+  handleTitleClick() {
+    const instanceName = this.getParams().instanceName;
+
+    if (this.props.handleTitleClick) {
+      this.props.handleTitleClick();
+      return;
+    }
+
+    this.transitionTo('triggers', {instanceName});
+  },
+
   handleItemClick(itemId) {
     this.transitionTo('trigger-traces', {
       instanceName: this.getParams().instanceName,
@@ -36,6 +47,9 @@ export default React.createClass({
   },
 
   initDialogs() {
+    const {checkedItems} = this.props;
+    const checkedTriggers = checkedItems ? checkedItems : Store.getCheckedItems();
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -44,7 +58,7 @@ export default React.createClass({
         title: 'Delete a Trigger',
         handleConfirm: Actions.removeTriggers,
         isLoading: this.props.isLoading,
-        items: Store.getCheckedItems(),
+        items: checkedTriggers,
         itemLabelName: 'label',
         groupName: 'Trigger'
       }
@@ -55,15 +69,15 @@ export default React.createClass({
     return (
       <ListItem
         key={`triggers-list-item-${item.id}`}
-        onIconClick={Actions.checkItem}
+        onIconClick={this.props.checkItem ? this.props.checkItem : Actions.checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('removeTriggerDialog', item)} />
     );
   },
 
   render() {
-    const {name, handleTitleClick, ...other} = this.props;
-    let checkedItems = Store.getNumberOfChecked();
+    const {handleSelectAll, handleUnselectAll, checkedItems, ...other} = this.props;
+    const checkedItemsCount = checkedItems ? checkedItems.length : Store.getNumberOfChecked();
 
     return (
       <Lists.Container className="triggers-list">
@@ -72,8 +86,8 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={handleTitleClick}>
-            {name}
+            handleClick={this.handleTitleClick}>
+            Trigger Sockets
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
@@ -97,8 +111,9 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItems}
-              actions={Actions}>
+              checkedItemsCount={checkedItemsCount}
+              handleSelectAll={handleSelectAll ? handleSelectAll : Actions.selectAll}
+              handleUnselectAll={handleUnselectAll ? handleUnselectAll : Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Trigger Socket"
                 multipleItemsText="Delete Trigger Sockets"
@@ -108,10 +123,11 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...other}
+          emptyItemHandleClick={Actions.showDialog}
+          emptyItemContent="Create a Trigger Socket"
           key="triggers-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );
   }
 });
-

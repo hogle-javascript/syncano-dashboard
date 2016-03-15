@@ -24,6 +24,7 @@ import Triggers from '../Triggers';
 import ScriptEndpoints from '../ScriptEndpoints';
 import PushNotifications from '../PushNotifications';
 import EmptyView from './EmptyView';
+import SocketsList from './SocketsList';
 
 export default React.createClass({
   displayName: 'Sockets',
@@ -138,50 +139,7 @@ export default React.createClass({
     return (
       <div style={{clear: 'both', height: '100%'}}>
         <Loading show={sockets.isLoading}>
-          <Show if={sockets.data.length}>
-            <Data.List
-              name="Data Sockets"
-              items={sockets.data}
-              handleTitleClick={() => this.handleListTitleClick('data')}
-              emptyItemHandleClick={Data.Actions.showDialog}
-              emptyItemContent="Create a Data Socket"/>
-          </Show>
-
-          <Show if={sockets.scripts.length}>
-            <ScriptEndpoints.List
-              name="Script Endpoints"
-              items={sockets.scripts}
-              handleTitleClick={() => this.handleListTitleClick('scriptEndpoints')}
-              emptyItemHandleClick={ScriptEndpoints.Actions.showDialog}
-              emptyItemContent="Create a Script Endpoint"/>
-          </Show>
-
-          <Show if={sockets.triggers.length}>
-            <Triggers.List
-              name="Trigger Sockets"
-              items={sockets.triggers}
-              handleTitleClick={() => this.handleListTitleClick('triggers')}
-              emptyItemHandleClick={Triggers.Actions.showDialog}
-              emptyItemContent="Create a Trigger Socket"/>
-          </Show>
-
-          <Show if={sockets.schedules.length}>
-            <Schedules.List
-              name="Schedule Sockets"
-              items={sockets.schedules}
-              handleTitleClick={() => this.handleListTitleClick('schedules')}
-              emptyItemHandleClick={Schedules.Actions.showDialog}
-              emptyItemContent="Create a Schedule Socket"/>
-          </Show>
-
-          <Show if={sockets.channels.length}>
-            <Channels.List
-              name="Channel Sockets"
-              items={sockets.channels}
-              handleTitleClick={() => this.handleListTitleClick('channels')}
-              emptyItemHandleClick={Channels.Actions.showDialog}
-              emptyItemContent="Create a Channel Socket"/>
-          </Show>
+          <SocketsList sockets={sockets}/>
 
           <Show if={this.getPushNotificationItems().length}>
             <PushNotifications.List

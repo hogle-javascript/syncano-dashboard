@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../mixins';
+import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin, CheckListStoreMixin} from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './SocketsActions';
@@ -18,6 +18,7 @@ export default Reflux.createStore({
 
   mixins: [
     Reflux.ListenerMixin,
+    CheckListStoreMixin,
     StoreHelpersMixin,
     StoreLoadingMixin,
     WaitForStoreMixin
@@ -110,7 +111,7 @@ export default Reflux.createStore({
     const apnsItems = this.getPushNotificationsItems([sockets.apnsPushNotifications], 'APNS', apnsDevicesCount);
 
     this.data.data = this.saveListFromSyncano(sockets.data);
-    this.data.scripts = this.saveListFromSyncano(sockets.scriptsSockets);
+    this.data.scripts = this.saveListFromSyncano(sockets.scriptEndpoints);
     this.data.triggers = this.saveListFromSyncano(sockets.triggers);
     this.data.schedules = this.saveListFromSyncano(sockets.schedules);
     this.data.channels = this.saveListFromSyncano(sockets.channels);

@@ -13,7 +13,7 @@ import ListItem from './DataViewsListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'DataViewsList',
@@ -29,7 +29,21 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
+  handleTitleClick() {
+    const instanceName = this.getParams().instanceName;
+
+    if (this.props.handleTitleClick) {
+      this.props.handleTitleClick();
+      return;
+    }
+
+    this.transitionTo('data', {instanceName});
+  },
+
   initDialogs() {
+    const {checkedItems} = this.props;
+    const checkedDataSockets = checkedItems ? checkedItems : Store.getCheckedItems();
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -38,7 +52,7 @@ export default React.createClass({
         title: 'Delete a DataView',
         handleConfirm: Actions.removeDataViews,
         isLoading: this.props.isLoading,
-        items: Store.getCheckedItems(),
+        items: checkedDataSockets,
         groupName: 'Data Socket'
       }
     }];
@@ -48,14 +62,15 @@ export default React.createClass({
     return (
       <ListItem
         key={`data-views-list-item-${item.name}`}
-        onIconClick={Actions.checkItem}
+        onIconClick={this.props.checkItem ? this.props.checkItem : Actions.checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('removeDataViewDialog', item)} />
     );
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const {handleSelectAll, handleUnselectAll, checkedItems} = this.props;
+    const checkedItemsCount = checkedItems ? checkedItems.length : Store.getNumberOfChecked();
 
     return (
       <Lists.Container>
@@ -65,8 +80,8 @@ export default React.createClass({
             className="col-xs-12"
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={this.props.handleTitleClick}>
-            {this.props.name}
+            handleClick={this.handleTitleClick}>
+            Data Sockets
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
@@ -80,8 +95,9 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItems}
-              actions={Actions}>
+              checkedItemsCount={checkedItemsCount}
+              handleSelectAll={handleSelectAll ? handleSelectAll : Actions.selectAll}
+              handleUnselectAll={handleUnselectAll ? handleUnselectAll : Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Data Socket"
                 multipleItemsText="Delete Data Sockets"
@@ -91,10 +107,11 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent="Create a Data Socket"
+          emptyItemHandleClick={Actions.showDialog}
           key="dataviews-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );
   }
 });
-
