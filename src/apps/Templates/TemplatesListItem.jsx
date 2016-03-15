@@ -36,8 +36,8 @@ export default React.createClass({
         key={item.name}>
         <Column.CheckIcon
           className="col-xs-16"
-          id={item.name.toString()}
-          iconClassName='arrow-up-bold'
+          id={item.name}
+          iconClassName="arrow-up-bold"
           keyName="name"
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}

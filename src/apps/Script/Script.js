@@ -170,10 +170,11 @@ export default React.createClass({
         </InnerToolbar>
         <Loading show={isLoading || !currentScript}>
           <div className="row">
-            <div className="col-flex-1" style={{borderRight: '1px solid rgba(224,224,224,.5)'}}>
+            <div className="col-flex-1" style={{borderRight: '1px solid rgba(224,224,224,.5)', display: 'flex'}}>
               <TogglePanel
                 title="Code"
-                initialOpen={true}>
+                initialOpen={true}
+                style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                 <Show if={this.getValidationMessages('source').length > 0}>
                   <div style={styles.notification}>
                     <Notification type="error">
@@ -186,8 +187,7 @@ export default React.createClass({
                   mode={editorMode}
                   onChange={this.handleOnSourceChange}
                   onLoad={this.clearAutosaveTimer}
-                  value={source}
-                  maxLines="Infinity"/>
+                  value={source}/>
               </TogglePanel>
             </div>
             <div className="col-flex-1" style={{padding: 0}}>
