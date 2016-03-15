@@ -52,10 +52,6 @@ export default React.createClass({
 
   getStyles() {
     return {
-      autosaveCheckbox: {
-        marginTop: 16,
-        whiteSpace: 'nowrap'
-      },
       notification: {
         marginTop: 20
       },
@@ -149,12 +145,12 @@ export default React.createClass({
           backFallback={() => this.transitionTo('scripts', this.getParams())}
           forceBackFallback={true}
           backButtonTooltip="Go back to Scripts list">
-          <div style={{display: 'inline-block', float: 'left'}}>
+          <div style={{display: 'inline-block'}}>
             <Checkbox
               ref="autosaveCheckbox"
               name="autosaveCheckbox"
               label="Autosave"
-              style={styles.autosaveCheckbox}
+              labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
               defaultChecked={this.isAutosaveEnabled()}
               onCheck={this.saveCheckboxState}/>
           </div>
