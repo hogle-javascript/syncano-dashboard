@@ -22,9 +22,7 @@ export default Radium(React.createClass({
 
   mixins: [
     Reflux.connect(InstancesStore),
-    Reflux.connectFilter(SessionStore, 'currentInstance', (sessionData) => {
-      return sessionData.instance;
-    }),
+    Reflux.connectFilter(SessionStore, 'currentInstance', (sessionData) => sessionData.instance),
     Router.Navigation,
     Router.State,
     Utils.Styles
