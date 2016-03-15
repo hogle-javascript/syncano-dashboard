@@ -15,15 +15,20 @@ export default {
   'Administrator adds a Trigger': (client) => {
     const triggersPage = client.page.triggersPage();
     const suffix = utils.addSuffix('trigger');
+    const socketsPage = client.page.socketsPage();
+
+    socketsPage
+      .navigate()
+      .waitForElementVisible('@codeBoxSocketItem');
 
     triggersPage
       .navigate()
       .clickElement('@addTriggerButton')
       .waitForElementPresent('@addTriggerModalTitle')
       .fillInput('@addTriggerModalLabel', suffix)
-      .selectDropdownValue('@addTriggerModalScript', 'snippet')
       .selectDropdownValue('@addTriggerModalSignal', 'create')
       .selectDropdownValue('@addTriggerModalClass', 'user_profile')
+      .selectDropdownValue('@addTriggerModalScript', 'snippet')
       .clickElement('@confirm')
       .waitForElementPresent('@triggerTableRow');
   },
@@ -42,11 +47,10 @@ export default {
     const triggersPage = client.page.triggersPage();
 
     triggersPage
-      .clickElement('@selectTriggerTableRow')
-      .clickElement('@triggersListMenu')
-      .clickElement('@triggersDeleteButton')
+      .navigate()
+      .clickListItemDropdown('@triggerDropdown', 'Delete')
       .waitForElementVisible('@confirm')
       .clickElement('@confirm')
-      .waitForElementNotPresent('@selectTriggerTableRow');
+      .waitForElementNotPresent('@triggerTableRow');
   }
 };

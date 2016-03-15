@@ -28,6 +28,7 @@ export default {
   },
   'Test Reset Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
+    const description = Utils.addSuffix();
     let apiKeyValue = null;
 
     apiKeysPage
@@ -40,11 +41,8 @@ export default {
       client.elementIdText(result.value.ELEMENT, (text) => apiKeyValue = text.value);
     });
     apiKeysPage
-      .clickElement('@selectApiKey')
-      .clickElement('@apiKeysListMenu')
-      .clickElement('@resetButton')
-      .clickElement('@confirmButton')
-      .waitForElementPresent('@selectApiKey');
+      .clickListItemDropdown(description, 'Reset')
+      .clickElement('@confirmButton');
     client
       .pause(1000)
       .element('xpath', apiKeyValueElement, (result) => {
@@ -55,12 +53,11 @@ export default {
   },
   'Test Delete Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
+    const description = Utils.addSuffix();
 
     apiKeysPage
       .navigate()
-      .clickElement('@selectApiKey')
-      .clickElement('@apiKeysListMenu')
-      .clickElement('@deleteButton')
+      .clickListItemDropdown(description, 'Delete')
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@selectApiKey');
   }

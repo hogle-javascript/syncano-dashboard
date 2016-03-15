@@ -4,18 +4,6 @@ import globals from '../globals';
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/sockets`,
   elements: {
-    codeBoxSocketDropDown: {
-      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../../..//button`,
-      locateStrategy: 'xpath'
-    },
-    editDropdownItem: {
-      selector: '//span[@class="dropdown-item-edit"]',
-      locateStrategy: 'xpath'
-    },
-    deleteDropdownItem: {
-      selector: '//span[@class="dropdown-item-delete"]',
-      locateStrategy: 'xpath'
-    },
     instancesDropdown: {
       selector: '.instances-dropdown'
     },
@@ -26,16 +14,8 @@ export default {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
-    deleteButton: {
-      selector: '//span[@class="synicon-delete"]',
-      locateStrategy: 'xpath'
-    },
-    editButton: {
-      selector: '//span[@class="synicon-pencil"]',
-      locateStrategy: 'xpath'
-    },
     addCodeBoxButton: {
-      selector: '//span[@class="synicon-socket-codebox"]',
+      selector: '//span[@class="synicon-socket-script-endpoint"]',
       locateStrategy: 'xpath'
     },
     codeBoxSocketItem: {
@@ -47,7 +27,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalTitle: {
-      selector: '//h3[text()="Create a Script Socket"]',
+      selector: '//h3[text()="Create a Script Endpoint"]',
       locateStrategy: 'xpath'
     },
     modalNameInput: {
@@ -58,28 +38,28 @@ export default {
       selector: '//input[@name="description"]',
       locateStrategy: 'xpath'
     },
+    channelModalDescriptionInput: {
+      selector: '//textarea[@name="description"]',
+      locateStrategy: 'xpath'
+    },
     addCodeBoxModalScriptDropdown: {
       selector: '//div[@class="script-dropdown"]',
       locateStrategy: 'xpath'
     },
     codeBoxTableRow: {
-      selector: `//div[text()="${utils.addSuffix('codebox')}"]`,
-      locateStrategy: 'xpath'
-    },
-    selectCodeBoxTableRow: {
-      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../div[1]/span`,
+      selector: `//div[text()="${utils.addSuffix('script')}"]`,
       locateStrategy: 'xpath'
     },
     codeBoxTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../following-sibling::div[1]`,
+      selector: `//div[text()="${utils.addSuffix('script')}"]/../../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     deleteCodeBoxModalTitle: {
-      selector: '//h3[text()="Delete a Script Socket"]',
+      selector: '//h3[text()="Delete a Script Endpoint"]',
       locateStrategy: 'xpath'
     },
     editCodeBoxModalTitle: {
-      selector: '//h3[text()="Edit a Script Socket"]',
+      selector: '//h3[text()="Edit a Script Endpoint"]',
       locateStrategy: 'xpath'
     },
     dataListItem: {

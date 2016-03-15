@@ -1,4 +1,4 @@
-import Utils from '../utils';
+import Utils from '../../utils';
 
 export default {
   tags: ['dataObjects'],
@@ -39,7 +39,7 @@ export default {
 
     dataObjectsPage
       .navigate()
-      .waitForElementVisible('@stringFieldEditedTableRow')
+      .waitForElementPresent('@stringFieldEditedTableRow')
       .clickElement('@selectDataObjectTableRow')
       .waitForElementNotPresent('@deleteDataObjectButtonDisabled')
       .clickElement('@deleteDataObjectButton')

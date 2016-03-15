@@ -33,21 +33,25 @@ export default {
   },
   'Test Edit Class': (client) => {
     const classesPage = client.page.classesPage();
+    const edit = Utils.addSuffix('edit');
+    const className = Utils.addSuffix('class');
 
     classesPage
-      .clickListItemDropdown('@classItemDropdown', 'Edit')
+      .navigate()
+      .clickListItemDropdown(className, 'Edit')
       .waitForElementVisible('@createModalDescriptionInput')
-      .fillInput('@createModalDescriptionInput', Utils.addSuffix('edit'))
+      .fillInput('@createModalDescriptionInput', edit)
       .clickElement('@confirmButton')
       .waitForElementVisible('@classTableRowDescription');
 
-    classesPage.verify.containsText('@classTableRowDescription', Utils.addSuffix('edit'));
+    classesPage.verify.containsText('@classTableRowDescription', edit);
   },
   'Test Delete Class': (client) => {
     const classesPage = client.page.classesPage();
+    const className = Utils.addSuffix('class');
 
     classesPage
-      .clickListItemDropdown('@classItemDropdown', 'Delete')
+      .clickListItemDropdown(className, 'Delete')
       .waitForElementVisible('@deleteClassModalTitle')
       .clickElement('@confirmDeleteButton')
       .waitForElementNotPresent('@deleteClassModalTitle')
@@ -57,6 +61,8 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
+      .navigate()
+      .waitForElementVisible('@selectUserClass')
       .moveToElement('@selectUserClass', 0, 0)
       .clickElement('@classToSelect')
       .clickElement('@checkboxSelected')
