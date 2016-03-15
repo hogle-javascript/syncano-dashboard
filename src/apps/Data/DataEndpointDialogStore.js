@@ -4,12 +4,12 @@ import Reflux from 'reflux';
 import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 
 // Stores & Actions
-import DataViewsActions from './DataViewsActions';
+import DataEndpointsActions from './DataEndpointsActions';
 import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 export default Reflux.createStore({
-  listenables: DataViewsActions,
+  listenables: DataEndpointsActions,
   mixins: [
     StoreFormMixin,
     DialogStoreMixin
@@ -38,7 +38,7 @@ export default Reflux.createStore({
   },
 
   getClassesDropdown() {
-    console.debug('DataViewDialogStore::getClassesDropdown');
+    console.debug('DataEndpointDialogStore::getClassesDropdown');
     let classes = ClassesStore.getClassesDropdown();
 
     if (classes.length === 0) {
@@ -52,15 +52,15 @@ export default Reflux.createStore({
     return this.crontabItems;
   },
 
-  onCreateDataViewCompleted() {
-    console.debug('DataViewDialogStore::onCreateDataViewCompleted');
+  onCreateDataEndpointCompleted() {
+    console.debug('DataEndpointDialogStore::onCreateDataEndpointCompleted');
     this.dismissDialog();
-    DataViewsActions.fetchDataViews();
+    DataEndpointsActions.fetchDataEndpoints();
   },
 
-  onUpdateDataViewCompleted() {
-    console.debug('DataViewDialogStore::onUpdateDataViewCompleted');
+  onUpdateDataEndpointCompleted() {
+    console.debug('DataEndpointDialogStore::onUpdateDataEndpointCompleted');
     this.dismissDialog();
-    DataViewsActions.fetchDataViews();
+    DataEndpointsActions.fetchDataEndpoints();
   }
 });

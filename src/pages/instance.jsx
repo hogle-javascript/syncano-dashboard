@@ -63,7 +63,7 @@ export default React.createClass({
                   <Sidebar.NestedLinkListItem
                     key="Data"
                     routeName="data"
-                    primaryText="Data" />,
+                    primaryText="Data Endpoint" />,
                   <Sidebar.NestedLinkListItem
                     key="ScriptEndpoint"
                     routeName="scriptEndpoints"

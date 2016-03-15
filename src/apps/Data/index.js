@@ -1,15 +1,15 @@
 import Data from './Data';
 
-import DataViewsStore from './DataViewsStore';
-import DataViewsList from './DataViewsList';
-import DataViewsActions from './DataViewsActions';
-import DataViewDialog from './DataViewDialog';
-import DataViewDialogStore from './DataViewDialogStore';
+import DataEndpointsStore from './DataEndpointsStore';
+import DataEndpointsList from './DataEndpointsList';
+import DataEndpointsActions from './DataEndpointsActions';
+import DataEndpointDialog from './DataEndpointDialog';
+import DataEndpointDialogStore from './DataEndpointDialogStore';
 
-Data.Actions = DataViewsActions;
-Data.Store = DataViewsStore;
-Data.List = DataViewsList;
-Data.Dialog = DataViewDialog;
-Data.DialogStore = DataViewDialogStore;
+Data.Actions = DataEndpointsActions;
+Data.Store = DataEndpointsStore;
+Data.List = DataEndpointsList;
+Data.Dialog = DataEndpointDialog;
+Data.DialogStore = DataEndpointDialogStore;
 
 export default Data;

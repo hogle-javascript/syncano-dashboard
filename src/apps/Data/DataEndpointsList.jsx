@@ -5,18 +5,18 @@ import Router from 'react-router';
 import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
-import Actions from './DataViewsActions';
-import Store from './DataViewsStore';
+import Actions from './DataEndpointsActions';
+import Store from './DataEndpointsStore';
 
 // Components
-import ListItem from './DataViewsListItem';
+import ListItem from './DataEndpointsListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
-  displayName: 'DataViewsList',
+  displayName: 'DataEndpointsList',
 
   mixins: [
     Router.State,
@@ -33,13 +33,13 @@ export default React.createClass({
     return [{
       dialog: Dialog.Delete,
       params: {
-        key: 'removeDataViewDialog',
-        ref: 'removeDataViewDialog',
-        title: 'Delete a DataView',
-        handleConfirm: Actions.removeDataViews,
+        key: 'removeDataEndpointDialog',
+        ref: 'removeDataEndpointDialog',
+        title: 'Delete a Data Endpoint',
+        handleConfirm: Actions.removeDataEndpoints,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
-        groupName: 'Data Socket'
+        groupName: 'Data Endpoint'
       }
     }];
   },
@@ -47,15 +47,15 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        key={`data-views-list-item-${item.name}`}
+        key={`data-endpoints-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeDataViewDialog', item)} />
+        showDeleteDialog={() => this.showDialog('removeDataEndpointDialog', item)} />
     );
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Lists.Container>
@@ -83,18 +83,17 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Lists.MenuItem
-                singleItemText="Delete a Data Socket"
-                multipleItemsText="Delete Data Sockets"
-                onTouchTap={() => this.showDialog('removeDataViewDialog')} />
+                singleItemText="Delete a Data Endpoint"
+                multipleItemsText="Delete Data Endpoints"
+                onTouchTap={() => this.showDialog('removeDataEndpointDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          key="dataviews-list"
+          key="dataendpoints-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );
   }
 });
-
