@@ -19,7 +19,7 @@ module.exports = {
     instancesPage
       .navigate()
       .clickElement('@instancesTableName');
-    socketsPage.waitForElementPresent('@dataSocketTableTitle');
+    socketsPage.waitForElementPresent('@dataEndpointListItemTitle');
   },
   afterEach(client, done) {
     if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
