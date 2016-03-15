@@ -71,15 +71,15 @@ module.exports = {
   //     .clickElement('@traces')
   //     .waitForElementPresent('@tracesEmpty');
   // },
-  'User goes to Data Objects View': (client) => {
-    const leftMenuPage = client.page.leftMenuPage();
-    const classesPage = client.page.classesPage();
-    const dataObjectsPage = client.page.dataObjectsPage();
-
-    leftMenuPage.clickElement('@classes');
-    classesPage.clickElement('@userClassListItem');
-    dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
-  },
+  // 'User goes to Data Objects View': (client) => {
+  //   const leftMenuPage = client.page.leftMenuPage();
+  //   const classesPage = client.page.classesPage();
+  //   const dataObjectsPage = client.page.dataObjectsPage();
+  //
+  //   leftMenuPage.clickElement('@classes');
+  //   classesPage.clickElement('@userClassListItem');
+  //   dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
+  // },
   'User goes to Users & Groups View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const usersPage = client.page.usersPage();
