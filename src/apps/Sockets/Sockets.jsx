@@ -140,11 +140,11 @@ export default React.createClass({
         <Loading show={sockets.isLoading}>
           <Show if={sockets.data.length}>
             <Data.List
-              name="Data Sockets"
+              name="Data Endpoints"
               items={sockets.data}
               handleTitleClick={() => this.handleListTitleClick('data')}
               emptyItemHandleClick={Data.Actions.showDialog}
-              emptyItemContent="Create a Data Socket"/>
+              emptyItemContent="Create a Data Endpoint"/>
           </Show>
 
           <Show if={sockets.scripts.length}>

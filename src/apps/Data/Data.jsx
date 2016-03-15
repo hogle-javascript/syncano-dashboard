@@ -6,16 +6,16 @@ import {State, Navigation} from 'react-router';
 import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
-import Actions from './DataViewsActions';
-import Store from './DataViewsStore';
+import Actions from './DataEndpointsActions';
+import Store from './DataEndpointsStore';
 
 // Components
 import {Container, Socket} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
-import DataList from './DataViewsList';
-import DataDialog from './DataViewDialog';
+import DataList from './DataEndpointsList';
+import DataDialog from './DataEndpointDialog';
 
 export default React.createClass({
   displayName: 'Data',
@@ -32,7 +32,7 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  showDataViewDialog() {
+  showDataEndpointDialog() {
     Actions.showDialog();
   },
 
@@ -41,20 +41,20 @@ export default React.createClass({
       <div>
         <DataDialog/>
 
-        <InnerToolbar title="Data Sockets">
+        <InnerToolbar title="Data Endpoints">
           <Socket.Data
             tooltipPosition="bottom-left"
-            onClick={this.showDataViewDialog}/>
+            onClick={this.showDataEndpointDialog}/>
         </InnerToolbar>
 
         <Container>
           <DataList
-            name="Data Sockets"
+            name="Data Endpoints"
             isLoading={this.state.isLoading}
             items={this.state.items}
             hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.showDataViewDialog}
-            emptyItemContent="Create a Data Socket"/>
+            emptyItemHandleClick={this.showDataEndpointDialog}
+            emptyItemContent="Create a Data Endpoint"/>
         </Container>
       </div>
     );

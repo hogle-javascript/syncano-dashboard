@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Actions from './DataViewsActions';
+import Actions from './DataEndpointsActions';
 
 import {SnackbarNotificationMixin} from '../../mixins';
 
@@ -10,7 +10,7 @@ import {Color, ColumnList, Clipboard} from 'syncano-components';
 const Column = ColumnList.Column;
 
 export default React.createClass({
-  displayName: 'DataViewsListItem',
+  displayName: 'DataEndpointsListItem',
 
   mixins: [SnackbarNotificationMixin],
 
@@ -36,10 +36,10 @@ export default React.createClass({
               text={item.links.self}
               copyText={`${SYNCANO_BASE_URL.slice(0, -1)}${item.links.self}`}
               onCopy={() => this.setSnackbarNotification({
-                message: 'Data Socket url copied!'
+                message: 'Data Endpoint url copied!'
               })}
               type="link"
-              tooltip="Copy Data Socket url" />
+              tooltip="Copy Data Endpoint url" />
           }/>
         <Column.Desc className="col-flex-1">
           {item.description}
@@ -51,14 +51,13 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit a Data Socket" />
+            primaryText="Edit a Data Endpoint" />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete a Data Socket" />
+            primaryText="Delete a Data Endpoint" />
         </Column.Menu>
       </ColumnList.Item>
     );
   }
 });
-

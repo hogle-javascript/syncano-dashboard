@@ -7,7 +7,7 @@ import Billing from './Billing';
 import Channels from './Channels';
 import Classes from './Classes';
 import Scripts from './Scripts';
-import DataViews from './DataViews';
+import DataEndpoints from './DataEndpoints';
 import ScriptEndpoints from './ScriptEndpoints';
 import DataObjects from './DataObjects';
 import Instances from './Instances';
@@ -33,7 +33,7 @@ export default {
   Channels,
   Classes,
   Scripts,
-  DataViews,
+  DataEndpoints,
   ScriptEndpoints,
   DataObjects,
   Instances,

@@ -66,8 +66,8 @@ export default {
       selector: '//div[text()="data_view"]',
       locateStrategy: 'xpath'
     },
-    dataListItemTitle: {
-      selector: '//div[text()="Data Sockets"]',
+    dataEndpointListItemTitle: {
+      selector: '//div[text()="Data Endpoints"]',
       locateStrategy: 'xpath'
     },
     codeBoxToSelect: {
@@ -87,10 +87,6 @@ export default {
     },
     emptyListItem: {
       selector: '.empty-list-item'
-    },
-    dataSocketTableTitle: {
-      selector: '//div[text()="Data Sockets"]',
-      locateStrategy: 'xpath'
     },
     emptySocketsHeading: {
       selector: '//div[text()="Start building your app here"]',

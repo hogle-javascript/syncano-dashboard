@@ -3,30 +3,29 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 export default CreateActions(
   {
     fetch: {},
-    setDataViews: {},
-
-    fetchDataViews: {
+    setDataEndpoints: {},
+    fetchDataEndpoints: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataViews.list'
+      method: 'Syncano.Actions.DataEndpoints.list'
     },
-    createDataView: {
+    createDataEndpoint: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataViews.create'
+      method: 'Syncano.Actions.DataEndpoints.create'
     },
-    updateDataView: {
+    updateDataEndpoint: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataViews.update'
+      method: 'Syncano.Actions.DataEndpoints.update'
     },
-    removeDataViews: {
+    removeDataEndpoints: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataViews.remove'
+      method: 'Syncano.Actions.DataEndpoints.remove'
     }
   },
   {

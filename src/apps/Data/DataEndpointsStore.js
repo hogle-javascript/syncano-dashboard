@@ -5,7 +5,7 @@ import {CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../m
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import Actions from './DataViewsActions';
+import Actions from './DataEndpointsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -32,28 +32,28 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  getDataViews(empty) {
+  getDataEndpoints(empty) {
     return this.data.items || empty || null;
   },
 
-  setDataViews(items) {
-    console.debug('DataViewsStore::setDataViews');
+  setDataEndpoints(items) {
+    console.debug('DataEndpointsStore::setDataEndpoints');
     this.data.items = items;
     this.trigger(this.data);
   },
 
   refreshData() {
-    console.debug('DataViewsStore::refreshData');
-    Actions.fetchDataViews();
+    console.debug('DataEndpointsStore::refreshData');
+    Actions.fetchDataEndpoints();
   },
 
-  onFetchDataViewsCompleted(items) {
-    console.debug('DataViewsStore::onFetchDataViewsCompleted');
-    Actions.setDataViews(items._items);
+  onFetchDataEndpointsCompleted(items) {
+    console.debug('DataEndpointsStore::onFetchDataEndpointsCompleted');
+    Actions.setDataEndpoints(items._items);
   },
 
-  onRemoveDataViewsCompleted() {
-    console.debug('DataViewsStore::onRemoveDataViewsCompleted');
+  onRemoveDataEndpointsCompleted() {
+    console.debug('DataEndpointsStore::onRemoveDataEndpointsCompleted');
     this.refreshData();
   }
 });

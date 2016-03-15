@@ -55,11 +55,11 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Channels.list'
   },
-  fetchDataViews: {
+  fetchDataEndpoints: {
     asyncResult: true,
     loading: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.DataViews.list'
+    method: 'Syncano.Actions.DataEndpoints.list'
   },
   createVersion: {
     asyncResult: true,
