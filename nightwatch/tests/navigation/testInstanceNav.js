@@ -44,13 +44,13 @@ module.exports = {
     schedulesPage.waitForElementPresent('@scheduleListItem');
     triggersPage.waitForElementPresent('@triggerListItem');
   },
-  'User goes to Classes View': (client) => {
-    const leftMenuPage = client.page.leftMenuPage();
-    const classesPage = client.page.classesPage();
+  // 'User goes to Classes View': (client) => {
+  //   const leftMenuPage = client.page.leftMenuPage();
+  //   const classesPage = client.page.classesPage();
 
-    leftMenuPage.clickElement('@classes');
-    classesPage.waitForElementPresent('@userProfileClassName');
-  },
+  //   leftMenuPage.clickElement('@classes');
+  //   classesPage.waitForElementPresent('@userProfileClassName');
+  // },
   'User goes to Scripts edit view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const scriptsPage = client.page.scriptsPage();
