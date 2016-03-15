@@ -19,7 +19,8 @@ export default React.createClass({
     return {
       actionName: 'delete',
       itemLabelName: 'name',
-      isLoading: false
+      isLoading: false,
+      icon: 'synicon-delete'
     };
   },
 
@@ -98,7 +99,7 @@ export default React.createClass({
   },
 
   render() {
-    const {children, ...other} = this.props;
+    const {children, icon, ...other} = this.props;
 
     return (
       <Dialog
@@ -115,7 +116,7 @@ export default React.createClass({
         <div className="row">
           <FontIcon
             style={{fontSize: 60, color: Styles.Colors.grey500}}
-            className="synicon-delete col-sm-7"/>
+            className={`${icon} col-sm-7`}/>
           <div className="vm-1-t col-sm-28">
             {children ? children : this.renderContent()}
           </div>

@@ -38,7 +38,7 @@ export default React.createClass({
         id={item.name}
         checked={item.checked}>
         <Column.CheckIcon
-          id={item.name.toString()}
+          id={item.name}
           iconClassName={metadata && metadata.icon ? metadata.icon : 'table-large'}
           background={Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
           checked={item.checked}

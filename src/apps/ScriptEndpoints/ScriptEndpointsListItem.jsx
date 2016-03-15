@@ -33,8 +33,8 @@ export default React.createClass({
         key={item.name}>
         <Column.CheckIcon.Socket
           className="col-xs-12"
-          id={item.name.toString()}
-          iconClassName='socket-script-endpoint'
+          id={item.name}
+          iconClassName="socket-script-endpoint"
           iconColor={Color.getColorByName('red', 'light')}
           keyName="name"
           checked={item.checked}
@@ -42,7 +42,8 @@ export default React.createClass({
           primaryText={item.name}
           secondaryText={
             <Clipboard
-              copyText={link}
+              text={link}
+              copyText={`${SYNCANO_BASE_URL.slice(0, -1)}${link}`}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Script Endpoint url copied!'
               })}

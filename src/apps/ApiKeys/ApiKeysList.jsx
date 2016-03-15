@@ -42,7 +42,8 @@ export default React.createClass({
           items: Store.getCheckedItems(),
           itemLabelName: 'api_key',
           actionName: 'reset',
-          groupName: 'API Key'
+          groupName: 'API Key',
+          icon: 'synicon-refresh'
         }
       },
       {
