@@ -47,6 +47,7 @@ export default {
     const triggersPage = client.page.triggersPage();
 
     triggersPage
+      .navigate()
       .clickListItemDropdown('@triggerDropdown', 'Delete')
       .waitForElementVisible('@confirm')
       .clickElement('@confirm')
