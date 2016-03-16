@@ -3,11 +3,13 @@ exports.command = function selectDropdownValue(element, dropdownValue) {
 
   this
     .waitForElementVisible(element)
-    .click(element)
-    .pause(1000)
+    .moveToElement(element, 0, 0)
+    .pause(500)
+    .mouseButtonClick()
     .waitForElementVisible(value)
+    .pause(500)
     .click(value)
-    .pause(1000);
+    .pause(500);
 
   return this;
 };

@@ -1,5 +1,5 @@
 export default {
-  tags: ['instances'],
+  tags: ['instance'],
   before(client) {
     const signupPage = client.page.signupPage();
     const slug = Date.now();
@@ -38,16 +38,6 @@ export default {
       .waitForElementVisible('@instancesTableName');
 
     instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
-  },
-  'Test Select/Deselect Instance': (client) => {
-    const instancesPage = client.page.instancesPage();
-
-    instancesPage
-      .navigate()
-      .clickElement('@selectInstance')
-      .waitForElementVisible('@instanceSelected')
-      .clickElement('@selectInstance')
-      .waitForElementNotPresent('@instanceSelected');
   },
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();

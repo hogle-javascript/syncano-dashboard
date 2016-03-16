@@ -5,7 +5,7 @@ import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin, CheckListStoreM
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './SocketsActions';
-import DataActions from '../Data/DataViewsActions';
+import DataActions from '../Data/DataEndpointsActions';
 import ScriptsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
@@ -40,14 +40,15 @@ export default Reflux.createStore({
   },
 
   socketsListenables: [
-    DataActions.createDataView.completed, DataActions.updateDataView.completed, DataActions.removeDataViews.completed,
-    ScriptsActions.createScriptEndpoint.completed, ScriptsActions.updateScriptEndpoint.completed,
-    ScriptsActions.removeScriptEndpoints.completed, TriggersActions.createTrigger.completed,
-    TriggersActions.updateTrigger.completed, TriggersActions.removeTriggers.completed,
-    SchedulesActions.createSchedule.completed, SchedulesActions.updateSchedule.completed,
-    SchedulesActions.removeSchedules.completed, ChannelsActions.createChannel.completed,
-    ChannelsActions.updateChannel.completed, ChannelsActions.removeChannels.completed,
-    APNSActions.configAPNSPushNotification.completed, GCMActions.configGCMPushNotification.completed
+    DataActions.createDataEndpoint.completed, DataActions.updateDataEndpoint.completed,
+    DataActions.removeDataEndpoints.completed, ScriptsActions.createScriptEndpoint.completed,
+    ScriptsActions.updateScriptEndpoint.completed, ScriptsActions.removeScriptEndpoints.completed,
+    TriggersActions.createTrigger.completed, TriggersActions.updateTrigger.completed,
+    TriggersActions.removeTriggers.completed, SchedulesActions.createSchedule.completed,
+    SchedulesActions.updateSchedule.completed, SchedulesActions.removeSchedules.completed,
+    ChannelsActions.createChannel.completed, ChannelsActions.updateChannel.completed,
+    ChannelsActions.removeChannels.completed, APNSActions.configAPNSPushNotification.completed,
+    GCMActions.configGCMPushNotification.completed
   ],
 
   init() {

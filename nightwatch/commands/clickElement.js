@@ -1,9 +1,9 @@
 exports.command = function clickElement(element) {
   this
     .waitForElementPresent(element)
-    .waitForElementVisible(element)
+    .moveToElement(element, 0, 0)
     .click(element)
-    .pause(1000);
+    .pause(500);
 
   return this;
 };

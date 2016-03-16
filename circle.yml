@@ -9,7 +9,9 @@ general:
 
 test:
   override:
-    - npm run-script eslint
+    - ./test.sh:
+        parallel: true
+        timeout: 600
 
 deployment:
   production:

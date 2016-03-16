@@ -29,7 +29,7 @@ export default {
       selector: 'input[name="confirmNewPassword"]'
     },
     notificationMessage: {
-      selector: '//div[@class="notification__content"]/div[2]',
+      selector: '//span[text()="Password changed successfully"]',
       locateStrategy: 'xpath'
     }
   }

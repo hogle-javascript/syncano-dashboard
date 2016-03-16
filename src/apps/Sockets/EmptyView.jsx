@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ChannelsActions from '../Channels/ChannelsActions';
-import DataViewsActions from '../Data/DataViewsActions';
+import DataEndpointsActions from '../Data/DataEndpointsActions';
 import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
@@ -51,7 +51,7 @@ export default React.createClass({
         </div>
         <Socket.EmptyListItem
           addTooltip="Create a Data Endpoint"
-          handleAdd={DataViewsActions.showDialog}
+          handleAdd={DataEndpointsActions.showDialog}
           socketName="Data"
           title="Add Data Endpoints">
           <div style={styles.socketDescription}>

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import Actions from './SocketsActions';
 import Store from './SocketsStore';
 
-import DataList from '../Data/DataViewsList';
+import DataList from '../Data/DataEndpointsList';
 import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
 import TriggersList from '../Triggers/TriggersList';
 import SchedulesList from '../Schedules/SchedulesList';

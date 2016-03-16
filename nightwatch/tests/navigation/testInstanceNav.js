@@ -1,7 +1,7 @@
 import path from 'path';
 
 module.exports = {
-  tags: ['navigation'],
+  tags: ['instanceNav'],
   before(client) {
     const loginPage = client.page.loginPage();
 
@@ -32,15 +32,11 @@ module.exports = {
     client.saveScreenshot(fileNamePath, done);
   },
   'User goes to Sockets View': (client) => {
-    const instancesPage = client.page.instancesPage();
     const socketsPage = client.page.socketsPage();
     const channelsPage = client.page.channelsPage();
     const schedulesPage = client.page.schedulesPage();
     const triggersPage = client.page.triggersPage();
 
-    instancesPage
-      .navigate()
-      .clickElement('@instancesTableName');
     socketsPage
       .waitForElementPresent('@codeBoxSocketItem')
       .waitForElementPresent('@dataListItem');
@@ -48,13 +44,13 @@ module.exports = {
     schedulesPage.waitForElementPresent('@scheduleListItem');
     triggersPage.waitForElementPresent('@triggerListItem');
   },
-  'User goes to Classes View': (client) => {
-    const leftMenuPage = client.page.leftMenuPage();
-    const classesPage = client.page.classesPage();
+  // 'User goes to Classes View': (client) => {
+  //   const leftMenuPage = client.page.leftMenuPage();
+  //   const classesPage = client.page.classesPage();
 
-    leftMenuPage.clickElement('@classes');
-    classesPage.waitForElementPresent('@userProfileClassName');
-  },
+  //   leftMenuPage.clickElement('@classes');
+  //   classesPage.waitForElementPresent('@userProfileClassName');
+  // },
   'User goes to Scripts edit view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const scriptsPage = client.page.scriptsPage();
@@ -75,15 +71,15 @@ module.exports = {
   //     .clickElement('@traces')
   //     .waitForElementPresent('@tracesEmpty');
   // },
-  'User goes to Data Objects View': (client) => {
-    const leftMenuPage = client.page.leftMenuPage();
-    const classesPage = client.page.classesPage();
-    const dataObjectsPage = client.page.dataObjectsPage();
-
-    leftMenuPage.clickElement('@classes');
-    classesPage.clickElement('@userClassListItem');
-    dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
-  },
+  // 'User goes to Data Objects View': (client) => {
+  //   const leftMenuPage = client.page.leftMenuPage();
+  //   const classesPage = client.page.classesPage();
+  //   const dataObjectsPage = client.page.dataObjectsPage();
+  //
+  //   leftMenuPage.clickElement('@classes');
+  //   classesPage.clickElement('@userClassListItem');
+  //   dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
+  // },
   'User goes to Users & Groups View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const usersPage = client.page.usersPage();
@@ -91,11 +87,11 @@ module.exports = {
     leftMenuPage.clickElement('@users');
     usersPage.waitForElementPresent('@user');
   },
-  'User goes to Script Socket Traces View': (client) => {
-    const socketsPage = client.page.socketsPage();
-    const codeBoxTracesPage = client.page.codeBoxTracesPage();
+  'User goes to Script Endpoint Traces View': (client) => {
+    const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
 
-    socketsPage.clickElement('@codeBoxSocketItemTraces');
-    codeBoxTracesPage.waitForElementPresent('@codeBoxTracesEmptyView');
+    scriptEndpointTracesPage
+      .navigate()
+      .waitForElementPresent('@scriptEndpointTracesEmptyView');
   }
 };

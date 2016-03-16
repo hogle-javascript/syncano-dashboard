@@ -5,8 +5,8 @@ import Reflux from 'reflux';
 import {DialogMixin, FormMixin} from '../../mixins';
 
 // Stores and Actions
-import Actions from './DataViewsActions';
-import Store from './DataViewDialogStore';
+import Actions from './DataEndpointsActions';
+import Store from './DataEndpointDialogStore';
 import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
@@ -16,7 +16,7 @@ import {SelectFieldWrapper, Show} from 'syncano-components';
 import {Dialog} from '../../common';
 
 export default React.createClass({
-  displayName: 'DataViewDialog',
+  displayName: 'DataEndpointDialog',
 
   mixins: [
     Reflux.connect(Store),
@@ -41,12 +41,12 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    console.info('DataViewDialog::handleDialogShow');
+    console.info('DataEndpointDialog::handleDialogShow');
     ClassesActions.fetch();
   },
 
   handleAddSubmit() {
-    Actions.createDataView({
+    Actions.createDataEndpoint({
       name: this.state.name,
       class: this.state.class,
       description: this.state.description,
@@ -58,7 +58,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    Actions.updateDataView(
+    Actions.updateDataEndpoint(
       this.state.name, {
         class: this.state.class,
         description: this.state.description,
@@ -71,7 +71,7 @@ export default React.createClass({
   },
 
   handleToggle(fieldsType, fieldName, event, value) {
-    console.info('DataViewDialog::handleToggle', arguments);
+    console.info('DataEndpointDialog::handleToggle', arguments);
 
     let genList = (list, name, val) => {
       let arr = list.replace(/ /g, '').split(',').filter((listItem) => listItem);
@@ -98,7 +98,7 @@ export default React.createClass({
   },
 
   renderFields() {
-    console.info('DataViewDialog::renderFields', this.state.class);
+    console.info('DataEndpointDialog::renderFields', this.state.class);
 
     let fields = [
       <div className="row vp-3-b">
@@ -138,7 +138,7 @@ export default React.createClass({
   },
 
   renderOptions() {
-    console.info('DataViewDialog::renderOrderBy', this.state.class);
+    console.info('DataEndpointDialog::renderOrderBy', this.state.class);
     let orderField = <div key="options_header" style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
     let orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
 
@@ -182,7 +182,7 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title={`${title} a Data Socket`}
+        title={`${title} a Data Endpoint`}
         onRequestClose={this.handleCancel}
         open={this.state.open}
         isLoading={this.state.isLoading}
@@ -202,8 +202,8 @@ export default React.createClass({
               disabled={this.hasEditMode()}
               valueLink={this.linkState('name')}
               errorText={this.getValidationMessages('name').join(' ')}
-              hintText="Name of the Socket"
-              floatingLabelText="Socket"/>
+              hintText="Name of the Data Endpoint"
+              floatingLabelText="Data Endpoint"/>
           </div>
           <div className="col-flex-1" style={{paddingLeft: 15}}>
             <TextField
@@ -212,7 +212,7 @@ export default React.createClass({
               fullWidth={true}
               valueLink={this.linkState('description')}
               errorText={this.getValidationMessages('description').join(' ')}
-              hintText="Description of the Socket"
+              hintText="Description of the Data Endpoint"
               floatingLabelText="Description"/>
           </div>
         </div>

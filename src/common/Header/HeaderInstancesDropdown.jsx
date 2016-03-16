@@ -6,6 +6,7 @@ import Radium from 'radium';
 import SessionActions from '../../apps/Session/SessionActions';
 import SessionStore from '../../apps/Session/SessionStore';
 import InstancesStore from '../../apps/Instances/InstancesStore';
+import InstancesActions from '../../apps/Instances/InstancesActions';
 import InstanceDialogActions from '../../apps/Instances/InstanceDialogActions';
 
 import {Utils, FontIcon, List, ListItem, IconMenu} from 'syncano-material-ui';
@@ -21,6 +22,7 @@ export default Radium(React.createClass({
 
   mixins: [
     Reflux.connect(InstancesStore),
+    Reflux.connectFilter(SessionStore, 'currentInstance', (sessionData) => sessionData.instance),
     Router.Navigation,
     Router.State,
     Utils.Styles
@@ -28,7 +30,7 @@ export default Radium(React.createClass({
 
   componentDidMount() {
     console.info('HeaderInstancesDropdown::componentDidMount');
-    InstancesStore.fetch();
+    InstancesActions.fetch();
   },
 
   getStyles() {
@@ -112,8 +114,8 @@ export default Radium(React.createClass({
   },
 
   renderAddInstanceItem() {
-    let styles = this.getStyles();
-    let icon = (
+    const styles = this.getStyles();
+    const icon = (
       <FontIcon
         className="synicon-plus"
         style={this.mergeStyles(styles.dropdownInstanceIcon, styles.addInstanceIcon)}/>
@@ -130,15 +132,15 @@ export default Radium(React.createClass({
   },
 
   renderListItems(instances) {
-    let styles = this.getStyles();
-    let defaultIconBackground = ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
-    let defaultIcon = ColumnList.ColumnListConstans.DEFAULT_ICON;
-    let items = instances.map((instance) => {
-      let iconName = instance.metadata.icon ? 'synicon-' + instance.metadata.icon : 'synicon-' + defaultIcon;
-      let iconBackground = {
+    const styles = this.getStyles();
+    const defaultIconBackground = ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
+    const defaultIcon = ColumnList.ColumnListConstans.DEFAULT_ICON;
+    const items = instances.map((instance) => {
+      const iconName = instance.metadata.icon ? 'synicon-' + instance.metadata.icon : 'synicon-' + defaultIcon;
+      const iconBackground = {
         backgroundColor: Color.getColorByName(instance.metadata.color, 'dark') || defaultIconBackground
       };
-      let icon = (
+      const icon = (
         <FontIcon
           className={iconName}
           style={this.mergeStyles(styles.dropdownInstanceIcon, iconBackground)}/>
@@ -148,7 +150,7 @@ export default Radium(React.createClass({
         <ListItem
           key={instance.name}
           primaryText={instance.name}
-          onTouchTap={this.handleDropdownItemClick.bind(null, instance.name)}
+          onTouchTap={() => this.handleDropdownItemClick(instance.name)}
           leftIcon={icon}/>
       );
     });
@@ -157,8 +159,8 @@ export default Radium(React.createClass({
   },
 
   renderList(instances) {
-    let styles = this.getStyles();
-    let subheaderText = InstancesStore.amIOwner(instances[0]) ? 'My Instances' : 'Shared with me';
+    const styles = this.getStyles();
+    const subheaderText = InstancesStore.amIOwner(instances[0]) ? 'My Instances' : 'Shared with me';
 
     return (
       <Show if={instances.length > 0}>
@@ -174,15 +176,15 @@ export default Radium(React.createClass({
   },
 
   renderDropdownIcon() {
-    let styles = this.getStyles();
-    let defaultIconBackground = ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
-    let currentInstance = SessionStore.instance;
-    let defaultIcon = ColumnList.ColumnListConstans.DEFAULT_ICON;
-    let iconStyle = {
+    const styles = this.getStyles();
+    const defaultIconBackground = ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
+    const {currentInstance} = this.state;
+    const defaultIcon = ColumnList.ColumnListConstans.DEFAULT_ICON;
+    const iconStyle = {
       backgroundColor: Color.getColorByName(currentInstance.metadata.color, 'dark') || defaultIconBackground,
       left: 0
     };
-    let iconName = currentInstance.metadata.icon ? currentInstance.metadata.icon : defaultIcon;
+    const iconName = currentInstance.metadata.icon ? currentInstance.metadata.icon : defaultIcon;
 
     return (
       <div style={styles.dropdownIcon}>
@@ -192,15 +194,15 @@ export default Radium(React.createClass({
         <div style={styles.dropdownText}>
           {currentInstance.name}
         </div>
-        <FontIcon className='synicon-menu-down'/>
+        <FontIcon className="synicon-menu-down"/>
       </div>
     );
   },
 
   render() {
-    let styles = this.getStyles();
-    let instance = SessionStore.instance;
-    let instancesList = InstancesStore.getAllInstances();
+    const styles = this.getStyles();
+    const instance = SessionStore.instance;
+    const instancesList = InstancesStore.getAllInstances();
 
     if (!instance || !instancesList.length) {
       return null;
@@ -210,7 +212,6 @@ export default Radium(React.createClass({
       <div style={styles.root}>
         <IconMenu
           ref="instancesDropdown"
-          onItemTouchTap={this.closeDropdown}
           iconButtonElement={this.renderDropdownIcon()}
           openDirection="bottom-right"
           style={styles.iconMenu}

@@ -5,18 +5,18 @@ import Router from 'react-router';
 import {DialogsMixin} from '../../mixins';
 
 // Stores and Actions
-import Actions from './DataViewsActions';
-import Store from './DataViewsStore';
+import Actions from './DataEndpointsActions';
+import Store from './DataEndpointsStore';
 
 // Components
-import ListItem from './DataViewsListItem';
+import ListItem from './DataEndpointsListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
 const Column = ColumnList.Column;
 
 export default React.createClass({
-  displayName: 'DataViewsList',
+  displayName: 'DataEndpointsList',
 
   mixins: [
     Router.State,
@@ -47,13 +47,13 @@ export default React.createClass({
     return [{
       dialog: Dialog.Delete,
       params: {
-        key: 'removeDataViewDialog',
-        ref: 'removeDataViewDialog',
-        title: 'Delete a DataView',
-        handleConfirm: Actions.removeDataViews,
+        key: 'removeDataEndpointDialog',
+        ref: 'removeDataEndpointDialog',
+        title: 'Delete a Data Endpoint',
+        handleConfirm: Actions.removeDataEndpoints,
         isLoading: this.props.isLoading,
         items: checkedDataSockets,
-        groupName: 'Data Socket'
+        groupName: 'Data Endpoint'
       }
     }];
   },
@@ -64,7 +64,7 @@ export default React.createClass({
         key={`data-views-list-item-${item.name}`}
         onIconClick={this.props.checkItem ? this.props.checkItem : Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeDataViewDialog', item)} />
+        showDeleteDialog={() => this.showDialog('removeDataEndpointDialog', item)} />
     );
   },
 
@@ -99,9 +99,9 @@ export default React.createClass({
               handleSelectAll={handleSelectAll ? handleSelectAll : Actions.selectAll}
               handleUnselectAll={handleUnselectAll ? handleUnselectAll : Actions.uncheckAll}>
               <Lists.MenuItem
-                singleItemText="Delete a Data Socket"
-                multipleItemsText="Delete Data Sockets"
-                onTouchTap={() => this.showDialog('removeDataViewDialog')} />
+                singleItemText="Delete a Data Endpoint"
+                multipleItemsText="Delete Data Endpoints"
+                onTouchTap={() => this.showDialog('removeDataEndpointDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
@@ -109,7 +109,7 @@ export default React.createClass({
           {...this.props}
           emptyItemContent="Create a Data Socket"
           emptyItemHandleClick={Actions.showDialog}
-          key="dataviews-list"
+          key="dataendpoints-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

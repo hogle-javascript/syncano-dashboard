@@ -12,28 +12,12 @@ export default {
       selector: `//div[text()="${utils.addSuffix('trigger')}"]/../../../following-sibling::div[@class="col-menu"]//button`,
       locateStrategy: 'xpath'
     },
-    editDropdownItem: {
-      selector: '//span[@class="dropdown-item-edit"]',
-      locateStrategy: 'xpath'
-    },
     confirm: {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
-    triggersDeleteButton: {
-      selector: '//div[text()="Delete a Trigger Socket"]',
-      locateStrategy: 'xpath'
-    },
-    triggersEditButton: {
-      selector: '//span[text()="Edit a Trigger Socket"]',
-      locateStrategy: 'xpath'
-    },
     triggerListItem: {
       selector: '//div[text()="trigger_123"]',
-      locateStrategy: 'xpath'
-    },
-    runEvery5minutes: {
-      selector: '//span[text()="Run every 5 minutes"]',
       locateStrategy: 'xpath'
     },
     addTriggerButton: {
@@ -62,10 +46,6 @@ export default {
     },
     triggerTableRow: {
       selector: `//div[text()="${ utils.addSuffix('trigger')}"]`,
-      locateStrategy: 'xpath'
-    },
-    selectTriggerTableRow: {
-      selector: `//div[text()="${ utils.addSuffix('trigger')}"]/../../preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {
