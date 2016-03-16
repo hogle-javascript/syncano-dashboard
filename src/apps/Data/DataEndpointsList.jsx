@@ -72,7 +72,7 @@ export default React.createClass({
             primary={true}
             columnName="CHECK_ICON"
             handleClick={handleTitleClick}>
-            Data Sockets
+            Data Endpoints
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
