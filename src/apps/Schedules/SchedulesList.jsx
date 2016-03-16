@@ -23,26 +23,18 @@ export default React.createClass({
     DialogsMixin
   ],
 
+  getDefaultProps() {
+    return {
+      checkedItems: Store.getCheckedItems()
+    };
+  },
+
   componentWillUpdate(nextProps) {
     console.info('Schedules::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleTitleClick() {
-    const instanceName = this.getParams().instanceName;
-
-    if (this.props.handleTitleClick) {
-      this.props.handleTitleClick();
-      return;
-    }
-
-    this.transitionTo('schedules', {instanceName});
-  },
-
   initDialogs() {
-    const {checkedItems} = this.props;
-    const checkedSchedules = checkedItems ? checkedItems : Store.getCheckedItems();
-
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -51,7 +43,7 @@ export default React.createClass({
         title: 'Delete a Schedule Socket',
         handleConfirm: Actions.removeSchedules,
         isLoading: this.props.isLoading,
-        items: checkedSchedules,
+        items: this.props.checkedItems,
         itemLabelName: 'label',
         groupName: 'Schedule'
       }
@@ -69,8 +61,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleSelectAll, handleUnselectAll, checkedItems} = this.props;
-    const checkedItemsCount = checkedItems ? checkedItems.length : Store.getNumberOfChecked();
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems} = this.props;
 
     return (
       <Lists.Container className="schedules-list">
@@ -79,7 +70,7 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={this.handleTitleClick}>
+            handleClick={handleTitleClick}>
             Schedule Sockets
           </Column.ColumnHeader>
           <Column.ColumnHeader
@@ -104,7 +95,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItemsCount}
+              checkedItemsCount={checkedItems.length}
               handleSelectAll={handleSelectAll ? handleSelectAll : Actions.selectAll}
               handleUnselectAll={handleUnselectAll ? handleUnselectAll : Actions.uncheckAll}>
               <Lists.MenuItem

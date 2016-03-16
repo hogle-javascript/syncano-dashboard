@@ -23,20 +23,15 @@ export default React.createClass({
     DialogsMixin
   ],
 
+  getDefaultProps() {
+    return {
+      checkedItems: Store.getCheckedItems()
+    };
+  },
+
   componentWillUpdate(nextProps) {
     console.info('Triggers::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
-  },
-
-  handleTitleClick() {
-    const instanceName = this.getParams().instanceName;
-
-    if (this.props.handleTitleClick) {
-      this.props.handleTitleClick();
-      return;
-    }
-
-    this.transitionTo('triggers', {instanceName});
   },
 
   handleItemClick(itemId) {
@@ -47,9 +42,6 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {checkedItems} = this.props;
-    const checkedTriggers = checkedItems ? checkedItems : Store.getCheckedItems();
-
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -58,7 +50,7 @@ export default React.createClass({
         title: 'Delete a Trigger',
         handleConfirm: Actions.removeTriggers,
         isLoading: this.props.isLoading,
-        items: checkedTriggers,
+        items: this.props.checkedItems,
         itemLabelName: 'label',
         groupName: 'Trigger'
       }
@@ -76,8 +68,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleSelectAll, handleUnselectAll, checkedItems, ...other} = this.props;
-    const checkedItemsCount = checkedItems ? checkedItems.length : Store.getNumberOfChecked();
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems, ...other} = this.props;
 
     return (
       <Lists.Container className="triggers-list">
@@ -86,7 +77,7 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={this.handleTitleClick}>
+            handleClick={handleTitleClick}>
             Trigger Sockets
           </Column.ColumnHeader>
           <Column.ColumnHeader
@@ -111,7 +102,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItemsCount}
+              checkedItemsCount={checkedItems.length}
               handleSelectAll={handleSelectAll ? handleSelectAll : Actions.selectAll}
               handleUnselectAll={handleUnselectAll ? handleUnselectAll : Actions.uncheckAll}>
               <Lists.MenuItem

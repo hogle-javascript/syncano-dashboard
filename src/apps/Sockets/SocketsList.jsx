@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import Actions from './SocketsActions';
 import Store from './SocketsStore';
+import SessionStore from '../Session/SessionStore';
 
 import DataList from '../Data/DataEndpointsList';
 import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
@@ -11,34 +12,43 @@ import SchedulesList from '../Schedules/SchedulesList';
 import ChannelsList from '../Channels/ChannelsList';
 import {Show} from 'syncano-components';
 
-export default ({sockets}) => {
+export default ({sockets, handleTitleClick}) => {
   const lists = {
     data: DataList,
-    scripts: ScriptEndpointsList,
+    scriptEndpoints: ScriptEndpointsList,
     triggers: TriggersList,
     schedules: SchedulesList,
     channels: ChannelsList
   };
 
-  const socketLists = _.map(lists, (list, key) => {
-    return (
-      <Show
-        key={`${key}SocketsList`}
-        if={sockets[key].length}>
-        {React.createElement(list, {
-          checkedItems: Store.getCheckedItems(key),
-          checkItem: (checkId, value, itemKeyName) => Actions.checkItem(checkId, value, itemKeyName, key),
-          handleSelectAll: () => Actions.selectAll(key),
-          handleUnselectAll: () => Actions.uncheckAll(key),
-          items: sockets[key]
-        })}
-      </Show>
-    );
-  });
+  const onClickTitle = (routeName) => {
+    const router = SessionStore.getRouter();
+    const instanceName = router.getCurrentParams().instanceName;
+
+    if (_.isFunction(handleTitleClick)) {
+      handleTitleClick();
+      return;
+    }
+
+    router.transitionTo(routeName, {instanceName});
+  };
 
   return (
     <div>
-      {socketLists}
+      {_.map(lists, (list, socketName) =>
+        <Show
+          key={`${socketName}SocketsList`}
+          if={sockets[socketName].length}>
+          {React.createElement(list, {
+            checkedItems: Store.getCheckedItems(socketName),
+            checkItem: (checkId, value, itemKeyName) => Actions.checkItem(checkId, value, itemKeyName, socketName),
+            handleSelectAll: () => Actions.selectAll(socketName),
+            handleUnselectAll: () => Actions.uncheckAll(socketName),
+            items: sockets[socketName],
+            handleTitleClick: () => onClickTitle(socketName)
+          })}
+        </Show>
+      )}
     </div>
   );
 };
