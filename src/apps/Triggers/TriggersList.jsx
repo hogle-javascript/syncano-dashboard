@@ -25,7 +25,10 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      checkedItems: Store.getCheckedItems()
+      checkedItems: Store.getCheckedItems(),
+      checkItem: Actions.checkItem,
+      handleSelectAll: Actions.selectAll,
+      handleUnselectAll: Actions.uncheckAll
     };
   },
 
@@ -42,6 +45,8 @@ export default React.createClass({
   },
 
   initDialogs() {
+    const {isLoading, checkedItems} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -49,19 +54,21 @@ export default React.createClass({
         ref: 'removeTriggerDialog',
         title: 'Delete a Trigger',
         handleConfirm: Actions.removeTriggers,
-        isLoading: this.props.isLoading,
-        items: this.props.checkedItems,
+        items: checkedItems,
         itemLabelName: 'label',
-        groupName: 'Trigger'
+        groupName: 'Trigger',
+        isLoading
       }
     }];
   },
 
   renderItem(item) {
+    const {checkItem} = this.props;
+
     return (
       <ListItem
         key={`triggers-list-item-${item.id}`}
-        onIconClick={this.props.checkItem ? this.props.checkItem : Actions.checkItem}
+        onIconClick={checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('removeTriggerDialog', item)} />
     );
@@ -103,8 +110,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems.length}
-              handleSelectAll={handleSelectAll ? handleSelectAll : Actions.selectAll}
-              handleUnselectAll={handleUnselectAll ? handleUnselectAll : Actions.uncheckAll}>
+              handleSelectAll={handleSelectAll}
+              handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Trigger Socket"
                 multipleItemsText="Delete Trigger Sockets"

@@ -26,7 +26,10 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      checkedItems: Store.getCheckedItems()
+      checkedItems: Store.getCheckedItems(),
+      checkItem: Actions.checkItem,
+      handleSelectAll: Actions.selectAll,
+      handleUnselectAll: Actions.uncheckAll
     };
   },
 
@@ -36,6 +39,8 @@ export default React.createClass({
   },
 
   initDialogs() {
+    const {checkedItems, isLoading} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -43,18 +48,20 @@ export default React.createClass({
         ref: 'removeDataEndpointDialog',
         title: 'Delete a Data Endpoint',
         handleConfirm: Actions.removeDataEndpoints,
-        isLoading: this.props.isLoading,
-        items: this.props.checkedItems,
-        groupName: 'Data Endpoint'
+        items: checkedItems,
+        groupName: 'Data Endpoint',
+        isLoading
       }
     }];
   },
 
   renderItem(item) {
+    const {checkItem} = this.props;
+
     return (
       <ListItem
         key={`data-views-list-item-${item.name}`}
-        onIconClick={this.props.checkItem ? this.props.checkItem : Actions.checkItem}
+        onIconClick={checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('removeDataEndpointDialog', item)} />
     );
@@ -87,8 +94,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems.length}
-              handleSelectAll={handleSelectAll ? handleSelectAll : Actions.selectAll}
-              handleUnselectAll={handleUnselectAll ? handleUnselectAll : Actions.uncheckAll}>
+              handleSelectAll={handleSelectAll}
+              handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Data Endpoint"
                 multipleItemsText="Delete Data Endpoints"

@@ -25,7 +25,10 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      checkedItems: Store.getCheckedItems()
+      checkedItems: Store.getCheckedItems(),
+      checkItem: Actions.checkItem,
+      handleSelectAll: Actions.selectAll,
+      handleUnselectAll: Actions.uncheckAll
     };
   },
 
@@ -35,6 +38,8 @@ export default React.createClass({
   },
 
   initDialogs() {
+    const {isLoading, checkedItems} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -42,19 +47,21 @@ export default React.createClass({
         ref: 'removeScheduleDialog',
         title: 'Delete a Schedule Socket',
         handleConfirm: Actions.removeSchedules,
-        isLoading: this.props.isLoading,
-        items: this.props.checkedItems,
+        items: checkedItems,
         itemLabelName: 'label',
-        groupName: 'Schedule'
+        groupName: 'Schedule',
+        isLoading
       }
     }];
   },
 
   renderItem(item) {
+    const {checkItem} = this.props;
+
     return (
       <ListItem
         key={`schedules-list-item-${item.id}`}
-        onIconClick={this.props.checkItem ? this.props.checkItem : Actions.checkItem}
+        onIconClick={checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('removeScheduleDialog', item)} />
     );
@@ -96,8 +103,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems.length}
-              handleSelectAll={handleSelectAll ? handleSelectAll : Actions.selectAll}
-              handleUnselectAll={handleUnselectAll ? handleUnselectAll : Actions.uncheckAll}>
+              handleSelectAll={handleSelectAll}
+              handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Schedule Socket"
                 multipleItemsText="Delete Schedule Sockets"
