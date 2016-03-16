@@ -53,7 +53,7 @@ export default {
   },
 
   remove(names) {
-    let promises = _.map(names, this.Connection.Instances.remove);
+    const promises = _.map(names, this.Connection.Instances.remove);
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -61,7 +61,7 @@ export default {
   },
 
   removeShared(names, adminId) {
-    let promises = _.map(names, (name) => this.Connection.Instances.removeShared(name, adminId));
+    const promises = _.map(names, (name) => this.Connection.Instances.removeShared(name, adminId));
 
     this.Promise.all(promises)
       .then(this.completed)
