@@ -12,7 +12,7 @@ import {ColumnList} from 'syncano-components';
 import {Container, Dialog, Lists} from '../../common';
 import ListItem from './ProfileInvitationsListItem';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ProfileInvitationsList',
@@ -86,7 +86,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
-              actions={Actions}>
+              handleSelectAll={Actions.selectAll}
+              handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Accept an Invitation"
                 multipleItemsText="Accept Invitations"

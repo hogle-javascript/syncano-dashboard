@@ -24,12 +24,23 @@ export default React.createClass({
     DialogsMixin
   ],
 
+  getDefaultProps() {
+    return {
+      checkedItems: Store.getCheckedItems(),
+      checkItem: Actions.checkItem,
+      handleSelectAll: Actions.selectAll,
+      handleUnselectAll: Actions.uncheckAll
+    };
+  },
+
   componentWillUpdate(nextProps) {
     console.info('Data::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
   },
 
   initDialogs() {
+    const {checkedItems, isLoading} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -37,25 +48,27 @@ export default React.createClass({
         ref: 'removeDataEndpointDialog',
         title: 'Delete a Data Endpoint',
         handleConfirm: Actions.removeDataEndpoints,
-        isLoading: this.props.isLoading,
-        items: Store.getCheckedItems(),
-        groupName: 'Data Endpoint'
+        items: checkedItems,
+        groupName: 'Data Endpoint',
+        isLoading
       }
     }];
   },
 
   renderItem(item) {
+    const {checkItem} = this.props;
+
     return (
       <ListItem
-        key={`data-endpoints-list-item-${item.name}`}
-        onIconClick={Actions.checkItem}
+        key={`data-views-list-item-${item.name}`}
+        onIconClick={checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('removeDataEndpointDialog', item)} />
     );
   },
 
   render() {
-    const checkedItems = Store.getNumberOfChecked();
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems} = this.props;
 
     return (
       <Lists.Container>
@@ -65,8 +78,8 @@ export default React.createClass({
             className="col-xs-12"
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={this.props.handleTitleClick}>
-            {this.props.name}
+            handleClick={handleTitleClick}>
+            Data Endpoints
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
@@ -80,8 +93,9 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItems}
-              actions={Actions}>
+              checkedItemsCount={checkedItems.length}
+              handleSelectAll={handleSelectAll}
+              handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Data Endpoint"
                 multipleItemsText="Delete Data Endpoints"
@@ -91,6 +105,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent="Create a Data Socket"
+          emptyItemHandleClick={Actions.showDialog}
           key="dataendpoints-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

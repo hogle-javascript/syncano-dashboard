@@ -2,45 +2,63 @@ import pluralize from 'pluralize';
 
 export default {
 
-  getNumberOfChecked() {
-    if (this.data.items === null) {
+  getKeyName(key) {
+    let keyName = key;
+
+    if (typeof keyName !== 'string') {
+      keyName = 'items';
+    }
+
+    return keyName;
+  },
+
+  getNumberOfChecked(key) {
+    const keyName = this.getKeyName(key);
+
+    if (this.data[keyName] === null) {
       return 0;
     }
 
-    let checkedFilter = (item) => item.checked === true;
+    const checkedFilter = (item) => item.checked === true;
 
-    return this.data.items.filter(checkedFilter).length;
+    return this.data[keyName].filter(checkedFilter).length;
   },
 
-  onCheckItem(checkId, state, key = 'id') {
+  onCheckItem(checkId, value, itemKeyName = 'id', stateKeyName) {
     console.debug('CheckListStoreMixin::onCheckItem');
-    this.data.items.forEach((item) => {
-      if (item[key].toString() === checkId.toString()) {
-        item.checked = state;
+    const keyName = this.getKeyName(stateKeyName);
+
+    this.data[keyName].forEach((item) => {
+      if (item[itemKeyName].toString() === checkId.toString()) {
+        item.checked = value;
       }
     });
     this.trigger(this.data);
   },
 
-  onUncheckAll() {
-    this.data.items.forEach((item) => item.checked = false);
+  onUncheckAll(key) {
+    const keyName = this.getKeyName(key);
+
+    this.data[keyName].forEach((item) => item.checked = false);
     this.trigger(this.data);
   },
 
-  onSelectAll() {
-    this.data.items.forEach((item) => item.checked = true);
+  onSelectAll(key) {
+    const keyName = this.getKeyName(key);
+
+    this.data[keyName].forEach((item) => item.checked = true);
     this.trigger(this.data);
   },
 
-  getCheckedItem() {
+  getCheckedItem(key = 'items') {
     // Looking for the first 'checked' item
     let checkedItem = null;
 
-    if (this.data.items === null) {
+    if (this.data[key] === null) {
       return checkedItem;
     }
 
-    this.data.items.some((item) => {
+    this.data[key].some((item) => {
       if (item.checked) {
         checkedItem = item;
         return true;
@@ -49,16 +67,18 @@ export default {
     return checkedItem;
   },
 
-  getCheckedItems() {
-    if (this.data.items === null) {
+  getCheckedItems(key) {
+    const keyName = this.getKeyName(key);
+
+    if (this.data[keyName] === null) {
       return [];
     }
 
-    return this.data.items.filter((item) => item.checked);
+    return this.data[keyName].filter((item) => item.checked);
   },
 
   getDeleteItemsPhrase(groupName) {
-    let checkedItemsCount = this.getNumberOfChecked();
+    const checkedItemsCount = this.getNumberOfChecked();
 
     return `${checkedItemsCount} ${pluralize(groupName, checkedItemsCount)}`;
   }

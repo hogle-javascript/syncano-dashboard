@@ -5,7 +5,7 @@ import {Styles, Paper, FontIcon} from 'syncano-material-ui';
 import {ColumnList, Loading, Trace} from 'syncano-components';
 import {Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default Radium(React.createClass({
   displayName: 'TracesList',
@@ -56,8 +56,8 @@ export default Radium(React.createClass({
 
   renderItem(item) {
     let duration = item.duration !== null ? item.duration + 'ms' : 'not executed';
-    let styles = this.getStyles();
-    let status = {
+    const styles = this.getStyles();
+    const status = {
       blocked: {
         background: 'rgba(0,0,0,0.2)',
         icon: 'alert'
@@ -153,8 +153,8 @@ export default Radium(React.createClass({
   },
 
   renderEmptyContent() {
-    let styles = this.getStyles();
-    let tracesFor = {
+    const styles = this.getStyles();
+    const tracesFor = {
       script: {
         name: 'Script',
         icon: 'synicon-package-variant'

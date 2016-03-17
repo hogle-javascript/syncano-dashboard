@@ -13,7 +13,7 @@ import ListItem from './InstancesListItem';
 import {Loading, ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'SharedInstancesList',
@@ -51,7 +51,7 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Loading show={this.props.isLoading}>
@@ -68,7 +68,8 @@ export default React.createClass({
             <Column.ColumnHeader columnName="MENU">
               <Lists.Menu
                 checkedItemsCount={checkedItems}
-                actions={Actions}>
+                handleSelectAll={Actions.selectAll}
+                handleUnselectAll={Actions.uncheckAll}>
                 <Lists.MenuItem
                   singleItemText="Leave an Instance"
                   multipleItemsText="Leave Instances"

@@ -12,7 +12,7 @@ import Actions from './ClassesActions';
 import SocketsActions from '../Sockets/SocketsActions';
 
 export default Reflux.createStore({
-  listenables: [Actions, SocketsActions],
+  listenables: Actions,
 
   mixins: [
     StoreHelpersMixin,
@@ -37,6 +37,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.listenTo(SocketsActions.fetchSockets.completed, this.saveClasses);
     this.setLoadingStates();
   },
 
@@ -181,6 +182,11 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  saveClasses(sockets) {
+    console.debug('ScriptsStore::onFetchSocketsCompleted');
+    Actions.setClasses(sockets.classes);
+  },
+
   onSetClickedClass(item) {
     this.data.clickedItem = item;
     this.trigger(this.data);
@@ -188,11 +194,6 @@ export default Reflux.createStore({
 
   onUpdateClassCompleted() {
     this.refreshData();
-  },
-
-  onFetchSocketsCompleted(sockets) {
-    console.debug('ScriptsStore::onFetchSocketsCompleted');
-    Actions.setClasses(sockets.scripts);
   },
 
   onFetchClassesCompleted(items) {

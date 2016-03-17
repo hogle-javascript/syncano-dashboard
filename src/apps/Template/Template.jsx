@@ -12,7 +12,7 @@ import {Tabs, Tab} from 'syncano-material-ui';
 import {Container, Socket} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
-let RouteHandler = Router.RouteHandler;
+const RouteHandler = Router.RouteHandler;
 
 export default React.createClass({
 
@@ -72,7 +72,7 @@ export default React.createClass({
   },
 
   getToolbarTitle() {
-    let template = this.state.template;
+    const template = this.state.template;
 
     return template.name ? `Template: ${template.name}` : '';
   },
@@ -97,8 +97,8 @@ export default React.createClass({
   },
 
   renderTabs() {
-    let styles = this.getStyles();
-    let template = this.state.template;
+    const styles = this.getStyles();
+    const template = this.state.template;
 
     if (template.name) {
       return (

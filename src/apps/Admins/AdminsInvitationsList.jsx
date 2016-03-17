@@ -12,7 +12,7 @@ import ListItem from './AdminsInvitationsListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'AdminsInvitationsList',
@@ -72,7 +72,7 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Lists.Container className="admins-invitations-list">
@@ -90,7 +90,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
-              actions={Actions}>
+              handleSelectAll={Actions.selectAll}
+              handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Delete an Invitation"
                 multipleItemsText="Delete Invitations"
@@ -106,4 +107,3 @@ export default React.createClass({
     );
   }
 });
-
