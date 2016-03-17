@@ -8,29 +8,29 @@ export default {
   afterEach(client, done) {
     client.end(done);
   },
-  'Admin Logs in with Facebook': (client) => {
-    const loginPage = client.page.loginPage();
-    const instancesPage = client.page.instancesPage();
-
-    loginPage.clickElement('@loginButtonFacebook');
-    client
-      .pause(1000)
-      .windowHandles((result) => {
-        const handle = result.value[1];
-
-        client.switchWindow(handle);
-      });
-    loginPage.fillInput('@emailInputFacebook', process.env.NIGHTWATCH_EMAIL);
-    loginPage.fillInput('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD);
-    loginPage.clickElement('@signInButtonFacebook');
-
-    client.windowHandles((result) => {
-      const handle = result.value[0];
-
-      client.switchWindow(handle);
-    });
-    instancesPage.waitForElementPresent('@socketsHeaderTitle');
-  },
+  // 'Admin Logs in with Facebook': (client) => {
+  //   const loginPage = client.page.loginPage();
+  //   const instancesPage = client.page.instancesPage();
+  //
+  //   loginPage.clickElement('@loginButtonFacebook');
+  //   client
+  //     .pause(1000)
+  //     .windowHandles((result) => {
+  //       const handle = result.value[1];
+  //
+  //       client.switchWindow(handle);
+  //     });
+  //   loginPage.fillInput('@emailInputFacebook', process.env.NIGHTWATCH_EMAIL);
+  //   loginPage.fillInput('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD);
+  //   loginPage.clickElement('@signInButtonFacebook');
+  //
+  //   client.windowHandles((result) => {
+  //     const handle = result.value[0];
+  //
+  //     client.switchWindow(handle);
+  //   });
+  //   instancesPage.waitForElementPresent('@socketsHeaderTitle');
+  // },
   // 'Admin Logs in with Google': (client) => {
   //   const loginPage = client.page.loginPage();
   //   const instancesPage = client.page.instancesPage();
