@@ -8,7 +8,7 @@ import SocketsActions from '../Sockets/SocketsActions';
 import Actions from './ScriptsActions';
 
 export default Reflux.createStore({
-  listenables: [Actions, SocketsActions],
+  listenables: Actions,
 
   mixins: [
     StoreHelpersMixin,
@@ -64,6 +64,7 @@ export default Reflux.createStore({
     );
     this.setLoadingStates();
     this.listenTo(Actions.setCurrentScriptId, this.fetchTraces);
+    this.listenTo(SocketsActions.fetchSockets.completed, this.saveScripts);
   },
 
   fetchTraces() {
@@ -149,6 +150,11 @@ export default Reflux.createStore({
     });
   },
 
+  saveScripts(sockets) {
+    console.debug('ScriptsStore::onFetchSocketsCompleted');
+    Actions.setScripts(this.saveListFromSyncano(sockets.scripts));
+  },
+
   setScripts(items) {
     this.data.items = items;
     this.trigger(this.data);
@@ -169,11 +175,6 @@ export default Reflux.createStore({
     console.debug('ScriptsStore::onRemoveScriptsCompleted');
     this.data.hideDialogs = true;
     this.refreshData();
-  },
-
-  onFetchSocketsCompleted(sockets) {
-    console.debug('ScriptsStore::onFetchSocketsCompleted');
-    Actions.setScripts(this.saveListFromSyncano(sockets.scripts));
   },
 
   onFetchScriptsCompleted(scripts) {

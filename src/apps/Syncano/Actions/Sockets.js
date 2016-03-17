@@ -13,14 +13,15 @@ export default {
       this.Connection.PushNotifications.APNS.get(),
       this.Connection.PushNotifications.Devices.list('gcm'),
       this.Connection.PushNotifications.Devices.list('apns'),
-      this.Connection.CodeBoxes.list(params)
+      this.Connection.CodeBoxes.list(params),
+      this.Connection.Classes.list(params)
     ];
 
     this.Promise.all(promises)
       .then((sockets) => {
         return {
           data: sockets[0],
-          scriptsSockets: sockets[1],
+          scriptEndpoints: sockets[1],
           triggers: sockets[2],
           schedules: sockets[3],
           channels: sockets[4],

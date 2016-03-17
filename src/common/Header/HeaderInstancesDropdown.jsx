@@ -201,10 +201,10 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const instance = SessionStore.instance;
+    const {currentInstance} = this.state;
     const instancesList = InstancesStore.getAllInstances();
 
-    if (!instance || !instancesList.length) {
+    if (!currentInstance || !instancesList.length) {
       return null;
     }
 

@@ -28,7 +28,7 @@ export default React.createClass({
         <DevicesList
           type="gcm"
           visibleItems={this.props.visibleItems}
-          getChekcedItems={Store.getCheckedItems}
+          getCheckedItems={Store.getCheckedItems}
           actions={Actions}
           showSendMessagesDialog={SendMessagesActions.showDialog}
           emptyItemHandleClick={Actions.showDialog}

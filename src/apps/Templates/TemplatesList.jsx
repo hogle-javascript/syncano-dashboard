@@ -12,7 +12,7 @@ import ListItem from './TemplatesListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -77,7 +77,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
-              actions={Actions}>
+              handleSelectAll={Actions.selectAll}
+              handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Template Socket"
                 multipleItemsText="Delete Template Sockets"
@@ -93,4 +94,3 @@ export default React.createClass({
     );
   }
 });
-

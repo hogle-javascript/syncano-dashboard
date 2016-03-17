@@ -15,7 +15,7 @@ import ListItem from './ScriptsListItem';
 import {ColumnList, Loading} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ScriptsList',
@@ -34,9 +34,9 @@ export default React.createClass({
   },
 
   getAssociatedScripts(associatedWith) {
-    let checkedScripts = Store.getCheckedItems();
+    const checkedScripts = Store.getCheckedItems();
 
-    let associatedScripts = _.filter(checkedScripts, (script) => {
+    const associatedScripts = _.filter(checkedScripts, (script) => {
       script[associatedWith] = _.pluck(_.filter(this.state[associatedWith], 'script', script.id), 'label');
       return script[associatedWith].length > 0;
     });
@@ -45,8 +45,8 @@ export default React.createClass({
   },
 
   getAssociationsList(associationsFor, associatedItems) {
-    let hasItems = associatedItems.length > 0;
-    let list = {
+    const hasItems = associatedItems.length > 0;
+    const list = {
       schedules: null,
       triggers: null,
       notAssociated: null
@@ -74,13 +74,13 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedScripts = Store.getCheckedItems();
-    let scriptsAssociatedWithTriggers = this.getAssociatedScripts('triggers');
-    let scriptsAssociatedWithSchedules = this.getAssociatedScripts('schedules');
-    let scriptsNotAssociated = _.difference(_.difference(checkedScripts, scriptsAssociatedWithSchedules),
+    const checkedScripts = Store.getCheckedItems();
+    const scriptsAssociatedWithTriggers = this.getAssociatedScripts('triggers');
+    const scriptsAssociatedWithSchedules = this.getAssociatedScripts('schedules');
+    const scriptsNotAssociated = _.difference(_.difference(checkedScripts, scriptsAssociatedWithSchedules),
       scriptsAssociatedWithTriggers);
 
-    let deleteDialog = {
+    const deleteDialog = {
       dialog: Dialog.Delete,
       params: {
         key: 'deleteScriptDialog',
@@ -95,9 +95,9 @@ export default React.createClass({
     };
 
     if (scriptsAssociatedWithSchedules.length > 0 || scriptsAssociatedWithTriggers.length > 0) {
-      let associatedWithSchedulesList = this.getAssociationsList('schedules', scriptsAssociatedWithSchedules);
-      let associatedWithTriggersList = this.getAssociationsList('triggers', scriptsAssociatedWithTriggers);
-      let notAssociatedList = this.getAssociationsList('notAssociated', scriptsNotAssociated);
+      const associatedWithSchedulesList = this.getAssociationsList('schedules', scriptsAssociatedWithSchedules);
+      const associatedWithTriggersList = this.getAssociationsList('triggers', scriptsAssociatedWithTriggers);
+      const notAssociatedList = this.getAssociationsList('notAssociated', scriptsNotAssociated);
 
       deleteDialog.params.children = [
         `Some of checked Scripts are associated with Schedules or Triggers. Do you really want to delete
@@ -126,7 +126,7 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Lists.Container>
@@ -142,7 +142,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
-              actions={Actions}>
+              handleSelectAll={Actions.selectAll}
+              handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Script Endpoint"
                 multipleItemsText="Delete Script Endpoints"
