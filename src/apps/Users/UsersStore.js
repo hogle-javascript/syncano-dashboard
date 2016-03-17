@@ -10,10 +10,7 @@ import Actions from './UsersActions';
 import GroupsActions from '../Groups/GroupsActions';
 
 export default Reflux.createStore({
-  listenables: [
-    Actions,
-    GroupsActions
-  ],
+  listenables: [Actions],
 
   mixins: [
     CheckListStoreMixin,
@@ -35,6 +32,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.listenTo(GroupsActions.setGroups, this.refreshData);
     this.setLoadingStates();
   },
 
