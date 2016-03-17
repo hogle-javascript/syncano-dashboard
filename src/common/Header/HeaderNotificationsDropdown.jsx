@@ -13,7 +13,6 @@ import {Loading} from 'syncano-components';
 import {SnackbarNotificationMixin} from '../../mixins';
 
 export default Radium(React.createClass({
-
   displayName: 'HeaderNotificationsDropdown',
 
   contextTypes: {
@@ -28,12 +27,6 @@ export default Radium(React.createClass({
     SnackbarNotificationMixin,
     Utils.Styles
   ],
-
-  getInitialState() {
-    return {
-      user: SessionStore.getUser({})
-    };
-  },
 
   componentDidMount() {
     ProfileInvitationsActions.fetch();
@@ -104,11 +97,8 @@ export default Radium(React.createClass({
 
   handleResendEmail() {
     console.info('Header::handleResendEmail');
-    AuthActions.resendActivationEmail(this.state.user.email);
-    this.setSnackbarNotification({
-      message: 'Activation e-mail was sent',
-      autoHideDuration: 3000
-    });
+    AuthActions.resendActivationEmail(SessionStore.getUser().email);
+    this.setSnackbarNotification({message: 'Activation e-mail was sent'});
     this.hasLastInvitation();
   },
 
@@ -118,84 +108,70 @@ export default Radium(React.createClass({
   },
 
   renderItems() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
+    const {accountInvitations} = this.state;
+    const user = SessionStore.getUser();
 
-    if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
-      let icon = (
-        <FontIcon
-          className="synicon-information"
-          color={Styles.Colors.lightBlueA700}/>
-      );
-
+    if (user && user.is_active && accountInvitations.items.length === 0) {
       return (
         <MenuItem
           key="empty"
           primaryText="You don't have any notifications"
           disabled={true}
-          leftIcon={icon}
+          leftIcon={
+            <FontIcon
+              className="synicon-information"
+              color={Styles.Colors.lightBlueA700} />
+          }
           style={styles.menuItem}/>
       );
     }
 
-    let notifications = this.state.accountInvitations.items.map((item) => {
-      let icon = (
-        <FontIcon
-          key={`${item.id}Icon`}
-          className="synicon-share-variant"
-          color={Styles.Colors.lightGreen500}/>
-      );
-      let content = (
-        <div>
-          <strong>{`${item.inviter} `}</strong>
-          invited you to their instance
-          <strong>{` ${item.instance}`}</strong>
-        </div>
-      );
-      let buttons = [
-        <FlatButton
-          key={`${item.id}ButtonAccept`}
-          onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
-          label="Accept"
-          primary={true}/>,
-        <FlatButton
-          key={`${item.id}ButtonDecline`}
-          onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
-          label="Decline"/>
-      ];
-
+    let notifications = accountInvitations.items.map((item) => {
       return (
         <MenuItem
           key={`invitation-${item.id}`}
           disabled={true}
-          leftIcon={icon}
+          leftIcon={
+            <FontIcon
+              key={`${item.id}Icon`}
+              className="synicon-share-variant"
+              color={Styles.Colors.lightGreen500} />
+          }
           innerDivStyle={{opacity: 1}}
           style={styles.menuItem}>
-          {content}
-          {buttons}
+          <div>
+            <strong>{`${item.inviter} `}</strong>
+            invited you to their instance
+            <strong>{` ${item.instance}`}</strong>
+          </div>
+          <FlatButton
+            key={`${item.id}ButtonAccept`}
+            onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
+            label="Accept"
+            primary={true}/>,
+          <FlatButton
+            key={`${item.id}ButtonDecline`}
+            onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
+            label="Decline"/>
         </MenuItem>
       );
     });
 
-    if (!this.state.user.is_active) {
-      let icon = (
-        <FontIcon
-          className="synicon-alert"
-          color={Styles.Colors.orange500}/>
-      );
-
-      let resendLink = (
-        <div style={this.getStyles().resendEmailText}>
-          Your email address is not yet verified. Click here to resend activation email.
-        </div>
-      );
-
+    if (SessionStore.getUser() && !SessionStore.getUser().is_active) {
       notifications.push(
         <MenuItem
           key="resend-link"
-          leftIcon={icon}
+          leftIcon={
+            <FontIcon
+              className="synicon-alert"
+              color={Styles.Colors.orange500}/>
+          }
           style={styles.menuItem}
           onTouchTap={this.handleResendEmail}>
-          {resendLink}
+          <div style={styles.resendEmailText}>
+            Your email address is not yet verified. Click here to resend activation email.
+          </div>
         </MenuItem>
       );
     }
@@ -228,11 +204,13 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
+    const {id} = this.props;
+    const {accountInvitations} = this.state;
 
     return (
       <IconMenu
-        id={this.props.id}
+        id={id}
         ref="headerNotificationDropdown"
         iconButtonElement={this.renderIcon()}
         autoWidth={false}
@@ -251,7 +229,7 @@ export default Radium(React.createClass({
           primaryText="Notifications"
           disabled={true}/>
         <Divider/>
-        <Loading show={this.state.accountInvitations.isLoading}>
+        <Loading show={accountInvitations.isLoading}>
           {this.renderItems()}
         </Loading>
       </IconMenu>
