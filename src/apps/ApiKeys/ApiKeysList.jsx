@@ -99,7 +99,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
-              actions={Actions}>
+              handleSelectAll={Actions.selectAll}
+              handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Reset an API Key"
                 multipleItemsText="Reset API Keys"

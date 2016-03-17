@@ -14,7 +14,7 @@ import ListItem from './DevicesListItem';
 import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
 import APNSSendMessageDialog from './APNSDevices/APNSSendMessageDialog';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default Radium(React.createClass({
   displayName: 'DevicesList',
@@ -59,30 +59,35 @@ export default Radium(React.createClass({
   },
 
   initDialogs() {
+    const {actions, isLoading, getCheckedItems} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
         key: 'deleteDeviceDialog',
         ref: 'deleteDeviceDialog',
         title: 'Delete a Device',
-        handleConfirm: this.props.actions.removeDevices,
-        isLoading: this.props.isLoading,
-        items: this.props.getChekcedItems(),
+        handleConfirm: actions.removeDevices,
+        items: getCheckedItems(),
         groupName: 'Device',
-        itemLabelName: 'label'
+        itemLabelName: 'label',
+        isLoading
       }
     }];
   },
 
-  sliceItems(items) {
-    if (this.props.visibleItems) {
-      return this.props.items.slice(0, this.props.visibleItems);
+  sliceItems(devices) {
+    const {visibleItems, items} = this.props;
+
+    if (visibleItems) {
+      return items.slice(0, visibleItems);
     }
 
-    return items;
+    return devices;
   },
 
   renderItem(item) {
+    const {getCheckedItems, actions, type, showSendMessagesDialog} = this.props;
     const icon = {
       apns: 'apple',
       gcm: 'android'
@@ -94,12 +99,12 @@ export default Radium(React.createClass({
     return (
       <ListItem
         key={`devices-list-item-${item.registration_id}`}
-        checkedItemsCount={this.props.getChekcedItems().length}
-        actions={this.props.actions}
-        onIconClick={this.props.actions.checkItem}
-        icon={icon[this.props.type]}
-        showSendMessageDialog={() => this.props.showSendMessagesDialog(item)}
-        showEditDialog={() => this.props.actions.showDialog(item)}
+        checkedItemsCount={getCheckedItems().length}
+        actions={actions}
+        onIconClick={actions.checkItem}
+        icon={icon[type]}
+        showSendMessageDialog={() => showSendMessagesDialog(item)}
+        showEditDialog={() => actions.showDialog(item)}
         showDeleteDialog={() => this.showDialog('deleteDeviceDialog', item)}
         item={item}/>
     );
@@ -107,8 +112,8 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const checkedItems = this.props.getChekcedItems().length;
-    const {items, ...other} = this.props;
+    const {items, getCheckedItems, type, actions, isLoading, showSendMessagesDialog, ...other} = this.props;
+    const checkedItemsCount = getCheckedItems().length;
     const titleText = {
       apns: 'iOS Devices',
       gcm: 'Android Devices'
@@ -116,15 +121,15 @@ export default Radium(React.createClass({
     const moreLink = (
       <span
         className="row align-center vp-3-t"
-        onClick={() => this.transitionTo(`${this.props.type}-devices`, this.getParams())}
-        key={`${this.props.type}-list`}
+        onClick={() => this.transitionTo(`${type}-devices`, this.getParams())}
+        key={`${type}-list`}
         style={styles.moreLink}>MORE DEVICES</span>
     );
 
     return (
       <div>
         <div style={styles.listTitleContainer}>
-          <span style={styles.listTitle}>{titleText[this.props.type]}</span>
+          <span style={styles.listTitle}>{titleText[type]}</span>
         </div>
         <GCMSendMessageDialog />
         <APNSSendMessageDialog />
@@ -148,12 +153,13 @@ export default Radium(React.createClass({
               Registered
             </Column.ColumnHeader>
             <Lists.Menu
-              checkedItemsCount={checkedItems}
-              actions={this.props.actions}>
+              checkedItemsCount={checkedItemsCount}
+              handleSelectAll={actions.selectAll}
+              handleUnselectAll={actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Send message"
                 multipleItemsText="Send messages"
-                onTouchTap={this.props.showSendMessagesDialog}/>
+                onTouchTap={showSendMessagesDialog}/>
               <Lists.MenuItem
                 singleItemText="Delete a Device"
                 multipleItemsText="Delete Devices"
@@ -164,7 +170,7 @@ export default Radium(React.createClass({
             {...other}
             items={this.sliceItems(items)}
             renderItem={this.renderItem}/>
-          {this.isActive('all-push-notification-devices') && !this.props.isLoading ? moreLink : null}
+          {this.isActive('all-push-notification-devices') && !isLoading ? moreLink : null}
         </Lists.Container>
       </div>
     );

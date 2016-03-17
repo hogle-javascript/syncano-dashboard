@@ -6,7 +6,7 @@ import {FontIcon} from 'syncano-material-ui';
 import {ColumnList, Loading} from 'syncano-components';
 import {Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default Radium(React.createClass({
   displayName: 'ChannelHistoryList',
@@ -72,7 +72,7 @@ export default Radium(React.createClass({
   },
 
   renderEmptyContent() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     return (
       <div style={styles.noHistoryContainer}>

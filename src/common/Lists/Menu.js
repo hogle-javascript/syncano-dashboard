@@ -1,7 +1,7 @@
 import React from 'react';
 import {IconMenu, IconButton, MenuItem} from 'syncano-material-ui';
 
-export default ({children, checkedItemsCount, handleSelectAll, handleUnselectAll, actions}) => (
+export default ({children, checkedItemsCount, handleSelectAll, handleUnselectAll}) => (
   <IconMenu
     iconButtonElement={
       <IconButton
@@ -13,11 +13,11 @@ export default ({children, checkedItemsCount, handleSelectAll, handleUnselectAll
     targetOrigin={{horizontal: 'right', vertical: 'top'}}>
     <MenuItem
       primaryText="Select All"
-      onTouchTap={handleSelectAll ? handleSelectAll : actions.selectAll}/>
+      onTouchTap={handleSelectAll}/>
     <MenuItem
       primaryText="Unselect All"
       disabled={!checkedItemsCount}
-      onTouchTap={handleUnselectAll ? handleUnselectAll : actions.uncheckAll}/>
+      onTouchTap={handleUnselectAll}/>
     {React.Children.map(children, (child) => React.cloneElement(child, {checkedItemsCount}))}
   </IconMenu>
 );
