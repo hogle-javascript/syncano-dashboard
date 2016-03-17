@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'moment';
 import _ from 'lodash';
 
-import MUI from 'syncano-material-ui';
+import {IconButton, TableHeaderColumn, TableRowColumn, TableHeader, TableRow} from 'syncano-material-ui';
 
 export default {
 
@@ -43,7 +43,7 @@ export default {
 
   renderFile(obj) {
     return (
-      <MUI.IconButton
+      <IconButton
         iconClassName="synicon-download"
         onClick={this.handleFileOnClick.bind(this, obj.value)}/>
     );
@@ -54,10 +54,10 @@ export default {
     console.debug('ClassesStore::getTableHeader');
 
     // Initial columns
-    let columnsComponents = columns.map((item, index) => {
+    const columnsComponents = columns.map((item, index) => {
       if (item.checked) {
         return (
-          <MUI.TableHeaderColumn
+          <TableHeaderColumn
             key={'header-column-' + index}
             style={{
               width: item.width ? item.width : 100,
@@ -66,32 +66,32 @@ export default {
             }}
             tooltip={item.tooltip}>
             {item.name}
-          </MUI.TableHeaderColumn>
+          </TableHeaderColumn>
         );
       }
     });
 
     return (
-      <MUI.TableHeader key='header'>
-        <MUI.TableRow key='header-row'>
+      <TableHeader key='header'>
+        <TableRow key='header-row'>
           {columnsComponents}
-        </MUI.TableRow>
-      </MUI.TableHeader>
+        </TableRow>
+      </TableHeader>
     );
   },
 
   // Table Body
   renderTableData(items, columns, selectedRows) {
     return items.map((item, index) => {
-      let selected = (selectedRows || []).indexOf(index) > -1;
-      let columnsComponents = columns.map((column, i) => {
+      const selected = (selectedRows || []).indexOf(index) > -1;
+      const columnsComponents = columns.map((column, i) => {
         if (!column.checked) {
           return false;
         }
 
         let value = item[column.id];
-        let valueIsObject = _.isObject(value);
-        let renderer = this.getColumnRenderer(column.id);
+        const valueIsObject = _.isObject(value);
+        const renderer = this.getColumnRenderer(column.id);
 
         if (valueIsObject && value.type === 'reference') {
           value = this.renderReference(value);
@@ -115,18 +115,21 @@ export default {
         }
 
         return (
-          <MUI.TableRowColumn
+          <TableRowColumn
             key={`${column.id}-${i}`}
             style={{width: column.width ? column.width : 100}}>
             {value}
-          </MUI.TableRowColumn>
+          </TableRowColumn>
         );
       });
 
       return (
-        <MUI.TableRow key={'row-' + index} selected={selected}>
+        <TableRow
+          style={{cursor: 'pointer'}}
+          key={'row-' + index}
+          selected={selected}>
           {columnsComponents}
-        </MUI.TableRow>
+        </TableRow>
       );
     });
   }

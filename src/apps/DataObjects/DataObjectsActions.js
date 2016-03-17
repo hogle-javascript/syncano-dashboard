@@ -18,6 +18,7 @@ export default CreateActions(
     },
     fetchDataObjects: {
       asyncResult: true,
+      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.list'
 

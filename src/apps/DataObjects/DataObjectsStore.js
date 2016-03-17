@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import URI from 'urijs';
 
 // Utils & Mixins
-import {CheckListStoreMixin, StoreFormMixin, WaitForStoreMixin} from '../../mixins';
+import {CheckListStoreMixin, StoreFormMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../mixins';
 import DataObjectsRenderer from './DataObjectsRenderer';
 
 // Stores & Actions
@@ -13,6 +13,7 @@ import DataObjectsActions from './DataObjectsActions';
 export default Reflux.createStore({
   listenables: DataObjectsActions,
   mixins: [
+    StoreLoadingMixin,
     CheckListStoreMixin,
     StoreFormMixin,
     WaitForStoreMixin
@@ -20,8 +21,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items: null,
-      isLoading: false,
+      items: [],
+      isLoading: true,
       selectedRows: [],
       columns: [
         {
@@ -112,6 +113,7 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.listenToForms();
+    this.setLoadingStates();
 
     this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
