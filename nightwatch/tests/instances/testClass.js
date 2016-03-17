@@ -19,12 +19,12 @@ export default {
     classesPage
       .navigate()
       .clickElement('@addClassButton')
+      .waitForElementVisible('@addClassTitle')
       .fillInput('@createModalNameInput', className)
       .fillInput('@createModalDescriptionInput', Utils.addSuffix())
       .fillInput('@createModalFieldNameInput', 'string')
       .selectDropdownValue('@createModalDropdownType', 'string')
       .clickElement('@addButton')
-      .waitForElementVisible('@addClassTitle')
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@addClassTitle')
       .waitForElementVisible('@classTableRow');
