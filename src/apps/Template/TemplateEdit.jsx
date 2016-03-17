@@ -68,8 +68,8 @@ export default React.createClass({
 
   isSaved() {
     if (this.state.template && this.refs.editorContent) {
-      let content = this.state.template.content;
-      let currentContent = this.refs.editorContent.editor.getValue();
+      const content = this.state.template.content;
+      const currentContent = this.refs.editorContent.editor.getValue();
 
       return content === currentContent;
     }
@@ -117,7 +117,7 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     return (
       <div>

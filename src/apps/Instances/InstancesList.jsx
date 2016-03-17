@@ -54,7 +54,7 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Loading show={this.props.isLoading}>
@@ -71,7 +71,8 @@ export default React.createClass({
             <Column.ColumnHeader columnName="MENU">
               <Lists.Menu
                 checkedItemsCount={checkedItems}
-                actions={Actions}>
+                handleSelectAll={Actions.selectAll}
+                handleUnselectAll={Actions.uncheckAll}>
                 <Lists.MenuItem
                   singleItemText="Delete an Instance"
                   multipleItemsText="Delete Instances"

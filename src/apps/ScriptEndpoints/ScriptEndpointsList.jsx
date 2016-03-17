@@ -12,7 +12,7 @@ import ListItem from './ScriptEndpointsListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ScriptEndpointsList',
@@ -23,12 +23,23 @@ export default React.createClass({
     DialogsMixin
   ],
 
+  getDefaultProps() {
+    return {
+      checkedItems: Store.getCheckedItems(),
+      checkItem: Actions.checkItem,
+      handleSelectAll: Actions.selectAll,
+      handleUnselectAll: Actions.uncheckAll
+    };
+  },
+
   componentWillUpdate(nextProps) {
     console.info('Admins::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
   },
 
   initDialogs() {
+    const {isLoading, checkedItems} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -36,25 +47,27 @@ export default React.createClass({
         ref: 'removeScriptEndpointDialog',
         title: 'Delete a Script Endpoint',
         handleConfirm: Actions.removeScriptEndpoints,
-        isLoading: this.props.isLoading,
-        items: Store.getCheckedItems(),
-        groupName: 'Script Endpoint'
+        items: checkedItems,
+        groupName: 'Script Endpoint',
+        isLoading
       }
     }];
   },
 
   renderItem(item) {
+    const {checkItem} = this.props;
+
     return (
       <ListItem
         key={`script-endpoints-list-item-${item.name}`}
-        onIconClick={Actions.checkItem}
+        onIconClick={checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('removeScriptEndpointDialog', item)} />
     );
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems} = this.props;
 
     return (
       <Lists.Container>
@@ -64,8 +77,8 @@ export default React.createClass({
             className="col-xs-12"
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={this.props.handleTitleClick}>
-            {this.props.name}
+            handleClick={handleTitleClick}>
+            Script Endpoints
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
@@ -89,8 +102,9 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItems}
-              actions={Actions}>
+              checkedItemsCount={checkedItems.length}
+              handleSelectAll={handleSelectAll}
+              handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Script Endpoint"
                 multipleItemsText="Delete Script Endpoint"
@@ -100,10 +114,11 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent="Create a Script Endpoint"
+          emptyItemHandleClick={Actions.showDialog}
           key="script-endpoints-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );
   }
 });
-

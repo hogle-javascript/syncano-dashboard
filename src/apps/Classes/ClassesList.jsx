@@ -13,7 +13,7 @@ import ListItem from './ClassesListItem';
 import {ColumnList, Loading} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ClassesList',
@@ -30,9 +30,9 @@ export default React.createClass({
   },
 
   getAssociatedClasses() {
-    let checkedClasses = Store.getCheckedItems();
+    const checkedClasses = Store.getCheckedItems();
 
-    let associatedClasses = _.filter(checkedClasses, (checkedClass) => {
+    const associatedClasses = _.filter(checkedClasses, (checkedClass) => {
       checkedClass.triggers = _.pluck(_.filter(this.props.triggers, 'class', checkedClass.name), 'label');
       return checkedClass.triggers.length > 0;
     });
@@ -41,8 +41,8 @@ export default React.createClass({
   },
 
   getAssociationsList(associationsFor, associatedItems) {
-    let hasItems = associatedItems.length > 0;
-    let list = {
+    const hasItems = associatedItems.length > 0;
+    const list = {
       triggers: null,
       notAssociated: null
     };
@@ -68,25 +68,26 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedClasses = Store.getCheckedItems();
-    let classesAssociatedWithTriggers = this.getAssociatedClasses();
-    let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
-    let deleteDialog = {
+    const {isLoading} = this.props;
+    const checkedClasses = Store.getCheckedItems();
+    const classesAssociatedWithTriggers = this.getAssociatedClasses();
+    const classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
+    const deleteDialog = {
       dialog: Dialog.Delete,
       params: {
         key: 'deleteClassDialog',
         ref: 'deleteClassDialog',
         title: 'Delete a Class',
         handleConfirm: Actions.removeClasses,
-        isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
-        groupName: 'Class'
+        groupName: 'Class',
+        isLoading
       }
     };
 
     if (classesAssociatedWithTriggers) {
-      let associatedWithTriggersList = this.getAssociationsList('triggers', classesAssociatedWithTriggers);
-      let notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
+      const associatedWithTriggersList = this.getAssociationsList('triggers', classesAssociatedWithTriggers);
+      const notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
 
       deleteDialog.params.children = (
         <div>
@@ -97,7 +98,7 @@ export default React.createClass({
           <Loading
             type="linear"
             position="bottom"
-            show={this.props.isLoading}/>
+            show={isLoading}/>
         </div>
       );
     }
@@ -148,7 +149,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItemsCount}
-              actions={Actions}>
+              handleSelectAll={Actions.selectAll}
+              handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Class"
                 multipleItemsText="Delete Classes"
@@ -165,4 +167,3 @@ export default React.createClass({
     );
   }
 });
-

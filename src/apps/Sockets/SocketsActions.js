@@ -14,5 +14,8 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Sockets.list'
     }
+  },
+  {
+    withCheck: true
   }
 );

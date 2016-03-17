@@ -13,7 +13,7 @@ import ListItem from './GroupsListItem';
 import {ColumnList} from 'syncano-components';
 import {Dialog, Lists} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default Radium(React.createClass({
   displayName: 'GroupsList',
@@ -56,7 +56,7 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked();
 
     return (
       <Lists.Container className="groups-list">
@@ -71,7 +71,8 @@ export default Radium(React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
-              actions={Actions}>
+              handleSelectAll={Actions.selectAll}
+              handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Group"
                 multipleItemsText="Delete Groups"
@@ -87,4 +88,3 @@ export default Radium(React.createClass({
     );
   }
 }));
-
