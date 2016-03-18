@@ -38,8 +38,8 @@ export default React.createClass({
       } else if (item.type === 'text') {
         validateObj[item.name] = {length: {maximum: 32000}};
       } else if (item.type === 'datetime') {
-        const isDateSet = this.refs[`fielddate-${item.name}`].refs.input.getValue().length !== 0;
-        const isTimeSet = this.refs[`fieldtime-${item.name}`].refs.input.getValue().length !== 0;
+        const isDateSet = this.refs[`fielddate-${item.name}`].refs.input.getValue().length;
+        const isTimeSet = this.refs[`fieldtime-${item.name}`].refs.input.getValue().length;
         const validate = (isFieldSet) => {
           const isValid = isDateSet === isTimeSet;
 
