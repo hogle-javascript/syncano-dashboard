@@ -47,7 +47,7 @@ export default {
   },
 
   remove(names) {
-    let promises = names.map((name) => this.Connection.Templates.remove(name));
+    const promises = names.map((name) => this.Connection.Templates.remove(name));
 
     this.Promise.all(promises)
       .then(this.completed)

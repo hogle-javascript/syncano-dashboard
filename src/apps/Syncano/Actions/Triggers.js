@@ -35,7 +35,7 @@ export default {
   },
 
   remove(ids) {
-    let promises = ids.map((id) => this.Connection.Triggers.remove(id));
+    const promises = ids.map((id) => this.Connection.Triggers.remove(id));
 
     this.Promise.all(promises)
       .then(this.completed)
