@@ -11,7 +11,7 @@ import Store from './InstallDialogStore';
 import Actions from './InstallDialogActions';
 
 // Components
-import {TextField, FlatButton} from 'syncano-material-ui' ;
+import {TextField} from 'syncano-material-ui' ;
 import {Loading, SelectFieldWrapper, Show} from 'syncano-components';
 import {Notification, Dialog} from '../../common';
 
@@ -42,39 +42,41 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
+    const {instance, instances, solutionId, version} = this.state;
     let instanceName = null;
 
-    if (this.state.instance) {
-      instanceName = this.state.instance;
-    } else if (this.state.instances.length === 1) {
-      instanceName = this.state.instances[0].name;
+    if (instance) {
+      instanceName = instance;
+    } else if (instances.length === 1) {
+      instanceName = instances[0].name;
     }
     if (!instanceName) {
       instanceName = InstanceDialogStore.genUniqueName();
 
       Actions.createInstance({name: instanceName}).then(() => {
         Actions.installSolution({
-          solutionId: this.state.solutionId,
-          versionId: this.state.version,
+          versionId: version,
+          solutionId,
           instanceName
         });
       });
     } else {
       Actions.installSolution({
-        solutionId: this.state.solutionId,
-        versionId: this.state.version,
+        versionId: version,
+        solutionId,
         instanceName
       });
     }
   },
 
   renderCustomFormNotifications() {
-    let nonFormFields = ['classes'];
-    let messages = [];
+    const {errors} = this.state;
+    const nonFormFields = ['classes'];
+    const messages = [];
 
-    Object.keys(this.state.errors).map((fieldName) => {
+    Object.keys(errors).map((fieldName) => {
       if (nonFormFields.indexOf(fieldName) > -1) {
-        this.state.errors[fieldName].map((error) => {
+        errors[fieldName].map((error) => {
           Object.keys(error).map((key) => {
             messages.push(error[key]);
           });
@@ -82,16 +84,18 @@ export default React.createClass({
       }
     });
     if (messages.length > 0) {
-      return <Notification type='error'>{messages.join(' ')}</Notification>;
+      return <Notification type="error">{messages.join(' ')}</Notification>;
     }
   },
 
   renderInstanceField() {
-    if (this.state.instances === null) {
+    const {instances, instance} = this.state;
+
+    if (!instances) {
       return <Loading />;
     }
 
-    if (this.state.instances instanceof Array && this.state.instances.length < 2) {
+    if (instances instanceof Array && instances.length < 2) {
       return (
         <TextField
           ref="instance"
@@ -108,57 +112,50 @@ export default React.createClass({
       <SelectFieldWrapper
         name="instance"
         options={Store.getInstancesDropdown()}
-        value={this.state.instance}
-        floatingLabelText='Instances'
+        value={instance}
+        floatingLabelText="Instances"
         onChange={this.setSelectFieldValue.bind(null, 'instance')}
         errorText={this.getValidationMessages('instance').join(' ')}/>
     );
   },
 
   render() {
-    let title = 'Install a Solution';
-    let dialogCustomActions = [
-      <FlatButton
-        ref='cancel'
-        key='cancel'
-        label='Cancel'
-        onTouchTap={this.handleCancel}/>,
-      <FlatButton
-        ref='submit'
-        key='confirm'
-        label='Confirm'
-        onTouchTap={this.handleFormValidation}
-        primary={true}/>
-    ];
+    const title = 'Install a Solution';
+    const {open, hideVersionPicker, version} = this.state;
 
     return (
-      <Dialog
-        key='dialog'
+      <Dialog.FullPage
+        key="dialog"
         ref="dialog"
         title={title}
+        contentSize="medium"
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        actions={dialogCustomActions}>
+        open={open}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div>
           {this.renderFormNotifications()}
           {this.renderCustomFormNotifications()}
 
-          <div className='row'>
-            <div className='col-flex-1'>
+          <div className="row">
+            <div className="col-flex-1">
               {this.renderInstanceField()}
             </div>
           </div>
 
-          <Show if={!this.state.hideVersionPicker}>
+          <Show if={!hideVersionPicker}>
             <SelectFieldWrapper
               name="version"
               options={Store.getVersionsDropdown()}
-              value={this.state.version}
+              value={version}
               onChange={this.setSelectFieldValue.bind(null, 'version')}
               errorText={this.getValidationMessages('version').join(' ')}/>
           </Show>
         </div>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

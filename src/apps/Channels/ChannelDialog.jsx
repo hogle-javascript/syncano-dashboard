@@ -110,7 +110,7 @@ export default React.createClass({
               name="name"
               disabled={this.hasEditMode()}
               fullWidth={true}
-              hintText="Short name for your Channel Socket"
+              hintText="Channel's name"
               floatingLabelText="Name" />
           </div>
           <div className="col-flex-1">
@@ -132,8 +132,8 @@ export default React.createClass({
               fullWidth={true}
               multiLine={true}
               maxRows={2}
-              hintText="Description of a Channel Socket (optional)"
-              floatingLabelText="Description of a Channel Socket" />
+              floatingLabelText="Description (optional)"
+              hintText="Channel Socket's description" />
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection title="Permissions">
@@ -143,8 +143,8 @@ export default React.createClass({
               name="group"
               fullWidth={true}
               errorText={this.getValidationMessages('group').join(' ')}
-              hintText="ID of the Group"
-              floatingLabelText="Group (ID)" />
+              hintText="Group's ID"
+              floatingLabelText="Group ID" />
           </div>
           <div className="col-flex-1">
             <SelectFieldWrapper

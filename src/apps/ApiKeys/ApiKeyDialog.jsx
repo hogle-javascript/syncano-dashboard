@@ -23,21 +23,15 @@ export default React.createClass({
   ],
 
   handleAddSubmit() {
-    Actions.createApiKey({
-      description: this.state.description,
-      allow_user_create: this.state.allow_user_create,
-      allow_anonymous_read: this.state.allow_anonymous_read,
-      ignore_acl: this.state.ignore_acl
-    });
+    const {description, allow_user_create, allow_anonymous_read, ignore_acl} = this.state;
+
+    Actions.createApiKey({description, allow_user_create, allow_anonymous_read, ignore_acl});
   },
 
   handleEditSubmit() {
-    Actions.updateApiKey(this.state.id, {
-      description: this.state.description,
-      allow_user_create: this.state.allow_user_create,
-      allow_anonymous_read: this.state.allow_anonymous_read,
-      ignore_acl: this.state.ignore_acl
-    });
+    const {id, description, allow_user_create, allow_anonymous_read, ignore_acl} = this.state;
+
+    Actions.updateApiKey(id, {description, allow_user_create, allow_anonymous_read, ignore_acl});
   },
 
   handleToogle(event, status) {
@@ -72,6 +66,7 @@ export default React.createClass({
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Generate';
+    const {open, isLoading} = this.state;
 
     return (
       <Dialog.FullPage
@@ -79,8 +74,8 @@ export default React.createClass({
         ref="dialog"
         title={`${title} an API Key`}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
@@ -93,11 +88,11 @@ export default React.createClass({
           fullWidth={true}
           valueLink={this.linkState('description')}
           errorText={this.getValidationMessages('description').join(' ')}
-          floatingLabelText="Description of an API Key"
+          hintText="API key's description"
+          floatingLabelText="Description (optional)"
           className="vm-3-b"/>
         {this.renderToggles()}
       </Dialog.FullPage>
     );
   }
 });
-

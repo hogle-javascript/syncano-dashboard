@@ -91,7 +91,7 @@ export default React.createClass({
             fullWidth={true}
             valueLink={this.linkState('label')}
             errorText={this.getValidationMessages('label').join(' ')}
-            hintText="Label of the trigger"
+            hintText="Trigger's label"
             floatingLabelText="Label"/>
           <SelectFieldWrapper
             name="signal"
@@ -116,4 +116,3 @@ export default React.createClass({
     );
   }
 });
-
