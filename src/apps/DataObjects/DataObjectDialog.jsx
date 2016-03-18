@@ -64,11 +64,13 @@ export default React.createClass({
         };
       }
 
-      return {
-        presence: {
-          message: "field is required for 'separate_rooms’ Channel type"
-        }
-      };
+      if (channel && channel !== 'no channel') {
+        return {
+          presence: {
+            message: "field is required for 'separate_rooms’ Channel type"
+          }
+        };
+      }
     };
 
     return validateObj;
