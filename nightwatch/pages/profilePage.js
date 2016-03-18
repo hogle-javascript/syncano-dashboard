@@ -11,6 +11,9 @@ export default {
     },
     firstName: {
       selector: 'input[name=firstName]'
+    },
+    email: {
+      selector: 'input[name=email]'
     }
   }
 };
