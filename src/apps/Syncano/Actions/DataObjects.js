@@ -1,13 +1,15 @@
 import Constants from '../../../constants/Constants';
+import _ from 'lodash';
 
 export default {
-  list(className) {
+  list(className, params = {}) {
+    _.defaults(params, {
+      page_size: Constants.DATAOBJECTS_PAGE_SIZE,
+      order_by: '-created_at'
+    });
     this.Connection
       .DataObjects
-      .list(className, {
-        page_size: Constants.DATAOBJECTS_PAGE_SIZE,
-        order_by: '-created_at'
-      })
+      .list(className, params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -25,7 +27,7 @@ export default {
       .DataObjects
       .create(payload.className, payload.params)
       .then((createdItem) => {
-        let promises = payload.fileFields.map((file) => {
+        const promises = payload.fileFields.map((file) => {
           return this.Connection.DataObjects.uploadFile(payload.className, createdItem, file);
         });
 
@@ -41,7 +43,7 @@ export default {
       .DataObjects
       .update(payload.className, payload.params)
       .then((updatedItem) => {
-        let promises = payload.fileFields.map((file) => {
+        const promises = payload.fileFields.map((file) => {
           return this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file);
         });
 
@@ -53,7 +55,7 @@ export default {
   },
 
   remove(className, dataobjects) {
-    let promises = dataobjects.map((dataobject) => this.Connection.DataObjects.remove(className, dataobject));
+    const promises = dataobjects.map((dataobject) => this.Connection.DataObjects.remove(className, dataobject));
 
     this.Promise.all(promises)
       .then(this.completed)

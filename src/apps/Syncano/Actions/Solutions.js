@@ -8,10 +8,11 @@ export default {
             .then(this.completed)
             .catch(this.failure);
   },
-  listVersions(solutionId) {
+  listVersions(solutionId, params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .Solutions
-      .listVersions(solutionId)
+      .listVersions(solutionId, params)
       .then(this.completed)
       .catch(this.failure);
   },

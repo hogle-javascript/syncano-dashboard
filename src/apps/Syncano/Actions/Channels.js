@@ -25,7 +25,7 @@ export default {
   },
 
   remove(names) {
-    let promises = names.map((id) => this.Connection.Channels.remove(id));
+    const promises = names.map((id) => this.Connection.Channels.remove(id));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -40,10 +40,11 @@ export default {
       .catch(this.failure);
   },
 
-  getHistory(channelName) {
+  getHistory(channelName, params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .Channels
-      .getHistory(channelName, {ordering: 'desc'})
+      .getHistory(channelName, params)
       .then(this.completed)
       .catch(this.failure);
   }
