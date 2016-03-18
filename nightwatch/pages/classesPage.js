@@ -30,7 +30,8 @@ export default {
       selector: 'input[name="description"]'
     },
     confirmButton: {
-      selector: 'button[type="submit"]'
+      selector: '//button//span[text()="Confirm"]',
+      locateStrategy: 'xpath'
     },
     addButton: {
       selector: '//span[text()="Add"]',
@@ -81,7 +82,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addClassTitle: {
-      selector: '//span[text()="Add a Class"]',
+      selector: '//h3[text()="Add a Class"]',
       locateStrategy: 'xpath'
     },
     editClassTitle: {

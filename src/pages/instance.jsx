@@ -131,9 +131,9 @@ export default React.createClass({
               key="Settings"
               subheader="Settings">
               <Sidebar.ListItem
-                key="General"
+                key="Instance Settings"
                 iconClassName="synicon-settings"
-                primaryText="General"
+                primaryText="Instance Settings"
                 onTouchTap={() => InstanceDialogActions.showDialog(SessionStore.getInstance())}/>
               <Sidebar.LinkListItem
                 key="Administrators"
