@@ -32,7 +32,7 @@ export default {
 
   renderReference(obj) {
     return (
-      <div>{obj.target + ': ' + obj.value}</div>
+      <div>{`${obj.target}: ${obj.value}`}</div>
     );
   },
 
@@ -45,7 +45,7 @@ export default {
     return (
       <IconButton
         iconClassName="synicon-download"
-        onClick={this.handleFileOnClick.bind(this, obj.value)}/>
+        onClick={() => this.handleFileOnClick(obj.value)}/>
     );
   },
 
@@ -54,7 +54,7 @@ export default {
     console.debug('ClassesStore::getTableHeader');
 
     // Initial columns
-    const columnsComponents = columns.map((item, index) => {
+    const columnsComponents = _.map(columns, (item, index) => {
       if (item.checked) {
         return (
           <TableHeaderColumn
@@ -82,9 +82,9 @@ export default {
 
   // Table Body
   renderTableData(items, columns, selectedRows) {
-    return items.map((item, index) => {
+    return _.map(items, (item, index) => {
       const selected = (selectedRows || []).indexOf(index) > -1;
-      const columnsComponents = columns.map((column, i) => {
+      const columnsComponents = _.map(columns, (column, i) => {
         if (!column.checked) {
           return false;
         }
@@ -126,7 +126,7 @@ export default {
       return (
         <TableRow
           style={{cursor: 'pointer'}}
-          key={'row-' + index}
+          key={`row-${index}`}
           selected={selected}>
           {columnsComponents}
         </TableRow>
