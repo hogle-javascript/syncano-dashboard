@@ -1,4 +1,5 @@
 import Stripe from '../../../stripe';
+import _ from 'lodash';
 
 export default {
   getProfile() {
@@ -38,10 +39,11 @@ export default {
     });
   },
 
-  listInvoices() {
+  listInvoices(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     return this.Connection
             .Billing
-            .getInvoices()
+            .getInvoices(params)
             .then(this.completed)
             .catch(this.failure);
   },
@@ -55,7 +57,7 @@ export default {
   },
 
   cancelNewPlan(subscriptions) {
-    let currentPlan = subscriptions[0];
+    const currentPlan = subscriptions[0];
 
     this.Connection
       .Billing
@@ -75,24 +77,26 @@ export default {
       .catch(this.failure);
   },
 
-  listPlans() {
+  listPlans(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .Billing
-      .getPlans()
+      .getPlans(params)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  listSubscriptions() {
+  listSubscriptions(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .Billing
-      .getSubscriptions()
+      .getSubscriptions(params)
       .then(this.completed)
       .catch(this.failure);
   },
 
   cancelSubscriptions(ids) {
-    let promises = ids.map((id) => this.Connection.Billing.cancelSubscription(id));
+    const promises = ids.map((id) => this.Connection.Billing.cancelSubscription(id));
 
     return this.Promise.all(promises)
             .then(this.completed)
