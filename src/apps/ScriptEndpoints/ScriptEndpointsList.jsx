@@ -25,7 +25,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      checkedItems: Store.getCheckedItems(),
+      getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem,
       handleSelectAll: Actions.selectAll,
       handleUnselectAll: Actions.uncheckAll
@@ -38,7 +38,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading, checkedItems} = this.props;
+    const {isLoading, getCheckedItems} = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -47,7 +47,7 @@ export default React.createClass({
         ref: 'removeScriptEndpointDialog',
         title: 'Delete a Script Endpoint',
         handleConfirm: Actions.removeScriptEndpoints,
-        items: checkedItems,
+        items: getCheckedItems(),
         groupName: 'Script Endpoint',
         isLoading
       }
@@ -67,7 +67,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems} = this.props;
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems} = this.props;
 
     return (
       <Lists.Container>
@@ -102,7 +102,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItems.length}
+              checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
               handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem
