@@ -1,6 +1,7 @@
 import React from 'react' ;
 import Reflux from 'reflux';
 import Router from 'react-router';
+import _ from 'lodash';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
@@ -72,14 +73,12 @@ export default React.createClass({
   renderCustomFormNotifications() {
     const {errors} = this.state;
     const nonFormFields = ['classes'];
-    const messages = [];
+    let messages = [];
 
-    Object.keys(errors).map((fieldName) => {
+    _.map(errors, (value, fieldName) => {
       if (nonFormFields.indexOf(fieldName) > -1) {
-        errors[fieldName].map((error) => {
-          Object.keys(error).map((key) => {
-            messages.push(error[key]);
-          });
+        _.forEach(value, (error) => {
+          messages = _.map(error, (errorText) => errorText);
         });
       }
     });
@@ -95,7 +94,7 @@ export default React.createClass({
       return <Loading />;
     }
 
-    if (instances instanceof Array && instances.length < 2) {
+    if (_.isArray(instances) && instances.length < 2) {
       return (
         <TextField
           ref="instance"

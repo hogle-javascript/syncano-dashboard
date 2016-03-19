@@ -42,6 +42,7 @@ export default {
     console.log('StoreFormMixin::handleFormFailure');
     let state = this.getInitialFormState();
 
+    console.error(payload.feedback ? payload.feedback : 'empty');
     if (typeof payload === 'string') {
       state.errors.feedback = payload;
     } else {

@@ -229,13 +229,8 @@ export default React.createClass({
   },
 
   handleRemoveField(item) {
-    const fields = [];
+    const fields = _.filter(this.state.fields, (field) => field.fieldName !== item.fieldName);
 
-    _.map(this.state.fields, (field) => {
-      if (field.fieldName !== item.fieldName) {
-        fields.push(field);
-      }
-    });
     this.setState({fields});
   },
 
