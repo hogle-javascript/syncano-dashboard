@@ -10,12 +10,13 @@ import Actions from './DataEndpointsActions';
 import Store from './DataEndpointsStore';
 
 // Components
-import {Container, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
-import DataList from './DataEndpointsList';
-import DataDialog from './DataEndpointDialog';
+import DataEndpointsList from './DataEndpointsList';
+import DataEndpointDialog from './DataEndpointDialog';
 
 export default React.createClass({
   displayName: 'Data',
@@ -32,29 +33,26 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  showDataEndpointDialog() {
-    Actions.showDialog();
-  },
-
   render() {
+    const {items, hideDialogs, isLoading} = this.state;
+
     return (
       <div>
-        <DataDialog/>
+        <DataEndpointDialog/>
 
         <InnerToolbar title="Data Endpoints">
-          <Socket.Data
-            tooltipPosition="bottom-left"
-            onClick={this.showDataEndpointDialog}/>
+          <RaisedButton
+            style={{marginRight: 0}}
+            label="Create"
+            primary={true}
+            onTouchTap={Actions.showDialog}/>
         </InnerToolbar>
 
         <Container>
-          <DataList
-            name="Data Endpoints"
-            isLoading={this.state.isLoading}
-            items={this.state.items}
-            hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.showDataEndpointDialog}
-            emptyItemContent="Create a Data Endpoint"/>
+          <DataEndpointsList
+            isLoading={isLoading}
+            items={items}
+            hideDialogs={hideDialogs} />
         </Container>
       </div>
     );

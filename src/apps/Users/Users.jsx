@@ -7,7 +7,8 @@ import Store from './UsersStore';
 import {GroupsActions, GroupsStore, GroupsList, GroupDialog} from './../Groups';
 
 // Components
-import {Container, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar, Lists} from '../../common';
 
 // Local components
@@ -15,7 +16,6 @@ import UsersList from './UsersList';
 import UserDialog from './UserDialog';
 
 export default React.createClass({
-
   displayName: 'Users',
 
   mixins: [
@@ -43,17 +43,23 @@ export default React.createClass({
   },
 
   render() {
+    const {groups, users} = this.state;
+
     return (
       <div>
         <UserDialog />
         <GroupDialog />
 
         <InnerToolbar title="Users & Groups">
-          <Socket.Users
-            iconClassName="synicon-socket-user"
-            onTouchTap={this.showGroupDialog}/>
-          <Socket.User
-            tooltipPosition="bottom-left"
+          <RaisedButton
+            label="Create a Group"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={GroupsActions.showDialog}/>
+          <RaisedButton
+            label="Create a User"
+            primary={true}
+            style={{marginRight: 0}}
             onTouchTap={this.showUserDialog.bind(null, null)}/>
         </InnerToolbar>
 
@@ -61,21 +67,15 @@ export default React.createClass({
           <Lists.Container className="row">
             <div className="col-lg-8">
               <GroupsList
-                name="Groups"
-                isLoading={this.state.groups.isLoading}
-                items={this.state.groups.items}
-                hideDialogs={this.state.groups.hideDialogs}
-                emptyItemHandleClick={this.showGroupDialog}
-                emptyItemContent="Create a Group"/>
+                isLoading={groups.isLoading}
+                items={groups.items}
+                hideDialogs={groups.hideDialogs} />
             </div>
             <div className="col-lg-27">
               <UsersList
-                name="Users"
-                isLoading={this.state.users.isLoading}
-                items={this.state.users.items}
-                hideDialogs={this.state.users.hideDialogs}
-                emptyItemHandleClick={this.showUserDialog}
-                emptyItemContent="Create a User"/>
+                isLoading={users.isLoading}
+                items={users.items}
+                hideDialogs={users.hideDialogs} />
             </div>
           </Lists.Container>
         </Container>

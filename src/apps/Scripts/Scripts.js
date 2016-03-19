@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -10,7 +10,8 @@ import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
 
 // Components
-import {Container, Socket} from 'syncano-components';
+import RaisedButton from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
@@ -22,8 +23,8 @@ export default React.createClass({
   displayName: 'Scripts',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
     Reflux.connect(Store),
     DialogsMixin
   ],
@@ -31,35 +32,31 @@ export default React.createClass({
   componentDidMount() {
     console.info('Scripts::componentDidMount');
     if (this.getParams().action === 'add') {
-      // Show Add modal
-      this.showScriptDialog();
+      Actions.showDialog();
     }
     Actions.fetch();
   },
 
-  showScriptDialog() {
-    Actions.showDialog();
-  },
-
   render() {
+    const {items, hideDialogs, isLoading} = this.state;
+
     return (
       <div>
         <ScriptDialog />
 
         <InnerToolbar title="Scripts">
-          <Socket
-            tooltip="Create a Script"
-            tooltipPosition="bottom-left"
-            onTouchTap={this.showScriptDialog}/>
+          <RaisedButton
+            label="Create"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={Actions.showDialog} />
         </InnerToolbar>
 
         <Container>
           <ScriptsList
-            name="Scripts"
-            items={this.state.items}
-            hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.showScriptDialog}
-            emptyItemContent="Create a Script"/>
+            items={items}
+            hideDialogs={hideDialogs}
+            isLoading={isLoading} />
         </Container>
       </div>
     );

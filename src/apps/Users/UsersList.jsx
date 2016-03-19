@@ -64,7 +64,7 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
-            {this.props.name}
+            Users
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Groups</Column.ColumnHeader>
           <Column.ColumnHeader
@@ -80,7 +80,7 @@ export default React.createClass({
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
-                singleItemText="Delete an User"
+                singleItemText="Delete a User"
                 multipleItemsText="Delete Users"
                 onTouchTap={() => this.showDialog('removeUserDialog')} />
             </Lists.Menu>
@@ -88,6 +88,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent="Create a User"
+          emptyItemHandleClick={Actions.showDialog}
           key="users-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

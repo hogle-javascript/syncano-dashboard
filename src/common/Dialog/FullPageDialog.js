@@ -78,6 +78,7 @@ export default React.createClass({
   render() {
     const styles = this.getStyles();
     const {
+      style,
       contentSize,
       contentStyle,
       children,
@@ -93,7 +94,7 @@ export default React.createClass({
       <Dialog
         {...other}
         open={_.isBoolean(open) ? open : this.state.open}
-        style={styles.style}
+        style={Utils.Styles.mergeStyles(styles.style, style)}
         overlayStyle={styles.overlay}
         contentStyle={Utils.Styles.mergeStyles(styles.content, this.getContentConfig(contentSize), contentStyle)}
         actions={actions}

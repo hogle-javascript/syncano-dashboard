@@ -135,7 +135,7 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
-            {this.props.name}
+            Scripts
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
@@ -153,6 +153,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent="Create a Script"
+          emptyItemHandleClick={Actions.showDialog}
           key="scripts-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

@@ -26,6 +26,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
+      emptyItemContent: 'Create a Data Endpoint',
+      emptyItemHandleClick: Actions.showDialog,
       checkedItems: Store.getCheckedItems(),
       checkItem: Actions.checkItem,
       handleSelectAll: Actions.selectAll,
@@ -68,7 +70,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems} = this.props;
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems, ...other} = this.props;
 
     return (
       <Lists.Container>
@@ -104,9 +106,7 @@ export default React.createClass({
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
-          {...this.props}
-          emptyItemContent="Create a Data Socket"
-          emptyItemHandleClick={Actions.showDialog}
+          {...other}
           key="dataendpoints-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

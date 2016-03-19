@@ -5,7 +5,7 @@ import Actions from './SocketsActions';
 import Store from './SocketsStore';
 import SessionStore from '../Session/SessionStore';
 
-import DataList from '../Data/DataEndpointsList';
+import DataList from '../DataEndpoints/DataEndpointsList';
 import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
 import TriggersList from '../Triggers/TriggersList';
 import SchedulesList from '../Schedules/SchedulesList';

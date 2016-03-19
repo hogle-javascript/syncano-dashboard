@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Stores and Actions
 import Actions from './ScriptEndpointsActions';
@@ -8,7 +8,8 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 import Store from './ScriptEndpointsStore';
 
 // Components
-import {Container, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
@@ -19,8 +20,8 @@ export default React.createClass({
   displayName: 'ScriptEndpoints',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
     Reflux.connect(Store)
   ],
 
@@ -42,9 +43,11 @@ export default React.createClass({
         <ScriptEndpointDialog />
 
         <InnerToolbar title="Script Endpoints">
-          <Socket.ScriptEndpoint
-            tooltipPosition="bottom-left"
-            onTouchTap={this.showScriptEndpointDialog}/>
+          <RaisedButton
+            label="Create"
+            style={{marginRight: 0}}
+            primary={true}
+            onTouchTap={Actions.showDialog}/>
         </InnerToolbar>
 
         <Container>
@@ -53,7 +56,6 @@ export default React.createClass({
             isLoading={isLoading}
             items={items}
             hideDialogs={hideDialogs}
-            emptyItemHandleClick={this.showScriptEndpointDialog}
             emptyItemContent="Create a Script Endpoint"/>
         </Container>
       </div>

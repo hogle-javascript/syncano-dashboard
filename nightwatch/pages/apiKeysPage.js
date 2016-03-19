@@ -9,7 +9,7 @@ const apiKeysCommands = {
 };
 
 export default {
-  url: `https://localhost:8080/#/instances/${globals.instanceName}/api_keys`,
+  url: `https://localhost:8080/#/instances/${globals.instanceName}/api-keys`,
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {

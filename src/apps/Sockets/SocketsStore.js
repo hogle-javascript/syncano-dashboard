@@ -5,13 +5,13 @@ import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin, CheckListStoreM
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './SocketsActions';
-import DataActions from '../Data/DataEndpointsActions';
+import DataActions from '../DataEndpoints/DataEndpointsActions';
 import ScriptsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 import ChannelsActions from '../Channels/ChannelsActions';
-import APNSActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
-import GCMActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
+// import APNSActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
+// import GCMActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -31,8 +31,8 @@ export default Reflux.createStore({
       triggers: [],
       schedules: [],
       channels: [],
-      gcmPushNotifications: [],
-      apnsPushNotifications: [],
+      // gcmPushNotifications: [],
+      // apnsPushNotifications: [],
 
       hasAnyItem: false,
       isLoading: true
@@ -40,15 +40,23 @@ export default Reflux.createStore({
   },
 
   socketsListenables: [
-    DataActions.createDataEndpoint.completed, DataActions.updateDataEndpoint.completed,
-    DataActions.removeDataEndpoints.completed, ScriptsActions.createScriptEndpoint.completed,
-    ScriptsActions.updateScriptEndpoint.completed, ScriptsActions.removeScriptEndpoints.completed,
-    TriggersActions.createTrigger.completed, TriggersActions.updateTrigger.completed,
-    TriggersActions.removeTriggers.completed, SchedulesActions.createSchedule.completed,
-    SchedulesActions.updateSchedule.completed, SchedulesActions.removeSchedules.completed,
-    ChannelsActions.createChannel.completed, ChannelsActions.updateChannel.completed,
-    ChannelsActions.removeChannels.completed, APNSActions.configAPNSPushNotification.completed,
-    GCMActions.configGCMPushNotification.completed
+    DataActions.createDataEndpoint.completed,
+    DataActions.updateDataEndpoint.completed,
+    DataActions.removeDataEndpoints.completed,
+    ScriptsActions.createScriptEndpoint.completed,
+    ScriptsActions.updateScriptEndpoint.completed,
+    ScriptsActions.removeScriptEndpoints.completed,
+    TriggersActions.createTrigger.completed,
+    TriggersActions.updateTrigger.completed,
+    TriggersActions.removeTriggers.completed,
+    SchedulesActions.createSchedule.completed,
+    SchedulesActions.updateSchedule.completed,
+    SchedulesActions.removeSchedules.completed,
+    ChannelsActions.createChannel.completed,
+    ChannelsActions.updateChannel.completed,
+    ChannelsActions.removeChannels.completed
+    // APNSActions.configAPNSPushNotification.completed,
+    // GCMActions.configGCMPushNotification.completed
   ],
 
   init() {
@@ -66,7 +74,10 @@ export default Reflux.createStore({
   },
 
   addSocketsListeners() {
-    _.forEach(this.socketsListenables, (listenable) => this.listenTo(listenable, this.refreshData));
+    _.forEach(this.socketsListenables, (listenable) => this.listenTo(listenable, () => {
+      this.refreshData();
+      Actions.dismissDialog();
+    }));
   },
 
   removeSocketsListeners() {
@@ -106,18 +117,18 @@ export default Reflux.createStore({
 
   onFetchSocketsCompleted(sockets) {
     console.debug('SocketsStore::onFetchSockets');
-    const gcmDevicesCount = this.saveListFromSyncano(sockets.gcmDevices).length;
-    const apnsDevicesCount = this.saveListFromSyncano(sockets.apnsDevices).length;
-    const gcmItems = this.getPushNotificationsItems([sockets.gcmPushNotifications], 'GCM', gcmDevicesCount);
-    const apnsItems = this.getPushNotificationsItems([sockets.apnsPushNotifications], 'APNS', apnsDevicesCount);
+    // const gcmDevicesCount = this.saveListFromSyncano(sockets.gcmDevices).length;
+    // const apnsDevicesCount = this.saveListFromSyncano(sockets.apnsDevices).length;
+    // const gcmItems = this.getPushNotificationsItems([sockets.gcmPushNotifications], 'GCM', gcmDevicesCount);
+    // const apnsItems = this.getPushNotificationsItems([sockets.apnsPushNotifications], 'APNS', apnsDevicesCount);
 
     this.data.data = this.saveListFromSyncano(sockets.data);
     this.data.scriptEndpoints = this.saveListFromSyncano(sockets.scriptEndpoints);
     this.data.triggers = this.saveListFromSyncano(sockets.triggers);
     this.data.schedules = this.saveListFromSyncano(sockets.schedules);
     this.data.channels = this.saveListFromSyncano(sockets.channels);
-    this.data.gcmPushNotifications = gcmItems;
-    this.data.apnsPushNotifications = apnsItems;
+    // this.data.gcmPushNotifications = gcmItems;
+    // this.data.apnsPushNotifications = apnsItems;
     this.data.hasAnyItem = _.some(this.data, (value) => value.length);
 
     this.trigger(this.data);

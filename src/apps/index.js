@@ -3,7 +3,7 @@ import Admins from './Admins';
 import ApiKeys from './ApiKeys';
 import Channels from './Channels';
 import Classes from './Classes';
-import Data from './Data';
+import DataEndpoints from './DataEndpoints';
 import DataObjects from './DataObjects';
 import Groups from './Groups';
 import Instances from './Instances';
@@ -29,7 +29,7 @@ export default {
   ApiKeys,
   Channels,
   Classes,
-  Data,
+  DataEndpoints,
   DataObjects,
   Groups,
   Instances,

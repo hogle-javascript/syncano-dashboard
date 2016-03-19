@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -12,7 +12,8 @@ import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
 // Components
-import {Container, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
@@ -24,8 +25,8 @@ export default React.createClass({
   displayName: 'Admins',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store, 'admins'),
     Reflux.connect(AdminsInvitationsStore, 'invitations'),
@@ -35,48 +36,33 @@ export default React.createClass({
   componentDidMount() {
     console.info('Admins::componentDidMount');
     Actions.fetch();
-  },
-
-  checkAdminItem(id, state) {
-    AdminsInvitationsActions.uncheckAll();
-    Actions.checkItem(id, state);
-  },
-
-  checkInvitationItem(id, state) {
-    Actions.uncheckAll();
-    AdminsInvitationsActions.checkItem(id, state);
-  },
-
-  showAdminDialog() {
-    Actions.showDialog();
+    AdminsInvitationsActions.fetch();
   },
 
   render() {
+    const {admins, invitations} = this.state;
+
     return (
       <div>
         <AdminDialog />
 
         <InnerToolbar title="Administrators">
-          <Socket
-            tooltip="Click here to invite Admin"
-            onTouchTap={this.showAdminDialog}/>
+          <RaisedButton
+            label="Invite"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={AdminsInvitationsActions.showDialog} />
         </InnerToolbar>
 
         <Container>
           <AdminsList
-            name="Administrators"
-            checkItem={this.checkAdminItem}
-            isLoading={this.state.admins.isLoading}
-            hideDialogs={this.state.admins.hideDialogs}
-            items={this.state.admins.items}/>
+            isLoading={admins.isLoading}
+            hideDialogs={admins.hideDialogs}
+            items={admins.items}/>
 
           <AdminsInvitationsList
-            name="Invitations"
-            emptyItemHandleClick={this.showAdminDialog}
-            emptyItemContent="Invite administrator"
-            checkItem={this.checkInvitationItem}
-            isLoading={this.state.invitations.isLoading}
-            hideDialogs={this.state.invitations.hideDialogs}
+            isLoading={invitations.isLoading}
+            hideDialogs={invitations.hideDialogs}
             items={AdminsInvitationsStore.getPendingInvitations()}/>
         </Container>
       </div>

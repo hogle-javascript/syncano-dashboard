@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -18,13 +18,15 @@ export default React.createClass({
   displayName: 'ScriptEndpointsList',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
     DialogsMixin
   ],
 
   getDefaultProps() {
     return {
+      emptyItemContent: 'Create a Script Endpoint',
+      emptyItemHandleClick: Actions.showDialog,
       checkedItems: Store.getCheckedItems(),
       checkItem: Actions.checkItem,
       handleSelectAll: Actions.selectAll,
@@ -67,7 +69,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems} = this.props;
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems, ...other} = this.props;
 
     return (
       <Lists.Container>
@@ -113,9 +115,7 @@ export default React.createClass({
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
-          {...this.props}
-          emptyItemContent="Create a Script Endpoint"
-          emptyItemHandleClick={Actions.showDialog}
+          {...other}
           key="script-endpoints-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

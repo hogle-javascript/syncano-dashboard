@@ -1,35 +1,38 @@
 import React from 'react';
 
 import ChannelsActions from '../Channels/ChannelsActions';
-import DataEndpointsActions from '../Data/DataEndpointsActions';
+import DataEndpointsActions from '../DataEndpoints/DataEndpointsActions';
 import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 
-import {Socket} from 'syncano-components';
-import Popover from '../PushNotifications/ConfigPushNotificationsPopover';
+import EmptyListItem from './EmptyListItem';
 
 export default React.createClass({
   displayName: 'SocketsEmpty',
 
   getStyles() {
     return {
-      container: {
-        margin: '20px auto'
+      titleContainer: {
+        padding: '18px 0 50px'
       },
       title: {
         textAlign: 'center',
-        fontSize: 24,
-        fontWeight: 600
+        fontSize: 25,
+        lineHeight: '34px',
+        fontWeight: 500,
+        color: '#4a4a4a',
+        marginBottom: 10
       },
       subtitle: {
         textAlign: 'center',
-        fontSize: 20,
-        padding: '20px 0 40px 0'
+        fontSize: 18,
+        lineHeight: '25px',
+        color: '#4a4a4a'
       },
       listContainer: {
-        display: 'flex',
-        flexDirection: 'column'
+        maxWidth: 744,
+        margin: '0 auto'
       },
       socketDescription: {
         paddingTop: 5,
@@ -42,73 +45,63 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <div style={styles.container}>
-        <div style={styles.title}>
-          Start building your app here
+      <div>
+        <div style={styles.titleContainer}>
+          <div style={styles.title}>
+            Start building your app here
+          </div>
+          <div style={styles.subtitle}>
+            Pick the functionality you need and start building your API
+          </div>
         </div>
-        <div style={styles.subtitle}>
-          Pick the functionality you need and start building your API
-        </div>
-        <Socket.EmptyListItem
-          addTooltip="Create a Data Endpoint"
-          handleAdd={DataEndpointsActions.showDialog}
-          socketName="Data"
-          title="Add Data Endpoints">
-          <div style={styles.socketDescription}>
-            Place your objects and manage how your data is returned from Syncano.
-          </div>
-        </Socket.EmptyListItem>
-        <Socket.EmptyListItem
-          addTooltip="Create a Channel"
-          handleAdd={ChannelsActions.showDialog}
-          socketName="Channel"
-          title="Manage Channels">
-          <div style={styles.socketDescription}>
-            Get real-time updates to keep your data synchronized.
-          </div>
-        </Socket.EmptyListItem>
-        <Socket.EmptyListItem
-          addTooltip="Create a Script Endpoint"
-          handleAdd={ScriptEndpointsActions.showDialog}
-          socketName="ScriptEndpoint"
-          title="Create Script Endpoints">
-          <div style={styles.socketDescription}>
-            Run Scripts on our servers and use them for business logic.
-          </div>
-        </Socket.EmptyListItem>
-        {
+        <div style={styles.listContainer}>
+          <EmptyListItem
+            handleCreate={DataEndpointsActions.showDialog}
+            socketName="DataEndpoint"
+            title="Data Endpoints"
+            description="Place your objects and manage how your data is returned from Syncano." />
 
-          /*
-           <Socket.EmptyListItem
-           addTooltip="Configure a Push Notification"
-           handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
-           socketName="Push"
-           title="Send Push Notifications">
-           <div style={styles.socketDescription}>
-           Instantly message your mobile users with timely and relevant content.
-           </div>
-           </Socket.EmptyListItem>
-           */
-        }
-        <Popover ref="popover"/>
-        <Socket.EmptyListItem
-          addTooltip="Create a Trigger"
-          handleAdd={TriggersActions.showDialog}
-          socketName="Trigger"
-          title="Configure Triggers">
-          <div style={styles.socketDescription}>
-            Execute a Script when your data is created, updated or deleted.
-          </div>
-        </Socket.EmptyListItem>
-        <Socket.EmptyListItem
-          addTooltip="Create a Schedule"
-          handleAdd={SchedulesActions.showDialog}
-          socketName="Schedule"
-          title="Create Schedules">
-          <div style={styles.socketDescription}>
-            Plan events and run Scripts at desired times.
-          </div>
-        </Socket.EmptyListItem>
+          <EmptyListItem
+            handleCreate={ChannelsActions.showDialog}
+            socketName="Channel"
+            title="Channels"
+            description="Get real-time updates to keep your data synchronized." />
+
+          <EmptyListItem
+            handleCreate={ScriptEndpointsActions.showDialog}
+            socketName="ScriptEndpoint"
+            title="Script Endpoints"
+            description="Run Scripts on our servers and use them for business logic." />
+
+          {
+
+            /*
+             <Socket.EmptyListItem
+             addTooltip="Configure a Push Notification"
+             handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
+             socketName="Push"
+             title="Send Push Notifications">
+             <div style={styles.socketDescription}>
+             Instantly message your mobile users with timely and relevant content.
+             </div>
+             </Socket.EmptyListItem>
+             <Popover ref="popover"/>
+             */
+
+          }
+
+          <EmptyListItem
+            handleCreate={TriggersActions.showDialog}
+            socketName="Trigger"
+            title="Triggers"
+            description="Execute a Script when your data is created, updated or deleted." />
+
+          <EmptyListItem
+            handleCreate={SchedulesActions.showDialog}
+            socketName="Schedule"
+            title="Schedules"
+            description="Plan events and run Scripts at desired times." />
+        </div>
       </div>
     );
   }

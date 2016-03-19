@@ -25,6 +25,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
+      emptyItemContent: 'Create a Schedule Socket',
+      emptyItemHandleClick: Actions.showDialog,
       checkedItems: Store.getCheckedItems(),
       checkItem: Actions.checkItem,
       handleSelectAll: Actions.selectAll,
@@ -68,7 +70,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems} = this.props;
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems, ...other} = this.props;
 
     return (
       <Lists.Container className="schedules-list">
@@ -113,9 +115,7 @@ export default React.createClass({
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
-          {...this.props}
-          emptyItemHandleClick={Actions.showDialog}
-          emptyItemContent="Create a Schedule Socket"
+          {...other}
           key="schedules-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
