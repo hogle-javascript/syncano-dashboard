@@ -39,6 +39,7 @@ export default React.createClass({
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Create';
+    const {isLoading, open} = this.state;
 
     return (
       <Dialog.FullPage
@@ -47,8 +48,8 @@ export default React.createClass({
         contentSize="small"
         title={`${title} a Group`}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
@@ -61,10 +62,9 @@ export default React.createClass({
           fullWidth={true}
           valueLink={this.linkState('label')}
           errorText={this.getValidationMessages('label').join(' ')}
-          hintText="Name of the group"
-          floatingLabelText="Group Name"/>
+          hintText="Group's name"
+          floatingLabelText="Name"/>
       </Dialog.FullPage>
     );
   }
 });
-

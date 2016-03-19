@@ -87,7 +87,7 @@ export default React.createClass({
           disabled={this.hasEditMode()}
           valueLink={this.linkState('name')}
           errorText={this.getValidationMessages('name').join(' ')}
-          hintText="Name of the Script Endpoint"
+          hintText="Script Endpoint's name"
           floatingLabelText="Name"/>
         <TextField
           ref="description"
@@ -95,8 +95,8 @@ export default React.createClass({
           fullWidth={true}
           valueLink={this.linkState('description')}
           errorText={this.getValidationMessages('description').join(' ')}
-          hintText="Description of the Script Endpoint"
-          floatingLabelText="Description"/>
+          hintText="Script Endpoint's description"
+          floatingLabelText="Description (optional)"/>
         <SelectFieldWrapper
           name="script"
           options={this.state.scripts}

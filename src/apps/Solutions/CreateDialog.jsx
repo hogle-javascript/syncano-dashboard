@@ -10,8 +10,8 @@ import Actions from './CreateDialogActions';
 import Store from './CreateDialogStore';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {TextField, Toggle} from 'syncano-material-ui';
+import {Dialog} from '../../common';
 
 export default React.createClass({
 
@@ -34,21 +34,15 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createSolution({
-      label: this.state.label,
-      description: this.state.description,
-      public: this.state.public,
-      tags: this.state.tags
-    });
+    const {label, description, tags} = this.state;
+
+    Actions.createSolution({label, description, tags, public: this.state.public});
   },
 
   handleEditSubmit() {
-    Actions.updateSolution(this.state.id, {
-      label: this.state.label,
-      description: this.state.description,
-      public: this.state.public,
-      tags: this.state.tags
-    });
+    const {id, label, description, tags} = this.state;
+
+    Actions.updateSolution(id, {label, description, tags, public: this.state.public});
   },
 
   handleTagsListChange(tagsString, tagsArray) {
@@ -65,48 +59,40 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update' : 'Create';
-    let dialogCustomActions = [
-      <MUI.FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <MUI.FlatButton
-        key="confirm"
-        label="Confirm"
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
+    const title = this.hasEditMode() ? 'Update' : 'Create';
 
     return (
-      <Common.Dialog
-        key='dialog'
+      <Dialog.FullPage
+        key="dialog"
         ref="dialog"
         title={`${title} a Solution`}
+        contentSize="medium"
         onRequestClose={this.handleCancel}
         open={this.state.open}
-        actions={dialogCustomActions}>
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }>
         <div>
           {this.renderFormNotifications()}
-          <MUI.TextField
-            ref='label'
-            name='label'
+          <TextField
+            ref="label"
+            name="label"
             fullWidth={true}
             valueLink={this.linkState('label')}
             errorText={this.getValidationMessages('label').join(' ')}
-            hintText='Short name for your Solution'
-            floatingLabelText='Name' />
-          <MUI.TextField
-            ref='description'
-            name='description'
+            hintText="Solution's name"
+            floatingLabelText="Name" />
+          <TextField
+            ref="description"
+            name="description"
             fullWidth={true}
             valueLink={this.linkState('description')}
             errorText={this.getValidationMessages('description').join(' ')}
-            hintText='Description of a Solution (optional)'
-            floatingLabelText='Description'
-            className='vm-4-b'/>
+            hintText="Solution's description"
+            floatingLabelText="Description (optional)"
+            className="vm-4-b"/>
           <Select
             value={this.state.tags}
             delimiter=","
@@ -115,16 +101,15 @@ export default React.createClass({
             placeholder="Select tags"
             options={Store.getTagsOptions()}
             onChange={this.handleTagsListChange}
-            className='vm-3-b'/>
-          <MUI.Toggle
-            ref='public'
-            name='public'
+            className="vm-3-b"/>
+          <Toggle
+            ref="public"
+            name="public"
             defaultToggled={this.state.public}
             onToggle={this.handleToogle}
-            label='Make this solution public?'/>
+            label="Make this solution public?"/>
         </div>
-      </Common.Dialog>
+      </Dialog.FullPage>
     );
   }
 });
-

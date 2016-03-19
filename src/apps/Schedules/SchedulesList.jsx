@@ -27,7 +27,7 @@ export default React.createClass({
     return {
       emptyItemContent: 'Create a Schedule Socket',
       emptyItemHandleClick: Actions.showDialog,
-      checkedItems: Store.getCheckedItems(),
+      getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem,
       handleSelectAll: Actions.selectAll,
       handleUnselectAll: Actions.uncheckAll
@@ -40,7 +40,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading, checkedItems} = this.props;
+    const {isLoading, getCheckedItems} = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -49,7 +49,7 @@ export default React.createClass({
         ref: 'removeScheduleDialog',
         title: 'Delete a Schedule Socket',
         handleConfirm: Actions.removeSchedules,
-        items: checkedItems,
+        items: getCheckedItems(),
         itemLabelName: 'label',
         groupName: 'Schedule',
         isLoading
@@ -70,7 +70,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems, ...other} = this.props;
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other} = this.props;
 
     return (
       <Lists.Container className="schedules-list">
@@ -104,7 +104,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItems.length}
+              checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
               handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem

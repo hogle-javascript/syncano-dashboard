@@ -21,11 +21,11 @@ export default {
       locateStrategy: 'xpath'
     },
     username: {
-      selector: '//div[text()="Username"]/following-sibling::input',
+      selector: '//div[text()="User\'s name"]/following-sibling::input',
       locateStrategy: 'xpath'
     },
     password: {
-      selector: '//div[text()="User password"]/following-sibling::input',
+      selector: '//div[text()="User\'s password"]/following-sibling::input',
       locateStrategy: 'xpath'
     },
     confirm: {

@@ -158,7 +158,7 @@ export default React.createClass({
             fullWidth={true}
             valueLink={this.linkState('name')}
             errorText={this.getValidationMessages('name').join(' ')}
-            hintText="Short name for your Instance"
+            hintText="Instance's name"
             onFocus={this.handleInstanceNameFieldFocus}
             floatingLabelText="Name"/>
           {this.hasEditMode() && notificationShowed ? this.renderNotification() : null}
@@ -171,8 +171,8 @@ export default React.createClass({
             multiLine={true}
             valueLink={this.linkState('description')}
             errorText={this.getValidationMessages('description').join(' ')}
-            hintText="Multiline description of Instance (optional)"
-            floatingLabelText="Description"/>
+            hintText="Instance's description"
+            floatingLabelText="Description (optional)"/>
         </Dialog.ContentSection>
       </Dialog.FullPage>
     );

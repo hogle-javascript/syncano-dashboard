@@ -37,19 +37,15 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    Actions.updateScript(this.state.id, {
-      label: this.state.label,
-      description: this.state.description,
-      runtime_name: this.state.runtime_name
-    });
+    const {label, description, runtime_name} = this.state;
+
+    Actions.updateScript(this.state.id, {label, description, runtime_name});
   },
 
   handleAddSubmit() {
-    Actions.createScript({
-      label: this.state.label,
-      description: this.state.description,
-      runtime_name: this.state.runtime_name
-    });
+    const {label, description, runtime_name} = this.state;
+
+    Actions.createScript({label, description, runtime_name});
   },
 
   render() {
@@ -72,27 +68,27 @@ export default React.createClass({
         <div>
           {this.renderFormNotifications()}
           <TextField
-            ref='label'
+            ref="label"
             valueLink={this.linkState('label')}
             errorText={this.getValidationMessages('label').join(' ')}
-            name='label'
+            name="label"
             style={{width: 500}}
-            hintText='Short name for your Script'
-            floatingLabelText='Label of a Script'/>
+            hintText="Script's label"
+            floatingLabelText="Label"/>
           <TextField
-            ref='description'
-            name='description'
+            ref="description"
+            name="description"
             valueLink={this.linkState('description')}
             errorText={this.getValidationMessages('description').join(' ')}
             style={{width: 500}}
             multiLine={true}
-            hintText='Multiline Script description (optional)'
-            floatingLabelText='Description of a Script'/>
+            hintText="Script's description"
+            floatingLabelText="Description (optional)"/>
           <SelectFieldWrapper
             name="runtime_name"
             options={runtimes}
             value={runtime_name}
-            floatingLabelText='Runtime environment'
+            floatingLabelText="Runtime environment"
             onChange={this.setSelectFieldValue.bind(null, 'runtime_name')}
             errorText={this.getValidationMessages('runtime_name').join(' ')}/>
         </div>
@@ -100,4 +96,3 @@ export default React.createClass({
     );
   }
 });
-
