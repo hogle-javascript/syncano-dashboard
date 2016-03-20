@@ -13,7 +13,7 @@ export default {
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
-      selector: '//span[@class="synicon-plus-circle-outline"]',
+      selector: '//span[text()="Generate"]',
       locateStrategy: 'xpath'
     },
     apiKeysListMenu: {

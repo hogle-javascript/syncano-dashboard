@@ -10,7 +10,7 @@ import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
 
 // Components
-import RaisedButton from 'syncano-material-ui';
+import {RaisedButton} from 'syncano-material-ui';
 import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 

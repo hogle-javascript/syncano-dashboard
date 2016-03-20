@@ -13,7 +13,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addUserButton: {
-      selector: '//span[@class="synicon-socket-user"]',
+      selector: '//button//span[text()="Create a User"]',
       locateStrategy: 'xpath'
     },
     addUserModalTitle: {
@@ -49,7 +49,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addGroupButton: {
-      selector: '//span[@class="synicon-socket-users"]',
+      selector: '//button//span[text()="Create a Group"]',
       locateStrategy: 'xpath'
     },
     addGroupModalTitle: {

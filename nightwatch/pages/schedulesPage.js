@@ -33,7 +33,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleButton: {
-      selector: '//button//span[@class="synicon-socket-schedule"]',
+      selector: '//button//span[text()="Create"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalTitle: {

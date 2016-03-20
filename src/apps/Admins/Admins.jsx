@@ -51,7 +51,7 @@ export default React.createClass({
             label="Invite"
             primary={true}
             style={{marginRight: 0}}
-            onTouchTap={AdminsInvitationsActions.showDialog} />
+            onTouchTap={Actions.showDialog} />
         </InnerToolbar>
 
         <Container>

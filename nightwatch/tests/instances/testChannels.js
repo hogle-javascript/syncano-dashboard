@@ -13,9 +13,9 @@ export default {
     client.end();
   },
   'User adds a Channel Socket': (client) => {
-    const socketsPage = client.page.socketsPage();
+    const channelsPage = client.page.channelsPage();
 
-    socketsPage
+    channelsPage
       .navigate()
       .waitForElementVisible('@channelSocketsListTitle')
       .clickElement('@addChannelButton')
@@ -25,9 +25,9 @@ export default {
       .waitForElementVisible('@channelTableRow');
   },
   'User edits a Channel Socket': (client) => {
-    const socketsPage = client.page.socketsPage();
+    const channelsPage = client.page.channelsPage();
 
-    socketsPage
+    channelsPage
       .navigate()
       .waitForElementVisible('@channelSocketsListTitle')
       .clickListItemDropdown(Utils.addSuffix('channel'), 'Edit')
@@ -37,12 +37,12 @@ export default {
       .waitForElementVisible('@channelTableRow')
       .waitForElementVisible('@channelTableRowDescription');
 
-    socketsPage.verify.containsText('@channelTableRowDescription', Utils.addSuffix('edit'));
+    channelsPage.verify.containsText('@channelTableRowDescription', Utils.addSuffix('edit'));
   },
   'User deletes a Channel Socket': (client) => {
-    const socketsPage = client.page.socketsPage();
+    const channelsPage = client.page.channelsPage();
 
-    socketsPage
+    channelsPage
       .navigate()
       .waitForElementVisible('@channelSocketsListTitle')
       .clickListItemDropdown(Utils.addSuffix('channel'), 'Delete')
