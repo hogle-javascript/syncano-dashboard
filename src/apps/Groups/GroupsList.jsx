@@ -66,7 +66,7 @@ export default Radium(React.createClass({
             primary={true}
             columnName="CHECK_ICON"
             className="col-flex-1">
-            {this.props.name}
+            Groups
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
@@ -82,6 +82,8 @@ export default Radium(React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent="Create a Group"
+          emptyItemHandleClick={Actions.showDialog}
           key="groups-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

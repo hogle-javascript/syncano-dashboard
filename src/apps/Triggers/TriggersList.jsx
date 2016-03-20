@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 import Actions from './TriggersActions';
 import Store from './TriggersStore';
@@ -18,8 +18,8 @@ export default React.createClass({
   displayName: 'TriggersList',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
     DialogsMixin
   ],
 
@@ -121,8 +121,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...other}
-          emptyItemHandleClick={Actions.showDialog}
           emptyItemContent="Create a Trigger Socket"
+          emptyItemHandleClick={Actions.showDialog}
           key="triggers-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

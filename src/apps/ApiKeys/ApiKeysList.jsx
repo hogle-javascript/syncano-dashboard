@@ -83,7 +83,7 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="CHECK_ICON"
             primary={true}>
-            {this.props.name}
+            API Keys
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="ID"
@@ -114,6 +114,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent="Generate an API Key"
+          emptyItemHandleClick={Actions.showDialog}
           key="apikeys-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

@@ -20,9 +20,10 @@ export default React.createClass({
   ],
 
   render() {
-    const {item} = this.props;
+    const {item, onIconClick, showDeleteDialog} = this.props;
     const script = ScriptsStore.getScriptById(item.codebox);
     const scriptLabel = script ? script.label : '';
+    const instanceName = this.getParams().instanceName;
 
     return (
       <ColumnList.Item
@@ -33,14 +34,14 @@ export default React.createClass({
           iconClassName="socket-trigger"
           iconColor={Styles.Colors.amberA200}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}
+          handleIconClick={onIconClick}
           primaryText={item.label}/>
         <Column.Desc className="col-flex-1">
           {item.class}
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link to="script" params={{
-            instanceName: this.getParams().instanceName,
+            instanceName,
             scriptId: item.codebox
           }}>
             {scriptLabel}
@@ -50,7 +51,7 @@ export default React.createClass({
           <Link
             to="trigger-traces"
             params={{
-              instanceName: this.getParams().instanceName,
+              instanceName,
               triggerId: item.id
             }}>
             Traces
@@ -66,7 +67,7 @@ export default React.createClass({
             primaryText="Edit a Trigger" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Trigger" />
         </Column.Menu>
       </ColumnList.Item>

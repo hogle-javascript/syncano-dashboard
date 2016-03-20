@@ -9,7 +9,8 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
-import {Container, Show, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container, Show} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 import InstancesList from './InstancesList';
@@ -51,12 +52,15 @@ export default React.createClass({
   },
 
   render() {
-    if (this.state.blocked) {
+    const {blocked, isLoading, hideDialogs, items} = this.state;
+
+
+    if (blocked) {
       return (
         <div className="row vp-5-t">
           <Container.Empty
             icon='synicon-block-helper'
-            text={this.state.blocked}/>
+            text={blocked}/>
         </div>
       );
     }
@@ -66,10 +70,11 @@ export default React.createClass({
         <InstanceDialog />
 
         <InnerToolbar title="Instances">
-          <Socket
-            tooltip="Create an Instance"
-            tooltipPosition="bottom-left"
-            onTouchTap={this.showInstanceDialog}/>
+          <RaisedButton
+            label="Create"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={InstanceDialogActions.showDialog} />
         </InnerToolbar>
 
         <Container id="instances">
@@ -77,18 +82,17 @@ export default React.createClass({
             ref="myInstancesList"
             name="My instances"
             items={Store.getMyInstances()}
-            isLoading={this.state.isLoading}
-            hideDialogs={this.state.hideDialogs}
+            isLoading={isLoading}
+            hideDialogs={hideDialogs}
             emptyItemHandleClick={this.showInstanceDialog}
             emptyItemContent="Create an instance" />
 
-          <Show if={this.state.items.length > 0 && Store.getOtherInstances().length > 0 && !this.state.isLoading}>
+          <Show if={items.length && Store.getOtherInstances().length && !isLoading}>
             <SharedInstancesList
               ref="otherInstancesList"
-              name="Shared with me"
               items={Store.getOtherInstances()}
-              hideDialogs={this.state.hideDialogs}
-              isLoading={this.state.isLoading}/>
+              hideDialogs={hideDialogs}
+              isLoading={isLoading}/>
           </Show>
         </Container>
       </div>

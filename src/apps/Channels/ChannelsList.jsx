@@ -26,6 +26,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
+      emptyItemContent: 'Create a Channel Socket',
+      emptyItemHandleClick: Actions.showDialog,
       getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem,
       handleSelectAll: Actions.selectAll,
@@ -68,7 +70,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems} = this.props;
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other} = this.props;
 
     return (
       <Lists.Container>
@@ -119,9 +121,7 @@ export default React.createClass({
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
-          {...this.props}
-          emptyItemHandleClick={Actions.showDialog}
-          emptyItemContent="Create a Channel Socket"
+          {...other}
           key="channels-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

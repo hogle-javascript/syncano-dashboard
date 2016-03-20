@@ -75,7 +75,7 @@ export default React.createClass({
           hintText="Administrator's email"
           floatingLabelText="Email"/>
         <SelectFieldWrapper
-          style={{width: 200}}
+          fullWidth={true}
           name="role"
           floatingLabelText="Administrator's role"
           options={Store.getRoles()}

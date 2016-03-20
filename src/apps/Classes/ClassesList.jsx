@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
@@ -19,13 +19,13 @@ export default React.createClass({
   displayName: 'ClassesList',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
     DialogsMixin
   ],
 
   componentWillUpdate(nextProps) {
-    console.info('ApiKeysList::componentWillUpdate');
+    console.info('ClassesList::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
   },
 
@@ -128,7 +128,7 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
-            {this.props.name}
+            Classes
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
@@ -161,6 +161,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent="Create a Class"
+          emptyItemHandleClick={Actions.showDialog}
           key="classes-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

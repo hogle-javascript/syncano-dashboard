@@ -17,7 +17,7 @@ exports.command = function(listItem, dropdownChoice) {
     .click(choice)
     // Waiting for dropdown to be removed from DOM
     .waitForElementNotPresent('//iframe/following-sibling::div[@style]/div')
-    .pause(100);
+    .pause(600);
 
   return this;
 };

@@ -6,13 +6,13 @@ import Actions from './TriggersActions';
 import Store from './TriggersStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
-import {Container, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
 
 export default React.createClass({
-
   displayName: 'TriggerSockets',
 
   mixins: [
@@ -32,24 +32,25 @@ export default React.createClass({
   },
 
   render() {
+    const {isLoading, items, hideDialogs} = this.state;
+
     return (
       <div>
         <TriggerDialog />
 
         <InnerToolbar title="Trigger Sockets">
-          <Socket.Trigger
-            tooltipPosition="bottom-left"
-            onTouchTap={this.showTriggerDialog}/>
+          <RaisedButton
+            label="Create"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={Actions.showDialog}/>
         </InnerToolbar>
 
         <Container>
           <TriggersList
-            name="Triggers"
-            isLoading={this.state.isLoading}
-            items={this.state.items}
-            hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.showTriggerDialog}
-            emptyItemContent="Create a Trigger Socket"/>
+            isLoading={isLoading}
+            items={items}
+            hideDialogs={hideDialogs} />
         </Container>
       </div>
     );

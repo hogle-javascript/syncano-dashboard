@@ -10,11 +10,11 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 
 import SchedulesList from './SchedulesList';
 import ScheduleDialog from './ScheduleDialog';
-import {Container, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 export default React.createClass({
-
   displayName: 'ScheduleSockets',
 
   mixins: [
@@ -35,24 +35,26 @@ export default React.createClass({
   },
 
   render() {
+    const {isLoading, items, hideDialogs} = this.state;
+
     return (
       <div>
         <ScheduleDialog />
 
         <InnerToolbar title="Schedule Sockets">
-          <Socket.Schedule
-            tooltipPosition="bottom-left"
-            onTouchTap={this.showScheduleDialog}/>
+          <RaisedButton
+            label="Create"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={Actions.showDialog} />
         </InnerToolbar>
 
         <Container>
           <SchedulesList
             name="Schedules"
-            isLoading={this.state.isLoading}
-            items={this.state.items}
-            hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.showScheduleDialog}
-            emptyItemContent="Create a Schedule Socket"/>
+            isLoading={isLoading}
+            items={items}
+            hideDialogs={hideDialogs} />
         </Container>
       </div>
     );

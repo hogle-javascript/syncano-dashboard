@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Actions from './DataEndpointsActions';
-
 import {SnackbarNotificationMixin} from '../../mixins';
 
 import {MenuItem} from 'syncano-material-ui';
