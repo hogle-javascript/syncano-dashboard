@@ -133,7 +133,7 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
-            Objects
+            Data Objects
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="ID"

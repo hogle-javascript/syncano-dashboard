@@ -37,13 +37,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemClick(itemId) {
-    this.transitionTo('trigger-traces', {
-      instanceName: this.getParams().instanceName,
-      triggerId: itemId
-    });
-  },
-
   initDialogs() {
     const {isLoading, getCheckedItems} = this.props;
 
@@ -90,7 +83,7 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
-            Class
+            Data Objects
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
