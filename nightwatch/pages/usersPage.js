@@ -13,7 +13,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addUserButton: {
-      selector: '//span[@class="synicon-socket-user"]',
+      selector: '//button//span[text()="Create a User"]',
       locateStrategy: 'xpath'
     },
     addUserModalTitle: {
@@ -21,11 +21,11 @@ export default {
       locateStrategy: 'xpath'
     },
     username: {
-      selector: '//div[text()="Username"]/following-sibling::input',
+      selector: '//div[text()="User\'s name"]/following-sibling::input',
       locateStrategy: 'xpath'
     },
     password: {
-      selector: '//div[text()="User password"]/following-sibling::input',
+      selector: '//div[text()="User\'s password"]/following-sibling::input',
       locateStrategy: 'xpath'
     },
     confirm: {
@@ -49,7 +49,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addGroupButton: {
-      selector: '//span[@class="synicon-socket-users"]',
+      selector: '//button//span[text()="Create a Group"]',
       locateStrategy: 'xpath'
     },
     addGroupModalTitle: {

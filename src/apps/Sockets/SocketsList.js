@@ -5,7 +5,7 @@ import Actions from './SocketsActions';
 import Store from './SocketsStore';
 import SessionStore from '../Session/SessionStore';
 
-import DataList from '../Data/DataEndpointsList';
+import DataList from '../DataEndpoints/DataEndpointsList';
 import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
 import TriggersList from '../Triggers/TriggersList';
 import SchedulesList from '../Schedules/SchedulesList';
@@ -40,7 +40,7 @@ export default ({sockets, handleTitleClick}) => {
           key={`${socketName}SocketsList`}
           if={sockets[socketName].length}>
           {React.createElement(list, {
-            checkedItems: Store.getCheckedItems(socketName),
+            getCheckedItems: () => Store.getCheckedItems(socketName),
             checkItem: (checkId, value, itemKeyName) => Actions.checkItem(checkId, value, itemKeyName, socketName),
             handleSelectAll: () => Actions.selectAll(socketName),
             handleUnselectAll: () => Actions.uncheckAll(socketName),

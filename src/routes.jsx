@@ -24,14 +24,15 @@ import Solutions from './apps/Solutions';
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
+import ChannelHistory from './apps/ChannelHistory';
+import Channels from './apps/Channels';
 import Classes from './apps/Classes';
 import ScriptEndpoints from './apps/ScriptEndpoints';
 import Script from './apps/Script';
 import Scripts from './apps/Scripts';
 import DataObjects from './apps/DataObjects/DataObjects';
-import Data from './apps/Data';
+import DataEndpoints from './apps/DataEndpoints';
 import Users from './apps/Users/Users';
-import Channels from './apps/Channels/Channels';
 import Sockets from './apps/Sockets';
 import Template from './apps/Template';
 import Templates from './apps/Templates';
@@ -119,8 +120,8 @@ export default (
         {/* Data */}
         <Route
           name="data"
-          path="data"
-          handler={Data}/>
+          path="data-endpoints"
+          handler={DataEndpoints}/>
 
         {/* Admins */}
         <Route
@@ -132,7 +133,7 @@ export default (
         <Route
           name="api-keys"
           handler={ApiKeys}
-          path="api_keys"/>
+          path="api-keys"/>
 
         {/* General */}
         <Route
@@ -193,8 +194,8 @@ export default (
 
         {/* ScriptEndpoints */}
         <Route
-          name="scriptEndpoints"
-          path="scriptEndpoints">
+          name="script-endpoints"
+          path="script-endpoints">
 
 
           {/* ScriptEndpoints Traces */}
@@ -279,7 +280,7 @@ export default (
           path="channels">
           <Route
             name='channel-history'
-            handler={Channels.HistoryMessages}
+            handler={ChannelHistory.Messages}
             path=':channelName/history'/>
 
           <DefaultRoute handler={Channels}/>

@@ -21,7 +21,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addAdminButton: {
-      selector: '//span[@class="synicon-plus-circle-outline"]',
+      selector: '//span[text()="Invite"]',
       locateStrategy: 'xpath'
     },
     addAdminModalTitle: {

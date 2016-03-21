@@ -27,7 +27,7 @@ export default React.createClass({
   ],
 
   validatorConstraints() {
-    let addFormConstraints = {
+    const addFormConstraints = {
       username: {
         presence: true
       },
@@ -35,7 +35,7 @@ export default React.createClass({
         presence: true
       }
     };
-    let editFormConstraints = {
+    const editFormConstraints = {
       username: {
         presence: true
       }
@@ -45,24 +45,28 @@ export default React.createClass({
   },
 
   getSelectValueSource() {
-    if (this.state.newUserGroups) {
+    const {newUserGroups, groups, secondInstance} = this.state;
+
+    if (newUserGroups) {
       return this.linkState('newUserGroups');
-    } else if (this.state.groups) {
+    } else if (groups) {
       return this.linkState('groups');
-    } else if (this.state.secondInstance && this.state.secondInstance.value) {
-      return this.state.secondInstance;
+    } else if (secondInstance && secondInstance.value) {
+      return secondInstance;
     }
 
     return null;
   },
 
   handleAddSubmit() {
-    let userGroups = this.state.newUserGroups || this.state.secondInstance;
+    const {newUserGroups, secondInstance, username, password} = this.state;
+
+    const userGroups = newUserGroups || secondInstance;
 
     UsersActions.createUser(
       {
-        username: this.state.username,
-        password: this.state.password
+        username,
+        password
       },
       {
         newGroups: userGroups
@@ -71,21 +75,21 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    let userGroups = this.getSelectValueSource().value;
-    let credentials = {
-      username: this.state.username
-    };
+    const {username, password, id, groups} = this.state;
 
-    if (this.state.password) {
-      credentials.password = this.state.password;
+    const userGroups = this.getSelectValueSource().value;
+    const credentials = {username};
+
+    if (password) {
+      credentials.password = password;
     }
 
     UsersActions.updateUser(
-      this.state.id,
+      id,
       credentials,
       {
-        groups: this.state.groups,
-        newGroups: userGroups
+        newGroups: userGroups,
+        groups
       }
     );
   },
@@ -97,10 +101,11 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
-    let selectValueSource = this.getSelectValueSource();
+    const {open, isLoading} = this.state;
+    const title = this.hasEditMode() ? 'Edit' : 'Create';
+    const selectValueSource = this.getSelectValueSource();
     let selectValue = '';
-    let allGroups = GroupsStore.getGroups().map((group) => {
+    const allGroups = GroupsStore.getGroups().map((group) => {
       group.value = group.id.toString();
       return group;
     });
@@ -118,8 +123,8 @@ export default React.createClass({
         title={`${title} a User`}
         contentSize="small"
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
@@ -128,26 +133,26 @@ export default React.createClass({
         <div>
           {this.renderFormNotifications()}
           <TextField
-            ref='username'
+            ref="username"
             fullWidth={true}
             valueLink={this.linkState('username')}
             errorText={this.getValidationMessages('username').join(' ')}
-            hintText='Username'
-            floatingLabelText='Username' />
+            hintText="User's name"
+            floatingLabelText="Username" />
           <TextField
-            ref='password'
-            type='password'
+            ref="password"
+            type="password"
             fullWidth={true}
             valueLink={this.linkState('password')}
             errorText={this.getValidationMessages('password').join(' ')}
-            hintText='User password'
-            floatingLabelText='Password'
-            className='vm-4-b' />
+            hintText="User's password"
+            floatingLabelText="Password"
+            className="vm-4-b" />
           <Select
-            name='group'
+            name="group"
             multi={true}
             value={selectValue}
-            placeholder='User groups'
+            placeholder="User groups"
             options={allGroups}
             onChange={this.handleSelectFieldChange} />
         </div>

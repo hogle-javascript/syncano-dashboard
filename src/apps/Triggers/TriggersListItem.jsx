@@ -5,9 +5,11 @@ import {DialogsMixin} from '../../mixins';
 
 import Actions from './TriggersActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
+import ClassesStore from '../Classes/ClassesStore';
 
 import {MenuItem, Styles} from 'syncano-material-ui';
 import {ColumnList} from 'syncano-components';
+import {DataObjectsAmount} from '../../common';
 
 let Column = ColumnList.Column;
 
@@ -20,9 +22,11 @@ export default React.createClass({
   ],
 
   render() {
-    const {item} = this.props;
+    const {item, onIconClick, showDeleteDialog} = this.props;
     const script = ScriptsStore.getScriptById(item.codebox);
     const scriptLabel = script ? script.label : '';
+    const instanceName = this.getParams().instanceName;
+    const itemClass = ClassesStore.getClassByName(item.class);
 
     return (
       <ColumnList.Item
@@ -33,14 +37,16 @@ export default React.createClass({
           iconClassName="socket-trigger"
           iconColor={Styles.Colors.amberA200}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}
+          handleIconClick={onIconClick}
           primaryText={item.label}/>
         <Column.Desc className="col-flex-1">
-          {item.class}
+          <DataObjectsAmount
+            className={itemClass.name}
+            dataObjects={itemClass.objects_count} />
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link to="script" params={{
-            instanceName: this.getParams().instanceName,
+            instanceName,
             scriptId: item.codebox
           }}>
             {scriptLabel}
@@ -50,7 +56,7 @@ export default React.createClass({
           <Link
             to="trigger-traces"
             params={{
-              instanceName: this.getParams().instanceName,
+              instanceName,
               triggerId: item.id
             }}>
             Traces
@@ -66,7 +72,7 @@ export default React.createClass({
             primaryText="Edit a Trigger" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Trigger" />
         </Column.Menu>
       </ColumnList.Item>

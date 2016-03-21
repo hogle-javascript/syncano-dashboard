@@ -10,7 +10,8 @@ import Actions from './ChannelsActions';
 import Store from './ChannelsStore';
 
 // Components
-import {Container, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
@@ -18,7 +19,6 @@ import ChannelsList from './ChannelsList';
 import ChannelDialog from './ChannelDialog';
 
 export default React.createClass({
-
   displayName: 'Channels',
 
   mixins: [
@@ -39,27 +39,27 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  showChannelDialog() {
-    Actions.showDialog();
-  },
-
   render() {
+    const {isLoading, items, hideDialogs} = this.state;
+
     return (
       <div>
         <ChannelDialog />
 
         <InnerToolbar title="Channel Sockets">
-          <Socket.Channel
-            tooltipPosition="bottom-left"
-            onTouchTap={this.showChannelDialog}/>
+          <RaisedButton
+            label="Create"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={Actions.showDialog} />
         </InnerToolbar>
 
         <Container>
           <ChannelsList
             name="Channels"
-            isLoading={this.state.isLoading}
-            items={this.state.items}
-            hideDialogs={this.state.hideDialogs}
+            isLoading={isLoading}
+            items={items}
+            hideDialogs={hideDialogs}
             emptyItemHandleClick={this.showChannelDialog}
             emptyItemContent="Create a Channel Socket"/>
         </Container>

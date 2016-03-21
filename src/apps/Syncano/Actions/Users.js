@@ -11,15 +11,15 @@ export default {
   },
 
   create(payload, groups) {
-    let userGroups = groups.newGroups ? groups.newGroups : null;
-    let userGroupsArray = _.isArray(userGroups) ? userGroups : [userGroups];
+    const userGroups = groups.newGroups ? groups.newGroups : null;
+    const userGroupsArray = _.isArray(userGroups) ? userGroups : [userGroups];
 
     if (userGroups) {
       this.Connection
         .Users
         .create(payload)
         .then((user) => {
-          let addUserToGroups = userGroupsArray.map((group) => this.Connection.Users.addToGroup(user.id, group.id));
+          const addUserToGroups = userGroupsArray.map((group) => this.Connection.Users.addToGroup(user.id, group.id));
 
           this.Promise.all(addUserToGroups)
             .then(this.completed)
@@ -40,13 +40,13 @@ export default {
       .Users
       .update(id, payload)
       .success(() => {
-        let groupsId = groups.groups.map((group) => group.id);
-        let newGroupsId = groups.newGroups.map((group) => group.id);
-        let addedGroups = _.difference(newGroupsId, groupsId);
-        let removedGroups = _.difference(groupsId, newGroupsId);
-        let addUserToGroups = addedGroups.map((group) => this.Connection.Users.addToGroup(id, group));
-        let removeUserFromGroups = removedGroups.map((group) => this.Connection.Users.removeFromGroup(id, group));
-        let promises = removeUserFromGroups.concat(addUserToGroups);
+        const groupsId = groups.groups.map((group) => group.id);
+        const newGroupsId = groups.newGroups.map((group) => group.id);
+        const addedGroups = _.difference(newGroupsId, groupsId);
+        const removedGroups = _.difference(groupsId, newGroupsId);
+        const addUserToGroups = addedGroups.map((group) => this.Connection.Users.addToGroup(id, group));
+        const removeUserFromGroups = removedGroups.map((group) => this.Connection.Users.removeFromGroup(id, group));
+        const promises = removeUserFromGroups.concat(addUserToGroups);
 
         this.Promise.all(promises)
           .then(this.completed)
@@ -56,7 +56,7 @@ export default {
   },
 
   remove(users) {
-    let promises = users.map((user) => this.Connection.Users.remove(user.id));
+    const promises = users.map((user) => this.Connection.Users.remove(user.id));
 
     this.Promise.all(promises)
       .then(this.completed)

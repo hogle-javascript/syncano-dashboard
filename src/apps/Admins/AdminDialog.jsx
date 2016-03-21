@@ -36,16 +36,15 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    AdminsInvitationsActions.createInvitation({
-      email: this.state.email,
-      role: this.state.role
-    });
+    const {email, role} = this.state;
+
+    AdminsInvitationsActions.createInvitation({email, role});
   },
 
   handleEditSubmit() {
-    AdminsActions.updateAdmin(this.state.id, {
-      role: this.state.role
-    });
+    const {id, role} = this.state;
+
+    AdminsActions.updateAdmin(id, {role});
   },
 
   render() {
@@ -73,12 +72,12 @@ export default React.createClass({
           disabled={this.hasEditMode()}
           valueLink={this.linkState('email')}
           errorText={this.getValidationMessages('email').join(' ')}
-          hintText="Email of the administrator"
+          hintText="Administrator's email"
           floatingLabelText="Email"/>
         <SelectFieldWrapper
-          style={{width: 200}}
+          fullWidth={true}
           name="role"
-          floatingLabelText="Role of the administrator"
+          floatingLabelText="Administrator's role"
           options={Store.getRoles()}
           value={this.state.role}
           onChange={this.setSelectFieldValue.bind(null, 'role')}
@@ -87,4 +86,3 @@ export default React.createClass({
     );
   }
 });
-

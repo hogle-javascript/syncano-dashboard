@@ -9,11 +9,11 @@ const apiKeysCommands = {
 };
 
 export default {
-  url: `https://localhost:8080/#/instances/${globals.instanceName}/api_keys`,
+  url: `https://localhost:8080/#/instances/${globals.instanceName}/api-keys`,
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
-      selector: '//span[@class="synicon-plus-circle-outline"]',
+      selector: '//span[text()="Generate"]',
       locateStrategy: 'xpath'
     },
     apiKeysListMenu: {

@@ -3,6 +3,7 @@ import Router from 'react-router';
 
 import Actions from './AdminsInvitationsActions';
 import Store from './AdminsInvitationsStore';
+import AdminsActions from './AdminsActions';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -26,6 +27,18 @@ export default React.createClass({
   componentWillUpdate(nextProps) {
     console.info('Admins::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
+  },
+
+  getDefaultProps() {
+    return {
+      emptyItemContent: 'Invite administrator',
+      emptyItemHandleClick: Actions.showDialog
+    };
+  },
+
+  checkItem(id, state) {
+    AdminsActions.uncheckAll();
+    Actions.checkItem(id, state);
   },
 
   initDialogs() {
@@ -82,7 +95,7 @@ export default React.createClass({
             primary={true}
             columnName="CHECK_ICON"
             className="col-xs-25 col-md-20">
-            {this.props.name}
+            Invitations
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC"/>
           <Column.ColumnHeader columnName="TEXT">Role</Column.ColumnHeader>
@@ -101,6 +114,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          checkItem={this.checkItem}
           key="admins-invitations-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Dropzone from 'react-dropzone';
 import Filesize from 'filesize';
+import _ from 'lodash';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
@@ -28,6 +29,7 @@ export default React.createClass({
   ],
 
   validatorConstraints() {
+    const {channel, channels} = this.state;
     let validateObj = {};
 
     DataObjectsStore.getCurrentClassObj().schema.map((item) => {
@@ -36,10 +38,10 @@ export default React.createClass({
       } else if (item.type === 'text') {
         validateObj[item.name] = {length: {maximum: 32000}};
       } else if (item.type === 'datetime') {
-        let isDateSet = this.refs[`fielddate-${item.name}`].refs.input.getValue().length !== 0;
-        let isTimeSet = this.refs[`fieldtime-${item.name}`].refs.input.getValue().length !== 0;
-        let validate = (isFieldSet) => {
-          let isValid = isDateSet === isTimeSet;
+        const isDateSet = this.refs[`fielddate-${item.name}`].refs.input.getValue().length;
+        const isTimeSet = this.refs[`fieldtime-${item.name}`].refs.input.getValue().length;
+        const validate = (isFieldSet) => {
+          const isValid = isDateSet === isTimeSet;
 
           if (!isValid && !isFieldSet) {
             return {presence: {message: `^Both date and time fields must be filled`}};
@@ -51,6 +53,26 @@ export default React.createClass({
         validateObj[`fieldtime-${item.name}`] = validate(isTimeSet);
       }
     });
+
+    validateObj.channel_room = () => {
+      if (_.some(channels, {text: channel, type: 'default'})) {
+        return {
+          length: {
+            is: 0,
+            message: "field is only available for 'separate_rooms’ Channel type"
+          }
+        };
+      }
+
+      if (channel && channel !== 'no channel') {
+        return {
+          presence: {
+            message: "field is required for 'separate_rooms’ Channel type"
+          }
+        };
+      }
+    };
+
     return validateObj;
   },
 
@@ -290,7 +312,7 @@ export default React.createClass({
   },
 
   renderGroupDropdownItem(group) {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     return (
       <div style={styles.groupItemContainer}>
@@ -305,8 +327,9 @@ export default React.createClass({
   },
 
   renderBuiltinFields() {
-    let styles = this.getStyles();
-    let permissions = [
+    const styles = this.getStyles();
+    const {channel, channel_room, channels} = this.state;
+    const permissions = [
       {
         text: 'none',
         payload: 'none'
@@ -325,7 +348,7 @@ export default React.createClass({
       }
     ];
 
-    let renderChannelFields = () => {
+    const renderChannelFields = () => {
       if (this.hasEditMode()) {
         return (
           <div key="edit-fields">
@@ -335,15 +358,15 @@ export default React.createClass({
               style={styles.dialogField}
               fullWidth={true}
               disabled={true}
-              value={this.state.channel || 'no channel'}
+              value={channel || 'no channel'}
               floatingLabelText="Channel"/>
             <TextField
               ref="field-channel_room"
-              name="field-channel_room"
+              name="channel_room"
               style={styles.dialogField}
               fullWidth={true}
               disabled={true}
-              value={this.state.channel_room || 'no channel'}
+              value={channel_room || 'no channel'}
               floatingLabelText="Channel Room"/>
           </div>
         );
@@ -353,8 +376,8 @@ export default React.createClass({
           <SelectFieldWrapper
             name="field-channel"
             floatingLabelText="Channel"
-            options={this.state.channels}
-            value={this.state.channel}
+            options={channels}
+            value={channel}
             style={styles.dialogField}
             onChange={this.setSelectFieldValue.bind(null, 'channel')}
             errorText={this.getValidationMessages('channel').join(' ')}/>
@@ -363,7 +386,7 @@ export default React.createClass({
             name="field-channel_room"
             style={styles.dialogField}
             fullWidth={true}
-            disabled={this.hasEditMode()}
+            disabled={this.hasEditMode() || !channel || channel === 'no channel'}
             valueLink={this.linkState('channel_room')}
             errorText={this.getValidationMessages('channel_room').join(' ')}
             hintText="Channel Room"
@@ -434,8 +457,8 @@ export default React.createClass({
   },
 
   renderDropZone(item) {
-    let styles = this.getStyles();
-    let file = this.state[`file-${item.name}`];
+    const styles = this.getStyles();
+    const file = this.state[`file-${item.name}`];
     let description = file ? file.name : null;
 
     if (description) {
@@ -459,7 +482,7 @@ export default React.createClass({
   },
 
   renderCustomFields() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     if (DataObjectsStore.getCurrentClassObj()) {
       return DataObjectsStore.getCurrentClassObj().schema.map((item) => {
@@ -485,11 +508,11 @@ export default React.createClass({
         /* eslint-disable no-undefined */
 
         if (item.type === 'datetime') {
-          let value = this.state[item.name] ? new Date(this.state[item.name].value) : undefined;
+          const value = this.state[item.name] ? new Date(this.state[item.name].value) : undefined;
 
         /* eslint-enable no-undefined*/
 
-          let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
+          const labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
             <div key={`field-${item.name}`}>
@@ -529,7 +552,7 @@ export default React.createClass({
         if (item.type === 'file') {
           if (this.hasEditMode()) {
             if (this.state[item.name]) {
-              let url = this.state[item.name].value;
+              const url = this.state[item.name].value;
 
               return (
                 <div key={`file-${item.name}`}>
@@ -575,10 +598,10 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let editTitle = `Edit a Data Object #${this.state.id} (${DataObjectsStore.getCurrentClassName()})`;
-    let addTitle = 'Add a Data Object';
-    let title = this.hasEditMode() ? editTitle : addTitle;
+    const styles = this.getStyles();
+    const editTitle = `Edit a Data Object #${this.state.id} (${DataObjectsStore.getCurrentClassName()})`;
+    const addTitle = 'Add a Data Object';
+    const title = this.hasEditMode() ? editTitle : addTitle;
 
     return (
       <Dialog.FullPage

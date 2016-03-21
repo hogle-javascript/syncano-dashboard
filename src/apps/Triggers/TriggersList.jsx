@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 import Actions from './TriggersActions';
 import Store from './TriggersStore';
@@ -18,14 +18,14 @@ export default React.createClass({
   displayName: 'TriggersList',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
     DialogsMixin
   ],
 
   getDefaultProps() {
     return {
-      checkedItems: Store.getCheckedItems(),
+      getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem,
       handleSelectAll: Actions.selectAll,
       handleUnselectAll: Actions.uncheckAll
@@ -37,15 +37,8 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemClick(itemId) {
-    this.transitionTo('trigger-traces', {
-      instanceName: this.getParams().instanceName,
-      triggerId: itemId
-    });
-  },
-
   initDialogs() {
-    const {isLoading, checkedItems} = this.props;
+    const {isLoading, getCheckedItems} = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -54,7 +47,7 @@ export default React.createClass({
         ref: 'removeTriggerDialog',
         title: 'Delete a Trigger',
         handleConfirm: Actions.removeTriggers,
-        items: checkedItems,
+        items: getCheckedItems(),
         itemLabelName: 'label',
         groupName: 'Trigger',
         isLoading
@@ -75,7 +68,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems, ...other} = this.props;
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other} = this.props;
 
     return (
       <Lists.Container className="triggers-list">
@@ -90,7 +83,7 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
-            Class
+            Data Objects
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
@@ -109,7 +102,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItems.length}
+              checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
               handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem
@@ -121,8 +114,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...other}
-          emptyItemHandleClick={Actions.showDialog}
           emptyItemContent="Create a Trigger Socket"
+          emptyItemHandleClick={Actions.showDialog}
           key="triggers-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

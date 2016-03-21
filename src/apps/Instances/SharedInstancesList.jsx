@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -19,12 +19,14 @@ export default React.createClass({
   displayName: 'SharedInstancesList',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
     DialogsMixin
   ],
 
   initDialogs() {
+    const {isLoading} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -32,7 +34,7 @@ export default React.createClass({
         ref: 'deleteSharedInstanceDialog',
         title: 'Leave shared Instance',
         handleConfirm: Actions.removeSharedInstance,
-        isLoading: this.props.isLoading,
+        isLoading,
         actionName: 'leave',
         items: Store.getCheckedItems(),
         groupName: 'Instance'
@@ -51,17 +53,18 @@ export default React.createClass({
   },
 
   render() {
+    const {isLoading, ...other} = this.props;
     const checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Loading show={this.props.isLoading}>
+      <Loading show={isLoading}>
         <Lists.Container className='instances-list'>
           {this.getDialogs()}
           <ColumnList.Header>
             <Column.ColumnHeader
               primary={true}
               columnName="CHECK_ICON">
-              {this.props.name}
+              Shared with me
             </Column.ColumnHeader>
             <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
             <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
@@ -78,7 +81,7 @@ export default React.createClass({
             </Column.ColumnHeader>
           </ColumnList.Header>
           <Lists.List
-            {...this.props}
+            {...other}
             key="shared-instances-list"
             renderItem={this.renderItem}/>
         </Lists.Container>

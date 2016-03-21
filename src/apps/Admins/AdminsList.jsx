@@ -3,6 +3,7 @@ import Router from 'react-router';
 
 import Actions from './AdminsActions';
 import Store from './AdminsStore';
+import AdminsInvitationsActions from './AdminsInvitationsActions';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -44,6 +45,11 @@ export default React.createClass({
     }];
   },
 
+  checkItem(id, state) {
+    AdminsInvitationsActions.uncheckAll();
+    Actions.checkItem(id, state);
+  },
+
   renderItem(item) {
     return (
       <ListItem
@@ -65,7 +71,7 @@ export default React.createClass({
             primary={true}
             columnName="CHECK_ICON"
             className="col-xs-25 col-md-20">
-            {this.props.name}
+            Administrators
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC"/>
           <Column.ColumnHeader columnName="TEXT">Role</Column.ColumnHeader>
@@ -84,6 +90,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          checkItem={this.checkItem}
           key="admins-list"
           renderItem={this.renderItem}/>
       </Lists.Container>

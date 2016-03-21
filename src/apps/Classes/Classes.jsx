@@ -10,7 +10,8 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 // Components
-import {Container, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
@@ -32,29 +33,26 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  showClassDialog() {
-    Actions.showDialog();
-  },
-
   render() {
+    const {items, triggers, hideDialogs} = this.state;
+
     return (
       <div>
         <ClassDialog/>
 
         <InnerToolbar title="Classes">
-          <Socket
-            tooltip="Create a Class"
-            onTouchTap={this.showClassDialog}/>
+          <RaisedButton
+            label="Create"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={Actions.showDialog} />
         </InnerToolbar>
 
         <Container>
           <ClassesList
-            name="Classes"
-            items={this.state.items}
-            triggers={this.state.triggers}
-            hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.showClassDialog}
-            emptyItemContent="Create a Class"/>
+            items={items}
+            triggers={triggers}
+            hideDialogs={hideDialogs} />
         </Container>
       </div>
     );

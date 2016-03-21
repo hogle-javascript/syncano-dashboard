@@ -11,19 +11,18 @@ import Store from './SocketsStore';
 import {DialogsMixin} from '../../mixins';
 
 // Components
-import {Container, Loading, Socket, Show} from 'syncano-components';
+import {Container, Loading} from 'syncano-components';
 import {InnerToolbar, Dialog} from '../../common';
-import Popover from '../PushNotifications/ConfigPushNotificationsPopover';
-import {FlatButton} from 'syncano-material-ui';
+import {FlatButton, RaisedButton} from 'syncano-material-ui';
 
 // Apps
-import Data from '../Data';
+import DataEndpoints from '../DataEndpoints';
 import Channels from '../Channels';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
 import ScriptEndpoints from '../ScriptEndpoints';
-import PushNotifications from '../PushNotifications';
 import EmptyView from './EmptyView';
+import SocketsDialog from './SocketsDialog';
 import SocketsList from './SocketsList';
 
 export default React.createClass({
@@ -64,40 +63,31 @@ export default React.createClass({
     return APNSItems.concat(GCMItems);
   },
 
-  handleListTitleClick(routeName) {
-    const instanceName = this.getParams().instanceName;
-
-    this.transitionTo(routeName, {instanceName});
-  },
-
   initDialogs() {
     const params = this.getParams();
 
-    return [
-      {
-        dialog: Dialog,
-        params: {
-          key: 'prolongDialog',
-          ref: 'prolongDialog',
-          title: 'Prolong instance lifetime',
-          children: `You've canceled the archiving of your instance ${params.instanceName}.
-          Close this dialog to continue working with your instance.`,
-          actions: (
-            <FlatButton
-              key="cancel"
-              onTouchTap={() => this.handleCancel('prolongDialog')}
-              primary={true}
-              label="Close"
-              ref="cancel"/>
-          )
-        }
+    return [{
+      dialog: Dialog,
+      params: {
+        key: 'prolongDialog',
+        ref: 'prolongDialog',
+        title: 'Prolong instance lifetime',
+        children: `You've canceled the archiving of your instance ${params.instanceName}.
+        Close this dialog to continue working with your instance.`,
+        actions: (
+          <FlatButton
+            key="cancel"
+            onTouchTap={() => this.handleCancel('prolongDialog')}
+            primary={true}
+            label="Close"
+            ref="cancel"/>
+        )
       }
-    ];
+    }];
   },
 
   renderToolbar() {
     const {sockets} = this.state;
-    // const togglePopover = this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null;
 
     if (!sockets.hasAnyItem || sockets.isLoading) {
       return <InnerToolbar title="Sockets"/>;
@@ -105,24 +95,11 @@ export default React.createClass({
 
     return (
       <InnerToolbar title="Sockets">
-        <div>
-          <Popover ref="pushSocketPopover"/>
-          <Socket.Data onTouchTap={Data.Actions.showDialog}/>
-          <Socket.ScriptEndpoint onTouchTap={ScriptEndpoints.Actions.showDialog}/>
-          <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
-
-          {
-
-            /* <Socket.Push
-            tooltip="Configure Push Notification Socket"
-            onTouchTap={togglePopover}/> */
-          }
-
-          <Socket.Trigger onTouchTap={Triggers.Actions.showDialog}/>
-          <Socket.Schedule
-            onTouchTap={Schedules.Actions.showDialog}
-            tooltipPosition="bottom-left"/>
-        </div>
+        <RaisedButton
+          label="Create"
+          primary={true}
+          style={{marginRight: 0}}
+          onTouchTap={Actions.showDialog} />
       </InnerToolbar>
     );
   },
@@ -141,12 +118,19 @@ export default React.createClass({
         <Loading show={sockets.isLoading}>
           <SocketsList sockets={sockets}/>
 
-          <Show if={this.getPushNotificationItems().length}>
-            <PushNotifications.List
-              name="Push Notification Sockets"
-              handleTitleClick={() => this.handleListTitleClick('push-notification-config')}
-              items={this.getPushNotificationItems()}/>
-          </Show>
+          {
+
+            /*
+             <Show if={this.getPushNotificationItems().length}>
+             <PushNotifications.List
+             name="Push Notification Sockets"
+             handleTitleClick={() => this.transitionTo('push-notification-config', this.getParams())}
+             items={this.getPushNotificationItems()}/>
+             </Show>
+             */
+
+          }
+
         </Loading>
       </div>
     );
@@ -155,13 +139,21 @@ export default React.createClass({
   render() {
     return (
       <div>
+        <SocketsDialog />
         <ScriptEndpoints.Dialog />
-        <Data.Dialog />
+        <DataEndpoints.Dialog />
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
-        <PushNotifications.APNSConfigDialog />
-        <PushNotifications.GCMConfigDialog />
+
+        {
+
+          /*
+          <PushNotifications.APNSConfigDialog />
+          <PushNotifications.GCMConfigDialog />
+          */
+
+        }
 
         {this.getDialogs()}
         {this.renderToolbar()}

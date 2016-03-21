@@ -1,5 +1,6 @@
 import ColorIconPicker from './ColorIconPicker';
 import ConversionPixel from './ConversionPixel';
+import DataObjectsAmount from './DataObjectsAmount';
 import Dialog from './Dialog';
 import Dropdown from './Dropdown';
 import DropZone from './DropZone';
@@ -18,6 +19,7 @@ import Sidebar from './Sidebar';
 export default {
   ColorIconPicker,
   ConversionPixel,
+  DataObjectsAmount,
   Dialog,
   Dropdown,
   DropZone,

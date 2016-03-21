@@ -78,7 +78,7 @@ export default Reflux.createStore({
     return items;
   },
 
-  onGetClassByName(className) {
+  getClassByName(className) {
     let classObj = null;
 
     this.data.items.some((item) => {

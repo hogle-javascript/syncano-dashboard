@@ -202,8 +202,8 @@ export default React.createClass({
               disabled={this.hasEditMode()}
               valueLink={this.linkState('name')}
               errorText={this.getValidationMessages('name').join(' ')}
-              hintText="Name of the Data Endpoint"
-              floatingLabelText="Data Endpoint"/>
+              hintText="Data Endpoint's name"
+              floatingLabelText="Name"/>
           </div>
           <div className="col-flex-1" style={{paddingLeft: 15}}>
             <TextField
@@ -212,8 +212,8 @@ export default React.createClass({
               fullWidth={true}
               valueLink={this.linkState('description')}
               errorText={this.getValidationMessages('description').join(' ')}
-              hintText="Description of the Data Endpoint"
-              floatingLabelText="Description"/>
+              hintText="Data Endpoint's description"
+              floatingLabelText="Description (optional)"/>
           </div>
         </div>
         <div className="row vm-4-b">

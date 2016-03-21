@@ -5,8 +5,9 @@ import {DialogsMixin} from '../../mixins';
 
 import Actions from './ClassesActions';
 
-import {MenuItem, IconButton, Styles} from 'syncano-material-ui';
+import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Color} from 'syncano-components';
+import {DataObjectsAmount} from '../../common';
 
 let Column = ColumnList.Column;
 
@@ -19,17 +20,8 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  redirectToClassDataObjects(className) {
-    console.info('ClassesListItem::handleItemClick');
-    this.transitionTo('classes-data-objects', {
-      instanceName: this.getParams().instanceName,
-      className
-    });
-  },
-
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
-    const objectsCount = item.objects_count < 1000 ? item.objects_count : `~ ${item.objects_count}`;
     const metadata = item.metadata;
 
     return (
@@ -47,11 +39,9 @@ export default React.createClass({
           primaryText={item.name}
           secondaryText={item.description}/>
         <Column.Desc className="col-flex-1">
-          {objectsCount}
-          <IconButton
-            onTouchTap={() => this.redirectToClassDataObjects(item.name)}
-            iconClassName="synicon-table"
-            iconStyle={{color: Styles.Colors.blue400, fontSize: 18, verticalAlign: 'bottom'}} />
+          <DataObjectsAmount
+            className={item.name}
+            dataObjects={item.objects_count} />
         </Column.Desc>
         <Column.ID className="col-flex-1">
           <Link

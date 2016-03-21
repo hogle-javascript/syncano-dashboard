@@ -69,7 +69,8 @@ export default Reflux.createStore({
     return dropdown.concat(this.data.items.map((item) => {
       return {
         payload: item.name,
-        text: item.name
+        text: item.name,
+        type: item.type
       };
     }));
   },

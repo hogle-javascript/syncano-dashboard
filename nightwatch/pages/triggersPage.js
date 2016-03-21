@@ -21,7 +21,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerButton: {
-      selector: '//button//span[@class="synicon-socket-trigger"]',
+      selector: '//button//span[text()="Create"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalTitle: {

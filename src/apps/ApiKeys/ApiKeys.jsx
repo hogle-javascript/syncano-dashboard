@@ -1,13 +1,14 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Stores and Actions
 import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import {Container, Socket} from 'syncano-components';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
@@ -15,13 +16,11 @@ import ApiKeysList from './ApiKeysList';
 import ApiKeyDialog from './ApiKeyDialog';
 
 export default React.createClass({
-
   displayName: 'ApiKeys',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-
+    State,
+    Navigation,
     Reflux.connect(Store)
   ],
 
@@ -30,29 +29,26 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  showApiKeyDialog() {
-    Actions.showDialog();
-  },
-
   render() {
+    const {items, isLoading, hideDialogs} = this.state;
+
     return (
       <div>
         <ApiKeyDialog />
 
         <InnerToolbar title="API Keys">
-          <Socket
-            tooltip="Click here to add an API Key"
-            onTouchTap={this.showApiKeyDialog}/>
+          <RaisedButton
+            label="Generate"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={Actions.showDialog} />
         </InnerToolbar>
 
         <Container>
           <ApiKeysList
-            name="API Keys"
-            items={this.state.items}
-            isLoading={this.state.isLoading}
-            hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.showApiKeyDialog}
-            emptyItemContent="Generate an API Key"/>
+            items={items}
+            isLoading={isLoading}
+            hideDialogs={hideDialogs} />
         </Container>
       </div>
     );

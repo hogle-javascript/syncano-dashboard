@@ -101,7 +101,8 @@ export default React.createClass({
             fullWidth={true}
             valueLink={this.linkState('label')}
             errorText={this.getValidationMessages('label').join(' ')}
-            floatingLabelText="Label of the schedule"/>
+            hintText="Schedule's label"
+            floatingLabelText="Label"/>
           <SelectFieldWrapper
             name="script"
             options={scripts}
@@ -126,4 +127,3 @@ export default React.createClass({
     );
   }
 });
-

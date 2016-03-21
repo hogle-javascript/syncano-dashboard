@@ -40,7 +40,7 @@ export default {
   },
 
   removeAPNSDevices(devices) {
-    let promises = devices.map((device) => {
+    const promises = devices.map((device) => {
       return this.Connection
         .PushNotifications
         .Devices
@@ -71,7 +71,7 @@ export default {
   },
 
   removeGCMDevices(devices) {
-    let promises = devices.map((device) => {
+    const promises = devices.map((device) => {
       return this.Connection
         .PushNotifications
         .Devices

@@ -132,8 +132,8 @@ export default React.createClass({
 
   renderTable() {
     console.info('DataObjects::renderTable');
-    let tableData = Store.renderTableData();
-    let tableHeader = Store.renderTableHeader(this.handleSelectAll);
+    const tableData = Store.renderTableData();
+    const tableHeader = Store.renderTableHeader(this.handleSelectAll);
 
     return (
     <div>
@@ -174,7 +174,6 @@ export default React.createClass({
   },
 
   render() {
-    let table = this.state.items ? this.renderTable() : <Loading visible={true}/>;
     const selectedRows = this.state.selectedRows;
     let selectedMessageText = '';
 
@@ -216,10 +215,9 @@ export default React.createClass({
 
         </InnerToolbar>
         <Container>
-          <Show if={this.state.isLoading}>
-            <Loading type='linear'/>
-          </Show>
-          {table}
+          <Loading show={this.state.isLoading}>
+            {this.renderTable()}
+          </Loading>
         </Container>
       </div>
     );

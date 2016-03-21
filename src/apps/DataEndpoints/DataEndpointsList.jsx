@@ -26,7 +26,9 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      checkedItems: Store.getCheckedItems(),
+      emptyItemContent: 'Create a Data Endpoint',
+      emptyItemHandleClick: Actions.showDialog,
+      getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem,
       handleSelectAll: Actions.selectAll,
       handleUnselectAll: Actions.uncheckAll
@@ -39,7 +41,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {checkedItems, isLoading} = this.props;
+    const {getCheckedItems, isLoading} = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -48,7 +50,7 @@ export default React.createClass({
         ref: 'removeDataEndpointDialog',
         title: 'Delete a Data Endpoint',
         handleConfirm: Actions.removeDataEndpoints,
-        items: checkedItems,
+        items: getCheckedItems(),
         groupName: 'Data Endpoint',
         isLoading
       }
@@ -68,7 +70,7 @@ export default React.createClass({
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, checkedItems} = this.props;
+    const {handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other} = this.props;
 
     return (
       <Lists.Container>
@@ -93,7 +95,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
-              checkedItemsCount={checkedItems.length}
+              checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
               handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem
@@ -104,9 +106,7 @@ export default React.createClass({
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
-          {...this.props}
-          emptyItemContent="Create a Data Socket"
-          emptyItemHandleClick={Actions.showDialog}
+          {...other}
           key="dataendpoints-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
