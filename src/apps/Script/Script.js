@@ -534,9 +534,9 @@ export default React.createClass({
                   title="Result"
                   initialOpen={true}>
                   <div style={{
-                    color: '#121212',
-                    fontFamily: 'Ubuntu Mono',
-                    fontSize: 14
+                    color: '#444',
+                    fontFamily: "Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace",
+                    fontSize: 12
                   }}>
                     {lastTraceResult}
                   </div>
