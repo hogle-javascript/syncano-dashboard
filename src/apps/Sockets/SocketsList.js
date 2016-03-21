@@ -45,7 +45,7 @@ export default ({sockets, handleTitleClick}) => {
             handleSelectAll: () => Actions.selectAll(socketName),
             handleUnselectAll: () => Actions.uncheckAll(socketName),
             items: sockets[socketName],
-            handleTitleClick: () => onClickTitle(socketName)
+            handleTitleClick: () => onClickTitle(_.kebabCase(socketName))
           })}
         </Show>
       )}
