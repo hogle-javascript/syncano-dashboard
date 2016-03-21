@@ -5,6 +5,7 @@ export default {
     _.defaults(params, {ordering: 'desc'});
 
     const {instance} = this.Connection.getInfo();
+    const query = _.map(params, (value, key) => `${key}=${value}`).join('&');
     const keys = [
       'data',
       'scriptEndpoints',
@@ -19,17 +20,17 @@ export default {
       'classes'
     ];
     const requests = [
-      {method: 'GET', path: `/v1/instances/${instance.name}/api/objects/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/webhooks/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/triggers/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/schedules/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/channels/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/gcm/config/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/apns/config/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/gcm/devices/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/apns/devices/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/codeboxes/`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/classes/`}
+      {method: 'GET', path: `/v1/instances/${instance.name}/api/objects/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/webhooks/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/triggers/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/schedules/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/channels/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/gcm/config/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/apns/config/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/gcm/devices/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/apns/devices/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/codeboxes/?${query}`},
+      {method: 'GET', path: `/v1/instances/${instance.name}/classes/?${query}`}
     ];
 
     this.Connection
