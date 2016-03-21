@@ -194,8 +194,8 @@ export default (
 
         {/* ScriptEndpoints */}
         <Route
-          name="scriptEndpoints"
-          path="scriptEndpoints">
+          name="script-endpoints"
+          path="script-endpoints">
 
 
           {/* ScriptEndpoints Traces */}

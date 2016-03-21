@@ -29,12 +29,13 @@ export default {
 
   saveCheckboxState(event, checked) {
     localStorage.setItem(this.autosaveAttributeName, checked);
+    this.forceUpdate();
   },
 
-  runAutoSave() {
+  runAutoSave(delay = 3000) {
     this.clearAutosaveTimer();
     if (!this.isSaved() && this.refs.autosaveCheckbox && this.refs.autosaveCheckbox.isChecked()) {
-      this.setAutosaveTimer();
+      this.setAutosaveTimer(delay);
     }
   },
 
@@ -42,7 +43,7 @@ export default {
     clearTimeout(this.autosaveTimer);
   },
 
-  setAutosaveTimer() {
-    this.autosaveTimer = setTimeout(this.handleUpdate, 3000);
+  setAutosaveTimer(delay = 3000) {
+    this.autosaveTimer = setTimeout(this.handleUpdate, delay);
   }
 };

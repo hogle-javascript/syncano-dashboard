@@ -66,7 +66,7 @@ export default React.createClass({
                     primaryText="Data Endpoint" />,
                   <Sidebar.NestedLinkListItem
                     key="ScriptEndpoint"
-                    routeName="scriptEndpoints"
+                    routeName="script-endpoints"
                     primaryText="Script Endpoint" />,
                   <Sidebar.NestedLinkListItem
                     key="Trigger"
