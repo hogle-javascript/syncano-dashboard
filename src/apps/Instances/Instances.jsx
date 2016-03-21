@@ -43,7 +43,8 @@ export default React.createClass({
   },
 
   transitionToFirstInstance() {
-    let firstInstance = Store.getMyInstances()[0] ? Store.getMyInstances()[0].name : null;
+    const {myInstances} = this.state;
+    const firstInstance = myInstances.length ? myInstances[0].name : null;
 
     if (firstInstance) {
       this.transitionTo('instance', {instanceName: firstInstance});
@@ -52,7 +53,7 @@ export default React.createClass({
   },
 
   render() {
-    const {blocked, isLoading, hideDialogs, items} = this.state;
+    const {blocked, isLoading, hideDialogs, myInstances, sharedInstances} = this.state;
 
 
     if (blocked) {
@@ -81,16 +82,16 @@ export default React.createClass({
           <InstancesList
             ref="myInstancesList"
             name="My instances"
-            items={Store.getMyInstances()}
+            items={myInstances}
             isLoading={isLoading}
             hideDialogs={hideDialogs}
             emptyItemHandleClick={this.showInstanceDialog}
             emptyItemContent="Create an instance" />
 
-          <Show if={items.length && Store.getOtherInstances().length && !isLoading}>
+          <Show if={sharedInstances.length && !isLoading}>
             <SharedInstancesList
               ref="otherInstancesList"
-              items={Store.getOtherInstances()}
+              items={sharedInstances}
               hideDialogs={hideDialogs}
               isLoading={isLoading}/>
           </Show>

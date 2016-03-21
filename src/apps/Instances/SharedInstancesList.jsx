@@ -24,6 +24,11 @@ export default React.createClass({
     DialogsMixin
   ],
 
+  handleCheckInstance(checkId, value) {
+    Actions.uncheckAll('myInstances');
+    Actions.checkItem(checkId, value, 'name', 'sharedInstances');
+  },
+
   initDialogs() {
     const {isLoading} = this.props;
 
@@ -36,7 +41,7 @@ export default React.createClass({
         handleConfirm: Actions.removeSharedInstance,
         isLoading,
         actionName: 'leave',
-        items: Store.getCheckedItems(),
+        items: Store.getCheckedItems('sharedInstances'),
         groupName: 'Instance'
       }
     }];
@@ -46,7 +51,7 @@ export default React.createClass({
     return (
       <ListItem
         key={`shared-instances-list-item-${item.name}`}
-        onIconClick={Actions.checkItem}
+        onIconClick={this.handleCheckInstance}
         item={item}
         showDeleteDialog={() => this.showDialog('deleteSharedInstanceDialog', item, SessionStore.getUser().id)}/>
     );
@@ -54,7 +59,7 @@ export default React.createClass({
 
   render() {
     const {isLoading, ...other} = this.props;
-    const checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked('sharedInstances');
 
     return (
       <Loading show={isLoading}>
@@ -71,8 +76,8 @@ export default React.createClass({
             <Column.ColumnHeader columnName="MENU">
               <Lists.Menu
                 checkedItemsCount={checkedItems}
-                handleSelectAll={Actions.selectAll}
-                handleUnselectAll={Actions.uncheckAll}>
+                handleSelectAll={() => Actions.selectAll('sharedInstances')}
+                handleUnselectAll={() => Actions.uncheckAll('sharedInstances')}>
                 <Lists.MenuItem
                   singleItemText="Leave an Instance"
                   multipleItemsText="Leave Instances"
