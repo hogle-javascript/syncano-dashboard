@@ -21,11 +21,11 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerButton: {
-      selector: '//button//span[text()="Create"]',
+      selector: '//button//span[text()="Add"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalTitle: {
-      selector: '//h3[text()="Create a Trigger Socket"]',
+      selector: '//h3[text()="Add a Trigger Socket"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalLabel: {

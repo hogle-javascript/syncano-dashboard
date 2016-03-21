@@ -17,11 +17,11 @@ export default {
       locateStrategy: 'xpath'
     },
     addChannelButton: {
-      selector: '//span[text()="Create"]',
+      selector: '//span[text()="Add"]',
       locateStrategy: 'xpath'
     },
     addChannelModalTitle: {
-      selector: '//h3[text()="Create a Channel Socket"]',
+      selector: '//h3[text()="Add a Channel Socket"]',
       locateStrategy: 'xpath'
     },
     editChannelModalTitle: {
