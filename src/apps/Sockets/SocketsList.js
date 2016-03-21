@@ -14,26 +14,11 @@ import {Show} from 'syncano-components';
 
 export default ({sockets, handleTitleClick}) => {
   const lists = {
-    data: {
-      component: DataList,
-      route: 'data'
-    },
-    scriptEndpoints: {
-      component: ScriptEndpointsList,
-      route: 'script-endpoints'
-    },
-    triggers: {
-      component: TriggersList,
-      route: 'triggers'
-    },
-    schedules: {
-      component: SchedulesList,
-      route: 'schedules'
-    },
-    channels: {
-      component: ChannelsList,
-      route: 'channels'
-    }
+    data: DataList,
+    scriptEndpoints: ScriptEndpointsList,
+    triggers: TriggersList,
+    schedules: SchedulesList,
+    channels: ChannelsList
   };
 
   const onClickTitle = (routeName) => {
@@ -50,17 +35,17 @@ export default ({sockets, handleTitleClick}) => {
 
   return (
     <div>
-      {_.map(lists, (socket, socketName) =>
+      {_.map(lists, (list, socketName) =>
         <Show
           key={`${socketName}SocketsList`}
           if={sockets[socketName].length}>
-          {React.createElement(socket.component, {
+          {React.createElement(list, {
             getCheckedItems: () => Store.getCheckedItems(socketName),
             checkItem: (checkId, value, itemKeyName) => Actions.checkItem(checkId, value, itemKeyName, socketName),
             handleSelectAll: () => Actions.selectAll(socketName),
             handleUnselectAll: () => Actions.uncheckAll(socketName),
             items: sockets[socketName],
-            handleTitleClick: () => onClickTitle(socket.route)
+            handleTitleClick: () => onClickTitle(_.kebabCase(socketName))
           })}
         </Show>
       )}
