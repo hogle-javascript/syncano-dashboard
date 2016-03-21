@@ -44,7 +44,7 @@ export default React.createClass({
 
         <InnerToolbar title="Script Endpoints">
           <RaisedButton
-            label="Create"
+            label="Add"
             style={{marginRight: 0}}
             primary={true}
             onTouchTap={Actions.showDialog}/>
@@ -52,11 +52,9 @@ export default React.createClass({
 
         <Container>
           <ScriptEndpointsList
-            name="Script Endpoints"
             isLoading={isLoading}
             items={items}
-            hideDialogs={hideDialogs}
-            emptyItemContent="Create a Script Endpoint"/>
+            hideDialogs={hideDialogs} />
         </Container>
       </div>
     );

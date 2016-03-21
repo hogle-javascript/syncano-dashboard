@@ -43,7 +43,7 @@ export default React.createClass({
         <InnerToolbar title="Data Endpoints">
           <RaisedButton
             style={{marginRight: 0}}
-            label="Create"
+            label="Add"
             primary={true}
             onTouchTap={Actions.showDialog}/>
         </InnerToolbar>

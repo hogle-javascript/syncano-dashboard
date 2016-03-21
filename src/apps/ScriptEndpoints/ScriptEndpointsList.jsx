@@ -25,7 +25,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      emptyItemContent: 'Create a Script Endpoint',
+      emptyItemContent: 'Add a Script Endpoint',
       emptyItemHandleClick: Actions.showDialog,
       getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem,

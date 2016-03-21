@@ -96,7 +96,7 @@ export default React.createClass({
     return (
       <InnerToolbar title="Sockets">
         <RaisedButton
-          label="Create"
+          label="Add"
           primary={true}
           style={{marginRight: 0}}
           onTouchTap={Actions.showDialog} />

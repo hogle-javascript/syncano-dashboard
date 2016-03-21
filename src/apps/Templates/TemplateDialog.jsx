@@ -51,7 +51,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Create';
+    let title = this.hasEditMode() ? 'Edit' : 'Add';
     let dialogStandardActions = [
       <FlatButton
         key="cancel"
