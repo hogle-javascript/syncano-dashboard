@@ -45,12 +45,6 @@ export default React.createClass({
           {item.description}
         </Column.Desc>
         <Column.Desc className="col-flex-1">
-          <div>
-            <div>group: {item.group_permissions}</div>
-            <div>other: {item.other_permissions}</div>
-          </div>
-        </Column.Desc>
-        <Column.Desc className="col-flex-1">
           {item.type}
         </Column.Desc>
         <Column.Desc className="col-flex-1">

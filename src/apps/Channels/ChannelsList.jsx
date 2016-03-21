@@ -91,11 +91,6 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-flex-1">
-            Permissions
-          </Column.ColumnHeader>
-          <Column.ColumnHeader
-            columnName="DESC"
-            className="col-flex-1">
             Type
           </Column.ColumnHeader>
           <Column.ColumnHeader
