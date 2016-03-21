@@ -30,13 +30,7 @@ export default {
       client.switchWindow(handle);
     });
     profilePage.navigate();
-    client
-      .waitForElementPresent(profilePage.elements.email.selector)
-      .element('css selector', profilePage.elements.email.selector, (result) => {
-        client.elementIdAttribute(result.value.ELEMENT, 'value', (attribute) => {
-          client.assert.equal(attribute.value, process.env.FACEBOOK_EMAIL);
-        });
-      });
+    profilePage.waitForElementPresent('@email');
   }
   // 'Admin Logs in with Google': (client) => {
   //   const loginPage = client.page.loginPage();
