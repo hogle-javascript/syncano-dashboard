@@ -581,6 +581,29 @@ export default React.createClass({
           return this.renderDropZone(item);
         }
 
+        if (item.type === 'object') {
+          const handleChange = (event) => {
+            const state = {};
+
+            state[item.name] = event.target.value;
+            this.setState(state);
+          };
+
+          return (
+            <TextField
+              key={`field-${item.name}`}
+              ref={`field-${item.name}`}
+              name={item.name}
+              style={styles.dialogField}
+              fullWidth={true}
+              onChange={handleChange}
+              defaultValue={JSON.stringify(this.state[item.name])}
+              errorText={this.getValidationMessages(item.name).join(' ')}
+              hintText={`Field ${item.name}`}
+              floatingLabelText={`${item.name} (${item.type})`}/>
+          );
+        }
+
         return (
           <TextField
             key={`field-${item.name}`}
