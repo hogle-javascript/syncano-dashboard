@@ -282,11 +282,6 @@ export default Reflux.createStore({
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjects() {
-    console.debug('DataObjectsStore::onFetchDataObjects');
-    this.trigger(this.data);
-  },
-
   onFetchDataObjectsCompleted(items) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
     this.data.items = [];

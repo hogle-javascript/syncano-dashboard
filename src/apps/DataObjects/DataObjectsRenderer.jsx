@@ -92,17 +92,18 @@ export default {
         let value = item[column.id];
         const valueIsObject = _.isObject(value);
         const renderer = this.getColumnRenderer(column.id);
+        const typesMap = {
+          reference: () => this.renderReference(value),
+          file: () => this.renderFile(value),
+          datetime: () => this.renderColumnDate(value.value)
+        };
 
-        if (valueIsObject && value.type === 'reference') {
-          value = this.renderReference(value);
-        }
-
-        if (valueIsObject && value.type === 'file') {
-          value = this.renderFile(value);
-        }
-
-        if (valueIsObject && value.type === 'datetime') {
-          value = this.renderColumnDate(value.value);
+        if (valueIsObject) {
+          if (value.type && _.keys(typesMap).includes(value.type)) {
+            value = typesMap[value.type]();
+          } else {
+            value = JSON.stringify(value);
+          }
         }
 
         if (renderer) {
