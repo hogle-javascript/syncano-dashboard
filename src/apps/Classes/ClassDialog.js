@@ -329,7 +329,7 @@ export default React.createClass({
       fieldName
     } = this.state;
     const styles = this.getStyles();
-    const title = this.hasEditMode() ? 'Update' : 'Add';
+    const title = this.hasEditMode() ? 'Update' : 'Create';
     const permissions = [
       {
         text: 'none',
