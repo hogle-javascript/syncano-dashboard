@@ -490,7 +490,7 @@ export default React.createClass({
                   value={source}/>
               </TogglePanel>
             </div>
-            <div className="col-flex-1" style={{padding: 0}}>
+            <div className="col-flex-1" style={{padding: 0, maxWidth: 600}}>
 
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
                 <TogglePanel

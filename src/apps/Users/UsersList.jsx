@@ -88,7 +88,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          emptyItemContent="Create a User"
+          emptyItemContent="Add a User"
           emptyItemHandleClick={Actions.showDialog}
           key="users-list"
           renderItem={this.renderItem}/>

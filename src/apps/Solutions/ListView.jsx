@@ -72,7 +72,7 @@ export default React.createClass({
             <InnerToolbar>
               <Show if={SessionStore.isFriendlyUser()}>
                 <RaisedButton
-                  label="Create"
+                  label="Add"
                   primary={true}
                   style={{marginRight: 0}}
                   onTouchTap={CreateDialogActions.showDialog} />

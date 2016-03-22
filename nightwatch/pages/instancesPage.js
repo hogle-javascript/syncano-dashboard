@@ -91,7 +91,7 @@ export default {
       selector: '.empty-list-item'
     },
     addInstanceModalTitle: {
-      selector: '//h3[text()="Create an Instance"]',
+      selector: '//h3[text()="Add an Instance"]',
       locateStrategy: 'xpath'
     },
     editInstanceModalTitle: {

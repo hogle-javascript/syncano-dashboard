@@ -71,7 +71,7 @@ export default React.createClass({
 
         <InnerToolbar title="Instances">
           <RaisedButton
-            label="Create"
+            label="Add"
             primary={true}
             style={{marginRight: 0}}
             onTouchTap={InstanceDialogActions.showDialog} />

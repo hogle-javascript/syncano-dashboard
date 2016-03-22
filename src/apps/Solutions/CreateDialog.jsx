@@ -59,7 +59,7 @@ export default React.createClass({
   },
 
   render() {
-    const title = this.hasEditMode() ? 'Update' : 'Create';
+    const title = this.hasEditMode() ? 'Update' : 'Add';
 
     return (
       <Dialog.FullPage

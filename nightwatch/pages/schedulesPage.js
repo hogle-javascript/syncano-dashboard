@@ -33,11 +33,11 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleButton: {
-      selector: '//button//span[text()="Create"]',
+      selector: '//button//span[text()="Add"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalTitle: {
-      selector: '//h3[text()="Create a Schedule Socket"]',
+      selector: '//h3[text()="Add a Schedule Socket"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalLabel: {

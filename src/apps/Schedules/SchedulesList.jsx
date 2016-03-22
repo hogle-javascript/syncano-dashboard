@@ -25,7 +25,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      emptyItemContent: 'Create a Schedule Socket',
+      emptyItemContent: 'Add a Schedule Socket',
       emptyItemHandleClick: Actions.showDialog,
       getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem,

@@ -62,12 +62,6 @@ export default React.createClass({
             description="Place your objects and manage how your data is returned from Syncano." />
 
           <EmptyListItem
-            handleCreate={ChannelsActions.showDialog}
-            socketName="Channel"
-            title="Channels"
-            description="Get real-time updates to keep your data synchronized." />
-
-          <EmptyListItem
             handleCreate={ScriptEndpointsActions.showDialog}
             socketName="ScriptEndpoint"
             title="Script Endpoints"
@@ -101,6 +95,12 @@ export default React.createClass({
             socketName="Schedule"
             title="Schedules"
             description="Plan events and run Scripts at desired times." />
+
+          <EmptyListItem
+            handleCreate={ChannelsActions.showDialog}
+            socketName="Channel"
+            title="Channels"
+            description="Get real-time updates to keep your data synchronized." />
         </div>
       </div>
     );

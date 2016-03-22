@@ -114,7 +114,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...other}
-          emptyItemContent="Create a Trigger Socket"
+          emptyItemContent="Add a Trigger Socket"
           emptyItemHandleClick={Actions.showDialog}
           key="triggers-list"
           renderItem={this.renderItem}/>
