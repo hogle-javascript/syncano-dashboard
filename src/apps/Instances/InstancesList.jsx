@@ -28,6 +28,11 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
+  handleCheckInstance(checkId, value) {
+    Actions.uncheckAll('sharedInstances');
+    Actions.checkItem(checkId, value, 'name', 'myInstances');
+  },
+
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -37,7 +42,7 @@ export default React.createClass({
         title: 'Delete an Instance',
         handleConfirm: Actions.removeInstances,
         isLoading: this.props.isLoading,
-        items: Store.getCheckedItems(),
+        items: Store.getCheckedItems('myInstances'),
         groupName: 'Instance'
       }
     }];
@@ -47,14 +52,14 @@ export default React.createClass({
     return (
       <ListItem
         key={`instances-list-item-${item.name}`}
-        onIconClick={Actions.checkItem}
+        onIconClick={this.handleCheckInstance}
         item={item}
         showDeleteDialog={() => this.showDialog('deleteInstanceDialog', item)}/>
     );
   },
 
   render() {
-    const checkedItems = Store.getNumberOfChecked();
+    const checkedItems = Store.getNumberOfChecked('myInstances');
 
     return (
       <Loading show={this.props.isLoading}>
@@ -71,8 +76,8 @@ export default React.createClass({
             <Column.ColumnHeader columnName="MENU">
               <Lists.Menu
                 checkedItemsCount={checkedItems}
-                handleSelectAll={Actions.selectAll}
-                handleUnselectAll={Actions.uncheckAll}>
+                handleSelectAll={() => Actions.selectAll('myInstances')}
+                handleUnselectAll={() => Actions.uncheckAll('myInstances')}>
                 <Lists.MenuItem
                   singleItemText="Delete an Instance"
                   multipleItemsText="Delete Instances"

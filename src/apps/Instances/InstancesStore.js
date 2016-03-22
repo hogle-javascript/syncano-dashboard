@@ -2,7 +2,13 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils & Mixins
-import {CheckListStoreMixin, StoreFormMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../mixins';
+import {
+  StoreHelpersMixin,
+  CheckListStoreMixin,
+  StoreFormMixin,
+  WaitForStoreMixin,
+  StoreLoadingMixin
+} from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
@@ -13,6 +19,7 @@ export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
+    StoreHelpersMixin,
     CheckListStoreMixin,
     StoreFormMixin,
     WaitForStoreMixin,
@@ -22,7 +29,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       clickedItem: null,
-      items: [],
+      myInstances: [],
+      sharedInstances: [],
       isLoading: true,
       isTourVisible: false,
       reactTourConfig: null,
@@ -56,33 +64,14 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onCheckItem(checkId, state) {
-    console.debug('InstancesStore::onCheckItem');
+  onSelectAll(key) {
+    const uncheckOthers = {
+      sharedInstances: () => Actions.uncheckAll('myInstances'),
+      myInstances: () => Actions.uncheckAll('sharedInstances')
+    };
 
-    let item = this.getInstanceById(checkId);
-    let checkedItems = this.getCheckedItems();
-
-    // Unchecking or no items checked
-    if (!state || checkedItems.length === 0) {
-      item.checked = state;
-      this.trigger(this.data);
-      return;
-    }
-
-    // Checking if the item is from the same list as other checked
-    let newItemFromMyList = this.amIOwner(item);
-    let otherItemFromMyList = this.amIOwner(checkedItems[0]);
-
-    item.checked = state;
-    if ((!newItemFromMyList && otherItemFromMyList) || (newItemFromMyList && !otherItemFromMyList)) {
-      this.data.items.forEach((existingItem) => {
-        // Uncheck all other then new one
-        if (item.name !== existingItem.name) {
-          existingItem.checked = false;
-        }
-      });
-    }
-
+    uncheckOthers[key]();
+    this.data[key].forEach((item) => item.checked = true);
     this.trigger(this.data);
   },
 
@@ -102,46 +91,17 @@ export default Reflux.createStore({
     return instance;
   },
 
-  isSharedInstanceChecked() {
-    let checkedItems = this.getCheckedItems();
-
-    if (checkedItems) {
-      return !this.amIOwner(checkedItems[0]);
-    }
-  },
-
   // Filters
-  filterMyInstances(item) {
-    return this.amIOwner(item);
-  },
-
-  filterOtherInstances(item) {
-    return !this.amIOwner(item);
-  },
-
   getAllInstances() {
-    return this.getInstances('all');
+    return this.data.myInstances.concat(this.data.sharedInstances);
   },
 
   getOtherInstances() {
-    return this.getInstances('other');
+    return this.data.sharedInstances;
   },
 
   getMyInstances() {
-    return this.getInstances('user');
-  },
-
-  getInstances(ownership) {
-    if (this.data.items === null) {
-      return this.data.items;
-    }
-    let filteredItems = {
-      user: this.data.items.filter(this.filterMyInstances),
-      other: this.data.items.filter(this.filterOtherInstances),
-      all: this.data.items
-    };
-
-    return filteredItems[ownership];
+    return this.data.myInsances;
   },
 
   getInstancesDropdown() {
@@ -153,20 +113,27 @@ export default Reflux.createStore({
     });
   },
 
-  setInstances(instances) {
-    console.debug('InstancesStore::setInstances');
-    this.data.items = Object.keys(instances).map((key) => {
-      if (_.isEmpty(instances[key].metadata)) {
-        instances[key].metadata = {color: 'indigo', icon: 'cloud'};
+  fillInstanceDefaultMeta(instances) {
+    return _.map(instances, (instance) => {
+      if (_.isEmpty(instance.metadata)) {
+        instance.metadata = {color: 'indigo', icon: 'cloud'};
       }
-      return instances[key];
+      return instance;
     });
+  },
+
+  setInstances(items) {
+    console.debug('InstancesStore::setInstances');
+    const instances = this.fillInstanceDefaultMeta(items);
+
+    this.data.myInstances = _.filter(instances, (instance) => this.amIOwner(instance));
+    this.data.sharedInstances = _.filter(instances, (instance) => !this.amIOwner(instance));
     this.trigger(this.data);
   },
 
   redirectToInstancesList() {
-    let router = SessionStore.getRouter();
-    let activeRouteName = router.getCurrentRoutes()[router.getCurrentRoutes().length - 1].name;
+    const router = SessionStore.getRouter();
+    const activeRouteName = router.getCurrentRoutes()[router.getCurrentRoutes().length - 1].name;
 
     if (!_.isUndefined(activeRouteName) && activeRouteName !== 'instances' || _.isUndefined(activeRouteName)) {
       SessionStore.getRouter().transitionTo('instances');
@@ -197,7 +164,7 @@ export default Reflux.createStore({
 
   onFetchInstancesCompleted(items) {
     console.debug('InstancesStore::onFetchInstancesCompleted');
-    Actions.setInstances(items);
+    Actions.setInstances(this.saveListFromSyncano(items));
   },
 
   onFetchInstancesFailure(result) {
@@ -221,7 +188,7 @@ export default Reflux.createStore({
   },
 
   getClickedItemIconColor() {
-    let clickedItem = this.getClickedItem();
+    const clickedItem = this.getClickedItem();
 
     if (!clickedItem) {
       return {

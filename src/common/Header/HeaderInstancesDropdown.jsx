@@ -201,8 +201,8 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {currentInstance} = this.state;
-    const instancesList = InstancesStore.getAllInstances();
+    const {currentInstance, myInstances, sharedInstances} = this.state;
+    const instancesList = myInstances.concat(sharedInstances);
 
     if (!currentInstance || !instancesList.length) {
       return null;
@@ -217,8 +217,8 @@ export default Radium(React.createClass({
           style={styles.iconMenu}
           menuStyle={styles.dropdownMenu}>
           {this.renderAddInstanceItem()}
-          {this.renderList(InstancesStore.getMyInstances())}
-          {this.renderList(InstancesStore.getOtherInstances())}
+          {this.renderList(myInstances)}
+          {this.renderList(sharedInstances)}
         </IconMenu>
       </div>
     );
