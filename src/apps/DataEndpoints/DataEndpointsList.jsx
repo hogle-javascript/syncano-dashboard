@@ -26,7 +26,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      emptyItemContent: 'Create a Data Endpoint',
+      emptyItemContent: 'Add a Data Endpoint',
       emptyItemHandleClick: Actions.showDialog,
       getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem,

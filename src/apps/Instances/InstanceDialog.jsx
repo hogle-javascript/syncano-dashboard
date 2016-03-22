@@ -117,7 +117,7 @@ export default React.createClass({
 
   render() {
     const {open, metadata, notificationShowed, isLoading} = this.state;
-    const title = this.hasEditMode() ? 'Update' : 'Create';
+    const title = this.hasEditMode() ? 'Update' : 'Add';
 
     return (
       <Dialog.FullPage

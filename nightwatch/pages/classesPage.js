@@ -13,7 +13,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addClassButton: {
-      selector: '//span[text()="Create"]',
+      selector: '//span[text()="Add"]',
       locateStrategy: 'xpath'
     },
     createModalNameInput: {
@@ -82,7 +82,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addClassTitle: {
-      selector: '//h3[text()="Add a Class"]',
+      selector: '//h3[text()="Create a Class"]',
       locateStrategy: 'xpath'
     },
     editClassTitle: {

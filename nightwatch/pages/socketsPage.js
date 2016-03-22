@@ -27,7 +27,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalTitle: {
-      selector: '//h3[text()="Create a Script Endpoint"]',
+      selector: '//h3[text()="Add a Script Endpoint"]',
       locateStrategy: 'xpath'
     },
     modalNameInput: {
@@ -101,7 +101,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addChannelModalTitle: {
-      selector: '//h3[text()="Create a Channel Socket"]',
+      selector: '//h3[text()="Add a Channel Socket"]',
       locateStrategy: 'xpath'
     },
     editChannelModalTitle: {

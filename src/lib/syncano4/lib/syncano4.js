@@ -380,6 +380,7 @@ var Syncano = (function () {
     };
 
     this.Deferred = Deferred;
+    this.createList = createList;
 
     /**
      * Object with methods to handle Accounts

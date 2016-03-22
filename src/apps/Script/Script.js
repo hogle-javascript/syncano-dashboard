@@ -490,7 +490,7 @@ export default React.createClass({
                   value={source}/>
               </TogglePanel>
             </div>
-            <div className="col-flex-1" style={{padding: 0}}>
+            <div className="col-flex-1" style={{padding: 0, maxWidth: 600}}>
 
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
                 <TogglePanel
@@ -534,9 +534,9 @@ export default React.createClass({
                   title="Result"
                   initialOpen={true}>
                   <div style={{
-                    color: '#121212',
-                    fontFamily: 'Ubuntu Mono',
-                    fontSize: 14
+                    color: '#444',
+                    fontFamily: "Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace",
+                    fontSize: 12
                   }}>
                     {lastTraceResult}
                   </div>

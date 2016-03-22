@@ -48,7 +48,7 @@ export default React.createClass({
 
         <InnerToolbar title="Channel Sockets">
           <RaisedButton
-            label="Create"
+            label="Add"
             primary={true}
             style={{marginRight: 0}}
             onTouchTap={Actions.showDialog} />
@@ -56,12 +56,9 @@ export default React.createClass({
 
         <Container>
           <ChannelsList
-            name="Channels"
             isLoading={isLoading}
             items={items}
-            hideDialogs={hideDialogs}
-            emptyItemHandleClick={this.showChannelDialog}
-            emptyItemContent="Create a Channel Socket"/>
+            hideDialogs={hideDialogs} />
         </Container>
       </div>
     );

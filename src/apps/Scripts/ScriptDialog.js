@@ -49,7 +49,7 @@ export default React.createClass({
   },
 
   render() {
-    const title = this.hasEditMode() ? 'Edit' : 'Create';
+    const title = this.hasEditMode() ? 'Edit' : 'Add';
     const {isLoading, runtimes, runtime_name, open} = this.state;
 
     return (

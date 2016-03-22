@@ -153,7 +153,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          emptyItemContent="Create a Script"
+          emptyItemContent="Add a Script"
           emptyItemHandleClick={Actions.showDialog}
           key="scripts-list"
           renderItem={this.renderItem}/>

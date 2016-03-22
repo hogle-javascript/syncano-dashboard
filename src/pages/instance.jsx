@@ -47,7 +47,9 @@ export default React.createClass({
         <div className="row">
           <Sidebar>
             <Sticky offsetTop={50}>
-              <HeaderInstancesDropdown />
+              <div style={{height: 56}}>
+                <HeaderInstancesDropdown />
+              </div>
             </Sticky>
             <Sidebar.List
               key="General"

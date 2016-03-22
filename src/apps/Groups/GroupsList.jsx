@@ -82,7 +82,7 @@ export default Radium(React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          emptyItemContent="Create a Group"
+          emptyItemContent="Add a Group"
           emptyItemHandleClick={Actions.showDialog}
           key="groups-list"
           renderItem={this.renderItem}/>

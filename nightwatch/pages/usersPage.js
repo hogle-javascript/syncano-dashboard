@@ -13,11 +13,11 @@ export default {
       locateStrategy: 'xpath'
     },
     addUserButton: {
-      selector: '//button//span[text()="Create a User"]',
+      selector: '//button//span[text()="Add a User"]',
       locateStrategy: 'xpath'
     },
     addUserModalTitle: {
-      selector: '//h3[text()="Create a User"]',
+      selector: '//h3[text()="Add a User"]',
       locateStrategy: 'xpath'
     },
     username: {
@@ -49,11 +49,11 @@ export default {
       locateStrategy: 'xpath'
     },
     addGroupButton: {
-      selector: '//button//span[text()="Create a Group"]',
+      selector: '//button//span[text()="Add a Group"]',
       locateStrategy: 'xpath'
     },
     addGroupModalTitle: {
-      selector: '//h3[text()="Create a Group"]',
+      selector: '//h3[text()="Add a Group"]',
       locateStrategy: 'xpath'
     },
     groupName: {

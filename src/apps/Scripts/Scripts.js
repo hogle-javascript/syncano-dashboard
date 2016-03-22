@@ -46,7 +46,7 @@ export default React.createClass({
 
         <InnerToolbar title="Scripts">
           <RaisedButton
-            label="Create"
+            label="Add"
             primary={true}
             style={{marginRight: 0}}
             onTouchTap={Actions.showDialog} />

@@ -78,7 +78,7 @@ export default React.createClass({
 
   render() {
     const {open, isLoading, scripts, codebox, crontab} = this.state;
-    const title = this.hasEditMode() ? 'Edit' : 'Create';
+    const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
       <Dialog.FullPage
