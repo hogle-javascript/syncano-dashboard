@@ -60,6 +60,7 @@ export default React.createClass({
                 primaryText="Sockets"
                 initiallyOpen={true}
                 iconClassName="synicon-hexagon-outline"
+                iconStyle={{transform: 'rotate(30deg)'}}
                 autoGenerateNestedIndicator={false}
                 nestedItems={[
                   <Sidebar.NestedLinkListItem
