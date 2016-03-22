@@ -58,13 +58,13 @@ export default React.createClass({
           <EmptyListItem
             handleCreate={DataEndpointsActions.showDialog}
             socketName="DataEndpoint"
-            title="Data Endpoints"
+            title="Data Endpoint"
             description="Place your objects and manage how your data is returned from Syncano." />
 
           <EmptyListItem
             handleCreate={ScriptEndpointsActions.showDialog}
             socketName="ScriptEndpoint"
-            title="Script Endpoints"
+            title="Script Endpoint"
             description="Run Scripts on our servers and use them for business logic." />
 
           {
@@ -87,19 +87,19 @@ export default React.createClass({
           <EmptyListItem
             handleCreate={TriggersActions.showDialog}
             socketName="Trigger"
-            title="Triggers"
+            title="Trigger"
             description="Execute a Script when your data is created, updated or deleted." />
 
           <EmptyListItem
             handleCreate={SchedulesActions.showDialog}
             socketName="Schedule"
-            title="Schedules"
+            title="Schedule"
             description="Plan events and run Scripts at desired times." />
 
           <EmptyListItem
             handleCreate={ChannelsActions.showDialog}
             socketName="Channel"
-            title="Channels"
+            title="Channel"
             description="Get real-time updates to keep your data synchronized." />
         </div>
       </div>

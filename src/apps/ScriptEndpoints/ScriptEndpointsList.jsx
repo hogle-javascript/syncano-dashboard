@@ -109,7 +109,7 @@ export default React.createClass({
               handleUnselectAll={handleUnselectAll}>
               <Lists.MenuItem
                 singleItemText="Delete a Script Endpoint"
-                multipleItemsText="Delete Script Endpoint"
+                multipleItemsText="Delete Script Endpoints"
                 onTouchTap={() => this.showDialog('removeScriptEndpointDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>

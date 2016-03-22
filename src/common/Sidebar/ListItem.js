@@ -44,13 +44,13 @@ export default React.createClass({
 
   renderIcon() {
     const styles = this.getStyles();
-    const {iconClassName, iconColor} = this.props;
+    const {iconClassName, iconColor, iconStyle} = this.props;
 
     if (iconClassName) {
       return (
         <FontIcon
           color={iconColor}
-          style={styles.iconStyle}
+          style={Utils.Styles.mergeStyles(styles.iconStyle, iconStyle)}
           className={iconClassName} />
       );
     }
