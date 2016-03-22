@@ -82,7 +82,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addClassTitle: {
-      selector: '//h3[text()="Create a Class"]',
+      selector: '//h3[text()="Add a Class"]',
       locateStrategy: 'xpath'
     },
     editClassTitle: {

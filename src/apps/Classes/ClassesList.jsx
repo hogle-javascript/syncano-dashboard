@@ -161,7 +161,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          emptyItemContent="Create a Class"
+          emptyItemContent="Add a Class"
           emptyItemHandleClick={Actions.showDialog}
           key="classes-list"
           renderItem={this.renderItem}/>
