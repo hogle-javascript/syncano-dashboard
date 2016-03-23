@@ -4,12 +4,6 @@
   "env": {
     "development": {
       "presets": ["react-hmre"]
-    },
-    "production": {
-      "plugins": [
-        "transform-react-inline-elements",
-        "transform-react-constant-elements"
-      ]
     }
   }
 }
