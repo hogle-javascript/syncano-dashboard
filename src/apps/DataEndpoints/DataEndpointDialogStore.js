@@ -22,7 +22,7 @@ export default Reflux.createStore({
       script: '',
       class: '',
       page_size: 50,
-      fields: '',
+      excluded_fields: '',
       expand: '',
       classes: [
         {payload: '', text: 'Loading...'}

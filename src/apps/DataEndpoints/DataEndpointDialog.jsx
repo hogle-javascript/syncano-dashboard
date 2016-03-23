@@ -46,26 +46,30 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
+    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
+
     Actions.createDataEndpoint({
-      name: this.state.name,
+      name,
       class: this.state.class,
-      description: this.state.description,
-      order_by: this.state.order_by,
-      page_size: this.state.page_size,
-      fields: this.state.fields,
-      expand: this.state.expand
+      description,
+      order_by,
+      page_size,
+      excluded_fields,
+      expand
     });
   },
 
   handleEditSubmit() {
+    const {description, order_by, page_size, excluded_fields, expand} = this.state;
+
     Actions.updateDataEndpoint(
       this.state.name, {
         class: this.state.class,
-        description: this.state.description,
-        order_by: this.state.order_by,
-        page_size: this.state.page_size,
-        fields: this.state.fields,
-        expand: this.state.expand
+        description,
+        order_by,
+        page_size,
+        excluded_fields,
+        expand
       }
     );
   },
@@ -88,8 +92,8 @@ export default React.createClass({
     let fields = '';
 
     if (fieldsType === 'showFields') {
-      fields = genList(this.state.fields, fieldName, value);
-      this.setState({fields});
+      fields = genList(this.state.excluded_fields, fieldName, !value);
+      this.setState({excluded_fields: fields});
     }
     if (fieldsType === 'expandFields') {
       fields = genList(this.state.expand, fieldName, value);
@@ -117,7 +121,7 @@ export default React.createClass({
                 name={field.name}
                 value={field.name}
                 label={field.name}
-                defaultToggled={this.isEnabled(this.state.fields, field.name)}
+                defaultToggled={!this.isEnabled(this.state.excluded_fields, field.name)}
                 onToggle={this.handleToggle.bind(this, 'showFields', field.name)}
                 />
             </div>
@@ -126,7 +130,7 @@ export default React.createClass({
                 <Checkbox
                   name="expand"
                   defaultChecked={this.isEnabled(this.state.expand, field.name)}
-                  disabled={!this.isEnabled(this.state.fields, field.name)}
+                  disabled={this.isEnabled(this.state.excluded_fields, field.name)}
                   onCheck={this.handleToggle.bind(this, 'expandFields', field.name)}
                   />
               </Show>
@@ -140,7 +144,7 @@ export default React.createClass({
   renderOptions() {
     console.info('DataEndpointDialog::renderOrderBy', this.state.class);
     let orderField = <div key="options_header" style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
-    let orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
+    const orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
 
     if (orderFields.length > 0) {
       orderField = (
