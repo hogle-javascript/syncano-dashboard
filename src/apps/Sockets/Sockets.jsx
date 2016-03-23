@@ -94,7 +94,9 @@ export default React.createClass({
     }
 
     return (
-      <InnerToolbar menu={<SocketsDropdown/>}>
+      <InnerToolbar
+        title="Sockets:"
+        menu={<SocketsDropdown/>}>
         <RaisedButton
           label="Add"
           primary={true}

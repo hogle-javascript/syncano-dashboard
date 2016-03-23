@@ -21,16 +21,16 @@ export default React.createClass({
     return (
       <DropDownMenu
         value={this.getActiveItem()}
-        labelStyle={{fontSize: 16}}
-        iconStyle={{fill: '#000'}}
+        labelStyle={{fontSize: 20, color: 'rgba(0, 0, 0, 0.4)'}}
+        iconStyle={{fill: 'rgba(0, 0, 0, 0.4)'}}
         onChange={(event, index, value) => this.transitionTo(value, this.getParams())}
         underlineStyle={{display: 'none'}}>
-        <MenuItem value={'sockets'} primaryText="All Sockets" />
+        <MenuItem value={'sockets'} primaryText="All" />
         <MenuItem value={'data'} primaryText="Data Endpoint" />
         <MenuItem value={'script-endpoints'} primaryText="Script Endpoint" />
-        <MenuItem value={'triggers'} primaryText="Trigger Socket" />
-        <MenuItem value={'schedules'} primaryText="Schedule Socket" />
-        <MenuItem value={'channels'} primaryText="Channel Socket" />
+        <MenuItem value={'triggers'} primaryText="Trigger" />
+        <MenuItem value={'schedules'} primaryText="Schedule" />
+        <MenuItem value={'channels'} primaryText="Channel" />
       </DropDownMenu>
     );
   }

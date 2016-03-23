@@ -41,7 +41,9 @@ export default React.createClass({
       <div>
         <ScheduleDialog />
 
-        <InnerToolbar menu={<SocketsDropdown/>}>
+        <InnerToolbar
+          title="Sockets:"
+          menu={<SocketsDropdown/>}>
           <RaisedButton
             label="Add"
             primary={true}

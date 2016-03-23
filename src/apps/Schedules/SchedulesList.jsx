@@ -80,7 +80,7 @@ export default React.createClass({
             primary={true}
             columnName="CHECK_ICON"
             handleClick={handleTitleClick}>
-            Schedule Sockets
+            Schedules
           </Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-flex-1"

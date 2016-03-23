@@ -42,7 +42,9 @@ export default React.createClass({
       <div>
         <ScriptEndpointDialog />
 
-        <InnerToolbar menu={<SocketsDropdown/>}>
+        <InnerToolbar
+          title="Sockets:"
+          menu={<SocketsDropdown/>}>
           <RaisedButton
             label="Add"
             style={{marginRight: 0}}
