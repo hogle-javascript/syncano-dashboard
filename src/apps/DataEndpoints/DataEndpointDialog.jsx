@@ -92,7 +92,7 @@ export default React.createClass({
     let fields = '';
 
     if (fieldsType === 'showFields') {
-      fields = genList(this.state.excluded_fields, fieldName, value);
+      fields = genList(this.state.excluded_fields, fieldName, !value);
       this.setState({excluded_fields: fields});
     }
     if (fieldsType === 'expandFields') {
@@ -121,7 +121,7 @@ export default React.createClass({
                 name={field.name}
                 value={field.name}
                 label={field.name}
-                defaultToggled={this.isEnabled(this.state.excluded_fields, field.name)}
+                defaultToggled={!this.isEnabled(this.state.excluded_fields, field.name)}
                 onToggle={this.handleToggle.bind(this, 'showFields', field.name)}
                 />
             </div>
@@ -130,7 +130,7 @@ export default React.createClass({
                 <Checkbox
                   name="expand"
                   defaultChecked={this.isEnabled(this.state.expand, field.name)}
-                  disabled={!this.isEnabled(this.state.excluded_fields, field.name)}
+                  disabled={this.isEnabled(this.state.excluded_fields, field.name)}
                   onCheck={this.handleToggle.bind(this, 'expandFields', field.name)}
                   />
               </Show>
