@@ -58,7 +58,7 @@ export default React.createClass({
         zIndex: 1,
         position: 'fixed',
         bottom: 20,
-        right: 20
+        right: 100
       },
       deleteIcon: {
         width: 64,
