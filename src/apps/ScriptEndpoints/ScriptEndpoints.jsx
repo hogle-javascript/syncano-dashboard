@@ -10,7 +10,7 @@ import Store from './ScriptEndpointsStore';
 // Components
 import {RaisedButton} from 'syncano-material-ui';
 import {Container} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {InnerToolbar, SocketsDropdown} from '../../common';
 
 // Local components
 import ScriptEndpointsList from './ScriptEndpointsList';
@@ -42,7 +42,7 @@ export default React.createClass({
       <div>
         <ScriptEndpointDialog />
 
-        <InnerToolbar title="Script Endpoints">
+        <InnerToolbar menu={<SocketsDropdown/>}>
           <RaisedButton
             label="Add"
             style={{marginRight: 0}}

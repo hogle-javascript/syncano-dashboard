@@ -110,12 +110,8 @@ export default (
         {/* Sockets */}
         <Route
           name="sockets"
-          path="sockets">
-
-
-          <DefaultRoute handler={Sockets}/>
-
-        </Route>
+          path="sockets"
+          handler={Sockets}/>
 
         {/* Data */}
         <Route

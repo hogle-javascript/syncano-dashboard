@@ -15,6 +15,7 @@ export default Radium(React.createClass({
 
   getDefaultProps() {
     return {
+      backButton: false,
       backButtonTooltipPosition: 'bottom-right',
       forceBackFallback: false
     };
@@ -40,24 +41,48 @@ export default Radium(React.createClass({
   },
 
   handleBackButtonTouchTap() {
-    if (this.isHistory() && !this.props.forceBackFallback) {
+    const {backFallback, forceBackFallback} = this.props;
+
+    if (this.isHistory() && !forceBackFallback) {
       return SessionStore.getRouter().goBack();
     }
 
-    return this.props.backFallback();
+    return backFallback();
   },
 
   renderBackButton() {
+    const {backButtonTooltip, backButtonTooltipPosition} = this.props;
+
     return (
       <ToolbarGroup style={{paddingRight: 24}}>
         <IconButton
           iconClassName="synicon-arrow-left"
-          tooltip={this.props.backButtonTooltip}
-          tooltipPosition={this.props.backButtonTooltipPosition}
+          tooltip={backButtonTooltip}
+          tooltipPosition={backButtonTooltipPosition}
           onClick={this.handleBackButtonTouchTap}
           touch={true}
           style={{marginTop: 4}}
           iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
+      </ToolbarGroup>
+    );
+  },
+
+  renderChildren(children) {
+    const styles = this.getStyles();
+
+    return (
+      <ToolbarGroup
+        float="right"
+        style={styles.toolbarRight}>
+        {children}
+      </ToolbarGroup>
+    );
+  },
+
+  renderMenu(menu) {
+    return (
+      <ToolbarGroup firstChild={true}>
+        {menu}
       </ToolbarGroup>
     );
   },
@@ -70,25 +95,16 @@ export default Radium(React.createClass({
     );
   },
 
-  renderChildren(children) {
-    const styles = this.getStyles();
-
-    return (
-      <ToolbarGroup float="right" style={styles.toolbarRight}>
-        {children}
-      </ToolbarGroup>
-    );
-  },
-
   render() {
     const styles = this.getStyles();
-    let {children, title, ...other} = this.props;
+    const {children, menu, title, backButton, backFallback} = this.props;
 
     return (
       <Sticky offsetTop={50} zIndex={12}>
         <Toolbar style={styles.toolbar}>
-          {this.isHistory() || this.props.backFallback ? this.renderBackButton() : null}
+          {(this.isHistory() || backFallback) && backButton ? this.renderBackButton() : null}
           {title ? this.renderTitle(title) : null}
+          {menu ? this.renderMenu(menu) : null}
           {children ? this.renderChildren(children) : null}
         </Toolbar>
       </Sticky>
