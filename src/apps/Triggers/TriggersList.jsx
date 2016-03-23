@@ -78,7 +78,7 @@ export default React.createClass({
             primary={true}
             columnName="CHECK_ICON"
             handleClick={handleTitleClick}>
-            Trigger Sockets
+            Triggers
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"

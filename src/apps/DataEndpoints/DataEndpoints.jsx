@@ -40,7 +40,9 @@ export default React.createClass({
       <div>
         <DataEndpointDialog/>
 
-        <InnerToolbar menu={<SocketsDropdown/>}>
+        <InnerToolbar
+          title="Sockets:"
+          menu={<SocketsDropdown/>}>
           <RaisedButton
             style={{marginRight: 0}}
             label="Add"
