@@ -152,7 +152,7 @@ export default Radium(React.createClass({
                     type="submit"
                     label={labelPrefix + ' payment'}
                     className="raised-button"
-                    secondary={true}
+                    primary={true}
                     style={{margin: '0 0 0 auto'}}/>
                 </div>
               </div>
@@ -167,7 +167,7 @@ export default Radium(React.createClass({
                 type="submit"
                 label={labelPrefix + ' payment'}
                 className="raised-button"
-                secondary={true}/>
+                primary={true}/>
             </div>
           </Show>
         </Container>

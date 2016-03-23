@@ -100,7 +100,7 @@ export default React.createClass({
               style={styles.updateButton}
               labelStyle={styles.updateButtonLabel}
               className="raised-button"
-              secondary={true}/>
+              primary={true}/>
           </form>
         </Container>
       </div>

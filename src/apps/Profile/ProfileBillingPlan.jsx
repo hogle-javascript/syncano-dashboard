@@ -121,7 +121,7 @@ export default Radium(React.createClass({
         actions: [
           <RaisedButton
             style={{marginRight: 10}}
-            secondary={true}
+            primary={true}
             label="No, I want to keep my plan."
             onTouchTap={this.handleCancelCancelProductionPlan}/>,
           <FlatButton
@@ -369,7 +369,7 @@ export default Radium(React.createClass({
               label="Subscribe"
               labelStyle={styles.updateButtonLabel}
               className="raised-button"
-              secondary={true}
+              primary={true}
               onClick={this.handleShowPlanDialog}/>
           </div>
         </div>
