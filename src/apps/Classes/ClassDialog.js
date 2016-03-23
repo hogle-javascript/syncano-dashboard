@@ -139,13 +139,13 @@ export default React.createClass({
   },
 
   hasFilter(fieldType) {
-    const noFilterFields = ['file', 'text'];
+    const noFilterFields = ['file', 'text', 'array', 'object'];
 
     return noFilterFields.indexOf(fieldType) < 0;
   },
 
   hasOrder(fieldType) {
-    const noOrderFields = ['file', 'text'];
+    const noOrderFields = ['file', 'text', 'array', 'object'];
 
     return _.indexOf(noOrderFields, fieldType) < 0;
   },
