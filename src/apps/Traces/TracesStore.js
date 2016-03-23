@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -32,7 +33,7 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('TracesStore::refreshData', this.data);
 
-    if (SessionStore.instance && this.data.objectId) {
+    if (!_.isEmpty(SessionStore.getInstance()) && !_.isEmpty(this.data.objectId)) {
       this.fetchTraces();
       this.fetchCurrentItem();
     }
