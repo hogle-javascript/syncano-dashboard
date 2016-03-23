@@ -103,7 +103,7 @@
     "node-libs-browser": ">=0.5.3",
     "node-sass": "3.4.2",
     "oauth-shim": "0.3.3",
-    "phantomjs-prebuilt": "2.1.4",
+    "phantomjs-prebuilt": "2.1.6",
     "raw-loader": "0.5.1",
     "react-inlinesvg": "github:patrykkopycinski/react-inlinesvg#build",
     "react-router": "0.13.5",

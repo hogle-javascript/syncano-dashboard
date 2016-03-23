@@ -79,13 +79,13 @@ export default React.createClass({
         ref: 'deleteClassDialog',
         title: 'Delete a Class',
         handleConfirm: Actions.removeClasses,
-        items: Store.getCheckedItems(),
+        items: checkedClasses,
         groupName: 'Class',
         isLoading
       }
     };
 
-    if (classesAssociatedWithTriggers) {
+    if (classesAssociatedWithTriggers.length) {
       const associatedWithTriggersList = this.getAssociationsList('triggers', classesAssociatedWithTriggers);
       const notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
 

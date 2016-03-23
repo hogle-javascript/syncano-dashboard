@@ -15,13 +15,7 @@ export default {
   getNumberOfChecked(key) {
     const keyName = this.getKeyName(key);
 
-    if (this.data[keyName] === null) {
-      return 0;
-    }
-
-    const checkedFilter = (item) => item.checked === true;
-
-    return this.data[keyName].filter(checkedFilter).length;
+    return this.getCheckedItems(keyName).length;
   },
 
   onCheckItem(checkId, value, itemKeyName = 'id', stateKeyName) {
