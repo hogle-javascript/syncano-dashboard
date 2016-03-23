@@ -17,12 +17,16 @@ export default Reflux.createStore({
   ],
 
   langMap: {
-    python: 'python',
     nodejs: 'javascript',
+    'nodejs_library_v0.4': 'javascript',
+    'nodejs_library_v1.0': 'javascript',
+    python: 'python',
+    'python_library_v4.2': 'python',
+    'python_library_v5.0': 'python',
     ruby: 'ruby',
     golang: 'golang',
-    swift: 'swift',
-    php: 'php'
+    php: 'php',
+    swift: 'swift'
   },
 
   scriptConfigValueTypes: [
