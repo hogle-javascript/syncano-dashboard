@@ -188,7 +188,8 @@ export default React.createClass({
 
         <InnerToolbar
           title={`Class: ${this.getParams().className} ${selectedMessageText}`}
-          backFallback={this.handleBackClick}>
+          backFallback={this.handleBackClick}
+          backButtonTooltip="Go back to Classes list">
 
           <IconButton
             style={{fontSize: 25, marginTop: 5}}

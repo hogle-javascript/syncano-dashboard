@@ -37,7 +37,7 @@ export default Radium(React.createClass({
     return {
       root: {
         height: 56,
-        paddingTop: 2,
+        paddingTop: 5,
         paddingBottom: 2,
         paddingLeft: 24,
         backgroundColor: '#F2F2F2'

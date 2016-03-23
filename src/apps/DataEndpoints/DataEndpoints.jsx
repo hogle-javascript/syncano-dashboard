@@ -12,7 +12,7 @@ import Store from './DataEndpointsStore';
 // Components
 import {RaisedButton} from 'syncano-material-ui';
 import {Container} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {InnerToolbar, SocketsDropdown} from '../../common';
 
 // Local components
 import DataEndpointsList from './DataEndpointsList';
@@ -40,7 +40,7 @@ export default React.createClass({
       <div>
         <DataEndpointDialog/>
 
-        <InnerToolbar title="Data Endpoints">
+        <InnerToolbar menu={<SocketsDropdown/>}>
           <RaisedButton
             style={{marginRight: 0}}
             label="Add"

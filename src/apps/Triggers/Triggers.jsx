@@ -8,7 +8,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 
 import {RaisedButton} from 'syncano-material-ui';
 import {Container} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {InnerToolbar, SocketsDropdown} from '../../common';
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
 
@@ -38,7 +38,7 @@ export default React.createClass({
       <div>
         <TriggerDialog />
 
-        <InnerToolbar title="Trigger Sockets">
+        <InnerToolbar menu={<SocketsDropdown/>}>
           <RaisedButton
             label="Add"
             primary={true}

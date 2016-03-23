@@ -12,7 +12,7 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import {Container, Loading} from 'syncano-components';
-import {InnerToolbar, Dialog} from '../../common';
+import {InnerToolbar, Dialog, SocketsDropdown} from '../../common';
 import {FlatButton, RaisedButton} from 'syncano-material-ui';
 
 // Apps
@@ -94,7 +94,7 @@ export default React.createClass({
     }
 
     return (
-      <InnerToolbar title="Sockets">
+      <InnerToolbar menu={<SocketsDropdown/>}>
         <RaisedButton
           label="Add"
           primary={true}
