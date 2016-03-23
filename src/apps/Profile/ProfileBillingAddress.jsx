@@ -221,7 +221,7 @@ export default React.createClass({
               type="submit"
               label="Update"
               className="raised-button"
-              secondary={true}/>
+              primary={true}/>
           </form>
         </Container>
       </div>

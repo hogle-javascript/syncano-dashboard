@@ -155,7 +155,7 @@ export default Radium(React.createClass({
                     style={styles.updateButton}
                     labelStyle={styles.updateButtonLabel}
                     className="raised-button"
-                    secondary={true} />
+                    primary={true} />
                 </form>
               </div>
             </div>
