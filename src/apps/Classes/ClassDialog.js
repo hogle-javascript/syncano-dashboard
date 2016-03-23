@@ -22,7 +22,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Reflux.connect(GroupsStore, 'groups'),
     DialogMixin,
     FormMixin
   ],
@@ -119,9 +118,9 @@ export default React.createClass({
   },
 
   getGroups() {
-    const groups = this.state.groups.items;
+    const groups = GroupsStore.getGroups();
     const emptyItem = {
-      payload: null,
+      payload: 'none',
       text: 'none'
     };
 
@@ -163,7 +162,7 @@ export default React.createClass({
     Actions.createClass({
       name,
       description,
-      group,
+      group: group !== 'none' ? group : null,
       group_permissions,
       other_permissions,
       schema,
@@ -180,7 +179,7 @@ export default React.createClass({
     Actions.updateClass(
       name, {
         description,
-        group,
+        group: group !== 'none' ? group : null,
         group_permissions,
         other_permissions,
         schema: this.getSchema()
