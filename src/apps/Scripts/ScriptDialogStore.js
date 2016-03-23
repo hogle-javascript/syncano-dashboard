@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils & Mixins
 import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
@@ -29,9 +30,21 @@ export default Reflux.createStore({
   },
 
   setScriptRuntimes(payload) {
-    let runtimes = Object.keys(payload).map((runtime) => {
-      return {payload: runtime, text: runtime};
-    });
+    const runtimesLabelMap = {
+      golang: 'Golang',
+      nodejs: 'NodeJS',
+      'nodejs_library_v0.4': 'NodeJS (deprecated v0.4)',
+      'nodejs_library_v1.0': 'NodeJS (latest v1.0)',
+      php: 'PHP',
+      python: 'Python',
+      'python_library_v4.2': 'Python (deprecated v4.2)',
+      'python_library_v5.0': 'Python (latest v5.0)',
+      ruby: 'Ruby',
+      swift: 'Swift'
+    };
+    const runtimes = _.sortBy(_.map(payload, (value, runtime) => {
+      return {payload: runtime, text: runtimesLabelMap[runtime]};
+    }), 'text');
 
     this.trigger({runtimes});
   },

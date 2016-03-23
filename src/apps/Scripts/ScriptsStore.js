@@ -18,8 +18,12 @@ export default Reflux.createStore({
   ],
 
   langMap: {
-    python: 'python',
     nodejs: 'javascript',
+    'nodejs_library_v0.4': 'javascript',
+    'nodejs_library_v1.0': 'javascript',
+    python: 'python',
+    'python_library_v4.2': 'python',
+    'python_library_v5.0': 'python',
     ruby: 'ruby',
     golang: 'golang',
     php: 'php',
@@ -28,7 +32,11 @@ export default Reflux.createStore({
 
   runtimeColors: {
     nodejs: {color: '#80BD01', icon: 'language-nodejs'},
+    'nodejs_library_v0.4': {color: '#80BD01', icon: 'language-nodejs'},
+    'nodejs_library_v1.0': {color: '#80BD01', icon: 'language-nodejs'},
     python: {color: '#FFC107', icon: 'language-python'},
+    'python_library_v4.2': {color: '#FFC107', icon: 'language-python'},
+    'python_library_v5.0': {color: '#FFC107', icon: 'language-python'},
     golang: {color: '#95DCF4', icon: 'language-golang'},
     ruby: {color: '#ED4545', icon: 'language-ruby'},
     swift: {color: '#FC8737', icon: 'language-swift'},
