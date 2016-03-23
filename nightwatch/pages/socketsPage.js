@@ -93,7 +93,7 @@ export default {
       locateStrategy: 'xpath'
     },
     channelSocketsListTitle: {
-      selector: '//div[text()="Channel Sockets"]',
+      selector: '//div[text()="Channels"]',
       locateStrategy: 'xpath'
     },
     addChannelButton: {
