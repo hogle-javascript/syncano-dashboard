@@ -62,8 +62,12 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('ScriptStore::refreshData');
-    Actions.fetchScript(SessionStore.getRouter().getCurrentParams().scriptId);
-    Actions.fetchScriptTraces(SessionStore.getRouter().getCurrentParams().scriptId);
+    const {scriptId} = SessionStore.getRouter().getCurrentParams();
+
+    if (scriptId) {
+      Actions.fetchScript(scriptId);
+      Actions.fetchScriptTraces(scriptId);
+    }
   },
 
   mapConfig(originalConfig) {
