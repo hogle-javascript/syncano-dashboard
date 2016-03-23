@@ -12,7 +12,7 @@ export default ({handleCancel, handleConfirm, submitLabel = 'Confirm'}) => {
       <RaisedButton
         key="confirm"
         label={submitLabel}
-        secondary={true}
+        primary={true}
         onTouchTap={handleConfirm}/>
     </div>
   );

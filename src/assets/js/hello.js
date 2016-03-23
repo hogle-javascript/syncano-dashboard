@@ -1,4 +1,4 @@
-/*! hellojs v1.8.1 | (c) 2012-2015 Andrew Dodson | MIT https://adodson.com/hello.js/LICENSE */
+/*! hellojs v1.12.0 | (c) 2012-2016 Andrew Dodson | MIT https://adodson.com/hello.js/LICENSE */
 // ES5 Object.create
 if (!Object.create) {
 
@@ -174,12 +174,21 @@ hello.utils = {
 
 		// Get the arguments as an array but ommit the initial item
 		Array.prototype.slice.call(arguments, 1).forEach(function(a) {
-			if (r instanceof Object && a instanceof Object && r !== a) {
+			if (Array.isArray(r) && Array.isArray(a)) {
+				Array.prototype.push.apply(r, a);
+			}
+			else if (r instanceof Object && a instanceof Object && r !== a) {
 				for (var x in a) {
 					r[x] = hello.utils.extend(r[x], a[x]);
 				}
 			}
 			else {
+
+				if (Array.isArray(a)) {
+					// Clone it
+					a = a.slice(0);
+				}
+
 				r = a;
 			}
 		});
@@ -213,6 +222,19 @@ hello.utils.extend(hello, {
 			scrollbars: 1,
 			width: 500,
 			height: 550
+		},
+
+		// Default scope
+		// Many services require atleast a profile scope,
+		// HelloJS automatially includes the value of provider.scope_map.basic
+		// If that's not required it can be removed via hello.settings.scope.length = 0;
+		scope: ['basic'],
+
+		// Scope Maps
+		// This is the default module scope, these are the defaults which each service is mapped too.
+		// By including them here it prevents the scope from being applied accidentally
+		scope_map: {
+			basic: ''
 		},
 
 		// Default service / network
@@ -280,14 +302,6 @@ hello.utils.extend(hello, {
 		// Merge services if there already exists some
 		utils.extend(this.services, services);
 
-		// Format the incoming
-		for (x in this.services) {
-			if (this.services.hasOwnProperty(x)) {
-				this.services[x].scope = this.services[x].scope || {};
-			}
-		}
-
-		//
 		// Update the default settings with this one.
 		if (options) {
 			utils.extend(this.settings, options);
@@ -319,6 +333,9 @@ hello.utils.extend(hello, {
 
 		// Local vars
 		var url;
+
+		// Get all the custom options and store to be appended to the querystring
+		var qs = utils.diffKey(p.options, _this.settings);
 
 		// Merge/override options with app defaults
 		var opts = p.options = utils.merge(_this.settings, p.options || {});
@@ -392,12 +409,11 @@ hello.utils.extend(hello, {
 		}
 
 		// Query string parameters, we may pass our own arguments to form the querystring
-		p.qs = {
+		p.qs = utils.merge(qs, {
 			client_id: encodeURIComponent(provider.id),
 			response_type: encodeURIComponent(responseType),
 			redirect_uri: encodeURIComponent(redirectUri),
 			display: opts.display,
-			scope: 'basic',
 			state: {
 				client_id: provider.id,
 				network: p.network,
@@ -406,7 +422,7 @@ hello.utils.extend(hello, {
 				state: opts.state,
 				redirect_uri: redirectUri
 			}
-		};
+		});
 
 		// Get current session for merging scopes, and for quick auth response
 		var session = utils.store(p.network);
@@ -415,18 +431,27 @@ hello.utils.extend(hello, {
 		// Ensure this is a string - IE has a problem moving Arrays between windows
 		// Append the setup scope
 		var SCOPE_SPLIT = /[,\s]+/;
-		var scope = (opts.scope || '').toString() + ',' + p.qs.scope;
+
+		// Include default scope settings (cloned).
+		var scope = _this.settings.scope ? [_this.settings.scope.toString()] : [];
+
+		// Extend the providers scope list with the default
+		var scopeMap = utils.merge(_this.settings.scope_map, provider.scope || {});
+
+		// Add user defined scopes...
+		if (opts.scope) {
+			scope.push(opts.scope.toString());
+		}
 
 		// Append scopes from a previous session.
 		// This helps keep app credentials constant,
 		// Avoiding having to keep tabs on what scopes are authorized
 		if (session && 'scope' in session && session.scope instanceof String) {
-			scope += ',' + session.scope;
+			scope.push(session.scope);
 		}
 
-		// Convert scope to an Array
-		// - easier to manipulate
-		scope = scope.split(SCOPE_SPLIT);
+		// Join and Split again
+		scope = scope.join(',').split(SCOPE_SPLIT);
 
 		// Format remove duplicates and empty values
 		scope = utils.unique(scope).filter(filterEmpty);
@@ -437,23 +462,7 @@ hello.utils.extend(hello, {
 		// Map scopes to the providers naming convention
 		scope = scope.map(function(item) {
 			// Does this have a mapping?
-			if (item in provider.scope) {
-				return provider.scope[item];
-			}
-			else {
-				// Loop through all services and determine whether the scope is generic
-				for (var x in _this.services) {
-					var serviceScopes = _this.services[x].scope;
-					if (serviceScopes && item in serviceScopes) {
-						// Found an instance of this scope, so lets not assume its special
-						return '';
-					}
-				}
-
-				// This is a unique scope to this service so lets in it.
-				return item;
-			}
-
+			return (item in scopeMap) ? scopeMap[item] : item;
 		});
 
 		// Stringify and Arrayify so that double mapped scopes are given the chance to be formatted
@@ -503,8 +512,8 @@ hello.utils.extend(hello, {
 		// Add OAuth to state
 		// Where the service is going to take advantage of the oauth_proxy
 		if (!/\btoken\b/.test(responseType) ||
-		parseInt(provider.oauth.version, 10) < 2 ||
-		(opts.display === 'none' && provider.oauth.grant && session && session.refresh_token)) {
+			parseInt(provider.oauth.version, 10) < 2 ||
+			(opts.display === 'none' && provider.oauth.grant && session && session.refresh_token)) {
 
 			// Add the oauth endpoints
 			p.qs.state.oauth = provider.oauth;
@@ -537,11 +546,14 @@ hello.utils.extend(hello, {
 			url = utils.qs(provider.oauth.auth, p.qs, encodeFunction);
 		}
 
+		// Broadcast this event as an auth:init
+		emit('auth.init', p);
+
 		// Execute
 		// Trigger how we want self displayed
 		if (opts.display === 'none') {
 			// Sign-in in the background, iframe
-			utils.iframe(url);
+			utils.iframe(url, redirectUri);
 		}
 
 		// Triggering popup?
@@ -620,7 +632,7 @@ hello.utils.extend(hello, {
 			var callback = function(opts) {
 
 				// Remove from the store
-				utils.store(p.name, '');
+				utils.store(p.name, null);
 
 				// Emit events by default
 				promise.fulfill(hello.utils.merge({network:p.name}, opts || {}));
@@ -704,7 +716,7 @@ hello.utils.extend(hello.utils, {
 			// Override the items in the URL which already exist
 			for (var x in params) {
 				var str = '([\\?\\&])' + x + '=[^\\&]*';
-				reg = new RegExp(str);
+				var reg = new RegExp(str);
 				if (url.match(reg)) {
 					url = url.replace(reg, '$1' + x + '=' + formatFunction(params[x]));
 					delete params[x];
@@ -763,13 +775,13 @@ hello.utils.extend(hello.utils, {
 	store: (function() {
 
 		var a = ['localStorage', 'sessionStorage'];
-		var i = 0;
+		var i = -1;
 		var prefix = 'test';
 
 		// Set LocalStorage
 		var localStorage;
 
-		while (a[i++]) {
+		while (a[++i]) {
 			try {
 				// In Chrome with cookies blocked, calling localStorage throws an error
 				localStorage = window[a[i]];
@@ -960,12 +972,12 @@ hello.utils.extend(hello.utils, {
 			t = typeof (args[i]);
 
 			if ((typeof (o[x]) === 'function' && o[x].test(args[i])) || (typeof (o[x]) === 'string' && (
-			(o[x].indexOf('s') > -1 && t === 'string') ||
-			(o[x].indexOf('o') > -1 && t === 'object') ||
-			(o[x].indexOf('i') > -1 && t === 'number') ||
-			(o[x].indexOf('a') > -1 && t === 'object') ||
-			(o[x].indexOf('f') > -1 && t === 'function')
-			))
+					(o[x].indexOf('s') > -1 && t === 'string') ||
+					(o[x].indexOf('o') > -1 && t === 'object') ||
+					(o[x].indexOf('i') > -1 && t === 'number') ||
+					(o[x].indexOf('a') > -1 && t === 'object') ||
+					(o[x].indexOf('f') > -1 && t === 'function')
+				))
 			) {
 				p[x] = args[i++];
 			}
@@ -995,7 +1007,7 @@ hello.utils.extend(hello.utils, {
 		else {
 			var a = document.createElement('a');
 			a.href = path;
-			return a;
+			return a.cloneNode(false);
 		}
 	},
 
@@ -1003,6 +1015,23 @@ hello.utils.extend(hello.utils, {
 		return b.filter(function(item) {
 			return a.indexOf(item) === -1;
 		});
+	},
+
+	// Get the different hash of properties unique to `a`, and not in `b`
+	diffKey: function(a, b) {
+		if (a || !b) {
+			var r = {};
+			for (var x in a) {
+				// Does the property not exist?
+				if (!(x in b)) {
+					r[x] = a[x];
+				}
+			}
+
+			return r;
+		}
+
+		return a;
 	},
 
 	// Unique
@@ -1038,6 +1067,8 @@ hello.utils.extend(hello.utils, {
 
 		return true;
 	},
+
+	//jscs:disable
 
 	/*!
 	 **  Thenable -- Embeddable Minimum Strictly-Compliant Promises/A+ 1.1.1 Thenable
@@ -1165,7 +1196,7 @@ hello.utils.extend(hello.utils, {
 			}
 
 			/*  surgically check for a "then" method
-				(mainly to just call the "getter" of "then" only once)  */
+			 (mainly to just call the "getter" of "then" only once)  */
 			var then;
 			if ((typeof x === "object" && x !== null) || typeof x === "function") {
 				try { then = x.then; }                                   /*  [Promises/A+ 2.3.3.1, 3.5]  */
@@ -1176,7 +1207,7 @@ hello.utils.extend(hello.utils, {
 			}
 
 			/*  handle own Thenables    [Promises/A+ 2.3.2]
-				and similar "thenables" [Promises/A+ 2.3.3]  */
+			 and similar "thenables" [Promises/A+ 2.3.3]  */
 			if (typeof then === "function") {
 				var resolved = false;
 				try {
@@ -1212,6 +1243,8 @@ hello.utils.extend(hello.utils, {
 		/*  export API  */
 		return api;
 	})(),
+
+	//jscs:enable
 
 	// Event
 	// A contructor superclass for adding event menthods, on, off, emit.
@@ -1337,18 +1370,12 @@ hello.utils.extend(hello.utils, {
 		window[guid] = function() {
 			// Trigger the callback
 			try {
-				bool = callback.apply(this, arguments);
+				if (callback.apply(this, arguments)) {
+					delete window[guid];
+				}
 			}
 			catch (e) {
 				console.error(e);
-			}
-
-			if (bool) {
-				// Remove this handler reference
-				try {
-					delete window[guid];
-				}
-				catch (e) {}
 			}
 		};
 
@@ -1384,99 +1411,6 @@ hello.utils.extend(hello.utils, {
 			optionsArray.push(name + (value !== null ? '=' + value : ''));
 		});
 
-		// Create a function for reopening the popup, and assigning events to the new popup object
-		// This is a fix whereby triggering the
-		var open = function(url) {
-
-			// Trigger callback
-			var popup = window.open(
-				url,
-				'_blank',
-				optionsArray.join(',')
-			);
-
-			// PhoneGap support
-			// Add an event listener to listen to the change in the popup windows URL
-			// This must appear before popup.focus();
-			if (popup && popup.addEventListener) {
-
-				// Get the origin of the redirect URI
-
-				var a = hello.utils.url(redirectUri);
-				var redirectUriOrigin = a.origin || (a.protocol + '//' + a.hostname);
-
-				// Listen to changes in the InAppBrowser window
-
-				popup.addEventListener('loadstart', function(e) {
-
-					var url = e.url;
-
-					// Is this the path, as given by the redirectUri?
-					// Check the new URL agains the redirectUriOrigin.
-					// According to #63 a user could click 'cancel' in some dialog boxes ....
-					// The popup redirects to another page with the same origin, yet we still wish it to close.
-
-					if (url.indexOf(redirectUriOrigin) !== 0) {
-						return;
-					}
-
-					// Split appart the URL
-					var a = hello.utils.url(url);
-
-					// We dont have window operations on the popup so lets create some
-					// The location can be augmented in to a location object like so...
-
-					var _popup = {
-						location: {
-							// Change the location of the popup
-							assign: function(location) {
-
-								// Unfourtunatly an app is may not change the location of a InAppBrowser window.
-								// So to shim this, just open a new one.
-
-								popup.addEventListener('exit', function() {
-
-									// For some reason its failing to close the window if a new window opens too soon.
-
-									setTimeout(function() {
-										open(location);
-									}, 1000);
-								});
-							},
-
-							search: a.search,
-							hash: a.hash,
-							href: a.href
-						},
-						close: function() {
-							if (popup.close) {
-								popup.close();
-							}
-						}
-					};
-
-					// Then this URL contains information which HelloJS must process
-					// URL string
-					// Window - any action such as window relocation goes here
-					// Opener - the parent window which opened this, aka this script
-
-					hello.utils.responseHandler(_popup, window);
-
-					// Always close the popup regardless of whether the hello.utils.responseHandler detects a state parameter or not in the querystring.
-					// Such situations might arise such as those in #63
-
-					_popup.close();
-
-				});
-			}
-
-			if (popup && popup.focus) {
-				popup.focus();
-			}
-
-			return popup;
-		};
-
 		// Call the open() function with the initial path
 		//
 		// OAuth redirect, fixes URI fragments from being lost in Safari
@@ -1490,7 +1424,17 @@ hello.utils.extend(hello.utils, {
 			url = redirectUri + '#oauth_redirect=' + encodeURIComponent(encodeURIComponent(url));
 		}
 
-		return open(url);
+		var popup = window.open(
+			url,
+			'_blank',
+			optionsArray.join(',')
+		);
+
+		if (popup && popup.focus) {
+			popup.focus();
+		}
+
+		return popup;
 	},
 
 	// OAuth and API response handler
@@ -1599,41 +1543,38 @@ hello.utils.extend(hello.utils, {
 		// Trigger a callback to authenticate
 		function authCallback(obj, window, parent) {
 
+			var cb = obj.callback;
+			var network = obj.network;
+
 			// Trigger the callback on the parent
-			_this.store(obj.network, obj);
+			_this.store(network, obj);
 
 			// If this is a page request it has no parent or opener window to handle callbacks
 			if (('display' in obj) && obj.display === 'page') {
 				return;
 			}
 
-			if (parent) {
-				// Call the generic listeners
-				// Win.hello.emit(network+":auth."+(obj.error?'failed':'login'), obj);
+			// Remove from session object
+			if (parent && cb && cb in parent) {
 
-				// TODO: remove from session object
-				var cb = obj.callback;
 				try {
 					delete obj.callback;
 				}
 				catch (e) {}
 
 				// Update store
-				_this.store(obj.network, obj);
+				_this.store(network, obj);
 
 				// Call the globalEvent function on the parent
-				if (cb in parent) {
+				// It's safer to pass back a string to the parent,
+				// Rather than an object/array (better for IE8)
+				var str = JSON.stringify(obj);
 
-					// It's safer to pass back a string to the parent,
-					// Rather than an object/array (better for IE8)
-					var str = JSON.stringify(obj);
-
-					try {
-						parent[cb](str);
-					}
-					catch (e) {
-						// Error thrown whilst executing parent callback
-					}
+				try {
+					parent[cb](str);
+				}
+				catch (e) {
+					// Error thrown whilst executing parent callback
 				}
 			}
 
@@ -1642,35 +1583,32 @@ hello.utils.extend(hello.utils, {
 
 		function closeWindow() {
 
-			// Close this current window
-			try {
-				window.close();
+			if (window.frameElement) {
+				// Inside an iframe, remove from parent
+				parent.document.body.removeChild(window.frameElement);
 			}
-			catch (e) {}
-
-			// IOS bug wont let us close a popup if still loading
-			if (window.addEventListener) {
-				window.addEventListener('load', function() {
+			else {
+				// Close this current window
+				try {
 					window.close();
-				});
+				}
+				catch (e) {}
+
+				// IOS bug wont let us close a popup if still loading
+				if (window.addEventListener) {
+					window.addEventListener('load', function() {
+						window.close();
+					});
+				}
 			}
+
 		}
 	}
 });
 
 // Events
-
 // Extend the hello object with its own event instance
 hello.utils.Event.call(hello);
-
-/////////////////////////////////////
-//
-// Save any access token that is in the current page URL
-// Handle any response solicited through iframe hash tag following an API request
-//
-/////////////////////////////////////
-
-hello.utils.responseHandler(window, window.opener || window.parent);
 
 ///////////////////////////////////
 // Monitoring session state
@@ -1766,7 +1704,7 @@ hello.utils.responseHandler(window, window.opener || window.parent);
 
 			// Has session changed?
 			else if (oldSess.access_token === session.access_token &&
-			oldSess.expires === session.expires) {
+				oldSess.expires === session.expires) {
 				continue;
 			}
 
@@ -1896,6 +1834,12 @@ hello.api = function() {
 		p.timeout = _this.settings.timeout;
 	}
 
+	// Format response
+	// Whether to run the raw response through post processing.
+	if (!('formatResponse' in p)) {
+		p.formatResponse = true;
+	}
+
 	// Get the current session
 	// Append the access_token to the query
 	p.authResponse = _this.getAuthResponse(p.network);
@@ -1980,6 +1924,10 @@ hello.api = function() {
 				val = p.query[key];
 				delete p.query[key];
 			}
+			else if (p.data && key in p.data) {
+				val = p.data[key];
+				delete p.data[key];
+			}
 			else if (!defaults) {
 				promise.reject(error('missing_attribute', 'The attribute ' + key + ' is missing from the request'));
 			}
@@ -2000,6 +1948,19 @@ hello.api = function() {
 		// @ response object
 		// @ statusCode integer if available
 		utils.request(p, function(r, headers) {
+
+			// Is this a raw response?
+			if (!p.formatResponse) {
+				// Bad request? error statusCode or otherwise contains an error response vis JSONP?
+				if (typeof headers === 'object' ? (headers.statusCode >= 400) : (typeof r === 'object' && 'error' in r)) {
+					promise.reject(r);
+				}
+				else {
+					promise.fulfill(r);
+				}
+
+				return;
+			}
 
 			// Should this be an object
 			if (r === true) {
@@ -2076,7 +2037,7 @@ hello.utils.extend(hello.utils, {
 		// Check if the browser and service support CORS
 		var cors = this.request_cors(function() {
 			// If it does then run this...
-			return (!('xhr' in p) || (p.xhr && (typeof (p.xhr) !== 'function' || p.xhr(p, p.query))));
+			return ((p.xhr === undefined) || (p.xhr && (typeof (p.xhr) !== 'function' || p.xhr(p, p.query))));
 		});
 
 		if (cors) {
@@ -2224,12 +2185,12 @@ hello.utils.extend(hello.utils, {
 	// Return the type of DOM object
 	domInstance: function(type, data) {
 		var test = 'HTML' + (type || '').replace(
-			/^[a-z]/,
-			function(m) {
-				return m.toUpperCase();
-			}
+				/^[a-z]/,
+				function(m) {
+					return m.toUpperCase();
+				}
 
-		) + 'Element';
+			) + 'Element';
 
 		if (!data) {
 			return false;
@@ -2249,7 +2210,7 @@ hello.utils.extend(hello.utils, {
 	// Create a clone of an object
 	clone: function(obj) {
 		// Does not clone DOM elements, nor Binary data, e.g. Blobs, Filelists
-		if (obj === null || typeof (obj) !== 'object' || obj instanceof Date || 'nodeName' in obj || this.isBinary(obj)) {
+		if (obj === null || typeof (obj) !== 'object' || obj instanceof Date || 'nodeName' in obj || this.isBinary(obj) || (typeof FormData === 'function' && obj instanceof FormData)) {
 			return obj;
 		}
 
@@ -2431,7 +2392,7 @@ hello.utils.extend(hello.utils, {
 		// This action will be ignored if we've already called the callback handler "cb" with a successful onload event
 		if (window.navigator.userAgent.toLowerCase().indexOf('opera') > -1) {
 			operaFix = _this.append('script', {
-				text: 'document.getElementById(\'' + callbackId + '\').onerror();'
+				text: 'document.getElementById(\'' + callbackID + '\').onerror();'
 			});
 			script.async = false;
 		}
@@ -2689,10 +2650,10 @@ hello.utils.extend(hello.utils, {
 	isBinary: function(data) {
 
 		return data instanceof Object && (
-		(this.domInstance('input', data) && data.type === 'file') ||
-		('FileList' in window && data instanceof window.FileList) ||
-		('File' in window && data instanceof window.File) ||
-		('Blob' in window && data instanceof window.Blob));
+			(this.domInstance('input', data) && data.type === 'file') ||
+			('FileList' in window && data instanceof window.FileList) ||
+			('File' in window && data instanceof window.File) ||
+			('Blob' in window && data instanceof window.Blob));
 
 	},
 
@@ -2824,6 +2785,15 @@ hello.utils.extend(hello.utils, {
 
 })(hello);
 
+/////////////////////////////////////
+//
+// Save any access token that is in the current page URL
+// Handle any response solicited through iframe hash tag following an API request
+//
+/////////////////////////////////////
+
+hello.utils.responseHandler(window, window.opener || window.parent);
+
 // Script to support ChromeApps
 // This overides the hello.utils.popup method to support chrome.identity.launchWebAuthFlow
 // See https://developer.chrome.com/apps/app_identity#non
@@ -2835,18 +2805,20 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 	(function() {
 
 		// Swap the popup method
-
 		hello.utils.popup = function(url) {
 
-			_open(url, true);
+			return _open(url, true);
 
-			return {
-				closed: false
-			};
+		};
+
+		// Swap the hidden iframe method
+		hello.utils.iframe = function(url) {
+
+			_open(url, false);
+
 		};
 
 		// Swap the request_cors method
-
 		hello.utils.request_cors = function(callback) {
 
 			callback();
@@ -2856,34 +2828,74 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 			return true;
 		};
 
+		// Swap the storage method
+		var _cache = {};
+		chrome.storage.local.get('hello', function(r) {
+			// Update the cache
+			_cache = r.hello || {};
+		});
+
+		hello.utils.store = function(name, value) {
+
+			// Get all
+			if (arguments.length === 0) {
+				return _cache;
+			}
+
+			// Get
+			if (arguments.length === 1) {
+				return _cache[name] || null;
+			}
+
+			// Set
+			if (value) {
+				_cache[name] = value;
+				chrome.storage.local.set({hello: _cache});
+				return value;
+			}
+
+			// Delete
+			if (value === null) {
+				delete _cache[name];
+				chrome.storage.local.set({hello: _cache});
+				return null;
+			}
+		};
+
 		// Open function
 		function _open(url, interactive) {
 
 			// Launch
+			var ref = {
+				closed: false
+			};
 
+			// Launch the webAuthFlow
 			chrome.identity.launchWebAuthFlow({
 				url: url,
 				interactive: interactive
 			}, function(responseUrl) {
 
-				// Split appart the URL
+				// Did the user cancel this prematurely
+				if (responseUrl === undefined) {
+					ref.closed = true;
+					return;
+				}
 
+				// Split appart the URL
 				var a = hello.utils.url(responseUrl);
 
 				// The location can be augmented in to a location object like so...
 				// We dont have window operations on the popup so lets create some
-
 				var _popup = {
 					location: {
 
 						// Change the location of the popup
-
 						assign: function(url) {
 
 							// If there is a secondary reassign
 							// In the case of OAuth1
 							// Trigger this in non-interactive mode.
-
 							_open(url, false);
 						},
 
@@ -2901,10 +2913,111 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 
 				hello.utils.responseHandler(_popup, window);
 			});
+
+			// Return the reference
+			return ref;
 		}
 
 	})();
 }
+
+// Phonegap override for hello.phonegap.js
+(function() {
+
+	// Is this a phonegap implementation?
+	if (!(/^file:\/{3}[^\/]/.test(window.location.href) && window.cordova)) {
+		// Cordova is not included.
+		return;
+	}
+
+	// Augment the hidden iframe method
+	hello.utils.iframe = function(url, redirectUri) {
+		hello.utils.popup(url, redirectUri, {hidden: 'yes'});
+	};
+
+	// Augment the popup
+	var utilPopup = hello.utils.popup;
+
+	// Replace popup
+	hello.utils.popup = function(url, redirectUri, options) {
+
+		// Run the standard
+		var popup = utilPopup.call(this, url, redirectUri, options);
+
+		// Create a function for reopening the popup, and assigning events to the new popup object
+		// PhoneGap support
+		// Add an event listener to listen to the change in the popup windows URL
+		// This must appear before popup.focus();
+		try {
+			if (popup && popup.addEventListener) {
+
+				// Get the origin of the redirect URI
+
+				var a = hello.utils.url(redirectUri);
+				var redirectUriOrigin = a.origin || (a.protocol + '//' + a.hostname);
+
+				// Listen to changes in the InAppBrowser window
+
+				popup.addEventListener('loadstart', function(e) {
+
+					var url = e.url;
+
+					// Is this the path, as given by the redirectUri?
+					// Check the new URL agains the redirectUriOrigin.
+					// According to #63 a user could click 'cancel' in some dialog boxes ....
+					// The popup redirects to another page with the same origin, yet we still wish it to close.
+
+					if (url.indexOf(redirectUriOrigin) !== 0) {
+						return;
+					}
+
+					// Split appart the URL
+					var a = hello.utils.url(url);
+
+					// We dont have window operations on the popup so lets create some
+					// The location can be augmented in to a location object like so...
+
+					var _popup = {
+						location: {
+							// Change the location of the popup
+							assign: function(location) {
+
+								// Unfourtunatly an app is may not change the location of a InAppBrowser window.
+								// So to shim this, just open a new one.
+								popup.executeScript({code: 'window.location.href = "' + location + ';"'});
+							},
+
+							search: a.search,
+							hash: a.hash,
+							href: a.href
+						},
+						close: function() {
+							if (popup.close) {
+								popup.close();
+								try {
+									popup.closed = true;
+								}
+								catch (_e) {}
+							}
+						}
+					};
+
+					// Then this URL contains information which HelloJS must process
+					// URL string
+					// Window - any action such as window relocation goes here
+					// Opener - the parent window which opened this, aka this script
+
+					hello.utils.responseHandler(_popup, window);
+
+				});
+			}
+		}
+		catch (e) {}
+
+		return popup;
+	};
+
+})();
 
 (function(hello) {
 
@@ -2956,18 +3069,18 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 			},
 
 			/*
-				Dropbox does not allow insecure HTTP URI's in the redirect_uri field
-				...otherwise I'd love to use OAuth2
+			 Dropbox does not allow insecure HTTP URI's in the redirect_uri field
+			 ...otherwise I'd love to use OAuth2
 
-				Follow request https://forums.dropbox.com/topic.php?id=106505
+			 Follow request https://forums.dropbox.com/topic.php?id=106505
 
-				p.qs.response_type = 'code';
-				oauth: {
-					version: 2,
-					auth: 'https://www.dropbox.com/1/oauth2/authorize',
-					grant: 'https://api.dropbox.com/1/oauth2/token'
-				}
-			*/
+			 p.qs.response_type = 'code';
+			 oauth: {
+			 version: 2,
+			 auth: 'https://www.dropbox.com/1/oauth2/authorize',
+			 grant: 'https://api.dropbox.com/1/oauth2/token'
+			 }
+			 */
 
 			// API Base URL
 			base: 'https://api.dropbox.com/1/',
@@ -3019,8 +3132,8 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 					p.data = {};
 
 					callback('fileops/create_folder?root=@{root|sandbox}&' + hello.utils.param({
-						path: name
-					}));
+							path: name
+						}));
 				}
 			},
 
@@ -3126,7 +3239,7 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 		path = path.replace(/^\//, '');
 		if (o.thumb_exists) {
 			o.thumbnail = req.oauth_proxy + '?path=' +
-			encodeURIComponent('https://api-content.dropbox.com/1/thumbnails/auto/' + path + '?format=jpeg&size=m') + '&access_token=' + req.options.access_token;
+				encodeURIComponent('https://api-content.dropbox.com/1/thumbnails/auto/' + path + '?format=jpeg&size=m') + '&access_token=' + req.options.access_token;
 		}
 
 		o.type = (o.is_dir ? 'folder' : o.mime_type);
@@ -3136,7 +3249,7 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 		}
 		else {
 			o.downloadLink = hello.settings.oauth_proxy + '?path=' +
-			encodeURIComponent('https://api-content.dropbox.com/1/files/auto/' + path) + '&access_token=' + req.options.access_token;
+				encodeURIComponent('https://api-content.dropbox.com/1/files/auto/' + path) + '&access_token=' + req.options.access_token;
 			o.file = 'https://api-content.dropbox.com/1/files/auto/' + path;
 		}
 
@@ -3178,8 +3291,8 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				share: 'user_posts',
 				birthday: 'user_birthday',
 				events: 'user_events',
-				photos: 'user_photos,user_videos',
-				videos: 'user_photos,user_videos',
+				photos: 'user_photos',
+				videos: 'user_videos',
 				friends: 'user_friends',
 				files: 'user_photos,user_videos',
 				publish_files: 'user_photos,user_videos,publish_actions',
@@ -3188,7 +3301,7 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				// Deprecated in v2.0
 				// Create_event	: 'create_event',
 
-				offline_access: 'offline_access'
+				offline_access: ''
 			},
 
 			// Refresh the access_token
@@ -3200,11 +3313,6 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				// https://developers.facebook.com/docs/facebook-login/reauthentication
 				if (p.options.force) {
 					p.qs.auth_type = 'reauthenticate';
-				}
-
-				// Support Facebook's unique auth_type parameter
-				if (p.options.auth_type) {
-					p.qs.auth_type = p.options.auth_type;
 				}
 
 				// The facebook login window is a different size.
@@ -3231,19 +3339,19 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 			},
 
 			// API Base URL
-			base: 'https://graph.facebook.com/v2.3/',
+			base: 'https://graph.facebook.com/v2.4/',
 
 			// Map GET requests
 			get: {
-				me: 'me',
+				me: 'me?fields=email,first_name,last_name,name,timezone,verified',
 				'me/friends': 'me/friends',
 				'me/following': 'me/friends',
 				'me/followers': 'me/friends',
 				'me/share': 'me/feed',
 				'me/like': 'me/likes',
 				'me/files': 'me/albums',
-				'me/albums': 'me/albums',
-				'me/album': '@{id}/photos',
+				'me/albums': 'me/albums?fields=cover_photo,name',
+				'me/album': '@{id}/photos?fields=picture',
 				'me/photos': 'me/photos',
 				'me/photo': '@{id}',
 				'friend/albums': '@{id}/albums',
@@ -3335,6 +3443,13 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 
 		if (o && 'data' in o) {
 			var token = req.query.access_token;
+
+			if (!(o.data instanceof Array)) {
+				var data = o.data;
+				delete o.data;
+				o.data = [data];
+			}
+
 			o.data.forEach(function(d) {
 
 				if (d.picture) {
@@ -3346,8 +3461,8 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 						return a.width - b.width;
 					});
 
-				if (d.cover_photo) {
-					d.thumbnail = base + d.cover_photo + '/picture?access_token=' + token;
+				if (d.cover_photo && d.cover_photo.id) {
+					d.thumbnail = base + d.cover_photo.id + '/picture?access_token=' + token;
 				}
 
 				if (d.type === 'album') {
@@ -3718,7 +3833,6 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 			},
 
 			scope: {
-				basic: '',
 				email: 'user:email'
 			},
 
@@ -3835,6 +3949,7 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				files: 'https://www.googleapis.com/auth/drive.readonly',
 				publish: '',
 				publish_files: 'https://www.googleapis.com/auth/drive',
+				share: '',
 				create_event: '',
 				offline_access: ''
 			},
@@ -3887,6 +4002,7 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				'me/photos': 'https://picasaweb.google.com/data/feed/api/user/default?alt=json&kind=photo&max-results=@{limit|100}&start-index=@{start|1}',
 
 				// See: https://developers.google.com/drive/v2/reference/files/list
+				'me/file': 'drive/v2/files/@{id}',
 				'me/files': 'drive/v2/files?q=%22@{parent|root}%22+in+parents+and+trashed=false&maxResults=@{limit|100}',
 
 				// See: https://developers.google.com/drive/v2/reference/files/list
@@ -3920,6 +4036,11 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 			del: {
 				'me/files': 'drive/v2/files/@{id}',
 				'me/folder': 'drive/v2/files/@{id}'
+			},
+
+			// Map PATCH requests
+			patch: {
+				'me/file': 'drive/v2/files/@{id}'
 			},
 
 			wrap: {
@@ -3963,6 +4084,10 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 
 				if (p.method === 'post' || p.method === 'put') {
 					toJSON(p);
+				}
+				else if (p.method === 'patch') {
+					hello.utils.extend(p.query, p.data);
+					p.data = null;
 				}
 
 				return true;
@@ -4399,8 +4524,15 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 
 			scope: {
 				basic: 'basic',
+				photos: '',
 				friends: 'relationships',
-				publish: 'likes comments'
+				publish: 'likes comments',
+				email: '',
+				share: '',
+				publish_files: '',
+				files: '',
+				videos: '',
+				offline_access: ''
 			},
 
 			scope_delim: ' ',
@@ -4481,6 +4613,7 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				},
 
 				'default': function(o) {
+					o = formatError(o);
 					paging(o);
 					return o;
 				}
@@ -4522,12 +4655,23 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 	}
 
 	function formatError(o) {
+		if (typeof o === 'string') {
+			return {
+				error: {
+					code: 'invalid_request',
+					message: o
+				}
+			};
+		}
+
 		if (o && 'meta' in o && 'error_type' in o.meta) {
 			o.error = {
 				code: o.meta.error_type,
 				message: o.meta.error_message
 			};
 		}
+
+		return o;
 	}
 
 	function formatFriends(o) {
@@ -4562,6 +4706,172 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 
 	hello.init({
 
+		joinme: {
+
+			name: 'join.me',
+
+			oauth: {
+				version: 2,
+				auth: 'https://secure.join.me/api/public/v1/auth/oauth2',
+				grant: 'https://secure.join.me/api/public/v1/auth/oauth2'
+			},
+
+			refresh: false,
+
+			scope: {
+				basic: 'user_info',
+				user: 'user_info',
+				scheduler: 'scheduler',
+				start: 'start_meeting',
+				email: '',
+				friends: '',
+				share: '',
+				publish: '',
+				photos: '',
+				publish_files: '',
+				files: '',
+				videos: '',
+				offline_access: ''
+			},
+
+			scope_delim: ' ',
+
+			login: function(p) {
+				p.options.popup.width = 400;
+				p.options.popup.height = 700;
+			},
+
+			base: 'https://api.join.me/v1/',
+
+			get: {
+				me: 'user',
+				meetings: 'meetings',
+				'meetings/info': 'meetings/@{id}'
+			},
+
+			post: {
+				'meetings/start/adhoc': function(p, callback) {
+					callback('meetings/start');
+				},
+
+				'meetings/start/scheduled': function(p, callback) {
+					var meetingId = p.data.meetingId;
+					p.data = {};
+					callback('meetings/' + meetingId + '/start');
+				},
+
+				'meetings/schedule': function(p, callback) {
+					callback('meetings');
+				}
+			},
+
+			patch: {
+				'meetings/update': function(p, callback) {
+					callback('meetings/' + p.data.meetingId);
+				}
+			},
+
+			del: {
+				'meetings/delete': 'meetings/@{id}'
+			},
+
+			wrap: {
+				me: function(o, headers) {
+					formatError(o, headers);
+
+					if (!o.email) {
+						return o;
+					}
+
+					o.name = o.fullName;
+					o.first_name = o.name.split(' ')[0];
+					o.last_name = o.name.split(' ')[1];
+					o.id = o.email;
+
+					return o;
+				},
+
+				'default': function(o, headers) {
+					formatError(o, headers);
+
+					return o;
+				}
+			},
+
+			xhr: formatRequest
+
+		}
+	});
+
+	function formatError(o, headers) {
+		var errorCode;
+		var message;
+		var details;
+
+		if (o && ('Message' in o)) {
+			message = o.Message;
+			delete o.Message;
+
+			if ('ErrorCode' in o) {
+				errorCode = o.ErrorCode;
+				delete o.ErrorCode;
+			}
+			else {
+				errorCode = getErrorCode(headers);
+			}
+
+			o.error = {
+				code: errorCode,
+				message: message,
+				details: o
+			};
+		}
+
+		return o;
+	}
+
+	function formatRequest(p, qs) {
+		// Move the access token from the request body to the request header
+		var token = qs.access_token;
+		delete qs.access_token;
+		p.headers.Authorization = 'Bearer ' + token;
+
+		// Format non-get requests to indicate json body
+		if (p.method !== 'get' && p.data) {
+			p.headers['Content-Type'] = 'application/json';
+			if (typeof (p.data) === 'object') {
+				p.data = JSON.stringify(p.data);
+			}
+		}
+
+		if (p.method === 'put') {
+			p.method = 'patch';
+		}
+
+		return true;
+	}
+
+	function getErrorCode(headers) {
+		switch (headers.statusCode) {
+			case 400:
+				return 'invalid_request';
+			case 403:
+				return 'stale_token';
+			case 401:
+				return 'invalid_token';
+			case 500:
+				return 'server_error';
+			default:
+				return 'server_error';
+		}
+	}
+
+}(hello));
+
+(function(hello) {
+
+	hello.init({
+
 		linkedin: {
 
 			oauth: {
@@ -4577,8 +4887,14 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 			scope: {
 				basic: 'r_basicprofile',
 				email: 'r_emailaddress',
+				files: '',
 				friends: '',
-				publish: 'w_share'
+				photos: '',
+				publish: 'w_share',
+				publish_files: 'w_share',
+				share: '',
+				videos: '',
+				offline_access: ''
 			},
 			scope_delim: ' ',
 
@@ -4586,9 +4902,6 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 
 			get: {
 				me: 'people/~:(picture-url,first-name,last-name,id,formatted-name,email-address)',
-				'me/friends': 'people/~/connections?count=@{limit|500}',
-				'me/followers': 'people/~/connections?count=@{limit|500}',
-				'me/following': 'people/~/connections?count=@{limit|500}',
 
 				// See: http://developer.linkedin.com/documents/get-network-updates-and-statistics-api
 				'me/share': 'people/~/network/updates?count=@{limit|250}'
@@ -5038,12 +5351,12 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 	}
 
 	/**
-	// The documentation says to define user in the request
-	// Although its not actually required.
+	 // The documentation says to define user in the request
+	 // Although its not actually required.
 
-	var user_id;
+	 var user_id;
 
-	function withUserId(callback){
+	 function withUserId(callback){
 		if(user_id){
 			callback(user_id);
 		}
@@ -5055,14 +5368,14 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 		}
 	}
 
-	function sign(url){
+	 function sign(url){
 		return function(p, callback){
 			withUserId(function(user_id){
 				callback(url+'?user_id='+user_id);
 			});
 		};
 	}
-	*/
+	 */
 
 })(hello);
 
@@ -5082,9 +5395,13 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 			},
 
 			// Authorization scopes
+			// See https://vk.com/dev/permissions
 			scope: {
-				basic: '',
 				email: 'email',
+				friends: 'friends',
+				photos: 'photos',
+				videos: 'video',
+				share: 'share',
 				offline_access: 'offline'
 			},
 
@@ -5093,8 +5410,8 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 
 			login: function(p) {
 				p.qs.display = window.navigator &&
-					window.navigator.userAgent &&
-					/ipad|phone|phone|android/.test(window.navigator.userAgent.toLowerCase()) ? 'mobile' : 'popup';
+				window.navigator.userAgent &&
+				/ipad|phone|phone|android/.test(window.navigator.userAgent.toLowerCase()) ? 'mobile' : 'popup';
 			},
 
 			// API Base URL
@@ -5186,6 +5503,7 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				files: 'wl.skydrive',
 				publish: 'wl.share',
 				publish_files: 'wl.skydrive_update',
+				share: 'wl.share',
 				create_event: 'wl.calendars_update,wl.events_create',
 				offline_access: 'wl.offline_access'
 			},
@@ -5221,7 +5539,7 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				'me/album': '@{id}/files/',
 
 				'me/folders': '@{id|me/skydrive/}',
-				'me/files': '@{parent|me/skydrive/}/files'
+				'me/files': '@{parent|me/skydrive}/files'
 			},
 
 			// Map DELETE requests
@@ -5379,30 +5697,27 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				// It might be better to loop through the social.relationship table with has unique IDs of users.
 				'me/friends': formatFriends,
 				'me/following': formatFriends,
-				'default': function(res) {
-					paging(res);
-					return res;
-				}
+				'default': paging
 			}
 		}
 	});
 
 	/*
-		// Auto-refresh fix: bug in Yahoo can't get this to work with node-oauth-shim
-		login : function(o){
-			// Is the user already logged in
-			var auth = hello('yahoo').getAuthResponse();
+	 // Auto-refresh fix: bug in Yahoo can't get this to work with node-oauth-shim
+	 login : function(o){
+	 // Is the user already logged in
+	 var auth = hello('yahoo').getAuthResponse();
 
-			// Is this a refresh token?
-			if(o.options.display==='none'&&auth&&auth.access_token&&auth.refresh_token){
-				// Add the old token and the refresh token, including path to the query
-				// See http://developer.yahoo.com/oauth/guide/oauth-refreshaccesstoken.html
-				o.qs.access_token = auth.access_token;
-				o.qs.refresh_token = auth.refresh_token;
-				o.qs.token_url = 'https://api.login.yahoo.com/oauth/v2/get_token';
-			}
-		},
-	*/
+	 // Is this a refresh token?
+	 if(o.options.display==='none'&&auth&&auth.access_token&&auth.refresh_token){
+	 // Add the old token and the refresh token, including path to the query
+	 // See http://developer.yahoo.com/oauth/guide/oauth-refreshaccesstoken.html
+	 o.qs.access_token = auth.access_token;
+	 o.qs.refresh_token = auth.refresh_token;
+	 o.qs.token_url = 'https://api.login.yahoo.com/oauth/v2/get_token';
+	 }
+	 },
+	 */
 
 	function formatError(o) {
 		if (o && 'meta' in o && 'error_type' in o.meta) {
@@ -5459,7 +5774,14 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 
 	function formatFriend(contact) {
 		contact.id = null;
-		contact.fields.forEach(function(field) {
+
+		// #362: Reports of responses returning a single item, rather than an Array of items.
+		// Format the contact.fields to be an array.
+		if (contact.fields && !(contact.fields instanceof Array)) {
+			contact.fields = [contact.fields];
+		}
+
+		(contact.fields || []).forEach(function(field) {
 			if (field.type === 'email') {
 				contact.email = field.value;
 			}
@@ -5484,6 +5806,8 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 				next: '?start=' + (res.query.count + (+request.options.start || 1))
 			};
 		}
+
+		return res;
 	}
 
 	function yql(q) {

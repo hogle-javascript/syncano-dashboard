@@ -81,7 +81,7 @@ export default Radium(React.createClass({
 
   renderMenu(menu) {
     return (
-      <ToolbarGroup firstChild={true}>
+      <ToolbarGroup>
         {menu}
       </ToolbarGroup>
     );
@@ -90,7 +90,9 @@ export default Radium(React.createClass({
   renderTitle(title) {
     return (
       <ToolbarGroup>
-        <ToolbarTitle text={title}/>
+        <ToolbarTitle
+          text={title}
+          style={{paddingRight: 0}} />
       </ToolbarGroup>
     );
   },

@@ -58,37 +58,8 @@ export default React.createClass({
                 key="Sockets"
                 routeName="sockets"
                 primaryText="Sockets"
-                initiallyOpen={true}
                 iconClassName="synicon-hexagon-outline"
-                iconStyle={{transform: 'rotate(30deg)'}}
-                autoGenerateNestedIndicator={false}
-                nestedItems={[
-                  <Sidebar.NestedLinkListItem
-                    key="Data"
-                    routeName="data"
-                    primaryText="Data Endpoint" />,
-                  <Sidebar.NestedLinkListItem
-                    key="ScriptEndpoint"
-                    routeName="script-endpoints"
-                    primaryText="Script Endpoint" />,
-                  <Sidebar.NestedLinkListItem
-                    key="Trigger"
-                    routeName="triggers"
-                    primaryText="Trigger" />,
-                  <Sidebar.NestedLinkListItem
-                    key="Schedule"
-                    routeName="schedules"
-                    primaryText="Schedule" />,
-                  <Sidebar.NestedLinkListItem
-                    key="Channel"
-                    routeName="channels"
-                    primaryText="Channel" />
-
-                  /* <Sidebar.NestedLinkListItem
-                    key="Push Notification"
-                    routeName="push-notification-config"
-                    primaryText="Push Notification" /> */
-                ]} />
+                iconStyle={{transform: 'rotate(30deg)'}} />
             </Sidebar.List>
             <Sidebar.List
               key="Components"

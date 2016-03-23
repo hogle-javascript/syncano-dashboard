@@ -58,7 +58,7 @@ export default React.createClass({
         zIndex: 1,
         position: 'fixed',
         bottom: 20,
-        right: 20
+        right: 100
       },
       deleteIcon: {
         width: 64,
@@ -463,7 +463,7 @@ export default React.createClass({
             onTouchTap={() => this.handleUpdate()} />
           <RaisedButton
             label="RUN"
-            secondary={true}
+            primary={true}
             style={{marginLeft: 5, marginRight: 0}}
             icon={<FontIcon className="synicon-play"/>}
             onTouchTap={this.handleRunScript}/>

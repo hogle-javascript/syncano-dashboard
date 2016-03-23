@@ -81,7 +81,7 @@ export default React.createClass({
             primary={true}
             columnName="CHECK_ICON"
             handleClick={handleTitleClick}>
-            Channel Sockets
+            Channels
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"

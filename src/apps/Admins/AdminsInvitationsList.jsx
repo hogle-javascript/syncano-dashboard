@@ -32,7 +32,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       emptyItemContent: 'Invite administrator',
-      emptyItemHandleClick: Actions.showDialog
+      emptyItemHandleClick: AdminsActions.showDialog
     };
   },
 
