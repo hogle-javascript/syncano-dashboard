@@ -128,7 +128,7 @@
     "oauth-server": "node oauth-server.js",
     "lint": "eslint src --quiet --ext .js --ext .jsx",
     "e2e": "nightwatch -e 1280x1024 --suiteRetries 1 --skiptags snippets,scriptSockets,socialLogins",
-    "e2e-0": "nightwatch -e 1280x1024 -g instances --suiteRetries 1 --skiptags scriptSockets,snippets,socialLogins,scripts",
+    "e2e-0": "nightwatch -e 1280x1024 -g instances --suiteRetries 1 --skiptags scriptSockets,snippets,socialLogins,scripts,dataObjects",
     "e2e-1": "nightwatch -e 1280x1024 -s instances --suiteRetries 1 --skiptags socialLogins,scripts",
     "e2e-local": "nightwatch -e 1280x1024 --suiteRetries 1 --skiptags snippets,socialLogins",
     "e2e-screenshots": "nightwatch -e 1280x1024,360x640,768x1024 --tag navigation || true",
