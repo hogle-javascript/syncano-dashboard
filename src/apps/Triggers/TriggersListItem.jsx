@@ -41,7 +41,7 @@ export default React.createClass({
           primaryText={item.label}/>
         <Column.Desc className="col-flex-1">
           <DataObjectsAmount
-            className={itemClass.name}
+            className={itemClass ? itemClass.name : null}
             dataObjects={itemClass.objects_count} />
         </Column.Desc>
         <Column.Desc className="col-flex-1">
