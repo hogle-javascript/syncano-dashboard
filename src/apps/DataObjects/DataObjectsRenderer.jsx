@@ -36,8 +36,7 @@ export default {
     );
   },
 
-  handleFileOnClick(value, event) {
-    event.stopPropagation();
+  handleFileOnClick(value) {
     window.open(value, '_blank');
   },
 
