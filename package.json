@@ -76,7 +76,6 @@
     "googleapis": "2.1.7",
     "gulp": "3.9.1",
     "gulp-awspublish": "2.0.2",
-    "gulp-bump": "1.0.0",
     "gulp-cloudfront": "0.0.14",
     "gulp-git": "1.7.0",
     "gulp-iconfont": "5.0.1",
@@ -137,12 +136,10 @@
     "iconfont": "gulp iconfont",
     "add-github-tag": "gulp add-github-tag",
     "check-github-tag": "gulp check-github-tag",
-    "changelog": "gulp changelog",
     "upload-screenshots": "gulp upload-screenshots",
     "s3-cleanup": "gulp s3-cleanup",
     "deployment-master": "gulp deployment-master",
     "deployment-devel": "gulp deployment-devel",
-    "deployment-branch": "gulp deployment-branch",
-    "bump": "gulp bump"
+    "deployment-branch": "gulp deployment-branch"
   }
 }
