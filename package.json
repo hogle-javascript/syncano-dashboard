@@ -142,6 +142,6 @@
     "deployment-devel": "gulp deployment-devel",
     "deployment-branch": "gulp deployment-branch",
     "postdeployment-master": "npm version patch -m \"Release v%s [ci skip]\"",
-    "postversion": "git push origin --tags"
+    "postversion": "git push origin master && git push origin --tags"
   }
 }

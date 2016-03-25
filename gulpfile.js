@@ -8,7 +8,6 @@ gulp.task('serve', ['webpack-dev-server']);
 gulp.task('build', ['webpack-build', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);
 gulp.task('deployment-master', gulpSequence(
-  'check-github-tag',
   'publish',
   'clean'
 ));
