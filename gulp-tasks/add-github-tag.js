@@ -28,20 +28,9 @@ module.exports = function(cb) {
     },
 
     function(callback) {
-      git.checkout('devel', callback);
-    },
-
-    function(callback) {
-      git.pull('origin', 'devel', callback);
-    },
-
-    function(callback) {
-      git.merge('master', callback);
-    },
-
-    function(callback) {
-      git.push('origin', 'devel', callback);
+      git.push('origin', 'master', callback);
     }
+
   ], function(err) {
     if (err) throw err;
     cb();

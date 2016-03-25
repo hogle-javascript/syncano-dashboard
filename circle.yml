@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 4.2.4
+    version: 4.4.1
 
 general:
   artifacts:
@@ -19,7 +19,6 @@ deployment:
     commands:
       - NODE_ENV=production npm run-script bump
       - NODE_ENV=production npm run-script deployment-master
-      - curl -v -X POST https://circleci.com/api/v1/project/syncano/syncano-dashboard/tree/screenshots?circle-token=$CI_TOKEN
 
   staging:
     branch: devel
