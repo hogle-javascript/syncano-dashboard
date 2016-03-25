@@ -17,14 +17,14 @@ deployment:
   production:
     branch: master
     commands:
-      - NODE_ENV=production npm run-script deployment-master
+      - NODE_ENV=production npm run deployment-master
 
   staging:
     branch: devel
     commands:
-      - NODE_ENV=staging npm run-script deployment-devel
+      - NODE_ENV=staging npm run deployment-devel
 
   sockets:
     branch: /.*/
     commands:
-      - NODE_ENV=staging npm run-script deployment-branch
+      - NODE_ENV=staging npm run deployment-branch

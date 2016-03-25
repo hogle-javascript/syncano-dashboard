@@ -140,6 +140,8 @@
     "s3-cleanup": "gulp s3-cleanup",
     "deployment-master": "gulp deployment-master",
     "deployment-devel": "gulp deployment-devel",
-    "deployment-branch": "gulp deployment-branch"
+    "deployment-branch": "gulp deployment-branch",
+    "postdeployment-master": "npm version patch -m \"Release %s [ci skip]\"",
+    "postversion": "git push origin --tags"
   }
 }
