@@ -1,5 +1,5 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
+import {State, Navigation, Link} from 'react-router';
 import Reflux from 'reflux';
 
 // Utils
@@ -204,12 +204,12 @@ export default React.createClass({
               With Data Endpoints you can configure Data Object calls and save them for later use.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Class">
-              Classes define properties of Data Objects. If you have no Classes yet you can create one &nbsp;
-              <a
-                href={this.makeHref('classes', this.getParams())}
-                style={{textDecoration: 'underline', color: 'rgba(68,68,68,.5)'}}>
-                <strong>here.</strong>
-              </a>
+              Classes define properties of Data Objects. If you have no Classes yet you can create one&nbsp;
+              <Link
+              to="classes"
+              params={{instanceName: this.getParams().instanceName}}
+              style={{textDecoration: 'underline', color: 'rgba(68,68,68,.5)'}}>
+              <strong>here.</strong></Link>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Class Fields">
               Choose which fields of Class schema will be included in the response. If a field is referencing
