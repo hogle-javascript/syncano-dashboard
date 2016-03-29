@@ -17,6 +17,7 @@ deployment:
   production:
     branch: master
     commands:
+      - npm run git-config
       - NODE_ENV=production npm run deployment-master
 
   staging:
