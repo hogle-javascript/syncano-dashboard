@@ -1,28 +1,19 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
+import {State} from 'react-router';
 
 import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Truncate} from 'syncano-components';
+import {LinkWrapper} from '../../common';
 
 const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ScriptsListItem',
 
-  mixins: [
-    State,
-    Navigation
-  ],
-
-  handleItemClick(itemId) {
-    this.transitionTo('script', {
-      instanceName: this.getParams().instanceName,
-      scriptId: itemId
-    });
-  },
+  mixins: [State],
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
@@ -40,10 +31,14 @@ export default React.createClass({
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={
-            <Truncate
-              onClick={() => this.handleItemClick(item.id)}
-              text={item.label}
-              style={{cursor: 'pointer'}}/>
+            <LinkWrapper
+              to="script"
+              params={{
+                instanceName: this.getParams().instanceName,
+                scriptId: item.id
+              }}>
+              <Truncate text={item.label}/>
+            </LinkWrapper>
           }
           secondaryText={`ID: ${item.id}`}/>
         <Column.Desc>{item.description}</Column.Desc>

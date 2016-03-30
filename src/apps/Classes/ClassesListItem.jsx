@@ -6,13 +6,11 @@ import {DialogsMixin} from '../../mixins';
 
 import Actions from './ClassesActions';
 
-import {MenuItem, Styles} from 'syncano-material-ui';
+import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Color, Truncate} from 'syncano-components';
-import {DataObjectsAmount} from '../../common';
+import {DataObjectsAmount, LinkWrapper} from '../../common';
 
 const Column = ColumnList.Column;
-
-const RadiumLink = Radium(Link);
 
 export default Radium(React.createClass({
   displayName: 'ClassesListItem',
@@ -21,16 +19,6 @@ export default Radium(React.createClass({
     State,
     DialogsMixin
   ],
-
-  getStyles() {
-    return {
-      color: '#444',
-      cursor: 'pointer',
-      ':hover': {
-        color: Styles.Colors.blue400
-      }
-    };
-  },
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
@@ -49,15 +37,14 @@ export default Radium(React.createClass({
           keyName="name"
           handleIconClick={onIconClick}
           primaryText={
-            <RadiumLink
-              style={this.getStyles()}
+            <LinkWrapper
               to="classes-data-objects"
               params={{
                 instanceName: this.getParams().instanceName,
                 className: item.name
               }}>
               <Truncate text={item.name}/>
-            </RadiumLink>
+            </LinkWrapper>
           }
           secondaryText={item.description}/>
         <Column.Desc className="col-flex-1">
