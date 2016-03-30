@@ -7,7 +7,7 @@ import Store from './ScriptsStore';
 import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Truncate} from 'syncano-components';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ScriptsListItem',
@@ -25,8 +25,8 @@ export default React.createClass({
   },
 
   render() {
-    let item = this.props.item;
-    let runtime = Store.getRuntimeColorIcon(item.runtime_name) || {};
+    const {item, onIconClick, showDeleteDialog} = this.props;
+    const runtime = Store.getRuntimeColorIcon(item.runtime_name) || {};
 
     return (
       <ColumnList.Item
@@ -38,10 +38,10 @@ export default React.createClass({
           iconClassName={runtime.icon}
           background={runtime.color}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}
+          handleIconClick={onIconClick}
           primaryText={
             <Truncate
-              onClick={this.handleItemClick.bind(null, item.id)}
+              onClick={() => this.handleItemClick(item.id)}
               text={item.label}
               style={{cursor: 'pointer'}}/>
           }
@@ -55,7 +55,7 @@ export default React.createClass({
             primaryText="Edit a Script" />
           <MenuItem
             className="dropdown-item-script-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Script" />
         </Column.Menu>
       </ColumnList.Item>

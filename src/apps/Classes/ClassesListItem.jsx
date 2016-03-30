@@ -6,10 +6,10 @@ import {DialogsMixin} from '../../mixins';
 import Actions from './ClassesActions';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from 'syncano-components';
+import {ColumnList, Color, Truncate} from 'syncano-components';
 import {DataObjectsAmount} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ClassesListItem',
@@ -19,6 +19,13 @@ export default React.createClass({
     Navigation,
     DialogsMixin
   ],
+
+  handleItemClick(className) {
+    this.transitionTo('classes-data-objects', {
+      instanceName: this.getParams().instanceName,
+      className
+    });
+  },
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
@@ -36,7 +43,12 @@ export default React.createClass({
           checked={item.checked}
           keyName="name"
           handleIconClick={onIconClick}
-          primaryText={item.name}
+          primaryText={
+            <Truncate
+              onClick={() => this.handleItemClick(item.name)}
+              text={item.name}
+              style={{cursor: 'pointer'}}/>
+          }
           secondaryText={item.description}/>
         <Column.Desc className="col-flex-1">
           <DataObjectsAmount
