@@ -114,7 +114,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          emptyItemContent="Generate an API Key"
+          emptyItemContent="Add an API Key"
           emptyItemHandleClick={Actions.showDialog}
           key="apikeys-list"
           renderItem={this.renderItem}/>
