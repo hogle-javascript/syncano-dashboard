@@ -1,30 +1,35 @@
 import React from 'react';
-import {Link, State, Navigation} from 'react-router';
+import Radium from 'radium';
+import {Link, State} from 'react-router';
 
 import {DialogsMixin} from '../../mixins';
 
 import Actions from './ClassesActions';
 
-import {MenuItem} from 'syncano-material-ui';
+import {MenuItem, Styles} from 'syncano-material-ui';
 import {ColumnList, Color, Truncate} from 'syncano-components';
 import {DataObjectsAmount} from '../../common';
 
 const Column = ColumnList.Column;
 
-export default React.createClass({
+const RadiumLink = Radium(Link);
+
+export default Radium(React.createClass({
   displayName: 'ClassesListItem',
 
   mixins: [
     State,
-    Navigation,
     DialogsMixin
   ],
 
-  handleItemClick(className) {
-    this.transitionTo('classes-data-objects', {
-      instanceName: this.getParams().instanceName,
-      className
-    });
+  getStyles() {
+    return {
+      color: '#444',
+      cursor: 'pointer',
+      ':hover': {
+        color: Styles.Colors.blue400
+      }
+    };
   },
 
   render() {
@@ -44,10 +49,15 @@ export default React.createClass({
           keyName="name"
           handleIconClick={onIconClick}
           primaryText={
-            <Truncate
-              onClick={() => this.handleItemClick(item.name)}
-              text={item.name}
-              style={{cursor: 'pointer'}}/>
+            <RadiumLink
+              style={this.getStyles()}
+              to="classes-data-objects"
+              params={{
+                instanceName: this.getParams().instanceName,
+                className: item.name
+              }}>
+              <Truncate text={item.name}/>
+            </RadiumLink>
           }
           secondaryText={item.description}/>
         <Column.Desc className="col-flex-1">
@@ -85,4 +95,4 @@ export default React.createClass({
       </ColumnList.Item>
     );
   }
-});
+}));
