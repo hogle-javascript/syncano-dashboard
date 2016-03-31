@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import _ from 'lodash';
 
 import {FormMixin} from '../../mixins';
 
@@ -24,77 +23,45 @@ export default React.createClass({
       length: {maximum: 150}
     },
     first_name: {
-      length: {maximum: 35},
-      format: {
-        pattern: /^([a-zA-Z]+)$/i,
-        message: 'can contain only alphabetical characters'
-      }
+      length: {maximum: 35}
     },
     last_name: {
-      length: {maximum: 35},
-      format: {
-        pattern: /^([a-zA-Z -]+)$/i,
-        message: 'can contain only alphabetical characters'
-      }
+      length: {maximum: 35}
     },
     address_line1: {
       length: {
         maximum: 150,
         message: '^Address is too long (maximum is 150 characters)'
-      },
-      format: {
-        pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
-        message: '^Address is invalid'
       }
     },
     address_line2: {
       length: {
         maximum: 150,
         message: '^Address is too long (maximum is 150 characters)'
-      },
-      format: {
-        pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
-        message: '^Address is invalid'
       }
     },
     address_city: {
       length: {
         maximum: 100,
         message: '^City is too long (maximum is 100 characters)'
-      },
-      format: {
-        pattern: /^([a-zA-Z -]+)$/i,
-        message: '^City can contain only alphabetical characters'
       }
     },
     address_state: {
       length: {
         maximum: 100,
         message: '^State  is too long (maximum is 100 characters)'
-      },
-      format: {
-        pattern: /^([a-zA-Z -]+)$/i,
-        message: '^State can contain only alphabetical characters'
       }
     },
     address_zip: {
       length: {
         maximum: 10,
         message: '^Zip code is too long (maximum is 10 characters)'
-      },
-      format: {
-        pattern: /^([a-zA-Z0-9 -]+)$/i,
-        message: '^Zip code is invalid'
       }
     },
     address_country: {
       length: {
         maximum: 35,
         message: '^Country is too long (maximum is 35 characters)'
-      },
-      format: {
-        pattern: /^([a-zA-Z -]+)$/i,
-        message: '^Country can contain only alphabetical characters'
       }
     },
     tax_number: {
@@ -107,12 +74,48 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    let params = _.omit(this.state, '_formLinkedKeys');
+    const {
+      company_name,
+      first_name,
+      last_name,
+      tax_number,
+      address_line1,
+      address_line2,
+      address_country,
+      address_state,
+      address_zip,
+      address_city
+    } = this.state;
+    const params = {
+      company_name,
+      first_name,
+      last_name,
+      tax_number,
+      address_line1,
+      address_line2,
+      address_country,
+      address_state,
+      address_zip,
+      address_city
+    };
 
     Actions.updateBillingProfile(params);
   },
 
   render() {
+    const {
+      company_name,
+      first_name,
+      last_name,
+      tax_number,
+      address_line1,
+      address_line2,
+      address_country,
+      address_state,
+      address_zip,
+      address_city
+    } = this.state;
+
     return (
       <div>
         <InnerToolbar title="Billing address"/>
@@ -129,13 +132,13 @@ export default React.createClass({
                   name="company_name"
                   fullWidth={true}
                   valueLink={this.linkState('company_name')}
-                  defaultValue={this.state.company_name}
+                  defaultValue={company_name}
                   errorText={this.getValidationMessages('company_name').join(' ')}
                   hintText="Company name"
                   floatingLabelText="Company name"/>
                 <TextField
                   valueLink={this.linkState('first_name')}
-                  defaultValue={this.state.first_name}
+                  defaultValue={first_name}
                   errorText={this.getValidationMessages('first_name').join(' ')}
                   name="first_name"
                   floatingLabelText="First name"
@@ -143,7 +146,7 @@ export default React.createClass({
                   fullWidth={true}/>
                 <TextField
                   valueLink={this.linkState('last_name')}
-                  defaultValue={this.state.last_name}
+                  defaultValue={last_name}
                   errorText={this.getValidationMessages('last_name').join(' ')}
                   name="last_name"
                   floatingLabelText="Last name"
@@ -151,7 +154,7 @@ export default React.createClass({
                   fullWidth={true}/>
                 <TextField
                   valueLink={this.linkState('tax_number')}
-                  defaultValue={this.state.tax_number}
+                  defaultValue={tax_number}
                   errorText={this.getValidationMessages('tax_number').join(' ')}
                   name="tax_number"
                   floatingLabelText="Tax number"
@@ -161,7 +164,7 @@ export default React.createClass({
               <div className="col-flex-1">
                 <TextField
                   valueLink={this.linkState('address_line1')}
-                  defaultValue={this.state.address_line1}
+                  defaultValue={address_line1}
                   errorText={this.getValidationMessages('address_line1').join(' ')}
                   name="address_line1"
                   floatingLabelText="Address"
@@ -169,7 +172,7 @@ export default React.createClass({
                   fullWidth={true}/>
                 <TextField
                   valueLink={this.linkState('address_line2')}
-                  defaultValue={this.state.address_line2}
+                  defaultValue={address_line2}
                   errorText={this.getValidationMessages('address_line2').join(' ')}
                   name="address_line2"
                   floatingLabelText="Address"
@@ -177,7 +180,7 @@ export default React.createClass({
                   fullWidth={true}/>
                 <TextField
                   valueLink={this.linkState('address_country')}
-                  defaultValue={this.state.address_country}
+                  defaultValue={address_country}
                   errorText={this.getValidationMessages('address_country').join(' ')}
                   name="address_country"
                   floatingLabelText="Country"
@@ -185,7 +188,7 @@ export default React.createClass({
                   fullWidth={true}/>
                 <TextField
                   valueLink={this.linkState('address_state')}
-                  defaultValue={this.state.address_state}
+                  defaultValue={address_state}
                   errorText={this.getValidationMessages('address_state').join(' ')}
                   name="address_state"
                   floatingLabelText="State"
@@ -197,7 +200,7 @@ export default React.createClass({
                   <div className="col-md-15">
                     <TextField
                       valueLink={this.linkState('address_zip')}
-                      defaultValue={this.state.address_zip}
+                      defaultValue={address_zip}
                       errorText={this.getValidationMessages('address_zip').join(' ')}
                       name="address_zip"
                       floatingLabelText="Zip code"
@@ -207,7 +210,7 @@ export default React.createClass({
                   <div className="col-flex-1">
                     <TextField
                       valueLink={this.linkState('address_city')}
-                      defaultValue={this.state.address_city}
+                      defaultValue={address_city}
                       errorText={this.getValidationMessages('address_city').join(' ')}
                       name="address_city"
                       floatingLabelText="City"
