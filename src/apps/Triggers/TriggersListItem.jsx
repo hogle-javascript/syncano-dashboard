@@ -16,6 +16,11 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'TriggersListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [
     State,
     DialogsMixin

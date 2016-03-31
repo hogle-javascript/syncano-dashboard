@@ -8,6 +8,12 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'ProfileInvitationsListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showAcceptDialog: React.PropTypes.func.isRequired,
+    showDeclineDialog: React.PropTypes.func.isRequired
+  },
+
   render() {
     let item = this.props.item;
 

@@ -12,6 +12,12 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'ApiKeysListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired,
+    showResetDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [SnackbarNotificationMixin],
 
   render() {

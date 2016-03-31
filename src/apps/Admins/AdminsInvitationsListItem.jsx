@@ -8,6 +8,11 @@ import {ColumnList, Color} from 'syncano-components';
 export default React.createClass({
   displayName: 'AdminsInvitationsListItem',
 
+  propTypes: {
+    showResendDialog: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [DialogsMixin],
 
   render() {
