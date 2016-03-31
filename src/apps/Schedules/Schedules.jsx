@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
 import Reflux from 'reflux';
 
 import {DialogsMixin} from '../../mixins';
@@ -12,15 +11,12 @@ import SchedulesList from './SchedulesList';
 import ScheduleDialog from './ScheduleDialog';
 import {RaisedButton} from 'syncano-material-ui';
 import {Container} from 'syncano-components';
-import {InnerToolbar, SocketsDropdown} from '../../common';
+import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 
 export default React.createClass({
   displayName: 'ScheduleSockets',
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store),
     DialogsMixin
   ],
@@ -30,10 +26,6 @@ export default React.createClass({
     ScriptsActions.fetch();
   },
 
-  showScheduleDialog() {
-    Actions.showDialog();
-  },
-
   render() {
     const {isLoading, items, hideDialogs} = this.state;
 
@@ -41,15 +33,13 @@ export default React.createClass({
       <div>
         <ScheduleDialog />
 
-        <InnerToolbar
-          title="Sockets:"
-          menu={<SocketsDropdown/>}>
+        <SocketsInnerToolbar>
           <RaisedButton
             label="Add"
             primary={true}
             style={{marginRight: 0}}
             onTouchTap={Actions.showDialog} />
-        </InnerToolbar>
+        </SocketsInnerToolbar>
 
         <Container>
           <SchedulesList

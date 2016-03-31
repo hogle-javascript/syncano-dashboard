@@ -12,7 +12,7 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import {Container, Loading} from 'syncano-components';
-import {InnerToolbar, Dialog, SocketsDropdown} from '../../common';
+import {Dialog} from '../../common';
 import {FlatButton, RaisedButton} from 'syncano-material-ui';
 
 // Apps
@@ -24,6 +24,7 @@ import ScriptEndpoints from '../ScriptEndpoints';
 import EmptyView from './EmptyView';
 import SocketsDialog from './SocketsDialog';
 import SocketsList from './SocketsList';
+import SocketsInnerToolbar from './SocketsInnerToolbar';
 
 export default React.createClass({
   displayName: 'Sockets',
@@ -86,26 +87,6 @@ export default React.createClass({
     }];
   },
 
-  renderToolbar() {
-    const {sockets} = this.state;
-
-    if (!sockets.hasAnyItem || sockets.isLoading) {
-      return <InnerToolbar title="Sockets"/>;
-    }
-
-    return (
-      <InnerToolbar
-        title="Sockets:"
-        menu={<SocketsDropdown/>}>
-        <RaisedButton
-          label="Add"
-          primary={true}
-          style={{marginRight: 0}}
-          onTouchTap={Actions.showDialog} />
-      </InnerToolbar>
-    );
-  },
-
   renderLists() {
     const {sockets} = this.state;
 
@@ -139,6 +120,8 @@ export default React.createClass({
   },
 
   render() {
+    const {sockets} = this.state;
+
     return (
       <div>
         <SocketsDialog />
@@ -158,7 +141,13 @@ export default React.createClass({
         }
 
         {this.getDialogs()}
-        {this.renderToolbar()}
+        <SocketsInnerToolbar empty={!sockets.hasAnyItem || sockets.isLoading}>
+          <RaisedButton
+            label="Add"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={Actions.showDialog} />
+        </SocketsInnerToolbar>
         <Container>
           {this.renderLists()}
         </Container>

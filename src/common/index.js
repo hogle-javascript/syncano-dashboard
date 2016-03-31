@@ -15,7 +15,6 @@ import Notification from './Notification';
 import Popover from './Popover';
 import Request from './Request';
 import Sidebar from './Sidebar';
-import SocketsDropdown from './SocketsDropdown';
 
 export default {
   ColorIconPicker,
@@ -34,6 +33,5 @@ export default {
   Notification,
   Popover,
   Request,
-  Sidebar,
-  SocketsDropdown
+  Sidebar
 };
