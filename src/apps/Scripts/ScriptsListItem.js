@@ -1,5 +1,6 @@
 import React from 'react';
 import {State} from 'react-router';
+import _ from 'lodash';
 
 import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
@@ -33,10 +34,7 @@ export default React.createClass({
           primaryText={
             <LinkWrapper
               to="script"
-              params={{
-                instanceName: this.getParams().instanceName,
-                scriptId: item.id
-              }}>
+              params={_.merge({}, this.getParams(), {scriptId: item.id})}>
               <Truncate text={item.label}/>
             </LinkWrapper>
           }

@@ -5,12 +5,8 @@ import {Styles, Utils} from 'syncano-material-ui';
 
 const RadiumLink = Radium(Link);
 
-export default Radium(React.createClass({
-  displayName: 'LinkWrapper',
-
-  mixins: [Utils.Styles],
-
-  getStyles() {
+export default Radium((props) => {
+  const getStyles = () => {
     return {
       color: '#444',
       cursor: 'pointer',
@@ -18,17 +14,15 @@ export default Radium(React.createClass({
         color: Styles.Colors.blue400
       }
     };
-  },
+  };
 
-  render() {
-    const {style, children, ...other} = this.props;
+  const {style, children, ...other} = props;
 
-    return (
-      <RadiumLink
-      style={this.mergeStyles(this.getStyles(), style)}
+  return (
+    <RadiumLink
+      style={Utils.Styles.mergeStyles(getStyles(), style)}
       {...other}>
       {children}
-      </RadiumLink>
-    );
-  }
-}));
+    </RadiumLink>
+  );
+});

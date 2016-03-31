@@ -1,6 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import {Link, State} from 'react-router';
+import _ from 'lodash';
 
 import {DialogsMixin} from '../../mixins';
 
@@ -39,10 +40,7 @@ export default Radium(React.createClass({
           primaryText={
             <LinkWrapper
               to="classes-data-objects"
-              params={{
-                instanceName: this.getParams().instanceName,
-                className: item.name
-              }}>
+              params={_.merge({}, this.getParams(), {className: item.name})}>
               <Truncate text={item.name}/>
             </LinkWrapper>
           }
