@@ -19,6 +19,10 @@ const Column = ColumnList.Column;
 export default Radium(React.createClass({
   displayName: 'DevicesList',
 
+  propTypes: {
+    showSendMessagesDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [
     Navigation,
     State,

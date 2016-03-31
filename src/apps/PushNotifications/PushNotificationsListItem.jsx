@@ -10,6 +10,10 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'DeviceListItem',
 
+  propTypes: {
+    showConfigDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [
     State,
     Navigation

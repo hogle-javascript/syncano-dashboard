@@ -13,9 +13,12 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'GroupsListItem',
 
-  mixins: [
-    DialogsMixin
-  ],
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
+  mixins: [DialogsMixin],
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;

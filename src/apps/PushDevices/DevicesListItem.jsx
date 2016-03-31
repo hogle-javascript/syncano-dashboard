@@ -10,6 +10,13 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'DeviceListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showEditDialog: React.PropTypes.func.isRequired,
+    showSendMessageDialog: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [SnackbarNotificationMixin],
 
   render() {
