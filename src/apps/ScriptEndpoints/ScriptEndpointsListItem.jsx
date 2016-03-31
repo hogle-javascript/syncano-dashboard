@@ -14,6 +14,11 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'ScriptEndpointsListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [
     State,
     SnackbarNotificationMixin

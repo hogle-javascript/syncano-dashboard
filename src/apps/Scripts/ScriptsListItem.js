@@ -12,6 +12,11 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'ScriptsListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [
     State,
     Navigation
