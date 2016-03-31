@@ -5,22 +5,18 @@ import {Styles, Utils} from 'syncano-material-ui';
 
 const RadiumLink = Radium(Link);
 
-export default Radium((props) => {
-  const getStyles = () => {
-    return {
-      color: '#444',
-      cursor: 'pointer',
-      ':hover': {
-        color: Styles.Colors.blue400
-      }
-    };
+export default Radium(({style, children, ...other}) => {
+  const linkStyles = {
+    color: '#444',
+    cursor: 'pointer',
+    ':hover': {
+      color: Styles.Colors.blue400
+    }
   };
-
-  const {style, children, ...other} = props;
 
   return (
     <RadiumLink
-      style={Utils.Styles.mergeStyles(getStyles(), style)}
+      style={Utils.Styles.mergeStyles(linkStyles, style)}
       {...other}>
       {children}
     </RadiumLink>
