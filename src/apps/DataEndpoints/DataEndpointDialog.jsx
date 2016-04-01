@@ -211,12 +211,9 @@ export default React.createClass({
               Data Objects in a different Class, you can expand it to get those Data Objects proprerties.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
-              <a
-                href="http://docs.syncano.io/docs/endpoints-data"
-                style={{textDecoration: 'underline', color: 'rgba(68,68,68,.5)'}}
-                target="_blank">
-                <strong>Learn more</strong>
-              </a>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/endpoints-data">
+                Learn more
+              </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
         }>

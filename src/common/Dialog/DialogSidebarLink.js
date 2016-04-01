@@ -21,13 +21,24 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
+    const {to, children} = this.props;
+
+    if (to.indexOf('http') >= 0) {
+      return (
+        <a
+          href={to}
+          style={styles.root}
+          target="_blank">
+          {children}
+        </a>
+    );}
 
     return (
       <Link
-        to={this.props.to}
+        to={to}
         params={this.getParams()}
         style={styles.root}>
-          {this.props.children}
+          {children}
       </Link>
     );
   }
