@@ -1,13 +1,15 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
+import {State} from 'react-router';
+import _ from 'lodash';
 
 import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Truncate} from 'syncano-components';
+import {LinkWrapper} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ScriptsListItem',
@@ -17,21 +19,11 @@ export default React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [
-    State,
-    Navigation
-  ],
-
-  handleItemClick(itemId) {
-    this.transitionTo('script', {
-      instanceName: this.getParams().instanceName,
-      scriptId: itemId
-    });
-  },
+  mixins: [State],
 
   render() {
-    let item = this.props.item;
-    let runtime = Store.getRuntimeColorIcon(item.runtime_name) || {};
+    const {item, onIconClick, showDeleteDialog} = this.props;
+    const runtime = Store.getRuntimeColorIcon(item.runtime_name) || {};
 
     return (
       <ColumnList.Item
@@ -43,12 +35,13 @@ export default React.createClass({
           iconClassName={runtime.icon}
           background={runtime.color}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}
+          handleIconClick={onIconClick}
           primaryText={
-            <Truncate
-              onClick={this.handleItemClick.bind(null, item.id)}
-              text={item.label}
-              style={{cursor: 'pointer'}}/>
+            <LinkWrapper
+              to="script"
+              params={_.merge({}, this.getParams(), {scriptId: item.id})}>
+              <Truncate text={item.label}/>
+            </LinkWrapper>
           }
           secondaryText={`ID: ${item.id}`}/>
         <Column.Desc>{item.description}</Column.Desc>
@@ -60,7 +53,7 @@ export default React.createClass({
             primaryText="Edit a Script" />
           <MenuItem
             className="dropdown-item-script-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText="Delete a Script" />
         </Column.Menu>
       </ColumnList.Item>
