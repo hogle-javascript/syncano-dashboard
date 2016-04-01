@@ -69,6 +69,7 @@ export default React.createClass({
           {this.renderFormNotifications()}
           <TextField
             ref="label"
+            autoFocus={true}
             valueLink={this.linkState('label')}
             errorText={this.getValidationMessages('label').join(' ')}
             name="label"
