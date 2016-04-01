@@ -68,6 +68,7 @@ export default React.createClass({
         <TextField
           ref="email"
           name="email"
+          autoFocus={true}
           fullWidth={true}
           disabled={this.hasEditMode()}
           valueLink={this.linkState('email')}

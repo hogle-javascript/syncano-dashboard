@@ -68,6 +68,7 @@ export default React.createClass({
         {this.renderFormNotifications()}
         <TextField
           ref="label"
+          autoFocus={true}
           valueLink={this.linkState('label')}
           errorText={this.getValidationMessages('label').join(' ')}
           name="label"
@@ -90,7 +91,7 @@ export default React.createClass({
           floatingLabelText="Runtime environment"
           onChange={this.setSelectFieldValue.bind(null, 'runtime_name')}
           errorText={this.getValidationMessages('runtime_name').join(' ')}/>
-    </Dialog.FullPage>
+      </Dialog.FullPage>
     );
   }
 });

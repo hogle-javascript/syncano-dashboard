@@ -581,7 +581,8 @@ export default React.createClass({
           return this.renderDropZone(item);
         }
 
-        if (item.type === 'object') {
+        if (item.type === 'object' || item.type === 'array') {
+          const value = this.state[item.name] ? JSON.stringify(this.state[item.name]) : '';
           const handleChange = (event) => {
             const state = {};
 
@@ -597,7 +598,7 @@ export default React.createClass({
               style={styles.dialogField}
               fullWidth={true}
               onChange={handleChange}
-              defaultValue={JSON.stringify(this.state[item.name])}
+              defaultValue={value}
               errorText={this.getValidationMessages(item.name).join(' ')}
               hintText={`Field ${item.name}`}
               floatingLabelText={`${item.name} (${item.type})`}/>

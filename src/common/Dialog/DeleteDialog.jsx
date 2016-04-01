@@ -66,9 +66,9 @@ export default React.createClass({
   },
 
   handleConfirm() {
-    const {handleConfirm} = this.props;
+    const {handleConfirm, handleConfirmParam} = this.props;
 
-    handleConfirm(this.getItems());
+    handleConfirm(this.getItems(), handleConfirmParam);
     if (_.isFunction(handleConfirm.completed)) {
       this.listenTo(handleConfirm.completed, () => {
         this.dismiss();

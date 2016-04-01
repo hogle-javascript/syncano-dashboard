@@ -90,6 +90,7 @@ export default React.createClass({
               <TextField
                 ref="development_api_key"
                 name="development_api_key"
+                autoFocus={true}
                 valueLink={this.linkState('development_api_key')}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Development API key"

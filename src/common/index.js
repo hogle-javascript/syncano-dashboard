@@ -8,6 +8,7 @@ import Editor from './Editor';
 import Header from './Header';
 import Icon from './Icon';
 import InnerToolbar from './InnerToolbar';
+import LinkWrapper from './LinkWrapper';
 import Lists from './Lists';
 import Logo from './Logo';
 import NoMobileInfo from './NoMobileInfo';
@@ -27,6 +28,7 @@ export default {
   Header,
   Icon,
   InnerToolbar,
+  LinkWrapper,
   Lists,
   Logo,
   NoMobileInfo,
