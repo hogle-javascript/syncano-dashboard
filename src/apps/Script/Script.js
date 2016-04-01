@@ -75,7 +75,7 @@ export default React.createClass({
   },
 
   getToolbarTitle() {
-    let currentScript = this.state.currentScript;
+    const {currentScript} = this.state;
 
     return currentScript ? `Script: ${currentScript.label} (id: ${currentScript.id})` : '';
   },
@@ -236,7 +236,7 @@ export default React.createClass({
   handleTypeFieldChange(fieldIndex, event, selectedIndex, value) {
     const fieldValueType = value;
     const fieldValue = this.refs[`fieldValue${fieldIndex}`].getValue();
-    const scriptConfig = this.state.scriptConfig;
+    const {scriptConfig} = this.state;
     const parsedValue = this.parseValue(fieldValue, fieldValueType);
 
     if (parsedValue || parsedValue === 0) {
@@ -251,10 +251,10 @@ export default React.createClass({
   parseValue(value, type) {
     // for integer type if value is empty string, convert to 0, if it's a valid number convert to int
     // if it's not a number either return null for error handling
-    let parsedInt = value === '' ? 0 : Number(value);
-    let obj = {
+    const parsedInt = Number(value);
+    const obj = {
       string: value,
-      integer: _.isNumber(parsedInt) ? parsedInt : null
+      integer: _.isNumber(parsedInt) && !_.isNaN(parsedInt) ? parsedInt : null
     };
 
     return obj[type];
@@ -336,7 +336,7 @@ export default React.createClass({
               options={Store.getScriptConfigValueTypes()}
               value={this.state.scriptConfig[index].type}
               onTouchTap={this.handleSelectFieldClick}
-              onChange={() => this.handleTypeFieldChange(index)}
+              onChange={(event, selectedIndex, value) => this.handleTypeFieldChange(index, event, selectedIndex, value)}
               errorText={this.getValidationMessages('configValueType').join(' ')}
               fullWidth={true}
               style={styles.field}/>
