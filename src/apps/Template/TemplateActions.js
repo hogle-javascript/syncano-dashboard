@@ -1,7 +1,6 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
-  setContext: {},
   fetch: {},
 
   fetchTemplate: {

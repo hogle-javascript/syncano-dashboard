@@ -217,13 +217,7 @@ export default (
           <Route
             name="template"
             handler={Template}
-            path=":templateName">
-            <Route
-              name="template-edit"
-              handler={Template.Edit}
-              path="edit"/>
-            <DefaultRoute handler={Template.Edit}/>
-          </Route>
+            path=":templateName"/>
           <DefaultRoute handler={Templates}/>
         </Route>
 

@@ -1,21 +1,18 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
-import {SnackbarNotificationMixin} from '../../mixins';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
+import AutosaveMixin from './TemplateAutosaveMixin';
 
 import Store from './TemplateStore';
 import Actions from './TemplateActions';
 
-import {Tabs, Tab} from 'syncano-material-ui';
-import {Container, Socket} from 'syncano-components';
-import {InnerToolbar} from '../../common';
-
-const RouteHandler = Router.RouteHandler;
+import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
+import {Show, Loading, TogglePanel} from 'syncano-components';
+import {InnerToolbar, Editor} from '../../common';
 
 export default React.createClass({
-
   displayName: 'Template',
 
   contextTypes: {
@@ -23,123 +20,201 @@ export default React.createClass({
   },
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-    LinkedStateMixin,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
-    SnackbarNotificationMixin
+    SnackbarNotificationMixin,
+    AutosaveMixin,
+    FormMixin,
+    MousetrapMixin,
+    DialogsMixin
   ],
 
-  getActiveSubTabIndex() {
-    let index = 0;
+  autosaveAttributeName: 'templateContentAutosave',
 
-    this.getTabsData().some((item, i) => {
-      if (this.isActive(item.route, item.params, item.query)) {
-        index = i;
-        return true;
-      }
+  componentDidMount() {
+    Actions.fetch();
+    this.bindShortcut(['command+s', 'ctrl+s'], () => {
+      this.handleUpdate();
+      return false;
     });
+  },
 
-    return index;
+  componentDidUpdate() {
+    const {renderedTemplate} = this.state;
+
+    if (renderedTemplate) {
+      this.refs.previewEditor.editor.setValue(renderedTemplate);
+    }
   },
 
   getStyles() {
     return {
-      subTabsHeader: {
-        backgroundColor: 'transparent'
+      notification: {
+        marginTop: 20
       },
-      tabs: {
-        padding: '0 20%',
-        borderBottom: '1px solid #DDDDDD'
+      lastResultContainer: {
+        zIndex: 1,
+        position: 'fixed',
+        bottom: 20,
+        right: 100
       },
-      tab: {
-        color: '#444'
+      deleteIcon: {
+        width: 64,
+        display: 'flex',
+        alignItems: 'center'
+      },
+      buttonsSection: {
+        margin: '30px 60px 0'
+      },
+      saveButton: {
+        marginLeft: 10
       }
     };
   },
 
-  getTabsData() {
-    return [
-      {
-        label: 'Edit',
-        route: 'template-edit'
-      }, {
-        label: 'Context',
-        route: 'template-context'
-      }
-    ];
-  },
+  isSaved() {
+    const {template} = this.state;
+    const contentType = this.refs.content_type;
+    const contentEditor = this.refs.contentEditor;
+    const contextEditor = this.refs.contextEditor;
 
-  getToolbarTitle() {
-    const template = this.state.template;
+    if (template && contentType && contentEditor && contextEditor) {
+      const contentTypeValue = contentType.getValue();
+      const contentEditorValue = contentEditor.editor.getValue();
+      const contextEditorValue = contextEditor.editor.getValue();
+      const isNewContentType = template.content_type === contentTypeValue;
+      const isNewContent = template.content === contentEditorValue;
+      const isNewContext = template.context === contextEditorValue;
 
-    return template.name ? `Template: ${template.name}` : '';
-  },
-
-  handleTabActive(tab) {
-    this.transitionTo(tab.props.route, {
-      templateName: this.state.template.name,
-      instanceName: this.getParams().instanceName
-    });
-  },
-
-  handleRenderTemplate() {
-    Actions.renderTemplate(this.state.template.name, this.state.context);
-    // if (this.state.isPayloadValid) {
-
-    // } else {
-    //   this.setSnackbarNotification({
-    //     message: "Can't run Snippet with invalid payload",
-    //     autoHideDuration: 3000
-    //   });
-    // }
-  },
-
-  renderTabs() {
-    const styles = this.getStyles();
-    const template = this.state.template;
-
-    if (template.name) {
-      return (
-        <Tabs
-          initialSelectedIndex={this.getActiveSubTabIndex()}
-          tabItemContainerStyle={styles.subTabsHeader}
-          style={styles.tabs}>
-          <Tab
-            style={styles.tab}
-            label="Edit"
-            route="template-edit"
-            onActive={this.handleTabActive}/>
-        </Tabs>
-      );
+      return !(isNewContentType || isNewContent || isNewContext);
     }
+
+    return true;
   },
 
-  renderRenderButton() {
-    return (
-      <Socket
-        iconClassName="synicon-play-circle"
-        iconStyle={{color: this.context.muiTheme.rawTheme.palette.accent2Color}}
-        tooltip="Click here to render Template"
-        onTouchTap={this.handleRenderTemplate}/>
-    );
+  handleUpdate() {
+    const {template} = this.state;
+    const content_type = this.refs.content_type.getValue();
+    const content = this.refs.contentEditor.editor.getValue();
+    const context = this.refs.contextEditor.editor.getValue();
+
+    this.clearAutosaveTimer();
+    Actions.updateTemplate(template.name, {content_type, content, context});
+    this.setSnackbarNotification({message: 'Saving...'});
+  },
+
+  handleOnSourceChange() {
+    this.resetForm();
+    this.runAutoSave();
   },
 
   render() {
+    const {template, isLoading} = this.state;
+    const styles = this.getStyles();
+
+    console.error(this.state);
+
     return (
       <div>
         <InnerToolbar
-          title={this.getToolbarTitle()}
-          backFallback={() => this.transitionTo('templates', this.getParams())}
-          forceBackFallback={true}
-          backButtonTooltip="Go back to Templates list">
-          {this.isActive('template-edit') ? this.renderRenderButton() : null}
+          title={`Template: ${template.name}` }>
+          <div style={{display: 'inline-block'}}>
+            <Checkbox
+              ref="autosaveCheckbox"
+              name="autosaveCheckbox"
+              label="Autosave"
+              labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
+              defaultChecked={this.isAutosaveEnabled()}
+              onCheck={this.saveCheckboxState}/>
+          </div>
+          <RaisedButton
+            label="SAVE"
+            style={{marginLeft: 5, marginRight: 5}}
+            onTouchTap={() => this.handleUpdate()} />
+          <RaisedButton
+            label="RENDER"
+            primary={true}
+            style={{marginLeft: 5, marginRight: 0}}
+            icon={<FontIcon className="synicon-play"/>}
+            onTouchTap={() => Actions.renderTemplate(template.name, template.context)}/>
         </InnerToolbar>
 
-        <Container.Tabs tabs={this.renderTabs()}>
-          <RouteHandler/>
-        </Container.Tabs>
+        <Loading show={isLoading}>
+          <div className="row">
+            <div className="col-flex-1" style={{borderRight: '1px solid rgba(224,224,224,.5)', display: 'flex'}}>
+              <TogglePanel
+                title="Code"
+                initialOpen={true}
+                style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                <Show if={this.getValidationMessages('source').length > 0}>
+                  <div style={styles.notification}>
+                    <Notification type="error">
+                      {this.getValidationMessages('source').join(' ')}
+                    </Notification>
+                  </div>
+                </Show>
+                <Editor
+                  ref="contentEditor"
+                  mode="text"
+                  onChange={this.handleOnSourceChange}
+                  onLoad={this.clearAutosaveTimer}
+                  value={template.content}/>
+              </TogglePanel>
+            </div>
+            <div className="col-flex-1" style={{padding: 0, maxWidth: 600}}>
+
+              <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
+                <TogglePanel
+                  title="Content type"
+                  initialOpen={true}>
+                  <TextField
+                    ref="content_type"
+                    name="content_type"
+                    fullWidth={true}
+                    defaultValue={template.content_type}
+                    onChange={this.handleOnSourceChange}
+                    hintText="Template's content type"
+                    floatingLabelText="Content type"/>
+                </TogglePanel>
+              </div>
+
+              <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
+                <TogglePanel
+                  title="Context"
+                  initialOpen={true}>
+                  <Editor
+                    name="contextEditor"
+                    ref="contextEditor"
+                    mode="json"
+                    height="200px"
+                    onChange={this.handleOnSourceChange}
+                    onLoad={this.clearAutosaveTimer}
+                    value={JSON.stringify(this.state.template.context, null, '\t') || [
+                      '{',
+                      '    "foo": "bar",',
+                      '    "bar": "foo"',
+                      '}'
+                    ].join('\n')} />
+                </TogglePanel>
+              </div>
+
+              <div>
+                <TogglePanel
+                  title="Preview"
+                  initialOpen={true}>
+                  <Editor
+                    name="previewEditor"
+                    ref="previewEditor"
+                    mode="text"
+                    readOnly={true}
+                    value={''} />
+                </TogglePanel>
+              </div>
+            </div>
+          </div>
+        </Loading>
       </div>
     );
   }

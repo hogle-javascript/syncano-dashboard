@@ -18,7 +18,6 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       template: {},
-      context: {},
       renderedTemplate: null,
       isRendering: false,
       isLoading: true
@@ -46,11 +45,6 @@ export default Reflux.createStore({
 
   clearTemplate() {
     this.data.template = null;
-  },
-
-  setContext(context) {
-    this.data.context = context;
-    this.trigger(this.data);
   },
 
   onFetchTemplateCompleted(template) {
