@@ -75,7 +75,7 @@ export default React.createClass({
   },
 
   getToolbarTitle() {
-    let currentScript = this.state.currentScript;
+    const {currentScript} = this.state;
 
     return currentScript ? `Script: ${currentScript.label} (id: ${currentScript.id})` : '';
   },
@@ -192,7 +192,7 @@ export default React.createClass({
   },
 
   handleDeleteKey(index) {
-    const scriptConfig = this.state.scriptConfig;
+    const {scriptConfig} = this.state;
 
     scriptConfig.splice(index, 1);
     this.runAutoSave(0);
@@ -201,7 +201,7 @@ export default React.createClass({
   },
 
   handleUpdateKey(key, index) {
-    const scriptConfig = this.state.scriptConfig;
+    const {scriptConfig} = this.state;
     const newValue = this.refs[`fieldValue${index}`].getValue();
     const type = this.refs[`fieldType${index}`].props.value;
     const parsedValue = this.parseValue(newValue, type);
@@ -233,14 +233,13 @@ export default React.createClass({
     this.handleUpdate();
   },
 
-  handleTypeFieldChange(fieldIndex, event, selectedIndex, value) {
-    const fieldValueType = value;
+  handleTypeFieldChange(fieldIndex, type) {
     const fieldValue = this.refs[`fieldValue${fieldIndex}`].getValue();
-    const scriptConfig = this.state.scriptConfig;
-    const parsedValue = this.parseValue(fieldValue, fieldValueType);
+    const {scriptConfig} = this.state;
+    const parsedValue = this.parseValue(fieldValue, type);
 
     if (parsedValue || parsedValue === 0) {
-      scriptConfig[fieldIndex].type = fieldValueType;
+      scriptConfig[fieldIndex].type = type;
       scriptConfig[fieldIndex].value = parsedValue;
       this.setState({scriptConfig});
     } else {
@@ -251,17 +250,19 @@ export default React.createClass({
   parseValue(value, type) {
     // for integer type if value is empty string, convert to 0, if it's a valid number convert to int
     // if it's not a number either return null for error handling
-    let parsedInt = value === '' ? 0 : Number(value);
-    let obj = {
+    const parsedInt = Number(value);
+    const typesMap = {
       string: value,
-      integer: _.isNumber(parsedInt) ? parsedInt : null
+      integer: _.isNumber(parsedInt) && !_.isNaN(parsedInt) ? parsedInt : null
     };
 
-    return obj[type];
+    return typesMap[type];
   },
 
 
   initDialogs() {
+    const {isLoading, traces} = this.state;
+
     return [
       {
         dialog: Dialog.FullPage,
@@ -272,10 +273,10 @@ export default React.createClass({
           actions: [],
           onRequestClose: () => this.handleCancel('scriptTraces'),
           children: <Traces.List
-                      isLoading={this.state.isLoading}
+                      isLoading={isLoading}
                       tracesFor="script"
                       name="Traces"
-                      items={this.state.traces}/>
+                      items={traces}/>
         }
       },
       {
@@ -303,12 +304,13 @@ export default React.createClass({
   },
 
   renderFields() {
-    if (!this.state.scriptConfig) {
+    const {scriptConfig} = this.state;
+
+    if (!scriptConfig.length) {
       return null;
     }
 
     const styles = this.getStyles();
-    const scriptConfig = this.state.scriptConfig ? this.state.scriptConfig : [];
     const configFields = _.map(scriptConfig, (field, index) => {
       return (
         <div
@@ -321,7 +323,7 @@ export default React.createClass({
               hintText="Key"
               floatingLabelText="Key"
               defaultValue={field.key}
-              value={this.state.scriptConfig[index].key}
+              value={scriptConfig[index].key}
               style={styles.field}
               fullWidth={true}
               onChange={() => this.handleUpdateKey(field.key, index)}/>
@@ -334,9 +336,9 @@ export default React.createClass({
               hintText="Value Type"
               floatingLabelText="Value Type"
               options={Store.getScriptConfigValueTypes()}
-              value={this.state.scriptConfig[index].type}
+              value={scriptConfig[index].type}
               onTouchTap={this.handleSelectFieldClick}
-              onChange={() => this.handleTypeFieldChange(index)}
+              onChange={(event, selectedIndex, value) => this.handleTypeFieldChange(index, value)}
               errorText={this.getValidationMessages('configValueType').join(' ')}
               fullWidth={true}
               style={styles.field}/>
@@ -348,7 +350,7 @@ export default React.createClass({
               hintText="Value"
               floatingLabelText="Value"
               defaultValue={field.value}
-              value={this.state.scriptConfig[index].value}
+              value={scriptConfig[index].value}
               style={styles.field}
               fullWidth={true}
               onChange={() => this.handleUpdateKey(field.key, index)}/>
@@ -395,7 +397,7 @@ export default React.createClass({
             floatingLabelText="Value Type"
             options={Store.getScriptConfigValueTypes()}
             value={configValueType}
-            onChange={this.setSelectFieldValue.bind(null, 'configValueType')}
+            onChange={(event, index, value) => this.setSelectFieldValue('configValueType', event, index, value)}
             errorText={this.getValidationMessages('configValueType').join(' ')}
             fullWidth={true}
             style={styles.field}/>

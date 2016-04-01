@@ -43,7 +43,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       currentScript: null,
-      scriptConfig: null,
+      scriptConfig: [],
       isPayloadValid: true,
 
       traces: [],
