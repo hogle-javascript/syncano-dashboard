@@ -39,10 +39,11 @@ export default React.createClass({
         ref: 'deleteSharedInstanceDialog',
         title: 'Leave shared Instance',
         handleConfirm: Actions.removeSharedInstance,
-        isLoading,
+        handleConfirmParam: SessionStore.getUser().id,
         actionName: 'leave',
         items: Store.getCheckedItems('sharedInstances'),
-        groupName: 'Instance'
+        groupName: 'Instance',
+        isLoading
       }
     }];
   },
@@ -53,7 +54,7 @@ export default React.createClass({
         key={`shared-instances-list-item-${item.name}`}
         onIconClick={this.handleCheckInstance}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteSharedInstanceDialog', item, SessionStore.getUser().id)}/>
+        showDeleteDialog={() => this.showDialog('deleteSharedInstanceDialog', item)}/>
     );
   },
 
