@@ -233,7 +233,7 @@ export default React.createClass({
     this.handleUpdate();
   },
 
-  handleTypeFieldChange(fieldIndex, event, selectedIndex, value) {
+  handleTypeFieldChange(fieldIndex, value) {
     const fieldValueType = value;
     const fieldValue = this.refs[`fieldValue${fieldIndex}`].getValue();
     const {scriptConfig} = this.state;
@@ -336,7 +336,7 @@ export default React.createClass({
               options={Store.getScriptConfigValueTypes()}
               value={this.state.scriptConfig[index].type}
               onTouchTap={this.handleSelectFieldClick}
-              onChange={(event, selectedIndex, value) => this.handleTypeFieldChange(index, event, selectedIndex, value)}
+              onChange={(event, selectedIndex, value) => this.handleTypeFieldChange(index, value)}
               errorText={this.getValidationMessages('configValueType').join(' ')}
               fullWidth={true}
               style={styles.field}/>
