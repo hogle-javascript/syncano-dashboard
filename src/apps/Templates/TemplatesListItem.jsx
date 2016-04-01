@@ -35,7 +35,7 @@ export default React.createClass({
         id={item.name}
         key={item.name}>
         <Column.CheckIcon
-          className="col-xs-16"
+          className="col-xs-12"
           id={item.name}
           iconClassName="arrow-up-bold"
           keyName="name"
@@ -54,11 +54,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit a Template Socket" />
+            primaryText="Edit a Template" />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete a Template Socket" />
+            primaryText="Delete a Template" />
         </Column.Menu>
       </ColumnList.Item>
     );

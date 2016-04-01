@@ -12,9 +12,9 @@ import Store from './ChannelsStore';
 // Components
 import {RaisedButton} from 'syncano-material-ui';
 import {Container} from 'syncano-components';
-import {InnerToolbar, SocketsDropdown} from '../../common';
 
 // Local components
+import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import ChannelsList from './ChannelsList';
 import ChannelDialog from './ChannelDialog';
 
@@ -46,15 +46,13 @@ export default React.createClass({
       <div>
         <ChannelDialog />
 
-        <InnerToolbar
-          title="Sockets:"
-          menu={<SocketsDropdown/>}>
+        <SocketsInnerToolbar>
           <RaisedButton
             label="Add"
             primary={true}
             style={{marginRight: 0}}
             onTouchTap={Actions.showDialog} />
-        </InnerToolbar>
+        </SocketsInnerToolbar>
 
         <Container>
           <ChannelsList

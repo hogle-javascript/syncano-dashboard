@@ -9,7 +9,7 @@ import Actions from './TemplatesActions';
 import DialogStore from './TemplateDialogStore';
 
 // Components
-import {TextField, FlatButton} from 'syncano-material-ui';
+import {TextField} from 'syncano-material-ui';
 import {Dialog} from '../../common';
 
 export default React.createClass({
@@ -31,49 +31,34 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createTemplate({
-      name: this.state.name,
-      content_type: this.state.content_type
-    });
+    const {name, content_type} = this.state;
+
+    Actions.createTemplate({name, content_type});
   },
 
   handleEditSubmit() {
-    Actions.updateTemplate(this.state.name, {
-      content_type: this.state.content_type
-    });
-  },
+    const {name, content_type} = this.state;
 
-  handleToogle(event, status) {
-    let state = {};
-
-    state[event.target.name] = status;
-    this.setState(state);
+    Actions.updateTemplate(name, {content_type});
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Add';
-    let dialogStandardActions = [
-      <FlatButton
-        key="cancel"
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel"/>,
-      <FlatButton
-        key="confirm"
-        label="Confirm"
-        primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"/>
-    ];
+    const title = this.hasEditMode() ? 'Edit' : 'Add';
+    const {open, isLoading} = this.state;
 
     return (
-      <Dialog
-        key='dialog'
-        ref='dialog'
-        title={`${title} a Template Socket`}
-        actions={dialogStandardActions}
-        open={this.state.open}
-        modal={true}>
+      <Dialog.FullPage
+        key="dialog"
+        ref="dialog"
+        title={`${title} a Template`}
+        actions={
+          <Dialog.StandardButtons
+            handleCancel={this.handleCancel}
+            handleConfirm={this.handleFormValidation}/>
+        }
+        onRequestClose={this.handleCancel}
+        open={open}
+        isLoading={isLoading}>
         {this.renderFormNotifications()}
         <TextField
           ref="name"
@@ -93,7 +78,7 @@ export default React.createClass({
           errorText={this.getValidationMessages('content_type').join(' ')}
           hintText="Content type of the Template"
           floatingLabelText="Content type"/>
-      </Dialog>
+      </Dialog.FullPage>
     );
   }
 });

@@ -12,14 +12,13 @@ import Store from './ScriptsStore';
 // Components
 import {RaisedButton} from 'syncano-material-ui';
 import {Container} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import SnippetsInnerToolbar from '../Snippets/SnippetsInnerToolbar';
 
 // Local components
 import ScriptsList from './ScriptsList';
 import ScriptDialog from './ScriptDialog';
 
 export default React.createClass({
-
   displayName: 'Scripts',
 
   mixins: [
@@ -44,13 +43,13 @@ export default React.createClass({
       <div>
         <ScriptDialog />
 
-        <InnerToolbar title="Scripts">
+        <SnippetsInnerToolbar>
           <RaisedButton
             label="Add"
             primary={true}
             style={{marginRight: 0}}
             onTouchTap={Actions.showDialog} />
-        </InnerToolbar>
+        </SnippetsInnerToolbar>
 
         <Container>
           <ScriptsList

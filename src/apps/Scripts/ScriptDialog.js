@@ -65,34 +65,32 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}>
-        <div>
-          {this.renderFormNotifications()}
-          <TextField
-            ref="label"
-            autoFocus={true}
-            valueLink={this.linkState('label')}
-            errorText={this.getValidationMessages('label').join(' ')}
-            name="label"
-            style={{width: 500}}
-            hintText="Script's label"
-            floatingLabelText="Label"/>
-          <TextField
-            ref="description"
-            name="description"
-            valueLink={this.linkState('description')}
-            errorText={this.getValidationMessages('description').join(' ')}
-            style={{width: 500}}
-            multiLine={true}
-            hintText="Script's description"
-            floatingLabelText="Description (optional)"/>
-          <SelectFieldWrapper
-            name="runtime_name"
-            options={runtimes}
-            value={runtime_name}
-            floatingLabelText="Runtime environment"
-            onChange={this.setSelectFieldValue.bind(null, 'runtime_name')}
-            errorText={this.getValidationMessages('runtime_name').join(' ')}/>
-        </div>
+        {this.renderFormNotifications()}
+        <TextField
+          ref="label"
+          autoFocus={true}
+          valueLink={this.linkState('label')}
+          errorText={this.getValidationMessages('label').join(' ')}
+          name="label"
+          style={{width: 500}}
+          hintText="Script's label"
+          floatingLabelText="Label"/>
+        <TextField
+          ref="description"
+          name="description"
+          valueLink={this.linkState('description')}
+          errorText={this.getValidationMessages('description').join(' ')}
+          style={{width: 500}}
+          multiLine={true}
+          hintText="Script's description"
+          floatingLabelText="Description (optional)"/>
+        <SelectFieldWrapper
+          name="runtime_name"
+          options={runtimes}
+          value={runtime_name}
+          floatingLabelText="Runtime environment"
+          onChange={this.setSelectFieldValue.bind(null, 'runtime_name')}
+          errorText={this.getValidationMessages('runtime_name').join(' ')}/>
       </Dialog.FullPage>
     );
   }

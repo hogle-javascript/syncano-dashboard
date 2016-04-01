@@ -1,59 +1,53 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 // Stores and Actions
 import Actions from './TemplatesActions';
 import Store from './TemplatesStore';
 
 // Components
-import {Container, Socket} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
+import SnippetsInnerToolbar from '../Snippets/SnippetsInnerToolbar';
 
 // Local components
 import TemplatesList from './TemplatesList';
 import TemplateDialog from './TemplateDialog';
 
-
 export default React.createClass({
   displayName: 'Templates',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
     console.info('Templates::componentDidMount');
     Actions.fetch();
   },
 
-  showTemplateDialog() {
-    Actions.showDialog();
-  },
-
   render() {
+    const {items, isLoading, hideDialogs} = this.state;
+
     return (
       <div>
         <TemplateDialog />
 
-        <InnerToolbar title="Template Sockets">
-          <Socket.CodeBox
-            tooltipPosition="bottom-left"
-            onTouchTap={this.showTemplateDialog}/>
-        </InnerToolbar>
+        <SnippetsInnerToolbar>
+          <RaisedButton
+            label="Add"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={Actions.showDialog} />
+        </SnippetsInnerToolbar>
 
         <Container>
           <TemplatesList
-            name="Template Sockets"
-            isLoading={this.state.isLoading}
-            items={this.state.items}
-            hideDialogs={this.state.hideDialogs}
-            emptyItemHandleClick={this.showTemplateDialog}
-            emptyItemContent="Add a Template Socket"/>
+            name="Templates"
+            isLoading={isLoading}
+            items={items}
+            hideDialogs={hideDialogs}
+            emptyItemHandleClick={Actions.showDialog}
+            emptyItemContent="Add a Template"/>
         </Container>
-
       </div>
     );
   }

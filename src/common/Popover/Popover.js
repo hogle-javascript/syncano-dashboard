@@ -1,9 +1,7 @@
 import React from 'react';
-
 import {Popover} from 'syncano-material-ui';
 
 export default React.createClass({
-
   displayName: 'Popover',
 
   getDefaultProps() {
@@ -39,14 +37,15 @@ export default React.createClass({
   },
 
   render() {
-    const {open, onRequestClose, children, ...other} = this.props;
+    const {open, anchorElement} = this.state;
+    const {children, ...other} = this.props;
 
     return (
       <Popover
         {...other}
         onRequestClose={this.hide}
-        open={this.state.open}
-        anchorEl={this.state.anchorElement}>
+        open={open}
+        anchorEl={anchorElement}>
         {children}
       </Popover>
     );

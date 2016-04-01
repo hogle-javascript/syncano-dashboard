@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -12,9 +11,9 @@ import Store from './DataEndpointsStore';
 // Components
 import {RaisedButton} from 'syncano-material-ui';
 import {Container} from 'syncano-components';
-import {InnerToolbar, SocketsDropdown} from '../../common';
 
 // Local components
+import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import DataEndpointsList from './DataEndpointsList';
 import DataEndpointDialog from './DataEndpointDialog';
 
@@ -22,8 +21,6 @@ export default React.createClass({
   displayName: 'Data',
 
   mixins: [
-    State,
-    Navigation,
     Reflux.connect(Store),
     DialogsMixin
   ],
@@ -40,15 +37,13 @@ export default React.createClass({
       <div>
         <DataEndpointDialog/>
 
-        <InnerToolbar
-          title="Sockets:"
-          menu={<SocketsDropdown/>}>
+        <SocketsInnerToolbar>
           <RaisedButton
             style={{marginRight: 0}}
             label="Add"
             primary={true}
             onTouchTap={Actions.showDialog}/>
-        </InnerToolbar>
+        </SocketsInnerToolbar>
 
         <Container>
           <DataEndpointsList

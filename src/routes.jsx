@@ -34,6 +34,7 @@ import DataObjects from './apps/DataObjects/DataObjects';
 import DataEndpoints from './apps/DataEndpoints';
 import Users from './apps/Users/Users';
 import Sockets from './apps/Sockets';
+import Snippets from './apps/Snippets';
 import Template from './apps/Template';
 import Templates from './apps/Templates';
 import Triggers from './apps/Triggers';
@@ -203,6 +204,11 @@ export default (
           <DefaultRoute handler={ScriptEndpoints}/>
 
         </Route>
+
+        <Route
+          name="snippets"
+          path="snippets"
+          handler={Snippets} />
 
         {/* Templates */}
         <Route
