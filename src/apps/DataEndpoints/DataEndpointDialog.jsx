@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation, Link} from 'react-router';
 import Reflux from 'reflux';
 
 // Utils
@@ -22,9 +21,7 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     DialogMixin,
-    FormMixin,
-    State,
-    Navigation
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -206,7 +203,7 @@ export default React.createClass({
             <Dialog.SidebarSection title="Class">
               Classes define properties of Data Objects. If you have no Classes yet you can create one&nbsp;
               <Dialog.SidebarLink to="classes">
-              here.
+                here.
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Class Fields">

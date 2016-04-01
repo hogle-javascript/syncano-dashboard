@@ -26,7 +26,9 @@ export default React.createClass({
       <Link
         to={this.props.to}
         params={this.getParams()}
-        style={styles.root}/>
+        style={styles.root}>
+          {this.props.children}
+      </Link>
     );
   }
 });
