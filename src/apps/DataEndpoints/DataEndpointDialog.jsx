@@ -194,10 +194,31 @@ export default React.createClass({
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              With Data Endpoints you can configure Data Object calls and save them for later use.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Class">
+              Classes define properties of Data Objects. If you have no Classes yet you can create one&nbsp;
+              <Dialog.SidebarLink to="classes">
+                here.
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Class Fields">
+              Choose which fields of Class schema will be included in the response. If a field is referencing
+              Data Objects in a different Class, you can expand it to get those Data Objects proprerties.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/endpoints-data">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
         {this.renderFormNotifications()}
-        <div>Main settings</div>
-        <div className="row">
+        <Dialog.ContentSection>
           <div className="col-xs-12">
             <TextField
               ref="name"
@@ -220,8 +241,8 @@ export default React.createClass({
               hintText="Data Endpoint's description"
               floatingLabelText="Description (optional)"/>
           </div>
-        </div>
-        <div className="row vm-4-b">
+        </Dialog.ContentSection>
+        <Dialog.ContentSection>
           <div className="col-flex-1">
             <SelectFieldWrapper
               name="class"
@@ -230,15 +251,15 @@ export default React.createClass({
               onChange={this.setSelectFieldValue.bind(null, 'class')}
               errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
-        </div>
-        <div className="row">
+        </Dialog.ContentSection>
+        <Dialog.ContentSection>
           <div className="col-flex-1">
             {fields}
           </div>
           <div className="col-flex-1" style={{paddingLeft: 40}}>
             {options}
           </div>
-        </div>
+        </Dialog.ContentSection>
       </Dialog.FullPage>
     );
   }
