@@ -105,6 +105,7 @@ export default React.createClass({
           <div className="col-md-20">
             <TextField
               ref="name"
+              autoFocus={true}
               valueLink={this.linkState('name')}
               errorText={this.getValidationMessages('name').join(' ')}
               name="name"
