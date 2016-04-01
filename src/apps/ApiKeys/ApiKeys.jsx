@@ -38,7 +38,7 @@ export default React.createClass({
 
         <InnerToolbar title="API Keys">
           <RaisedButton
-            label="Generate"
+            label="Add"
             primary={true}
             style={{marginRight: 0}}
             onTouchTap={Actions.showDialog} />

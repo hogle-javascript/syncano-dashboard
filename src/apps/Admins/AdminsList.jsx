@@ -73,7 +73,7 @@ export default React.createClass({
             className="col-xs-25 col-md-20">
             Administrators
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DESC"/>
+          <Column.ColumnHeader columnName="DESC" />
           <Column.ColumnHeader columnName="TEXT">Role</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">

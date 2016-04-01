@@ -65,7 +65,7 @@ export default React.createClass({
   },
 
   render() {
-    const title = this.hasEditMode() ? 'Edit' : 'Generate';
+    const title = this.hasEditMode() ? 'Edit' : 'Add';
     const {open, isLoading} = this.state;
 
     return (
