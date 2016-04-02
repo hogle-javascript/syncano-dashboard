@@ -20,6 +20,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       name: null,
+      group_permissions: 'create_objects',
+      other_permissions: 'create_objects',
       fields: []
     };
   },
