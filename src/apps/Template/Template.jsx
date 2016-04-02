@@ -157,7 +157,8 @@ export default React.createClass({
                 </Show>
                 <Editor
                   ref="contentEditor"
-                  mode="text"
+                  name="contentEditor"
+                  mode="django"
                   onChange={this.handleOnSourceChange}
                   onLoad={this.clearAutosaveTimer}
                   value={template.content}/>
@@ -207,7 +208,7 @@ export default React.createClass({
                   <Editor
                     name="previewEditor"
                     ref="previewEditor"
-                    mode="text"
+                    mode="html"
                     readOnly={true}
                     value={''} />
                 </TogglePanel>
