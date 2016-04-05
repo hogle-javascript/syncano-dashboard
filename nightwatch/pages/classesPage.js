@@ -34,7 +34,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addButton: {
-      selector: '//span[text()="Add"]',
+      selector: '(//span[text()="Add"])[2]',
       locateStrategy: 'xpath'
     },
     classTableRows: {
