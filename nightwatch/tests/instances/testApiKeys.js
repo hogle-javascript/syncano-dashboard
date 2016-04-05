@@ -28,7 +28,6 @@ export default {
   },
   'Test Reset Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
-    const description = Utils.addSuffix();
     let apiKeyValue = null;
 
     apiKeysPage
@@ -40,9 +39,17 @@ export default {
     client.element('xpath', apiKeyValueElement, (result) => {
       client.elementIdText(result.value.ELEMENT, (text) => apiKeyValue = text.value);
     });
+
+    client.useXpath();
+
     apiKeysPage
-      .clickListItemDropdown(description, 'Reset')
+      .waitForElementVisible('@apiKeysListItemDropDown')
+      .click('@apiKeysListItemDropDown')
+      .waitForElementNotPresent('//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div')
+      .click('@resetButton')
+      .waitForElementNotPresent('//iframe/following-sibling::div[@style]/div')
       .clickElement('@confirmButton');
+
     client
       .pause(1000)
       .element('xpath', apiKeyValueElement, (result) => {
