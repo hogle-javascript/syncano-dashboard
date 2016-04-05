@@ -81,7 +81,7 @@ export default Reflux.createStore({
       }
       return 'string';
     }
-    let config = _.map(originalConfig, (value, key) => {
+    const config = _.map(originalConfig, (value, key) => {
       return {
         key,
         value,
@@ -114,7 +114,7 @@ export default Reflux.createStore({
   },
 
   getEditorMode() {
-    let currentScript = this.data.currentScript;
+    const currentScript = this.data.currentScript;
 
     return currentScript ? this.langMap[currentScript.runtime_name] : 'python';
   },
