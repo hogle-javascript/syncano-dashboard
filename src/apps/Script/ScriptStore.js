@@ -76,7 +76,6 @@ export default Reflux.createStore({
 
   mapConfig(originalConfig) {
     const getFieldValueType = (fieldValue) => {
-      console.error(fieldValue, typeof fieldValue);
       if (_.isNumber(fieldValue)) {
         return 'integer';
       }
