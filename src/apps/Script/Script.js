@@ -184,7 +184,6 @@ export default React.createClass({
     };
 
     scriptConfig.push(newField);
-    // this.runAutoSave(0);
     this.setState({scriptConfig});
     this.refs.newFieldKey.clearValue();
     this.refs.newFieldValue.clearValue();
