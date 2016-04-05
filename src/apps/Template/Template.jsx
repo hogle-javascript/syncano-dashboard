@@ -10,7 +10,7 @@ import Actions from './TemplateActions';
 
 import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
 import {Show, Loading, TogglePanel} from 'syncano-components';
-import {InnerToolbar, Editor} from '../../common';
+import {InnerToolbar, Editor, Notification} from '../../common';
 
 export default React.createClass({
   displayName: 'Template',
@@ -52,7 +52,7 @@ export default React.createClass({
   getStyles() {
     return {
       notification: {
-        marginTop: 20
+        marginBottom: 20
       },
       lastResultContainer: {
         zIndex: 1,
@@ -148,10 +148,10 @@ export default React.createClass({
                 title="Code"
                 initialOpen={true}
                 style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                <Show if={this.getValidationMessages('source').length > 0}>
+                <Show if={this.getValidationMessages('content').length > 0}>
                   <div style={styles.notification}>
                     <Notification type="error">
-                      {this.getValidationMessages('source').join(' ')}
+                      {this.getValidationMessages('content').join(' ')}
                     </Notification>
                   </div>
                 </Show>
