@@ -134,7 +134,7 @@ export default React.createClass({
   getConfigObject() {
     const {scriptConfig} = this.state;
     const scriptConfigObject = _.reduce(scriptConfig, (result, item) => {
-      result[item.key] = item.type === 'integer' ? Number(item.value) : item.value;
+      result[item.key] = item.type === 'integer' ? Number(item.value) : item.value.toString();
       return result;
     }, {});
 
@@ -229,8 +229,16 @@ export default React.createClass({
 
   handleTypeFieldChange(fieldIndex, type) {
     const {scriptConfig} = this.state;
+    const value = scriptConfig[fieldIndex].value;
+    const valueMap = {
+      integer: 0,
+      string: ''
+    };
 
     scriptConfig[fieldIndex].type = type;
+    if (value === 0 || value === '') {
+      scriptConfig[fieldIndex].value = valueMap[type];
+    }
     this.setState({scriptConfig});
   },
 
