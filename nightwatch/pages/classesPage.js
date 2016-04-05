@@ -66,7 +66,7 @@ export default {
       locateStrategy: 'xpath'
     },
     classTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('class')}"]/../following-sibling::div[1]/div`,
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     classTableName: {
