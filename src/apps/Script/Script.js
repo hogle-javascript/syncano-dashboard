@@ -40,20 +40,25 @@ export default React.createClass({
     let validateObj = {};
 
     _.forEach(scriptConfig, (item, index) => {
-      validateObj[`fieldKey${index}`] = {
-        presence: {
-          message: '^This field cannot be blank'
-        }
-      };
       validateObj[`fieldKey${index}`] = (value, options) => {
+        const keyValidation = {
+          presence: {
+            message: '^This field cannot be blank'
+          }
+        };
+
         if (_.filter(options, (fieldVal) => fieldVal === value).length > 1) {
-          return {
+          const uniqueKeyValidation = {
             inclusion: {
               within: [],
               message: '^This field must be unique'
             }
           };
+
+          _.assign(keyValidation, uniqueKeyValidation);
         }
+
+        return keyValidation;
       };
       if (item.type === 'integer') {
         validateObj[`fieldValue${index}`] = {
