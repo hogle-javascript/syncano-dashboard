@@ -56,11 +56,6 @@ export default {
     resetButton: {
       selector: '//div[text()="Reset an API Key"]',
       locateStrategy: 'xpath'
-    },
-    apiKeysListItemDropDown: {
-      selector: `//div[text()="${utils.addSuffix('')}"]/../../../
-        following-sibling::div//span[@class="synicon-dots-vertical"]`,
-      locateStrategy: 'xpath'
     }
   }
 };
