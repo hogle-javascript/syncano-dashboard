@@ -235,14 +235,10 @@ export default React.createClass({
   handleTypeFieldChange(fieldIndex, type) {
     const {scriptConfig} = this.state;
     const value = scriptConfig[fieldIndex].value;
-    const valueMap = {
-      integer: 0,
-      string: ''
-    };
 
     scriptConfig[fieldIndex].type = type;
     if (value === 0 || value === '') {
-      scriptConfig[fieldIndex].value = valueMap[type];
+      scriptConfig[fieldIndex].value = type === 'integer' ? 0 : '';
     }
     this.setState({scriptConfig});
   },
