@@ -34,11 +34,12 @@ export default {
   'Test Edit Class': (client) => {
     const classesPage = client.page.classesPage();
     const edit = Utils.addSuffix('edit');
-    const className = Utils.addSuffix('class');
 
     classesPage
       .navigate()
-      .clickListItemDropdown(className, 'Edit')
+      .waitForElementVisible('@classesListItemDropDown')
+      .click('@classesListItemDropDown')
+      .click('@editButton')
       .waitForElementVisible('@createModalDescriptionInput')
       .fillInput('@createModalDescriptionInput', edit)
       .clickElement('@confirmButton')
@@ -48,10 +49,11 @@ export default {
   },
   'Test Delete Class': (client) => {
     const classesPage = client.page.classesPage();
-    const className = Utils.addSuffix('class');
 
     classesPage
-      .clickListItemDropdown(className, 'Delete')
+      .waitForElementVisible('@classesListItemDropDown')
+      .click('@classesListItemDropDown')
+      .click('@deleteButton')
       .waitForElementVisible('@deleteClassModalTitle')
       .clickElement('@confirmDeleteButton')
       .waitForElementNotPresent('@deleteClassModalTitle')

@@ -96,6 +96,19 @@ export default {
     checkboxSelected: {
       selector: '//span[@class="synicon-checkbox-marked-outline"]',
       locateStrategy: 'xpath'
+    },
+    classesListItemDropDown: {
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../../../../
+        following-sibling::div//span[@class="synicon-dots-vertical"]`,
+      locateStrategy: 'xpath'
+    },
+    editButton: {
+      selector: '//div[text()="Edit a Class"]',
+      locateStrategy: 'xpath'
+    },
+    deleteButton: {
+      selector: '//div[text()="Delete a Class"]',
+      locateStrategy: 'xpath'
     }
   }
 };
