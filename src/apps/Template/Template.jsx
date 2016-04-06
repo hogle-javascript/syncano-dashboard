@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
+import Radium from 'radium';
 import {State, Navigation} from 'react-router';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
@@ -13,7 +14,7 @@ import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
 import {Show, Loading, TogglePanel, Truncate} from 'syncano-components';
 import {InnerToolbar, Editor, Notification} from '../../common';
 
-export default React.createClass({
+export default Radium(React.createClass({
   displayName: 'Template',
 
   contextTypes: {
@@ -82,6 +83,9 @@ export default React.createClass({
       notification: {
         marginBottom: 20
       },
+      contextNotification: {
+        margin: '10px 10px 10px 20px'
+      },
       lastResultContainer: {
         zIndex: 1,
         position: 'fixed',
@@ -149,10 +153,23 @@ export default React.createClass({
     Actions.renderTemplate(template.name, template.context);
   },
 
+  renderErrorNotifications(errorsKey) {
+    const styles = this.getStyles();
+
+    return (
+      <Show if={this.getValidationMessages(errorsKey).length > 0}>
+        <div style={[styles.notification, errorsKey === 'context' && styles.contextNotification]}>
+          <Notification type="error">
+            {this.getValidationMessages(errorsKey).join(' ')}
+          </Notification>
+        </div>
+      </Show>
+    );
+  },
+
   render() {
     const {template, isLoading} = this.state;
     const instanceName = this.getParams().instanceName;
-    const styles = this.getStyles();
 
     return (
       <div>
@@ -186,13 +203,7 @@ export default React.createClass({
                 title="Code"
                 initialOpen={true}
                 style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                <Show if={this.getValidationMessages('content').length > 0}>
-                  <div style={styles.notification}>
-                    <Notification type="error">
-                      {this.getValidationMessages('content').join(' ')}
-                    </Notification>
-                  </div>
-                </Show>
+                {this.renderErrorNotifications('content')}
                 <Editor
                   ref="contentEditor"
                   name="contentEditor"
@@ -238,6 +249,7 @@ export default React.createClass({
                       '}'
                     ].join('\n')} />
                 </TogglePanel>
+                {this.renderErrorNotifications('context')}
               </div>
 
               <div>
@@ -258,4 +270,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}));
