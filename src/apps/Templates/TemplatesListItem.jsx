@@ -1,5 +1,6 @@
 import React from 'react';
 import {State, Navigation} from 'react-router';
+import _ from 'lodash';
 
 import {DialogsMixin} from '../../mixins';
 
@@ -7,8 +8,9 @@ import Actions from './TemplatesActions';
 
 import {MenuItem} from 'syncano-material-ui';
 import {Color, ColumnList, Truncate} from 'syncano-components';
+import {LinkWrapper} from '../../common/';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'TemplatesListItem',
@@ -43,10 +45,11 @@ export default React.createClass({
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={
-            <Truncate
-              onClick={() => this.handleItemClick(item.name)}
-              text={item.name}
-              style={{cursor: 'pointer'}}/>
+            <LinkWrapper
+              to="template"
+              params={_.merge({}, this.getParams(), {templateName: item.name})}>
+              <Truncate text={item.name}/>
+            </LinkWrapper>
           }>
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.content_type}</Column.Desc>
@@ -64,4 +67,3 @@ export default React.createClass({
     );
   }
 });
-
