@@ -26,11 +26,6 @@ export default CreateActions(
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Templates.remove'
-    },
-    renderTemplatese: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Templates.render'
     }
   },
   {

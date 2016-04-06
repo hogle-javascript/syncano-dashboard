@@ -62,13 +62,14 @@ export default Reflux.createStore({
 
   onRenderTemplateCompleted(renderedTemplate) {
     console.debug('TemplateStore::onRenderTemplateCompleted');
+    console.error(renderedTemplate);
     this.data.isRendering = false;
     this.data.renderedTemplate = renderedTemplate;
     this.trigger(this.data);
   },
 
   onRenderTemplateFailure() {
-    console.debug('TemplateStore::onRenderTemplateCompleted');
+    console.debug('TemplateStore::onRenderTemplateFailure');
     this.data.isRendering = false;
     this.data.renderedTemplate = null;
     this.trigger(this.data);
@@ -78,6 +79,13 @@ export default Reflux.createStore({
     this.data.template = template;
     this.dismissSnackbarNotification();
     this.refreshData();
+  },
+
+  onRenderFromEndpointCompleted(renderedTemplate) {
+    console.debug('TemplateStore::onRenderFromEndpointCompleted');
+    this.data.isRendering = false;
+    this.data.renderedTemplate = renderedTemplate;
+    this.trigger(this.data);
   },
 
   onUpdateTemplateFailure() {
