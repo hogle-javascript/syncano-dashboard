@@ -5,7 +5,7 @@ exports.command = function(listItem, dropdownChoice) {
   // if xpath pass, else construct xpath
   const isSelector = ['/', '('];
   const listItemDropdown = isSelector.indexOf(listItem[0]) !== -1 ? listItem
-  : `//div[text()="${listItem}"]/../../../../following-sibling::div//span[@class="synicon-dots-vertical"]`;
+  : `//div[text()="${listItem}"]/../../../following-sibling::div//span[@class="synicon-dots-vertical"]`;
   const choice = `//div[contains(text(), "${dropdownChoice}")]`;
 
   this
