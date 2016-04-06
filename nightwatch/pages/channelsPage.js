@@ -59,6 +59,6 @@ export default {
     channelModalDescriptionInput: {
       selector: '//textarea[@name="description"]',
       locateStrategy: 'xpath'
-    },
+    }
   }
 };

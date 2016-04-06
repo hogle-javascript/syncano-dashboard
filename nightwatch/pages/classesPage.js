@@ -34,7 +34,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addButton: {
-      selector: '//span[text()="Add"]',
+      selector: '(//span[text()="Add"])[2]',
       locateStrategy: 'xpath'
     },
     classTableRows: {
@@ -50,7 +50,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectUserClass: {
-      selector: '//div[text()="user_profile"]/../../../button//span',
+      selector: '//div[text()="user_profile"]/../../../../button//span',
       locateStrategy: 'xpath'
     },
     userClassListItem: {
@@ -58,7 +58,7 @@ export default {
       locateStrategy: 'xpath'
     },
     userClassDropDown: {
-      selector: '//div[text()="user_profile"]/../../../../div[@class="col-menu"]//button',
+      selector: '//div[text()="user_profile"]/../../../../../div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     classToSelect: {
@@ -66,7 +66,7 @@ export default {
       locateStrategy: 'xpath'
     },
     classTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('class')}"]/../following-sibling::div[1]/div`,
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     classTableName: {
@@ -95,6 +95,19 @@ export default {
     },
     checkboxSelected: {
       selector: '//span[@class="synicon-checkbox-marked-outline"]',
+      locateStrategy: 'xpath'
+    },
+    classesListItemDropDown: {
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../../../../
+        following-sibling::div//span[@class="synicon-dots-vertical"]`,
+      locateStrategy: 'xpath'
+    },
+    editButton: {
+      selector: '//div[text()="Edit a Class"]',
+      locateStrategy: 'xpath'
+    },
+    deleteButton: {
+      selector: '//div[text()="Delete a Class"]',
       locateStrategy: 'xpath'
     }
   }
