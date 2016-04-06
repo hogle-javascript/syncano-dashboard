@@ -37,7 +37,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.listenTo(SocketsActions.fetchSockets.completed, this.saveClasses);
+    this.listenTo(SocketsActions.fetchSockets.completed, Actions.fetchClasses);
     this.setLoadingStates();
   },
 
@@ -180,11 +180,6 @@ export default Reflux.createStore({
     }
 
     this.trigger(this.data);
-  },
-
-  saveClasses(sockets) {
-    console.debug('ScriptsStore::onFetchSocketsCompleted');
-    Actions.setClasses(sockets.classes);
   },
 
   onSetClickedClass(item) {

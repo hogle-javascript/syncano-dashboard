@@ -20,7 +20,7 @@ export default React.createClass({
   getStyles() {
     return {
       style: {
-        padding: '136px 0 0px',
+        paddingBottom: 16,
         overflowY: 'auto'
       },
       closeButton: {
@@ -36,11 +36,12 @@ export default React.createClass({
       },
       overlay: {
         background: '#fff',
-        zIndex: 0
+        zIndex: -1
       },
       content: {
         transform: 'none',
-        width: '100%'
+        width: '100%',
+        maxWidth: 'none'
       },
       title: {
         paddingTop: 0
@@ -49,7 +50,8 @@ export default React.createClass({
         paddingTop: 35
       },
       actionsContainer: {
-        padding: '0 24px'
+        padding: '0 24px',
+        margin: 0
       },
       loading: {
         position: 'fixed'
@@ -60,11 +62,9 @@ export default React.createClass({
   getContentConfig(size) {
     const config = {
       small: {
-        paddingTop: 120,
         maxWidth: 500
       },
       medium: {
-        paddingTop: 80,
         maxWidth: 840
       },
       large: {
@@ -100,7 +100,6 @@ export default React.createClass({
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}
-        repositionOnUpdate={false}
         titleStyle={styles.title}
         bodyStyle={styles.body}
         actionsContainerStyle={Utils.Styles.mergeStyles(styles.actionsContainer, sidebar && {paddingLeft: 262})}

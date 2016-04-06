@@ -16,8 +16,7 @@ export default {
       'apnsPushNotifications',
       'gcmDevices',
       'apnsDevices',
-      'scripts',
-      'classes'
+      'scripts'
     ];
     const requests = [
       {method: 'GET', path: `/v1/instances/${instance.name}/api/objects/?${query}`},
@@ -29,8 +28,7 @@ export default {
       {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/apns/config/?${query}`},
       {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/gcm/devices/?${query}`},
       {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/apns/devices/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/codeboxes/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/classes/?${query}`}
+      {method: 'GET', path: `/v1/instances/${instance.name}/codeboxes/?${query}`}
     ];
 
     this.Connection
