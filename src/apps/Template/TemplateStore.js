@@ -62,7 +62,6 @@ export default Reflux.createStore({
 
   onRenderTemplateCompleted(renderedTemplate) {
     console.debug('TemplateStore::onRenderTemplateCompleted');
-    console.error(renderedTemplate);
     this.data.isRendering = false;
     this.data.renderedTemplate = renderedTemplate;
     this.trigger(this.data);
