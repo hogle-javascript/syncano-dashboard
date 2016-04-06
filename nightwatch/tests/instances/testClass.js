@@ -38,8 +38,8 @@ export default {
     classesPage
       .navigate()
       .waitForElementVisible('@classesListItemDropDown')
-      .click('@classesListItemDropDown')
-      .click('@editButton')
+      .clickElement('@classesListItemDropDown')
+      .clickElement('@editButton')
       .waitForElementVisible('@createModalDescriptionInput')
       .fillInput('@createModalDescriptionInput', edit)
       .clickElement('@confirmButton')
@@ -52,8 +52,8 @@ export default {
 
     classesPage
       .waitForElementVisible('@classesListItemDropDown')
-      .click('@classesListItemDropDown')
-      .click('@deleteButton')
+      .clickElement('@classesListItemDropDown')
+      .clickElement('@deleteButton')
       .waitForElementVisible('@deleteClassModalTitle')
       .clickElement('@confirmDeleteButton')
       .waitForElementNotPresent('@deleteClassModalTitle')
