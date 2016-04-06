@@ -10,7 +10,7 @@ import Store from './TemplateStore';
 import Actions from './TemplateActions';
 
 import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
-import {Show, Loading, TogglePanel} from 'syncano-components';
+import {Show, Loading, TogglePanel, Truncate} from 'syncano-components';
 import {InnerToolbar, Editor, Notification} from '../../common';
 
 export default React.createClass({
@@ -44,11 +44,11 @@ export default React.createClass({
         }
       };
 
-      if (value.indexOf(SYNCANO_BASE_URL) === -1) {
+      if (value && value.indexOf(SYNCANO_BASE_URL) === -1) {
         const syncanoUrlValidation = {
           inclusion: {
             within: [],
-            message: '^Invalid Syncano URL'
+            message: '^Invalid endpoint URL'
           }
         };
 
@@ -142,8 +142,7 @@ export default React.createClass({
     const {template} = this.state;
 
     if (this.refs.dataSourceUrl.getValue().length) {
-      Actions.renderFromEndpoint(template.name, this.refs.dataSourceUrl.getValue());
-      return;
+      return Actions.renderFromEndpoint(template.name, this.refs.dataSourceUrl.getValue());
     }
 
     Actions.renderTemplate(template.name, template.context);
@@ -214,9 +213,8 @@ export default React.createClass({
                     fullWidth={true}
                     valueLink={this.linkState('dataSourceUrl')}
                     errorText={this.getValidationMessages('dataSourceUrl').join(' ')}
-                    hintText={`e.g. https://api.syncano.rocks/v1/instances/${instanceName}/channels/`}
+                    hintText={<Truncate text={`e.g. https://api.syncano.rocks/v1/instances/${instanceName}/classes/`}/>}
                     onChange={this.handleOnSourceChange}
-                    hintStyle={{fontSize: 14}}
                     floatingLabelText="Data source URL"/>
                 </TogglePanel>
               </div>
