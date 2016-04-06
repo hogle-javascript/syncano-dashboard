@@ -14,7 +14,8 @@ export default React.createClass({
   getStyles() {
     return {
       titleContainer: {
-        padding: '18px 0 50px'
+        marginTop: -35,
+        paddingBottom: 50
       },
       title: {
         textAlign: 'center',
