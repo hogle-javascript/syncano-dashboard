@@ -35,6 +35,46 @@ export default React.createClass({
 
   autosaveAttributeName: 'scriptSourceAutosave',
 
+  validatorConstraints() {
+    const {scriptConfig} = this.state;
+    let validateObj = {};
+
+    _.forEach(scriptConfig, (item, index) => {
+      validateObj[`fieldKey${index}`] = (value, options) => {
+        const keyValidation = {
+          presence: {
+            message: '^This field cannot be blank'
+          }
+        };
+
+        if (_.filter(options, (fieldVal) => fieldVal === value).length > 1) {
+          const uniqueKeyValidation = {
+            inclusion: {
+              within: [],
+              message: '^This field must be unique'
+            }
+          };
+
+          _.assign(keyValidation, uniqueKeyValidation);
+        }
+
+        return keyValidation;
+      };
+      if (item.type === 'integer') {
+        validateObj[`fieldValue${index}`] = {
+          numericality: {
+            onlyInteger: true,
+            greaterThanOrEqualTo: Number.MIN_SAFE_INTEGER,
+            lessThanOrEqualTo: Number.MAX_SAFE_INTEGER,
+            message: '^This value should be an integer type and range'
+          }
+        };
+      }
+    });
+
+    return validateObj;
+  },
+
   componentDidMount() {
     Actions.fetch();
     this.bindShortcut(['command+s', 'ctrl+s'], () => {
@@ -47,6 +87,22 @@ export default React.createClass({
 
   componentWillUnmount() {
     Store.clearCurrentScript();
+  },
+
+  getValidatorAttributes() {
+    const {scriptConfig} = this.state;
+
+    if (!scriptConfig.length) {
+      return {};
+    }
+
+    const attributes = _.reduce(scriptConfig, (all, item, index) => {
+      all[`fieldKey${index}`] = item.key;
+      all[`fieldValue${index}`] = item.value;
+      return all;
+    }, {});
+
+    return attributes;
   },
 
   getStyles() {
@@ -83,7 +139,7 @@ export default React.createClass({
   getConfigObject() {
     const {scriptConfig} = this.state;
     const scriptConfigObject = _.reduce(scriptConfig, (result, item) => {
-      result[item.key] = item.value;
+      result[item.key] = item.type === 'integer' ? Number(item.value) : item.value.toString();
       return result;
     }, {});
 
@@ -101,19 +157,6 @@ export default React.createClass({
     const currentSource = this.refs.editorSource.editor.getValue();
 
     return _.isEqual(initialSource, currentSource) && _.isEqual(currentScript.config, this.getConfigObject());
-  },
-
-  isConfigValid() {
-    const {scriptConfig} = this.state;
-
-    return _.uniq(_.pluck(scriptConfig, 'key')).length === scriptConfig.length;
-  },
-
-  hasKey(newKey) {
-    const {scriptConfig} = this.state;
-    const existingKeys = _.pluck(scriptConfig, 'key');
-
-    return _.includes(existingKeys, newKey);
   },
 
   handleOnSourceChange() {
@@ -139,35 +182,13 @@ export default React.createClass({
     event.preventDefault();
     const {scriptConfig} = this.state;
 
-    const configValueType = this.refs.newFieldType.refs.configValueType.props.value;
-    const configKey = this.refs.newFieldKey.getValue();
-    const configValue = this.refs.newFieldValue.getValue();
-
-    const parsedValue = this.parseValue(configValue, configValueType);
-
-    if (parsedValue === null) {
-      this.refs.newFieldValue.setErrorText('This field should be a number');
-      return;
-    }
-
     const newField = {
-      key: configKey,
-      value: parsedValue,
-      type: configValueType
+      key: this.refs.newFieldKey.getValue(),
+      value: this.refs.newFieldValue.getValue(),
+      type: this.refs.newFieldType.refs.configValueType.props.value
     };
 
-    if (this.hasKey(newField.key)) {
-      this.refs.newFieldKey.setErrorText('Field with this Key already exist. Please choose another.');
-      return;
-    }
-
-    if (newField.key === '') {
-      this.refs.newFieldKey.setErrorText('This field cannot be blank.');
-      return;
-    }
-
     scriptConfig.push(newField);
-    this.runAutoSave(0);
     this.setState({scriptConfig});
     this.refs.newFieldKey.clearValue();
     this.refs.newFieldValue.clearValue();
@@ -175,14 +196,6 @@ export default React.createClass({
   },
 
   handleUpdate() {
-    if (!this.isConfigValid()) {
-      this.setState({
-        errors: {
-          config: ['Config save failed. One or more keys are not unique. Please verify keys and try again.']
-        }
-      });
-      return;
-    }
     const config = this.getConfigObject();
     const source = this.refs.editorSource.editor.getValue();
 
@@ -203,30 +216,16 @@ export default React.createClass({
   handleUpdateKey(key, index) {
     const {scriptConfig} = this.state;
     const newValue = this.refs[`fieldValue${index}`].getValue();
-    const type = this.refs[`fieldType${index}`].props.value;
-    const parsedValue = this.parseValue(newValue, type);
-
-    if (parsedValue === null) {
-      this.refs[`fieldValue${index}`].setErrorText('This field should be a number');
-      return;
-    }
+    const newType = this.refs[`fieldType${index}`].props.value;
 
     const newField = {
       key: this.refs[`fieldKey${index}`].getValue(),
-      value: parsedValue,
-      type: this.refs[`fieldType${index}`].props.value
+      value: newValue,
+      type: newType
     };
 
-    if (key !== newField.key && this.hasKey(newField.key)) {
-      scriptConfig[index] = newField;
-      this.setState({scriptConfig}, () => {
-        this.refs[`fieldKey${index}`].setErrorText('Field with this name already exist. Please choose another.');
-      });
-      return;
-    }
     scriptConfig[index] = newField;
     this.setState({scriptConfig});
-    this.clearValidations();
   },
 
   handleSuccessfullValidation() {
@@ -234,31 +233,15 @@ export default React.createClass({
   },
 
   handleTypeFieldChange(fieldIndex, type) {
-    const fieldValue = this.refs[`fieldValue${fieldIndex}`].getValue();
     const {scriptConfig} = this.state;
-    const parsedValue = this.parseValue(fieldValue, type);
+    const value = scriptConfig[fieldIndex].value;
 
-    if (parsedValue || parsedValue === 0) {
-      scriptConfig[fieldIndex].type = type;
-      scriptConfig[fieldIndex].value = parsedValue;
-      this.setState({scriptConfig});
-    } else {
-      this.refs[`fieldValue${fieldIndex}`].setErrorText('This field should be a number');
+    scriptConfig[fieldIndex].type = type;
+    if (value === 0 || value === '') {
+      scriptConfig[fieldIndex].value = type === 'integer' ? 0 : '';
     }
+    this.setState({scriptConfig});
   },
-
-  parseValue(value, type) {
-    // for integer type if value is empty string, convert to 0, if it's a valid number convert to int
-    // if it's not a number either return null for error handling
-    const parsedInt = Number(value);
-    const typesMap = {
-      string: value,
-      integer: _.isNumber(parsedInt) && !_.isNaN(parsedInt) ? parsedInt : null
-    };
-
-    return typesMap[type];
-  },
-
 
   initDialogs() {
     const {isLoading, traces} = this.state;
@@ -326,6 +309,7 @@ export default React.createClass({
               value={scriptConfig[index].key}
               style={styles.field}
               fullWidth={true}
+              errorText={this.getValidationMessages(`fieldKey${index}`).join(' ')}
               onChange={() => this.handleUpdateKey(field.key, index)}/>
           </div>
           <div className="col-flex-1">
@@ -353,6 +337,7 @@ export default React.createClass({
               value={scriptConfig[index].value}
               style={styles.field}
               fullWidth={true}
+              errorText={this.getValidationMessages(`fieldValue${index}`).join(' ')}
               onChange={() => this.handleUpdateKey(field.key, index)}/>
           </div>
           <div className="col-flex-0" style={styles.deleteIcon}>
@@ -385,6 +370,7 @@ export default React.createClass({
             hintText="Key"
             floatingLabelText="Key"
             defaultValue=""
+            errorText={this.getValidationMessages(`newFieldKey`).join(' ')}
             fullWidth={true}
             style={styles.field}/>
         </div>
@@ -462,7 +448,7 @@ export default React.createClass({
           <RaisedButton
             label="SAVE"
             style={{marginLeft: 5, marginRight: 5}}
-            onTouchTap={() => this.handleUpdate()} />
+            onTouchTap={this.handleFormValidation} />
           <RaisedButton
             label="RUN"
             primary={true}
