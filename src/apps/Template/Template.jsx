@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 import {State, Navigation} from 'react-router';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
@@ -9,7 +10,7 @@ import Store from './TemplateStore';
 import Actions from './TemplateActions';
 
 import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
-import {Show, Loading, TogglePanel} from 'syncano-components';
+import {Show, Loading, TogglePanel, Truncate} from 'syncano-components';
 import {InnerToolbar, Editor, Notification} from '../../common';
 
 export default React.createClass({
@@ -32,6 +33,33 @@ export default React.createClass({
   ],
 
   autosaveAttributeName: 'templateContentAutosave',
+
+  validatorConstraints() {
+    let validataObj = {};
+
+    validataObj.dataSourceUrl = (value) => {
+      const urlValidation = {
+        url: {
+          message: '^Invalid URL'
+        }
+      };
+
+      if (value && value.indexOf(SYNCANO_BASE_URL) === -1) {
+        const syncanoUrlValidation = {
+          inclusion: {
+            within: [],
+            message: '^Invalid endpoint URL'
+          }
+        };
+
+        _.assign(urlValidation, syncanoUrlValidation);
+      }
+
+      return urlValidation;
+    };
+
+    return validataObj;
+  },
 
   componentDidMount() {
     Actions.fetch();
@@ -76,19 +104,16 @@ export default React.createClass({
 
   isSaved() {
     const {template} = this.state;
-    const contentType = this.refs.content_type;
     const contentEditor = this.refs.contentEditor;
     const contextEditor = this.refs.contextEditor;
 
-    if (template && contentType && contentEditor && contextEditor) {
-      const contentTypeValue = contentType.getValue();
+    if (template && contentEditor && contextEditor) {
       const contentEditorValue = contentEditor.editor.getValue();
       const contextEditorValue = contextEditor.editor.getValue();
-      const isNewContentType = template.content_type === contentTypeValue;
       const isNewContent = template.content === contentEditorValue;
       const isNewContext = template.context === contextEditorValue;
 
-      return !(isNewContentType || isNewContent || isNewContext);
+      return !(isNewContent || isNewContext);
     }
 
     return true;
@@ -96,12 +121,11 @@ export default React.createClass({
 
   handleUpdate() {
     const {template} = this.state;
-    const content_type = this.refs.content_type.getValue();
     const content = this.refs.contentEditor.editor.getValue();
     const context = this.refs.contextEditor.editor.getValue();
 
     this.clearAutosaveTimer();
-    Actions.updateTemplate(template.name, {content_type, content, context});
+    Actions.updateTemplate(template.name, {content, context});
     this.setSnackbarNotification({message: 'Saving...'});
   },
 
@@ -110,16 +134,43 @@ export default React.createClass({
     this.runAutoSave();
   },
 
-  render() {
-    const {template, isLoading} = this.state;
+  handleSuccessfullValidation() {
+    this.handleRender();
+  },
+
+  handleRender() {
+    const {template} = this.state;
+    const dataSourceUrl = this.refs.dataSourceUrl.getValue();
+
+    if (dataSourceUrl.length) {
+      return Actions.renderFromEndpoint(template.name, dataSourceUrl.getValue());
+    }
+
+    Actions.renderTemplate(template.name, template.context);
+  },
+
+  renderErrorNotifications(errorsKey) {
     const styles = this.getStyles();
 
-    console.error(this.state);
+    return (
+      <Show if={this.getValidationMessages(errorsKey).length}>
+        <div style={styles.notification}>
+          <Notification type="error">
+            {this.getValidationMessages(errorsKey).join(' ')}
+          </Notification>
+        </div>
+      </Show>
+    );
+  },
+
+  render() {
+    const {template, isLoading} = this.state;
+    const instanceName = this.getParams().instanceName;
 
     return (
       <div>
         <InnerToolbar
-          title={`Template: ${template.name}` }>
+          title={`Template: ${template.name}`}>
           <div style={{display: 'inline-block'}}>
             <Checkbox
               ref="autosaveCheckbox"
@@ -138,7 +189,7 @@ export default React.createClass({
             primary={true}
             style={{marginLeft: 5, marginRight: 0}}
             icon={<FontIcon className="synicon-play"/>}
-            onTouchTap={() => Actions.renderTemplate(template.name, template.context)}/>
+            onTouchTap={this.handleFormValidation}/>
         </InnerToolbar>
 
         <Loading show={isLoading}>
@@ -148,13 +199,7 @@ export default React.createClass({
                 title="Code"
                 initialOpen={true}
                 style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                <Show if={this.getValidationMessages('content').length > 0}>
-                  <div style={styles.notification}>
-                    <Notification type="error">
-                      {this.getValidationMessages('content').join(' ')}
-                    </Notification>
-                  </div>
-                </Show>
+                {this.renderErrorNotifications('content')}
                 <Editor
                   ref="contentEditor"
                   name="contentEditor"
@@ -168,16 +213,17 @@ export default React.createClass({
 
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
                 <TogglePanel
-                  title="Content type"
+                  title="Data source URL"
                   initialOpen={true}>
                   <TextField
-                    ref="content_type"
-                    name="content_type"
+                    ref="dataSourceUrl"
+                    name="dataSourceUrl"
                     fullWidth={true}
-                    defaultValue={template.content_type}
+                    valueLink={this.linkState('dataSourceUrl')}
+                    errorText={this.getValidationMessages('dataSourceUrl').join(' ')}
+                    hintText={<Truncate text={`e.g. https://api.syncano.rocks/v1/instances/${instanceName}/classes/`}/>}
                     onChange={this.handleOnSourceChange}
-                    hintText="Template's content type"
-                    floatingLabelText="Content type"/>
+                    floatingLabelText="Data source URL"/>
                 </TogglePanel>
               </div>
 
@@ -185,6 +231,7 @@ export default React.createClass({
                 <TogglePanel
                   title="Context"
                   initialOpen={true}>
+                  {this.renderErrorNotifications('context')}
                   <Editor
                     name="contextEditor"
                     ref="contextEditor"
@@ -210,7 +257,7 @@ export default React.createClass({
                     ref="previewEditor"
                     mode="html"
                     readOnly={true}
-                    value={''} />
+                    value="" />
                 </TogglePanel>
               </div>
             </div>
