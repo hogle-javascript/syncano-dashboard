@@ -21,13 +21,6 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  handleItemClick(templateName) {
-    this.transitionTo('template', {
-      instanceName: this.getParams().instanceName,
-      templateName
-    });
-  },
-
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
 
