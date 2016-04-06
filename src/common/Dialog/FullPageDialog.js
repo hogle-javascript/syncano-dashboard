@@ -36,11 +36,12 @@ export default React.createClass({
       },
       overlay: {
         background: '#fff',
-        zIndex: 0
+        zIndex: -1
       },
       content: {
         transform: 'none',
-        width: '100%'
+        width: '100%',
+        maxWidth: 'none'
       },
       title: {
         paddingTop: 0
