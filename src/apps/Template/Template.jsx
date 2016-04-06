@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
-import Radium from 'radium';
 import {State, Navigation} from 'react-router';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
@@ -14,7 +13,7 @@ import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
 import {Show, Loading, TogglePanel, Truncate} from 'syncano-components';
 import {InnerToolbar, Editor, Notification} from '../../common';
 
-export default Radium(React.createClass({
+export default React.createClass({
   displayName: 'Template',
 
   contextTypes: {
@@ -82,9 +81,6 @@ export default Radium(React.createClass({
     return {
       notification: {
         marginBottom: 20
-      },
-      contextNotification: {
-        margin: '10px 10px 10px 20px'
       },
       lastResultContainer: {
         zIndex: 1,
@@ -157,8 +153,8 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
 
     return (
-      <Show if={this.getValidationMessages(errorsKey).length > 0}>
-        <div style={[styles.notification, errorsKey === 'context' && styles.contextNotification]}>
+      <Show if={this.getValidationMessages(errorsKey).length}>
+        <div style={styles.notification}>
           <Notification type="error">
             {this.getValidationMessages(errorsKey).join(' ')}
           </Notification>
@@ -235,6 +231,7 @@ export default Radium(React.createClass({
                 <TogglePanel
                   title="Context"
                   initialOpen={true}>
+                  {this.renderErrorNotifications('context')}
                   <Editor
                     name="contextEditor"
                     ref="contextEditor"
@@ -249,7 +246,6 @@ export default Radium(React.createClass({
                       '}'
                     ].join('\n')} />
                 </TogglePanel>
-                {this.renderErrorNotifications('context')}
               </div>
 
               <div>
@@ -270,4 +266,4 @@ export default Radium(React.createClass({
       </div>
     );
   }
-}));
+});
