@@ -1,8 +1,6 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
+import {State} from 'react-router';
 import _ from 'lodash';
-
-import {DialogsMixin} from '../../mixins';
 
 import Actions from './TemplatesActions';
 
@@ -15,11 +13,7 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'TemplatesListItem',
 
-  mixins: [
-    State,
-    Navigation,
-    DialogsMixin
-  ],
+  mixins: [State],
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
