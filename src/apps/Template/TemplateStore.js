@@ -20,7 +20,9 @@ export default Reflux.createStore({
       template: {},
       renderedTemplate: null,
       isRendering: false,
-      isLoading: true
+      isLoading: true,
+      successValidationAction: null,
+      dataSource: null
     };
   },
 
@@ -48,6 +50,25 @@ export default Reflux.createStore({
     this.data.renderedTemplate = null;
   },
 
+  setFlag(flagName, callback) {
+    this.data.successValidationAction = flagName;
+    this.trigger(this.data);
+    if (typeof callback === 'function') {
+      callback();
+    }
+  },
+
+  setDataSource(dataSource) {
+    this.data.dataSource = dataSource;
+  },
+
+  saveRenderedTemplate(renderedTemplate) {
+    console.debug('TemplateStore::saveRenderedTemplate');
+    this.data.isRendering = false;
+    this.data.renderedTemplate = renderedTemplate;
+    this.trigger(this.data);
+  },
+
   onFetchTemplateCompleted(template) {
     console.debug('TemplateStore::onFetchTemplateCompleted');
     this.data.isLoading = false;
@@ -63,29 +84,34 @@ export default Reflux.createStore({
 
   onRenderTemplateCompleted(renderedTemplate) {
     console.debug('TemplateStore::onRenderTemplateCompleted');
-    this.data.isRendering = false;
-    this.data.renderedTemplate = renderedTemplate;
-    this.trigger(this.data);
+    this.saveRenderedTemplate(renderedTemplate);
   },
 
   onRenderTemplateFailure() {
     console.debug('TemplateStore::onRenderTemplateFailure');
-    this.data.isRendering = false;
-    this.data.renderedTemplate = null;
-    this.trigger(this.data);
+    this.saveRenderedTemplate(null);
+  },
+
+  onRenderFromEndpointCompleted(renderedTemplate) {
+    console.debug('TemplateStore::onRenderFromEndpointCompleted');
+    this.saveRenderedTemplate(renderedTemplate);
+  },
+
+  onRenderFromEndpointFailure(renderedTemplateError) {
+    console.debug('TemplateStore::onRenderFromEndpointFailure');
+    this.saveRenderedTemplate(renderedTemplateError);
   },
 
   onUpdateTemplateCompleted(template) {
     this.data.template = template;
     this.dismissSnackbarNotification();
-    this.refreshData();
-  },
+    if (this.data.successValidationAction === 'tabRender') {
+      const apiKey = SessionStore.getToken();
+      const dataSource = this.data.dataSource;
 
-  onRenderFromEndpointCompleted(renderedTemplate) {
-    console.debug('TemplateStore::onRenderFromEndpointCompleted');
-    this.data.isRendering = false;
-    this.data.renderedTemplate = renderedTemplate;
-    this.trigger(this.data);
+      window.open(`${dataSource}?template_response=${template.name}&api_key=${apiKey}`, '_blank');
+    }
+    this.refreshData();
   },
 
   onUpdateTemplateFailure() {

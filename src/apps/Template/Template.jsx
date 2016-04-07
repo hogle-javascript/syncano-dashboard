@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
+import _ from 'lodash';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
 import AutosaveMixin from './TemplateAutosaveMixin';
@@ -34,6 +35,7 @@ export default React.createClass({
   autosaveAttributeName: 'templateContentAutosave',
 
   validatorConstraints() {
+    const {successValidationAction} = this.state;
     let validataObj = {};
 
     validataObj.dataSourceUrl = (value) => {
@@ -42,6 +44,12 @@ export default React.createClass({
           message: '^Invalid URL'
         }
       };
+
+      if (successValidationAction === 'tabRender') {
+        urlValidation = {
+          presence: true
+        };
+      }
 
       if (value && value.indexOf(SYNCANO_BASE_URL) === -1) {
         urlValidation = {
@@ -64,6 +72,8 @@ export default React.createClass({
       this.handleUpdate();
       return false;
     });
+    this._handleUpdate = _.debounce(this.handleUpdate, 500, {leading: true});
+    this._handleRender = _.debounce(this.handleRender, 500, {leading: true});
   },
 
   componentDidUpdate() {
@@ -126,6 +136,7 @@ export default React.createClass({
     const context = this.refs.contextEditor.editor.getValue();
 
     this.clearAutosaveTimer();
+    Actions.setDataSource(this.refs.dataSourceUrl.getValue());
     Actions.updateTemplate(template.name, {content, context});
     this.setSnackbarNotification({message: 'Saving...'});
   },
@@ -136,7 +147,14 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    this.handleRender();
+    const {successValidationAction} = this.state;
+    const flagMap = {
+      update: this._handleUpdate,
+      render: this._handleRender,
+      tabRender: this._handleUpdate
+    };
+
+    flagMap[successValidationAction]();
   },
 
   handleRender() {
@@ -150,6 +168,10 @@ export default React.createClass({
     Actions.renderTemplate(template.name, template.context);
   },
 
+  setFlag(successValidationAction) {
+    Actions.setFlag(successValidationAction, this.handleFormValidation);
+  },
+
   renderErrorNotifications(errorsKey) {
     const styles = this.getStyles();
 
@@ -161,6 +183,19 @@ export default React.createClass({
           </Notification>
         </div>
       </Show>
+    );
+  },
+
+  renderRunButtons(label, iconName, flagName) {
+    return (
+      <RaisedButton
+        label={label}
+        primary={true}
+        style={{marginLeft: 5, marginRight: 0}}
+        icon={<FontIcon
+          className={iconName}
+          style={{marginTop: '-4px'}} />}
+        onTouchTap={() => this.setFlag(flagName)}/>
     );
   },
 
@@ -184,13 +219,9 @@ export default React.createClass({
           <RaisedButton
             label="SAVE"
             style={{marginLeft: 5, marginRight: 5}}
-            onTouchTap={() => this.handleUpdate()} />
-          <RaisedButton
-            label="RENDER"
-            primary={true}
-            style={{marginLeft: 5, marginRight: 0}}
-            icon={<FontIcon className="synicon-play"/>}
-            onTouchTap={this.handleFormValidation}/>
+            onTouchTap={() => this.setFlag('update')} />
+          {this.renderRunButtons('RENDER', 'synicon-play', 'render')}
+          {this.renderRunButtons('RENDER IN TAB', 'synicon-open-in-new', 'tabRender')}
         </InnerToolbar>
 
         <Loading show={isLoading}>
