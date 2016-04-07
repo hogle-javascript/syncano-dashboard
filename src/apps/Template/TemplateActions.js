@@ -2,6 +2,8 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
   fetch: {},
+  setFlag: {},
+  setDataSource: {},
 
   fetchTemplate: {
     asyncResult: true,
