@@ -229,6 +229,12 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
+    const {shouldRun} = this.state;
+
+    if (shouldRun) {
+      return this.handleRunScript();
+    }
+
     this.handleUpdate();
   },
 
@@ -241,6 +247,10 @@ export default React.createClass({
       scriptConfig[fieldIndex].value = type === 'integer' ? 0 : '';
     }
     this.setState({scriptConfig});
+  },
+
+  setFlag(flag) {
+    this.setState({shouldRun: flag}, this.handleFormValidation);
   },
 
   initDialogs() {
@@ -448,13 +458,13 @@ export default React.createClass({
           <RaisedButton
             label="SAVE"
             style={{marginLeft: 5, marginRight: 5}}
-            onTouchTap={this.handleFormValidation} />
+            onTouchTap={() => this.setFlag(false)} />
           <RaisedButton
             label="RUN"
             primary={true}
             style={{marginLeft: 5, marginRight: 0}}
             icon={<FontIcon className="synicon-play"/>}
-            onTouchTap={this.handleRunScript}/>
+            onTouchTap={() => this.setFlag(true)}/>
         </InnerToolbar>
         <Loading show={isLoading || !currentScript}>
           <div className="row">
