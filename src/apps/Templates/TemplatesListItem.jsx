@@ -2,7 +2,6 @@ import React from 'react';
 import _ from 'lodash';
 
 import Actions from './TemplatesActions';
-import SessionStore from '../Session/SessionStore';
 
 import {MenuItem} from 'syncano-material-ui';
 import {Color, ColumnList, Truncate} from 'syncano-components';
@@ -10,7 +9,7 @@ import {LinkWrapper} from '../../common/';
 
 const Column = ColumnList.Column;
 
-export default ({item, onIconClick, showDeleteDialog}) => {
+const TemplateListItem = ({item, onIconClick, showDeleteDialog}, context) => {
   return (
     <ColumnList.Item
       checked={item.checked}
@@ -27,7 +26,7 @@ export default ({item, onIconClick, showDeleteDialog}) => {
         primaryText={
           <LinkWrapper
             to="template"
-            params={_.merge({}, SessionStore.router.getCurrentParams(), {templateName: item.name})}>
+            params={_.merge({}, context.router.getCurrentParams(), {templateName: item.name})}>
             <Truncate text={item.name}/>
           </LinkWrapper>
         }>
@@ -46,3 +45,9 @@ export default ({item, onIconClick, showDeleteDialog}) => {
     </ColumnList.Item>
   );
 };
+
+TemplateListItem.contextTypes = {
+  router: React.PropTypes.func
+};
+
+export default TemplateListItem;
