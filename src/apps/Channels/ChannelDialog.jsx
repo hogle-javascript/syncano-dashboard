@@ -91,12 +91,9 @@ export default React.createClass({
               handy when you’d like.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
-              <a
-                href="http://docs.syncano.io/docs/realtime-communication"
-                style={{textDecoration: 'underline', color: 'rgba(68,68,68,.5)'}}
-                target="_blank">
-                <strong>Learn more</strong>
-              </a>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/realtime-communication">
+                Learn more
+              </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
         }>

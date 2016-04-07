@@ -99,12 +99,9 @@ export default React.createClass({
               Snippet Script name that'll be executed by this Trigger.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
-              <a
-                href="http://docs.syncano.io/docs/triggers"
-                style={{textDecoration: 'underline', color: 'rgba(68,68,68,.5)'}}
-                target="_blank">
-                <strong>Learn more</strong>
-              </a>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/triggers">
+                Learn more
+              </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
         }>
