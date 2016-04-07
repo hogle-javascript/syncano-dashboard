@@ -21,6 +21,7 @@ export default {
       .waitForElementVisible('@codeBoxSocketItem')
       .clickElement('@addCodeBoxButton')
       .waitForElementVisible('@addCodeBoxModalTitle')
+      .clickElement('@addScriptEndpoint')
       .fillInput('@modalNameInput', script)
       .selectDropdownValue('@addCodeBoxModalScriptDropdown', 'snippet')
       .clickElement('@confirmButton')

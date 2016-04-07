@@ -13,7 +13,7 @@ export default {
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
-      selector: '//span[text()="Generate"]',
+      selector: '//span[text()="Add"]',
       locateStrategy: 'xpath'
     },
     apiKeysListMenu: {

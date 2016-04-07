@@ -15,7 +15,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxButton: {
-      selector: '//span[@class="synicon-socket-script-endpoint"]',
+      selector: '//span[text()="Add"]',
       locateStrategy: 'xpath'
     },
     codeBoxSocketItem: {
@@ -27,7 +27,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalTitle: {
-      selector: '//h3[text()="Add a Script Endpoint"]',
+      selector: '//div[text()="Start building your app here"]',
       locateStrategy: 'xpath'
     },
     modalNameInput: {
@@ -126,6 +126,10 @@ export default {
     },
     channelSocketDropDown: {
       selector: `//div[text()="${utils.addSuffix('channel')}"]/../../../..//button`,
+      locateStrategy: 'xpath'
+    },
+    addScriptEndpoint: {
+      selector: '//div[text()="Script Endpoint"]/following::div[2]',
       locateStrategy: 'xpath'
     }
   }
