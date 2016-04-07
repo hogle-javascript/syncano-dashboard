@@ -45,6 +45,7 @@ export default Reflux.createStore({
 
   clearTemplate() {
     this.data.template = null;
+    this.data.renderedTemplate = null;
   },
 
   onFetchTemplateCompleted(template) {
