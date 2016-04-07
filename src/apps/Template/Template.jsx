@@ -137,10 +137,10 @@ export default React.createClass({
 
   handleRender() {
     const {template} = this.state;
-    const dataSourceUrl = this.refs.dataSourceUrl.getValue();
+    const dataSourceUrlValue = this.refs.dataSourceUrl.getValue();
 
-    if (dataSourceUrl.length) {
-      return Actions.renderFromEndpoint(template.name, dataSourceUrl.getValue());
+    if (dataSourceUrlValue.length) {
+      return Actions.renderFromEndpoint(template.name, dataSourceUrlValue);
     }
 
     Actions.renderTemplate(template.name, template.context);
