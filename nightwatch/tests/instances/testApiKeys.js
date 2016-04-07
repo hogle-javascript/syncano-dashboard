@@ -40,9 +40,11 @@ export default {
     client.element('xpath', apiKeyValueElement, (result) => {
       client.elementIdText(result.value.ELEMENT, (text) => apiKeyValue = text.value);
     });
+
     apiKeysPage
       .clickListItemDropdown(description, 'Reset')
       .clickElement('@confirmButton');
+
     client
       .pause(1000)
       .element('xpath', apiKeyValueElement, (result) => {
