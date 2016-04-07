@@ -82,6 +82,31 @@ export default React.createClass({
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Trigger Sockets execute a Script when a Data Object inside selected Class is created,
+               updated or deleted (depends on "signal" field value).
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Signal">
+              Signal indicates which operation performed on Data Object should execute the Trigger.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Class">
+              Operations on Data Objects in selected Class will execute the Trigger.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Script">
+              Snippet Script name that'll be executed by this Trigger.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <a
+                href="http://docs.syncano.io/docs/triggers"
+                style={{textDecoration: 'underline', color: 'rgba(68,68,68,.5)'}}
+                target="_blank">
+                <strong>Learn more</strong>
+              </a>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
         <div>
           {this.renderFormNotifications()}
