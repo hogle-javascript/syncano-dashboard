@@ -3,7 +3,7 @@ import React from 'react';
 import {Styles, Utils} from 'syncano-material-ui';
 import LinkWrapper from '../LinkWrapper/LinkWrapper';
 
-export default ({visible = true, routeName, params, style, label = 'SHOW MORE'}) => {
+export default ({routeName, params, style, label = 'SHOW MORE', visible = true}) => {
   const styles = {
     paddingTop: 0,
     marginTop: 20,

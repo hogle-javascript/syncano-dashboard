@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 import Actions from './SocketsActions';
 import Store from './SocketsStore';
-import SessionStore from '../Session/SessionStore';
 
 import DataList from '../DataEndpoints/DataEndpointsList';
 import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
@@ -13,9 +12,8 @@ import ChannelsList from '../Channels/ChannelsList';
 import {Show} from 'syncano-components';
 import {ShowMore} from '../../common';
 
-export default ({sockets, handleTitleClick}) => {
-  const router = SessionStore.getRouter();
-  const visibleItems = 3;
+const SocketsList = ({sockets, handleTitleClick, visibleItems = 3}, context) => {
+  const router = context.router;
   const lists = {
     data: DataList,
     scriptEndpoints: ScriptEndpointsList,
@@ -58,3 +56,9 @@ export default ({sockets, handleTitleClick}) => {
     </div>
   );
 };
+
+SocketsList.contextTypes = {
+  router: React.PropTypes.func
+};
+
+export default SocketsList;
