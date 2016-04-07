@@ -74,6 +74,10 @@ export default React.createClass({
     }
   },
 
+  componentWillUnmount() {
+    Store.clearTemplate();
+  },
+
   getStyles() {
     return {
       notification: {
