@@ -11,6 +11,11 @@ import {ColumnList, Color} from 'syncano-components';
 export default React.createClass({
   displayName: 'AdminsListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [DialogsMixin],
 
   renderEditAdmin(item, isOwner) {

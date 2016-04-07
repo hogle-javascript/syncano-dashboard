@@ -43,7 +43,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       currentScript: null,
-      scriptConfig: null,
+      scriptConfig: [],
       isPayloadValid: true,
 
       traces: [],
@@ -75,17 +75,11 @@ export default Reflux.createStore({
   },
 
   mapConfig(originalConfig) {
-    function getFieldValueType(fieldValue) {
-      if (typeof fieldValue === 'number') {
-        return 'integer';
-      }
-      return 'string';
-    }
-    let config = _.map(originalConfig, (value, key) => {
+    const config = _.map(originalConfig, (value, key) => {
       return {
         key,
         value,
-        type: getFieldValueType(value)
+        type: _.isNumber(value) ? 'integer' : 'string'
       };
     });
 
@@ -114,7 +108,7 @@ export default Reflux.createStore({
   },
 
   getEditorMode() {
-    let currentScript = this.data.currentScript;
+    const {currentScript} = this.data;
 
     return currentScript ? this.langMap[currentScript.runtime_name] : 'python';
   },
@@ -145,7 +139,7 @@ export default Reflux.createStore({
     this.data.lastTraceStatus = null;
     this.data.lastTraceDuration = null;
     if (this.data.traces && this.data.traces.length > 0) {
-      let lastTrace = this.data.traces[0];
+      const lastTrace = this.data.traces[0];
 
       if (lastTrace.status !== 'success' && lastTrace.status !== 'failure') {
         this.data.lastTraceReady = false;

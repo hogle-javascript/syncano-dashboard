@@ -52,5 +52,16 @@ export default {
     this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
+  },
+
+  renderFromEndpoint(templateName, endpointUrl) {
+    const {instance} = this.Connection.getInfo();
+    const params = {template_response: templateName, serialize: false};
+    const endpointName = endpointUrl.slice(endpointUrl.indexOf(instance.name) + instance.name.length);
+
+    this.Connection
+      .request('GET', `v1/instances/${instance.name}${endpointName}`, params)
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

@@ -8,6 +8,7 @@ import Editor from './Editor';
 import Header from './Header';
 import Icon from './Icon';
 import InnerToolbar from './InnerToolbar';
+import LinkWrapper from './LinkWrapper';
 import Lists from './Lists';
 import Logo from './Logo';
 import NoMobileInfo from './NoMobileInfo';
@@ -15,7 +16,7 @@ import Notification from './Notification';
 import Popover from './Popover';
 import Request from './Request';
 import Sidebar from './Sidebar';
-import SocketsDropdown from './SocketsDropdown';
+import ShowMore from './ShowMore';
 
 export default {
   ColorIconPicker,
@@ -28,6 +29,7 @@ export default {
   Header,
   Icon,
   InnerToolbar,
+  LinkWrapper,
   Lists,
   Logo,
   NoMobileInfo,
@@ -35,5 +37,5 @@ export default {
   Popover,
   Request,
   Sidebar,
-  SocketsDropdown
+  ShowMore
 };

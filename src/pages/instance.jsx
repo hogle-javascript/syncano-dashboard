@@ -74,11 +74,24 @@ export default React.createClass({
                 routeName="classes"
                 iconClassName="synicon-layers"
                 primaryText="Classes" />
+
               <Sidebar.LinkListItem
-                key="Scripts"
-                routeName="scripts"
+                key="pushDevices"
+                routeName="snippets"
+                primaryText="Snippets"
                 iconClassName="synicon-code-tags"
-                primaryText="Scripts"/>
+                initiallyOpen={true}
+                autoGenerateNestedIndicator={false}
+                nestedItems={[
+                  <Sidebar.NestedLinkListItem
+                    key="scripts"
+                    routeName="scripts"
+                    primaryText="Scripts" />,
+                  <Sidebar.NestedLinkListItem
+                    key="templates"
+                    routeName="templates"
+                    primaryText="Templates" />
+                ]}/>
 
               {
 
@@ -100,6 +113,7 @@ export default React.createClass({
                     primaryText="Android Devices" />
                 ]}/> */
               }
+
             </Sidebar.List>
             <Sidebar.List
               key="Settings"

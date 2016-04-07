@@ -81,6 +81,7 @@ export default (type, Store, Actions) => {
             <TextField
               ref="label"
               name="label"
+              autoFocus={true}
               valueLink={this.linkState('label')}
               fullWidth={true}
               errorText={this.getValidationMessages('label').join(' ')}

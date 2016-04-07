@@ -34,6 +34,7 @@ import DataObjects from './apps/DataObjects/DataObjects';
 import DataEndpoints from './apps/DataEndpoints';
 import Users from './apps/Users/Users';
 import Sockets from './apps/Sockets';
+import Snippets from './apps/Snippets';
 import Template from './apps/Template';
 import Templates from './apps/Templates';
 import Triggers from './apps/Triggers';
@@ -204,6 +205,11 @@ export default (
 
         </Route>
 
+        <Route
+          name="snippets"
+          path="snippets"
+          handler={Snippets} />
+
         {/* Templates */}
         <Route
           name="templates"
@@ -211,13 +217,7 @@ export default (
           <Route
             name="template"
             handler={Template}
-            path=":templateName">
-            <Route
-              name="template-edit"
-              handler={Template.Edit}
-              path="edit"/>
-            <DefaultRoute handler={Template.Edit}/>
-          </Route>
+            path=":templateName"/>
           <DefaultRoute handler={Templates}/>
         </Route>
 
@@ -357,4 +357,3 @@ export default (
     </Route>
   </Route>
 );
-

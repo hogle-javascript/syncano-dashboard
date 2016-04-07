@@ -11,6 +11,11 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'UsersListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
   getInitialState() {
     return {
       userInfoVisible: false

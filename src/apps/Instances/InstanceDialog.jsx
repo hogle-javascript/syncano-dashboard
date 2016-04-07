@@ -155,6 +155,7 @@ export default React.createClass({
           <TextField
             ref="name"
             name="name"
+            autoFocus={true}
             fullWidth={true}
             valueLink={this.linkState('name')}
             errorText={this.getValidationMessages('name').join(' ')}

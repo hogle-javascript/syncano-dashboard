@@ -18,10 +18,11 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       template: {},
-      context: {},
       renderedTemplate: null,
       isRendering: false,
-      isLoading: true
+      isLoading: true,
+      successValidationAction: null,
+      dataSource: null
     };
   },
 
@@ -46,10 +47,25 @@ export default Reflux.createStore({
 
   clearTemplate() {
     this.data.template = null;
+    this.data.renderedTemplate = null;
   },
 
-  setContext(context) {
-    this.data.context = context;
+  setFlag(flagName, callback) {
+    this.data.successValidationAction = flagName;
+    this.trigger(this.data);
+    if (typeof callback === 'function') {
+      callback();
+    }
+  },
+
+  setDataSource(dataSource) {
+    this.data.dataSource = dataSource;
+  },
+
+  saveRenderedTemplate(renderedTemplate) {
+    console.debug('TemplateStore::saveRenderedTemplate');
+    this.data.isRendering = false;
+    this.data.renderedTemplate = renderedTemplate;
     this.trigger(this.data);
   },
 
@@ -68,21 +84,33 @@ export default Reflux.createStore({
 
   onRenderTemplateCompleted(renderedTemplate) {
     console.debug('TemplateStore::onRenderTemplateCompleted');
-    this.data.isRendering = false;
-    this.data.renderedTemplate = renderedTemplate;
-    this.trigger(this.data);
+    this.saveRenderedTemplate(renderedTemplate);
   },
 
   onRenderTemplateFailure() {
-    console.debug('TemplateStore::onRenderTemplateCompleted');
-    this.data.isRendering = false;
-    this.data.renderedTemplate = null;
-    this.trigger(this.data);
+    console.debug('TemplateStore::onRenderTemplateFailure');
+    this.saveRenderedTemplate(null);
+  },
+
+  onRenderFromEndpointCompleted(renderedTemplate) {
+    console.debug('TemplateStore::onRenderFromEndpointCompleted');
+    this.saveRenderedTemplate(renderedTemplate);
+  },
+
+  onRenderFromEndpointFailure(renderedTemplateError) {
+    console.debug('TemplateStore::onRenderFromEndpointFailure');
+    this.saveRenderedTemplate(renderedTemplateError);
   },
 
   onUpdateTemplateCompleted(template) {
     this.data.template = template;
     this.dismissSnackbarNotification();
+    if (this.data.successValidationAction === 'tabRender') {
+      const apiKey = SessionStore.getToken();
+      const dataSource = this.data.dataSource;
+
+      window.open(`${dataSource}?template_response=${template.name}&api_key=${apiKey}`, '_blank');
+    }
     this.refreshData();
   },
 

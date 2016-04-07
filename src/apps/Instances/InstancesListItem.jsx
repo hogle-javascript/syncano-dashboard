@@ -16,13 +16,18 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'InstancesListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [
     Navigation,
     DialogsMixin
   ],
 
   render() {
-    let {item} = this.props;
+    let {item, onIconClick, showDeleteDialog} = this.props;
     const removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
 
     return (
@@ -35,7 +40,7 @@ export default React.createClass({
           iconClassName={item.metadata.icon}
           background={Color.getColorByName(item.metadata.color)}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}
+          handleIconClick={onIconClick}
           primaryText={
             <Truncate
               onClick={() => this.transitionTo('instance', {instanceName: item.name})}
@@ -51,7 +56,7 @@ export default React.createClass({
             primaryText="Edit an Instance" />
           <MenuItem
             className="dropdown-item-instance-delete"
-            onTouchTap={this.props.showDeleteDialog}
+            onTouchTap={showDeleteDialog}
             primaryText={removeText} />
         </Column.Menu>
       </ColumnList.Item>

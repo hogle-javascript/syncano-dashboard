@@ -13,6 +13,11 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'ChannelsListItem',
 
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
+
   mixins: [SnackbarNotificationMixin, State],
 
   render() {

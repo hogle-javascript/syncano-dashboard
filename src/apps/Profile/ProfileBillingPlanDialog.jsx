@@ -176,6 +176,7 @@ export default React.createClass({
           <TextField
             name="number"
             ref="number"
+            autoFocus={true}
             fullWidth={true}
             valueLink={this.linkState('number')}
             errorText={this.getValidationMessages('number').join(' ')}
@@ -382,4 +383,3 @@ export default React.createClass({
     );
   }
 });
-

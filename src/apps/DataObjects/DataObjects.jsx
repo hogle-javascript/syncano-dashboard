@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
+import Constants from '../../constants/Constants';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -19,6 +20,7 @@ import {Dialog, InnerToolbar} from '../../common';
 // Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu';
 import DataObjectDialog from './DataObjectDialog';
+import ReadOnlyTooltip from './ReadOnlyTooltip';
 
 export default React.createClass({
   displayName: 'DataObjects',
@@ -47,6 +49,10 @@ export default React.createClass({
 
   componentWillUnmount() {
     Actions.clearStore();
+  },
+
+  isClassProtected() {
+    return _.includes(Constants.PROTECTED_FROM_DELETE_CLASS_NAMES, this.getParams().className);
   },
 
   handleDelete() {
@@ -174,7 +180,8 @@ export default React.createClass({
   },
 
   render() {
-    const selectedRows = this.state.selectedRows;
+    const {selectedRows, isLoading} = this.state;
+    const className = this.getParams().className;
     let selectedMessageText = '';
 
     if (_.isArray(selectedRows) && !_.isEmpty(selectedRows)) {
@@ -187,28 +194,29 @@ export default React.createClass({
         <DataObjectDialog />
 
         <InnerToolbar
-          title={`Class: ${this.getParams().className} ${selectedMessageText}`}
+          title={`Class: ${className} ${selectedMessageText}`}
           backFallback={this.handleBackClick}
           backButtonTooltip="Go back to Classes list">
 
           <IconButton
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-plus"
-            tooltip="Add Data Objects"
-            onClick={() => Actions.showDialog()}/>
+            tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Objects'}
+            disabled={this.isClassProtected()}
+            onClick={Actions.showDialog}/>
 
           <IconButton
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-delete"
-            tooltip="Delete Data Objects"
-            disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
+            tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Delete Data Objects'}
+            disabled={selectedRows && selectedRows.length < 1 || this.isClassProtected()}
             onTouchTap={() => this.showDialog('deleteDataObjectDialog')}/>
 
           <IconButton
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-refresh"
             tooltip="Reload Data Objects"
-            onTouchTap={() => Actions.fetch()}/>
+            onTouchTap={Actions.fetch}/>
 
           <ColumnsFilterMenu
             columns={Store.getTableColumns()}
@@ -216,7 +224,7 @@ export default React.createClass({
 
         </InnerToolbar>
         <Container>
-          <Loading show={this.state.isLoading}>
+          <Loading show={isLoading}>
             {this.renderTable()}
           </Loading>
         </Container>

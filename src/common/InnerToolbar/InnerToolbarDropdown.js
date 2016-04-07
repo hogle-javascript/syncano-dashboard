@@ -1,6 +1,6 @@
 import React from 'react';
 import {State, Navigation} from 'react-router';
-import {DropDownMenu, MenuItem} from 'syncano-material-ui';
+import {DropDownMenu} from 'syncano-material-ui';
 
 export default React.createClass({
   displayName: 'SocketsDropdown',
@@ -18,6 +18,8 @@ export default React.createClass({
   },
 
   render() {
+    const {children} = this.props;
+
     return (
       <DropDownMenu
         value={this.getActiveItem()}
@@ -25,14 +27,8 @@ export default React.createClass({
         iconStyle={{fill: 'rgba(0, 0, 0, 0.4)'}}
         onChange={(event, index, value) => this.transitionTo(value, this.getParams())}
         underlineStyle={{display: 'none'}}>
-        <MenuItem value={'sockets'} primaryText="All" />
-        <MenuItem value={'data'} primaryText="Data Endpoint" />
-        <MenuItem value={'script-endpoints'} primaryText="Script Endpoint" />
-        <MenuItem value={'triggers'} primaryText="Trigger" />
-        <MenuItem value={'schedules'} primaryText="Schedule" />
-        <MenuItem value={'channels'} primaryText="Channel" />
+        {children}
       </DropDownMenu>
     );
   }
 });
-

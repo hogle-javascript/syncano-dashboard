@@ -26,7 +26,7 @@ case "$CIRCLE_NODE_INDEX" in
     0)
         run_unit_tests
         e2e_setup
-        # npm run-script e2e-0
+        npm run-script e2e-0
         e2e_cleanup
         ;;
     1)
@@ -38,7 +38,7 @@ case "$CIRCLE_NODE_INDEX" in
             e2e_cleanup
         else
             e2e_setup
-            # npm run-script e2e-1
+            npm run-script e2e-1
             e2e_cleanup
         fi
         ;;

@@ -65,7 +65,7 @@ export default React.createClass({
   },
 
   render() {
-    const title = this.hasEditMode() ? 'Edit' : 'Generate';
+    const title = this.hasEditMode() ? 'Edit' : 'Add';
     const {open, isLoading} = this.state;
 
     return (
@@ -85,6 +85,7 @@ export default React.createClass({
         <TextField
           ref="description"
           name="description"
+          autoFocus={true}
           fullWidth={true}
           valueLink={this.linkState('description')}
           errorText={this.getValidationMessages('description').join(' ')}

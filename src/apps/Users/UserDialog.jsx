@@ -134,6 +134,7 @@ export default React.createClass({
           {this.renderFormNotifications()}
           <TextField
             ref="username"
+            autoFocus={true}
             fullWidth={true}
             valueLink={this.linkState('username')}
             errorText={this.getValidationMessages('username').join(' ')}

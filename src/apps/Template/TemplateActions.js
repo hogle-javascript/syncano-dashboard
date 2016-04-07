@@ -1,8 +1,9 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
-  setContext: {},
   fetch: {},
+  setFlag: {},
+  setDataSource: {},
 
   fetchTemplate: {
     asyncResult: true,
@@ -23,6 +24,13 @@ export default CreateActions({
     loading: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Templates.render'
+  },
+
+  renderFromEndpoint: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Templates.renderFromEndpoint'
   }
 
 });

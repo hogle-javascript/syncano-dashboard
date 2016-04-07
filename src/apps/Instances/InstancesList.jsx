@@ -34,6 +34,8 @@ export default React.createClass({
   },
 
   initDialogs() {
+    const {isLoading} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -41,9 +43,9 @@ export default React.createClass({
         ref: 'deleteInstanceDialog',
         title: 'Delete an Instance',
         handleConfirm: Actions.removeInstances,
-        isLoading: this.props.isLoading,
         items: Store.getCheckedItems('myInstances'),
-        groupName: 'Instance'
+        groupName: 'Instance',
+        isLoading
       }
     }];
   },

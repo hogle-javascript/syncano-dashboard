@@ -8,9 +8,10 @@ import SessionStore from '../../apps/Session/SessionStore';
 import ProfileInvitationsStore from '../../apps/ProfileInvitations/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../../apps/ProfileInvitations/ProfileInvitationsActions';
 
-import {Utils, Styles, FontIcon, FlatButton, MenuItem, Divider, Badge, IconButton, IconMenu} from 'syncano-material-ui';
+import {Utils, Styles, FontIcon, MenuItem, Divider, Badge, IconButton, IconMenu} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {SnackbarNotificationMixin} from '../../mixins';
+import StandardButtons from '../Dialog/DialogStandardButtons';
 
 export default Radium(React.createClass({
   displayName: 'HeaderNotificationsDropdown',
@@ -129,32 +130,33 @@ export default Radium(React.createClass({
 
     let notifications = accountInvitations.items.map((item) => {
       return (
-        <MenuItem
-          key={`invitation-${item.id}`}
-          disabled={true}
-          leftIcon={
-            <FontIcon
-              key={`${item.id}Icon`}
-              className="synicon-share-variant"
-              color={Styles.Colors.lightGreen500} />
-          }
-          innerDivStyle={{opacity: 1}}
-          style={styles.menuItem}>
-          <div>
-            <strong>{`${item.inviter} `}</strong>
-            invited you to their instance
-            <strong>{` ${item.instance}`}</strong>
-          </div>
-          <FlatButton
-            key={`${item.id}ButtonAccept`}
-            onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
-            label="Accept"
-            primary={true}/>,
-          <FlatButton
-            key={`${item.id}ButtonDecline`}
-            onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
-            label="Decline"/>
-        </MenuItem>
+        <div>
+          <MenuItem
+            key={`invitation-${item.id}`}
+            disabled={true}
+            leftIcon={
+              <FontIcon
+                key={`${item.id}Icon`}
+                className="synicon-share-variant"
+                color={Styles.Colors.lightGreen500} />
+            }
+            innerDivStyle={{opacity: 1}}
+            style={styles.menuItem}>
+            <div>
+              <strong>{`${item.inviter} `}</strong>
+              invited you to their instance
+              <strong>{` ${item.instance}`}</strong>
+            </div>
+            <div className="vp-2-t">
+              <StandardButtons
+                cancelLabel="Decline"
+                submitLabel="Accept"
+                handleCancel={() => this.handleDeclineInvitations([item])}
+                handleConfirm={() => this.handleAcceptInvitations([item])}/>
+            </div>
+          </MenuItem>
+          <Divider/>
+        </div>
       );
     });
 

@@ -10,12 +10,16 @@ import 'brace/mode/golang';
 import 'brace/mode/swift';
 import 'brace/mode/php';
 import 'brace/mode/json';
+import 'brace/mode/html';
+import 'brace/mode/django';
 import 'brace/theme/tomorrow';
 
 export default React.createClass({
 
   propTypes: {
-    mode: React.PropTypes.oneOf(['python', 'javascript', 'ruby', 'golang', 'swift', 'php', 'json']),
+    mode: React.PropTypes.oneOf([
+      'text', 'python', 'javascript', 'ruby', 'golang', 'swift', 'php', 'json', 'django', 'html'
+    ]),
     theme: React.PropTypes.string,
     name: React.PropTypes.string,
     height: React.PropTypes.string,

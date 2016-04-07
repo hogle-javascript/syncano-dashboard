@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 import Actions from './SocketsActions';
 import Store from './SocketsStore';
-import SessionStore from '../Session/SessionStore';
 
 import DataList from '../DataEndpoints/DataEndpointsList';
 import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
@@ -11,8 +10,10 @@ import TriggersList from '../Triggers/TriggersList';
 import SchedulesList from '../Schedules/SchedulesList';
 import ChannelsList from '../Channels/ChannelsList';
 import {Show} from 'syncano-components';
+import {ShowMore} from '../../common';
 
-export default ({sockets, handleTitleClick}) => {
+const SocketsList = ({sockets, handleTitleClick, visibleItems = 3}, context) => {
+  const router = context.router;
   const lists = {
     data: DataList,
     scriptEndpoints: ScriptEndpointsList,
@@ -22,12 +23,10 @@ export default ({sockets, handleTitleClick}) => {
   };
 
   const onClickTitle = (routeName) => {
-    const router = SessionStore.getRouter();
     const instanceName = router.getCurrentParams().instanceName;
 
     if (_.isFunction(handleTitleClick)) {
-      handleTitleClick();
-      return;
+      return handleTitleClick();
     }
 
     router.transitionTo(routeName, {instanceName});
@@ -44,11 +43,22 @@ export default ({sockets, handleTitleClick}) => {
             checkItem: (checkId, value, itemKeyName) => Actions.checkItem(checkId, value, itemKeyName, socketName),
             handleSelectAll: () => Actions.selectAll(socketName),
             handleUnselectAll: () => Actions.uncheckAll(socketName),
-            items: sockets[socketName],
+            items: sockets[socketName].slice(0, visibleItems),
             handleTitleClick: () => onClickTitle(_.kebabCase(socketName))
           })}
+          <ShowMore
+            style={{margin: '-30px 0 40px 0'}}
+            visible={sockets[socketName].length > visibleItems}
+            routeName={_.kebabCase(socketName)}
+            params={router.getCurrentParams()}/>
         </Show>
       )}
     </div>
   );
 };
+
+SocketsList.contextTypes = {
+  router: React.PropTypes.func
+};
+
+export default SocketsList;

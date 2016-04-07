@@ -35,11 +35,11 @@ export default React.createClass({
       params: {
         key: 'removeTemplateDialog',
         ref: 'removeTemplateDialog',
-        title: 'Delete a Template Socket',
+        title: 'Delete a Template',
         handleConfirm: Actions.removeTemplates,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
-        groupName: 'Template Socket'
+        groupName: 'Template'
       }
     }];
   },
@@ -63,7 +63,7 @@ export default React.createClass({
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
-            className="col-xs-16"
+            className="col-xs-12"
             primary={true}
             columnName="CHECK_ICON"
             handleClick={handleTitleClick}>
@@ -80,8 +80,8 @@ export default React.createClass({
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
-                singleItemText="Delete a Template Socket"
-                multipleItemsText="Delete Template Sockets"
+                singleItemText="Delete a Template"
+                multipleItemsText="Delete Templates"
                 onTouchTap={() => this.showDialog('removeTemplateDialog')}/>
             </Lists.Menu>
           </Column.ColumnHeader>

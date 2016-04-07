@@ -1,22 +1,28 @@
 import React from 'react';
-import {Link, State, Navigation} from 'react-router';
+import Radium from 'radium';
+import {Link, State} from 'react-router';
+import _ from 'lodash';
 
 import {DialogsMixin} from '../../mixins';
 
 import Actions from './ClassesActions';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from 'syncano-components';
-import {DataObjectsAmount} from '../../common';
+import {ColumnList, Color, Truncate} from 'syncano-components';
+import {DataObjectsAmount, LinkWrapper} from '../../common';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
-export default React.createClass({
+export default Radium(React.createClass({
   displayName: 'ClassesListItem',
+
+  propTypes: {
+    onIconClick: React.PropTypes.func.isRequired,
+    showDeleteDialog: React.PropTypes.func.isRequired
+  },
 
   mixins: [
     State,
-    Navigation,
     DialogsMixin
   ],
 
@@ -36,7 +42,13 @@ export default React.createClass({
           checked={item.checked}
           keyName="name"
           handleIconClick={onIconClick}
-          primaryText={item.name}
+          primaryText={
+            <LinkWrapper
+              to="classes-data-objects"
+              params={_.merge({}, this.getParams(), {className: item.name})}>
+              <Truncate text={item.name}/>
+            </LinkWrapper>
+          }
           secondaryText={item.description}/>
         <Column.Desc className="col-flex-1">
           <DataObjectsAmount
@@ -73,4 +85,4 @@ export default React.createClass({
       </ColumnList.Item>
     );
   }
-});
+}));

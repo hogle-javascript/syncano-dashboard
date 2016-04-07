@@ -15,7 +15,7 @@ import {GroupsStore, GroupsActions} from '../Groups';
 // Components
 import {TextField, FlatButton, Checkbox} from 'syncano-material-ui';
 import {Color, Show, SelectFieldWrapper} from 'syncano-components';
-import {Dialog, Icon} from '../../common';
+import {Dialog, Icon, Notification} from '../../common';
 
 export default React.createClass({
   displayName: 'ClassDialog',
@@ -363,6 +363,7 @@ export default React.createClass({
             <TextField
               ref="name"
               name="name"
+              autoFocus={true}
               disabled={this.hasEditMode()}
               fullWidth={true}
               valueLink={this.linkState('name')}
