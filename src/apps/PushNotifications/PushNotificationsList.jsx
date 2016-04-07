@@ -5,7 +5,7 @@ import {Container, Lists} from '../../common';
 import APNSListItem from './APNS/APNSPushNotificationsListItem';
 import GCMListItem from './GCM/GCMPushNotificationsListItem';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default (props) => {
   const renderItem = (item) => {

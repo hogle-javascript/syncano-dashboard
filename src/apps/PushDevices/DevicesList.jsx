@@ -9,7 +9,7 @@ import UsersActions from '../Users/UsersActions';
 import UsersStore from '../Users/UsersStore';
 
 import {ColumnList} from 'syncano-components';
-import {Container, Lists, Dialog} from '../../common';
+import {Container, Lists, Dialog, ShowMore} from '../../common';
 import ListItem from './DevicesListItem';
 import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
 import APNSSendMessageDialog from './APNSDevices/APNSSendMessageDialog';
@@ -123,11 +123,11 @@ export default Radium(React.createClass({
       gcm: 'Android Devices'
     };
     const moreLink = (
-      <span
-        className="row align-center vp-3-t"
-        onClick={() => this.transitionTo(`${type}-devices`, this.getParams())}
-        key={`${type}-list`}
-        style={styles.moreLink}>MORE DEVICES</span>
+      <ShowMore
+        label="MORE DEVICES"
+        visible={items.length > 3}
+        routeName={`${type}-devices`}
+        params={this.getParams()}/>
     );
 
     return (

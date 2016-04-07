@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import _ from 'lodash';
 import {State, Navigation} from 'react-router';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
@@ -38,21 +37,19 @@ export default React.createClass({
     let validataObj = {};
 
     validataObj.dataSourceUrl = (value) => {
-      const urlValidation = {
+      let urlValidation = {
         url: {
           message: '^Invalid URL'
         }
       };
 
       if (value && value.indexOf(SYNCANO_BASE_URL) === -1) {
-        const syncanoUrlValidation = {
+        urlValidation = {
           inclusion: {
             within: [],
             message: '^Invalid endpoint URL'
           }
         };
-
-        _.assign(urlValidation, syncanoUrlValidation);
       }
 
       return urlValidation;
@@ -140,10 +137,10 @@ export default React.createClass({
 
   handleRender() {
     const {template} = this.state;
-    const dataSourceUrl = this.refs.dataSourceUrl.getValue();
+    const dataSourceUrlValue = this.refs.dataSourceUrl.getValue();
 
-    if (dataSourceUrl.length) {
-      return Actions.renderFromEndpoint(template.name, dataSourceUrl.getValue());
+    if (dataSourceUrlValue.length) {
+      return Actions.renderFromEndpoint(template.name, dataSourceUrlValue);
     }
 
     Actions.renderTemplate(template.name, template.context);
