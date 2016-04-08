@@ -369,6 +369,9 @@ export default React.createClass({
             <Dialog.SidebarSection title="Schema">
               Class schema determines what type of data Data Objects can store.
             </Dialog.SidebarSection>
+            <Dialog.SidebarSection>
+              <strong>Schema field name cannot start with number!</strong>
+            </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/classes">
                 Learn more
