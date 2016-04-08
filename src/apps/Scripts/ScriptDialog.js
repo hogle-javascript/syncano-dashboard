@@ -68,7 +68,7 @@ export default React.createClass({
         sidebar={
           <Dialog.SidebarBox>
             <Dialog.SidebarSection>
-              A Script is an object that contains code that can be run on Syncano's servers. A Script is a very
+              A Script is an object that contains code that can be run on Syncano&#39;s servers. A Script is a very
                powerful tool. Just like with code, you can do a lot with it. Additionally, Syncano gives you many
                ways to run Scripts.
             </Dialog.SidebarSection>
@@ -109,7 +109,7 @@ export default React.createClass({
           options={runtimes}
           value={runtime_name}
           floatingLabelText="Runtime environment"
-          onChange={this.setSelectFieldValue.bind(null, 'runtime_name')}
+          onChange={(event, index, value) => this.setSelectFieldValue('runtime_name', event, index, value)}
           errorText={this.getValidationMessages('runtime_name').join(' ')}/>
       </Dialog.FullPage>
     );
