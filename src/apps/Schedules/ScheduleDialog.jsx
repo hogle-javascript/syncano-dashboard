@@ -104,7 +104,7 @@ export default React.createClass({
               Chosen Script will be executed at selected time interval writen as crontab.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Crontab">
-              We prepared some crontabs for you so you can choose from predefined or write your own.
+              We prepared some crontabs to choose from. You can also write your own.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/schedules">
