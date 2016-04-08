@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({title, last, children}) => {
+export default ({title, last, children, style}) => {
   const styles = {
     title: {
       color: '#aaa',
@@ -12,7 +12,9 @@ export default ({title, last, children}) => {
   return (
     <div className={!last ? 'vm-6-b' : ''}>
       {title ? <div style={styles.title}>{title}</div> : null}
-      <div className="row">
+      <div
+        style={style}
+        className="row">
         {children}
       </div>
     </div>
