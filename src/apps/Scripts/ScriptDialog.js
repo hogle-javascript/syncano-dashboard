@@ -74,7 +74,7 @@ export default React.createClass({
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Runtime environment">
               The runtime environment that the Script will run in (i.e. <strong>Ruby, Python, NodeJS, Golang,
-               Swift</strong> and <strong>PHP</strong>). Every runtime environment support different language and
+               Swift</strong> and <strong>PHP</strong>). Every runtime environment supports different language and
                several libraries for each language. For example: The Python runtime has a <strong>requests </strong>
                library.
             </Dialog.SidebarSection>
