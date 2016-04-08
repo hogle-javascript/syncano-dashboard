@@ -113,7 +113,7 @@ export default React.createClass({
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
         }>
-        <div>
+        <Dialog.ContentSection>
           {this.renderFormNotifications()}
           <TextField
             ref="label"
@@ -143,7 +143,7 @@ export default React.createClass({
             dataSource={this.renderCrontabDataSource()}
             errorText={this.getValidationMessages('crontab').join(' ')}
             onTouchTap={this.handleCrontabOpen}/>
-        </div>
+        </Dialog.ContentSection>
       </Dialog.FullPage>
     );
   }
