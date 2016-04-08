@@ -364,7 +364,7 @@ export default React.createClass({
                Objects, you have to define a Class.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Permissions">
-              It's a place where you can manage who will have access to your Data Objects.
+              It&#39;s a place where you can manage who will have access to your Data Objects.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Schema">
               Class schema determines what type of data Data Objects can store.
