@@ -108,7 +108,7 @@ export default React.createClass({
             name="script"
             options={scripts}
             value={codebox}
-            onChange={this.setSelectFieldValue.bind(null, 'codebox')}
+            onChange={(event, index, value) => this.setSelectFieldValue('codebox', value)}
             errorText={this.getValidationMessages('codebox').join(' ')}/>
           <AutoComplete
             ref="crontab"
