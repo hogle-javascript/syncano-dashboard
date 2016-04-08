@@ -78,6 +78,25 @@ export default React.createClass({
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Script Endpoint is simply a URL that a website or application can make a HTTP request to. In the
+               case of Syncano, this HTTP request to the URL will cause a Script execution.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Script">
+              Select Script which you want to run when you hit Script Endpoint URL.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Public">
+              Determines whether the Script Endpoint public link is active.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/endpoints-scripts">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
         {this.renderFormNotifications()}
         <TextField
