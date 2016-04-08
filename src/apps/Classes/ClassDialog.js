@@ -360,7 +360,7 @@ export default React.createClass({
         sidebar={
           <Dialog.SidebarBox>
             <Dialog.SidebarSection>
-              Classes are templates for Data Objects which will be stored in Syncano. In order to be abble to add Data
+              Classes are templates for Data Objects which will be stored in Syncano. In order to be able to add Data
                Objects, you have to define a Class.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Permissions">
