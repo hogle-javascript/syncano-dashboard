@@ -12,7 +12,7 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import {Container, Loading} from 'syncano-components';
-import {Dialog} from '../../common';
+import {Dialog, Show} from '../../common';
 import {FlatButton, RaisedButton} from 'syncano-material-ui';
 
 // Apps
@@ -25,6 +25,7 @@ import EmptyView from './EmptyView';
 import SocketsDialog from './SocketsDialog';
 import SocketsList from './SocketsList';
 import SocketsInnerToolbar from './SocketsInnerToolbar';
+import PushNotifications from '../PushNotifications';
 
 export default React.createClass({
   displayName: 'Sockets',
@@ -101,18 +102,12 @@ export default React.createClass({
         <Loading show={sockets.isLoading}>
           <SocketsList sockets={sockets}/>
 
-          {
-
-            /*
-             <Show if={this.getPushNotificationItems().length}>
-             <PushNotifications.List
-             name="Push Notification Sockets"
-             handleTitleClick={() => this.transitionTo('push-notification-config', this.getParams())}
-             items={this.getPushNotificationItems()}/>
-             </Show>
-             */
-
-          }
+          <Show if={this.getPushNotificationItems().length}>
+            <PushNotifications.List
+              name="Push Notification Sockets"
+              handleTitleClick={() => this.transitionTo('push-notification-config', this.getParams())}
+              items={this.getPushNotificationItems()}/>
+          </Show>
 
         </Loading>
       </div>
@@ -130,15 +125,8 @@ export default React.createClass({
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
-
-        {
-
-          /*
-          <PushNotifications.APNSConfigDialog />
-          <PushNotifications.GCMConfigDialog />
-          */
-
-        }
+        <PushNotifications.APNSConfigDialog />
+        <PushNotifications.GCMConfigDialog />
 
         {this.getDialogs()}
         <SocketsInnerToolbar empty={!sockets.hasAnyItem || sockets.isLoading}>

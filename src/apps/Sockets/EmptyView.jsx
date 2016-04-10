@@ -6,6 +6,7 @@ import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 
+import {Popover} from 'syncano-material-ui';
 import EmptyListItem from './EmptyListItem';
 
 export default React.createClass({
@@ -68,23 +69,6 @@ export default React.createClass({
             title="Script Endpoint"
             description="Run Scripts on our servers and use them for business logic." />
 
-          {
-
-            /*
-             <Socket.EmptyListItem
-             addTooltip="Configure a Push Notification"
-             handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
-             socketName="Push"
-             title="Send Push Notifications">
-             <div style={styles.socketDescription}>
-             Instantly message your mobile users with timely and relevant content.
-             </div>
-             </Socket.EmptyListItem>
-             <Popover ref="popover"/>
-             */
-
-          }
-
           <EmptyListItem
             handleCreate={TriggersActions.showDialog}
             socketName="Trigger"
@@ -102,6 +86,14 @@ export default React.createClass({
             socketName="Channel"
             title="Channel"
             description="Get real-time updates to keep your data synchronized." />
+
+          <EmptyListItem
+            addTooltip="Configure a Push Notification"
+            handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
+            socketName="Push"
+            title="Send Push Notifications"
+            description="Instantly message your mobile users with timely and relevant content." />
+          <Popover ref="popover"/>
         </div>
       </div>
     );
