@@ -379,7 +379,7 @@ export default React.createClass({
             options={channels}
             value={channel}
             style={styles.dialogField}
-            onChange={this.setSelectFieldValue.bind(null, 'channel')}
+            onChange={(event, index, value) => this.setSelectFieldValue('channel', value)}
             errorText={this.getValidationMessages('channel').join(' ')}/>
           <TextField
             ref="field-channel_room"
@@ -418,7 +418,7 @@ export default React.createClass({
             labelStyle={styles.groupDropdownLabel}
             menuItemStyle={styles.groupMenuItem}
             style={styles.dialogField}
-            onChange={this.setSelectFieldValue.bind(null, 'group')}
+            onChange={(event, index, value) => this.setSelectFieldValue('group', value)}
             errorText={this.getValidationMessages('group').join(' ')}/>
           {renderChannelFields()}
         </div>
@@ -433,7 +433,7 @@ export default React.createClass({
             options={permissions}
             style={styles.dialogField}
             value={this.state.owner_permissions}
-            onChange={this.setSelectFieldValue.bind(null, 'owner_permissions')}
+            onChange={(event, index, value) => this.setSelectFieldValue('owner_permissions', value)}
             errorText={this.getValidationMessages('owner_permissions').join(' ')}/>
           <SelectFieldWrapper
             name="group_permissions"
@@ -441,7 +441,7 @@ export default React.createClass({
             options={permissions}
             style={styles.dialogField}
             value={this.state.group_permissions}
-            onChange={this.setSelectFieldValue.bind(null, 'group_permissions')}
+            onChange={(event, index, value) => this.setSelectFieldValue('group_permissions', value)}
             errorText={this.getValidationMessages('group_permissions').join(' ')}/>
           <SelectFieldWrapper
             name="other_permissions"
@@ -449,7 +449,7 @@ export default React.createClass({
             options={permissions}
             style={styles.dialogField}
             value={this.state.other_permissions}
-            onChange={this.setSelectFieldValue.bind(null, 'other_permissions')}
+            onChange={(event, index, value) => this.setSelectFieldValue('other_permissions', value)}
             errorText={this.getValidationMessages('other_permissions').join(' ')}/>
         </div>
       </div>
@@ -500,7 +500,7 @@ export default React.createClass({
               floatingLabelText={`Value of ${item.name}`}
               value={this.state[item.name]}
               style={styles.dialogField}
-              onChange={this.setSelectFieldValue.bind(null, item.name)}
+              onChange={(event, index, value) => this.setSelectFieldValue(item.name, value)}
               errorText={this.getValidationMessages(item.name).join(' ')}/>
           );
         }

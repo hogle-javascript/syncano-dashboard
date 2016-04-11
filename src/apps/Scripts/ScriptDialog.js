@@ -109,7 +109,7 @@ export default React.createClass({
           options={runtimes}
           value={runtime_name}
           floatingLabelText="Runtime environment"
-          onChange={(event, index, value) => this.setSelectFieldValue('runtime_name', event, index, value)}
+          onChange={(event, index, value) => this.setSelectFieldValue('runtime_name', value)}
           errorText={this.getValidationMessages('runtime_name').join(' ')}/>
       </Dialog.FullPage>
     );
