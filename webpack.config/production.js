@@ -15,6 +15,9 @@ config.plugins  = config.plugins.concat(
     compress: {
       drop_console: true,
       drop_debugger: true
+    },
+    output: {
+      comments: false
     }
   }),
   new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js', minChunks: Infinity})
