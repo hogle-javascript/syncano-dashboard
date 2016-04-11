@@ -120,19 +120,19 @@ export default React.createClass({
             name="signal"
             options={Store.getSignalsDropdown()}
             value={this.state.signal}
-            onChange={this.setSelectFieldValue.bind(null, 'signal')}
+            onChange={(event, index, value) => this.setSelectFieldValue('signal', value)}
             errorText={this.getValidationMessages('signal').join(' ')}/>
           <SelectFieldWrapper
             name="class"
             options={this.state.classes}
             value={this.state.class}
-            onChange={this.setSelectFieldValue.bind(null, 'class')}
+            onChange={(event, index, value) => this.setSelectFieldValue('class', value)}
             errorText={this.getValidationMessages('class').join(' ')}/>
           <SelectFieldWrapper
             name="script"
             options={this.state.scripts}
             value={this.state.codebox}
-            onChange={this.setSelectFieldValue.bind(null, 'codebox')}
+            onChange={(event, index, value) => this.setSelectFieldValue('codebox', value)}
             errorText={this.getValidationMessages('codebox').join(' ')}/>
         </Dialog.ContentSection>
       </Dialog.FullPage>
