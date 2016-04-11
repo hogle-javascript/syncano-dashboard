@@ -364,13 +364,13 @@ export default React.createClass({
                Objects, you have to define a Class.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Permissions">
-              It&#39;s a place where you can manage who will have access to your Data Objects.
+              This is place where you can manage who will have access to your Data Objects.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Schema">
-              Class schema determines what type of data Data Objects can store.
+              Class schema determines what type of data your Data Objects can store.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection>
-              <strong>Schema field name cannot start with number!</strong>
+              <i>Note: Schema field name has to start with a letter!</i>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/classes">
