@@ -102,7 +102,7 @@ export default React.createClass({
           name="script"
           options={this.state.scripts}
           value={this.state.codebox}
-          onChange={this.setSelectFieldValue.bind(null, 'codebox')}
+          onChange={(event, index, value) => this.setSelectFieldValue('codebox', value)}
           errorText={this.getValidationMessages('codebox').join(' ')}/>
         <Toggle
           ref='public'
