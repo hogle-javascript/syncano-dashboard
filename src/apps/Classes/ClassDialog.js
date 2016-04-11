@@ -413,7 +413,7 @@ export default React.createClass({
               labelStyle={styles.groupDropdownLabel}
               menuItemStyle={styles.groupMenuItem}
               floatingLabelText="Group (ID)"
-              onChange={this.setSelectFieldValue.bind(null, 'group')}
+              onChange={(event, index, value) => this.setSelectFieldValue('group', value)}
               errorText={this.getValidationMessages('group').join(' ')}/>
           </div>
           <div className="col-flex-1">
@@ -422,7 +422,7 @@ export default React.createClass({
               options={permissions}
               floatingLabelText="Group Permissions"
               value={group_permissions}
-              onChange={this.setSelectFieldValue.bind(null, 'group_permissions')}
+              onChange={(event, index, value) => this.setSelectFieldValue('group_permissions', value)}
               errorText={this.getValidationMessages('group_permissions').join(' ')}/>
           </div>
           <div className="col-flex-1">
@@ -431,7 +431,7 @@ export default React.createClass({
               options={permissions}
               floatingLabelText="Other Permissions"
               value={other_permissions}
-              onChange={this.setSelectFieldValue.bind(null, 'other_permissions')}
+              onChange={(event, index, value) => this.setSelectFieldValue('other_permissions', value)}
               errorText={this.getValidationMessages('other_permissions').join(' ')}/>
           </div>
         </Dialog.ContentSection>
@@ -469,7 +469,7 @@ export default React.createClass({
               options={this.getFieldTypes()}
               value={fieldType}
               floatingLabelText="Type"
-              onChange={this.setSelectFieldValue.bind(null, 'fieldType')}
+              onChange={(event, index, value) => this.setSelectFieldValue('fieldType', value)}
               errorText={this.getValidationMessages('fieldType').join(' ')}/>
           </div>
           <div className="col-xs-8">
@@ -479,7 +479,7 @@ export default React.createClass({
                 options={this.getFieldTargetOptions()}
                 value={fieldTarget}
                 floatingLabelText="Target Class"
-                onChange={this.setSelectFieldValue.bind(null, 'fieldTarget')}
+                onChange={(event, index, value) => this.setSelectFieldValue('fieldTarget', value)}
                 errorText={this.getValidationMessages('fieldTarget').join(' ')}/>
             </Show>
           </div>

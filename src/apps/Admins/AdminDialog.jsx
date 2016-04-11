@@ -81,7 +81,7 @@ export default React.createClass({
           floatingLabelText="Administrator's role"
           options={Store.getRoles()}
           value={this.state.role}
-          onChange={this.setSelectFieldValue.bind(null, 'role')}
+          onChange={(event, index, value) => this.setSelectFieldValue('role', value)}
           errorText={this.getValidationMessages('role').join(' ')}/>
       </Dialog.FullPage>
     );
