@@ -11,7 +11,7 @@ import {Dialog} from '../../common';
 
 export default (type, Store, Actions) => {
   return React.createClass({
-    displayName: `${type}Dialog`,
+    displayName: `${type}DeviceDialog`,
 
     mixins: [
       Reflux.connect(Store),
@@ -19,26 +19,27 @@ export default (type, Store, Actions) => {
       FormMixin
     ],
 
-    validatorConstraints() {
-      let validatorObj = {
-        label: {
-          presence: true
-        },
-        registration_id: {
-          presence: true
-        }
-      };
-
-      return validatorObj;
+    validatorConstraints: {
+      label: {
+        presence: true
+      },
+      registration_id: {
+        presence: true
+      },
+      device_id: {
+        presence: true
+      }
     },
 
     getParams() {
+      const {label, registration_id, user_id, device_id, is_active} = this.state;
+
       return {
-        label: this.state.label,
-        registration_id: this.state.registration_id,
-        user_id: this.state.user_id === '' ? null : this.state.user_id,
-        device_id: this.state.device_id,
-        is_active: this.state.is_active
+        user_id: user_id === '' ? null : user_id,
+        label,
+        registration_id,
+        device_id,
+        is_active
       };
     },
 
@@ -61,6 +62,7 @@ export default (type, Store, Actions) => {
     },
 
     render() {
+      const {open, isLoading, is_active} = this.state;
       const title = this.hasEditMode() ? 'Edit' : 'Add';
 
       return (
@@ -69,8 +71,8 @@ export default (type, Store, Actions) => {
           ref="dialog"
           title={`${title} a ${type} Device`}
           onRequestClose={this.handleCancel}
-          open={this.state.open}
-          isLoading={this.state.isLoading}
+          open={open}
+          isLoading={isLoading}
           actions={
             <Dialog.StandardButtons
               handleCancel={this.handleCancel}
@@ -115,7 +117,7 @@ export default (type, Store, Actions) => {
               <Toggle
                 ref="is_active"
                 key="is_active"
-                defaultToggled={this.state.is_active}
+                defaultToggled={is_active}
                 onToggle={this.handleToggle}
                 label="Active"/>
             </div>

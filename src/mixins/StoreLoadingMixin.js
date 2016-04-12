@@ -41,7 +41,9 @@ export default {
       if (!state) {
         this.data.hideDialogs = true;
       }
-      this.trigger(this.data);
+      const temp = {isLoading: state};
+
+      this.trigger(temp);
     }
   }
 
