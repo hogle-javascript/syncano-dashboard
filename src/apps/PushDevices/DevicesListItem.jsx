@@ -3,7 +3,7 @@ import React from 'react';
 import {SnackbarNotificationMixin} from '../../mixins';
 
 import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList, Clipboard} from 'syncano-components';
+import {Color, ColumnList, Clipboard, Truncate} from 'syncano-components';
 
 let Column = ColumnList.Column;
 
@@ -52,8 +52,11 @@ export default React.createClass({
               tooltip="Copy device ID"
               type="link" />
           }/>
-        <Column.Desc className="col-sm-13">
+        <Column.Desc>
           {item.userName}
+        </Column.Desc>
+        <Column.Desc>
+          <Truncate text={JSON.stringify(item.metadata)} />
         </Column.Desc>
         <Column.Desc>
           {item.is_active.toString()}

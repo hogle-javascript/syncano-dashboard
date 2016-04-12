@@ -11,8 +11,8 @@ import Store from './SocketsStore';
 import {DialogsMixin} from '../../mixins';
 
 // Components
-import {Container, Loading} from 'syncano-components';
-import {Dialog, Show} from '../../common';
+import {Container, Loading, Show} from 'syncano-components';
+import {Dialog} from '../../common';
 import {FlatButton, RaisedButton} from 'syncano-material-ui';
 
 // Apps
@@ -102,7 +102,7 @@ export default React.createClass({
         <Loading show={sockets.isLoading}>
           <SocketsList sockets={sockets}/>
 
-          <Show if={this.getPushNotificationItems().length}>
+          <Show if={this.getPushNotificationItems().length > 0}>
             <PushNotifications.List
               name="Push Notification Sockets"
               handleTitleClick={() => this.transitionTo('push-notification-config', this.getParams())}
