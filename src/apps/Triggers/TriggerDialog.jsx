@@ -105,7 +105,7 @@ export default React.createClass({
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
         }>
-        <div>
+        <Dialog.ContentSection>
           {this.renderFormNotifications()}
           <TextField
             ref="label"
@@ -134,7 +134,7 @@ export default React.createClass({
             value={this.state.codebox}
             onChange={(event, index, value) => this.setSelectFieldValue('codebox', value)}
             errorText={this.getValidationMessages('codebox').join(' ')}/>
-        </div>
+        </Dialog.ContentSection>
       </Dialog.FullPage>
     );
   }
