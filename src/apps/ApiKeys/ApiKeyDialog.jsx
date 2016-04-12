@@ -80,6 +80,36 @@ export default React.createClass({
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              When trying to connect to an Instance with one of our libraries,
+              the API key is passed as a parameter and serves as the password
+              for connecting to your Instance.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Ignore ACL">
+              API Key with this flag set to true will ignore any permissions set
+              for the resources in Syncano.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="User registration">
+              API Key with this flag enables user registration (read about adding new users&nbsp;
+                <Dialog.SidebarLink to="http://docs.syncano.io/docs/user-management#adding-a-user">
+                  here
+                </Dialog.SidebarLink>
+              ).
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Anonymous usage">
+              API Key with this flag will allow making GET requests to Classes
+              and Data Objects provided that "other_permissions"
+              for those resources are set appropriately.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/permissions#using-api-keys-and-user-keys">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
         {this.renderFormNotifications()}
         <TextField
