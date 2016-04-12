@@ -160,6 +160,7 @@ export default React.createClass({
             label="Create my account"
             labelStyle={{fontSize: '16px'}}
             fullWidth={true}
+            disabled={!this.state.canSubmit}
             style={{boxShadow: 'none', height: '48px'}}
             primary={true}/>
         </form>

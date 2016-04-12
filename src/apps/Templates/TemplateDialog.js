@@ -53,6 +53,7 @@ export default React.createClass({
         title={`${title} a Template`}
         actions={
           <Dialog.StandardButtons
+            disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }

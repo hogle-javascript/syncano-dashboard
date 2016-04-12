@@ -138,6 +138,7 @@ export default React.createClass({
               : null
             }
             <Dialog.StandardButtons
+              disabled={!this.state.canSubmit}
               handleCancel={this.handleCancel}
               handleConfirm={this.handleFormValidation}/>
           </div>
