@@ -116,7 +116,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, metadata, notificationShowed, isLoading} = this.state;
+    const {open, metadata, notificationShowed, isLoading, canSubmit} = this.state;
     const title = this.hasEditMode() ? 'Update' : 'Add';
 
     return (
@@ -138,7 +138,7 @@ export default React.createClass({
               : null
             }
             <Dialog.StandardButtons
-              disabled={!this.state.canSubmit}
+              disabled={!canSubmit}
               handleCancel={this.handleCancel}
               handleConfirm={this.handleFormValidation}/>
           </div>

@@ -44,7 +44,7 @@ export default React.createClass({
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    const {open, isLoading} = this.state;
+    const {open, isLoading, canSubmit} = this.state;
 
     return (
       <Dialog.FullPage
@@ -53,7 +53,7 @@ export default React.createClass({
         title={`${title} a Template`}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
