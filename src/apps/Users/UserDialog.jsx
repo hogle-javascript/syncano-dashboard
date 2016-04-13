@@ -101,7 +101,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, isLoading} = this.state;
+    const {open, isLoading, canSubmit} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
     const selectValueSource = this.getSelectValueSource();
     let selectValue = '';
@@ -127,6 +127,7 @@ export default React.createClass({
         isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
+            disabled={!canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
