@@ -162,13 +162,9 @@ export default Radium(React.createClass({
               handleSelectAll={actions.selectAll}
               handleUnselectAll={actions.uncheckAll}>
               <Lists.MenuItem
-                singleItemText="Send message"
-                multipleItemsText="Send messages"
+                primaryText="Send message"
                 onTouchTap={showSendMessagesDialog}/>
-              <Lists.MenuItem
-                singleItemText="Delete a Device"
-                multipleItemsText="Delete Devices"
-                onTouchTap={() => this.showDialog('deleteDeviceDialog')}/>
+              <Lists.MenuItem onTouchTap={() => this.showDialog('deleteDeviceDialog')} />
             </Lists.Menu>
           </ColumnList.Header>
           <Lists.List

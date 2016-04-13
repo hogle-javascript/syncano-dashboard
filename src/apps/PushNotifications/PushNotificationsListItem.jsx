@@ -81,7 +81,7 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={this.props.showConfigDialog}
-            primaryText="Edit Socket"/>
+            primaryText="Edit"/>
           <MenuItem
             className="dropdown-item-devices"
             onTouchTap={() => this.transitionTo(this.props.devicesRoute, this.getParams())}

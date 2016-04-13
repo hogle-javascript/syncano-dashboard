@@ -73,10 +73,7 @@ export default Radium(React.createClass({
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
-              <Lists.MenuItem
-                singleItemText="Delete a Group"
-                multipleItemsText="Delete Groups"
-                onTouchTap={() => this.showDialog('removeGroupDialog')} />
+              <Lists.MenuItem onTouchTap={() => this.showDialog('removeGroupDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

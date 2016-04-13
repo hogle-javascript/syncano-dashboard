@@ -105,10 +105,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
-              <Lists.MenuItem
-                singleItemText="Delete an Invitation"
-                multipleItemsText="Delete Invitations"
-                onTouchTap={() => this.showDialog('removeInvitationDialog')} />
+              <Lists.MenuItem onTouchTap={() => this.showDialog('removeInvitationDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

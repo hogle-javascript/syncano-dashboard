@@ -50,11 +50,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-script-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit a Script" />
+            primaryText="Edit" />
           <MenuItem
             className="dropdown-item-script-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete a Script" />
+            primaryText="Delete" />
         </Column.Menu>
       </ColumnList.Item>
     );

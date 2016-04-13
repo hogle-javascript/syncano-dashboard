@@ -152,10 +152,8 @@ export default React.createClass({
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
-                singleItemText="Delete a Class"
-                multipleItemsText="Delete Classes"
                 disabled={someClassIsProtectedFromDelete}
-                onTouchTap={() => this.showDialog('deleteClassDialog')}/>
+                onTouchTap={() => this.showDialog('deleteClassDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

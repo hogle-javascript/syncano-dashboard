@@ -80,10 +80,7 @@ export default React.createClass({
                 checkedItemsCount={checkedItems}
                 handleSelectAll={() => Actions.selectAll('myInstances')}
                 handleUnselectAll={() => Actions.uncheckAll('myInstances')}>
-                <Lists.MenuItem
-                  singleItemText="Delete an Instance"
-                  multipleItemsText="Delete Instances"
-                  onTouchTap={() => this.showDialog('deleteInstanceDialog')} />
+                <Lists.MenuItem onTouchTap={() => this.showDialog('deleteInstanceDialog')} />
               </Lists.Menu>
             </Column.ColumnHeader>
           </ColumnList.Header>

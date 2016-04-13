@@ -74,11 +74,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit a Trigger" />
+            primaryText="Edit" />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete a Trigger" />
+            primaryText="Delete" />
         </Column.Menu>
       </ColumnList.Item>
     );

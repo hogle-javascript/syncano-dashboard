@@ -107,10 +107,7 @@ export default React.createClass({
               checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
               handleUnselectAll={handleUnselectAll}>
-              <Lists.MenuItem
-                singleItemText="Delete a Script Endpoint"
-                multipleItemsText="Delete Script Endpoints"
-                onTouchTap={() => this.showDialog('removeScriptEndpointDialog')} />
+              <Lists.MenuItem onTouchTap={() => this.showDialog('removeScriptEndpointDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
