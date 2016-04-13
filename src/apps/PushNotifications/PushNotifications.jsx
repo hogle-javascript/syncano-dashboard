@@ -12,8 +12,8 @@ import APNSConfigDialog from './APNS/APNSConfigDialog';
 import GCMConfigDialog from './GCM/GCMConfigDialog';
 import ConfigPushNotificationsPopover from './ConfigPushNotificationsPopover';
 import {RaisedButton} from 'syncano-material-ui';
-import {InnerToolbar} from '../../common';
 import {Container} from 'syncano-components';
+import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 
 export default React.createClass({
   displayName: 'PushNotifications',
@@ -39,13 +39,13 @@ export default React.createClass({
       <div>
         <APNSConfigDialog/>
         <GCMConfigDialog/>
-        <InnerToolbar title="Push Notifications">
+        <SocketsInnerToolbar>
           <RaisedButton
             label="Add"
             primary={true}
             style={{marginRight: 0}}
             onTouchTap={pushSocketPopover ? pushSocketPopover.toggle : null} />
-        </InnerToolbar>
+        </SocketsInnerToolbar>
         <ConfigPushNotificationsPopover ref="pushSocketPopover"/>
         <Container>
           <PushNotificationsList
