@@ -202,7 +202,7 @@ export default Reflux.createStore({
         {
           percent: _.round((usageAmount.cbx / pricing.cbx.overage) / pricing.cbx.included * 100, 0),
           amount: _.round(usageAmount.cbx / pricing.cbx.overage, 0),
-          label: 'Script runs',
+          label: 'Script seconds',
           styles: {background: '#FFBC5A'}
         }
       ],
