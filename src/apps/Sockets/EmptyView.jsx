@@ -91,7 +91,7 @@ export default React.createClass({
             addTooltip="Configure a Push Notification"
             handleCreate={pushSocketPopover ? pushSocketPopover.toggle : null}
             socketName="Push"
-            title="Push Notifications"
+            title="Push Notifications (BETA)"
             description="Instantly message your mobile users with timely and relevant content." />
           <ConfigPushNotificationsPopover ref="pushSocketPopover"/>
         </div>
