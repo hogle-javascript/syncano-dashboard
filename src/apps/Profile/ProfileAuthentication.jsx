@@ -155,6 +155,7 @@ export default Radium(React.createClass({
                     style={styles.updateButton}
                     labelStyle={styles.updateButtonLabel}
                     className="raised-button"
+                    disabled={!this.state.canSubmit}
                     primary={true} />
                 </form>
               </div>

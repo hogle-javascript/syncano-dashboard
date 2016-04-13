@@ -89,13 +89,11 @@ export default React.createClass({
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
-                singleItemText="Accept an Invitation"
-                multipleItemsText="Accept Invitations"
-                onTouchTap={() => this.showDialog('acceptInvitationsDialog')}/>
+                primaryText="Accept All"
+                onTouchTap={() => this.showDialog('acceptInvitationsDialog')} />
               <Lists.MenuItem
-                singleItemText="Decline an Invitation"
-                multipleItemsText="Decline Invitations"
-                onTouchTap={() => this.showDialog('declineInvitationsDialog')}/>
+                primaryText="Decline All"
+                onTouchTap={() => this.showDialog('declineInvitationsDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

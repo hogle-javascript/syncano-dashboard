@@ -75,12 +75,12 @@ export default Radium(React.createClass({
           <MenuItem
             className="dropdown-item-edit-class"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit a Class"/>
+            primaryText="Edit"/>
           <MenuItem
             className="dropdown-item-delete-class"
             disabled={item.protectedFromDelete}
             onTouchTap={showDeleteDialog}
-            primaryText="Delete a Class"/>
+            primaryText="Delete"/>
         </Column.Menu>
       </ColumnList.Item>
     );

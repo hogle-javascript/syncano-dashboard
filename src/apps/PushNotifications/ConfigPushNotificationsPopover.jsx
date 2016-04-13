@@ -9,7 +9,6 @@ import {FontIcon, ListItem, Styles} from 'syncano-material-ui';
 import {Popover} from '../../common';
 
 export default React.createClass({
-
   displayName: 'ConfigPushNotificationsPopover',
 
   toggle(event) {
@@ -48,7 +47,9 @@ export default React.createClass({
     return (
       <Popover
         ref="pushSocketPopover"
-        style={{padding: '8px 0'}}>
+        style={{padding: '8px 0'}}
+        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}>
         <ListItem
           primaryText="GCM Socket"
           rightIcon={hasGCMConfig ? doneIcon : null}

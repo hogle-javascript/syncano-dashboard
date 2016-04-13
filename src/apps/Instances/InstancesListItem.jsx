@@ -27,8 +27,7 @@ export default React.createClass({
   ],
 
   render() {
-    let {item, onIconClick, showDeleteDialog} = this.props;
-    const removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
+    const {item, onIconClick, showDeleteDialog} = this.props;
 
     return (
       <ColumnList.Item
@@ -53,11 +52,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-instance-edit"
             onTouchTap={() => InstanceDialogActions.showDialog(item)}
-            primaryText="Edit an Instance" />
+            primaryText="Edit" />
           <MenuItem
             className="dropdown-item-instance-delete"
             onTouchTap={showDeleteDialog}
-            primaryText={removeText} />
+            primaryText={Store.amIOwner(item) ? 'Delete' : 'Leave'} />
         </Column.Menu>
       </ColumnList.Item>
     );

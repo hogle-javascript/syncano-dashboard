@@ -6,8 +6,8 @@ import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 
-import {Popover} from 'syncano-material-ui';
 import EmptyListItem from './EmptyListItem';
+import ConfigPushNotificationsPopover from '../PushNotifications/ConfigPushNotificationsPopover';
 
 export default React.createClass({
   displayName: 'SocketsEmpty',
@@ -15,7 +15,6 @@ export default React.createClass({
   getStyles() {
     return {
       titleContainer: {
-        marginTop: -35,
         paddingBottom: 50
       },
       title: {
@@ -44,7 +43,8 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const {pushSocketPopover} = this.refs;
+    const styles = this.getStyles();
 
     return (
       <div>
@@ -89,11 +89,11 @@ export default React.createClass({
 
           <EmptyListItem
             addTooltip="Configure a Push Notification"
-            handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
+            handleCreate={pushSocketPopover ? pushSocketPopover.toggle : null}
             socketName="Push"
-            title="Send Push Notifications"
+            title="Push Notifications (BETA)"
             description="Instantly message your mobile users with timely and relevant content." />
-          <Popover ref="popover"/>
+          <ConfigPushNotificationsPopover ref="pushSocketPopover"/>
         </div>
       </div>
     );

@@ -253,7 +253,7 @@ export default React.createClass({
                     fullWidth={true}
                     valueLink={this.linkState('dataSourceUrl')}
                     errorText={this.getValidationMessages('dataSourceUrl').join(' ')}
-                    hintText={<Truncate text={`e.g. https://api.syncano.rocks/v1/instances/${instanceName}/classes/`}/>}
+                    hintText={<Truncate text={`e.g. ${SYNCANO_BASE_URL}v1.1/instances/${instanceName}/classes/`}/>}
                     onChange={this.handleOnSourceChange}
                     floatingLabelText="Data source URL"/>
                 </TogglePanel>

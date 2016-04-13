@@ -72,6 +72,7 @@ export default React.createClass({
         isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
+            disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -118,7 +119,7 @@ export default React.createClass({
               options={ChannelsStore.getChannelTypesDropdown()}
               disabled={this.hasEditMode()}
               value={this.state.type}
-              onChange={this.setSelectFieldValue.bind(null, 'type')}
+              onChange={(event, index, value) => this.setSelectFieldValue('type', value)}
               errorText={this.getValidationMessages('type').join(' ')}/>
           </div>
           <div className="col-flex-0">
@@ -150,7 +151,7 @@ export default React.createClass({
               floatingLabelText="Group permissions"
               options={ChannelsStore.getChannelPermissionsDropdown()}
               value={this.state.group_permissions}
-              onChange={this.setSelectFieldValue.bind(null, 'group_permissions')}
+              onChange={(event, index, value) => this.setSelectFieldValue('group_permissions', value)}
               errorText={this.getValidationMessages('group_permissions').join(' ')}/>
           </div>
           <div className="col-flex-1">
@@ -159,7 +160,7 @@ export default React.createClass({
               floatingLabelText="Other permissions"
               options={ChannelsStore.getChannelPermissionsDropdown()}
               value={this.state.other_permissions}
-              onChange={this.setSelectFieldValue.bind(null, 'other_permissions')}
+              onChange={(event, index, value) => this.setSelectFieldValue('other_permissions', value)}
               errorText={this.getValidationMessages('other_permissions').join(' ')}/>
           </div>
         </Dialog.ContentSection>

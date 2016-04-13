@@ -79,10 +79,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
-              <Lists.MenuItem
-                singleItemText="Delete a User"
-                multipleItemsText="Delete Users"
-                onTouchTap={() => this.showDialog('removeUserDialog')} />
+              <Lists.MenuItem onTouchTap={() => this.showDialog('removeUserDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

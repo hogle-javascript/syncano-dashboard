@@ -108,10 +108,7 @@ export default React.createClass({
               checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
               handleUnselectAll={handleUnselectAll}>
-              <Lists.MenuItem
-                singleItemText="Delete a Channel Socket"
-                multipleItemsText="Delete Channel Sockets"
-                onTouchTap={() => this.showDialog('deleteChannelDialog')} />
+              <Lists.MenuItem onTouchTap={() => this.showDialog('deleteChannelDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

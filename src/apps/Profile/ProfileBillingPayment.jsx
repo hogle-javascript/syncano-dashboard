@@ -153,6 +153,7 @@ export default Radium(React.createClass({
                     label={labelPrefix + ' payment'}
                     className="raised-button"
                     primary={true}
+                    disabled={!this.state.canSubmit}
                     style={{margin: '0 0 0 auto'}}/>
                 </div>
               </div>

@@ -27,7 +27,7 @@ export default React.createClass({
       <MenuItem
         className="dropdown-item-edit-admin"
         onTouchTap={() => Actions.showDialog(item)}
-        primaryText="Edit an Admin" />
+        primaryText="Edit" />
     );
   },
 
@@ -51,13 +51,13 @@ export default React.createClass({
           secondaryText={isOwner ? 'Owner (cannot be edited)' : null}/>
         <ColumnList.Column.Desc/>
         <ColumnList.Column.Text>{item.role}</ColumnList.Column.Text>
-        <ColumnList.Column.Date date={item.created_at}/>
+        <ColumnList.Column.Date date={null}/>
         <ColumnList.Column.Menu>
           {this.renderEditAdmin(item, isOwner)}
           <MenuItem
             className="dropdown-item-delete-admin"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete an Admin" />
+            primaryText="Delete" />
         </ColumnList.Column.Menu>
       </ColumnList.Item>
     );

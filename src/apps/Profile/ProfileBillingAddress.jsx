@@ -199,6 +199,7 @@ export default React.createClass({
               type="submit"
               label="Update"
               className="raised-button"
+              disabled={!this.state.canSubmit}
               primary={true}/>
           </form>
         </Container>

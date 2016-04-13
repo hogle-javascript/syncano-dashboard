@@ -145,10 +145,11 @@ export default Radium(React.createClass({
               className="col-sm-14">
               Device
             </Column.ColumnHeader>
-            <Column.ColumnHeader
-              className="col-sm-13"
-              columnName="DESC">
+            <Column.ColumnHeader columnName="DESC">
               User
+            </Column.ColumnHeader>
+            <Column.ColumnHeader columnName="DESC">
+              Metadata
             </Column.ColumnHeader>
             <Column.ColumnHeader columnName="DESC">
               Active
@@ -161,13 +162,9 @@ export default Radium(React.createClass({
               handleSelectAll={actions.selectAll}
               handleUnselectAll={actions.uncheckAll}>
               <Lists.MenuItem
-                singleItemText="Send message"
-                multipleItemsText="Send messages"
+                primaryText="Send message"
                 onTouchTap={showSendMessagesDialog}/>
-              <Lists.MenuItem
-                singleItemText="Delete a Device"
-                multipleItemsText="Delete Devices"
-                onTouchTap={() => this.showDialog('deleteDeviceDialog')}/>
+              <Lists.MenuItem onTouchTap={() => this.showDialog('deleteDeviceDialog')} />
             </Lists.Menu>
           </ColumnList.Header>
           <Lists.List

@@ -79,10 +79,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
-              <Lists.MenuItem
-                singleItemText="Delete a Template"
-                multipleItemsText="Delete Templates"
-                onTouchTap={() => this.showDialog('removeTemplateDialog')}/>
+              <Lists.MenuItem onTouchTap={() => this.showDialog('removeTemplateDialog')}/>
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

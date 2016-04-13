@@ -75,16 +75,13 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC" />
           <Column.ColumnHeader columnName="TEXT">Role</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DATE"></Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
-              <Lists.MenuItem
-                singleItemText="Delete an Admin"
-                multipleItemsText="Delete Admins"
-                onTouchTap={() => this.showDialog('deleteAdminDialog')} />
+              <Lists.MenuItem onTouchTap={() => this.showDialog('deleteAdminDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

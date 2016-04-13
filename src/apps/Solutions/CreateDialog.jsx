@@ -71,6 +71,7 @@ export default React.createClass({
         open={this.state.open}
         actions={
           <Dialog.StandardButtons
+            disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }>

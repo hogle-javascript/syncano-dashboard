@@ -354,11 +354,34 @@ export default React.createClass({
         isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
+            disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Classes are templates for Data Objects which will be stored in Syncano. In order to be able to add Data
+               Objects, you have to define a Class.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Permissions">
+              This is place where you can manage who will have access to your Data Objects.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Schema">
+              Class schema determines what type of data your Data Objects can store.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection>
+              <i>Note: Schema field name has to start with a letter!</i>
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/classes">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
-        {this.renderFormNotifications()}
-        <div className="row">
+        <Dialog.ContentSection>
+          {this.renderFormNotifications()}
           <div className="col-xs-8">
             <TextField
               ref="name"
@@ -381,8 +404,8 @@ export default React.createClass({
               hintText="Class's description"
               floatingLabelText="Description (optional)"/>
           </div>
-        </div>
-        <div className="row vm-4-b">
+        </Dialog.ContentSection>
+        <Dialog.ContentSection title="Permissions">
           <div className="col-flex-1">
             <SelectFieldWrapper
               name="group"
@@ -391,7 +414,7 @@ export default React.createClass({
               labelStyle={styles.groupDropdownLabel}
               menuItemStyle={styles.groupMenuItem}
               floatingLabelText="Group (ID)"
-              onChange={this.setSelectFieldValue.bind(null, 'group')}
+              onChange={(event, index, value) => this.setSelectFieldValue('group', value)}
               errorText={this.getValidationMessages('group').join(' ')}/>
           </div>
           <div className="col-flex-1">
@@ -400,7 +423,7 @@ export default React.createClass({
               options={permissions}
               floatingLabelText="Group Permissions"
               value={group_permissions}
-              onChange={this.setSelectFieldValue.bind(null, 'group_permissions')}
+              onChange={(event, index, value) => this.setSelectFieldValue('group_permissions', value)}
               errorText={this.getValidationMessages('group_permissions').join(' ')}/>
           </div>
           <div className="col-flex-1">
@@ -409,12 +432,11 @@ export default React.createClass({
               options={permissions}
               floatingLabelText="Other Permissions"
               value={other_permissions}
-              onChange={this.setSelectFieldValue.bind(null, 'other_permissions')}
+              onChange={(event, index, value) => this.setSelectFieldValue('other_permissions', value)}
               errorText={this.getValidationMessages('other_permissions').join(' ')}/>
           </div>
-        </div>
+        </Dialog.ContentSection>
         <div className="vm-2-b">
-          Schema
           <Show if={this.getValidationMessages('schema').length > 0}>
             <Notification
               className="vm-1-t"
@@ -430,9 +452,9 @@ export default React.createClass({
           <div className="col-xs-3">Order</div>
           <div className="col-xs-5"></div>
         </div>
-        <div
+        <Dialog.ContentSection
           style={styles.schemaAddSection}
-          className="row align-bottom vm-2-b">
+          title="Schema">
           <div className="col-xs-8">
             <TextField
               ref="fieldName"
@@ -448,7 +470,7 @@ export default React.createClass({
               options={this.getFieldTypes()}
               value={fieldType}
               floatingLabelText="Type"
-              onChange={this.setSelectFieldValue.bind(null, 'fieldType')}
+              onChange={(event, index, value) => this.setSelectFieldValue('fieldType', value)}
               errorText={this.getValidationMessages('fieldType').join(' ')}/>
           </div>
           <div className="col-xs-8">
@@ -458,7 +480,7 @@ export default React.createClass({
                 options={this.getFieldTargetOptions()}
                 value={fieldTarget}
                 floatingLabelText="Target Class"
-                onChange={this.setSelectFieldValue.bind(null, 'fieldTarget')}
+                onChange={(event, index, value) => this.setSelectFieldValue('fieldTarget', value)}
                 errorText={this.getValidationMessages('fieldTarget').join(' ')}/>
             </Show>
           </div>
@@ -489,7 +511,7 @@ export default React.createClass({
               secondary={true}
               onClick={this.handleFieldAdd}/>
           </div>
-        </div>
+        </Dialog.ContentSection>
         <div className="vm-4-b">
           {this.renderSchemaFields()}
         </div>

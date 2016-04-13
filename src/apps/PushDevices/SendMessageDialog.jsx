@@ -133,18 +133,19 @@ export default (store, props) => {
     },
 
     handleSendMessage() {
+      const {registration_id, appName, content, environment, isJSONMessage, JSONMessage} = this.state;
       const type = store.getConfig().type;
       const checkedItems = props.getCheckedItems().map((item) => item.registration_id);
-      const registrationIds = checkedItems.length > 0 ? checkedItems : [this.state.registration_id];
+      const registrationIds = checkedItems.length ? checkedItems : [registration_id];
       let payload = {
         APNS: {
           content: {
             registration_ids: registrationIds,
-            environment: this.state.environment,
+            environment,
             aps: {
               alert: {
-                title: this.state.appName,
-                body: this.state.content
+                title: appName,
+                body: content
               }
             }
           }
@@ -152,17 +153,17 @@ export default (store, props) => {
         GCM: {
           content: {
             registration_ids: registrationIds,
-            environment: this.state.environment,
+            environment,
             notification: {
-              title: this.state.appName,
-              body: this.state.content
+              title: appName,
+              body: content
             }
           }
         }
       };
 
-      if (this.state.isJSONMessage) {
-        payload[type] = JSON.parse(this.state.JSONMessage);
+      if (isJSONMessage) {
+        payload[type] = JSON.parse(JSONMessage);
       }
 
       props.handleSendMessage(payload[type]);
@@ -176,48 +177,20 @@ export default (store, props) => {
       this.handleSendMessage();
     },
 
-    handleChangeDropdown(event, index, value) {
-      this.setState({
-        environment: value
-      });
-    },
-
-    toggleJSONMessage() {
-      this.setState({
-        isJSONMessage: !this.state.isJSONMessage
-      });
-    },
-
-    toggleSandbox() {
-      this.setState({
-        environment: this.state.environment === 'development' ? 'production' : 'development'
-      });
-    },
-
-    toggleExpandHeader() {
-      this.setState({
-        isHeaderExpanded: !this.state.isHeaderExpanded
-      });
-    },
-
-    updateJSONMessage(value) {
-      this.setState({
-        JSONMessage: value
-      });
-    },
-
     renderMessageFields() {
-      if (this.state.isJSONMessage) {
+      const {isJSONMessage, JSONMessage} = this.state;
+
+      if (isJSONMessage) {
         return (
           <div className="vm-3-t">
             <Editor
               ref="JSONMessage"
               minLines={16}
               maxLines={16}
-              onChange={this.updateJSONMessage}
+              onChange={(value) => this.setState({JSONMessage: value})}
               mode="javascript"
               theme="tomorow"
-              value={this.state.JSONMessage}/>
+              value={JSONMessage}/>
           </div>
         );
       }
@@ -242,7 +215,7 @@ export default (store, props) => {
 
     renderCheckedItemsData() {
       const styles = this.getStyles();
-      const state = this.state;
+      const {userName, label, device_id, isHeaderExpanded} = this.state;
       const checkedItems = props.getCheckedItems();
       let itemNodes = [
         <div
@@ -253,18 +226,18 @@ export default (store, props) => {
             1.
           </div>
           <div className="col-sm-8">
-            {state.userName}
+            {userName}
           </div>
           <div className="col-sm-9">
-            {state.label}
+            {label}
           </div>
           <div className="col-sm-15">
-            {state.device_id}
+            {device_id}
           </div>
         </div>
       ];
 
-      if (checkedItems.length > 0) {
+      if (checkedItems.length) {
         itemNodes = checkedItems.map((item, index) => {
           return (
             <div
@@ -288,17 +261,19 @@ export default (store, props) => {
         });
       }
 
-      return this.state.isHeaderExpanded ? itemNodes : itemNodes.slice(0, 3);
+      return isHeaderExpanded ? itemNodes : itemNodes.slice(0, 3);
     },
 
     renderCertificateTypeFields(type) {
+      const {environment} = this.state;
+
       const field = {
         GCM: <SelectField
           floatingLabelText="Certificate type"
           autoWidth={true}
           fullWidth={true}
-          value={this.state.environment}
-          onChange={this.handleChangeDropdown}>
+          value={environment}
+          onChange={(event, index, value) => this.setState({environment: value})}>
           <MenuItem
             value="development"
             primaryText="Development"/>
@@ -309,8 +284,8 @@ export default (store, props) => {
         APNS: <div className="vm-3-t">
           <Toggle
             label="Use Sandbox"
-            onToggle={this.toggleSandbox}
-            toggled={this.state.environment === 'development'}/>
+            onToggle={() => this.setState({environment: environment === 'development' ? 'production' : 'development'})}
+            toggled={environment === 'development'}/>
         </div>
       };
 
@@ -318,6 +293,7 @@ export default (store, props) => {
     },
 
     render() {
+      const {open, isLoading, appName, content, isJSONMessage, isHeaderExpanded} = this.state;
       const config = store.getConfig();
       const isAPNS = config.type === 'APNS';
       const styles = this.getStyles();
@@ -335,10 +311,11 @@ export default (store, props) => {
           autoDetectWindowHeight={true}
           actionsContainerClassName="vm-1-t"
           onRequestClose={this.handleCancel}
-          open={this.state.open}
-          isLoading={this.state.isLoading}
+          open={open}
+          isLoading={isLoading}
           actions={
             <Dialog.StandardButtons
+              disabled={!this.state.canSubmit}
               handleCancel={this.handleCancel}
               handleConfirm={this.handleFormValidation}/>
           }>
@@ -363,9 +340,9 @@ export default (store, props) => {
           </div>
           <div
             style={[styles.seeMoreHidden, props.getCheckedItems().length > 3 && styles.seeMoreVisible]}
-            onClick={this.toggleExpandHeader}
+            onClick={() => this.setState({isHeaderExpanded: !isHeaderExpanded})}
             className="row align-center vp-2-t">
-            {this.state.isHeaderExpanded ? `SHOW LESS` : `SHOW MORE (${props.getCheckedItems().length - 3})`}
+            {isHeaderExpanded ? `SHOW LESS` : `SHOW MORE (${props.getCheckedItems().length - 3})`}
           </div>
           <div className="row hp-1-l hp-1-r vm-4-t">
             <div style={styles.phoneContainer}>
@@ -377,14 +354,14 @@ export default (store, props) => {
                   className="col-sm-30">
                   <div style={styles.appNameContainer}>
                     <div style={[styles.messageText, styles.gcmAppName, isAPNS && styles.apnsAppName]}>
-                      {this.state.appName}
+                      {appName}
                     </div>
                     <div>
                       5:09 PM
                     </div>
                   </div>
                   <div style={styles.messageText}>
-                    {this.state.content}
+                    {content}
                   </div>
                 </div>
               </div>
@@ -397,14 +374,14 @@ export default (store, props) => {
                 <div className="col-sm-18 vm-3-t">
                   <Toggle
                     label="JSON message"
-                    onToggle={this.toggleJSONMessage}
-                    toggled={this.state.isJSONMessage}/>
+                    onToggle={() => this.setState({isJSONMessage: !isJSONMessage})}
+                    toggled={isJSONMessage}/>
                 </div>
               </div>
               {this.renderMessageFields()}
             </div>
           </div>
-          <Show if={this.getValidationMessages('content').length > 0}>
+          <Show if={this.getValidationMessages('content').length}>
             <div className="vm-3-t">
               <Notification type="error">
                 {this.getValidationMessages('content').join(' ')}
