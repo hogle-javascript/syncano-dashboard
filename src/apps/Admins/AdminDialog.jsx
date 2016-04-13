@@ -63,6 +63,19 @@ export default React.createClass({
           <Dialog.StandardButtons
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Inviting Syncano Adminstrators to your Instance will allow for
+              team collaboration on a project.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/administrators">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
         {this.renderFormNotifications()}
         <TextField
