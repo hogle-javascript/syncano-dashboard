@@ -36,13 +36,13 @@ export default React.createClass({
       <Loading show={isLoading}>
         <InnerToolbar title="Invoices"/>
 
-        <Show if={invoices.length < 1}>
+        <Show if={!invoices.length}>
           <Container.Empty
             icon="synicon-file-outline"
             text="You have no invoices"/>
         </Show>
 
-        <Show if={invoices.length > 0}>
+        <Show if={invoices.length}>
           <Container>
             <Lists.Container className='invoices-list'>
               <ColumnList.Header>
