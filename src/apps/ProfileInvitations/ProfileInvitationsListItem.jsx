@@ -35,11 +35,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-invitation-accept"
             onTouchTap={this.props.showAcceptDialog}
-            primaryText="Accept Invitation"/>
+            primaryText="Accept"/>
           <MenuItem
             className="dropdown-item-invitation-decline"
             onTouchTap={this.props.showDeclineDialog}
-            primaryText="Decline Invitation"/>
+            primaryText="Decline"/>
         </Column.Menu>
       </ColumnList.Item>
     );

@@ -102,13 +102,9 @@ export default React.createClass({
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
               <Lists.MenuItem
-                singleItemText="Reset an API Key"
-                multipleItemsText="Reset API Keys"
+                primaryText="Reset All"
                 onTouchTap={() => this.showDialog('resetApiKeyDialog')} />
-              <Lists.MenuItem
-                singleItemText="Delete an API Key"
-                multipleItemsText="Delete API Keys"
-                onTouchTap={() => this.showDialog('deleteApiKeyDialog')} />
+              <Lists.MenuItem onTouchTap={() => this.showDialog('deleteApiKeyDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

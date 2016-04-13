@@ -81,10 +81,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}>
-              <Lists.MenuItem
-                singleItemText="Delete an Admin"
-                multipleItemsText="Delete Admins"
-                onTouchTap={() => this.showDialog('deleteAdminDialog')} />
+              <Lists.MenuItem onTouchTap={() => this.showDialog('deleteAdminDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

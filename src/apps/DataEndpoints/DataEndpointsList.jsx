@@ -98,10 +98,7 @@ export default React.createClass({
               checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
               handleUnselectAll={handleUnselectAll}>
-              <Lists.MenuItem
-                singleItemText="Delete a Data Endpoint"
-                multipleItemsText="Delete Data Endpoints"
-                onTouchTap={() => this.showDialog('removeDataEndpointDialog')} />
+              <Lists.MenuItem onTouchTap={() => this.showDialog('removeDataEndpointDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>

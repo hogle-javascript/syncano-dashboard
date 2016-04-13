@@ -37,11 +37,11 @@ export default React.createClass({
           <MenuItem
             onTouchTap={showResendDialog}
             className="dropdown-item-resend-invitation"
-            primaryText="Resend an Invitation" />
+            primaryText="Resend" />
           <MenuItem
             onTouchTap={showDeleteDialog}
             className="dropdown-item-remove-invitation"
-            primaryText="Delete an Invitation" />
+            primaryText="Delete" />
         </ColumnList.Column.Menu>
       </ColumnList.Item>
     );

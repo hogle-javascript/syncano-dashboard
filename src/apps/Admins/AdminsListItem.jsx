@@ -27,7 +27,7 @@ export default React.createClass({
       <MenuItem
         className="dropdown-item-edit-admin"
         onTouchTap={() => Actions.showDialog(item)}
-        primaryText="Edit an Admin" />
+        primaryText="Edit" />
     );
   },
 
@@ -57,7 +57,7 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-delete-admin"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete an Admin" />
+            primaryText="Delete" />
         </ColumnList.Column.Menu>
       </ColumnList.Item>
     );
