@@ -11,7 +11,7 @@ export default () => {
       <MenuItem value="triggers" primaryText="Triggers" />
       <MenuItem value="schedules" primaryText="Schedules" />
       <MenuItem value="channels" primaryText="Channels" />
-      <MenuItem value="push-notifications" primaryText="Push Notifications" />
+      <MenuItem value="push-notification-config" primaryText="Push Notifications" />
     </InnerToolbarDropdown>
   );
 };
