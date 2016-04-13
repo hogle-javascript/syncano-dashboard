@@ -102,13 +102,12 @@ export default React.createClass({
         <Loading show={sockets.isLoading}>
           <SocketsList sockets={sockets}/>
 
-          <Show if={this.getPushNotificationItems().length > 0}>
+          <Show if={this.getPushNotificationItems().length}>
             <PushNotifications.List
               name="Push Notification Sockets"
               handleTitleClick={() => this.transitionTo('push-notification-config', this.getParams())}
               items={this.getPushNotificationItems()}/>
           </Show>
-
         </Loading>
       </div>
     );

@@ -59,8 +59,6 @@ export default (type, Store, Actions) => {
       const {open, isLoading, is_active, metadata} = this.state;
       const title = this.hasEditMode() ? 'Edit' : 'Add';
 
-      console.error(metadata);
-
       return (
         <Dialog.FullPage
           key="dialog"
