@@ -7,6 +7,7 @@ import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 
 import EmptyListItem from './EmptyListItem';
+import ConfigPushNotificationsPopover from '../PushNotifications/ConfigPushNotificationsPopover';
 
 export default React.createClass({
   displayName: 'SocketsEmpty',
@@ -14,7 +15,6 @@ export default React.createClass({
   getStyles() {
     return {
       titleContainer: {
-        marginTop: -35,
         paddingBottom: 50
       },
       title: {
@@ -43,7 +43,8 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const {pushSocketPopover} = this.refs;
+    const styles = this.getStyles();
 
     return (
       <div>
@@ -68,23 +69,6 @@ export default React.createClass({
             title="Script Endpoint"
             description="Run Scripts on our servers and use them for business logic." />
 
-          {
-
-            /*
-             <Socket.EmptyListItem
-             addTooltip="Configure a Push Notification"
-             handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
-             socketName="Push"
-             title="Send Push Notifications">
-             <div style={styles.socketDescription}>
-             Instantly message your mobile users with timely and relevant content.
-             </div>
-             </Socket.EmptyListItem>
-             <Popover ref="popover"/>
-             */
-
-          }
-
           <EmptyListItem
             handleCreate={TriggersActions.showDialog}
             socketName="Trigger"
@@ -102,6 +86,14 @@ export default React.createClass({
             socketName="Channel"
             title="Channel"
             description="Get real-time updates to keep your data synchronized." />
+
+          <EmptyListItem
+            addTooltip="Configure a Push Notification"
+            handleCreate={pushSocketPopover ? pushSocketPopover.toggle : null}
+            socketName="Push"
+            title="Push Notifications"
+            description="Instantly message your mobile users with timely and relevant content." />
+          <ConfigPushNotificationsPopover ref="pushSocketPopover"/>
         </div>
       </div>
     );

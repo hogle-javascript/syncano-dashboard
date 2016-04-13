@@ -76,7 +76,7 @@ export default React.createClass({
                 primaryText="Classes" />
 
               <Sidebar.LinkListItem
-                key="pushDevices"
+                key="Snippets"
                 routeName="snippets"
                 primaryText="Snippets"
                 iconClassName="synicon-code-tags"
@@ -93,9 +93,7 @@ export default React.createClass({
                     primaryText="Templates" />
                 ]}/>
 
-              {
-
-              /* <Sidebar.LinkListItem
+              <Sidebar.LinkListItem
                 key="pushDevices"
                 routeName="all-push-notification-devices"
                 primaryText="Push Devices"
@@ -111,8 +109,7 @@ export default React.createClass({
                     key="androidDevices"
                     routeName="gcm-devices"
                     primaryText="Android Devices" />
-                ]}/> */
-              }
+                ]}/>
 
             </Sidebar.List>
             <Sidebar.List

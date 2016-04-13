@@ -145,10 +145,11 @@ export default Radium(React.createClass({
               className="col-sm-14">
               Device
             </Column.ColumnHeader>
-            <Column.ColumnHeader
-              className="col-sm-13"
-              columnName="DESC">
+            <Column.ColumnHeader columnName="DESC">
               User
+            </Column.ColumnHeader>
+            <Column.ColumnHeader columnName="DESC">
+              Metadata
             </Column.ColumnHeader>
             <Column.ColumnHeader columnName="DESC">
               Active
