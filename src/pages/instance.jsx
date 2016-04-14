@@ -43,8 +43,8 @@ export default React.createClass({
 
   render() {
     return (
-      <div>
-        <div className="row">
+      <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+        <div className="row" style={{display: 'flex', flex: 1}}>
           <Sidebar>
             <Sticky offsetTop={50}>
               <div style={{height: 56}}>
@@ -132,7 +132,9 @@ export default React.createClass({
                 primaryText="API keys" />
             </Sidebar.List>
           </Sidebar>
-          <div className="col-flex-1" style={{maxWidth: 'calc(100% - 256px)'}}>
+          <div
+            className="col-flex-1"
+            style={{maxWidth: 'calc(100% - 256px)', display: 'flex', flexDirection: 'column'}}>
             <RouteHandler />
           </div>
         </div>
