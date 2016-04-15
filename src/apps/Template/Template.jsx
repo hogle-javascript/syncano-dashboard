@@ -204,7 +204,7 @@ export default React.createClass({
     const instanceName = this.getParams().instanceName;
 
     return (
-      <div>
+      <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'column'}}>
         <InnerToolbar
           title={`Template: ${template.name}`}>
           <div style={{display: 'inline-block'}}>
@@ -224,24 +224,31 @@ export default React.createClass({
           {this.renderRunButtons('RENDER IN TAB', 'synicon-open-in-new', 'tabRender')}
         </InnerToolbar>
 
-        <Loading show={isLoading}>
-          <div className="row">
+        <Loading
+          show={isLoading}
+          style={{display: 'flex', flex: 1}}>
+          <div className="row" style={{flex: 1}}>
             <div className="col-flex-1" style={{borderRight: '1px solid rgba(224,224,224,.5)', display: 'flex'}}>
               <TogglePanel
                 title="Code"
                 initialOpen={true}
-                style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                style={{display: 'flex', flexDirection: 'column'}}>
                 {this.renderErrorNotifications('content')}
-                <Editor
-                  ref="contentEditor"
-                  name="contentEditor"
-                  mode="django"
-                  onChange={this.handleOnSourceChange}
-                  onLoad={this.clearAutosaveTimer}
-                  value={template.content}/>
+                <div style={{position: 'relative', flex: 1}}>
+                  <Editor
+                    ref="contentEditor"
+                    name="contentEditor"
+                    mode="django"
+                    onChange={this.handleOnSourceChange}
+                    onLoad={this.clearAutosaveTimer}
+                    value={template.content}
+                    width="100%"
+                    height="100%"
+                    style={{position: 'absolute'}} />
+                </div>
               </TogglePanel>
             </div>
-            <div className="col-flex-1" style={{padding: 0, maxWidth: 600}}>
+            <div className="col-flex-1" style={{padding: 0, maxWidth: 600, display: 'flex', flexDirection: 'column'}}>
 
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
                 <TogglePanel
@@ -280,16 +287,22 @@ export default React.createClass({
                 </TogglePanel>
               </div>
 
-              <div>
+              <div style={{flex: 1, display: 'flex'}}>
                 <TogglePanel
                   title="Preview"
-                  initialOpen={true}>
-                  <Editor
-                    name="previewEditor"
-                    ref="previewEditor"
-                    mode="html"
-                    readOnly={true}
-                    value="" />
+                  initialOpen={true}
+                  style={{display: 'flex', flexDirection: 'column'}}>
+                  <div style={{position: 'relative', flex: 1, minHeight: 200}}>
+                    <Editor
+                      name="previewEditor"
+                      ref="previewEditor"
+                      mode="html"
+                      readOnly={true}
+                      value=""
+                      width="100%"
+                      height="100%"
+                      style={{position: 'absolute'}} />
+                  </div>
                 </TogglePanel>
               </div>
             </div>
