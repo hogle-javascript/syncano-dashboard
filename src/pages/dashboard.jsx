@@ -41,9 +41,12 @@ export default React.createClass({
 
   render() {
     return (
-      <div>
-        <Grid>
-          <Breakpoint minWidth={768} widthMethod="componentWidth">
+      <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+        <Grid style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+          <Breakpoint
+            minWidth={768}
+            widthMethod="componentWidth"
+            style={{display: 'flex', flexDirection: 'column', flex: 1}}>
             <Header/>
             <RouteHandler />
           </Breakpoint>
