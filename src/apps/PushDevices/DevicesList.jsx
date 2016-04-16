@@ -96,7 +96,7 @@ export default Radium(React.createClass({
       apns: 'apple',
       gcm: 'android'
     };
-    const userName = UsersStore.getUserById(item.user_id) ? UsersStore.getUserById(item.user_id).username : 'No user';
+    const userName = UsersStore.getUserById(item.user) ? UsersStore.getUserById(item.user).username : 'No user';
 
     item.userName = userName;
 
