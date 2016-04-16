@@ -307,8 +307,6 @@ export default (store, props) => {
               {`Send Message To ${config.device} Device`}
             </Dialog.TitleWithIcon>
           }
-          autoScrollBodyContent={true}
-          autoDetectWindowHeight={true}
           actionsContainerClassName="vm-1-t"
           onRequestClose={this.handleCancel}
           open={open}
