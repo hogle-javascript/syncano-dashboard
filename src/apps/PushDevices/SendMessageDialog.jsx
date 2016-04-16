@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
+import _ from 'lodash';
 
 import {DialogMixin, FormMixin} from '../../mixins';
 
@@ -132,41 +133,83 @@ export default (store, props) => {
       };
     },
 
+    getDefaultJSONMessage() {
+      const {appName, content} = this.state;
+      const type = store.getConfig().type;
+
+      if (type === 'APNS') {
+        return {
+          title: appName,
+          body: content
+        };
+      }
+
+      if (type === 'GCM') {
+        return {
+          notification: {
+            title: appName,
+            body: content
+          }
+        };
+      }
+    },
+
     handleSendMessage() {
+      const {handleSendMessage} = this.props;
       const {registration_id, appName, content, environment, isJSONMessage, JSONMessage} = this.state;
       const type = store.getConfig().type;
       const checkedItems = props.getCheckedItems().map((item) => item.registration_id);
       const registrationIds = checkedItems.length ? checkedItems : [registration_id];
       let payload = {
-        APNS: {
-          content: {
-            registration_ids: registrationIds,
-            environment,
-            aps: {
-              alert: {
+        content: {
+          registration_ids: registrationIds,
+          environment
+        }
+      };
+
+      if (!isJSONMessage && type === 'APNS') {
+        payload = _.merge(
+          payload,
+          {
+            content: {
+              aps: {
+                alert: {
+                  title: appName,
+                  body: content
+                }
+              }
+            }
+          }
+        );
+      }
+
+      if (!isJSONMessage && type === 'GCM') {
+        payload = _.merge(
+          payload,
+          {
+            content: {
+              notification: {
                 title: appName,
                 body: content
               }
             }
           }
-        },
-        GCM: {
-          content: {
-            registration_ids: registrationIds,
-            environment,
-            notification: {
-              title: appName,
-              body: content
-            }
-          }
-        }
-      };
-
-      if (isJSONMessage) {
-        payload[type] = JSON.parse(JSONMessage);
+        );
       }
 
-      props.handleSendMessage(payload[type]);
+      if (isJSONMessage && type === 'APNS') {
+        payload = _.merge(payload, {content: {aps: {alert: JSON.parse(JSONMessage)}}});
+      }
+
+      if (isJSONMessage && type === 'GCM') {
+        payload = _.merge(payload, {GCM: {content: JSON.parse(JSONMessage)}});
+      }
+
+      handleSendMessage(payload);
+    },
+
+    handleToggleEnvironment(environment) {
+      this.setState({environment: environment === 'development' ? 'production' : 'development'});
     },
 
     handleEditSubmit() {
@@ -190,7 +233,7 @@ export default (store, props) => {
               onChange={(value) => this.setState({JSONMessage: value})}
               mode="javascript"
               theme="tomorow"
-              value={JSONMessage}/>
+              value={JSONMessage || JSON.stringify(this.getDefaultJSONMessage(), null, '\t')} />
           </div>
         );
       }
@@ -268,25 +311,29 @@ export default (store, props) => {
       const {environment} = this.state;
 
       const field = {
-        GCM: <SelectField
-          floatingLabelText="Certificate type"
-          autoWidth={true}
-          fullWidth={true}
-          value={environment}
-          onChange={(event, index, value) => this.setState({environment: value})}>
-          <MenuItem
-            value="development"
-            primaryText="Development"/>
-          <MenuItem
-            value="production"
-            primaryText="Production"/>
-        </SelectField>,
-        APNS: <div className="vm-3-t">
-          <Toggle
-            label="Use Sandbox"
-            onToggle={() => this.setState({environment: environment === 'development' ? 'production' : 'development'})}
-            toggled={environment === 'development'}/>
-        </div>
+        GCM: (
+          <SelectField
+            floatingLabelText="Certificate type"
+            autoWidth={true}
+            fullWidth={true}
+            value={environment}
+            onChange={(event, index, value) => this.setState({environment: value})}>
+            <MenuItem
+              value="development"
+              primaryText="Development"/>
+            <MenuItem
+              value="production"
+              primaryText="Production"/>
+          </SelectField>
+        ),
+        APNS: (
+          <div className="vm-3-t">
+            <Toggle
+              label="Use Sandbox"
+              onToggle={() => this.handleToggleEnvironment(environment)}
+              toggled={environment === 'development'}/>
+          </div>
+        )
       };
 
       return field[type];
