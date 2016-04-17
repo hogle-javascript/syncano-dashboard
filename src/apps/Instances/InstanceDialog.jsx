@@ -144,7 +144,7 @@ export default React.createClass({
           </div>
         }
         sidebar={[
-          <Dialog.SidebarBox>
+          <Dialog.SidebarBox key="sidebarbox">
             <Dialog.SidebarSection>
               Instance gathers all the data associated with a project into a shared space. It can be an equivalent
                of an app or a piece of functionality.
@@ -156,6 +156,7 @@ export default React.createClass({
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>,
           <ColorIconPicker
+            key="coloriconpicker"
             icon={metadata.icon}
             color={metadata.color}
             onIconChange={this.handleIconChange}
