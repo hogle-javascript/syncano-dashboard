@@ -202,7 +202,7 @@ export default (store, props) => {
       }
 
       if (isJSONMessage && type === 'GCM') {
-        payload = _.merge(payload, {GCM: {content: JSON.parse(JSONMessage)}});
+        payload = _.merge(payload, {content: JSON.parse(JSONMessage)});
       }
 
       onSendMessage(payload);
@@ -354,8 +354,6 @@ export default (store, props) => {
               {`Send Message To ${config.device} Device`}
             </Dialog.TitleWithIcon>
           }
-          autoScrollBodyContent={true}
-          autoDetectWindowHeight={true}
           actionsContainerClassName="vm-1-t"
           onRequestClose={this.handleCancel}
           open={open}
