@@ -2,6 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 import {Utils} from 'syncano-material-ui';
+import SidebarContent from './SidebarContent';
 
 export default Radium(React.createClass({
   displayName: 'Sidebar',
@@ -28,22 +29,6 @@ export default Radium(React.createClass({
         left: 0,
         top: 0,
         borderRight: '1px solid #eee'
-      },
-      content: {
-        width: 256,
-        paddingBottom: 56,
-        maxHeight: '100%',
-        overflow: 'auto'
-      },
-      topToolbar: {
-        background: this.context.muiTheme.rawTheme.palette.primary1Color,
-        height: 50,
-        paddingLeft: 24,
-        display: 'flex',
-        alignItems: 'center'
-      },
-      contentStretched: {
-        width: '100%'
       }
     };
   },
@@ -58,9 +43,9 @@ export default Radium(React.createClass({
         style={this.mergeStyles(style, styles.root)}
         {...other}>
         <div style={styles.background}></div>
-        <div style={styles.content}>
+        <SidebarContent>
           {children}
-        </div>
+        </SidebarContent>
       </div>
     );
   }
