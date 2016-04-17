@@ -155,7 +155,7 @@ export default (store, props) => {
     },
 
     handleSendMessage() {
-      const {handleSendMessage} = this.props;
+      const {onSendMessage} = props;
       const {registration_id, appName, content, environment, isJSONMessage, JSONMessage} = this.state;
       const type = store.getConfig().type;
       const checkedItems = props.getCheckedItems().map((item) => item.registration_id);
@@ -205,7 +205,7 @@ export default (store, props) => {
         payload = _.merge(payload, {GCM: {content: JSON.parse(JSONMessage)}});
       }
 
-      handleSendMessage(payload);
+      onSendMessage(payload);
     },
 
     handleToggleEnvironment(environment) {
