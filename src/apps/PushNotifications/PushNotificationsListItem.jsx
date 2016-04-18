@@ -48,7 +48,6 @@ export default React.createClass({
           iconClassName="socket-push"
           checkable={false}
           iconColor={Color.getColorByName('indigo', 'light')}
-          className="col-sm-20"
           primaryText={this.props.label}
           secondaryText={
             <div>
@@ -71,12 +70,14 @@ export default React.createClass({
               </span>
             </div>
           }/>
-        <Column.Desc className="col-sm-8">
+        <Column.Desc/>
+        <Column.Desc>
           {item ? item.hasConfig.toString() : null}
         </Column.Desc>
-        <Column.Desc className="col-flex-1">
+        <Column.Desc>
           {item ? item.devicesCount : null}
         </Column.Desc>
+        <Column.Desc/>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
