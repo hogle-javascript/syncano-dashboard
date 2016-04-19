@@ -22,7 +22,7 @@ export default Radium(React.createClass({
   },
 
   mixins: [
-    Reflux.connect(ProfileInvitationsStore, 'accountInvitations'),
+    Reflux.connect(ProfileInvitationsStore),
     Navigation,
     State,
     SnackbarNotificationMixin,
@@ -77,7 +77,9 @@ export default Radium(React.createClass({
   },
 
   hasLastInvitation() {
-    if (this.state.accountInvitations.items.length <= 1) {
+    const {items} = this.state;
+
+    if (items.length <= 1) {
       this.refs.headerNotificationDropdown.close();
     }
   },
@@ -110,10 +112,10 @@ export default Radium(React.createClass({
 
   renderItems() {
     const styles = this.getStyles();
-    const {accountInvitations} = this.state;
+    const {items} = this.state;
     const user = SessionStore.getUser();
 
-    if (user && user.is_active && accountInvitations.items.length === 0) {
+    if (user && user.is_active && !items.length) {
       return (
         <MenuItem
           key="empty"
@@ -128,7 +130,7 @@ export default Radium(React.createClass({
       );
     }
 
-    let notifications = accountInvitations.items.map((item) => {
+    let notifications = items.map((item) => {
       return (
         <div>
           <MenuItem
@@ -182,13 +184,13 @@ export default Radium(React.createClass({
   },
 
   renderIcon() {
-    let notifications = this.renderItems();
-    let isBadge = notifications.length > 0;
-    let notificationCountIcon = isBadge ? notifications.length : '';
-    let iconClassName = notifications.length > 0 ? 'synicon-bell' : 'synicon-bell-outline';
-    let styles = this.getStyles();
-    let badgeContainerStyle = this.mergeStyles(styles.badgeContainer, isBadge && styles.badgeContainerFilled);
-    let badgeStyle = this.mergeStyles(styles.badge, isBadge && styles.badgeFilled);
+    const notifications = this.renderItems();
+    const isBadge = notifications.length > 0;
+    const notificationCountIcon = isBadge ? notifications.length : '';
+    const iconClassName = notifications.length ? 'synicon-bell' : 'synicon-bell-outline';
+    const styles = this.getStyles();
+    const badgeContainerStyle = this.mergeStyles(styles.badgeContainer, isBadge && styles.badgeContainerFilled);
+    const badgeStyle = this.mergeStyles(styles.badge, isBadge && styles.badgeFilled);
 
     return (
       <div>
@@ -208,7 +210,7 @@ export default Radium(React.createClass({
   render() {
     const styles = this.getStyles();
     const {id} = this.props;
-    const {accountInvitations} = this.state;
+    const {isLoading} = this.state;
 
     return (
       <IconMenu
@@ -231,7 +233,7 @@ export default Radium(React.createClass({
           primaryText="Notifications"
           disabled={true}/>
         <Divider/>
-        <Loading show={accountInvitations.isLoading}>
+        <Loading show={isLoading}>
           {this.renderItems()}
         </Loading>
       </IconMenu>

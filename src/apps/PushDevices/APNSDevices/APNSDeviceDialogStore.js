@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin} from '../../../mixins';
+import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin} from '../../../mixins';
 
 // Stores & Actions
 import Actions from './APNSDevicesActions';
@@ -10,33 +10,33 @@ export default Reflux.createStore({
   listenables: Actions,
   mixins: [
     StoreFormMixin,
-    DialogStoreMixin
+    DialogStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {
     return {
-      label: null,
-      user: null,
-      registration_id: null,
-      device_id: null,
-      is_active: true
+      isLoading: false
     };
   },
 
   init() {
     this.data = this.getInitialState();
     this.listenToForms();
+    this.setLoadingStates();
   },
 
   onCreateDeviceCompleted() {
     console.debug('DeviceDialogStore::onCreateDeviceCompleted');
     this.dismissDialog();
     Actions.fetchDevices();
+    this.trigger(this.data);
   },
 
   onUpdateDeviceCompleted() {
     console.debug('DeviceDialogStore::onUpdateDeviceCompleted');
     this.dismissDialog();
     Actions.fetchDevices();
+    this.trigger(this.data);
   }
 });

@@ -16,11 +16,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      label: null,
-      user: null,
-      registration_id: null,
-      device_id: null,
-      is_active: true
+      isLoading: false
     };
   },
 
@@ -34,11 +30,13 @@ export default Reflux.createStore({
     console.debug('GCMDeviceDialogStore::onCreateDeviceCompleted');
     this.dismissDialog();
     Actions.fetchDevices();
+    this.trigger(this.data);
   },
 
   onUpdateDeviceCompleted() {
     console.debug('GCMDeviceDialogStore::onUpdateDeviceCompleted');
     this.dismissDialog();
     Actions.fetchDevices();
+    this.trigger(this.data);
   }
 });
