@@ -15,7 +15,7 @@ export default Reflux.createStore({
     console.debug('ProfileBillingInvoicesStore::onFetchInvoicesCompleted');
     this.trigger({
       isLoading: false,
-      invoices: Object.keys(invoices).map((key) => invoices[key])
+      invoices: Object.keys(invoices).map((key) => invoices[key]).reverse()
     });
   },
 
