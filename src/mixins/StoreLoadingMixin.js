@@ -4,7 +4,7 @@ export default {
 
   setLoadingStates() {
     if (this.listenables) {
-      let listenables = [].concat(this.listenables);
+      const listenables = [].concat(this.listenables);
 
       _.forEach(listenables, (listenable) => {
         this.bindLoadingListeners(listenable);
@@ -35,14 +35,13 @@ export default {
     }
 
     console.debug('StoreLoadingMixin::setLoading', state);
+    this.data.isLoading = state;
 
     if (trigger) {
-      this.trigger({
-        isLoading: state,
-        hideDialogs: !state
-      });
-    } else {
-      this.data.isLoading = state;
+      if (!state) {
+        this.data.hideDialogs = true;
+      }
+      this.trigger(this.data);
     }
   }
 };

@@ -33,6 +33,12 @@ export default (type, Store, Actions) => {
       };
     },
 
+    getInitialState() {
+      return {
+        is_active: true
+      };
+    },
+
     getParams() {
       const {label, registration_id, user_id, device_id, is_active, metadata} = this.state;
 
