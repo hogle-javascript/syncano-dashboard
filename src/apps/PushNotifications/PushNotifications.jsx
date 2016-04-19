@@ -50,7 +50,7 @@ export default React.createClass({
         <Container>
           <PushNotificationsList
             isLoading={APNSPushNotifications.isLoading || GCMPushNotifications.isLoading}
-            name="Push Notification Sockets"
+            name="Push Notification Sockets (BETA)"
             items={items}/>
         </Container>
       </div>
