@@ -1,8 +1,11 @@
 import Reflux from 'reflux';
 import Actions from './ProfileActions';
+import {StoreHelpersMixin} from '../../mixins';
 
 export default Reflux.createStore({
   listenables: Actions,
+
+  mixins: [StoreHelpersMixin],
 
   getInitialState() {
     return {
@@ -15,7 +18,7 @@ export default Reflux.createStore({
     console.debug('ProfileBillingInvoicesStore::onFetchInvoicesCompleted');
     this.trigger({
       isLoading: false,
-      invoices: Object.keys(invoices).map((key) => invoices[key]).reverse()
+      invoices: this.saveListFromSyncano(invoices)
     });
   },
 
