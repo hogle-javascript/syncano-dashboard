@@ -4,6 +4,7 @@ import DialogsMixin from './DialogsMixin';
 import DialogStoreMixin from './DialogStoreMixin';
 import FormMixin from './FormMixin';
 import MousetrapMixin from './MousetrapMixin';
+import ScrollLockMixin from './ScrollLockMixin';
 import SnackbarNotificationMixin from './SnackbarNotificationMixin';
 import StoreFormMixin from './StoreFormMixin';
 import StoreHelpersMixin from './StoreHelpersMixin';
@@ -16,6 +17,7 @@ export {DialogsMixin};
 export {DialogStoreMixin};
 export {FormMixin};
 export {MousetrapMixin};
+export {ScrollLockMixin};
 export {SnackbarNotificationMixin};
 export {StoreFormMixin};
 export {StoreHelpersMixin};
@@ -29,6 +31,7 @@ export default {
   DialogStoreMixin,
   FormMixin,
   MousetrapMixin,
+  ScrollLockMixin,
   SnackbarNotificationMixin,
   StoreFormMixin,
   StoreHelpersMixin,

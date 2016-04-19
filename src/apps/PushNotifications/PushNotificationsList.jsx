@@ -28,19 +28,18 @@ export default (props) => {
           handleClick={props.handleTitleClick}
           primary={true}
           columnName="DESC"
-          className="col-sm-20">
+          className="col-sm-12">
           {props.name}
         </Column.ColumnHeader>
-        <Column.ColumnHeader
-          className="col-sm-8"
-          columnName="DESC">
+        <Column.ColumnHeader columnName="DESC"/>
+        <Column.ColumnHeader columnName="DESC">
           Configured
         </Column.ColumnHeader>
-        <Column.ColumnHeader
-          className="col-flex-1"
-          columnName="DESC">
+        <Column.ColumnHeader columnName="DESC">
           Devices
         </Column.ColumnHeader>
+        <Column.ColumnHeader columnName="DESC"/>
+        <Column.ColumnHeader columnName="MENU"/>
       </ColumnList.Header>
       <Loading show={props.isLoading}>
         <Lists.List

@@ -40,12 +40,12 @@ export default (type, Store, Actions) => {
     },
 
     getParams() {
-      const {label, registration_id, user_id, device_id, is_active, metadata} = this.state;
+      const {label, registration_id, user, device_id, is_active, metadata} = this.state;
 
       return {
         label,
         registration_id,
-        user_id,
+        user,
         device_id,
         is_active,
         metadata
@@ -114,11 +114,11 @@ export default (type, Store, Actions) => {
               errorText={this.getValidationMessages('registration_id').join(' ')}
               floatingLabelText="Device's registration ID" />
             <TextField
-              ref="user_id"
-              name="user_id"
-              valueLink={this.linkState('user_id')}
+              ref="user"
+              name="user"
+              valueLink={this.linkState('user')}
               fullWidth={true}
-              errorText={this.getValidationMessages('user_id').join(' ')}
+              errorText={this.getValidationMessages('user').join(' ')}
               floatingLabelText="User ID" />
             <TextField
               className="vm-4-b"

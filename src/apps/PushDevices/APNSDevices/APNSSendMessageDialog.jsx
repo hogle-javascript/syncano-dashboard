@@ -11,7 +11,7 @@ let getPhoneIcon = () => {
 };
 const props = {
   getCheckedItems: DevicesStore.getCheckedItems,
-  handleSendMessage: Actions.sendMessagesToAPNS,
+  onSendMessage: Actions.sendMessagesToAPNS,
   phoneIcon: getPhoneIcon()
 };
 

@@ -1,12 +1,12 @@
 # Installation
 
-Project requires node 0.12.7 and npm 2.14.6. The best way to manage node versions
+Project requires node 4.4.3 and npm 3.8.6. The best way to manage node versions
 I found is [n](https://github.com/tj/n).
 
 Installation.
 
     $ sudo npm install -g n
-    $ n 0.12.7
+    $ n 4.4.3
 
 Type `n` to prompt selection of an installed node.
 Use the up / down arrow to navigate, and press enter or the right arrow to select, or ^C to cancel:
@@ -14,7 +14,7 @@ Use the up / down arrow to navigate, and press enter or the right arrow to selec
     $ n
 
       0.8.14
-    ο 0.12.7
+    ο 4.4.3
       0.9.6
 
 
@@ -23,7 +23,7 @@ Without proper node version everything tends to blow up :fire: !
 With proper node:
 
     $ node --version
-    v0.12.7
+    v4.4.3
 
 Install dependencies:
 

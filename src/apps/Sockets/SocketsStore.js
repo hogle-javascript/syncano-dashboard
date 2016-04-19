@@ -89,16 +89,16 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  hasGCMConfig(items) {
-    if (items.length > 0) {
+  hasGCMConfig(items = this.data.gcmPushNotifications) {
+    if (items.length) {
       return !_.isEmpty(items[0].development_api_key) || !_.isEmpty(items[0].production_api_key);
     }
 
     return false;
   },
 
-  hasAPNSConfig(items) {
-    if (items.length > 0) {
+  hasAPNSConfig(items = this.data.apnsPushNotifications) {
+    if (items.length) {
       return items[0].development_certificate || items[0].production_certificate;
     }
 

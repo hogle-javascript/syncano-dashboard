@@ -3689,7 +3689,7 @@ var Syncano = (function () {
      * @param {Object} params
      * @param {string} params.label - name of the device
      * @param {string} params.registration_id - device's registration id
-     * @param {string} params.user_id - user's id
+     * @param {string} params.user - user's id
      * @param {string} params.device_id - device's id
      * @param {boolean} params.is_active - specifies if device is active
      * @param {function} [callbackOK] - optional method to call on success

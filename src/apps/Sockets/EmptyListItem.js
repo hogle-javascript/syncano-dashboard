@@ -37,7 +37,7 @@ const styles = {
   }
 };
 
-export default ({socketName, title, description, handleCreate}) => (
+export default ({socketName, title, description, handleCreate, label = 'Add'}) => (
   <div style={styles.container}>
     <div className="row align-middle">
       <div className="col-flex-0" style={{width: 'auto'}}>
@@ -59,7 +59,7 @@ export default ({socketName, title, description, handleCreate}) => (
       </div>
       <div className="col-flex-0" style={{width: 'auto'}}>
         <RaisedButton
-          label="Add"
+          label={label}
           primary={true}
           style={{marginRight: 0}}
           onTouchTap={handleCreate} />
