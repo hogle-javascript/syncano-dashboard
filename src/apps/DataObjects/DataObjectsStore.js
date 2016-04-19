@@ -27,76 +27,66 @@ export default Reflux.createStore({
       columns: [
         {
           id: 'id',
-          name: 'Id',
           width: 90,
           tooltip: 'Built-in property: ID',
           checked: true
         },
         {
           id: 'revision',
-          name: 'Rev',
           width: 20,
           tooltip: 'Built-in property: Revision',
           checked: true
         },
         {
           id: 'owner',
-          name: 'Owner',
           width: 90,
+          tooltip: 'Owner',
           checked: false
         },
         {
           id: 'group',
-          name: 'Group',
           width: 90,
           tooltip: 'Built-in property: Group',
           checked: false
         },
         {
           id: 'owner_permissions',
-          name: 'Owner permissions',
           width: 90,
           tooltip: 'Built-in property: Owner Permissions',
           checked: false
         },
         {
           id: 'group_permissions',
-          name: 'Group permissions',
           width: 90,
           tooltip: 'Built-in property: Group Permissions',
           checked: false
         },
         {
           id: 'other_permissions',
-          name: 'Other permissions',
           width: 90,
           tooltip: 'Built-in property: Other Permissions',
           checked: false
         },
         {
           id: 'channel',
-          name: 'Channel',
           width: 90,
           tooltip: 'Built-in property: Channel',
           checked: false
         },
         {
           id: 'channel_room',
-          name: 'Channel room',
           width: 90,
           tooltip: 'Built-in property: Channel room',
           checked: false
         },
         {
           id: 'created_at',
-          name: 'Created',
           width: 120,
           tooltip: 'Built-in property: Created At',
           checked: true
         },
         {
           id: 'updated_at',
-          name: 'Updated',
           width: 120,
           tooltip: 'Built-in property: Updated At',
           checked: true
