@@ -67,11 +67,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => showEditDialog(item)}
-            primaryText="Edit a Device"/>
+            primaryText="Edit"/>
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete a Device"/>
+            primaryText="Delete"/>
           <MenuItem
             disabled={checkedItemsCount > 1}
             className="dropdown-item-delete"

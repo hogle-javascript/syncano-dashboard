@@ -23,7 +23,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       label: null,
-      user_id: null,
+      user: null,
       registration_id: null,
       device_id: null,
       is_active: true

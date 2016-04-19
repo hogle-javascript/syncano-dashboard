@@ -68,7 +68,6 @@ module.exports = {
   },
   externals: {
     'analyticsjs': 'window.analytics',
-    'hellojs': 'hello',
     'stripejs': 'Stripe'
   }
 };

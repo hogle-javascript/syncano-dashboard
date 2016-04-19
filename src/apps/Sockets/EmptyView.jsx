@@ -5,9 +5,10 @@ import DataEndpointsActions from '../DataEndpoints/DataEndpointsActions';
 import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
+import {APNSActions, GCMActions} from '../PushNotifications';
+import SocketsStore from './SocketsStore';
 
 import EmptyListItem from './EmptyListItem';
-import ConfigPushNotificationsPopover from '../PushNotifications/ConfigPushNotificationsPopover';
 
 export default React.createClass({
   displayName: 'SocketsEmpty',
@@ -43,7 +44,6 @@ export default React.createClass({
   },
 
   render() {
-    const {pushSocketPopover} = this.refs;
     const styles = this.getStyles();
 
     return (
@@ -88,12 +88,18 @@ export default React.createClass({
             description="Get real-time updates to keep your data synchronized." />
 
           <EmptyListItem
-            addTooltip="Configure a Push Notification"
-            handleCreate={pushSocketPopover ? pushSocketPopover.toggle : null}
+            handleCreate={APNSActions.showDialog}
+            label={SocketsStore.hasAPNSConfig() ? 'Edit' : 'Add'}
             socketName="Push"
-            title="Push Notifications"
+            title="APNS Push Notifications (BETA)"
             description="Instantly message your mobile users with timely and relevant content." />
-          <ConfigPushNotificationsPopover ref="pushSocketPopover"/>
+
+          <EmptyListItem
+            handleCreate={GCMActions.showDialog}
+            label={SocketsStore.hasGCMConfig() ? 'Edit' : 'Add'}
+            socketName="Push"
+            title="GCM Push Notifications (BETA)"
+            description="Instantly message your mobile users with timely and relevant content." />
         </div>
       </div>
     );

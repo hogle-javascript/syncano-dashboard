@@ -22,20 +22,23 @@ export default React.createClass({
   },
 
   render() {
+    const {hideDialogs, isLoading, items} = this.state;
+    const {visibleItems} = this.props;
+
     return (
       <Container>
         <GCMDialog />
         <DevicesList
           type="gcm"
-          visibleItems={this.props.visibleItems}
+          visibleItems={visibleItems}
           getCheckedItems={Store.getCheckedItems}
           actions={Actions}
           showSendMessagesDialog={SendMessagesActions.showDialog}
           emptyItemHandleClick={Actions.showDialog}
           emptyItemContent="Add GCM Device"
-          hideDialogs={this.state.hideDialogs}
-          isLoading={this.state.isLoading}
-          items={this.state.items}/>
+          hideDialogs={hideDialogs}
+          isLoading={isLoading}
+          items={items}/>
       </Container>
     );
   }

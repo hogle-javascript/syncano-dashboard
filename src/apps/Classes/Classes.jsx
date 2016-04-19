@@ -11,7 +11,7 @@ import Store from './ClassesStore';
 
 // Components
 import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {Container, Loading} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 // Local components
@@ -34,7 +34,7 @@ export default React.createClass({
   },
 
   render() {
-    const {items, triggers, hideDialogs} = this.state;
+    const {items, triggers, hideDialogs, isLoading} = this.state;
 
     return (
       <div>
@@ -49,10 +49,12 @@ export default React.createClass({
         </InnerToolbar>
 
         <Container>
-          <ClassesList
-            items={items}
-            triggers={triggers}
-            hideDialogs={hideDialogs} />
+          <Loading show={isLoading}>
+            <ClassesList
+              items={items}
+              triggers={triggers}
+              hideDialogs={hideDialogs} />
+          </Loading>
         </Container>
       </div>
     );

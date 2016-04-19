@@ -8,7 +8,7 @@ import {Styles} from 'syncano-material-ui';
 import UsersActions from '../Users/UsersActions';
 import UsersStore from '../Users/UsersStore';
 
-import {ColumnList} from 'syncano-components';
+import {ColumnList, Loading} from 'syncano-components';
 import {Container, Lists, Dialog, ShowMore} from '../../common';
 import ListItem from './DevicesListItem';
 import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
@@ -96,7 +96,7 @@ export default Radium(React.createClass({
       apns: 'apple',
       gcm: 'android'
     };
-    const userName = UsersStore.getUserById(item.user_id) ? UsersStore.getUserById(item.user_id).username : 'No user';
+    const userName = UsersStore.getUserById(item.user) ? UsersStore.getUserById(item.user).username : 'No user';
 
     item.userName = userName;
 
@@ -137,48 +137,46 @@ export default Radium(React.createClass({
         </div>
         <GCMSendMessageDialog />
         <APNSSendMessageDialog />
-        <Lists.Container>
-          {this.getDialogs()}
-          <ColumnList.Header>
-            <Column.ColumnHeader
-              columnName="CHECK_ICON"
-              className="col-sm-14">
-              Device
-            </Column.ColumnHeader>
-            <Column.ColumnHeader
-              columnName="DESC"
-              className="col-sm-6">
-              Metadata
-            </Column.ColumnHeader>
-            <Column.ColumnHeader columnName="DESC">
-              User
-            </Column.ColumnHeader>
-            <Column.ColumnHeader columnName="DESC">
-              Active
-            </Column.ColumnHeader>
-            <Column.ColumnHeader columnName="DATE">
-              Registered
-            </Column.ColumnHeader>
-            <Lists.Menu
-              checkedItemsCount={checkedItemsCount}
-              handleSelectAll={actions.selectAll}
-              handleUnselectAll={actions.uncheckAll}>
-              <Lists.MenuItem
-                singleItemText="Send message"
-                multipleItemsText="Send messages"
-                onTouchTap={showSendMessagesDialog}/>
-              <Lists.MenuItem
-                singleItemText="Delete a Device"
-                multipleItemsText="Delete Devices"
-                onTouchTap={() => this.showDialog('deleteDeviceDialog')}/>
-            </Lists.Menu>
-          </ColumnList.Header>
-          <Lists.List
-            {...other}
-            items={this.sliceItems(items)}
-            renderItem={this.renderItem}/>
-          {this.isActive('all-push-notification-devices') && !isLoading ? moreLink : null}
-        </Lists.Container>
+        <Loading show={isLoading}>
+          <Lists.Container>
+            {this.getDialogs()}
+            <ColumnList.Header>
+              <Column.ColumnHeader
+                columnName="CHECK_ICON"
+                className="col-sm-14">
+                Device
+              </Column.ColumnHeader>
+              <Column.ColumnHeader
+                columnName="DESC"
+                className="col-sm-6">
+                Metadata
+              </Column.ColumnHeader>
+              <Column.ColumnHeader columnName="DESC">
+                User
+              </Column.ColumnHeader>
+              <Column.ColumnHeader columnName="DESC">
+                Active
+              </Column.ColumnHeader>
+              <Column.ColumnHeader columnName="DATE">
+                Registered
+              </Column.ColumnHeader>
+              <Lists.Menu
+                checkedItemsCount={checkedItemsCount}
+                handleSelectAll={actions.selectAll}
+                handleUnselectAll={actions.uncheckAll}>
+                <Lists.MenuItem
+                  primaryText="Send message"
+                  onTouchTap={showSendMessagesDialog}/>
+                <Lists.MenuItem onTouchTap={() => this.showDialog('deleteDeviceDialog')} />
+              </Lists.Menu>
+            </ColumnList.Header>
+            <Lists.List
+              {...other}
+              items={this.sliceItems(items)}
+              renderItem={this.renderItem}/>
+            {this.isActive('all-push-notification-devices') && !isLoading ? moreLink : null}
+          </Lists.Container>
+        </Loading>
       </div>
     );
   }

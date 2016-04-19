@@ -52,8 +52,22 @@ export default React.createClass({
         isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
+            disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Groups are a way of categorizing users. They can be used to construct
+              different levels of access to resources stored on the platform.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/groups">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
         {this.renderFormNotifications()}
         <TextField

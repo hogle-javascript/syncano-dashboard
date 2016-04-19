@@ -55,12 +55,11 @@ export default {
   },
 
   renderFromEndpoint(templateName, endpointUrl) {
-    const {instance} = this.Connection.getInfo();
     const params = {template_response: templateName, serialize: false};
-    const endpointName = endpointUrl.slice(endpointUrl.indexOf(instance.name) + instance.name.length);
+    const endpointUrlWithoutDomain = endpointUrl.substring(endpointUrl.indexOf('/v1'));
 
     this.Connection
-      .request('GET', `v1/instances/${instance.name}${endpointName}`, params)
+      .request('GET', endpointUrlWithoutDomain, params)
       .then(this.completed)
       .catch(this.failure);
   }

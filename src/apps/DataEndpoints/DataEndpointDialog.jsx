@@ -153,7 +153,7 @@ export default React.createClass({
           floatingLabelText="Order by"
           options={orderFields}
           value={this.state.order_by}
-          onChange={this.setSelectFieldValue.bind(null, 'order_by')}
+          onChange={(event, index, value) => this.setSelectFieldValue('order_by', value)}
           errorText={this.getValidationMessages('order_by').join(' ')}/>
       );
     }
@@ -192,6 +192,7 @@ export default React.createClass({
         isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
+            disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -248,7 +249,7 @@ export default React.createClass({
               name="class"
               options={this.state.classes}
               value={this.state.class}
-              onChange={this.setSelectFieldValue.bind(null, 'class')}
+              onChange={(event, index, value) => this.setSelectFieldValue('class', value)}
               errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
         </Dialog.ContentSection>

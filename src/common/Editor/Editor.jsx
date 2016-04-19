@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ace from 'brace';
+import {Utils} from 'syncano-material-ui';
 
 import 'brace/mode/python';
 import 'brace/mode/javascript';
@@ -51,7 +52,8 @@ export default React.createClass({
       maxLines: null,
       readOnly: false,
       highlightActiveLine: true,
-      showPrintMargin: true
+      showPrintMargin: true,
+      style: {}
     };
   },
 
@@ -92,11 +94,12 @@ export default React.createClass({
   },
 
   render() {
-    let divStyle = {
-      width: this.props.width,
-      height: this.props.height
+    const {name, width, height, style} = this.props;
+    const divStyle = {
+      width,
+      height
     };
 
-    return (<div id={this.props.name} onChange={this.onChange} style={divStyle}></div>);
+    return <div id={name} onChange={this.onChange} style={Utils.Styles.mergeStyles(style, divStyle)}></div>;
   }
 });

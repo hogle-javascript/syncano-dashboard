@@ -74,7 +74,7 @@ export default {
       locateStrategy: 'xpath'
     },
     inactiveDeleteButton: {
-      selector: '//div[text()="Delete a Class"]/..',
+      selector: '//div[text()="Delete"]/..',
       locateStrategy: 'xpath'
     },
     confirmDeleteButton: {
@@ -103,11 +103,11 @@ export default {
       locateStrategy: 'xpath'
     },
     editButton: {
-      selector: '//div[text()="Edit a Class"]',
+      selector: '//div[text()="Edit"]',
       locateStrategy: 'xpath'
     },
     deleteButton: {
-      selector: '//div[text()="Delete a Class"]',
+      selector: '//div[text()="Delete"]',
       locateStrategy: 'xpath'
     }
   }

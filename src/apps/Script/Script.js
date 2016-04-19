@@ -435,7 +435,7 @@ export default React.createClass({
     }
 
     return (
-      <div className="col-flex-1" style={{padding: 0, height: '100px', display: 'flex', flexDirection: 'column'}}>
+      <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'column'}}>
         {this.getDialogs()}
         <InnerToolbar
           title={this.getToolbarTitle()}
@@ -466,13 +466,15 @@ export default React.createClass({
             icon={<FontIcon className="synicon-play"/>}
             onTouchTap={() => this.setFlag(true)}/>
         </InnerToolbar>
-        <Loading show={isLoading || !currentScript}>
-          <div className="row">
+        <Loading
+          show={isLoading || !currentScript}
+          style={{display: 'flex', flex: 1}}>
+          <div className="row" style={{flex: 1}}>
             <div className="col-flex-1" style={{borderRight: '1px solid rgba(224,224,224,.5)', display: 'flex'}}>
               <TogglePanel
                 title="Code"
                 initialOpen={true}
-                style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                style={{display: 'flex', flexDirection: 'column'}}>
                 <Show if={this.getValidationMessages('source').length > 0}>
                   <div style={styles.notification}>
                     <Notification type="error">
@@ -480,16 +482,20 @@ export default React.createClass({
                     </Notification>
                   </div>
                 </Show>
-                <Editor
-                  ref="editorSource"
-                  mode={editorMode}
-                  onChange={this.handleOnSourceChange}
-                  onLoad={this.clearAutosaveTimer}
-                  value={source}/>
+                <div style={{position: 'relative', flex: 1}}>
+                  <Editor
+                    ref="editorSource"
+                    mode={editorMode}
+                    onChange={this.handleOnSourceChange}
+                    onLoad={this.clearAutosaveTimer}
+                    value={source}
+                    width="100%"
+                    height="100%"
+                    style={{position: 'absolute'}} />
+                </div>
               </TogglePanel>
             </div>
             <div className="col-flex-1" style={{padding: 0, maxWidth: 600}}>
-
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
                 <TogglePanel
                   title="Config"

@@ -4,7 +4,7 @@ export default {
 
   setLoadingStates() {
     if (this.listenables) {
-      let listenables = [].concat(this.listenables);
+      const listenables = [].concat(this.listenables);
 
       _.forEach(listenables, (listenable) => {
         this.bindLoadingListeners(listenable);
@@ -44,5 +44,4 @@ export default {
       this.trigger(this.data);
     }
   }
-
 };
