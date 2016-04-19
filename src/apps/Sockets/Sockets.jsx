@@ -38,18 +38,14 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  statics: {
-    willTransitionFrom(transition, component) {
-      if (_.includes(transition.path, 'prolong')) {
-        component.refs.prolongDialog.show();
-      }
-    }
-  },
-
   componentDidMount() {
     console.info('Sockets::componentDidMount');
     Actions.addSocketsListeners();
     _.debounce(Actions.fetch, 1000)();
+
+    if (this.refs.prolongDialog && this.getQuery().showProlongDialog) {
+      this.refs.prolongDialog.show();
+    }
   },
 
   componentWillUnmount() {
@@ -69,12 +65,13 @@ export default React.createClass({
     const params = this.getParams();
 
     return [{
-      dialog: Dialog,
+      dialog: Dialog.Delete,
       params: {
+        icon: 'synicon-information-outline',
         key: 'prolongDialog',
         ref: 'prolongDialog',
         title: 'Prolong instance lifetime',
-        children: `You've canceled the archiving of your instance ${params.instanceName}.
+        children: `You've canceled the deletion of your instance ${params.instanceName}.
         Close this dialog to continue working with your instance.`,
         actions: (
           <FlatButton
