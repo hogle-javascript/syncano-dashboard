@@ -7,25 +7,25 @@ export default {
       selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     },
-    codeBoxToSelect: {
+    scriptMenuSelect: {
       selector: '.col-menu .synicon-dots-vertical'
     },
-    selectMultipleButton: {
+    selectAllButton: {
       selector: '//div[text()="Select All"]',
       locateStrategy: 'xpath'
     },
-    checkboxSelected: {
+    scriptsSelected: {
       selector: '.synicon-checkbox-marked-outline'
     },
-    deselectMultipleButton: {
+    deselectAllButton: {
       selector: '//div[text()="Unselect All"]',
       locateStrategy: 'xpath'
     },
-    deleteButton: {
+    deleteAllButton: {
       selector: '//div[text()="Delete All"]',
       locateStrategy: 'xpath'
     },
-    deleteCodeBoxModalTitle: {
+    deleteScriptsDialogTitle: {
       selector: '//h3[text()="Delete a Script"]',
       locateStrategy: 'xpath'
     },

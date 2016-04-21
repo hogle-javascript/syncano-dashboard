@@ -28,23 +28,23 @@ export default {
     client.url(tempUrl);
 
     scriptsPage
-      .waitForElementVisible('@codeBoxToSelect')
-      .clickElement('@codeBoxToSelect')
-      .clickElement('@selectMultipleButton');
+      .waitForElementVisible('@scriptMenuSelect')
+      .clickElement('@scriptMenuSelect')
+      .clickElement('@selectAllButton');
 
-    client.elements('css selector', scriptsPage.elements.checkboxSelected.selector, (result) => {
+    client.elements('css selector', scriptsPage.elements.scriptsSelected.selector, (result) => {
       client.assert.equal(result.value.length, 3);
     });
 
     scriptsPage
-      .waitForElementVisible('@codeBoxToSelect');
+      .waitForElementVisible('@scriptMenuSelect');
     client
       .pause(2000);
     scriptsPage
-      .clickElement('@codeBoxToSelect')
-      .clickElement('@deselectMultipleButton');
+      .clickElement('@scriptMenuSelect')
+      .clickElement('@deselectAllButton');
 
-    client.elements('css selector', scriptsPage.elements.checkboxSelected.selector, (result) => {
+    client.elements('css selector', scriptsPage.elements.scriptsSelected.selector, (result) => {
       client.assert.equal(result.value.length, 0);
     });
   },
@@ -57,15 +57,15 @@ export default {
       .pause(2000);
 
     scriptsPage
-      .waitForElementVisible('@codeBoxToSelect')
-      .clickElement('@codeBoxToSelect')
-      .clickElement('@selectMultipleButton');
+      .waitForElementVisible('@scriptMenuSelect')
+      .clickElement('@scriptMenuSelect')
+      .clickElement('@selectAllButton');
     client
       .pause(2000);
     scriptsPage
-      .clickElement('@codeBoxToSelect')
-      .clickElement('@deleteButton')
-      .waitForElementVisible('@deleteCodeBoxModalTitle')
+      .clickElement('@scriptMenuSelect')
+      .clickElement('@deleteAllButton')
+      .waitForElementVisible('@deleteScriptsDialogTitle')
       .clickElement('@confirmButton')
       .waitForElementVisible('@emptyListItem');
   }
