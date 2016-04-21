@@ -20,41 +20,14 @@ export default React.createClass({
     this.setState({columns: newProps.columns});
   },
 
-  handleMenuClick() {
-    console.info('ColumnAvatarCheck:handleClick');
-    this.props.handleIconClick(this.props.id, !this.state.checked);
-  },
-
-  handleClick(columnId) {
-    this.props.checkToggleColumn(columnId);
-  },
-
-  renderMenuItems() {
-    return this.state.columns.map((column) => {
-      let checkbox = (
-        <Checkbox
-          checked={column.checked}
-          onCheck={this.handleClick.bind(null, column.id)}/>
-      );
-
-      return (
-        <ListItem
-          key={column.id}
-          id={column.id}
-          primaryText={column.name}
-          secondaryText={column.tooltip}
-          leftCheckbox={checkbox}/>
-      );
-    });
-  },
-
   render() {
-    let mainIcon = <IconButton iconClassName="synicon-view-column"/>;
+    const {columns} = this.state;
+    const {checkToggleColumn} = this.props;
 
     return (
       <IconMenu
         closeOnItemTouchTap={false}
-        iconButtonElement={mainIcon}
+        iconButtonElement={<IconButton iconClassName="synicon-view-column"/>}
         anchorOrigin={{
           vertical: 'center',
           horizontal: 'middle'
@@ -63,7 +36,18 @@ export default React.createClass({
           vertical: 'top',
           horizontal: 'right'
         }}>
-        {this.renderMenuItems()}
+        {columns.map((column) => (
+          <ListItem
+            key={column.id}
+            id={column.id}
+            primaryText={column.name || column.id}
+            secondaryText={column.tooltip}
+            leftCheckbox={
+              <Checkbox
+                checked={column.checked}
+                onCheck={() => checkToggleColumn(column.id)}/>
+          }/>
+        ))}
       </IconMenu>
     );
   }

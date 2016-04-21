@@ -4,13 +4,11 @@ import {RouteHandler, State} from 'react-router';
 import APNSDevicesActions from '../../src/apps/PushDevices/APNSDevices/APNSDevicesActions';
 import GCMDevicesActions from '../../src/apps/PushDevices/GCMDevices/GCMDevicesActions';
 
-import {ListItem, FontIcon, Styles} from 'syncano-material-ui';
-import {Socket} from 'syncano-components';
+import {ListItem, FontIcon, RaisedButton, Styles} from 'syncano-material-ui';
 import {Popover} from '../common';
 import {InnerToolbar} from '../common';
 
 export default React.createClass({
-
   displayName: 'PushDevicesPage',
 
   mixins: [State],
@@ -37,14 +35,23 @@ export default React.createClass({
     return (
       <div>
         <InnerToolbar title="Push Notification Devices">
-          <Socket
-            tooltip="Add Device"
+          <RaisedButton
+            label="Add"
+            primary={true}
+            style={{marginRight: 0}}
             onTouchTap={this.handleTouchTapAddIcon}/>
           <Popover
             ref="addDevicePopover"
+            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
             style={{padding: '8px 0'}}>
             <ListItem
-              leftIcon={<FontIcon color={Styles.Colors.green400} className="synicon-android"/>}
+              leftIcon={
+                <FontIcon
+                  color={Styles.Colors.green400}
+                  className="synicon-android"
+                />
+              }
               onTouchTap={() => this.handleAddDevice('gcm-devices')}
               primaryText="Android Device"/>
             <ListItem

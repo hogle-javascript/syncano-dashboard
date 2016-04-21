@@ -5,6 +5,8 @@ import DataEndpointsActions from '../DataEndpoints/DataEndpointsActions';
 import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
+import {APNSActions, GCMActions} from '../PushNotifications';
+import SocketsStore from './SocketsStore';
 
 import EmptyListItem from './EmptyListItem';
 
@@ -14,7 +16,6 @@ export default React.createClass({
   getStyles() {
     return {
       titleContainer: {
-        marginTop: -35,
         paddingBottom: 50
       },
       title: {
@@ -43,7 +44,7 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     return (
       <div>
@@ -68,23 +69,6 @@ export default React.createClass({
             title="Script Endpoint"
             description="Run Scripts on our servers and use them for business logic." />
 
-          {
-
-            /*
-             <Socket.EmptyListItem
-             addTooltip="Configure a Push Notification"
-             handleAdd={this.refs.popover ? this.refs.popover.toggle : null}
-             socketName="Push"
-             title="Send Push Notifications">
-             <div style={styles.socketDescription}>
-             Instantly message your mobile users with timely and relevant content.
-             </div>
-             </Socket.EmptyListItem>
-             <Popover ref="popover"/>
-             */
-
-          }
-
           <EmptyListItem
             handleCreate={TriggersActions.showDialog}
             socketName="Trigger"
@@ -102,6 +86,20 @@ export default React.createClass({
             socketName="Channel"
             title="Channel"
             description="Get real-time updates to keep your data synchronized." />
+
+          <EmptyListItem
+            handleCreate={APNSActions.showDialog}
+            label={SocketsStore.hasAPNSConfig() ? 'Edit' : 'Add'}
+            socketName="Push"
+            title="APNS Push Notifications (BETA)"
+            description="Instantly message your mobile users with timely and relevant content." />
+
+          <EmptyListItem
+            handleCreate={GCMActions.showDialog}
+            label={SocketsStore.hasGCMConfig() ? 'Edit' : 'Add'}
+            socketName="Push"
+            title="GCM Push Notifications (BETA)"
+            description="Instantly message your mobile users with timely and relevant content." />
         </div>
       </div>
     );

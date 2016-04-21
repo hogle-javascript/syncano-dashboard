@@ -113,7 +113,7 @@ export default React.createClass({
         options={Store.getInstancesDropdown()}
         value={instance}
         floatingLabelText="Instances"
-        onChange={this.setSelectFieldValue.bind(null, 'instance')}
+        onChange={(event, index, value) => this.setSelectFieldValue('instance', value)}
         errorText={this.getValidationMessages('instance').join(' ')}/>
     );
   },
@@ -132,6 +132,7 @@ export default React.createClass({
         open={open}
         actions={
           <Dialog.StandardButtons
+            disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }>
@@ -150,7 +151,7 @@ export default React.createClass({
               name="version"
               options={Store.getVersionsDropdown()}
               value={version}
-              onChange={this.setSelectFieldValue.bind(null, 'version')}
+              onChange={(event, index, value) => this.setSelectFieldValue('version', value)}
               errorText={this.getValidationMessages('version').join(' ')}/>
           </Show>
         </div>

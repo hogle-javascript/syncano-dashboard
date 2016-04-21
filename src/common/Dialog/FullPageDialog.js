@@ -8,7 +8,10 @@ import DialogSidebar from './DialogSidebar';
 export default React.createClass({
   displayName: 'FullPageDialog',
 
-  mixins: [DialogMixin],
+  mixins: [
+    DialogMixin,
+    Utils.Styles
+  ],
 
   getDefaultProps() {
     return {
@@ -18,6 +21,8 @@ export default React.createClass({
   },
 
   getStyles() {
+    const {sidebar} = this.props;
+
     return {
       style: {
         paddingBottom: 16,
@@ -52,6 +57,9 @@ export default React.createClass({
       actionsContainer: {
         padding: '0 24px',
         margin: 0
+      },
+      actionsContainerWhenSidebar: {
+        paddingLeft: 238 * React.Children.count(sidebar) + 24
       },
       loading: {
         position: 'fixed'
@@ -94,15 +102,15 @@ export default React.createClass({
       <Dialog
         {...other}
         open={_.isBoolean(open) ? open : this.state.open}
-        style={Utils.Styles.mergeStyles(styles.style, style)}
+        style={this.mergeStyles(styles.style, style)}
         overlayStyle={styles.overlay}
-        contentStyle={Utils.Styles.mergeStyles(styles.content, this.getContentConfig(contentSize), contentStyle)}
+        contentStyle={this.mergeStyles(styles.content, this.getContentConfig(contentSize), contentStyle)}
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}
         titleStyle={styles.title}
         bodyStyle={styles.body}
-        actionsContainerStyle={Utils.Styles.mergeStyles(styles.actionsContainer, sidebar && {paddingLeft: 262})}
+        actionsContainerStyle={this.mergeStyles(styles.actionsContainer, sidebar && styles.actionsContainerWhenSidebar)}
         onRequestClose={onRequestClose}
         zDepth={0}>
 

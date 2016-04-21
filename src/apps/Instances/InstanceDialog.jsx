@@ -116,7 +116,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, metadata, notificationShowed, isLoading} = this.state;
+    const {open, metadata, notificationShowed, isLoading, canSubmit} = this.state;
     const title = this.hasEditMode() ? 'Update' : 'Add';
 
     return (
@@ -138,17 +138,30 @@ export default React.createClass({
               : null
             }
             <Dialog.StandardButtons
+              disabled={!canSubmit}
               handleCancel={this.handleCancel}
               handleConfirm={this.handleFormValidation}/>
           </div>
         }
-        sidebar={
+        sidebar={[
+          <Dialog.SidebarBox key="sidebarbox">
+            <Dialog.SidebarSection>
+              Instance gathers all the data associated with a project into a shared space. It can be an equivalent
+               of an app or a piece of functionality.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/#adding-an-instance">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>,
           <ColorIconPicker
+            key="coloriconpicker"
             icon={metadata.icon}
             color={metadata.color}
             onIconChange={this.handleIconChange}
-            onColorChange={this.handleColorChange}/>
-        }>
+            onColorChange={this.handleColorChange} />
+        ]}>
         {DialogsMixin.getDialogs(this.initDialogs())}
         {this.renderFormNotifications()}
         <Dialog.ContentSection>

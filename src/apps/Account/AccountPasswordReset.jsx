@@ -67,6 +67,7 @@ export default React.createClass({
             fullWidth={true}
             labelStyle={{fontSize: '16px'}}
             style={{boxShadow: 'none', height: '48px'}}
+            disabled={!this.state.canSubmit}
             primary={true}/>
         </form>
         <div className="account-container__content__footer">

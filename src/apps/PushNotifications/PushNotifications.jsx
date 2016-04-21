@@ -10,12 +10,12 @@ import GCMPushNotificationsStore from './GCM/GCMPushNotificationsStore';
 import PushNotificationsList from './PushNotificationsList';
 import APNSConfigDialog from './APNS/APNSConfigDialog';
 import GCMConfigDialog from './GCM/GCMConfigDialog';
-import Popover from './ConfigPushNotificationsPopover';
-import {InnerToolbar} from '../../common';
-import {Container, Socket} from 'syncano-components';
+import ConfigPushNotificationsPopover from './ConfigPushNotificationsPopover';
+import {RaisedButton} from 'syncano-material-ui';
+import {Container} from 'syncano-components';
+import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 
 export default React.createClass({
-
   displayName: 'PushNotifications',
 
   mixins: [
@@ -31,23 +31,26 @@ export default React.createClass({
   },
 
   render() {
-    const items = this.state.APNSPushNotifications.items.concat(this.state.GCMPushNotifications.items);
+    const {APNSPushNotifications, GCMPushNotifications} = this.state;
+    const {pushSocketPopover} = this.refs;
+    const items = APNSPushNotifications.items.concat(GCMPushNotifications.items);
 
     return (
       <div>
         <APNSConfigDialog/>
         <GCMConfigDialog/>
-        <InnerToolbar title="Push Notifications">
-          <Socket.Push
-            tooltip="Configure Push Notification Socket"
-            tooltipPosition="bottom-left"
-            onTouchTap={this.refs.pushSocketPopover ? this.refs.pushSocketPopover.toggle : null}/>
-        </InnerToolbar>
-        <Popover ref="pushSocketPopover"/>
+        <SocketsInnerToolbar>
+          <RaisedButton
+            label="Add"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={pushSocketPopover ? pushSocketPopover.toggle : null} />
+        </SocketsInnerToolbar>
+        <ConfigPushNotificationsPopover ref="pushSocketPopover"/>
         <Container>
           <PushNotificationsList
-            isLoading={this.state.APNSPushNotifications.isLoading || this.state.GCMPushNotifications.isLoading}
-            name="Push Notification Sockets"
+            isLoading={APNSPushNotifications.isLoading || GCMPushNotifications.isLoading}
+            name="Push Notification Sockets (BETA)"
             items={items}/>
         </Container>
       </div>

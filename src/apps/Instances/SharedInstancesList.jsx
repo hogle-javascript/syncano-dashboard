@@ -80,8 +80,7 @@ export default React.createClass({
                 handleSelectAll={() => Actions.selectAll('sharedInstances')}
                 handleUnselectAll={() => Actions.uncheckAll('sharedInstances')}>
                 <Lists.MenuItem
-                  singleItemText="Leave an Instance"
-                  multipleItemsText="Leave Instances"
+                  primaryText="Leave All"
                   onTouchTap={() => this.showDialog('deleteSharedInstanceDialog')} />
               </Lists.Menu>
             </Column.ColumnHeader>

@@ -79,6 +79,7 @@ export default React.createClass({
         isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
+            disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }>

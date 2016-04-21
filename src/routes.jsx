@@ -103,6 +103,7 @@ export default (
 
 
           <Redirect
+            query={{showProlongDialog: true}}
             from="/instances/:instanceName/prolong"
             to="sockets"/>
 

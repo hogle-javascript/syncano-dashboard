@@ -61,8 +61,22 @@ export default React.createClass({
         isLoading={this.state.isLoading}
         actions={
           <Dialog.StandardButtons
+            disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Inviting Syncano Adminstrators to your Instance will allow for
+              team collaboration on a project.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/administrators">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
         {this.renderFormNotifications()}
         <TextField
@@ -81,7 +95,7 @@ export default React.createClass({
           floatingLabelText="Administrator's role"
           options={Store.getRoles()}
           value={this.state.role}
-          onChange={this.setSelectFieldValue.bind(null, 'role')}
+          onChange={(event, index, value) => this.setSelectFieldValue('role', value)}
           errorText={this.getValidationMessages('role').join(' ')}/>
       </Dialog.FullPage>
     );

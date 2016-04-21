@@ -10,8 +10,8 @@ import ScriptsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 import ChannelsActions from '../Channels/ChannelsActions';
-// import APNSActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
-// import GCMActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
+import APNSActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
+import GCMActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -31,8 +31,8 @@ export default Reflux.createStore({
       triggers: [],
       schedules: [],
       channels: [],
-      // gcmPushNotifications: [],
-      // apnsPushNotifications: [],
+      gcmPushNotifications: [],
+      apnsPushNotifications: [],
 
       hasAnyItem: false,
       isLoading: true
@@ -54,9 +54,9 @@ export default Reflux.createStore({
     SchedulesActions.removeSchedules.completed,
     ChannelsActions.createChannel.completed,
     ChannelsActions.updateChannel.completed,
-    ChannelsActions.removeChannels.completed
-    // APNSActions.configAPNSPushNotification.completed,
-    // GCMActions.configGCMPushNotification.completed
+    ChannelsActions.removeChannels.completed,
+    APNSActions.configAPNSPushNotification.completed,
+    GCMActions.configGCMPushNotification.completed
   ],
 
   init() {
@@ -89,16 +89,16 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  hasGCMConfig(items) {
-    if (items.length > 0) {
+  hasGCMConfig(items = this.data.gcmPushNotifications) {
+    if (items.length) {
       return !_.isEmpty(items[0].development_api_key) || !_.isEmpty(items[0].production_api_key);
     }
 
     return false;
   },
 
-  hasAPNSConfig(items) {
-    if (items.length > 0) {
+  hasAPNSConfig(items = this.data.apnsPushNotifications) {
+    if (items.length) {
       return items[0].development_certificate || items[0].production_certificate;
     }
 
@@ -117,18 +117,18 @@ export default Reflux.createStore({
 
   onFetchSocketsCompleted(sockets) {
     console.debug('SocketsStore::onFetchSockets');
-    // const gcmDevicesCount = this.saveListFromSyncano(sockets.gcmDevices).length;
-    // const apnsDevicesCount = this.saveListFromSyncano(sockets.apnsDevices).length;
-    // const gcmItems = this.getPushNotificationsItems([sockets.gcmPushNotifications], 'GCM', gcmDevicesCount);
-    // const apnsItems = this.getPushNotificationsItems([sockets.apnsPushNotifications], 'APNS', apnsDevicesCount);
+    const gcmDevicesCount = this.saveListFromSyncano(sockets.gcmDevices).length;
+    const apnsDevicesCount = this.saveListFromSyncano(sockets.apnsDevices).length;
+    const gcmItems = this.getPushNotificationsItems([sockets.gcmPushNotifications], 'GCM', gcmDevicesCount);
+    const apnsItems = this.getPushNotificationsItems([sockets.apnsPushNotifications], 'APNS', apnsDevicesCount);
 
     this.data.data = this.saveListFromSyncano(sockets.data);
     this.data.scriptEndpoints = this.saveListFromSyncano(sockets.scriptEndpoints);
     this.data.triggers = this.saveListFromSyncano(sockets.triggers);
     this.data.schedules = this.saveListFromSyncano(sockets.schedules);
     this.data.channels = this.saveListFromSyncano(sockets.channels);
-    // this.data.gcmPushNotifications = gcmItems;
-    // this.data.apnsPushNotifications = apnsItems;
+    this.data.gcmPushNotifications = gcmItems;
+    this.data.apnsPushNotifications = apnsItems;
     this.data.hasAnyItem = _.some(this.data, (value) => value.length);
 
     this.trigger(this.data);

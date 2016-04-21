@@ -51,7 +51,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+      <div style={{display: 'flex', flexDirection: 'column', flex: 1, maxWidth: '100%'}}>
         <RouteHandler/>
         <SnackbarNotification />
       </div>

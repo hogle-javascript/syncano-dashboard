@@ -11,7 +11,7 @@ import Store from './SocketsStore';
 import {DialogsMixin} from '../../mixins';
 
 // Components
-import {Container, Loading} from 'syncano-components';
+import {Container, Loading, Show} from 'syncano-components';
 import {Dialog} from '../../common';
 import {FlatButton, RaisedButton} from 'syncano-material-ui';
 
@@ -25,6 +25,7 @@ import EmptyView from './EmptyView';
 import SocketsDialog from './SocketsDialog';
 import SocketsList from './SocketsList';
 import SocketsInnerToolbar from './SocketsInnerToolbar';
+import PushNotifications from '../PushNotifications';
 
 export default React.createClass({
   displayName: 'Sockets',
@@ -37,18 +38,14 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  statics: {
-    willTransitionFrom(transition, component) {
-      if (_.includes(transition.path, 'prolong')) {
-        component.refs.prolongDialog.show();
-      }
-    }
-  },
-
   componentDidMount() {
     console.info('Sockets::componentDidMount');
     Actions.addSocketsListeners();
     _.debounce(Actions.fetch, 1000)();
+
+    if (this.refs.prolongDialog && this.getQuery().showProlongDialog) {
+      this.refs.prolongDialog.show();
+    }
   },
 
   componentWillUnmount() {
@@ -68,12 +65,13 @@ export default React.createClass({
     const params = this.getParams();
 
     return [{
-      dialog: Dialog,
+      dialog: Dialog.Delete,
       params: {
+        icon: 'synicon-information-outline',
         key: 'prolongDialog',
         ref: 'prolongDialog',
         title: 'Prolong instance lifetime',
-        children: `You've canceled the archiving of your instance ${params.instanceName}.
+        children: `You've canceled the deletion of your instance ${params.instanceName}.
         Close this dialog to continue working with your instance.`,
         actions: (
           <FlatButton
@@ -101,19 +99,12 @@ export default React.createClass({
         <Loading show={sockets.isLoading}>
           <SocketsList sockets={sockets}/>
 
-          {
-
-            /*
-             <Show if={this.getPushNotificationItems().length}>
-             <PushNotifications.List
-             name="Push Notification Sockets"
-             handleTitleClick={() => this.transitionTo('push-notification-config', this.getParams())}
-             items={this.getPushNotificationItems()}/>
-             </Show>
-             */
-
-          }
-
+          <Show if={this.getPushNotificationItems().length}>
+            <PushNotifications.List
+              name="Push Notification Sockets"
+              handleTitleClick={() => this.transitionTo('push-notification-config', this.getParams())}
+              items={this.getPushNotificationItems()}/>
+          </Show>
         </Loading>
       </div>
     );
@@ -130,15 +121,8 @@ export default React.createClass({
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
-
-        {
-
-          /*
-          <PushNotifications.APNSConfigDialog />
-          <PushNotifications.GCMConfigDialog />
-          */
-
-        }
+        <PushNotifications.APNSConfigDialog />
+        <PushNotifications.GCMConfigDialog />
 
         {this.getDialogs()}
         <SocketsInnerToolbar empty={!sockets.hasAnyItem || sockets.isLoading}>

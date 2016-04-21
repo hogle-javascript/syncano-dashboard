@@ -54,15 +54,15 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit an API Key" />
+            primaryText="Edit" />
           <MenuItem
             onTouchTap={showResetDialog}
             className="dropdown-item-reset-apikey"
-            primaryText="Reset an API Key" />
+            primaryText="Reset" />
           <MenuItem
             onTouchTap={showDeleteDialog}
             className="dropdown-item-delete-apikey"
-            primaryText="Delete an API Key" />
+            primaryText="Delete" />
         </Column.Menu>
       </ColumnList.Item>
     );
