@@ -6,6 +6,8 @@ export default {
   before(client) {
     Async.waterfall([
       client.createTempAccount,
+      client.createTempScript,
+      client.createTempScript,
       client.createTempScript
     ], (err) => {
       if (err) throw err;
@@ -20,36 +22,51 @@ export default {
     client.end();
   },
   'Test Select/Deselect multiple Script Sockets': (client) => {
-    const socketsPage = client.page.socketsPage();
+    const scriptsPage = client.page.scriptsPage();
+    const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
 
-    client.url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/codeboxes`);
+    client.url(tempUrl);
 
-    socketsPage.waitForElementVisible('@codeBoxToSelect');
-    socketsPage.clickElement('@codeBoxToSelect');
-    socketsPage.clickElement('@selectMultipleButton');
+    scriptsPage
+      .waitForElementVisible('@codeBoxToSelect')
+      .clickElement('@codeBoxToSelect')
+      .clickElement('@selectMultipleButton');
 
-    client.elements('css selector', socketsPage.elements.checkboxSelected.selector, (result) => {
+    client.elements('css selector', scriptsPage.elements.checkboxSelected.selector, (result) => {
       client.assert.equal(result.value.length, 3);
     });
 
-    socketsPage.clickElement('@deselectMultipleButton');
-    socketsPage.waitForElementVisible('@codeBoxToSelect');
+    scriptsPage
+      .waitForElementVisible('@codeBoxToSelect');
+    client
+      .pause(2000);
+    scriptsPage
+      .clickElement('@codeBoxToSelect')
+      .clickElement('@deselectMultipleButton');
 
-    client.elements('css selector', socketsPage.elements.codeBoxToSelect.selector, (result) => {
-      client.assert.equal(result.value.length, 3);
+    client.elements('css selector', scriptsPage.elements.checkboxSelected.selector, (result) => {
+      client.assert.equal(result.value.length, 0);
     });
   },
   'Test Delete multiple Script Sockets': (client) => {
-    const socketsPage = client.page.socketsPage();
+    const scriptsPage = client.page.scriptsPage();
+    const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
 
-    client.url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/codeboxes`);
+    client
+      .url(tempUrl)
+      .pause(2000);
 
-    socketsPage.waitForElementVisible('@codeBoxToSelect');
-    socketsPage.clickElement('@codeBoxToSelect');
-    socketsPage.clickElement('@selectMultipleButton');
-    socketsPage.clickElement('@deleteButton');
-    socketsPage.waitForElementVisible('@deleteCodeBoxModalTitle');
-    socketsPage.clickElement('@confirmButton');
-    socketsPage.waitForElementVisible('@emptyListItem');
+    scriptsPage
+      .waitForElementVisible('@codeBoxToSelect')
+      .clickElement('@codeBoxToSelect')
+      .clickElement('@selectMultipleButton');
+    client
+      .pause(2000);
+    scriptsPage
+      .clickElement('@codeBoxToSelect')
+      .clickElement('@deleteButton')
+      .waitForElementVisible('@deleteCodeBoxModalTitle')
+      .clickElement('@confirmButton')
+      .waitForElementVisible('@emptyListItem');
   }
 };
