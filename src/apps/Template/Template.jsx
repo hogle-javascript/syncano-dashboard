@@ -135,10 +135,12 @@ export default React.createClass({
     const content = this.refs.contentEditor.editor.getValue();
     const context = this.refs.contextEditor.editor.getValue();
 
-    this.clearAutosaveTimer();
-    Actions.setDataSource(this.refs.dataSourceUrl.getValue());
-    Actions.updateTemplate(template.name, {content, context});
-    this.setSnackbarNotification({message: 'Saving...'});
+    if (this.areEditorsLoaded()) {
+      this.clearAutosaveTimer();
+      Actions.setDataSource(this.refs.dataSourceUrl.getValue());
+      Actions.updateTemplate(template.name, {content, context});
+      this.setSnackbarNotification({message: 'Saving...'});
+    }
   },
 
   handleOnSourceChange() {
@@ -158,11 +160,15 @@ export default React.createClass({
   },
 
   handleRender() {
-    const {template} = this.state;
-    const dataSourceUrlValue = this.refs.dataSourceUrl.getValue();
+    if (!this.areEditorsLoaded()) {
+      return null;
+    }
 
-    if (dataSourceUrlValue.length) {
-      return Actions.renderFromEndpoint(template.name, dataSourceUrlValue);
+    const {template} = this.state;
+    const {dataSourceUrl} = this.refs;
+
+    if (dataSourceUrl && dataSourceUrl.getValue().length) {
+      return Actions.renderFromEndpoint(template.name, dataSourceUrl.getValue());
     }
 
     Actions.renderTemplate(template.name, template.context);
@@ -170,6 +176,12 @@ export default React.createClass({
 
   setFlag(successValidationAction) {
     Actions.setFlag(successValidationAction, this.handleFormValidation);
+  },
+
+  areEditorsLoaded() {
+    const editorRefs = ['contextEditor', 'contentEditor', 'previewEditor'];
+
+    return !_.some(editorRefs, (ref) => _.isUndefined(this.refs[ref]));
   },
 
   renderErrorNotifications(errorsKey) {
@@ -207,21 +219,23 @@ export default React.createClass({
       <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'column'}}>
         <InnerToolbar
           title={`Template: ${template.name}`}>
-          <div style={{display: 'inline-block'}}>
-            <Checkbox
-              ref="autosaveCheckbox"
-              name="autosaveCheckbox"
-              label="Autosave"
-              labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
-              defaultChecked={this.isAutosaveEnabled()}
-              onCheck={this.saveCheckboxState}/>
-          </div>
-          <RaisedButton
-            label="SAVE"
-            style={{marginLeft: 5, marginRight: 5}}
-            onTouchTap={() => this.setFlag('update')} />
-          {this.renderRunButtons('RENDER', 'synicon-play', 'render')}
-          {this.renderRunButtons('RENDER IN TAB', 'synicon-open-in-new', 'tabRender')}
+          <Show if={!isLoading}>
+            <div style={{display: 'inline-block'}}>
+              <Checkbox
+                ref="autosaveCheckbox"
+                name="autosaveCheckbox"
+                label="Autosave"
+                labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
+                defaultChecked={this.isAutosaveEnabled()}
+                onCheck={this.saveCheckboxState}/>
+            </div>
+            <RaisedButton
+              label="SAVE"
+              style={{marginLeft: 5, marginRight: 5}}
+              onTouchTap={() => this.setFlag('update')} />
+            {this.renderRunButtons('RENDER', 'synicon-play', 'render')}
+            {this.renderRunButtons('RENDER IN TAB', 'synicon-open-in-new', 'tabRender')}
+          </Show>
         </InnerToolbar>
 
         <Loading
