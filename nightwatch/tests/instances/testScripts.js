@@ -21,7 +21,7 @@ export default {
   after(client) {
     client.end();
   },
-  'Test Select/Deselect multiple Script Sockets': (client) => {
+  'Test Select/Deselect multiple Scripts': (client) => {
     const scriptsPage = client.page.scriptsPage();
     const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
 
@@ -48,7 +48,7 @@ export default {
       client.assert.equal(result.value.length, 0);
     });
   },
-  'Test Delete multiple Script Sockets': (client) => {
+  'Test Delete multiple Scripts': (client) => {
     const scriptsPage = client.page.scriptsPage();
     const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
 
