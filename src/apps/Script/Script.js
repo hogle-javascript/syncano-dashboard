@@ -444,6 +444,7 @@ export default React.createClass({
           backButtonTooltip="Go back to Scripts list">
           <div style={{display: 'inline-block'}}>
             <Checkbox
+              disabled={isLoading}
               ref="autosaveCheckbox"
               name="autosaveCheckbox"
               label="Autosave"
@@ -452,14 +453,17 @@ export default React.createClass({
               onCheck={this.saveCheckboxState}/>
           </div>
           <RaisedButton
+            disabled={isLoading}
             label="TRACES"
             style={{marginRight: 5, marginLeft: 20}}
             onTouchTap={() => this.showDialog('scriptTraces')}/>
           <RaisedButton
+            disabled={isLoading}
             label="SAVE"
             style={{marginLeft: 5, marginRight: 5}}
             onTouchTap={() => this.setFlag(false)} />
           <RaisedButton
+            disabled={isLoading}
             label="RUN"
             primary={true}
             style={{marginLeft: 5, marginRight: 0}}
