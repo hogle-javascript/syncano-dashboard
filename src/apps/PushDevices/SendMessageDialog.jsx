@@ -389,7 +389,7 @@ export default (store, props) => {
             className="row align-center vp-2-t">
             {isHeaderExpanded ? `SHOW LESS` : `SHOW MORE (${props.getCheckedItems().length - 3})`}
           </div>
-          <div className="row hp-1-l hp-1-r vm-4-t">
+          <div className="row hp-1-l hp-1-r vm-4-t vm-3-b">
             <div style={styles.phoneContainer}>
               {props.phoneIcon}
               <div style={styles.messagePreview}>
@@ -426,8 +426,9 @@ export default (store, props) => {
               {this.renderMessageFields()}
             </div>
           </div>
+          {this.renderFormNotifications()}
           <Show if={this.getValidationMessages('content').length}>
-            <div className="vm-3-t">
+            <div className="vm-2-t">
               <Notification type="error">
                 {this.getValidationMessages('content').join(' ')}
               </Notification>

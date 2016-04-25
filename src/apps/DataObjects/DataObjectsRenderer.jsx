@@ -64,7 +64,7 @@ export default {
               wordWrap: 'normal'
             }}
             tooltip={item.tooltip}>
-            {item.name}
+            {item.id}
           </TableHeaderColumn>
         );
       }

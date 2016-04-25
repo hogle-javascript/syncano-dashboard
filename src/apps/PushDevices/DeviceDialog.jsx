@@ -26,7 +26,16 @@ export default (type, Store, Actions) => {
         },
         registration_id: {
           presence: true
+        },
+        device_id: {
+          presence: true
         }
+      };
+    },
+
+    getInitialState() {
+      return {
+        is_active: true
       };
     },
 

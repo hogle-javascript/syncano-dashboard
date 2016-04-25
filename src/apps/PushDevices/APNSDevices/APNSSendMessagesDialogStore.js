@@ -22,11 +22,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      label: null,
-      user: null,
-      registration_id: null,
-      device_id: null,
-      is_active: true
+      isLoading: false
     };
   },
 
@@ -42,6 +38,7 @@ export default Reflux.createStore({
 
   onSendMessagesToAPNSCompleted() {
     console.debug('APNSDeviceDialogStore::onSendMessageToAPNSCompleted');
+    this.trigger(this.data);
     this.dismissDialog();
   }
 });

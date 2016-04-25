@@ -52,11 +52,11 @@ export default React.createClass({
               tooltip="Copy device ID"
               type="link" />
           }/>
-        <Column.Desc>
-          {item.userName}
+        <Column.Desc className="col-sm-6">
+          <Truncate text={JSON.stringify(item.metadata)} />
         </Column.Desc>
         <Column.Desc>
-          <Truncate text={JSON.stringify(item.metadata)} />
+          {item.userName}
         </Column.Desc>
         <Column.Desc>
           {item.is_active.toString()}

@@ -8,7 +8,6 @@ import IconPicker from './IconPicker';
 export default Radium(({icon, color, onIconChange, onColorChange}) => {
   const getStyles = () => ({
     headline: {
-      paddingTop: 16,
       color: 'rgba(0, 0, 0, 0.498039)',
       fontSize: 12,
       lineHeight: '18px'
