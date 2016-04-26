@@ -199,10 +199,10 @@ export default React.createClass({
   },
 
   handleUpdate() {
-    const config = this.getConfigObject();
-    const source = this.refs.editorSource.editor.getValue();
-
     if (this.areEditorsLoaded()) {
+      const config = this.getConfigObject();
+      const source = this.refs.editorSource.editor.getValue();
+
       this.clearAutosaveTimer();
       Actions.updateScript(this.state.currentScript.id, {config, source});
       this.setSnackbarNotification({message: 'Saving...'});
