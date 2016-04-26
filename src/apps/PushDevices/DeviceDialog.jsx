@@ -22,7 +22,10 @@ export default (type, Store, Actions) => {
     validatorConstraints() {
       return {
         label: {
-          presence: true
+          presence: true,
+          length: {
+            maximum: 64
+          }
         },
         registration_id: {
           presence: true
@@ -39,14 +42,14 @@ export default (type, Store, Actions) => {
     getParams() {
       const {label, registration_id, user, device_id, is_active, metadata} = this.state;
 
-      return {
+      return _.omit({
         label,
         registration_id,
         user,
         device_id,
         is_active,
         metadata
-      };
+      }, _.isEmpty);
     },
 
     handleAddSubmit() {
