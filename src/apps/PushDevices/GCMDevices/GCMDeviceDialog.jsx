@@ -1,6 +1,35 @@
+import React from 'react';
+
 import Actions from './GCMDevicesActions';
 import Store from './GCMDeviceDialogStore';
 
 import DeviceDialog from '../DeviceDialog';
+import {Dialog} from '../../../common/';
 
-export default DeviceDialog('GCM', Store, Actions);
+const sidebar = (
+    <Dialog.SidebarBox>
+      <Dialog.SidebarSection>
+        GCM Devices allows you to send Push Notifications to your Android devices.
+      </Dialog.SidebarSection>
+      <Dialog.SidebarSection title="Registration ID">
+        To send and receive push notifications your app must register with GCM. In this process, the client gets a
+         unique registration ID. Read more at&nbsp;
+        <Dialog.SidebarLink to="https://console.developers.google.com">
+          Google Developer Console.
+        </Dialog.SidebarLink>
+      </Dialog.SidebarSection>
+      <Dialog.SidebarSection title="User ID">
+        Connects device with Syncano user. The device will be assigned to user with this ID.
+      </Dialog.SidebarSection>
+      <Dialog.SidebarSection title="Device ID">
+        It&#39;s unique ID assigned to your device.
+      </Dialog.SidebarSection>
+      <Dialog.SidebarSection last={true}>
+        <Dialog.SidebarLink to="http://docs.syncano.io/docs/sending-push-notifications">
+          Learn more
+        </Dialog.SidebarLink>
+      </Dialog.SidebarSection>
+    </Dialog.SidebarBox>
+);
+
+export default DeviceDialog('GCM', Store, Actions, sidebar);
