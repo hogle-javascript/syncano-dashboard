@@ -82,8 +82,26 @@ export default React.createClass({
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              GCM Push Notification Sockets allow for sending messages directly to your users Android devices. Thanks
+               to this functionality, your users can be quickly informed about changes taking place within your
+               application.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Development and Production API keys">
+              Those are your API keys from Google Developer Console. At least one of them is required to send Push
+               Notification messages to devices.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/push-notification-sockets-android">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
-        <div className="row align-center hp-2-l hp-2-r">
+        <div className="row align-center hp-2-l hp-2-r vp-2-t">
           <div dangerouslySetInnerHTML={{__html: require('./phone-android.svg')}}>
           </div>
           <div className="col-flex-1 hm-3-l">
