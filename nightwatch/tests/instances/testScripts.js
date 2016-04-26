@@ -25,12 +25,13 @@ export default {
     const scriptsPage = client.page.scriptsPage();
     const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
 
-    client.url(tempUrl);
+    client
+      .pause(2000)
+      .url(tempUrl);
 
     scriptsPage
       .waitForElementVisible('@scriptMenuSelect')
-      .clickElement('@scriptMenuSelect')
-      .clickElement('@selectAllButton');
+      .clickListItemDropdown('@scriptMenuSelect', 'Select');
 
     client.elements('css selector', scriptsPage.elements.scriptsSelected.selector, (result) => {
       client.assert.equal(result.value.length, 3);
@@ -41,8 +42,7 @@ export default {
     client
       .pause(2000);
     scriptsPage
-      .clickElement('@scriptMenuSelect')
-      .clickElement('@deselectAllButton');
+      .clickListItemDropdown('@scriptMenuSelect', 'Unselect');
 
     client.elements('css selector', scriptsPage.elements.scriptsSelected.selector, (result) => {
       client.assert.equal(result.value.length, 0);
@@ -57,14 +57,11 @@ export default {
       .pause(2000);
 
     scriptsPage
-      .waitForElementVisible('@scriptMenuSelect')
-      .clickElement('@scriptMenuSelect')
-      .clickElement('@selectAllButton');
+      .clickListItemDropdown('@scriptMenuSelect', 'Select');
     client
       .pause(2000);
     scriptsPage
-      .clickElement('@scriptMenuSelect')
-      .clickElement('@deleteAllButton')
+      .clickListItemDropdown('@scriptMenuSelect', 'Delete')
       .waitForElementVisible('@deleteScriptsDialogTitle')
       .clickElement('@confirmButton')
       .waitForElementVisible('@emptyListItem');
