@@ -57,21 +57,19 @@ export default React.createClass({
 
   handleDelete() {
     console.info('DataObjects::handleDelete');
-    Actions.removeDataObjects(this.state.classObj.name, Store.getIDsFromTable());
+    const {classObj} = this.state;
+
+    Actions.removeDataObjects(classObj.name, Store.getIDsFromTable());
   },
 
   handleRowSelection(selectedRows) {
     console.info('DataObjects::handleRowSelection', arguments);
-    let rowsSelection = selectedRows;
+    const selectedRowsMap = {
+      all: _.map(Store.getItems(), (item, index) => index),
+      none: []
+    };
 
-    // Writing to the store
-    if (selectedRows === 'all') {
-      rowsSelection = Store.getItems().map((item, index) => {
-        return index;
-      });
-    }
-
-    Actions.setSelectedRows(rowsSelection);
+    Actions.setSelectedRows(_.isString(selectedRows) ? selectedRowsMap[selectedRows] : selectedRows);
   },
 
   handleSelectAll(selectAll) {
@@ -86,9 +84,11 @@ export default React.createClass({
   },
 
   handleMoreRows() {
+    const {classObj, nextParams} = this.state;
+
     Actions.subFetchDataObjects({
-      className: this.state.classObj.name,
-      params: this.state.nextParams
+      className: classObj.name,
+      params: nextParams
     });
   },
 
@@ -138,6 +138,7 @@ export default React.createClass({
 
   renderTable() {
     console.info('DataObjects::renderTable');
+    const {hasNextPage} = this.state;
     const tableData = Store.renderTableData();
     const tableHeader = Store.renderTableHeader(this.handleSelectAll);
 
@@ -166,7 +167,7 @@ export default React.createClass({
         style={{margin: 50}}>
         <div>Loaded {tableData.length} Data Objects</div>
       </div>
-      <Show if={this.state.hasNextPage}>
+      <Show if={hasNextPage}>
         <div
           className="row align-center"
           style={{margin: 50}}>
@@ -209,7 +210,7 @@ export default React.createClass({
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-delete"
             tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Delete Data Objects'}
-            disabled={selectedRows && selectedRows.length < 1 || this.isClassProtected()}
+            disabled={(selectedRows && !selectedRows.length) || this.isClassProtected()}
             onTouchTap={() => this.showDialog('deleteDataObjectDialog')}/>
 
           <IconButton
