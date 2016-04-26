@@ -32,7 +32,10 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  autosaveAttributeName: 'templateContentAutosave',
+  mixinsConfig: {
+    autosaveAttributeName: 'templateContentAutosave',
+    editorRefs: ['contextEditor', 'contentEditor', 'previewEditor']
+  },
 
   validatorConstraints() {
     const {successValidationAction} = this.state;
@@ -176,12 +179,6 @@ export default React.createClass({
 
   setFlag(successValidationAction) {
     Actions.setFlag(successValidationAction, this.handleFormValidation);
-  },
-
-  areEditorsLoaded() {
-    const editorRefs = ['contextEditor', 'contentEditor', 'previewEditor'];
-
-    return !_.some(editorRefs, (ref) => _.isUndefined(this.refs[ref]));
   },
 
   renderErrorNotifications(errorsKey) {

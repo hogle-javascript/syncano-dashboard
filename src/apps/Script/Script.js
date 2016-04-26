@@ -33,7 +33,10 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  autosaveAttributeName: 'scriptSourceAutosave',
+  mixinsConfig: {
+    autosaveAttributeName: 'scriptSourceAutosave',
+    editorRefs: ['editorSource', 'payloadSource']
+  },
 
   validatorConstraints() {
     const {scriptConfig} = this.state;
@@ -296,12 +299,6 @@ export default React.createClass({
         }
       }
     ];
-  },
-
-  areEditorsLoaded() {
-    const editorRefs = ['editorSource', 'payloadSource'];
-
-    return !_.some(editorRefs, (ref) => _.isUndefined(this.refs[ref]));
   },
 
   renderFields() {
