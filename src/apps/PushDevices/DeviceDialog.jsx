@@ -41,15 +41,16 @@ export default (type, Store, Actions) => {
 
     getParams() {
       const {label, registration_id, user, device_id, is_active, metadata} = this.state;
-
-      return _.omit({
+      const params = {
         label,
         registration_id,
         user,
         device_id,
         is_active,
         metadata
-      }, _.isEmpty);
+      };
+
+      return this.removeEmptyKeys(params);
     },
 
     handleAddSubmit() {
@@ -62,6 +63,10 @@ export default (type, Store, Actions) => {
       if (_.isFunction(Actions.updateDevice)) {
         Actions.updateDevice(this.getParams());
       }
+    },
+
+    removeEmptyKeys(params) {
+      return _.omit(params, _.isEmpty);
     },
 
     render() {
