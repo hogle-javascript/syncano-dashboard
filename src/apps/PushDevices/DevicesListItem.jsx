@@ -45,11 +45,11 @@ export default React.createClass({
           primaryText={item.label}
           secondaryText={
             <Clipboard
-              copyText={item.device_id}
+              copyText={item.registration_id}
               onCopy={() => this.setSnackbarNotification({
-                message: 'Device ID copied to the clipboard!'
+                message: 'Registration ID copied to the clipboard!'
               })}
-              tooltip="Copy device ID"
+              tooltip="Copy registration ID"
               type="link" />
           }/>
         <Column.Desc className="col-sm-6">
@@ -82,4 +82,3 @@ export default React.createClass({
     );
   }
 });
-
