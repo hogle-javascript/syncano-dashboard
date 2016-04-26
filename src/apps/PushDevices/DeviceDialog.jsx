@@ -9,7 +9,7 @@ import {DialogMixin, FormMixin} from '../../mixins';
 import {TextField, Toggle} from 'syncano-material-ui';
 import {Dialog, Editor} from '../../common';
 
-export default (type, Store, Actions) => {
+export default (type, Store, Actions, sidebar) => {
   return React.createClass({
     displayName: `${type}Dialog`,
 
@@ -81,13 +81,13 @@ export default (type, Store, Actions) => {
               disabled={!this.state.canSubmit}
               handleCancel={this.handleCancel}
               handleConfirm={this.handleFormValidation}/>
-          }>
-          <div>
+          }
+          sidebar={sidebar}>
+          <div className="vm-2-t">
             {this.renderFormNotifications()}
             <Dialog.ContentSection>
               <div className="col-flex-1">
-                <div
-                  style={{width: 100}}>
+                <div style={{width: 100}}>
                   <Toggle
                     ref="is_active"
                     key="is_active"
