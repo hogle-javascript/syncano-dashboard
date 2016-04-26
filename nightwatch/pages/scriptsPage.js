@@ -8,22 +8,11 @@ export default {
       locateStrategy: 'xpath'
     },
     scriptMenuSelect: {
-      selector: '.col-menu .synicon-dots-vertical'
-    },
-    selectAllButton: {
-      selector: '//div[text()="Select All"]',
+      selector: '(//span[@class="synicon-dots-vertical"])[1]',
       locateStrategy: 'xpath'
     },
     scriptsSelected: {
       selector: '.synicon-checkbox-marked-outline'
-    },
-    deselectAllButton: {
-      selector: '//div[text()="Unselect All"]',
-      locateStrategy: 'xpath'
-    },
-    deleteAllButton: {
-      selector: '//div[text()="Delete All"]',
-      locateStrategy: 'xpath'
     },
     deleteScriptsDialogTitle: {
       selector: '//h3[text()="Delete a Script"]',
