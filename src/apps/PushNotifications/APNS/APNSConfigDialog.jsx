@@ -275,7 +275,7 @@ export default Radium(React.createClass({
         sidebar={
           <Dialog.SidebarBox>
             <Dialog.SidebarSection>
-              APNS Push Notification Socket allow you to send messages to your iOS devices. You can easly notify users
+              APNS Push Notification Socket allows you to send messages to your iOS devices. You can easily notify users
                about updates etc.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection>
@@ -284,8 +284,7 @@ export default Radium(React.createClass({
               </i>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Certificates">
-              Each iOS application using APNS must have unique ID. Certificates are those IDs that uniquely identifies
-               your application.
+              Certificates are IDs that uniquely identify your application.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/push-notification-sockets-ios">
