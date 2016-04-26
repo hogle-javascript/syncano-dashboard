@@ -83,7 +83,7 @@ export default (type, Store, Actions, sidebar) => {
               handleConfirm={this.handleFormValidation}/>
           }
           sidebar={sidebar}>
-          <div className="vm-2-t">
+          <div className="vp-2-t">
             {this.renderFormNotifications()}
             <Dialog.ContentSection>
               <div className="col-flex-1">
