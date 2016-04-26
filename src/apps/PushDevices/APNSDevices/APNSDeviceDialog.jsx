@@ -15,13 +15,13 @@ const sidebar = (
     </Dialog.SidebarSection>
     <Dialog.SidebarSection title="Registration ID">
       Your application must register in APNS service to receive Push Notifications. Registration ID is the key that
-       authenticates your app with APNS server.
+       authenticates your app with an APNS server.
     </Dialog.SidebarSection>
     <Dialog.SidebarSection title="User ID">
-      Assigns device to Syncano user with this ID.
+      Assigns a device to the Syncano user with this ID.
     </Dialog.SidebarSection>
     <Dialog.SidebarSection title="Device ID">
-      It&#39;s unique identificator of your device.
+      It&#39;s a unique identificator of your device.
     </Dialog.SidebarSection>
     <Dialog.SidebarSection last={true}>
       <Dialog.SidebarLink to="http://docs.syncano.io/docs/sending-push-notifications">
