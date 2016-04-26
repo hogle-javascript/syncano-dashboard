@@ -9,7 +9,7 @@ import {Dialog} from '../../../common/';
 const sidebar = (
     <Dialog.SidebarBox>
       <Dialog.SidebarSection>
-        GCM Devices allows you to send Push Notifications to your Android devices.
+        GCM allows you to send Push Notifications to your Android devices.
       </Dialog.SidebarSection>
       <Dialog.SidebarSection>
         <i>NOTE: At least one production or development API key must be added.</i>
@@ -22,10 +22,10 @@ const sidebar = (
         </Dialog.SidebarLink>
       </Dialog.SidebarSection>
       <Dialog.SidebarSection title="User ID">
-        Connects device with Syncano user. The device will be assigned to user with this ID.
+        Connects the device with Syncano user. The device will be assigned to the user with this ID.
       </Dialog.SidebarSection>
       <Dialog.SidebarSection title="Device ID">
-        It&#39;s unique ID assigned to your device.
+        It&#39;s a unique ID assigned to your device.
       </Dialog.SidebarSection>
       <Dialog.SidebarSection last={true}>
         <Dialog.SidebarLink to="http://docs.syncano.io/docs/sending-push-notifications">
