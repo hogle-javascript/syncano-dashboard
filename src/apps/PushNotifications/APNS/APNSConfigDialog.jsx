@@ -271,10 +271,32 @@ export default Radium(React.createClass({
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              APNS Push Notification Socket allow you to send messages to your iOS devices. You can easly notify users
+               about updates etc.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection>
+              <i>
+                NOTE: At least one production or development certificate must be uploaded to send Push Notifications.
+              </i>
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Certificates">
+              Each iOS application using APNS must have unique ID. Certificates are those IDs that uniquely identifies
+               your application.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/push-notification-sockets-ios">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
-        <div className="row align-center hp-2-l hp-2-r vm-2-b">
+        <div className="row align-center hp-2-l hp-2-r vm-2-b vm-2-t">
           <div
-            className="hm-2-r"
+            className="hm-2-r vm-6-t"
             dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
           <div className="col-flex-1">
             {this.renderDropZones()}
