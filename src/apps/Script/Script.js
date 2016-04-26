@@ -33,7 +33,10 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  autosaveAttributeName: 'scriptSourceAutosave',
+  mixinsConfig: {
+    autosaveAttributeName: 'scriptSourceAutosave',
+    editorRefs: ['editorSource', 'payloadSource']
+  },
 
   validatorConstraints() {
     const {scriptConfig} = this.state;
@@ -196,12 +199,14 @@ export default React.createClass({
   },
 
   handleUpdate() {
-    const config = this.getConfigObject();
-    const source = this.refs.editorSource.editor.getValue();
+    if (this.areEditorsLoaded()) {
+      const config = this.getConfigObject();
+      const source = this.refs.editorSource.editor.getValue();
 
-    this.clearAutosaveTimer();
-    Actions.updateScript(this.state.currentScript.id, {config, source});
-    this.setSnackbarNotification({message: 'Saving...'});
+      this.clearAutosaveTimer();
+      Actions.updateScript(this.state.currentScript.id, {config, source});
+      this.setSnackbarNotification({message: 'Saving...'});
+    }
   },
 
   handleDeleteKey(index) {
@@ -442,29 +447,31 @@ export default React.createClass({
           backFallback={() => this.transitionTo('scripts', this.getParams())}
           forceBackFallback={true}
           backButtonTooltip="Go back to Scripts list">
-          <div style={{display: 'inline-block'}}>
-            <Checkbox
-              ref="autosaveCheckbox"
-              name="autosaveCheckbox"
-              label="Autosave"
-              labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
-              defaultChecked={this.isAutosaveEnabled()}
-              onCheck={this.saveCheckboxState}/>
-          </div>
-          <RaisedButton
-            label="TRACES"
-            style={{marginRight: 5, marginLeft: 20}}
-            onTouchTap={() => this.showDialog('scriptTraces')}/>
-          <RaisedButton
-            label="SAVE"
-            style={{marginLeft: 5, marginRight: 5}}
-            onTouchTap={() => this.setFlag(false)} />
-          <RaisedButton
-            label="RUN"
-            primary={true}
-            style={{marginLeft: 5, marginRight: 0}}
-            icon={<FontIcon className="synicon-play"/>}
-            onTouchTap={() => this.setFlag(true)}/>
+          <Show if={!isLoading}>
+            <div style={{display: 'inline-block'}}>
+              <Checkbox
+                ref="autosaveCheckbox"
+                name="autosaveCheckbox"
+                label="Autosave"
+                labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
+                defaultChecked={this.isAutosaveEnabled()}
+                onCheck={this.saveCheckboxState}/>
+            </div>
+            <RaisedButton
+              label="TRACES"
+              style={{marginRight: 5, marginLeft: 20}}
+              onTouchTap={() => this.showDialog('scriptTraces')}/>
+            <RaisedButton
+              label="SAVE"
+              style={{marginLeft: 5, marginRight: 5}}
+              onTouchTap={() => this.setFlag(false)} />
+            <RaisedButton
+              label="RUN"
+              primary={true}
+              style={{marginLeft: 5, marginRight: 0}}
+              icon={<FontIcon className="synicon-play"/>}
+              onTouchTap={() => this.setFlag(true)}/>
+          </Show>
         </InnerToolbar>
         <Loading
           show={isLoading || !currentScript}

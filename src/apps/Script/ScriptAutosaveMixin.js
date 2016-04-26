@@ -5,11 +5,11 @@ export default {
   autosaveTimer: null,
 
   componentWillMount() {
-    if (!this.autosaveAttributeName) {
+    if (!this.mixinsConfig.autosaveAttributeName) {
       throw Error("Missing attribute: 'autosaveAttributeName'");
     }
-    if (!_.has(localStorage, this.autosaveAttributeName)) {
-      localStorage.setItem(this.autosaveAttributeName, true);
+    if (!_.has(localStorage, this.mixinsConfig.autosaveAttributeName)) {
+      localStorage.setItem(this.mixinsConfig.autosaveAttributeName, true);
     }
   },
 
@@ -24,11 +24,11 @@ export default {
   },
 
   isAutosaveEnabled() {
-    return JSON.parse(localStorage.getItem(this.autosaveAttributeName));
+    return JSON.parse(localStorage.getItem(this.mixinsConfig.autosaveAttributeName));
   },
 
   saveCheckboxState(event, checked) {
-    localStorage.setItem(this.autosaveAttributeName, checked);
+    localStorage.setItem(this.mixinsConfig.autosaveAttributeName, checked);
     this.forceUpdate();
   },
 
@@ -45,5 +45,11 @@ export default {
 
   setAutosaveTimer(delay = 3000) {
     this.autosaveTimer = setTimeout(this.handleUpdate, delay);
+  },
+
+  areEditorsLoaded() {
+    const {editorRefs} = this.mixinsConfig;
+
+    return !_.some(editorRefs, (ref) => _.isUndefined(this.refs[ref]));
   }
 };
