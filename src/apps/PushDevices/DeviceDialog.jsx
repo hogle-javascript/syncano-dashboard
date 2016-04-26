@@ -22,12 +22,12 @@ export default (type, Store, Actions, sidebar) => {
     validatorConstraints() {
       return {
         label: {
-          presence: true
+          presence: true,
+          length: {
+            maximum: 64
+          }
         },
         registration_id: {
-          presence: true
-        },
-        device_id: {
           presence: true
         }
       };
@@ -41,8 +41,7 @@ export default (type, Store, Actions, sidebar) => {
 
     getParams() {
       const {label, registration_id, user, device_id, is_active, metadata} = this.state;
-
-      return {
+      const params = {
         label,
         registration_id,
         user,
@@ -50,6 +49,8 @@ export default (type, Store, Actions, sidebar) => {
         is_active,
         metadata
       };
+
+      return this.removeEmptyKeys(params);
     },
 
     handleAddSubmit() {
@@ -62,6 +63,10 @@ export default (type, Store, Actions, sidebar) => {
       if (_.isFunction(Actions.updateDevice)) {
         Actions.updateDevice(this.getParams());
       }
+    },
+
+    removeEmptyKeys(params) {
+      return _.omit(params, _.isEmpty);
     },
 
     render() {

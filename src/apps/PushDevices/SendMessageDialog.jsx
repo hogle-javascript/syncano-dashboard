@@ -6,7 +6,7 @@ import _ from 'lodash';
 import {DialogMixin, FormMixin} from '../../mixins';
 
 import {TextField, Toggle, SelectField, MenuItem, Utils, Styles} from 'syncano-material-ui';
-import {Show} from 'syncano-components';
+import {Show, Truncate} from 'syncano-components';
 import {Dialog, Editor, Notification} from '../../common';
 
 export default (store, props) => {
@@ -258,7 +258,7 @@ export default (store, props) => {
 
     renderCheckedItemsData() {
       const styles = this.getStyles();
-      const {userName, label, device_id, isHeaderExpanded} = this.state;
+      const {userName, label, registration_id, isHeaderExpanded} = this.state;
       const checkedItems = props.getCheckedItems();
       let itemNodes = [
         <div
@@ -272,10 +272,10 @@ export default (store, props) => {
             {userName}
           </div>
           <div className="col-sm-9">
-            {label}
+            <Truncate text={label} />
           </div>
           <div className="col-sm-15">
-            {device_id}
+            <Truncate text={registration_id} />
           </div>
         </div>
       ];
@@ -294,10 +294,10 @@ export default (store, props) => {
                 {item.userName}
               </div>
               <div className="col-sm-9">
-                {item.label}
+                <Truncate text={item.label} />
               </div>
               <div className="col-sm-15">
-                {item.device_id}
+                <Truncate text={item.registration_id} />
               </div>
             </div>
           );
@@ -378,7 +378,7 @@ export default (store, props) => {
                 Device label
               </div>
               <div className="col-sm-15">
-                Device UUID
+                Registration ID
               </div>
             </div>
             {this.renderCheckedItemsData()}
