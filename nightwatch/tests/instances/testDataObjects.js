@@ -2,15 +2,15 @@ import Utils from '../../utils';
 
 export default {
   tags: ['dataObjects'],
-  before(client) {
+  beforeEach(client) {
     const loginPage = client.page.loginPage();
 
     loginPage
       .navigate()
       .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
-  after(client) {
-    client.end();
+  afterEach(client, done) {
+    client.end(done);
   },
   'Administrator adds a Data Object'(client) {
     const dataObjectsPage = client.page.dataObjectsPage();

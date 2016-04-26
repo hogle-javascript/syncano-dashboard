@@ -20,12 +20,12 @@ export default {
       locateStrategy: 'xpath'
     },
     traces: {
-      selector: '//div/span[text()="Traces"]',
+      selector: '//div/span[text()="TRACES"]',
       locateStrategy: 'xpath'
     },
     tracesEmpty: {
       selector: '//span[text()="There are no traces for this "]',
-      locateStrategy: "xpath"
+      locateStrategy: 'xpath'
     }
   }
 };

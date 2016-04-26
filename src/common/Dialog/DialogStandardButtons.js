@@ -1,8 +1,9 @@
 import React from 'react';
+import _ from 'lodash';
 import {FlatButton, RaisedButton} from 'syncano-material-ui';
 
 export default (props) => {
-  const {
+  let {
     handleCancel,
     handleConfirm,
     submitLabel = 'Confirm',
@@ -11,6 +12,14 @@ export default (props) => {
     submitDisabled = false,
     cancelDisabled = false
   } = props;
+
+  if (handleCancel) {
+    handleCancel = _.debounce(handleCancel, 500, {leading: true});
+  }
+
+  if (handleConfirm) {
+    handleConfirm = _.debounce(handleConfirm, 500, {leading: true});
+  }
 
   return (
     <div>

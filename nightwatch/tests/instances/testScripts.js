@@ -1,67 +1,70 @@
 import Globals from '../../globals';
-import Syncano from 'syncano';
+import Async from 'async';
 
 export default {
   tags: ['snippets'],
   before(client) {
-    const syncano = new Syncano({accountKey: Globals.tempAccountKey, baseUrl: 'https://api.syncano.rocks'});
-    const loginPage = client.page.loginPage();
+    Async.waterfall([
+      client.createTempAccount,
+      client.createTempScript,
+      client.createTempScript,
+      client.createTempScript
+    ], (err) => {
+      if (err) throw err;
+      const loginPage = client.page.loginPage();
 
-    const scriptOptions = {
-      label: 'script',
-      source: 'print "foo"',
-      runtime_name: 'python'
-    };
-    const codeBoxOptions = {
-      name: null,
-      script: null
-    };
-
-    syncano.instance(Globals.tempInstanceName).codebox().add(scriptOptions).then((success) => {
-      codeBoxOptions.codebox = success.id;
-      for (let i = 0; i < 3; i += 1) {
-        codeBoxOptions.name = `codeBox_${i.toString()}`;
-        syncano.instance(Globals.tempInstanceName).codeBox().add(codeBoxOptions);
-      }
+      loginPage
+        .navigate()
+        .login(Globals.tempEmail, Globals.tempPass);
     });
-    loginPage
-      .navigate()
-      .login(Globals.tempEmail, Globals.tempPass);
   },
   after(client) {
     client.end();
   },
-  'Test Select/Deselect multiple Script Sockets': (client) => {
-    const socketsPage = client.page.socketsPage();
+  'Test Select/Deselect multiple Scripts': (client) => {
+    const scriptsPage = client.page.scriptsPage();
+    const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
 
-    client.url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/codeboxes`);
+    // ToDO: Delete client.pause after dissappearing of scripts will be solved
+    client
+      .pause(2000)
+      .url(tempUrl);
 
-    socketsPage.waitForElementVisible('@codeBoxToSelect');
-    socketsPage.clickElement('@codeBoxToSelect');
-    socketsPage.clickElement('@selectMultipleButton');
+    scriptsPage
+      .waitForElementVisible('@scriptMenuSelect')
+      .clickListItemDropdown('@scriptMenuSelect', 'Select');
 
-    client.elements('css selector', socketsPage.elements.checkboxSelected.selector, (result) => {
+    client.elements('css selector', scriptsPage.elements.scriptsSelected.selector, (result) => {
       client.assert.equal(result.value.length, 3);
     });
 
-    socketsPage.clickElement('@deselectMultipleButton');
-    socketsPage.waitForElementVisible('@codeBoxToSelect');
+    scriptsPage
+      .waitForElementVisible('@scriptMenuSelect');
+    client
+      .pause(2000);
+    scriptsPage
+      .clickListItemDropdown('@scriptMenuSelect', 'Unselect');
 
-    client.elements('css selector', socketsPage.elements.codeBoxToSelect.selector, (result) => {
-      client.assert.equal(result.value.length, 3);
+    client.elements('css selector', scriptsPage.elements.scriptsSelected.selector, (result) => {
+      client.assert.equal(result.value.length, 0);
     });
   },
-  'Test Delete multiple Script Sockets': (client) => {
-    const socketsPage = client.page.socketsPage();
+  'Test Delete multiple Scripts': (client) => {
+    const scriptsPage = client.page.scriptsPage();
+    const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
 
-    client.url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/codeboxes`);
+    client
+      .url(tempUrl)
+      .pause(2000);
 
-    socketsPage.waitForElementVisible('@codeBoxToSelect');
-    socketsPage.clickElement('@codeBoxToSelect');
-    socketsPage.clickElement('@selectMultipleButton');
-    socketsPage.clickElement('@deleteButton');
-    socketsPage.waitForElementVisible('@deleteCodeBoxModalTitle');
-    socketsPage.clickElement('@confirmButton');
-    socketsPage.waitForElementVisible('@emptyListItem');
+    scriptsPage
+      .clickListItemDropdown('@scriptMenuSelect', 'Select');
+    client
+      .pause(2000);
+    scriptsPage
+      .clickListItemDropdown('@scriptMenuSelect', 'Delete')
+      .waitForElementVisible('@deleteScriptsDialogTitle')
+      .clickElement('@confirmButton')
+      .waitForElementVisible('@emptyListItem');
   }
 };
