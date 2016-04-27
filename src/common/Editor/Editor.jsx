@@ -86,7 +86,7 @@ export default React.createClass({
   },
 
   onChange() {
-    let value = this.editor.getValue();
+    const value = this.editor.getValue();
 
     if (this.props.onChange) {
       this.props.onChange(value);

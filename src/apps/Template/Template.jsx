@@ -83,7 +83,9 @@ export default React.createClass({
     const {renderedTemplate} = this.state;
 
     if (renderedTemplate) {
-      this.refs.previewEditor.editor.setValue(renderedTemplate);
+      const value = _.isObject(renderedTemplate) ? JSON.stringify(renderedTemplate, null, '\t') : renderedTemplate;
+
+      this.refs.previewEditor.editor.setValue(value);
     }
   },
 
@@ -289,7 +291,7 @@ export default React.createClass({
                     height="200px"
                     onChange={this.handleOnSourceChange}
                     onLoad={this.clearAutosaveTimer}
-                    value={JSON.stringify(this.state.template.context, null, '\t') || [
+                    value={JSON.stringify(template.context, null, '\t') || [
                       '{',
                       '    "foo": "bar",',
                       '    "bar": "foo"',
@@ -312,7 +314,6 @@ export default React.createClass({
                       ref="previewEditor"
                       mode="html"
                       readOnly={true}
-                      value=""
                       width="100%"
                       height="100%"
                       style={{position: 'absolute'}} />

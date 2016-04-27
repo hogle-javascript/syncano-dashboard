@@ -3,6 +3,7 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 export default CreateActions({
   fetch: {},
   setFlag: {},
+  resetFlag: {},
   setDataSource: {},
 
   fetchTemplate: {
