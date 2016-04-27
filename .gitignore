@@ -28,3 +28,6 @@ dist/
 reports/
 bin/
 .jshintrc
+
+# OS files
+.DS_Store

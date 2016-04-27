@@ -10,7 +10,7 @@ export default {
   },
   'Admin Logs in with Facebook': (client) => {
     const loginPage = client.page.loginPage();
-    const profilePage = client.page.profilePage();
+    const instancesPage = client.page.instancesPage();
 
     loginPage.clickElement('@loginButtonFacebook');
     client
@@ -20,17 +20,19 @@ export default {
 
         client.switchWindow(handle);
       });
-    loginPage.fillInput('@emailInputFacebook', process.env.FACEBOOK_EMAIL);
-    loginPage.fillInput('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD);
-    loginPage.clickElement('@signInButtonFacebook');
+    loginPage
+      .fillInput('@emailInputFacebook', process.env.FACEBOOK_EMAIL)
+      .fillInput('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD)
+      .clickElement('@signInButtonFacebook');
 
     client.windowHandles((result) => {
       const handle = result.value[0];
 
       client.switchWindow(handle);
     });
-    profilePage.navigate();
-    profilePage.waitForElementPresent('@email');
+    instancesPage
+      .navigate()
+      .waitForElementPresent('@instancesTable');
   }
   // 'Admin Logs in with Google': (client) => {
   //   const loginPage = client.page.loginPage();
@@ -51,6 +53,7 @@ export default {
   //     .clickElement('@signInButtonGoogle');
 
   //   client.pause(2000);
+
   //   loginPage.clickElement('@approveAccessButtonGoogle');
 
   //   client.windowHandles((result) => {
@@ -58,11 +61,14 @@ export default {
 
   //     client.switchWindow(handle);
   //   });
-  //   instancesPage.waitForElementPresent('@instancesTable');
+  //   instancesPage
+  //     .navigate()
+  //     .waitForElementPresent('@instancesTable');
   // },
   // 'Admin Logs in with Github': (client) => {
   //   const loginPage = client.page.loginPage();
   //   const instancesPage = client.page.instancesPage();
+  //   const screenshotPath = './reports/';
 
   //   loginPage.clickElement('@loginButtonGithub');
   //   client
@@ -70,6 +76,7 @@ export default {
   //     .windowHandles((result) => {
   //       const handle = result.value[1];
 
+  //       client.assert.equal(result.value.length, 2, 'There should be two windows open.');
   //       client.switchWindow(handle);
   //     });
   //   loginPage
@@ -77,11 +84,20 @@ export default {
   //     .fillInput('@passInputGithub', process.env.NIGHTWATCH_PASSWORD)
   //     .clickElement('@signInButtonGithub');
 
-  //   client.windowHandles((result) => {
-  //     const handle = result.value[0];
+  //   client
+  //     .pause(3000)
+  //     .windowHandles((result) => {
+  //       client.assert.equal(result.value.length, 1, 'There should be only one window open.');
+  //       client.switchWindow(result.value[0]);
+  //     })
+  //     .pause(3000)
+  //     .saveScreenshot(screenshotPath + 'GitHub-afterlogin.png');
 
-  //     client.switchWindow(handle);
-  //   });
-  //   instancesPage.waitForElementPresent('@socketsHeaderTitle');
+  //   instancesPage.navigate();
+  //   client
+  //     .pause(3000)
+  //     .saveScreenshot(screenshotPath + 'GitHub-beforeassertion.png');
+  //   instancesPage
+  //     .waitForElementPresent('@instancesTable');
   // }
 };
