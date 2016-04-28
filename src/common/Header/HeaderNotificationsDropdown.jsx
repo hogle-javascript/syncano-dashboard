@@ -186,6 +186,7 @@ export default Radium(React.createClass({
 
   render() {
     const {isLoading, open, anchorEl} = this.state;
+    const {id} = this.props;
 
     return (
       <div>
@@ -197,6 +198,7 @@ export default Radium(React.createClass({
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           onRequestClose={(event) => this.togglePopover(event, false)}>
           <MenuItem
+            id={id}
             key="notificationDropdownHeader"
             primaryText="Notifications"
             disabled={true}/>
