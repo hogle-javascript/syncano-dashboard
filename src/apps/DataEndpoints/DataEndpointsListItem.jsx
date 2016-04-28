@@ -38,7 +38,7 @@ export default React.createClass({
           secondaryText={
             <Clipboard
               text={item.links.self}
-              copyText={`${SYNCANO_BASE_URL.slice(0, -1)}${item.links.self}`}
+              copyText={`${SYNCANO_BASE_URL.slice(0, -1)}${item.links.get}`}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Data Endpoint url copied!'
               })}
