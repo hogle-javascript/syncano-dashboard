@@ -18,7 +18,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       template: {},
-      renderedTemplate: null,
+      renderedTemplate: '',
       isRendering: false,
       isLoading: true,
       successValidationAction: null,
@@ -47,7 +47,7 @@ export default Reflux.createStore({
 
   clearTemplate() {
     this.data.template = null;
-    this.data.renderedTemplate = null;
+    this.data.renderedTemplate = '';
   },
 
   setFlag(flagName, callback) {
@@ -56,6 +56,11 @@ export default Reflux.createStore({
     if (typeof callback === 'function') {
       callback();
     }
+  },
+
+  resetFlag() {
+    this.data.successValidationAction = 'update';
+    this.trigger(this.data);
   },
 
   setDataSource(dataSource) {
@@ -85,11 +90,13 @@ export default Reflux.createStore({
   onRenderTemplateCompleted(renderedTemplate) {
     console.debug('TemplateStore::onRenderTemplateCompleted');
     this.saveRenderedTemplate(renderedTemplate);
+    Actions.resetFlag();
   },
 
   onRenderTemplateFailure() {
     console.debug('TemplateStore::onRenderTemplateFailure');
-    this.saveRenderedTemplate(null);
+    this.saveRenderedTemplate('');
+    Actions.resetFlag();
   },
 
   onRenderFromEndpointCompleted(renderedTemplate) {
@@ -112,9 +119,11 @@ export default Reflux.createStore({
       window.open(`${dataSource}?template_response=${template.name}&api_key=${apiKey}`, '_blank');
     }
     this.refreshData();
+    Actions.resetFlag();
   },
 
   onUpdateTemplateFailure() {
     this.dismissSnackbarNotification();
+    Actions.resetFlag();
   }
 });

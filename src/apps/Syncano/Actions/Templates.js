@@ -55,8 +55,11 @@ export default {
   },
 
   renderFromEndpoint(templateName, endpointUrl) {
-    const params = {template_response: templateName, serialize: false};
     const endpointUrlWithoutDomain = endpointUrl.substring(endpointUrl.indexOf('/v1'));
+    const params = {
+      template_response: templateName,
+      serialize: false
+    };
 
     this.Connection
       .request('GET', endpointUrlWithoutDomain, params)

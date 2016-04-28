@@ -4,7 +4,7 @@ import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
-import AutosaveMixin from './TemplateAutosaveMixin';
+import AutosaveMixin from '../Script/ScriptAutosaveMixin';
 
 import Store from './TemplateStore';
 import Actions from './TemplateActions';
@@ -83,7 +83,9 @@ export default React.createClass({
     const {renderedTemplate} = this.state;
 
     if (renderedTemplate) {
-      this.refs.previewEditor.editor.setValue(renderedTemplate);
+      const value = _.isObject(renderedTemplate) ? JSON.stringify(renderedTemplate, null, '\t') : renderedTemplate;
+
+      this.refs.previewEditor.editor.setValue(value);
     }
   },
 
@@ -124,10 +126,10 @@ export default React.createClass({
     if (template && contentEditor && contextEditor) {
       const contentEditorValue = contentEditor.editor.getValue();
       const contextEditorValue = contextEditor.editor.getValue();
-      const isNewContent = template.content === contentEditorValue;
-      const isNewContext = template.context === contextEditorValue;
+      const isContentSaved = _.isEqual(template.content, contentEditorValue);
+      const isContextSaved = _.isEqual(JSON.stringify(template.context, null, '\t'), contextEditorValue);
 
-      return !(isNewContent || isNewContext);
+      return isContentSaved && isContextSaved;
     }
 
     return true;
@@ -244,7 +246,6 @@ export default React.createClass({
                 title="Code"
                 initialOpen={true}
                 style={{display: 'flex', flexDirection: 'column'}}>
-                {this.renderErrorNotifications('content')}
                 <div style={{position: 'relative', flex: 1}}>
                   <Editor
                     ref="contentEditor"
@@ -254,8 +255,11 @@ export default React.createClass({
                     onLoad={this.clearAutosaveTimer}
                     value={template.content}
                     width="100%"
-                    height="100%"
+                    height="calc(100% - 60px)"
                     style={{position: 'absolute'}} />
+                  <div style={{position: 'absolute', bottom: 0, margin: '5px auto -20px auto', width: '100%'}}>
+                    {this.renderErrorNotifications('content')}
+                  </div>
                 </div>
               </TogglePanel>
             </div>
@@ -272,7 +276,6 @@ export default React.createClass({
                     valueLink={this.linkState('dataSourceUrl')}
                     errorText={this.getValidationMessages('dataSourceUrl').join(' ')}
                     hintText={<Truncate text={`e.g. ${SYNCANO_BASE_URL}v1.1/instances/${instanceName}/classes/`}/>}
-                    onChange={this.handleOnSourceChange}
                     floatingLabelText="Data source URL"/>
                 </TogglePanel>
               </div>
@@ -281,7 +284,6 @@ export default React.createClass({
                 <TogglePanel
                   title="Context"
                   initialOpen={true}>
-                  {this.renderErrorNotifications('context')}
                   <Editor
                     name="contextEditor"
                     ref="contextEditor"
@@ -289,13 +291,16 @@ export default React.createClass({
                     height="200px"
                     onChange={this.handleOnSourceChange}
                     onLoad={this.clearAutosaveTimer}
-                    value={JSON.stringify(this.state.template.context, null, '\t') || [
+                    value={JSON.stringify(template.context, null, '\t') || [
                       '{',
                       '    "foo": "bar",',
                       '    "bar": "foo"',
                       '}'
                     ].join('\n')} />
                 </TogglePanel>
+                <div style={{padding: '10px 20px 10px 20px'}}>
+                  {this.renderErrorNotifications('context')}
+                </div>
               </div>
 
               <div style={{flex: 1, display: 'flex'}}>
@@ -309,7 +314,6 @@ export default React.createClass({
                       ref="previewEditor"
                       mode="html"
                       readOnly={true}
-                      value=""
                       width="100%"
                       height="100%"
                       style={{position: 'absolute'}} />
