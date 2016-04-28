@@ -8,10 +8,10 @@ import SessionStore from '../../apps/Session/SessionStore';
 import ProfileInvitationsStore from '../../apps/ProfileInvitations/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../../apps/ProfileInvitations/ProfileInvitationsActions';
 
-import {Utils, Styles, FontIcon, MenuItem, Divider, Badge, IconButton, IconMenu} from 'syncano-material-ui';
+import {Popover, Utils, Styles, FontIcon, MenuItem, Divider, Badge, IconButton} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {SnackbarNotificationMixin} from '../../mixins';
-import StandardButtons from '../Dialog/DialogStandardButtons';
+import InvitationItem from './InvitationItem';
 
 export default Radium(React.createClass({
   displayName: 'HeaderNotificationsDropdown',
@@ -31,6 +31,12 @@ export default Radium(React.createClass({
 
   componentDidMount() {
     ProfileInvitationsActions.fetch();
+  },
+
+  getInitialState() {
+    return {
+      open: false
+    };
   },
 
   getStyles() {
@@ -65,49 +71,46 @@ export default Radium(React.createClass({
         paddingTop: '12px',
         paddingBottom: '12px',
         position: 'relative'
-      },
-      menu: {
-        cursor: 'auto',
-        maxHeight: '500px',
-        overflowY: 'auto',
-        border: '1px solid #DDD',
-        minWidth: '400px'
       }
     };
-  },
-
-  hasLastInvitation() {
-    const {items} = this.state;
-
-    if (items.length <= 1) {
-      this.refs.headerNotificationDropdown.close();
-    }
   },
 
   handleAcceptInvitations(items) {
     console.info('Header::handleAcceptInvitations');
     ProfileInvitationsActions.acceptInvitations(items);
-    event.stopPropagation();
-    this.hasLastInvitation();
+    this.shouldPopoverHide();
   },
 
   handleDeclineInvitations(items) {
     console.info('Header::handleDeclineInvitations');
     ProfileInvitationsActions.declineInvitations(items);
-    event.stopPropagation();
-    this.hasLastInvitation();
+    this.shouldPopoverHide();
   },
 
   handleResendEmail() {
     console.info('Header::handleResendEmail');
     AuthActions.resendActivationEmail(SessionStore.getUser().email);
     this.setSnackbarNotification({message: 'Activation e-mail was sent'});
-    this.hasLastInvitation();
+    this.shouldPopoverHide();
   },
 
-  handleNotificationsIconClick() {
-    console.info('Header::handleNotificationsIconClick');
-    ProfileInvitationsActions.fetchInvitations();
+  shouldPopoverHide() {
+    const {items} = this.state;
+
+    if (!items.length) {
+      this.togglePopover(null, false);
+    }
+  },
+
+  togglePopover(event, isOpen) {
+    if (isOpen) {
+      ProfileInvitationsActions.fetchInvitations();
+    }
+
+    this.setState({
+      open: isOpen,
+      anchorEl: event ? event.currentTarget : null
+    });
   },
 
   renderItems() {
@@ -121,58 +124,34 @@ export default Radium(React.createClass({
           key="empty"
           primaryText="You don't have any notifications"
           disabled={true}
+          style={styles.menuItem}
           leftIcon={
             <FontIcon
               className="synicon-information"
               color={Styles.Colors.lightBlueA700} />
-          }
-          style={styles.menuItem}/>
+          }/>
       );
     }
 
-    let notifications = items.map((item) => {
-      return (
-        <div>
-          <MenuItem
-            key={`invitation-${item.id}`}
-            disabled={true}
-            leftIcon={
-              <FontIcon
-                key={`${item.id}Icon`}
-                className="synicon-share-variant"
-                color={Styles.Colors.lightGreen500} />
-            }
-            innerDivStyle={{opacity: 1}}
-            style={styles.menuItem}>
-            <div>
-              <strong>{`${item.inviter} `}</strong>
-              invited you to their instance
-              <strong>{` ${item.instance}`}</strong>
-            </div>
-            <div className="vp-2-t">
-              <StandardButtons
-                cancelLabel="Decline"
-                submitLabel="Accept"
-                handleCancel={() => this.handleDeclineInvitations([item])}
-                handleConfirm={() => this.handleAcceptInvitations([item])}/>
-            </div>
-          </MenuItem>
-          <Divider/>
-        </div>
-      );
-    });
+    let notifications = items.map((item) =>
+      <InvitationItem
+        key={`invitation${item.id}`}
+        item={item}
+        handleAccept={() => this.handleAcceptInvitations([item])}
+        handleDecline={() => this.handleDeclineInvitations([item])}/>
+    );
 
     if (SessionStore.getUser() && !SessionStore.getUser().is_active) {
       notifications.push(
         <MenuItem
           key="resend-link"
+          style={styles.menuItem}
+          onTouchTap={this.handleResendEmail}
           leftIcon={
             <FontIcon
               className="synicon-alert"
               color={Styles.Colors.orange500}/>
-          }
-          style={styles.menuItem}
-          onTouchTap={this.handleResendEmail}>
+          }>
           <div style={styles.resendEmailText}>
             Your email address is not yet verified. Click here to resend activation email.
           </div>
@@ -193,50 +172,44 @@ export default Radium(React.createClass({
     const badgeStyle = this.mergeStyles(styles.badge, isBadge && styles.badgeFilled);
 
     return (
-      <div>
-        <Badge
-          badgeContent={notificationCountIcon}
-          style={badgeContainerStyle}
-          badgeStyle={badgeStyle}>
-          <IconButton
-            iconStyle={styles.icon}
-            iconClassName={iconClassName}
-            onTouchTap={this.handleNotificationsIconClick}/>
-        </Badge>
-      </div>
+      <Badge
+        badgeContent={notificationCountIcon}
+        style={badgeContainerStyle}
+        badgeStyle={badgeStyle}>
+        <IconButton
+          iconStyle={styles.icon}
+          iconClassName={iconClassName}
+          onTouchTap={(event) => this.togglePopover(event, true)}/>
+      </Badge>
     );
   },
 
   render() {
-    const styles = this.getStyles();
+    const {isLoading, open, anchorEl} = this.state;
     const {id} = this.props;
-    const {isLoading} = this.state;
 
     return (
-      <IconMenu
-        id={id}
-        ref="headerNotificationDropdown"
-        iconButtonElement={this.renderIcon()}
-        autoWidth={false}
-        maxWidth="400px"
-        anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'middle'
-        }}
-        targetOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        menuStyle={styles.menu}>
-        <MenuItem
-          key="notificationDropdownHeader"
-          primaryText="Notifications"
-          disabled={true}/>
-        <Divider/>
-        <Loading show={isLoading}>
+      <div>
+        {this.renderIcon()}
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          onRequestClose={(event) => this.togglePopover(event, false)}>
+          <MenuItem
+            id={id}
+            key="notificationDropdownHeader"
+            primaryText="Notifications"
+            disabled={true}/>
+          <Divider/>
           {this.renderItems()}
-        </Loading>
-      </IconMenu>
-  );
+          <Loading
+            type="linear"
+            position="bottom"
+            show={isLoading}/>
+        </Popover>
+      </div>
+    );
   }
 }));
