@@ -8,7 +8,7 @@ import SessionStore from '../../apps/Session/SessionStore';
 import ProfileInvitationsStore from '../../apps/ProfileInvitations/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../../apps/ProfileInvitations/ProfileInvitationsActions';
 
-import {Utils, Styles, FontIcon, MenuItem, Divider, Badge, IconButton, IconMenu} from 'syncano-material-ui';
+import {Popover, Utils, Styles, FontIcon, MenuItem, Divider, Badge, IconButton} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import {SnackbarNotificationMixin} from '../../mixins';
 import StandardButtons from '../Dialog/DialogStandardButtons';
@@ -31,6 +31,12 @@ export default Radium(React.createClass({
 
   componentDidMount() {
     ProfileInvitationsActions.fetch();
+  },
+
+  getInitialState() {
+    return {
+      open: false
+    };
   },
 
   getStyles() {
@@ -66,7 +72,7 @@ export default Radium(React.createClass({
         paddingBottom: '12px',
         position: 'relative'
       },
-      menu: {
+      popover: {
         cursor: 'auto',
         maxHeight: '500px',
         overflowY: 'auto',
@@ -105,9 +111,15 @@ export default Radium(React.createClass({
     this.hasLastInvitation();
   },
 
-  handleNotificationsIconClick() {
-    console.info('Header::handleNotificationsIconClick');
-    ProfileInvitationsActions.fetchInvitations();
+  togglePopover(event, isOpen) {
+    if (isOpen) {
+      ProfileInvitationsActions.fetchInvitations();
+    }
+
+    this.setState({
+      open: isOpen,
+      anchorEl: event.currentTarget
+    });
   },
 
   renderItems() {
@@ -132,9 +144,8 @@ export default Radium(React.createClass({
 
     let notifications = items.map((item) => {
       return (
-        <div>
+        <div key={`invitation-${item.id}`}>
           <MenuItem
-            key={`invitation-${item.id}`}
             disabled={true}
             leftIcon={
               <FontIcon
@@ -201,7 +212,7 @@ export default Radium(React.createClass({
           <IconButton
             iconStyle={styles.icon}
             iconClassName={iconClassName}
-            onTouchTap={this.handleNotificationsIconClick}/>
+            onTouchTap={(event) => this.togglePopover(event, true)}/>
         </Badge>
       </div>
     );
@@ -209,34 +220,30 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {id} = this.props;
-    const {isLoading} = this.state;
+    const {isLoading, open, anchorEl} = this.state;
 
     return (
-      <IconMenu
-        id={id}
-        ref="headerNotificationDropdown"
-        iconButtonElement={this.renderIcon()}
-        autoWidth={false}
-        maxWidth="400px"
-        anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'middle'
-        }}
-        targetOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        menuStyle={styles.menu}>
-        <MenuItem
-          key="notificationDropdownHeader"
-          primaryText="Notifications"
-          disabled={true}/>
-        <Divider/>
-        <Loading show={isLoading}>
+      <div>
+        {this.renderIcon()}
+        <Popover
+          style={styles.popover}
+          open={open}
+          anchorEl={anchorEl}
+          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          onRequestClose={(event) => this.togglePopover(event, false)}>
+          <MenuItem
+            key="notificationDropdownHeader"
+            primaryText="Notifications"
+            disabled={true}/>
+          <Divider/>
           {this.renderItems()}
-        </Loading>
-      </IconMenu>
-  );
+          <Loading
+            type="linear"
+            position="bottom"
+            show={isLoading}/>
+        </Popover>
+      </div>
+    );
   }
 }));
