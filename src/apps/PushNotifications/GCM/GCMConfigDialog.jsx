@@ -26,12 +26,12 @@ export default React.createClass({
     return {
       development_api_key: {
         length: {
-          maximum: 200
+          maximum: 40
         }
       },
       production_api_key: {
         length: {
-          maximum: 200
+          maximum: 40
         }
       }
     };
@@ -59,10 +59,18 @@ export default React.createClass({
     };
   },
 
-  handleAddSubmit() {
+  handleSaveGCMConfig() {
     const {production_api_key, development_api_key} = this.state;
 
     Actions.configGCMPushNotification({production_api_key, development_api_key});
+  },
+
+  handleAddSubmit() {
+    this.handleSaveGCMConfig();
+  },
+
+  handleEditSubmit() {
+    this.handleSaveGCMConfig();
   },
 
   render() {
