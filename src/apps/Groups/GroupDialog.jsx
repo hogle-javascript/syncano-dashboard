@@ -34,7 +34,7 @@ export default React.createClass({
   handleEditSubmit() {
     const {id, label} = this.state;
 
-    Actions.updateGroup(id, {label});
+    Actions.updateGroup(id, label);
   },
 
   render() {

@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 import pluralize from 'pluralize';
 import _ from 'lodash';
 
-import {Loading} from 'syncano-components';
 import {FontIcon, Styles} from 'syncano-material-ui';
 import Dialog from './FullPageDialog';
 import StandardButtons from './DialogStandardButtons';
@@ -102,12 +101,13 @@ export default React.createClass({
 
   render() {
     const {children, icon, ...other} = this.props;
+    const {open} = this.state;
 
     return (
       <Dialog
         onRequestClose={this.dismiss}
         contentSize="small"
-        open={this.state.open}
+        open={open}
         modal={true}
         actions={
           <StandardButtons
@@ -123,10 +123,6 @@ export default React.createClass({
             {children ? children : this.renderContent()}
           </div>
         </div>
-        <Loading
-          type="linear"
-          position="bottom"
-          show={this.props.isLoading}/>
       </Dialog>
     );
   }

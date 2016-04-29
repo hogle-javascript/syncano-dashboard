@@ -30,6 +30,8 @@ export default Radium(React.createClass({
   },
 
   initDialogs() {
+    const {isLoading} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -37,10 +39,10 @@ export default Radium(React.createClass({
         ref: 'removeGroupDialog',
         title: 'Delete a Group',
         handleConfirm: Actions.removeGroups,
-        isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         itemLabelName: 'label',
-        groupName: 'Group'
+        groupName: 'Group',
+        isLoading
       }
     }];
   },

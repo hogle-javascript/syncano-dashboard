@@ -58,11 +58,6 @@ export default Reflux.createStore({
     Actions.setUsers(payload);
   },
 
-  onFetchGroupUsersCompleted(payload) {
-    console.debug('UsersStore::onFetchGroupUsersCompleted');
-    Actions.setUsers(payload);
-  },
-
   onRemoveUsersCompleted() {
     console.debug('UsersStore::onRemoveUsersCompleted');
     this.data.hideDialogs = true;
@@ -76,21 +71,6 @@ export default Reflux.createStore({
 
   onUpdateUserCompleted() {
     console.debug('UsersStore::onUpdateUserCompleted');
-    this.refreshData();
-  },
-
-  onUpdateGroupCompleted() {
-    console.debug('UsersStore::onUpdateGroupCompleted');
-    this.refreshData();
-  },
-
-  onRemoveGroupsCompleted() {
-    console.debug('UsersStore::onRemoveGroupsCompleted');
-    this.refreshData();
-  },
-
-  onFetchGroupsCompleted() {
-    console.debug('UsersStore::onSetActiveGroup');
     this.refreshData();
   }
 });

@@ -2,43 +2,38 @@ import _ from 'lodash';
 
 export default {
   create(label) {
-    this.Connection
-      .Groups
-      .create(label)
+    this.NewLibConnection
+      .Group
+      .please()
+      .create({label})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Groups
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Group
+      .please()
+      .list()
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(id, payload) {
-    this.Connection
-      .Groups
-      .update(id, payload)
+  update(id, label) {
+    this.NewLibConnection
+      .Group
+      .please()
+      .update({id}, {label})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(ids) {
-    const promises = ids.map((id) => this.Connection.Groups.remove(id));
+  remove(groups) {
+    const ids = _.pluck(groups, 'id');
+    const promises = _.map(ids, (id) => this.NewLibConnection.Group.please().delete({id}));
 
     this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
-  },
-
-  listUsers(groupId) {
-    this.Connection
-      .Groups
-      .getUsers(groupId)
-      .then(this.completed)
-      .catch(this.failure);
   }
 };
