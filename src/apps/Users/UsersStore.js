@@ -49,11 +49,7 @@ export default Reflux.createStore({
   },
 
   setUsers(users) {
-    let usersArray = users._items ? users._items : users;
-
-    this.data.items = Object.keys(usersArray).map((key) => {
-      return usersArray[key].user ? usersArray[key].user : usersArray[key];
-    });
+    this.data.items = users;
     this.trigger(this.data);
   },
 

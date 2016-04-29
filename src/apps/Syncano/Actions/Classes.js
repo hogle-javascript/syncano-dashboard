@@ -4,6 +4,7 @@ export default {
       .Class
       .please()
       .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },

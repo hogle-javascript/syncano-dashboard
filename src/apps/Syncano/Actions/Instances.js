@@ -71,7 +71,7 @@ export default {
 
     this.Promise.mapSeries(promises)
       .then(this.completed)
-      .error(this.failure);
+      .catch(this.failure);
   },
 
   removeShared(names, adminId) {
@@ -79,7 +79,7 @@ export default {
 
     this.Promise.all(promises)
       .then(this.completed)
-      .error(this.failure);
+      .catch(this.failure);
   },
 
   set(name) {
