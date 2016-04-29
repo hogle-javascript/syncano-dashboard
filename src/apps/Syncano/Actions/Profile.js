@@ -30,6 +30,7 @@ export default {
   },
 
   getUser(token) {
+    this.NewLibConnection.setAccountKey(token);
     this.Connection
       .setApiKey(token)
       .Accounts

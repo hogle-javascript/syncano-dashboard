@@ -164,7 +164,7 @@ export default Reflux.createStore({
 
   onFetchInstancesCompleted(items) {
     console.debug('InstancesStore::onFetchInstancesCompleted');
-    Actions.setInstances(this.saveListFromSyncano(items));
+    Actions.setInstances(items);
   },
 
   onFetchInstancesFailure(result) {

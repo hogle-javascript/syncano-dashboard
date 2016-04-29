@@ -1,18 +1,20 @@
 import _ from 'lodash';
 
 export default {
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Instances
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Instance
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
   create(payload) {
-    this.Connection
-      .Instances
+    this.NewLibConnection
+      .Instance
+      .please()
       .create({
         name: payload.name,
         description: payload.description,
@@ -23,39 +25,51 @@ export default {
   },
 
   update(name, payload) {
-    this.Connection
-      .Instances
-      .update(name, payload)
+    const {description, metadata} = payload;
+
+    this.NewLibConnection
+      .Instance
+      .please()
+      .update({name}, {description, metadata})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  rename(name, payload) {
-    this.Connection
-      .Instances
-      .rename(name, payload)
+  rename(name, newName) {
+    this.NewLibConnection
+      .Instance
+      .please()
+      .rename({name}, {new_name: newName})
       .then(this.completed)
       .catch(this.failure);
   },
 
   renameAndUpdate(name, newName, payload) {
-    this.Connection
-      .Instances
-      .rename(name, {new_name: newName})
+    const {description, metadata} = payload;
+
+    this.NewLibConnection
+      .Instance
+      .please()
+      .rename({name}, {new_name: newName})
       .then(() => {
-        this.Connection
-          .Instances
-          .update(newName, payload)
+        this.NewLibConnection
+          .Instance
+          .please()
+          .update({name: newName}, {description, metadata})
           .then(this.completed)
           .catch(this.failure);
       })
       .catch(this.failure);
   },
 
-  remove(names) {
-    const promises = _.map(names, this.Connection.Instances.remove);
+  remove(instances) {
+    const promises = _.map(instances, (instance) =>
+      this.NewLibConnection
+        .Instance
+        .please()
+        .delete({name: instance.name}));
 
-    this.Promise.all(promises)
+    this.Promise.mapSeries(promises)
       .then(this.completed)
       .error(this.failure);
   },
@@ -69,9 +83,13 @@ export default {
   },
 
   set(name) {
-    this.Connection
-      .setInstance(name)
+    this.NewLibConnection.setInstanceName(name);
+    this.NewLibConnection
+      .Instance
+      .please()
+      .get({name})
       .then(this.completed)
       .catch(this.failure);
+    this.Connection.setInstance(name);
   }
 };

@@ -42,9 +42,11 @@ export default React.createClass({
 
   getDialogList(items, paramName, associationFor) {
     const listItems = items.map((item) => {
-      const isAssociated = (item.triggers && item.triggers.length) || (item.schedules && item.schedules.length);
-      const triggersAssociation = item.triggers ? ` (${item.triggers.join(', ')})` : '';
-      const schedulesAssociation = item.schedules ? ` (${item.schedules.join(', ')})` : '';
+      const isAssociatedWithTriggers = _.isArray(item.triggers) && item.triggers.length;
+      const isAssociatedWithSchedules = _.isArray(item.schedules) && item.schedules.length;
+      const isAssociated = (isAssociatedWithTriggers) || (isAssociatedWithSchedules);
+      const triggersAssociation = _.isArray(item.triggers) ? ` (${item.triggers.join(', ')})` : '';
+      const schedulesAssociation = _.isArray(item.schedules) ? ` (${item.schedules.join(', ')})` : '';
       let association = '';
 
       if (isAssociated && associationFor === 'triggers') {

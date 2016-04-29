@@ -1,11 +1,9 @@
-import _ from 'lodash';
-
 export default {
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Classes
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Class
+      .please()
+      .list()
       .then(this.completed)
       .catch(this.failure);
   },
