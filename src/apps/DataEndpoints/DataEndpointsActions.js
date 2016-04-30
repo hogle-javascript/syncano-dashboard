@@ -16,6 +16,12 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataEndpoints.create'
     },
+    createDataEndpointWithClass: {
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataEndpoints.createWithClass'
+    },
     updateDataEndpoint: {
       asyncResult: true,
       asyncForm: true,

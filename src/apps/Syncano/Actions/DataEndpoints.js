@@ -9,6 +9,23 @@ export default {
       .catch(this.failure);
   },
 
+  createWithClass(payload) {
+    this.Connection
+      .Classes
+      .create({
+        name: payload.class,
+        schema: ''
+      })
+      .then(() => {
+        this.Connection
+          .DataViews
+          .create(payload)
+          .then(this.completed)
+          .catch(this.failure);
+      })
+      .catch(this.failure);
+  },
+
   list(params = {}) {
     _.defaults(params, {ordering: 'desc'});
     this.Connection

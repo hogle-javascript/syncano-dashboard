@@ -5,6 +5,7 @@ import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
 
 // Stores & Actions
 import DataEndpointsActions from './DataEndpointsActions';
+import DataEndpointSummaryDialogActions from './DataEndpointSummaryDialogActions';
 import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
@@ -55,6 +56,14 @@ export default Reflux.createStore({
   onCreateDataEndpointCompleted() {
     console.debug('DataEndpointDialogStore::onCreateDataEndpointCompleted');
     this.dismissDialog();
+    DataEndpointSummaryDialogActions.showDialog();
+    DataEndpointsActions.fetchDataEndpoints();
+  },
+
+  onCreateDataEndpointWithClassCompleted() {
+    console.debug('DataEndpointDialogStore::onCreateDataEndpointCompleted');
+    this.dismissDialog();
+    DataEndpointSummaryDialogActions.showDialog();
     DataEndpointsActions.fetchDataEndpoints();
   },
 

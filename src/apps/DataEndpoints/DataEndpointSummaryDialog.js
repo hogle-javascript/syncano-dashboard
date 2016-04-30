@@ -1,0 +1,94 @@
+import React from 'react';
+import Reflux from 'reflux';
+
+import Store from './DataEndpointSummaryDialogStore';
+import DataEndpointsStore from './DataEndpointsStore';
+import SessionStore from '../Session/SessionStore';
+
+import {DialogMixin} from '../../mixins';
+import {Dialog} from '../../common';
+import {Card, CardTitle, CardText, RaisedButton, Styles} from 'syncano-material-ui';
+
+export default React.createClass({
+  displayName: 'DataEndpointSummaryDialog',
+
+  mixins: [
+    Reflux.connect(Store),
+    DialogMixin
+  ],
+
+  render() {
+    const {open} = this.state;
+    const item = DataEndpointsStore.data.items[0];
+
+
+    return (
+      <Dialog.FullPage
+        key="dialog"
+        ref="dialog"
+        title="Hooray! You've just created a Data Endpoint!"
+        titleStyle={{paddingLeft: 72}}
+        onRequestClose={this.handleCancel}
+        open={open}>
+        <div style={{position: 'absolute', top: 0, left: 24}}>
+          <span
+            className="synicon-socket-data"
+            style={{
+              color: Styles.Colors.green400,
+              fontSize: 32
+            }} />
+        </div>
+        {!item ? null : (
+          <div>
+            <Dialog.ContentSection>
+              <div className="col-flex-1">
+                <div style={{fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)'}}>
+                  <p>
+                    Data Endpoint you just created, can always be modified later. You can change which fields from your
+                    objects should be hidden, which should stay visible, which reference fields to expand and how should
+                    look like the search query applied to it.
+                  </p>
+                </div>
+              </div>
+            </Dialog.ContentSection>
+            <Dialog.ContentSection>
+              <div className="col-flex-1">
+                <Card>
+                  <CardTitle title="Preview Data" />
+                  <CardText>
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                      <div style={{flex: 1}}>
+                        Click link on the right to open your Endpoint in new browser's tab
+                      </div>
+                      <div style={{paddingLeft: 20}}>
+                        <RaisedButton
+                          primary={true}
+                          label="Open Endpoint in new tab"
+                          linkButton={true}
+                          target="_blank"
+                          href={`
+                            ${SYNCANO_BASE_URL.slice(0, -1)}${item.links.get}?api_key=${SessionStore.getToken()}
+                          `} />
+                      </div>
+                    </div>
+                  </CardText>
+                </Card>
+              </div>
+            </Dialog.ContentSection>
+            <Dialog.ContentSection>
+              <div className="col-flex-1">
+                <Card>
+                  <CardTitle title="Use in your App"/>
+                  <CardText>
+                    <p>Choose your favorite language below and copy the code</p>
+                    <img src={require('./editor_example.jpg')} style={{maxWidth: '100%'}} />
+                  </CardText>
+                </Card>
+              </div>
+            </Dialog.ContentSection>
+          </div>
+        )}
+      </Dialog.FullPage>
+    );
+  }
+});

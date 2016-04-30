@@ -16,6 +16,7 @@ import {Container} from 'syncano-components';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import DataEndpointsList from './DataEndpointsList';
 import DataEndpointDialog from './DataEndpointDialog';
+import DataEndpointSummaryDialog from './DataEndpointSummaryDialog';
 
 export default React.createClass({
   displayName: 'Data',
@@ -36,6 +37,7 @@ export default React.createClass({
     return (
       <div>
         <DataEndpointDialog/>
+        <DataEndpointSummaryDialog/>
 
         <SocketsInnerToolbar>
           <RaisedButton

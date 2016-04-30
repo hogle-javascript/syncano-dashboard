@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
@@ -13,7 +14,7 @@ import ClassesStore from '../Classes/ClassesStore';
 // Components
 import {TextField, Toggle, Checkbox} from 'syncano-material-ui';
 import {SelectFieldWrapper, Show} from 'syncano-components';
-import {Dialog} from '../../common';
+import {Dialog, Notification} from '../../common';
 
 export default React.createClass({
   displayName: 'DataEndpointDialog',
@@ -24,13 +25,20 @@ export default React.createClass({
     FormMixin
   ],
 
-  validatorConstraints: {
-    name: {
-      presence: true
-    },
-    class: {
-      presence: true
+  validatorConstraints() {
+    let validateObj = {
+      name: {
+        presence: true
+      }
+    };
+
+    if (!this.state.new_class) {
+      validateObj.class = {
+        presence: true
+      };
     }
+
+    return validateObj;
   },
 
   isEnabled(list, field) {
@@ -46,17 +54,19 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
+    const {name, description, order_by, page_size, excluded_fields, expand, new_class} = this.state;
 
-    Actions.createDataEndpoint({
-      name,
-      class: this.state.class,
-      description,
-      order_by,
-      page_size,
-      excluded_fields,
-      expand
-    });
+    if (new_class) {
+      Actions.createDataEndpointWithClass({
+        name,
+        class: new_class,
+        description,
+        order_by,
+        page_size,
+        excluded_fields,
+        expand
+      });
+    }
   },
 
   handleEditSubmit() {
@@ -101,6 +111,16 @@ export default React.createClass({
     }
   },
 
+  handleClassChange(event, index, value) {
+    this.setState({class: value, new_class: null});
+  },
+
+  handleNewClassChange(event) {
+    const value = !_.isEmpty(event.target.value) ? event.target.value : null;
+
+    this.setState({class: null, new_class: value});
+  },
+
   renderFields() {
     console.info('DataEndpointDialog::renderFields', this.state.class);
 
@@ -122,8 +142,7 @@ export default React.createClass({
                 value={field.name}
                 label={field.name}
                 defaultToggled={!this.isEnabled(this.state.excluded_fields, field.name)}
-                onToggle={this.handleToggle.bind(this, 'showFields', field.name)}
-                />
+                onToggle={this.handleToggle.bind(this, 'showFields', field.name)} />
             </div>
             <div className="col-xs-8">
               <Show if={field.type === 'reference'}>
@@ -131,8 +150,7 @@ export default React.createClass({
                   name="expand"
                   defaultChecked={this.isEnabled(this.state.expand, field.name)}
                   disabled={this.isEnabled(this.state.excluded_fields, field.name)}
-                  onCheck={this.handleToggle.bind(this, 'expandFields', field.name)}
-                  />
+                  onCheck={this.handleToggle.bind(this, 'expandFields', field.name)} />
               </Show>
             </div>
           </div>
@@ -143,10 +161,14 @@ export default React.createClass({
 
   renderOptions() {
     console.info('DataEndpointDialog::renderOrderBy', this.state.class);
-    let orderField = <div key="options_header" style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
     const orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
+    let orderField = (
+      <div key="options_header" style={{paddingTop: 24, paddingBottom: 24}}>
+        <Notification>Add schema fields with order index</Notification>
+      </div>
+    );
 
-    if (orderFields.length > 0) {
+    if (orderFields.length) {
       orderField = (
         <SelectFieldWrapper
           name="order_by"
@@ -158,29 +180,26 @@ export default React.createClass({
       );
     }
 
-    return [
-      <div>Response options</div>,
-      orderField,
-      <TextField
-        ref="page_size"
-        name="page_size"
-        fullWidth={true}
-        valueLink={this.linkState('page_size')}
-        errorText={this.getValidationMessages('page_size').join(' ')}
-        hintText="Number"
-        floatingLabelText="Number of records in data set"/>
-    ];
+    return (
+      <div>
+        <div>Response options</div>
+        {orderField}
+        <TextField
+          ref="page_size"
+          name="page_size"
+          fullWidth={true}
+          valueLink={this.linkState('page_size')}
+          errorText={this.getValidationMessages('page_size').join(' ')}
+          hintText="Number"
+          floatingLabelText="Number of records in data set"/>
+      </div>
+    );
   },
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    let fields = null;
-    let options = null;
-
-    if (this.state.class) {
-      fields = this.renderFields();
-      options = this.renderOptions();
-    }
+    const {open, isLoading, canSubmit, classes, new_class} = this.state;
+    const submitLabel = new_class ? 'Confirm and create a class' : 'Confirm';
 
     return (
       <Dialog.FullPage
@@ -188,11 +207,12 @@ export default React.createClass({
         ref="dialog"
         title={`${title} a Data Endpoint`}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
+            submitLabel={submitLabel}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -220,7 +240,7 @@ export default React.createClass({
         }>
         {this.renderFormNotifications()}
         <Dialog.ContentSection>
-          <div className="col-xs-12">
+          <div className="col-flex-1">
             <TextField
               ref="name"
               name="name"
@@ -243,22 +263,35 @@ export default React.createClass({
               floatingLabelText="Description (optional)"/>
           </div>
         </Dialog.ContentSection>
-        <Dialog.ContentSection>
+        <Dialog.ContentSection style={{height: 72}}>
           <div className="col-flex-1">
             <SelectFieldWrapper
               name="class"
-              options={this.state.classes}
+              options={classes}
               value={this.state.class}
-              onChange={(event, index, value) => this.setSelectFieldValue('class', value)}
-              errorText={this.getValidationMessages('class').join(' ')}/>
+              disabled={new_class}
+              fullWidth={true}
+              floatingLabelText="Class"
+              onChange={this.handleClassChange}
+              errorText={!new_class ? this.getValidationMessages('class').join(' ') : null}/>
+          </div>
+          <div className="col-flex-1" style={{paddingLeft: 15}}>
+            <TextField
+              ref="new_class"
+              name="new_class"
+              fullWidth={true}
+              errorText={this.getValidationMessages('new_class').join(' ')}
+              hintText="New Class's name"
+              floatingLabelText="New Class"
+              onChange={this.handleNewClassChange}/>
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection>
           <div className="col-flex-1">
-            {fields}
+            {this.renderFields()}
           </div>
-          <div className="col-flex-1" style={{paddingLeft: 40}}>
-            {options}
+          <div className="col-flex-1" style={{paddingLeft: 15}}>
+            {this.renderOptions()}
           </div>
         </Dialog.ContentSection>
       </Dialog.FullPage>
