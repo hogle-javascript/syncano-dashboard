@@ -43,7 +43,6 @@ module.exports = {
   module: {
     preLoaders: [],
     loaders: [
-      {test: /\.(jpg)$/, loader: 'file-loader'},
       {test: /\.(svg)$/, loader: 'raw-loader'},
       {test: /\.js(|x)$/, exclude: [/node_modules/, /syncano-components/, /material-ui/], loader: 'babel'},
       {test: /\.css$/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'},

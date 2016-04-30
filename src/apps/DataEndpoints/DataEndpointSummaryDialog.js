@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Reflux from 'reflux';
 
@@ -6,7 +7,7 @@ import DataEndpointsStore from './DataEndpointsStore';
 import SessionStore from '../Session/SessionStore';
 
 import {DialogMixin} from '../../mixins';
-import {Dialog} from '../../common';
+import {CodePreview, Dialog} from '../../common';
 import {Card, CardTitle, CardText, RaisedButton, Styles} from 'syncano-material-ui';
 
 export default React.createClass({
@@ -20,7 +21,8 @@ export default React.createClass({
   render() {
     const {open} = this.state;
     const item = DataEndpointsStore.data.items[0];
-
+    const token = SessionStore.getToken();
+    const currentInstance = SessionStore.getInstance();
 
     return (
       <Dialog.FullPage
@@ -38,7 +40,7 @@ export default React.createClass({
               fontSize: 32
             }} />
         </div>
-        {!item ? null : (
+        {!item || !currentInstance || !token ? null : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -67,7 +69,7 @@ export default React.createClass({
                           linkButton={true}
                           target="_blank"
                           href={`
-                            ${SYNCANO_BASE_URL.slice(0, -1)}${item.links.get}?api_key=${SessionStore.getToken()}
+                            ${SYNCANO_BASE_URL.slice(0, -1)}${item.links.get}?api_key=${token}
                           `} />
                       </div>
                     </div>
@@ -81,7 +83,16 @@ export default React.createClass({
                   <CardTitle title="Use in your App"/>
                   <CardText>
                     <p>Choose your favorite language below and copy the code</p>
-                    <img src={require('./editor_example.jpg')} style={{maxWidth: '100%'}} />
+                    <CodePreview>
+                      <CodePreview.Item
+                        title="cURL"
+                        languageClassName="markup"
+                        code={`curl -X GET\n-H "X-API-KEY: API_KEY"\n"https://api.syncano.io/v1.1/instances/${currentInstance.name}/endpoints/data/${item.name}/get/"`} />
+                      <CodePreview.Item
+                        title="JavaScript"
+                        languageClassName="javascript"
+                        code={`DataEndpoint\n  .please()\n  .fetchData({name: '${item.name}', instanceName: '${currentInstance.name}'})\n  .then(function(dataObjects) {});`} />
+                    </CodePreview>
                   </CardText>
                 </Card>
               </div>
