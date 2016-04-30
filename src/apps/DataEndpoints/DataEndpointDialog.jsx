@@ -270,6 +270,7 @@ export default React.createClass({
               onUpdateInput={(value) => this.setState({class: value})}
               fullWidth={true}
               triggerUpdateOnFocus={true}
+              onClick={() => this.refs.class._open()}
               errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
         </Dialog.ContentSection>
