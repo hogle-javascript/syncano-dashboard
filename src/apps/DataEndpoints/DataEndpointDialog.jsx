@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import _ from 'lodash';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
@@ -12,7 +11,7 @@ import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 // Components
-import {TextField, Toggle, Checkbox} from 'syncano-material-ui';
+import {TextField, Toggle, Checkbox, AutoComplete} from 'syncano-material-ui';
 import {SelectFieldWrapper, Show} from 'syncano-components';
 import {Dialog, Notification} from '../../common';
 
@@ -25,20 +24,13 @@ export default React.createClass({
     FormMixin
   ],
 
-  validatorConstraints() {
-    let validateObj = {
-      name: {
-        presence: true
-      }
-    };
-
-    if (!this.state.new_class) {
-      validateObj.class = {
-        presence: true
-      };
+  validatorConstraints: {
+    name: {
+      presence: true
+    },
+    class: {
+      presence: true
     }
-
-    return validateObj;
   },
 
   isEnabled(list, field) {
@@ -54,44 +46,45 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {name, description, order_by, page_size, excluded_fields, expand, new_class} = this.state;
-
-    if (new_class) {
-      Actions.createDataEndpointWithClass({
-        name,
-        class: new_class,
-        description,
-        order_by,
-        page_size,
-        excluded_fields,
-        expand
-      });
-    }
-
-    Actions.createDataEndpoint({
+    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
+    const className = this.state.class;
+    const isActualClass = ClassesStore.getClassByName(className);
+    const payload = {
       name,
-      class: this.state.class,
+      class: className,
       description,
       order_by,
       page_size,
       excluded_fields,
       expand
-    });
+    };
+
+    if (!isActualClass) {
+      return Actions.createDataEndpointWithClass(payload);
+    }
+
+    return Actions.createDataEndpoint(payload);
   },
 
   handleEditSubmit() {
-    const {description, order_by, page_size, excluded_fields, expand} = this.state;
+    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
+    const className = this.state.class;
+    const isActualClass = ClassesStore.getClassByName(className);
+    const payload = {
+      class: className,
+      description,
+      order_by,
+      page_size,
+      excluded_fields,
+      expand
+    };
 
-    Actions.updateDataEndpoint(
-      this.state.name, {
-        class: this.state.class,
-        description,
-        order_by,
-        page_size,
-        excluded_fields,
-        expand
-      }
-    );
+
+    if (!isActualClass) {
+      return Actions.updateDataEndpointWithClass(name, payload);
+    }
+
+    return Actions.updateDataEndpoint(name, payload);
   },
 
   handleToggle(fieldsType, fieldName, event, value) {
@@ -119,16 +112,6 @@ export default React.createClass({
       fields = genList(this.state.expand, fieldName, value);
       this.setState({expand: fields});
     }
-  },
-
-  handleClassChange(event, index, value) {
-    this.setState({class: value, new_class: null});
-  },
-
-  handleNewClassChange(event) {
-    const value = !_.isEmpty(event.target.value) ? event.target.value : null;
-
-    this.setState({class: null, new_class: value});
   },
 
   renderFields() {
@@ -208,8 +191,8 @@ export default React.createClass({
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    const {open, isLoading, canSubmit, classes, new_class} = this.state;
-    const submitLabel = new_class ? 'Confirm and create a class' : 'Confirm';
+    const {open, isLoading, canSubmit, classes} = this.state;
+    const submitLabel = !ClassesStore.getClassByName(this.state.class) ? 'Confirm and create a class' : 'Confirm';
 
     return (
       <Dialog.FullPage
@@ -274,26 +257,20 @@ export default React.createClass({
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection style={{height: 72}}>
-          <div className="col-flex-1">
-            <SelectFieldWrapper
+          <div className="col-flex-1" style={{position: 'relative'}}>
+            <AutoComplete
+              ref="class"
               name="class"
-              options={classes}
-              value={this.state.class}
-              disabled={new_class}
-              fullWidth={true}
               floatingLabelText="Class"
-              onChange={this.handleClassChange}
-              errorText={!new_class ? this.getValidationMessages('class').join(' ') : null}/>
-          </div>
-          <div className="col-flex-1" style={{paddingLeft: 15}}>
-            <TextField
-              ref="new_class"
-              name="new_class"
+              hintText="Choose Class from list or put name of new Class"
+              filter={(searchText, key) => !searchText ? true : searchText !== '' && key.includes(searchText)}
+              dataSource={classes}
+              searchText={this.state.class}
+              onNewRequest={(value) => this.setState({class: value})}
+              onUpdateInput={(value) => this.setState({class: value})}
               fullWidth={true}
-              errorText={this.getValidationMessages('new_class').join(' ')}
-              hintText="New Class's name"
-              floatingLabelText="New Class"
-              onChange={this.handleNewClassChange}/>
+              triggerUpdateOnFocus={true}
+              errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection>

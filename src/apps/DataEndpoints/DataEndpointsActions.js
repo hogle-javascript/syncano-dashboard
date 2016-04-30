@@ -28,6 +28,12 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataEndpoints.update'
     },
+    updateDataEndpointWithClass: {
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataEndpoints.updateWithClass'
+    },
     removeDataEndpoints: {
       asyncResult: true,
       children: ['completed', 'failure'],

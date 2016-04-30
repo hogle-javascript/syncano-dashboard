@@ -23,7 +23,12 @@ export default {
           .then(this.completed)
           .catch(this.failure);
       })
-      .catch(this.failure);
+      .catch((error) => {
+        if (error.name) {
+          return this.failure({class: error.name});
+        }
+        this.failure(error);
+      });
   },
 
   list(params = {}) {
@@ -41,6 +46,28 @@ export default {
       .update(id, payload)
       .then(this.completed)
       .catch(this.failure);
+  },
+
+  updateWithClass(id, payload) {
+    this.Connection
+      .Classes
+      .create({
+        name: payload.class,
+        schema: ''
+      })
+      .then(() => {
+        this.Connection
+          .DataViews
+          .update(id, payload)
+          .then(this.completed)
+          .catch(this.failure);
+      })
+      .catch((error) => {
+        if (error.name) {
+          return this.failure({class: error.name});
+        }
+        this.failure(error);
+      });
   },
 
   remove(dataviews) {

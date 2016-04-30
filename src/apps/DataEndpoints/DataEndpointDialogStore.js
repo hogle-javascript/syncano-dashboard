@@ -25,9 +25,7 @@ export default Reflux.createStore({
       page_size: 50,
       excluded_fields: '',
       expand: '',
-      classes: [
-        {payload: '', text: 'Loading...'}
-      ],
+      classes: ['Loading...'],
       expandFields: {},
       showFields: {}
     };
@@ -40,11 +38,7 @@ export default Reflux.createStore({
 
   getClassesDropdown() {
     console.debug('DataEndpointDialogStore::getClassesDropdown');
-    let classes = ClassesStore.getClassesDropdown();
-
-    if (classes.length === 0) {
-      classes = [{payload: '', text: 'No classes, add one first'}];
-    }
+    const classes = ClassesStore.getItems().map((item) => item.name);
 
     this.trigger({classes});
   },
@@ -55,21 +49,35 @@ export default Reflux.createStore({
 
   onCreateDataEndpointCompleted() {
     console.debug('DataEndpointDialogStore::onCreateDataEndpointCompleted');
-    this.dismissDialog();
     DataEndpointSummaryDialogActions.showDialog();
     DataEndpointsActions.fetchDataEndpoints();
+    this.dismissDialog();
   },
 
   onCreateDataEndpointWithClassCompleted() {
-    console.debug('DataEndpointDialogStore::onCreateDataEndpointCompleted');
-    this.dismissDialog();
+    console.debug('DataEndpointDialogStore::onCreateDataEndpointWithClassCompleted');
     DataEndpointSummaryDialogActions.showDialog();
     DataEndpointsActions.fetchDataEndpoints();
+    this.dismissDialog();
+  },
+
+  onCreateDataEndpointWithClassFailure() {
+    ClassesActions.fetchClasses();
   },
 
   onUpdateDataEndpointCompleted() {
     console.debug('DataEndpointDialogStore::onUpdateDataEndpointCompleted');
-    this.dismissDialog();
     DataEndpointsActions.fetchDataEndpoints();
+    this.dismissDialog();
+  },
+
+  onUpdateDataEndpointWithClassCompleted() {
+    console.debug('DataEndpointDialogStore::onUpdateDataEndpointWithClassCompleted');
+    DataEndpointsActions.fetchDataEndpoints();
+    this.dismissDialog();
+  },
+
+  onUpdateDataEndpointWithClassFailure() {
+    ClassesActions.fetchClasses();
   }
 });
