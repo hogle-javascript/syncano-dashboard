@@ -118,6 +118,7 @@ export default React.createClass({
         <SocketsDialog />
         <ScriptEndpoints.Dialog />
         <DataEndpoints.Dialog />
+        <DataEndpoints.SummaryDialog />
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
