@@ -67,6 +67,16 @@ export default React.createClass({
         expand
       });
     }
+
+    Actions.createDataEndpoint({
+      name,
+      class: this.state.class,
+      description,
+      order_by,
+      page_size,
+      excluded_fields,
+      expand
+    });
   },
 
   handleEditSubmit() {
