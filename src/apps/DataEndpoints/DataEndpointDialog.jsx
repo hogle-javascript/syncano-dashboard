@@ -262,7 +262,7 @@ export default React.createClass({
               ref="class"
               name="class"
               floatingLabelText="Class"
-              hintText="Choose Class from list or put name of new Class"
+              hintText="Start typing to see matching classes list or type a new class name"
               filter={(searchText, key) => !searchText ? true : searchText !== '' && key.includes(searchText)}
               dataSource={classes}
               searchText={this.state.class}
