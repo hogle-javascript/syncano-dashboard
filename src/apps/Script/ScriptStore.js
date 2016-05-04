@@ -102,11 +102,6 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onRunScriptWithUpdateCompleted() {
-    console.debug('ScriptStore::onRunScriptWithUpdateCompleted');
-    this.refreshData();
-  },
-
   getEditorMode() {
     const {currentScript} = this.data;
 
