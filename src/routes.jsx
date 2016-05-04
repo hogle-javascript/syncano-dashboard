@@ -236,8 +236,7 @@ export default (
         <Route
           name="scripts-add"
           handler={Scripts}
-          path="scripts/:action"
-          />
+          path="scripts/:action"/>
 
         {/* Data Objects */}
         <Route
