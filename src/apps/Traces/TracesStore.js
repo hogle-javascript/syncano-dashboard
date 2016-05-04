@@ -96,9 +96,9 @@ export default Reflux.createStore({
     this.setTraces(triggerTraces);
   },
 
-  onFetchScheduleTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchScheduleTracesCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+  onFetchScheduleTracesCompleted(scheduleTraces) {
+    console.debug('TracesStore::onFetchScheduleTracesCompleted', scheduleTraces);
+    this.setTraces(scheduleTraces);
   },
 
   onFetchCurrentScriptCompleted(currentObj) {
@@ -110,6 +110,7 @@ export default Reflux.createStore({
     console.debug('TracesStore::onFetchCurrentScriptEndpointCompleted', currentObj);
     this.saveCurrentObj(currentObj.name);
   },
+
   onFetchCurrentTriggerCompleted(currentObj) {
     console.debug('TracesStore::onFetchCurrentTriggerCompleted', currentObj);
     this.saveCurrentObj(currentObj.label);

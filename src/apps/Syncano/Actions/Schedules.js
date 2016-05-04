@@ -1,42 +1,44 @@
-import _ from 'lodash';
-
 export default {
   create(payload) {
-    this.Connection
-      .Schedules
+    this.NewLibConnection
+      .Schedule
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   get(scheduleId) {
-    this.Connection
-      .Schedules
-      .get(scheduleId)
+    this.NewLibConnection
+      .Schedule
+      .please()
+      .get({id: scheduleId})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Schedules
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Schedule
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
   update(id, payload) {
-    this.Connection
-      .Schedules
-      .update(id, payload)
+    this.NewLibConnection
+      .Schedule
+      .please()
+      .update({id}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   remove(schedules) {
     const promises = schedules.map((schedule) => {
-      return this.Connection.Schedules.remove(schedule.id);
+      return this.NewLibConnection.Schedule.please().delete({id: schedule.id});
     });
 
     this.Promise.all(promises)
@@ -45,9 +47,11 @@ export default {
   },
 
   listTraces(scheduleId) {
-    this.Connection
-      .Schedules
-      .traces(scheduleId, {ordering: 'desc'})
+    this.NewLibConnection
+      .ScheduleTrace
+      .please()
+      .list({scheduleId})
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   }

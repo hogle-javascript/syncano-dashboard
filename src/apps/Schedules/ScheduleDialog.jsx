@@ -28,7 +28,7 @@ export default React.createClass({
     label: {
       presence: true
     },
-    codebox: {
+    script: {
       presence: true
     },
     crontab: {
@@ -42,15 +42,15 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {label, crontab, codebox} = this.state;
+    const {label, crontab, script} = this.state;
 
-    Actions.createSchedule({label, crontab, codebox});
+    Actions.createSchedule({label, crontab, script});
   },
 
   handleEditSubmit() {
-    const {id, label, crontab, codebox} = this.state;
+    const {id, label, crontab, script} = this.state;
 
-    Actions.updateSchedule(id, {label, crontab, codebox});
+    Actions.updateSchedule(id, {label, crontab, script});
   },
 
   handleCrontabChange(value) {
@@ -77,7 +77,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, isLoading, scripts, codebox, crontab, canSubmit} = this.state;
+    const {open, isLoading, scripts, script, crontab, canSubmit} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -128,9 +128,9 @@ export default React.createClass({
           <SelectFieldWrapper
             name="script"
             options={scripts}
-            value={codebox}
-            onChange={(event, index, value) => this.setSelectFieldValue('codebox', value)}
-            errorText={this.getValidationMessages('codebox').join(' ')}/>
+            value={script}
+            onChange={(event, index, value) => this.setSelectFieldValue('script', value)}
+            errorText={this.getValidationMessages('script').join(' ')}/>
           <AutoComplete
             ref="crontab"
             floatingLabelText="Crontab"
