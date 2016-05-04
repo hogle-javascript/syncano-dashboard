@@ -4,8 +4,6 @@ let connection = new Syncano({baseUrl: SYNCANO_BASE_URL});
 
 export default {
   Syncano,
-  Deferred: connection.Deferred,
-  D: connection.Deferred,
 
   get() {
     return connection;

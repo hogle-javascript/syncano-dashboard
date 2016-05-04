@@ -114,7 +114,6 @@
     "semver": "5.1.0",
     "style-loader": "0.13.1",
     "superagent": "1.7.2",
-    "syncano": "0.4.8",
     "through2": "2.0.1",
     "url-loader": "0.5.7",
     "webpack": "1.12.15",
