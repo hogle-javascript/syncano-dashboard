@@ -55,9 +55,9 @@ export default Reflux.createStore({
     Actions.setCurrentChannelName(channelName);
   },
 
-  onFetchChannelHistoryCompleted(channelHistoryObj) {
-    console.debug('ChannelHistoryStore::onFetchChannelHistoryCompleted', channelHistoryObj);
-    this.setChannelHistory(channelHistoryObj._items);
+  onFetchChannelHistoryCompleted(channelHistory) {
+    console.debug('ChannelHistoryStore::onFetchChannelHistoryCompleted', channelHistory);
+    this.setChannelHistory(channelHistory.objects);
   }
 
 });
