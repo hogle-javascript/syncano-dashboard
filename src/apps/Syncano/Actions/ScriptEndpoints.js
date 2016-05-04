@@ -1,51 +1,58 @@
-import _ from 'lodash';
-
 export default {
-  get(codeboxName) {
-    this.Connection
-      .WebHooks
-      .get(codeboxName)
+  get(name) {
+    this.NewLibConnection
+      .ScriptEndpoint
+      .please()
+      .get({name})
       .then(this.completed)
       .catch(this.failure);
   },
 
   create(payload) {
-    this.Connection
-      .WebHooks
+    this.NewLibConnection
+      .ScriptEndpoint
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .WebHooks
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .ScriptEndpoint
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(id, payload) {
-    this.Connection
-      .WebHooks
-      .update(id, payload)
+  update(name, payload) {
+    this.NewLibConnection
+      .ScriptEndpoint
+      .please()
+      .update({name}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(ids) {
-    const promises = ids.map((id) => this.Connection.WebHooks.remove(id));
+  remove(scriptEndpoints) {
+    const promises = scriptEndpoints.map((scriptEndpoint) =>
+      this.NewLibConnection
+        .ScriptEndpoint
+        .please()
+        .delete({name: scriptEndpoint.name}));
 
     this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },
 
-  listTraces(codeboxId) {
-    this.Connection
-      .WebHooks
-      .traces(codeboxId, {ordering: 'desc'})
+  listTraces(scriptEndpointName) {
+    this.NewLibConnection
+      .ScriptEndpointTrace
+      .please({scriptEndpointName})
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   }

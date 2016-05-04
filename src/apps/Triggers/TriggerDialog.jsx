@@ -41,7 +41,7 @@ export default React.createClass({
     }
   },
 
-  getParams() {
+  getTriggerParams() {
     const {label, script, signal} = this.state;
     const params = {
       class: this.state.class,
@@ -60,13 +60,13 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createTrigger(this.getParams());
+    Actions.createTrigger(this.getTriggerParams());
   },
 
   handleEditSubmit() {
     const {id} = this.state;
 
-    Actions.updateTrigger(id, this.getParams());
+    Actions.updateTrigger(id, this.getTriggerParams());
   },
 
   render() {
