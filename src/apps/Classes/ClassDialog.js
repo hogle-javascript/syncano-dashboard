@@ -82,7 +82,7 @@ export default React.createClass({
   },
 
   getFieldTypes() {
-    return Constants.fieldTypes.map((item) => {
+    return _.map(Constants.fieldTypes, (item) => {
       return {
         payload: item,
         text: item

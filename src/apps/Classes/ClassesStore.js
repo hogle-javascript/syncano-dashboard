@@ -198,7 +198,7 @@ export default Reflux.createStore({
 
   onFetchTriggersCompleted(items) {
     console.debug('ClassesStore::onFetchTriggersCompleted');
-    this.setTriggers(items._items);
+    this.setTriggers(items);
   },
 
   setTriggers(items) {
