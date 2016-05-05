@@ -1,61 +1,70 @@
-import _ from 'lodash';
-
 export default {
-  get(templateName) {
-    this.Connection
-      .Templates
-      .get(templateName)
+  get(name) {
+    this.NewLibConnection
+      .Template
+      .please()
+      .get({name})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(templateName, params) {
-    this.Connection
-      .Templates
-      .update(templateName, params)
+  update(name, params) {
+    this.NewLibConnection
+      .Template
+      .please()
+      .update({name}, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  render(templateName, context = {}) {
-    this.Connection
-      .Templates
-      .render(templateName, {context})
+  render(name, context = {}) {
+    this.NewLibConnection
+      .Template
+      .please()
+      .render({name}, context)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Templates
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Template
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
   create(payload) {
-    this.Connection
-      .Templates
+    const {name, content_type} = payload;
+
+    this.NewLibConnection
+      .Template
+      .please()
       .create({
-        name: payload.name,
-        content_type: payload.content_type,
-        content: '{# This is how to use comments in template #}'
+        content: '{# This is how to use comments in template #}',
+        name,
+        content_type
       })
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(names) {
-    const promises = names.map((name) => this.Connection.Templates.remove(name));
+  remove(templates) {
+    const promises = templates.map((template) =>
+      this.NewLibConnection
+        .Template
+        .please()
+        .delete({name: template.name}));
 
     this.Promise.all(promises)
       .then(this.completed)
-      .error(this.failure);
+      .catch(this.failure);
   },
 
   renderFromEndpoint(templateName, endpointUrl) {
-    const endpointUrlWithoutDomain = endpointUrl.substring(endpointUrl.indexOf('/v1'));
+    const endpointUrlWithoutDomain = endpointUrl.substring(endpointUrl.indexOf('/v1.1'));
     const params = {
       template_response: templateName,
       serialize: false
