@@ -50,9 +50,7 @@ export default Reflux.createStore({
 
   onFetchDevicesCompleted(devices) {
     console.debug('APNSDevicesStore::onFetchDevicesCompleted');
-    let items = this.saveListFromSyncano(devices);
-
-    Actions.setDevices(items);
+    Actions.setDevices(devices);
   },
 
   onRemoveDevicesCompleted() {

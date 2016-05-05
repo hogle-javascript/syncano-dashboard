@@ -61,7 +61,9 @@ export default (type, Store, Actions, sidebar) => {
 
     handleEditSubmit() {
       if (_.isFunction(Actions.updateDevice)) {
-        Actions.updateDevice(this.getParams());
+        const {registration_id} = this.state;
+
+        Actions.updateDevice(registration_id, this.getParams());
       }
     },
 
