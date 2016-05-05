@@ -22,16 +22,24 @@ export default React.createClass({
     FormMixin
   ],
 
-  handleAddSubmit() {
-    const {description, allow_user_create, allow_anonymous_read, ignore_acl} = this.state;
+  getApiKeyParams() {
+    const {id, description, allow_user_create, allow_anonymous_read, ignore_acl} = this.state;
 
-    Actions.createApiKey({description, allow_user_create, allow_anonymous_read, ignore_acl});
+    return {
+      id,
+      description,
+      allow_user_create,
+      allow_anonymous_read,
+      ignore_acl
+    };
+  },
+
+  handleAddSubmit() {
+    Actions.createApiKey(this.getApiKeyParams());
   },
 
   handleEditSubmit() {
-    const {id, description, allow_user_create, allow_anonymous_read, ignore_acl} = this.state;
-
-    Actions.updateApiKey(id, {description, allow_user_create, allow_anonymous_read, ignore_acl});
+    Actions.updateApiKey(this.state.id, this.getApiKeyParams());
   },
 
   handleToogle(event, status) {
