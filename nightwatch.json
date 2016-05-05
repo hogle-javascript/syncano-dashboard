@@ -35,7 +35,7 @@
         "javascriptEnabled": true,
         "acceptSslCerts": true,
         "chromeOptions" : {
-         "args" : ["window-position=0,0", "window-size=1280,1024"]
+         "args" : ["window-position=0,0", "window-size=1280,1024", "--disable-popup-blocking"]
         }
       },
       "exclude": "utils.js"

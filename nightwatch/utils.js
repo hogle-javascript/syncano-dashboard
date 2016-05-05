@@ -19,5 +19,8 @@ export default {
   },
   testBaseUrl() {
     return 'https://localhost:8080';
+  },
+  jinja_template() {
+    return `{% set objects = response.objects %}{% if objects %}{{- timestamp -}}{{',' -}}{% for object in objects %}{% for key, value in object.iteritems() %}{{- key -}}{{',' -}}{% endfor %}{% endfor %}{% endif %}`;
   }
 };
