@@ -33,6 +33,20 @@ export default React.createClass({
     }
   },
 
+  getDataEndpointParams() {
+    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
+
+    return {
+      name,
+      class: this.state.class,
+      description,
+      order_by,
+      page_size,
+      excluded_fields,
+      expand
+    };
+  },
+
   isEnabled(list, field) {
     if (!list) {
       return false;
@@ -46,36 +60,16 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
-
-    Actions.createDataEndpoint({
-      name,
-      class: this.state.class,
-      description,
-      order_by,
-      page_size,
-      excluded_fields,
-      expand
-    });
+    Actions.createDataEndpoint(this.getDataEndpointParams());
   },
 
   handleEditSubmit() {
-    const {description, order_by, page_size, excluded_fields, expand} = this.state;
-
-    Actions.updateDataEndpoint(
-      this.state.name, {
-        class: this.state.class,
-        description,
-        order_by,
-        page_size,
-        excluded_fields,
-        expand
-      }
-    );
+    Actions.updateDataEndpoint(this.state.name, this.getDataEndpointParams());
   },
 
   handleToggle(fieldsType, fieldName, event, value) {
     console.info('DataEndpointDialog::handleToggle', arguments);
+    const {expand, excluded_fields} = this.state;
 
     let genList = (list, name, val) => {
       let arr = list.replace(/ /g, '').split(',').filter((listItem) => listItem);
@@ -92,11 +86,11 @@ export default React.createClass({
     let fields = '';
 
     if (fieldsType === 'showFields') {
-      fields = genList(this.state.excluded_fields, fieldName, !value);
+      fields = genList(excluded_fields, fieldName, !value);
       this.setState({excluded_fields: fields});
     }
     if (fieldsType === 'expandFields') {
-      fields = genList(this.state.expand, fieldName, value);
+      fields = genList(expand, fieldName, value);
       this.setState({expand: fields});
     }
   },

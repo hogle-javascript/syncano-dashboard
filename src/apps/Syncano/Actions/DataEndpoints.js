@@ -2,32 +2,39 @@ import _ from 'lodash';
 
 export default {
   create(payload) {
-    this.Connection
-      .DataViews
+    this.NewLibConnection
+      .DataEndpoint
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .DataViews
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .DataEndpoint
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(id, payload) {
-    this.Connection
-      .DataViews
-      .update(id, payload)
+  update(name, payload) {
+    this.NewLibConnection
+      .DataEndpoint
+      .please()
+      .update({name}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(dataviews) {
-    const promises = _.map(dataviews, (dataview) => this.Connection.DataViews.remove(dataview.name));
+  remove(dataEndpoints) {
+    const promises = _.map(dataEndpoints, (dataEndpoint) =>
+      this.NewLibConnection
+        .DataEndpoint
+        .please()
+        .delete({name: dataEndpoint.name}));
 
     this.Promise.all(promises)
       .then(this.completed)

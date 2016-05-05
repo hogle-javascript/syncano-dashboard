@@ -49,7 +49,7 @@ export default Reflux.createStore({
 
   onFetchDataEndpointsCompleted(items) {
     console.debug('DataEndpointsStore::onFetchDataEndpointsCompleted');
-    Actions.setDataEndpoints(items._items);
+    Actions.setDataEndpoints(items);
   },
 
   onRemoveDataEndpointsCompleted() {
