@@ -3,6 +3,7 @@ set -e
 
 function run_unit_tests {
     npm run-script lint
+    npm run-script test
 }
 
 function e2e_setup {

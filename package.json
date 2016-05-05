@@ -121,7 +121,7 @@
     "webpack-dev-server": "1.14.1"
   },
   "scripts": {
-    "test": "karma start karma.config.js",
+    "test": "export NODE_ENV=testing && karma start karma.config.js",
     "start": "gulp webpack-dev-server",
     "build": "gulp build",
     "publish": "gulp publish",
