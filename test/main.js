@@ -35,7 +35,6 @@ import './apps/DataObjects/DataObjects';
 import './apps/DataObjects/DataObjectsActions';
 import './apps/DataObjects/DataObjectsRenderer';
 import './apps/DataObjects/DataObjectsStore';
-import Header from 'syncano-components';
 import './apps/Instances/InstanceDialog';
 import './apps/Instances/InstanceDialogStore';
 import './apps/Instances/Instances';
