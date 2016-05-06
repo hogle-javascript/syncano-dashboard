@@ -20,7 +20,17 @@ export default {
   testBaseUrl() {
     return 'https://localhost:8080';
   },
-  jinja_template() {
-    return `{% set objects = response.objects %}{% if objects %}{{- timestamp -}}{{',' -}}{% for object in objects %}{% for key, value in object.iteritems() %}{{- key -}}{{',' -}}{% endfor %}{% endfor %}{% endif %}`;
+  jinjaTemplate() {
+    return `{% set objects = response.objects %}{% if objects %}{{- timestamp -}}{{',' -}}{% for object in objects %}
+      {% for key, value in object.iteritems() %}{{- key -}}{{',' -}}{% endfor %}{% endfor %}{% endif %}`;
+  },
+  randomString(length) {
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let apiKey = '';
+
+    for (let i = 0; i < length; i++) {
+      apiKey += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return apiKey;
   }
 };

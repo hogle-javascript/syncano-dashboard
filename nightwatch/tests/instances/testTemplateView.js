@@ -45,7 +45,7 @@ module.exports = {
       .clickElement('@htmlTestTemplateRow')
       .waitForElementPresent('@codeEditor')
       .clearAceEditor('@codeEditorContent')
-      .setValue('@codeEditor', utils.jinja_template())
+      .setValue('@codeEditor', utils.jinjaTemplate())
       .fillInput('@inputDataSourceUrl', dataSourceUrl)
       .clearAceEditor('@contextEditorContent')
       .setValue('@contextEditor', `{"timestamp": "${controlTimestamp}"}`)

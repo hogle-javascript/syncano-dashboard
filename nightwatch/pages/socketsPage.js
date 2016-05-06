@@ -131,6 +131,51 @@ export default {
     addScriptEndpoint: {
       selector: '//div[text()="Script Endpoint"]/following::div[2]',
       locateStrategy: 'xpath'
+    },
+    addApnsSocket: {
+      selector: '//div[text()="APNS Push Notifications (BETA)"]/following::div[2]',
+      locateStrategy: 'xpath'
+    },
+    uploadApnsDevCert: {
+      selector: 'input[name="hiddenInput"]'
+    },
+    addGcmSocket: {
+      selector: '//div[text()="GCM Push Notifications (BETA)"]/following::div[2]',
+      locateStrategy: 'xpath'
+    },
+    inputGcmDevKey: {
+      selector: 'input[name="development_api_key"]'
+    },
+    gcmSocket: {
+      selector: '//div[text()="Google Cloud Messaging (GCM)"]',
+      locateStrategy: 'xpath'
+    },
+    inputGcmProdKey: {
+      selector: 'input[name="production_api_key"]'
+    },
+    apnsBundleInput: {
+      selector: '//label[text()="Bundle Identifier"]/../input',
+      locateStrategy: 'xpath'
+    },
+    apnsCertNameInput: {
+      selector: '//label[text()="Apple Push Notification Certificate Name"]/../input',
+      locateStrategy: 'xpath'
+    },
+    apnsSocket: {
+      selector: '//div[text()="Apple Push Notification service (APNs)"]',
+      locateStrategy: 'xpath'
+    },
+    removeCert: {
+      selector: '//div[@class="row"]//span[@class="synicon-close"]',
+      locateStrategy: 'xpath'
+    },
+    certDragAndDrop: {
+      selector: '(//span[@class="synicon-cloud-upload"]/following-sibling::div)[2]',
+      locateStrategy: 'xpath'
+    },
+    gcmTitleHeading: {
+      selector: '//h3[text()="Configure Push Notification Socket - GCM"]',
+      locateStrategy: 'xpath'
     }
   }
 };
