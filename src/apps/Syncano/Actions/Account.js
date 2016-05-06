@@ -2,53 +2,49 @@ import Hello from '../../Account/Hello.js';
 
 export default {
   resendActivationEmail(email) {
-    this.NewLibConnection
-      .Account
-      .resendEmail(email)
-      .then((err) => console.error(err))
-      .catch((err) => console.error(err));
+    this.Connection
+      .Accounts
+      .resendActivationEmail(email)
+      .then(this.completed)
+      .catch(this.failure);
   },
 
   activate(payload) {
-    this.Connection
-      .Accounts
+    this.NewLibConnection
+      .Account
       .activate(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   passwordSignIn(payload) {
-    this.Connection
-      .connect(payload.email, payload.password)
+    this.NewLibConnection
+      .Account
+      .login(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   passwordSignUp(payload) {
-    this.Connection
-      .Accounts
-      .create({
-        email: payload.email,
-        password: payload.password
-      })
+    this.NewLibConnection
+      .Account
+      .register(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   passwordReset(email) {
-    console.error('passwordReset');
-    this.NewLibConnection
-      .Account
-      .resetPassword(email)
+    this.Connection
+      .Accounts
+      .passwordReset(email)
       .then(this.completed)
       .catch(this.failure);
   },
 
   passwordResetConfirm(payload) {
-    console.error('passwordResetConfirm');
-    this.Connection
-      .Accounts
-      .passwordResetConfirm(payload)
+    this.NewLibConnection
+      .Account
+      .confirmPasswordReset(payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -58,10 +54,7 @@ export default {
       .login(network)
       .then((auth) => {
         this.Connection
-          .socialConnect(
-          auth.network,
-          auth.authResponse.access_token
-        )
+          .socialConnect(auth.network, auth.authResponse.access_token)
           .then((payload) => {
             payload.network = network;
             return payload;
