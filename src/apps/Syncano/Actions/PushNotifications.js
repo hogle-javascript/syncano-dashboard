@@ -1,36 +1,36 @@
 export default {
   configGCMPushNotification(params = {}) {
-    this.Connection
-      .PushNotifications
-      .GCM
-      .config(params)
+    this.NewLibConnection
+      .GCMConfig
+      .please()
+      .update({}, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
   configAPNSPushNotification(params = {}) {
-    this.Connection
-      .PushNotifications
-      .APNS
-      .config(params)
+    this.NewLibConnection
+      .APNSConfig
+      .please()
+      .update({}, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  getGCMPushNotificationConfig(params = {}) {
-    this.Connection
-      .PushNotifications
-      .GCM
-      .get(params)
+  getGCMPushNotificationConfig() {
+    this.NewLibConnection
+      .GCMConfig
+      .please()
+      .get()
       .then(this.completed)
       .catch(this.failure);
   },
 
-  getAPNSPushNotificationConfig(params = {}) {
-    this.Connection
-      .PushNotifications
-      .APNS
-      .get(params)
+  getAPNSPushNotificationConfig() {
+    this.NewLibConnection
+      .APNSConfig
+      .please()
+      .get()
       .then(this.completed)
       .catch(this.failure);
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
+import Syncano from 'syncano';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../../mixins';
@@ -104,11 +105,11 @@ export default Radium(React.createClass({
     const state = {
       development: {
         development_certificate_name: certificate.name,
-        development_certificate: certificate
+        development_certificate: Syncano.file(certificate)
       },
       production: {
         production_certificate_name: certificate.name,
-        production_certificate: certificate
+        production_certificate: Syncano.file(certificate)
       }
     };
 
@@ -116,24 +117,32 @@ export default Radium(React.createClass({
   },
 
   handleAddSubmit() {
-    const state = this.state;
-    let params = {
-      production_certificate_name: state.production_certificate_name,
-      production_certificate: state.production_certificate,
-      production_bundle_identifier: state.production_bundle_identifier,
-      production_expiration_date: state.production_expiration_date,
-      development_certificate_name: state.development_certificate_name,
-      development_certificate: state.development_certificate,
-      development_expiration_date: state.development_expiration_date,
-      development_bundle_identifier: state.development_bundle_identifier
+    const {
+      production_certificate_name,
+      production_certificate,
+      production_bundle_identifier,
+      production_expiration_date,
+      development_certificate_name,
+      development_certificate,
+      development_expiration_date,
+      development_bundle_identifier
+    } = this.state;
+    const params = {
+      production_certificate_name,
+      production_certificate,
+      production_bundle_identifier,
+      production_expiration_date,
+      development_certificate_name,
+      development_certificate,
+      development_expiration_date,
+      development_bundle_identifier
     };
 
-    _.forEach(params, (value, key) => {
-      if (_.isEmpty(value)) {
-        delete params[key];
-      }
-    });
-    Actions.configAPNSPushNotification(params);
+    Actions.configAPNSPushNotification(this.removeEmptyParams(params));
+  },
+
+  removeEmptyParams(params) {
+    return _.omit(params, _.isEmpty);
   },
 
   clearCertificate(type) {
