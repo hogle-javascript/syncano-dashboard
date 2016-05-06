@@ -49,15 +49,15 @@ export default Reflux.createStore({
 
   onCreateDataEndpointCompleted() {
     console.debug('DataEndpointDialogStore::onCreateDataEndpointCompleted');
-    DataEndpointSummaryDialogActions.showDialog();
     DataEndpointsActions.fetchDataEndpoints();
+    DataEndpointSummaryDialogActions.showDialog();
     this.dismissDialog();
   },
 
   onCreateDataEndpointWithClassCompleted() {
     console.debug('DataEndpointDialogStore::onCreateDataEndpointWithClassCompleted');
-    DataEndpointSummaryDialogActions.showDialog();
     DataEndpointsActions.fetchDataEndpoints();
+    DataEndpointSummaryDialogActions.showDialog();
     this.dismissDialog();
   },
 

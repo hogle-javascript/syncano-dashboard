@@ -156,7 +156,12 @@ export default React.createClass({
     console.info('DataEndpointDialog::renderOrderBy', this.state.class);
     const orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
     let orderField = (
-      <div key="options_header" style={{paddingTop: 24, paddingBottom: 24}}>
+      <div
+        key="options_header"
+        style={{
+          paddingTop: 24,
+          paddingBottom: 24
+        }}>
         <Notification>Add schema fields with order index</Notification>
       </div>
     );
@@ -245,7 +250,9 @@ export default React.createClass({
               hintText="Data Endpoint's name"
               floatingLabelText="Name"/>
           </div>
-          <div className="col-flex-1" style={{paddingLeft: 15}}>
+          <div
+            className="col-flex-1"
+            style={{paddingLeft: 15}}>
             <TextField
               ref="description"
               name="description"

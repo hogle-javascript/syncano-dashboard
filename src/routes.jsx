@@ -150,6 +150,11 @@ export default (
             handler={DataObjects}
             path=":className/objects"/>
 
+          <Route
+            name="classEdit"
+            handler={Classes}
+            path=":className/:action"/>
+
           <DefaultRoute handler={Classes}/>
         </Route>
 

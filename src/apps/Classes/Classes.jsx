@@ -33,6 +33,15 @@ export default React.createClass({
     Actions.fetch();
   },
 
+  componentWillUpdate() {
+    const {action, className} = this.getParams();
+    const classObject = Store.getClassByName(className);
+
+    if (action === 'edit' && classObject) {
+      Actions.showDialog(classObject);
+    }
+  },
+
   render() {
     const {items, triggers, hideDialogs, isLoading} = this.state;
 

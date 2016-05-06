@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from 'react';
+import {Link, State} from 'react-router';
 import Reflux from 'reflux';
 
 import Store from './DataEndpointSummaryDialogStore';
@@ -7,7 +8,7 @@ import DataEndpointsStore from './DataEndpointsStore';
 import SessionStore from '../Session/SessionStore';
 
 import {DialogMixin} from '../../mixins';
-import {CodePreview, Dialog} from '../../common';
+import {CodePreview, Dialog, Notification} from '../../common';
 import {Card, CardTitle, CardText, RaisedButton, Styles} from 'syncano-material-ui';
 
 export default React.createClass({
@@ -15,11 +16,13 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    DialogMixin
+    Reflux.connect(DataEndpointsStore, 'dataEndpoints'),
+    DialogMixin,
+    State
   ],
 
   render() {
-    const {open} = this.state;
+    const {open, dataEndpoints} = this.state;
     const item = DataEndpointsStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
@@ -31,6 +34,7 @@ export default React.createClass({
         title="Hooray! You've just created a Data Endpoint!"
         titleStyle={{paddingLeft: 72}}
         onRequestClose={this.handleCancel}
+        loading={dataEndpoints.isLoading}
         open={open}>
         <div style={{position: 'absolute', top: 0, left: 24}}>
           <span
@@ -40,7 +44,7 @@ export default React.createClass({
               fontSize: 32
             }} />
         </div>
-        {!item || !currentInstance || !token ? null : (
+        {!item || !currentInstance || !token || dataEndpoints.isLoading ? null : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -51,6 +55,20 @@ export default React.createClass({
                     look like the search query applied to it.
                   </p>
                 </div>
+              </div>
+            </Dialog.ContentSection>
+            <Dialog.ContentSection>
+              <div className="col-flex-1">
+                <Notification>
+                  You have chosen to use class "{item.class}", but it does not contain any custom fields in the class
+                  schema. To use the full power of Data Endpoints, we suggest
+                  <Link
+                    to="classEdit"
+                    params={{...this.getParams(), className: item.class, action: 'edit'}}
+                    style={{fontWeight: 700}}>
+                    {` [clicking here to add custom fields for your data objects].`}
+                  </Link>
+                </Notification>
               </div>
             </Dialog.ContentSection>
             <Dialog.ContentSection>
