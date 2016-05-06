@@ -2,11 +2,11 @@ import Hello from '../../Account/Hello.js';
 
 export default {
   resendActivationEmail(email) {
-    this.Connection
-      .Accounts
-      .resendActivationEmail(email)
-      .then(this.completed)
-      .catch(this.failure);
+    this.NewLibConnection
+      .Account
+      .resendEmail(email)
+      .then((err) => console.error(err))
+      .catch((err) => console.error(err));
   },
 
   activate(payload) {
@@ -36,14 +36,16 @@ export default {
   },
 
   passwordReset(email) {
-    this.Connection
-      .Accounts
-      .passwordReset(email)
+    console.error('passwordReset');
+    this.NewLibConnection
+      .Account
+      .resetPassword(email)
       .then(this.completed)
       .catch(this.failure);
   },
 
   passwordResetConfirm(payload) {
+    console.error('passwordResetConfirm');
     this.Connection
       .Accounts
       .passwordResetConfirm(payload)

@@ -1,7 +1,7 @@
 export default {
   updateSettings(payload) {
-    this.Connection
-      .Accounts
+    this.NewLibConnection
+      .Account
       .update({
         first_name: payload.firstName,
         last_name: payload.lastName
@@ -11,8 +11,8 @@ export default {
   },
 
   changePassword(payload) {
-    this.Connection
-      .Accounts
+    this.NewLibConnection
+      .Account
       .changePassword({
         current_password: payload.current_password,
         new_password: payload.newPassword
@@ -21,10 +21,10 @@ export default {
       .catch(this.failure);
   },
 
-  setPassword(payload) {
-    this.Connection
-      .Accounts
-      .setPassword(payload)
+  setPassword(password) {
+    this.NewLibConnection
+      .Account
+      .setPassword({password})
       .then(this.completed)
       .catch(this.failure);
   },
@@ -40,8 +40,8 @@ export default {
   },
 
   resetKey() {
-    this.Connection
-      .Accounts
+    this.NewLibConnection
+      .Account
       .resetKey()
       .then(this.completed)
       .catch(this.failure);
