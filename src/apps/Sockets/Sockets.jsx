@@ -101,7 +101,7 @@ export default React.createClass({
 
           <Show if={this.getPushNotificationItems().length}>
             <PushNotifications.List
-              name="Push Notification Sockets"
+              name="Push Notification Sockets (BETA)"
               handleTitleClick={() => this.transitionTo('push-notification-config', this.getParams())}
               items={this.getPushNotificationItems()}/>
           </Show>
