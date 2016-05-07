@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 import Actions from './UsersActions';
 import Store from './UsersStore';
@@ -47,6 +48,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Users & Groups" />
         <UserDialog />
         <GroupDialog />
 

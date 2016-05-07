@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -183,6 +184,7 @@ export default React.createClass({
   render() {
     const {selectedRows, isLoading} = this.state;
     const className = this.getParams().className;
+    const title = `Class: ${className}`;
     let selectedMessageText = '';
 
     if (_.isArray(selectedRows) && !_.isEmpty(selectedRows)) {
@@ -191,11 +193,12 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title={title} />
         {this.getDialogs()}
         <DataObjectDialog />
 
         <InnerToolbar
-          title={`Class: ${className} ${selectedMessageText}`}
+          title={`${title} ${selectedMessageText}`}
           backFallback={this.handleBackClick}
           backButtonTooltip="Go back to Classes list">
 

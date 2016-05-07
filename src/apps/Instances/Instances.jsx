@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -54,11 +55,12 @@ export default React.createClass({
 
   render() {
     const {blocked, isLoading, hideDialogs, myInstances, sharedInstances} = this.state;
-
+    const title = 'Instances';
 
     if (blocked) {
       return (
         <div className="row vp-5-t">
+          <Helmet title="Account blocked"/>
           <Container.Empty
             icon='synicon-block-helper'
             text={blocked}/>
@@ -68,9 +70,10 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title={title}/>
         <InstanceDialog />
 
-        <InnerToolbar title="Instances">
+        <InnerToolbar title={title}>
           <RaisedButton
             label="Add"
             primary={true}

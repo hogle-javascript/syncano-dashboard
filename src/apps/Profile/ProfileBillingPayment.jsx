@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import {FormMixin} from '../../mixins';
 
@@ -69,15 +70,18 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let hasCard = !_.isEmpty(this.state.card);
-    let showForm = !hasCard || this.state.showForm === true || this.state.show_form === true;
-    let labelPrefix = hasCard ? 'Update' : 'Add';
+    const {card, showForm, show_form, isLoading, canSubmit} = this.state;
+    const title = 'Payment methods';
+    const hasCard = !_.isEmpty(card);
+    const labelPrefix = hasCard ? 'Update' : 'Add';
+    const displayForm = !hasCard || showForm === true || show_form === true;
 
     return (
-      <Loading show={this.state.isLoading}>
-        <InnerToolbar title="Payment methods"/>
+      <Loading show={isLoading}>
+        <Helmet title={title} />
+        <InnerToolbar title={title} />
         <Container>
-          <Show if={showForm}>
+          <Show if={displayForm}>
             <form
               onSubmit={this.handleFormValidation}
               acceptCharset="UTF-8"
@@ -153,7 +157,7 @@ export default Radium(React.createClass({
                     label={labelPrefix + ' payment'}
                     className="raised-button"
                     primary={true}
-                    disabled={!this.state.canSubmit}
+                    disabled={!canSubmit}
                     style={{margin: '0 0 0 auto'}}/>
                 </div>
               </div>
@@ -162,7 +166,7 @@ export default Radium(React.createClass({
 
           <Show if={!showForm}>
             <div>
-              <CreditCard card={this.state.card}/>
+              <CreditCard card={card}/>
               <RaisedButton
                 onClick={this.toggleForm.bind(null, true)}
                 type="submit"

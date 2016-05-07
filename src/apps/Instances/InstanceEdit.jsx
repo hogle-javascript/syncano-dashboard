@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Actions & Stores
 import Actions from './InstancesActions';
@@ -156,6 +157,7 @@ export default React.createClass({
     const styles = this.getStyles();
     const {instance} = this.state;
     const deleteButtonText = Store.amIOwner(instance) ? 'Delete' : 'Leave';
+    const title = 'General Settings';
 
     if (!instance) {
       return null;
@@ -163,9 +165,10 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title={title} />
         {this.getDialogs()}
 
-        <InnerToolbar title="General">
+        <InnerToolbar title={title}>
           <IconButton
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-delete"

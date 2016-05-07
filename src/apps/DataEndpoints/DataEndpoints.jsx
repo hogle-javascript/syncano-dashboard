@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -35,6 +36,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Data Endpoints" />
         <DataEndpointDialog/>
 
         <SocketsInnerToolbar>
