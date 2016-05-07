@@ -91,7 +91,7 @@ export default React.createClass({
                 <Sidebar.LinkListItem
                   key="pushDevices"
                   routeName="all-push-notification-devices"
-                  primaryText="Push Devices"
+                  primaryText="Push Devices (BETA)"
                   iconClassName="synicon-cellphone-iphone"
                   initiallyOpen={true}
                   autoGenerateNestedIndicator={false}
