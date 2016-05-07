@@ -66,7 +66,7 @@ export default React.createClass({
                     to="classEdit"
                     params={{...this.getParams(), className: item.class, action: 'edit'}}
                     style={{fontWeight: 700}}>
-                    {` [clicking here to add custom fields for your data objects].`}
+                    {` clicking here to add custom fields for your data objects.`}
                   </Link>
                 </Notification>
               </div>
