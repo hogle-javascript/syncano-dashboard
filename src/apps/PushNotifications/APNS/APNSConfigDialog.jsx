@@ -275,16 +275,20 @@ export default Radium(React.createClass({
         sidebar={
           <Dialog.SidebarBox>
             <Dialog.SidebarSection>
-              APNS Push Notification Socket allows you to send messages to your iOS devices. You can easily notify users
-               about updates etc.
-            </Dialog.SidebarSection>
-            <Dialog.SidebarSection>
+              <strong>APNS Push Notification Socket</strong> allows you to send messages to your iOS devices. You can
+              easily notify users about updates etc.
+              <br/><br/>
               <i>
                 NOTE: At least one production or development certificate must be uploaded to send Push Notifications.
               </i>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Certificates">
               Certificates are IDs that uniquely identify your application.
+              <br/><br/>
+              <i>
+                NOTE: If you don't have any certificates generated yet, click link below to learn how to generate them
+                 from our docs.
+              </i>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/push-notification-sockets-ios">
@@ -295,16 +299,10 @@ export default Radium(React.createClass({
         }>
         <div className="row align-center hp-2-l hp-2-r vm-2-b vm-2-t">
           <div
-            className="hm-2-r vm-6-t"
+            className="hm-2-r"
             dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
           <div className="col-flex-1">
             {this.renderDropZones()}
-            <div className="vm-4-t">
-              If you don't have any certificates generated yet read
-              <a
-                style={styles.GDClink}
-                href="https://developer.apple.com/membercenter"> here</a> to get them.
-            </div>
             {this.renderCertificateErrors()}
           </div>
         </div>
