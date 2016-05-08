@@ -145,7 +145,7 @@ export default React.createClass({
   },
 
   hasOrder(fieldType) {
-    const noOrderFields = ['file', 'text', 'array', 'object'];
+    const noOrderFields = ['file', 'text', 'array', 'object', 'geopoint'];
 
     return _.indexOf(noOrderFields, fieldType) < 0;
   },
@@ -290,20 +290,18 @@ export default React.createClass({
           <span className="col-xs-8">{item.fieldType}</span>
           <span className="col-xs-8">{item.fieldTarget}</span>
           <span className="col-xs-3">
-            <Show if={this.hasFilter(item.fieldType)}>
-              <Checkbox
-                name="filter"
-                defaultChecked={item.fieldFilter}
-                onCheck={this.handleOnCheck.bind(this, item)}/>
-            </Show>
+            <Checkbox
+              name="filter"
+              defaultChecked={item.fieldFilter}
+              disabled={!this.hasFilter(item.fieldType)}
+              onCheck={this.handleOnCheck.bind(this, item)}/>
           </span>
           <span className="col-xs-3">
-            <Show if={this.hasOrder(item.fieldType)}>
-              <Checkbox
-                name="order"
-                defaultChecked={item.fieldOrder}
-                onCheck={this.handleOnCheck.bind(this, item)}/>
-            </Show>
+            <Checkbox
+              name="order"
+              defaultChecked={item.fieldOrder}
+              disabled={!this.hasOrder(item.fieldType)}
+              onCheck={this.handleOnCheck.bind(this, item)}/>
           </span>
           <span className="col-xs-5">
             <FlatButton

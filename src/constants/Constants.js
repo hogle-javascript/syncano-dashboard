@@ -85,6 +85,7 @@ export default {
     'datetime',
     'file',
     'float',
+    'geopoint',
     'integer',
     'object',
     'reference',

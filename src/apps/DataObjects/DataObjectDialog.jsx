@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Reflux from 'reflux';
 import Dropzone from 'react-dropzone';
@@ -51,6 +52,20 @@ export default React.createClass({
 
         validateObj[`fielddate-${item.name}`] = validate(isDateSet);
         validateObj[`fieldtime-${item.name}`] = validate(isTimeSet);
+      } else if (item.type === 'geopoint') {
+        const isLatitudeSet = this.refs[`fieldlatitude-${item.name}`].getValue().length;
+        const isLongitudeSet = this.refs[`fieldlongitude-${item.name}`].getValue().length;
+        const validate = (isFieldSet) => {
+          const isValid = isLatitudeSet === isLongitudeSet;
+
+          if (!isValid && !isFieldSet) {
+            return {presence: {message: `^Both date and time fields must be filled`}};
+          }
+          return null;
+        };
+
+        validateObj[`fieldlatitude-${item.name}`] = validate(isLatitudeSet);
+        validateObj[`fieldlongitude-${item.name}`] = validate(isLongitudeSet);
       }
     });
 
@@ -198,6 +213,18 @@ export default React.createClass({
 
             params[item.name] = dateTime.toISOString();
           }
+        } else if (item.type === 'geopoint') {
+          const field = this.state[item.name];
+          const isFieldEmpty = field ? !_.isNumber(field.latitude) && !_.isNumber(field.longitude) : true;
+
+          if (!field || isFieldEmpty) {
+            params[item.name] = null
+          }
+
+          if (field && !isFieldEmpty) {
+            params[item.name] = field;
+          }
+
         } else {
           let fieldValue = this.refs[`field-${item.name}`].getValue();
 
@@ -324,6 +351,14 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  handleGeopointFieldChange(fieldName, key, value) {
+    const field = this.state[fieldName] || {};
+    const isEmptyField = _.isString(value) && _.isEmpty(value);
+
+    field[key] = !isEmptyField ? Number(value) : null;
+    this.setState({[`${fieldName}`]: field});
   },
 
   renderBuiltinFields() {
@@ -602,6 +637,47 @@ export default React.createClass({
               errorText={this.getValidationMessages(item.name).join(' ')}
               hintText={`Field ${item.name}`}
               floatingLabelText={`${item.name} (${item.type})`}/>
+          );
+        }
+
+        if (item.type === 'geopoint') {
+          const latitude = this.state[item.name] ? this.state[item.name].latitude : '';
+          const longitude = this.state[item.name] ? this.state[item.name].longitude : '';
+
+          return (
+            <div key={`field-${item.name}`}>
+              <div className="row">
+                <div>{item.name} ({item.type})</div>
+              </div>
+              <div className="row">
+                <div className="col-flex-1">
+                  <TextField
+                    key={`fieldlatitude-${item.name}`}
+                    ref={`fieldlatitude-${item.name}`}
+                    name={item.name}
+                    style={styles.dialogField}
+                    fullWidth={true}
+                    value={latitude}
+                    onChange={(event) => this.handleGeopointFieldChange(item.name, 'latitude', event.target.value)}
+                    errorText={this.getValidationMessages(`fieldlatitude-${item.name}`).join(' ')}
+                    hintText={`Field ${item.name}`}
+                    floatingLabelText={`${item.name} (${item.type})`}/>
+                </div>
+                <div className="col-flex-1">
+                  <TextField
+                    key={`fieldlongitude-${item.name}`}
+                    ref={`fieldlongitude-${item.name}`}
+                    name={item.name}
+                    style={styles.dialogField}
+                    fullWidth={true}
+                    value={longitude}
+                    onChange={(event) => this.handleGeopointFieldChange(item.name, 'longitude', event.target.value)}
+                    errorText={this.getValidationMessages(`fieldlongitude-${item.name}`).join(' ')}
+                    hintText={`Field ${item.name}`}
+                    floatingLabelText={`${item.name} (${item.type})`}/>
+                </div>
+              </div>
+            </div>
           );
         }
 
