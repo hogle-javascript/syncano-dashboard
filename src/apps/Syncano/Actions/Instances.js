@@ -69,7 +69,7 @@ export default {
         .please()
         .delete({name: instance.name}));
 
-    this.Promise.mapSeries(promises)
+    this.Promise.all(promises)
       .then(this.completed)
       .catch(this.failure);
   },
