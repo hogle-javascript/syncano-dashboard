@@ -1,6 +1,6 @@
 import 'd3';
-import 'syncano-c3/c3.css';
-import c3 from 'syncano-c3';
+import 'c3/c3.css';
+import c3 from 'c3';
 import _ from 'lodash';
 
 import React from 'react';

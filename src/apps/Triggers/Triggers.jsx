@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import {DialogsMixin} from '../../mixins';
 
@@ -31,6 +32,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Triggers" />
         <TriggerDialog />
 
         <SocketsInnerToolbar>

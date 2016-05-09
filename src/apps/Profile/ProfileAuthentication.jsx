@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
+import Helmet from 'react-helmet';
 
 import {FormMixin, SnackbarNotificationMixin} from '../../mixins';
 
@@ -83,10 +84,12 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
     const user = SessionStore.getUser();
     const hasPassword = user && user.has_password ? user.has_password : null;
+    const title = 'Authentication';
 
     return (
       <div>
-        <InnerToolbar title="Authentication"/>
+        <Helmet title={title} />
+        <InnerToolbar title={title} />
         <Container>
           <div style={styles.content}>
             <div>Account key</div>

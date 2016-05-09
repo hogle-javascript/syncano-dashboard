@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import {FormMixin} from '../../mixins';
 
@@ -11,7 +12,6 @@ import {Container} from 'syncano-components';
 import {InnerToolbar} from '../../common';
 
 export default React.createClass({
-
   displayName: 'ProfileSettings',
 
   mixins: [
@@ -52,11 +52,13 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
+    const title = 'Profile';
 
     return (
       <div>
-        <InnerToolbar title="Profile"/>
+        <Helmet title={title} />
+        <InnerToolbar title={title}/>
         <Container>
           {this.renderFormNotifications()}
           <form

@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -41,12 +42,14 @@ export default React.createClass({
 
   render() {
     const {admins, invitations} = this.state;
+    const title = 'Administrators';
 
     return (
       <div>
+        <Helmet title={title} />
         <AdminDialog />
 
-        <InnerToolbar title="Administrators">
+        <InnerToolbar title={title}>
           <RaisedButton
             label="Invite"
             primary={true}

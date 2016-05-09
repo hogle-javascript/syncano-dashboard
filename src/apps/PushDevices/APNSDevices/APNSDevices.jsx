@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import Store from './APNSDevicesStore';
 import Actions from './APNSDevicesActions';
@@ -24,6 +25,7 @@ export default React.createClass({
   render() {
     return (
       <Container>
+        <Helmet title="iOS Devices" />
         <APNSDialog />
         <DevicesList
           type="apns"

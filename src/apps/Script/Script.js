@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
 import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
 import AutosaveMixin from './ScriptAutosaveMixin';
@@ -441,6 +442,7 @@ export default React.createClass({
 
     return (
       <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'column'}}>
+        <Helmet title={this.getToolbarTitle()} />
         {this.getDialogs()}
         <InnerToolbar
           title={this.getToolbarTitle()}
