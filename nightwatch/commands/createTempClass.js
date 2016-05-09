@@ -11,11 +11,18 @@ exports.command = (callback) => {
       {type: 'string', name}
     ]
   };
+  const connection = Syncano({
+    baseUrl,
+    accountKey,
+    defaults: {
+      instanceName: Globals.tempInstanceName
+    }
+  });
 
-  new Syncano({accountKey, baseUrl})
-    .instance(Globals.tempInstanceName)
-    .class()
-    .add(data)
+  connection
+    .Class
+    .please()
+    .create(data)
     .then((response) => {
       Globals.tempClassName = response.name;
       if (typeof callback === 'function') {

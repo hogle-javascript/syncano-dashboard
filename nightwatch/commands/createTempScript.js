@@ -4,17 +4,18 @@ import Syncano from 'syncano';
 exports.command = (callback) => {
   const accountKey = Globals.tempAccountKey;
   const baseUrl = 'https://api.syncano.rocks';
-  const name = 'script' + Date.now();
+  const connection = Syncano({baseUrl, accountKey});
+  const label = 'script' + Date.now();
   const data = {
-    label: name,
+    label,
     source: 'print "foo"',
     runtime_name: 'python'
   };
 
-  new Syncano({accountKey, baseUrl})
-    .instance(Globals.tempInstanceName)
-    .codebox()
-    .add(data)
+  connection
+    .Script
+    .please()
+    .create(data)
     .then((response) => {
       Globals.tempScriptId = response.id;
       if (typeof callback === 'function') {
