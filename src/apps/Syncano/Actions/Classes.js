@@ -10,17 +10,19 @@ export default {
   },
 
   create(payload) {
-    this.Connection
-      .Classes
+    this.NewLibConnection
+      .Class
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   update(name, payload) {
-    this.Connection
-      .Classes
-      .update(name, payload)
+    this.NewLibConnection
+      .Class
+      .please()
+      .update({name}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
