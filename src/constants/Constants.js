@@ -7,7 +7,7 @@ export default {
   API: api,
 
   // Views constrains
-  DATAOBJECTS_PAGE_SIZE: 50,
+  DATAOBJECTS_PAGE_SIZE: 100,
   VIEW_MODES: ['cards', 'stream'],
   SORT_MODES: [
     'sortByName',

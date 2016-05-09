@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -138,51 +139,53 @@ export default React.createClass({
 
   renderTable() {
     console.info('DataObjects::renderTable');
-    const {hasNextPage} = this.state;
+    const {hasNextPage, isLoading} = this.state;
     const tableData = Store.renderTableData();
     const tableHeader = Store.renderTableHeader(this.handleSelectAll);
 
     return (
-    <div>
-      <Table
-        ref="table"
-        multiSelectable={true}
-        showRowHover={true}
-        onCellClick={this.handleCellClick}
-        onRowSelection={this.handleRowSelection}
-        wrapperStyle={{minHeight: '120px'}}
-        bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>
-        {tableHeader}
-        <TableBody
-          className="mui-table-body"
-          deselectOnClickaway={false}
+      <div>
+        <Table
+          ref="table"
+          multiSelectable={true}
           showRowHover={true}
-          stripedRows={false}>
-          {tableData}
-        </TableBody>
-      </Table>
+          onCellClick={this.handleCellClick}
+          onRowSelection={this.handleRowSelection}
+          wrapperStyle={{minHeight: '120px'}}
+          bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>
+          {tableHeader}
+          <TableBody
+            className="mui-table-body"
+            deselectOnClickaway={false}
+            showRowHover={true}
+            stripedRows={false}>
+            {tableData}
+          </TableBody>
+        </Table>
 
-      <div
-        className="row align-center"
-        style={{margin: 50}}>
-        <div>Loaded {tableData.length} Data Objects</div>
-      </div>
-      <Show if={hasNextPage}>
         <div
           className="row align-center"
           style={{margin: 50}}>
-          <RaisedButton
-            label="Load more"
-            onClick={this.handleMoreRows}/>
+          <div>Loaded {tableData.length} Data Objects</div>
         </div>
-      </Show>
-    </div>
+        <Loading show={isLoading}/>
+        <Show if={hasNextPage && !isLoading}>
+          <div
+            className="row align-center"
+            style={{margin: 50}}>
+            <RaisedButton
+              label="Load more"
+              onClick={this.handleMoreRows}/>
+          </div>
+        </Show>
+      </div>
     );
   },
 
   render() {
-    const {selectedRows, isLoading} = this.state;
+    const {items, selectedRows, isLoading} = this.state;
     const className = this.getParams().className;
+    const title = `Class: ${className}`;
     let selectedMessageText = '';
 
     if (_.isArray(selectedRows) && !_.isEmpty(selectedRows)) {
@@ -191,11 +194,12 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title={title} />
         {this.getDialogs()}
         <DataObjectDialog />
 
         <InnerToolbar
-          title={`Class: ${className} ${selectedMessageText}`}
+          title={`${title} ${selectedMessageText}`}
           backFallback={this.handleBackClick}
           backButtonTooltip="Go back to Classes list">
 
@@ -225,7 +229,7 @@ export default React.createClass({
 
         </InnerToolbar>
         <Container>
-          <Loading show={isLoading}>
+          <Loading show={!items && isLoading}>
             {this.renderTable()}
           </Loading>
         </Container>

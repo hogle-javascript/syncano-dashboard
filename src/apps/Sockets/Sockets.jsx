@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 // Stores & Actions
 import Actions from './SocketsActions';
@@ -115,9 +116,11 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Sockets"/>
         <SocketsDialog />
         <ScriptEndpoints.Dialog />
         <DataEndpoints.Dialog />
+        <DataEndpoints.SummaryDialog />
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />

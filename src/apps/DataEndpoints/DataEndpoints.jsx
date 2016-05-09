@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -16,6 +17,7 @@ import {Container} from 'syncano-components';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import DataEndpointsList from './DataEndpointsList';
 import DataEndpointDialog from './DataEndpointDialog';
+import DataEndpointSummaryDialog from './DataEndpointSummaryDialog';
 
 export default React.createClass({
   displayName: 'Data',
@@ -35,7 +37,9 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Data Endpoints" />
         <DataEndpointDialog/>
+        <DataEndpointSummaryDialog/>
 
         <SocketsInnerToolbar>
           <RaisedButton

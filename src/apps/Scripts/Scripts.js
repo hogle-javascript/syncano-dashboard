@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -41,6 +42,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Scripts" />
         <ScriptDialog />
 
         <SnippetsInnerToolbar>

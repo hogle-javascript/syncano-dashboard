@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
 import AutosaveMixin from '../Script/ScriptAutosaveMixin';
@@ -213,11 +214,12 @@ export default React.createClass({
   render() {
     const {template, isLoading} = this.state;
     const instanceName = this.getParams().instanceName;
+    const title = `Template: ${template.name}`;
 
     return (
       <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'column'}}>
-        <InnerToolbar
-          title={`Template: ${template.name}`}>
+        <Helmet title={title} />
+        <InnerToolbar title={title}>
           <Show if={!isLoading}>
             <div style={{display: 'inline-block'}}>
               <Checkbox

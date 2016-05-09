@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import Store from './TracesStore';
@@ -108,6 +109,7 @@ export default Radium(React.createClass({
 
     return (
       <div>
+        <Helmet title={toolbarTitleText} />
         <InnerToolbar
           title={toolbarTitleText}
           backFallback={this.handleBackClick}

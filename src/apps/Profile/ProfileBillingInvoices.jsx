@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import SessionStore from '../Session/SessionStore';
 import Actions from './ProfileActions';
@@ -31,10 +32,12 @@ export default React.createClass({
 
   render() {
     const {isLoading, invoices} = this.state;
+    const title = 'Invoices';
 
     return (
       <Loading show={isLoading}>
-        <InnerToolbar title="Invoices"/>
+        <Helmet title={title} />
+        <InnerToolbar title={title} />
 
         <Show if={!invoices.length}>
           <Container.Empty

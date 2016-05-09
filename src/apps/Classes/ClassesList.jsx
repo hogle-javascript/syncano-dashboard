@@ -33,7 +33,7 @@ export default React.createClass({
     const checkedClasses = Store.getCheckedItems();
 
     const associatedClasses = _.filter(checkedClasses, (checkedClass) => {
-      checkedClass.triggers = _.pluck(_.filter(this.props.triggers, 'class', checkedClass.name), 'label');
+      checkedClass.triggers = _.map(_.filter(this.props.triggers, 'class', checkedClass.name), 'label');
       return checkedClass.triggers.length > 0;
     });
 

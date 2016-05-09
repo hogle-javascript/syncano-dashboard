@@ -37,7 +37,7 @@ export default React.createClass({
     const checkedScripts = Store.getCheckedItems();
 
     const associatedScripts = _.filter(checkedScripts, (script) => {
-      script[associatedWith] = _.pluck(_.filter(this.state[associatedWith], 'script', script.id), 'label');
+      script[associatedWith] = _.map(_.filter(this.state[associatedWith], 'script', script.id), 'label');
       return script[associatedWith].length > 0;
     });
 

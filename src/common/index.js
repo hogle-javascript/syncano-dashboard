@@ -1,3 +1,4 @@
+import CodePreview from './CodePreview';
 import ColorIconPicker from './ColorIconPicker';
 import ConversionPixel from './ConversionPixel';
 import DataObjectsAmount from './DataObjectsAmount';
@@ -19,6 +20,7 @@ import Sidebar from './Sidebar';
 import ShowMore from './ShowMore';
 
 export default {
+  CodePreview,
   ColorIconPicker,
   ConversionPixel,
   DataObjectsAmount,

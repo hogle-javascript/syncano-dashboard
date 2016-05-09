@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -33,14 +34,25 @@ export default React.createClass({
     Actions.fetch();
   },
 
+  componentWillUpdate() {
+    const {action, className} = this.getParams();
+    const classObject = Store.getClassByName(className);
+
+    if (action === 'edit' && classObject) {
+      Actions.showDialog(classObject);
+    }
+  },
+
   render() {
     const {items, triggers, hideDialogs, isLoading} = this.state;
+    const title = 'Classes';
 
     return (
       <div>
+        <Helmet title={title} />
         <ClassDialog/>
 
-        <InnerToolbar title="Classes">
+        <InnerToolbar title={title}>
           <RaisedButton
             label="Add"
             primary={true}

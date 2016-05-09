@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import Store from './ChannelHistoryStore';
@@ -56,20 +57,24 @@ export default Radium(React.createClass({
   },
 
   render() {
+    const {channelName} = this.props;
+    const {items, isLoading} = this.state;
     const styles = this.getStyles();
+    const title = `Channel History for ${channelName}`;
 
     return (
       <div>
+        <Helmet title={title} />
         <InnerToolbar
-          title={'Channel History for ' + this.props.channelName}
+          title={title}
           backFallback={this.handleBackClick}
           backButtonTooltip='Go back to Channels list'/>
         <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>
           <Container>
             <ChannelHistoryList
               name="Channel History"
-              items={this.state.items}
-              isLoading={this.state.isLoading}/>
+              items={items}
+              isLoading={isLoading}/>
           </Container>
         </div>
       </div>

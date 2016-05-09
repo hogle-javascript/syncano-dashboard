@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import PushDevices from '../PushDevices';
 import APNSPushNotificationsActions from './APNS/APNSPushNotificationsActions';
@@ -37,6 +38,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Push Notifications" />
         <APNSConfigDialog/>
         <GCMConfigDialog/>
         <SocketsInnerToolbar>

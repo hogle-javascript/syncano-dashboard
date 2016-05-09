@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import Actions from './TemplatesActions';
@@ -29,6 +30,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Templates" />
         <TemplateDialog />
 
         <SnippetsInnerToolbar>
