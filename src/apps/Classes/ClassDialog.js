@@ -139,7 +139,7 @@ export default React.createClass({
   },
 
   hasFilter(fieldType) {
-    const noFilterFields = ['file', 'text', 'array', 'object'];
+    const noFilterFields = ['file', 'text', 'object'];
 
     return noFilterFields.indexOf(fieldType) < 0;
   },

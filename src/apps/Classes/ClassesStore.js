@@ -87,6 +87,7 @@ export default Reflux.createStore({
         return true;
       }
     });
+
     return classObj;
   },
 
@@ -185,6 +186,10 @@ export default Reflux.createStore({
   onSetClickedClass(item) {
     this.data.clickedItem = item;
     this.trigger(this.data);
+  },
+
+  onCreateClassCompleted() {
+    Actions.fetchClasses();
   },
 
   onUpdateClassCompleted() {
