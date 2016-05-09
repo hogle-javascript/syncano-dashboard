@@ -52,18 +52,5 @@ export default {
     this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
-  },
-
-  renderFromEndpoint(templateName, endpointUrl) {
-    const endpointUrlWithoutDomain = endpointUrl.substring(endpointUrl.indexOf('/v1'));
-    const params = {
-      template_response: templateName,
-      serialize: false
-    };
-
-    this.Connection
-      .request('GET', endpointUrlWithoutDomain, params)
-      .then(this.completed)
-      .catch(this.failure);
   }
 };
