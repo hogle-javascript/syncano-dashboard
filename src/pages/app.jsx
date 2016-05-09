@@ -1,6 +1,7 @@
 import React from 'react';
 import {State, RouteHandler} from 'react-router';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
@@ -52,6 +53,9 @@ export default React.createClass({
   render() {
     return (
       <div style={{display: 'flex', flexDirection: 'column', flex: 1, maxWidth: '100%'}}>
+        <Helmet
+          titleTemplate="%s - Syncano Dashboard"
+          link={[{rel: 'icon', type: 'image/png', href: 'img/favicon-32x32.png', sizes: '32x32'}]} />
         <RouteHandler/>
         <SnackbarNotification />
       </div>

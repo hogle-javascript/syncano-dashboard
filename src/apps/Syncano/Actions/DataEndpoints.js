@@ -20,6 +20,29 @@ export default {
       .catch(this.failure);
   },
 
+  createWithClass(payload) {
+    this.Connection
+      .Classes
+      .create({
+        name: payload.class,
+        schema: ''
+      })
+      .then(() => {
+        this.NewLibConnection
+          .DataEndpoint
+          .please()
+          .create(payload)
+          .then(this.completed)
+          .catch(this.failure);
+      })
+      .catch((error) => {
+        if (error.name) {
+          return this.failure({class: error.name});
+        }
+        this.failure(error);
+      });
+  },
+
   update(name, payload) {
     this.NewLibConnection
       .DataEndpoint
@@ -39,5 +62,28 @@ export default {
     this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
+  },
+
+  updateWithClass(id, payload) {
+    this.Connection
+      .Classes
+      .create({
+        name: payload.class,
+        schema: ''
+      })
+      .then(() => {
+        this.NewLibConnection
+          .DataEndpoint
+          .please()
+          .create(payload)
+          .then(this.completed)
+          .catch(this.failure);
+      })
+      .catch((error) => {
+        if (error.name) {
+          return this.failure({class: error.name});
+        }
+        this.failure(error);
+      });
   }
 };

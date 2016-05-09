@@ -26,7 +26,7 @@ export default ({item, handleAccept, handleDecline}) => {
         innerDivStyle={{opacity: 1}}
         style={menuItemStyles}>
         <div>
-          <strong>{`${item.inviter} `}</strong>invited you to their instance<strong>{` ${item.instance}`}</strong>
+          <strong>{`${item.inviter} `}</strong>invited you<br/>to their instance<strong>{` ${item.instance}`}</strong>
         </div>
         <div className="vp-2-t">
           <StandardButtons

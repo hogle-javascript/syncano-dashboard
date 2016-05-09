@@ -1,5 +1,6 @@
 import React from 'react';
 import {RouteHandler, State} from 'react-router';
+import Helmet from 'react-helmet';
 
 import APNSDevicesActions from '../../src/apps/PushDevices/APNSDevices/APNSDevicesActions';
 import GCMDevicesActions from '../../src/apps/PushDevices/GCMDevices/GCMDevicesActions';
@@ -32,9 +33,12 @@ export default React.createClass({
   },
 
   render() {
+    const title = 'Push Notification Devices (BETA)';
+
     return (
       <div>
-        <InnerToolbar title="Push Notification Devices">
+        <Helmet title={title} />
+        <InnerToolbar title={title}>
           <RaisedButton
             label="Add"
             primary={true}

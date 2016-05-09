@@ -48,7 +48,7 @@ export default {
       locateStrategy: 'xpath'
     },
     apiKeys: {
-      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="API keys"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="API Keys"]',
       locateStrategy: 'xpath'
     },
     authentication: {
@@ -60,11 +60,11 @@ export default {
       locateStrategy: 'xpath'
     },
     billingPlan: {
-      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Billing plan"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Billing Plan"]',
       locateStrategy: 'xpath'
     },
     paymentMethods: {
-      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Payment methods"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Payment Methods"]',
       locateStrategy: 'xpath'
     },
     invoices: {
@@ -72,7 +72,7 @@ export default {
       locateStrategy: 'xpath'
     },
     billingAddress: {
-      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Billing address"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Billing Address"]',
       locateStrategy: 'xpath'
     }
   }

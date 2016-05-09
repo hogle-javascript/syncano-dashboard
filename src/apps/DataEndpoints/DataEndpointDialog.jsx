@@ -11,9 +11,9 @@ import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 // Components
-import {TextField, Toggle, Checkbox} from 'syncano-material-ui';
+import {TextField, Toggle, Checkbox, AutoComplete} from 'syncano-material-ui';
 import {SelectFieldWrapper, Show} from 'syncano-components';
-import {Dialog} from '../../common';
+import {Dialog, Notification} from '../../common';
 
 export default React.createClass({
   displayName: 'DataEndpointDialog',
@@ -33,20 +33,6 @@ export default React.createClass({
     }
   },
 
-  getDataEndpointParams() {
-    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
-
-    return {
-      name,
-      class: this.state.class,
-      description,
-      order_by,
-      page_size,
-      excluded_fields,
-      expand
-    };
-  },
-
   isEnabled(list, field) {
     if (!list) {
       return false;
@@ -60,11 +46,45 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createDataEndpoint(this.getDataEndpointParams());
+    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
+    const className = this.state.class;
+    const isActualClass = ClassesStore.getClassByName(className);
+    const payload = {
+      name,
+      class: className,
+      description,
+      order_by,
+      page_size,
+      excluded_fields,
+      expand
+    };
+
+    if (!isActualClass) {
+      return Actions.createDataEndpointWithClass(payload);
+    }
+
+    return Actions.createDataEndpoint(payload);
   },
 
   handleEditSubmit() {
-    Actions.updateDataEndpoint(this.state.name, this.getDataEndpointParams());
+    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
+    const className = this.state.class;
+    const isActualClass = ClassesStore.getClassByName(className);
+    const payload = {
+      class: className,
+      description,
+      order_by,
+      page_size,
+      excluded_fields,
+      expand
+    };
+
+
+    if (!isActualClass) {
+      return Actions.updateDataEndpointWithClass(name, payload);
+    }
+
+    return Actions.updateDataEndpoint(name, payload);
   },
 
   handleToggle(fieldsType, fieldName, event, value) {
@@ -116,8 +136,7 @@ export default React.createClass({
                 value={field.name}
                 label={field.name}
                 defaultToggled={!this.isEnabled(this.state.excluded_fields, field.name)}
-                onToggle={this.handleToggle.bind(this, 'showFields', field.name)}
-                />
+                onToggle={this.handleToggle.bind(this, 'showFields', field.name)} />
             </div>
             <div className="col-xs-8">
               <Show if={field.type === 'reference'}>
@@ -125,8 +144,7 @@ export default React.createClass({
                   name="expand"
                   defaultChecked={this.isEnabled(this.state.expand, field.name)}
                   disabled={this.isEnabled(this.state.excluded_fields, field.name)}
-                  onCheck={this.handleToggle.bind(this, 'expandFields', field.name)}
-                  />
+                  onCheck={this.handleToggle.bind(this, 'expandFields', field.name)} />
               </Show>
             </div>
           </div>
@@ -137,10 +155,19 @@ export default React.createClass({
 
   renderOptions() {
     console.info('DataEndpointDialog::renderOrderBy', this.state.class);
-    let orderField = <div key="options_header" style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
     const orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
+    let orderField = (
+      <div
+        key="options_header"
+        style={{
+          paddingTop: 24,
+          paddingBottom: 24
+        }}>
+        <Notification>Add schema fields with order index</Notification>
+      </div>
+    );
 
-    if (orderFields.length > 0) {
+    if (orderFields.length) {
       orderField = (
         <SelectFieldWrapper
           name="order_by"
@@ -152,29 +179,26 @@ export default React.createClass({
       );
     }
 
-    return [
-      <div>Response options</div>,
-      orderField,
-      <TextField
-        ref="page_size"
-        name="page_size"
-        fullWidth={true}
-        valueLink={this.linkState('page_size')}
-        errorText={this.getValidationMessages('page_size').join(' ')}
-        hintText="Number"
-        floatingLabelText="Number of records in data set"/>
-    ];
+    return (
+      <div>
+        <div>Response options</div>
+        {orderField}
+        <TextField
+          ref="page_size"
+          name="page_size"
+          fullWidth={true}
+          valueLink={this.linkState('page_size')}
+          errorText={this.getValidationMessages('page_size').join(' ')}
+          hintText="Number"
+          floatingLabelText="Number of records in data set"/>
+      </div>
+    );
   },
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    let fields = null;
-    let options = null;
-
-    if (this.state.class) {
-      fields = this.renderFields();
-      options = this.renderOptions();
-    }
+    const {open, isLoading, canSubmit, classes} = this.state;
+    const submitLabel = !ClassesStore.getClassByName(this.state.class) ? 'Confirm and create a class' : 'Confirm';
 
     return (
       <Dialog.FullPage
@@ -182,11 +206,12 @@ export default React.createClass({
         ref="dialog"
         title={`${title} a Data Endpoint`}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
+            submitLabel={submitLabel}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -214,7 +239,7 @@ export default React.createClass({
         }>
         {this.renderFormNotifications()}
         <Dialog.ContentSection>
-          <div className="col-xs-12">
+          <div className="col-flex-1">
             <TextField
               ref="name"
               name="name"
@@ -226,7 +251,9 @@ export default React.createClass({
               hintText="Data Endpoint's name"
               floatingLabelText="Name"/>
           </div>
-          <div className="col-flex-1" style={{paddingLeft: 15}}>
+          <div
+            className="col-flex-1"
+            style={{paddingLeft: 15}}>
             <TextField
               ref="description"
               name="description"
@@ -237,22 +264,31 @@ export default React.createClass({
               floatingLabelText="Description (optional)"/>
           </div>
         </Dialog.ContentSection>
-        <Dialog.ContentSection>
-          <div className="col-flex-1">
-            <SelectFieldWrapper
+        <Dialog.ContentSection style={{height: 72}}>
+          <div className="col-flex-1" style={{position: 'relative'}}>
+            <AutoComplete
+              ref="class"
               name="class"
-              options={this.state.classes}
-              value={this.state.class}
-              onChange={(event, index, value) => this.setSelectFieldValue('class', value)}
+              floatingLabelText="Class"
+              hintText="Start typing to see matching classes list or type a new class name"
+              filter={(searchText, key) => !searchText ? true : searchText !== '' && key.includes(searchText)}
+              dataSource={classes}
+              searchText={this.state.class}
+              onNewRequest={(value) => this.setState({class: value})}
+              onUpdateInput={(value) => this.setState({class: value})}
+              fullWidth={true}
+              triggerUpdateOnFocus={true}
+              onFocus={() => this.refs.class._open()}
+              onClick={() => this.refs.class._open()}
               errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection>
           <div className="col-flex-1">
-            {fields}
+            {this.renderFields()}
           </div>
-          <div className="col-flex-1" style={{paddingLeft: 40}}>
-            {options}
+          <div className="col-flex-1" style={{paddingLeft: 15}}>
+            {this.renderOptions()}
           </div>
         </Dialog.ContentSection>
       </Dialog.FullPage>

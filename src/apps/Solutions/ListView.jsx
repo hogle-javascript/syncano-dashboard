@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import Store from './ListViewStore';
@@ -45,6 +46,7 @@ export default React.createClass({
 
     return (
       <div id='solutions'>
+        <Helmet title="Solutions Market" />
         <div className="row">
           <Sidebar>
             <List className="vm-3-b">

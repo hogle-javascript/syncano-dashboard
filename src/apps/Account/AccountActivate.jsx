@@ -8,7 +8,6 @@ import Actions from './AuthActions';
 import AccountContainer from './AccountContainer';
 
 export default React.createClass({
-
   displayName: 'AccountActivate',
 
   contextTypes: {

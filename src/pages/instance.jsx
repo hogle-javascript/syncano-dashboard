@@ -91,7 +91,7 @@ export default React.createClass({
                 <Sidebar.LinkListItem
                   key="pushDevices"
                   routeName="all-push-notification-devices"
-                  primaryText="Push Devices"
+                  primaryText="Push Devices (BETA)"
                   iconClassName="synicon-cellphone-iphone"
                   initiallyOpen={true}
                   autoGenerateNestedIndicator={false}
@@ -121,10 +121,10 @@ export default React.createClass({
                   iconClassName="synicon-account-star-variant"
                   primaryText="Administrators" />
                 <Sidebar.LinkListItem
-                  key="API keys"
+                  key="API Keys"
                   routeName="api-keys"
                   iconClassName="synicon-key-variant"
-                  primaryText="API keys" />
+                  primaryText="API Keys" />
               </Sidebar.List>
             </div>
           </Sidebar>

@@ -10,7 +10,7 @@ export default ({title, last, children, style}) => {
   };
 
   return (
-    <div className={!last ? 'vm-6-b' : ''}>
+    <div className={!last ? 'vm-3-b' : ''}>
       {title ? <div style={styles.title}>{title}</div> : null}
       <div
         style={style}
