@@ -29,8 +29,7 @@ export default {
   },
 
   remove(groups) {
-    const ids = _.pluck(groups, 'id');
-    const promises = _.map(ids, (id) => this.NewLibConnection.Group.please().delete({id}));
+    const promises = _.map(groups, (group) => this.NewLibConnection.Group.please().delete({id: group.id}));
 
     this.Promise.all(promises)
       .then(this.completed)

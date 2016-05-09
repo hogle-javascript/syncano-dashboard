@@ -103,6 +103,8 @@ export default React.createClass({
   },
 
   initDialogs() {
+    const {isLoading} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -110,10 +112,10 @@ export default React.createClass({
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
         handleConfirm: this.handleDelete,
-        isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         groupName: 'Channel',
-        children: `Do you really want to delete ${Store.getSelectedRowsLength()} Data Object(s)?`
+        children: `Do you really want to delete ${Store.getSelectedRowsLength()} Data Object(s)?`,
+        isLoading
       }
     }];
   },
