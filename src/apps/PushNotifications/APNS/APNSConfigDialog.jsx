@@ -116,28 +116,7 @@ export default Radium(React.createClass({
   },
 
   handleAddSubmit() {
-    const {
-      production_certificate_name,
-      production_certificate,
-      production_bundle_identifier,
-      production_expiration_date,
-      development_certificate_name,
-      development_certificate,
-      development_expiration_date,
-      development_bundle_identifier
-    } = this.state;
-    const params = {
-      production_certificate_name,
-      production_certificate,
-      production_bundle_identifier,
-      production_expiration_date,
-      development_certificate_name,
-      development_certificate,
-      development_expiration_date,
-      development_bundle_identifier
-    };
-
-    Actions.configAPNSPushNotification(this.removeEmptyParams(params));
+    Actions.configAPNSPushNotification(this.removeEmptyParams(this.state));
   },
 
   removeEmptyParams(params) {
