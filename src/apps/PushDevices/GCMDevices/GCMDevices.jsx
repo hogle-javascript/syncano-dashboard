@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import Store from './GCMDevicesStore';
 import Actions from './GCMDevicesActions';
@@ -27,6 +28,7 @@ export default React.createClass({
 
     return (
       <Container>
+        <Helmet title="Android Devices" />
         <GCMDialog />
         <DevicesList
           type="gcm"

@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import Actions from './ApiKeysActions';
@@ -31,12 +32,14 @@ export default React.createClass({
 
   render() {
     const {items, isLoading, hideDialogs} = this.state;
+    const title = 'API Keys';
 
     return (
       <div>
+        <Helmet title={title} />
         <ApiKeyDialog />
 
-        <InnerToolbar title="API Keys">
+        <InnerToolbar title={title}>
           <RaisedButton
             label="Add"
             primary={true}

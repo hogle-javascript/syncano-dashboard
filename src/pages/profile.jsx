@@ -32,11 +32,11 @@ export default React.createClass({
             <Sidebar.LinkListItem
               key="Billing plan"
               routeName="profile-billing-plan"
-              primaryText="Billing plan"/>
+              primaryText="Billing Plan"/>
             <Sidebar.LinkListItem
               key="Payment methods"
               routeName="profile-billing-payment"
-              primaryText="Payment methods"/>
+              primaryText="Payment Methods"/>
             <Sidebar.LinkListItem
               key="Invoices"
               routeName="profile-billing-invoices"
@@ -44,7 +44,7 @@ export default React.createClass({
             <Sidebar.LinkListItem
               key="Billing address"
               routeName="profile-billing-address"
-              primaryText="Billing address"/>
+              primaryText="Billing Address"/>
           </Sidebar.List>
         </Sidebar>
         <div className="col-flex-1" style={{maxWidth: 'calc(100% - 256px)'}}>

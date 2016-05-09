@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import Radium from 'radium';
 import Moment from 'moment';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import {FormMixin, DialogsMixin} from '../../mixins';
 
@@ -378,6 +379,7 @@ export default Radium(React.createClass({
 
     return (
       <div>
+        <Helmet title="Billing Plan" />
         {this.getDialogs()}
         <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
 

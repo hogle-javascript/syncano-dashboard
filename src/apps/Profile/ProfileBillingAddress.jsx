@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import {FormMixin} from '../../mixins';
 
@@ -88,12 +89,15 @@ export default React.createClass({
       address_country,
       address_state,
       address_zip,
-      address_city
+      address_city,
+      canSubmit
     } = this.state;
+    const title = 'Billing address';
 
     return (
       <div>
-        <InnerToolbar title="Billing address"/>
+        <Helmet title={title} />
+        <InnerToolbar title={title} />
 
         <Container>
           {this.renderFormNotifications()}
@@ -199,7 +203,7 @@ export default React.createClass({
               type="submit"
               label="Update"
               className="raised-button"
-              disabled={!this.state.canSubmit}
+              disabled={!canSubmit}
               primary={true}/>
           </form>
         </Container>
