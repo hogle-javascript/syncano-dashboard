@@ -87,6 +87,7 @@ export default React.createClass({
     const styles = this.getStyles();
     const {
       style,
+      titleStyle,
       contentSize,
       contentStyle,
       children,
@@ -108,7 +109,7 @@ export default React.createClass({
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}
-        titleStyle={styles.title}
+        titleStyle={this.mergeStyles(styles.title, titleStyle)}
         bodyStyle={styles.body}
         actionsContainerStyle={this.mergeStyles(styles.actionsContainer, sidebar && styles.actionsContainerWhenSidebar)}
         onRequestClose={onRequestClose}

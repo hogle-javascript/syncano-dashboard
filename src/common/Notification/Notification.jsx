@@ -5,11 +5,10 @@ import {FontIcon, Utils} from 'syncano-material-ui';
 import './Notification.sass';
 
 export default React.createClass({
-
   displayName: 'Notification',
 
   propTypes: {
-    style: React.PropTypes.string,
+    style: React.PropTypes.object,
     type: React.PropTypes.string.isRequired,
     children: React.PropTypes.any.isRequired
   },
@@ -23,42 +22,43 @@ export default React.createClass({
   },
 
   getStyles() {
-    const styles = {
-      fontSize: 18,
-      lineHeight: 1,
-      color: 'inherit',
-      verticalAlign: 'middle',
-      display: 'inline-flex'
+    return {
+      icon: {
+        fontSize: 18,
+        lineHeight: 1,
+        color: 'inherit',
+        verticalAlign: 'middle',
+        display: 'inline-flex'
+      }
     };
-
-    return this.mergeStyles(styles, this.props.style);
   },
 
   render() {
     const styles = this.getStyles();
+    const {type, className, style, children} = this.props;
 
     const cssClasses = classNames({
       notification: true,
-      'notification--info': this.props.type === 'info',
-      'notification--error': this.props.type === 'error',
-      'notification--warning': this.props.type === 'warning'
-    }, this.props.className);
+      'notification--info': type === 'info',
+      'notification--error': type === 'error',
+      'notification--warning': type === 'warning'
+    }, className);
 
     const iconClass = classNames({
-      information: this.props.type === 'info',
-      'alert-circle': this.props.type === 'error',
-      alert: this.props.type === 'warning'
+      information: type === 'info',
+      'alert-circle': type === 'error',
+      alert: type === 'warning'
     });
 
     return (
       <div className={cssClasses}>
-        <div className="notification__content">
+        <div className="notification__content" style={style}>
           <div className="notification__content__icon">
             <FontIcon
-              style={styles}
+              style={styles.icon}
               className={`synicon-${iconClass}`} />
           </div>
-          <div>{this.props.children}</div>
+          <div>{children}</div>
         </div>
       </div>
     );
