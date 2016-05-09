@@ -190,7 +190,7 @@ export default React.createClass({
   handleFieldAdd() {
     const {fields, fieldName, fieldType, fieldTarget} = this.state;
 
-    if (_.includes(_.pluck(fields, 'fieldName'), fieldName)) {
+    if (_.includes(_.map(fields, 'fieldName'), fieldName)) {
       this.refs.fieldName.setErrorText('Field with this name already exists.');
       return;
     }
