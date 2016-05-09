@@ -10,10 +10,11 @@ export default {
       .catch(this.failure);
   },
 
-  update(scriptId, params) {
-    this.Connection
-      .CodeBoxes
-      .update(scriptId, params)
+  update(id, params) {
+    this.NewLibConnection
+      .Script
+      .please()
+      .update({id}, params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -55,8 +56,9 @@ export default {
       source = `${comment} Start coding!`;
     }
 
-    this.Connection
-      .CodeBoxes
+    this.NewLibConnection
+      .Script
+      .please()
       .create({runtime_name, label, description, source})
       .then(this.completed)
       .catch(this.failure);
@@ -87,9 +89,10 @@ export default {
   },
 
   listRuntimes() {
-    this.Connection
-      .CodeBoxes
-      .listRuntimes()
+    this.NewLibConnection
+      .Script
+      .please()
+      .getRuntimes()
       .then(this.completed)
       .catch(this.failure);
   }

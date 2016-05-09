@@ -72,7 +72,7 @@ export default {
   },
 
   remove(users) {
-    const promises = _.map(users, (user) => this.Connection.Users.remove(user.id));
+    const promises = _.map(users, (user) => this.NewLibConnection.User.please().delete({id: user.id}));
 
     this.Promise.all(promises)
       .then(this.completed)

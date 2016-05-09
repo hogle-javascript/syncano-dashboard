@@ -11,13 +11,18 @@ export default {
 
   accept(invitations) {
     if (typeof invitations === 'string') {
-      this.Connection
-        .AccountInvitations
+      this.NewLibConnection
+        .Invitation
+        .please()
         .accept(invitations)
         .then(this.completed)
         .catch(this.failure);
     } else {
-      const promises = invitations.map((invitation) => this.Connection.AccountInvitations.accept(invitation.key));
+      const promises = invitations.map((invitation) =>
+        this.NewLibConnection
+          .Invitation
+          .please()
+          .accept(invitation.key));
 
       this.Promise.all(promises)
         .then(this.completed)

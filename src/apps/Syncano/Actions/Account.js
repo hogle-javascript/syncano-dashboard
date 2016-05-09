@@ -2,9 +2,9 @@ import Hello from '../../Account/Hello.js';
 
 export default {
   resendActivationEmail(email) {
-    this.Connection
-      .Accounts
-      .resendActivationEmail(email)
+    this.NewLibConnection
+      .Account
+      .resendEmail(email)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -34,9 +34,9 @@ export default {
   },
 
   passwordReset(email) {
-    this.Connection
-      .Accounts
-      .passwordReset(email)
+    this.NewLibConnection
+      .Account
+      .resetPassword(email)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -53,8 +53,9 @@ export default {
     Hello
       .login(network)
       .then((auth) => {
-        this.Connection
-          .socialConnect(auth.network, auth.authResponse.access_token)
+        this.NewLibConnection
+          .Account
+          .socialLogin(auth.network === 'google' ? 'google-oauth2' : auth.network, auth.authResponse.access_token)
           .then((payload) => {
             payload.network = network;
             return payload;
