@@ -56,5 +56,9 @@ export default Reflux.createStore({
       return item;
     });
     this.trigger(this.data);
+  },
+
+  onRemoveCertificate() {
+    this.refreshData();
   }
 });

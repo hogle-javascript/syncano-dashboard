@@ -797,6 +797,7 @@ var Syncano = (function () {
         sendMessages: this.sendMessageToGCMDevices.bind(this)
       },
       APNS: {
+        removeCertificate: this.removeCertificate.bind(this),
         config: this.configAPNSPushNotification.bind(this),
         get: this.getAPNSPushNotificationConfig.bind(this),
         sendMessages: this.sendMessageToAPNSDevices.bind(this)
@@ -3573,6 +3574,27 @@ var Syncano = (function () {
       xhr.send(formData);
 
       return deferred.promise;
+    },
+
+    /**
+     * Removes APNS certificate
+     *
+     * @method Syncano#removeCertificate
+     * @alias Syncano.PushNotifications.APNS.removeCertificate
+     * @param {Object} params - JSON payload
+     * @param {string} params.development_certificate_name - development certificate name to delete
+     * @param {string} params.production_certificate_name - production certificate name to delete
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    removeCertificate: function (params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      var url = linksObject.instance_push_notifications + 'apns/config/remove_certificate';
+
+      return this.request('POST', url, params, callbackOK, callbackError);
     },
 
     /**
