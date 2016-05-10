@@ -13,9 +13,9 @@ import ClassesStore from './ClassesStore';
 import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
-import {TextField, FlatButton, Checkbox} from 'syncano-material-ui';
+import {TextField, FlatButton, Checkbox, Tabs, Tab, Styles} from 'syncano-material-ui';
 import {Color, Show, SelectFieldWrapper} from 'syncano-components';
-import {Dialog, Icon, Notification} from '../../common';
+import {Dialog, Icon, Notification, ColorIconPicker} from '../../common';
 
 export default React.createClass({
   displayName: 'ClassDialog',
@@ -40,6 +40,15 @@ export default React.createClass({
     if (!nextState.schemaInitialized && nextState.schema) {
       this.setFields(nextState.schema);
       nextState.schemaInitialized = true;
+    }
+
+    if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
+      this.setState({
+        metadata: {
+          color: Color.getRandomColorName(),
+          icon: Icon.Store.getRandomIconPickerIcon()
+        }
+      });
     }
   },
 
@@ -77,6 +86,22 @@ export default React.createClass({
       },
       groupItemId: {
         flexShrink: 0
+      },
+      tab: {
+        color: Styles.Colors.blue400,
+        fontSize: 13,
+        lineHeight: '18px',
+        fontWeight: 800
+      },
+      inkBarStyle: {
+        background: Styles.Colors.blue400
+      },
+      contentContainerStyle: {
+        padding: '0 8px 0 8px'
+      },
+      tabItemContainerStyle: {
+        background: 'transparent',
+        borderBottom: '1px solid #b8c0c9'
       }
     };
   },
@@ -152,7 +177,7 @@ export default React.createClass({
 
   handleAddSubmit() {
     const schema = this.getSchema();
-    const {name, description, group, group_permissions, other_permissions} = this.state;
+    const {name, description, group, group_permissions, other_permissions, metadata} = this.state;
 
     if (schema.length < 1) {
       this.setState({feedback: 'You need to add at least one field!'});
@@ -166,15 +191,12 @@ export default React.createClass({
       group_permissions,
       other_permissions,
       schema,
-      metadata: {
-        color: Color.getRandomColorName(),
-        icon: Icon.Store.getRandomIconPickerIcon()
-      }
+      metadata
     });
   },
 
   handleEditSubmit() {
-    const {name, description, group, group_permissions, other_permissions} = this.state;
+    const {name, description, group, group_permissions, other_permissions, metadata} = this.state;
 
     Actions.updateClass(
       name, {
@@ -182,7 +204,8 @@ export default React.createClass({
         group: group !== 'none' ? group : null,
         group_permissions,
         other_permissions,
-        schema: this.getSchema()
+        schema: this.getSchema(),
+        metadata
       }
     );
   },
@@ -247,6 +270,18 @@ export default React.createClass({
     });
 
     this.setState({fields: newFields});
+  },
+
+  handleColorChange(color) {
+    const {metadata} = this.state;
+
+    this.setState({metadata: _.merge({}, metadata, {color})});
+  },
+
+  handleIconChange(icon) {
+    const {metadata} = this.state;
+
+    this.setState({metadata: _.merge({}, metadata, {icon})});
   },
 
   setFields(schema) {
@@ -323,6 +358,7 @@ export default React.createClass({
       group,
       group_permissions,
       other_permissions,
+      metadata,
       fieldType,
       fieldTarget,
       fieldName
@@ -380,31 +416,59 @@ export default React.createClass({
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
         }>
-        <Dialog.ContentSection>
-          {this.renderFormNotifications()}
-          <div className="col-xs-8">
-            <TextField
-              ref="name"
-              name="name"
-              autoFocus={true}
-              disabled={this.hasEditMode()}
-              fullWidth={true}
-              valueLink={this.linkState('name')}
-              errorText={this.getValidationMessages('name').join(' ')}
-              hintText="Class's name"
-              floatingLabelText="Name"/>
-          </div>
-          <div className="col-flex-1">
-            <TextField
-              ref="description"
-              name="description"
-              fullWidth={true}
-              valueLink={this.linkState('description')}
-              errorText={this.getValidationMessages('description').join(' ')}
-              hintText="Class's description"
-              floatingLabelText="Description (optional)"/>
-          </div>
-        </Dialog.ContentSection>
+        {this.renderFormNotifications()}
+        <Tabs
+          inkBarStyle={styles.inkBarStyle}
+          contentContainerStyle={styles.contentContainerStyle}
+          tabItemContainerStyle={styles.tabItemContainerStyle}>
+          <Tab
+            style={styles.tab}
+            label="GENERAL">
+            <Dialog.ContentSection>
+              <div style={{padding: '20px 0 56px 0', width: '100%'}}>
+                <TextField
+                  ref="name"
+                  name="name"
+                  autoFocus={true}
+                  disabled={this.hasEditMode()}
+                  fullWidth={true}
+                  valueLink={this.linkState('name')}
+                  errorText={this.getValidationMessages('name').join(' ')}
+                  hintText="Class's name"
+                  floatingLabelText="Name"/>
+                <TextField
+                  ref="description"
+                  name="description"
+                  fullWidth={true}
+                  valueLink={this.linkState('description')}
+                  errorText={this.getValidationMessages('description').join(' ')}
+                  hintText="Class's description"
+                  floatingLabelText="Description (optional)"/>
+              </div>
+            </Dialog.ContentSection>
+          </Tab>
+          <Tab
+            style={styles.tab}
+            label="CUSTOMIZE">
+            <div className="row align-middle vp-4-t vp-4-b">
+              <div className="col-sm-11">
+                <ColorIconPicker.Preview
+                  color={metadata.color}
+                  icon={metadata.icon}/>
+              </div>
+              <div className="col-sm-12">
+                <ColorIconPicker.IconPicker
+                  selectedIcon={metadata.icon}
+                  onIconChange={this.handleIconChange} />
+              </div>
+              <div className="col-sm-12">
+                <ColorIconPicker.ColorPicker
+                  selectedColor={metadata.color}
+                  onColorChange={this.handleColorChange} />
+              </div>
+            </div>
+          </Tab>
+        </Tabs>
         <Dialog.ContentSection title="Permissions">
           <div className="col-flex-1">
             <SelectFieldWrapper
