@@ -8,7 +8,7 @@ exports.command = (callback) => {
   const data = {
     label,
     source: 'print "foo"',
-    runtime_name: 'python'
+    runtime_name: 'python_library_v5.0'
   };
   const connection = Syncano({
     baseUrl,
