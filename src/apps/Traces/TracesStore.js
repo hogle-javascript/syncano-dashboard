@@ -86,19 +86,19 @@ export default Reflux.createStore({
     this.setTraces(tracesObj._items);
   },
 
-  onFetchScriptEndpointTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchScriptEndpointTracesCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+  onFetchScriptEndpointTracesCompleted(scriptEndpointTraces) {
+    console.debug('TracesStore::onFetchScriptEndpointTracesCompleted', scriptEndpointTraces);
+    this.setTraces(scriptEndpointTraces);
   },
 
-  onFetchTriggerTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchTriggerTracesCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+  onFetchTriggerTracesCompleted(triggerTraces) {
+    console.debug('TracesStore::onFetchTriggerTracesCompleted', triggerTraces);
+    this.setTraces(triggerTraces);
   },
 
-  onFetchScheduleTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchScheduleTracesCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+  onFetchScheduleTracesCompleted(scheduleTraces) {
+    console.debug('TracesStore::onFetchScheduleTracesCompleted', scheduleTraces);
+    this.setTraces(scheduleTraces);
   },
 
   onFetchCurrentScriptCompleted(currentObj) {
@@ -110,6 +110,7 @@ export default Reflux.createStore({
     console.debug('TracesStore::onFetchCurrentScriptEndpointCompleted', currentObj);
     this.saveCurrentObj(currentObj.name);
   },
+
   onFetchCurrentTriggerCompleted(currentObj) {
     console.debug('TracesStore::onFetchCurrentTriggerCompleted', currentObj);
     this.saveCurrentObj(currentObj.label);

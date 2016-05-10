@@ -37,9 +37,9 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    const {label, description, runtime_name} = this.state;
+    const {id, label, description, runtime_name} = this.state;
 
-    Actions.updateScript(this.state.id, {label, description, runtime_name});
+    Actions.updateScript(id, {label, description, runtime_name});
   },
 
   handleAddSubmit() {

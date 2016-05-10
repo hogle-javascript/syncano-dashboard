@@ -265,19 +265,23 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createDataObject({
+    const payload = {
       className: DataObjectsStore.getCurrentClassName(),
-      params: this.getParams(),
       fileFields: this.getFileFields()
-    });
+    };
+
+    Actions.createDataObject(_.merge(payload, this.getParams()));
   },
 
   handleEditSubmit() {
-    Actions.updateDataObject({
+    const {id} = this.state;
+    const payload = {
       className: DataObjectsStore.getCurrentClassName(),
-      params: this.getParams(),
-      fileFields: this.getFileFields()
-    });
+      fileFields: this.getFileFields(),
+      id
+    };
+
+    Actions.updateDataObject(_.merge(payload, this.getParams()));
   },
 
   handleFileOnClick(value, event) {

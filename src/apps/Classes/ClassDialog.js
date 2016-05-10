@@ -82,7 +82,7 @@ export default React.createClass({
   },
 
   getFieldTypes() {
-    return Constants.fieldTypes.map((item) => {
+    return _.map(Constants.fieldTypes, (item) => {
       return {
         payload: item,
         text: item
@@ -99,7 +99,7 @@ export default React.createClass({
   getSchema() {
     const {fields} = this.state;
 
-    return JSON.stringify(fields.map((item) => {
+    return _.map(fields, (item) => {
       const schema = {
         name: item.fieldName,
         type: item.fieldType,
@@ -114,7 +114,7 @@ export default React.createClass({
         schema.filter_index = item.fieldFilter;
       }
       return schema;
-    }));
+    });
   },
 
   getGroups() {

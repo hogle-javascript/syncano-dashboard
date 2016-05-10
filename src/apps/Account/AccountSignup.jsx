@@ -109,12 +109,14 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation(data) {
+    const {email, password} = data;
+
     SessionStore.showWelcomeDialog();
     SessionStore.setSignUpMode();
 
     Actions.passwordSignUp({
-      email: data.email,
-      password: data.password
+      email,
+      password
     });
   },
 

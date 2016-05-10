@@ -4,7 +4,13 @@ import Syncano from 'syncano';
 exports.command = (callback) => {
   const accountKey = Globals.tempAccountKey;
   const baseUrl = 'https://api.syncano.rocks';
-
+  const connection = Syncano({
+    baseUrl,
+    accountKey,
+    defaults: {
+      instanceName: Globals.tempInstanceName
+    }
+  });
   const data = {
     label: 'trigger',
     signal: 'post_create',
@@ -12,10 +18,10 @@ exports.command = (callback) => {
     script: Globals.tempScriptId
   };
 
-  new Syncano({accountKey, baseUrl})
-    .instance(Globals.tempInstanceName)
-    .trigger()
-    .add(data)
+  connection
+    .Trigger
+    .please()
+    .create(data)
     .then((response) => {
       Globals.tempTriggerId = response.id;
       if (typeof callback === 'function') {

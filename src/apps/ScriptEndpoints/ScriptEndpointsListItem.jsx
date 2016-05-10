@@ -25,11 +25,11 @@ export default React.createClass({
   ],
 
   render() {
-    let {item, onIconClick, showDeleteDialog} = this.props;
-    let publicString = item.public.toString();
-    let link = item.public ? item.links['public-link'] : item.links.self;
-    let script = ScriptsStore.getScriptById(item.codebox);
-    let scriptLabel = script ? script.label : '';
+    const {item, onIconClick, showDeleteDialog} = this.props;
+    const publicString = item.public.toString();
+    const link = item.public ? item.links['public-link'] : item.links.self;
+    const script = ScriptsStore.getScriptById(item.script);
+    const scriptLabel = script ? script.label : '';
 
     return (
       <ColumnList.Item
@@ -63,7 +63,7 @@ export default React.createClass({
             to="script"
             params={{
               instanceName: this.getParams().instanceName,
-              scriptId: item.codebox
+              scriptId: item.script
             }}>
             {scriptLabel}
           </Link>
@@ -93,4 +93,3 @@ export default React.createClass({
     );
   }
 });
-

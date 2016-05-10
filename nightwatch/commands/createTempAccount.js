@@ -4,6 +4,7 @@ import async from 'async';
 
 exports.command = (callback) => {
   const baseUrl = 'https://api.syncano.rocks';
+  const connection = Syncano({baseUrl});
 
   Globals.tempPass = Date.now();
   Globals.tempInstanceName = 'a' + Globals.tempPass;
@@ -11,21 +12,24 @@ exports.command = (callback) => {
 
   async.waterfall([
     (cb) => {
-      new Syncano({baseUrl})
+      connection
+        .Account
         .register({
           email: Globals.tempEmail,
           password: Globals.tempPass
         })
         .then((success) => {
+          connection.setAccountKey(success.account_key);
           Globals.tempAccountKey = success.account_key;
           cb(null, success.account_key);
         })
         .catch(cb);
     },
     (accountKey, cb) => {
-      new Syncano({baseUrl, accountKey})
-        .instance()
-        .add({name: Globals.tempInstanceName})
+      connection
+        .Instance
+        .please()
+        .create({name: Globals.tempInstanceName})
         .then(() => cb(null))
         .catch(cb);
     }

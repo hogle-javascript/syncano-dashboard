@@ -21,7 +21,7 @@ export default React.createClass({
 
   render() {
     const {item, onIconClick, showDeleteDialog} = this.props;
-    const script = ScriptsStore.getScriptById(item.codebox);
+    const script = ScriptsStore.getScriptById(item.script);
     const scriptLabel = script ? script.label : '';
 
     return (
@@ -42,7 +42,7 @@ export default React.createClass({
         <Column.Desc className="col-flex-1">
           <Link to="script" params={{
             instanceName: this.getParams().instanceName,
-            scriptId: item.codebox
+            scriptId: item.script
           }}>
             {scriptLabel}
           </Link>
@@ -72,4 +72,3 @@ export default React.createClass({
     );
   }
 });
-

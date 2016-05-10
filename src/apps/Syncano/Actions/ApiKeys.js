@@ -1,43 +1,49 @@
-import _ from 'lodash';
-
 export default {
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .ApiKeys
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .ApiKey
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
   create(payload) {
-    this.Connection
-      .ApiKeys
+    this.NewLibConnection
+      .ApiKey
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(name, payload) {
-    this.Connection
-      .ApiKeys
-      .update(name, payload)
+  update(id, payload) {
+    this.NewLibConnection
+      .ApiKey
+      .please()
+      .update({id}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(names) {
-    names.map((name) => {
-      this.Connection
-        .ApiKeys
-        .remove(name)
+  remove(apiKeys) {
+    apiKeys.map((apiKey) => {
+      this.NewLibConnection
+        .ApiKey
+        .please()
+        .delete({id: apiKey.id})
         .then(this.completed)
         .catch(this.failure);
     });
   },
 
   reset(apiKeys) {
-    let promises = apiKeys.map((apiKey) => this.Connection.ApiKeys.reset(apiKey.id));
+    const promises = apiKeys.map((apiKey) =>
+      this.NewLibConnection
+        .ApiKey
+        .please()
+        .reset({id: apiKey.id}));
 
     this.Promise.all(promises)
       .then(this.completed)

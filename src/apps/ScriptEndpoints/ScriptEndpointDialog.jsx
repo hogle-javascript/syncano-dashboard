@@ -30,11 +30,23 @@ export default React.createClass({
     name: {
       presence: true
     },
-    codebox: {
+    script: {
       presence: {
         message: `^Script can't be blank`
       }
     }
+  },
+
+  getScriptEndpointParams() {
+    const {name, script, description} = this.state;
+    const params = {
+      public: this.state.public,
+      name,
+      script,
+      description
+    };
+
+    return params;
   },
 
   handleDialogShow() {
@@ -43,20 +55,13 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createScriptEndpoint({
-      name: this.state.name,
-      codebox: this.state.codebox,
-      description: this.state.description,
-      public: this.state.public
-    });
+    Actions.createScriptEndpoint(this.getScriptEndpointParams());
   },
 
   handleEditSubmit() {
-    Actions.updateScriptEndpoint(this.state.name, {
-      codebox: this.state.codebox,
-      description: this.state.description,
-      public: this.state.public
-    });
+    const {name} = this.state;
+
+    Actions.updateScriptEndpoint(name, this.getScriptEndpointParams());
   },
 
   handleToogle(event, status) {
@@ -67,6 +72,7 @@ export default React.createClass({
   },
 
   render() {
+    const {open, isLoading, canSubmit, scripts, script} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -75,11 +81,11 @@ export default React.createClass({
         ref="dialog"
         title={`${title} a Script Endpoint`}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -132,10 +138,10 @@ export default React.createClass({
             floatingLabelText="Description (optional)"/>
           <SelectFieldWrapper
             name="script"
-            options={this.state.scripts}
-            value={this.state.codebox}
-            onChange={(event, index, value) => this.setSelectFieldValue('codebox', value)}
-            errorText={this.getValidationMessages('codebox').join(' ')}/>
+            options={scripts}
+            value={script}
+            onChange={(event, index, value) => this.setSelectFieldValue('script', value)}
+            errorText={this.getValidationMessages('script').join(' ')}/>
           <Toggle
             ref='public'
             name='public'
