@@ -117,51 +117,21 @@ export default Radium(React.createClass({
   },
 
   handleAddSubmit() {
-    const {
-      production_certificate_name,
-      production_certificate,
-      production_bundle_identifier,
-      production_expiration_date,
-      development_certificate_name,
-      development_certificate,
-      development_expiration_date,
-      development_bundle_identifier
-    } = this.state;
-    const params = {
-      production_certificate_name,
-      production_certificate,
-      production_bundle_identifier,
-      production_expiration_date,
-      development_certificate_name,
-      development_certificate,
-      development_expiration_date,
-      development_bundle_identifier
-    };
-
-    Actions.configAPNSPushNotification(this.removeEmptyParams(params));
+    Actions.configAPNSPushNotification(this.removeEmptyParams(this.state));
   },
 
   removeEmptyParams(params) {
-    return _.omit(params, _.isEmpty);
+    return _.omitBy(params, _.isEmpty);
   },
 
   clearCertificate(type) {
-    const keys = {
-      production: {
-        production_certificate_name: null,
-        production_certificate: null,
-        production_bundle_identifier: null,
-        production_expiration_date: null
-      },
-      development: {
-        development_certificate_name: null,
-        development_certificate: null,
-        development_expiration_date: null,
-        development_bundle_identifier: null
-      }
+    const params = {
+      [`${type}_certificate`]: false,
+      [`${type}_certificate_name`]: null,
+      [`${type}_bundle_identifier`]: null
     };
 
-    this.setState(keys[type]);
+    Actions.removeCertificate(params);
   },
 
   renderDropzoneDescription(type) {

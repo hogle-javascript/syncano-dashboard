@@ -33,5 +33,14 @@ export default {
       .get()
       .then(this.completed)
       .catch(this.failure);
+  },
+
+  removeCertificate(params = {}) {
+    this.Connection
+      .PushNotifications
+      .APNS
+      .removeCertificate(params)
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

@@ -16,6 +16,13 @@ export default CreateActions(
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushNotifications.configAPNSPushNotification'
+    },
+    removeCertificate: {
+      asyncForm: true,
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushNotifications.removeCertificate'
     }
   },
   {
