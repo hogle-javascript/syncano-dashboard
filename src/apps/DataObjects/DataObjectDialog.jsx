@@ -53,19 +53,25 @@ export default React.createClass({
         validateObj[`fielddate-${item.name}`] = validate(isDateSet);
         validateObj[`fieldtime-${item.name}`] = validate(isTimeSet);
       } else if (item.type === 'geopoint') {
-        const isLatitudeSet = this.refs[`fieldlatitude-${item.name}`].getValue().length;
-        const isLongitudeSet = this.refs[`fieldlongitude-${item.name}`].getValue().length;
-        const validate = (isFieldSet) => {
-          const isValid = isLatitudeSet === isLongitudeSet;
+        const latitude = this.refs[`fieldlatitude-${item.name}`].getValue();
+        const longitude = this.refs[`fieldlongitude-${item.name}`].getValue();
 
-          if (!isValid && !isFieldSet) {
-            return {presence: {message: `^Both date and time fields must be filled`}};
+        const validate = (fieldName, value, minValue, maxValue) => {
+          const isValid = !_.isEmpty(latitude) === !_.isEmpty(longitude);
+
+          if (!_.inRange(value, minValue, maxValue)) {
+            return { presence: { message: `^${fieldName} has incorrect value` }};
           }
+
+          if (!isValid && !value) {
+            return {presence: {message: `^Both latitude and longitude fields must be filled`}};
+          }
+
           return null;
         };
 
-        validateObj[`fieldlatitude-${item.name}`] = validate(isLatitudeSet);
-        validateObj[`fieldlongitude-${item.name}`] = validate(isLongitudeSet);
+        validateObj[`fieldlatitude-${item.name}`] = validate('latitude', latitude, -90, 90);
+        validateObj[`fieldlongitude-${item.name}`] = validate('longitude', longitude, -180, 180);
       }
     });
 
@@ -355,9 +361,20 @@ export default React.createClass({
 
   handleGeopointFieldChange(fieldName, key, value) {
     const field = this.state[fieldName] || {};
+    const isNumberRegExp = /^-?[0-9]\d*(\.\d+)?$/;
     const isEmptyField = _.isString(value) && _.isEmpty(value);
+    const onlyMinus = value.length === 1 && _.startsWith(value, '-');
 
-    field[key] = !isEmptyField ? Number(value) : null;
+    field[key] = '';
+
+    if (!isEmptyField && !onlyMinus && isNumberRegExp.test(value)) {
+      field[key] = Number(value);
+    }
+
+    if (onlyMinus) {
+      field[key] = value;
+    }
+
     this.setState({[`${fieldName}`]: field});
   },
 
@@ -643,10 +660,13 @@ export default React.createClass({
         if (item.type === 'geopoint') {
           const latitude = this.state[item.name] ? this.state[item.name].latitude : '';
           const longitude = this.state[item.name] ? this.state[item.name].longitude : '';
+          const labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
             <div key={`field-${item.name}`}>
-              <div className="row">
+              <div
+                className="row"
+                style={labelStyle}>
                 <div>{item.name} ({item.type})</div>
               </div>
               <div className="row">
@@ -660,8 +680,7 @@ export default React.createClass({
                     value={latitude}
                     onChange={(event) => this.handleGeopointFieldChange(item.name, 'latitude', event.target.value)}
                     errorText={this.getValidationMessages(`fieldlatitude-${item.name}`).join(' ')}
-                    hintText={`Field ${item.name}`}
-                    floatingLabelText={`${item.name} (${item.type})`}/>
+                    hintText={`latitude`} />
                 </div>
                 <div className="col-flex-1">
                   <TextField
@@ -673,8 +692,7 @@ export default React.createClass({
                     value={longitude}
                     onChange={(event) => this.handleGeopointFieldChange(item.name, 'longitude', event.target.value)}
                     errorText={this.getValidationMessages(`fieldlongitude-${item.name}`).join(' ')}
-                    hintText={`Field ${item.name}`}
-                    floatingLabelText={`${item.name} (${item.type})`}/>
+                    hintText={`longitude`} />
                 </div>
               </div>
             </div>
