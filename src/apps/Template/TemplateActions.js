@@ -33,5 +33,4 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Templates.renderFromEndpoint'
   }
-
 });

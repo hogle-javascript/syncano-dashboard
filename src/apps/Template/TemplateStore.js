@@ -104,17 +104,19 @@ export default Reflux.createStore({
     this.saveRenderedTemplate(renderedTemplate);
   },
 
-  onRenderFromEndpointFailure(renderedTemplateError) {
+  onRenderFromEndpointFailure(renderedTemplate) {
     console.debug('TemplateStore::onRenderFromEndpointFailure');
-    this.saveRenderedTemplate(renderedTemplateError);
+    this.saveRenderedTemplate(renderedTemplate);
   },
 
   onUpdateTemplateCompleted(template) {
     this.data.template = template;
     this.dismissSnackbarNotification();
     if (this.data.successValidationAction === 'tabRender') {
+      let {dataSource} = this.data;
       const apiKey = SessionStore.getToken();
-      const dataSource = this.data.dataSource;
+
+      dataSource = dataSource.endsWith('/') ? dataSource : dataSource + '/';
 
       window.open(`${dataSource}?template_response=${template.name}&api_key=${apiKey}`, '_blank');
     }
