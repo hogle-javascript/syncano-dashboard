@@ -5,7 +5,6 @@ export default CreateActions({
   setFlag: {},
   resetFlag: {},
   setDataSource: {},
-  renderFromEndpoint: {},
 
   fetchTemplate: {
     asyncResult: true,
@@ -26,5 +25,12 @@ export default CreateActions({
     loading: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Templates.render'
+  },
+
+  renderFromEndpoint: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Templates.renderFromEndpoint'
   }
 });

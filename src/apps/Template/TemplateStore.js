@@ -99,8 +99,13 @@ export default Reflux.createStore({
     Actions.resetFlag();
   },
 
-  onRenderFromEndpoint(renderedTemplate) {
+  onRenderFromEndpointCompleted(renderedTemplate) {
     console.debug('TemplateStore::onRenderFromEndpointCompleted');
+    this.saveRenderedTemplate(renderedTemplate);
+  },
+
+  onRenderFromEndpointFailure(renderedTemplate) {
+    console.debug('TemplateStore::onRenderFromEndpointFailure');
     this.saveRenderedTemplate(renderedTemplate);
   },
 
