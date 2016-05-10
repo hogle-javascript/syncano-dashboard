@@ -49,7 +49,7 @@ export default Reflux.createStore({
 
   onFetchTriggersCompleted(items) {
     console.debug('TriggersStore::onFetchTriggersCompleted');
-    Actions.setTriggers(items._items);
+    Actions.setTriggers(items);
   },
 
   onRemoveTriggersCompleted() {

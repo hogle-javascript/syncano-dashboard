@@ -1,6 +1,7 @@
 import Reflux from 'reflux';
 import Raven from '../../raven';
 import Connection from './Connection';
+import NewLibConnection from './NewLibConnection';
 import _ from 'lodash';
 
 import SessionActions from './SessionActions';
@@ -13,6 +14,7 @@ export default Reflux.createStore({
 
   init() {
     this.connection = Connection.get();
+    this.NewLibConnection = NewLibConnection.get();
     this.token = localStorage.getItem('token') || null;
     this.user = null;
     this.instance = null;
@@ -120,6 +122,7 @@ export default Reflux.createStore({
     } else {
       this.token = user.account_key;
       this.connection.setApiKey(this.token);
+      this.NewLibConnection.setAccountKey(this.token);
       localStorage.setItem('token', this.token);
     }
 

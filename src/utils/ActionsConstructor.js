@@ -3,10 +3,12 @@ import _ from 'lodash';
 import Promise from 'bluebird';
 
 import Connection from '../apps/Session/Connection';
+import NewLibConnection from '../apps/Session/NewLibConnection';
 import Syncano from '../apps/Syncano';
 
-let Libraries = {Syncano};
-let Context = {
+const Libraries = {Syncano};
+const Context = {
+  NewLibConnection: NewLibConnection.get(),
   Connection: Connection.get(),
   Promise
 };

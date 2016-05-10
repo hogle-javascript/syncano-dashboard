@@ -32,8 +32,8 @@ export default ({item, handleAccept, handleDecline}) => {
           <StandardButtons
             cancelLabel="Decline"
             submitLabel="Accept"
-            handleCancel={handleAccept}
-            handleConfirm={handleDecline}/>
+            handleCancel={handleDecline}
+            handleConfirm={handleAccept}/>
         </div>
       </MenuItem>
       <Divider/>

@@ -57,7 +57,7 @@ export default Reflux.createStore({
     }
 
     console.debug('ProfileInvitationsStore::onFetchInvitationsCompleted');
-    Actions.setInvitations(items._items);
+    Actions.setInvitations(items);
   },
 
   onFetchInvitationsFailure() {

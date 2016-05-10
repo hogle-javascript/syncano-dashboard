@@ -1,89 +1,81 @@
 import _ from 'lodash';
 
 export default {
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Users
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .User
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
-  create(payload, groups) {
+  create(userParams, groups) {
     const userGroups = groups.newGroups ? groups.newGroups : null;
     const userGroupsArray = _.isArray(userGroups) ? userGroups : [userGroups];
 
     if (userGroups) {
-      this.Connection
-        .Users
-        .create(payload)
+      this.NewLibConnection
+        .User
+        .please()
+        .create(userParams)
         .then((user) => {
-          const addUserToGroups = userGroupsArray.map((group) => this.Connection.Users.addToGroup(user.id, group.id));
+          const addUserToGroups = _.map(userGroupsArray, (group) =>
+            this.NewLibConnection
+              .Group
+              .please()
+              .addUser({id: group.id}, {user: user.id}));
 
           this.Promise.all(addUserToGroups)
             .then(this.completed)
-            .error(this.failure);
+            .catch(this.failure);
         })
         .catch(this.failure);
     } else {
-      this.Connection
-        .Users
-        .create(payload)
+      this.NewLibConnection
+        .User
+        .please()
+        .create(userParams)
         .then(this.completed)
         .catch(this.failure);
     }
   },
 
   update(id, payload, groups) {
-    this.Connection
-      .Users
-      .update(id, payload)
-      .success(() => {
+    this.NewLibConnection
+      .User
+      .please()
+      .update({id}, payload)
+      .then(() => {
         const groupsId = groups.groups.map((group) => group.id);
         const newGroupsId = groups.newGroups.map((group) => group.id);
         const addedGroups = _.difference(newGroupsId, groupsId);
         const removedGroups = _.difference(groupsId, newGroupsId);
-        const addUserToGroups = addedGroups.map((group) => this.Connection.Users.addToGroup(id, group));
-        const removeUserFromGroups = removedGroups.map((group) => this.Connection.Users.removeFromGroup(id, group));
+        const addUserToGroups = _.map(addedGroups, (group) =>
+          this.NewLibConnection
+            .Group
+            .please()
+            .addUser({id: group}, {user: id}));
+        const removeUserFromGroups = _.map(removedGroups, (group) =>
+          this.NewLibConnection
+            .Group
+            .please()
+            .deleteUser({id: group}, {user: id}));
         const promises = removeUserFromGroups.concat(addUserToGroups);
 
         this.Promise.all(promises)
           .then(this.completed)
-          .error(this.failure);
+          .catch(this.failure);
       })
-      .error(this.failure);
+      .catch(this.failure);
   },
 
   remove(users) {
-    const promises = users.map((user) => this.Connection.Users.remove(user.id));
+    const promises = _.map(users, (user) => this.NewLibConnection.User.please().delete({id: user.id}));
 
     this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
-  },
-
-  addToGroup(user, group) {
-    this.Connection
-      .Users
-      .addToGroup(user, group)
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  removeFromGroup(user, group) {
-    this.Connection
-      .Users
-      .removeFromGroup(user, group)
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  listUserGroups(user) {
-    this.Connection
-      .Users
-      .getUserGroups(user)
-      .then(this.completed)
-      .catch(this.failure);
   }
 };

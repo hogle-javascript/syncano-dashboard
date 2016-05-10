@@ -1,50 +1,55 @@
-import _ from 'lodash';
-
 export default {
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Channels
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Channel
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
   create(payload) {
-    this.Connection
-      .Channels.create(payload)
+    this.NewLibConnection
+      .Channel
+      .please()
+      .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(channelName, params) {
-    this.Connection
-      .Channels.update(channelName, params)
+  update(name, params) {
+    this.NewLibConnection
+      .Channel
+      .please()
+      .update({name}, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(names) {
-    const promises = names.map((id) => this.Connection.Channels.remove(id));
+  remove(channels) {
+    const promises = channels.map((channel) => this.NewLibConnection.Channel.please().delete({name: channel.name}));
 
     this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },
 
-  get(channelName) {
-    this.Connection
-      .Channels
-      .get(channelName)
+  get(name) {
+    this.NewLibConnection
+      .Channel
+      .please()
+      .get({name})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  getHistory(channelName, params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Channels
-      .getHistory(channelName, params)
+  getHistory(name) {
+    this.NewLibConnection
+      .Channel
+      .please()
+      .history({name})
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   }

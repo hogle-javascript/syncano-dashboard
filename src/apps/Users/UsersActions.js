@@ -27,21 +27,6 @@ export default CreateActions(
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.remove'
-    },
-    addToGroup: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Users.addToGroup'
-    },
-    removeFromGroup: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Users.removeFromGroup'
-    },
-    getUserGroups: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Users.listUserGroups'
     }
   },
   {

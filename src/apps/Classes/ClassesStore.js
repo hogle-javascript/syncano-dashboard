@@ -168,11 +168,11 @@ export default Reflux.createStore({
   },
 
   setClasses(items) {
-    this.data.items = Object.keys(items).map((key) => {
-      if (_.isEmpty(items[key].metadata)) {
-        items[key].metadata = {color: 'indigo', icon: 'cloud'};
+    this.data.items = _.map(items, (item) => {
+      if (_.isEmpty(item.metadata)) {
+        item.metadata = {color: 'indigo', icon: 'cloud'};
       }
-      return items[key];
+      return item;
     });
 
     if (this.data.items.length > 0) {
@@ -203,7 +203,7 @@ export default Reflux.createStore({
 
   onFetchTriggersCompleted(items) {
     console.debug('ClassesStore::onFetchTriggersCompleted');
-    this.setTriggers(items._items);
+    this.setTriggers(items);
   },
 
   setTriggers(items) {

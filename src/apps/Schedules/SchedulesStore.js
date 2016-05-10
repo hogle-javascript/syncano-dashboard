@@ -49,7 +49,7 @@ export default Reflux.createStore({
 
   onFetchSchedulesCompleted(items) {
     console.debug('SchedulesStore::onFetchSchedulesCompleted');
-    Actions.setSchedules(items._items);
+    Actions.setSchedules(items);
   },
 
   onRemoveSchedulesCompleted() {

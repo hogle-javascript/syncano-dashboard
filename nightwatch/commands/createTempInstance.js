@@ -4,13 +4,15 @@ import Syncano from 'syncano';
 exports.command = (callback) => {
   const accountKey = Globals.tempAccountKey;
   const baseUrl = 'https://api.syncano.rocks';
+  const connection = Syncano({baseUrl, accountKey});
 
   const instanceName = 'a' + Date.now();
 
-  new Syncano({accountKey, baseUrl})
-    .instance()
-    .add({name: instanceName})
-    .then((response) => {
+  connection
+    .Instance
+    .please()
+    .create({name: instanceName})
+    .then(() => {
       if (typeof callback === 'function') {
         callback.call(this);
       }

@@ -49,21 +49,12 @@ export default Reflux.createStore({
   },
 
   setUsers(users) {
-    let usersArray = users._items ? users._items : users;
-
-    this.data.items = Object.keys(usersArray).map((key) => {
-      return usersArray[key].user ? usersArray[key].user : usersArray[key];
-    });
+    this.data.items = users;
     this.trigger(this.data);
   },
 
   onFetchUsersCompleted(payload) {
     console.debug('UsersStore::onFetchUsersCompleted');
-    Actions.setUsers(payload);
-  },
-
-  onFetchGroupUsersCompleted(payload) {
-    console.debug('UsersStore::onFetchGroupUsersCompleted');
     Actions.setUsers(payload);
   },
 
@@ -80,21 +71,6 @@ export default Reflux.createStore({
 
   onUpdateUserCompleted() {
     console.debug('UsersStore::onUpdateUserCompleted');
-    this.refreshData();
-  },
-
-  onUpdateGroupCompleted() {
-    console.debug('UsersStore::onUpdateGroupCompleted');
-    this.refreshData();
-  },
-
-  onRemoveGroupsCompleted() {
-    console.debug('UsersStore::onRemoveGroupsCompleted');
-    this.refreshData();
-  },
-
-  onFetchGroupsCompleted() {
-    console.debug('UsersStore::onSetActiveGroup');
     this.refreshData();
   }
 });
