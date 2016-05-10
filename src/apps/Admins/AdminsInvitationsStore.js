@@ -53,15 +53,15 @@ export default Reflux.createStore({
   getPendingInvitations() {
     console.debug('AdminsInvitationsStore::getPendingInvitations');
 
-    let isInvitationPending = (element) => element.state === 'new';
-    let pendingInvitations = this.data.items.filter(isInvitationPending);
+    const isInvitationPending = (element) => element.state === 'new';
+    const pendingInvitations = this.data.items.filter(isInvitationPending);
 
     return pendingInvitations;
   },
 
   onFetchInvitationsCompleted(items) {
     console.debug('AdminsInvitationsStore::onFetchInvitationsCompleted');
-    Actions.setInvitations(items._items);
+    Actions.setInvitations(items);
   },
 
   onRemoveInvitationCompleted() {

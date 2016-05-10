@@ -89,6 +89,7 @@ export default React.createClass({
 
   handleToggle(fieldsType, fieldName, event, value) {
     console.info('DataEndpointDialog::handleToggle', arguments);
+    const {expand, excluded_fields} = this.state;
 
     let genList = (list, name, val) => {
       let arr = list.replace(/ /g, '').split(',').filter((listItem) => listItem);
@@ -105,11 +106,11 @@ export default React.createClass({
     let fields = '';
 
     if (fieldsType === 'showFields') {
-      fields = genList(this.state.excluded_fields, fieldName, !value);
+      fields = genList(excluded_fields, fieldName, !value);
       this.setState({excluded_fields: fields});
     }
     if (fieldsType === 'expandFields') {
-      fields = genList(this.state.expand, fieldName, value);
+      fields = genList(expand, fieldName, value);
       this.setState({expand: fields});
     }
   },

@@ -2,9 +2,20 @@ import _ from 'lodash';
 
 export default {
   create(payload) {
-    this.Connection
-      .DataViews
+    this.NewLibConnection
+      .DataEndpoint
+      .please()
       .create(payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  list() {
+    this.NewLibConnection
+      .DataEndpoint
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
@@ -17,8 +28,9 @@ export default {
         schema: ''
       })
       .then(() => {
-        this.Connection
-          .DataViews
+        this.NewLibConnection
+          .DataEndpoint
+          .please()
           .create(payload)
           .then(this.completed)
           .catch(this.failure);
@@ -31,21 +43,25 @@ export default {
       });
   },
 
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .DataViews
-      .list(params)
+  update(name, payload) {
+    this.NewLibConnection
+      .DataEndpoint
+      .please()
+      .update({name}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(id, payload) {
-    this.Connection
-      .DataViews
-      .update(id, payload)
+  remove(dataEndpoints) {
+    const promises = _.map(dataEndpoints, (dataEndpoint) =>
+      this.NewLibConnection
+        .DataEndpoint
+        .please()
+        .delete({name: dataEndpoint.name}));
+
+    this.Promise.all(promises)
       .then(this.completed)
-      .catch(this.failure);
+      .error(this.failure);
   },
 
   updateWithClass(id, payload) {
@@ -56,9 +72,10 @@ export default {
         schema: ''
       })
       .then(() => {
-        this.Connection
-          .DataViews
-          .update(id, payload)
+        this.NewLibConnection
+          .DataEndpoint
+          .please()
+          .create(payload)
           .then(this.completed)
           .catch(this.failure);
       })
@@ -68,13 +85,5 @@ export default {
         }
         this.failure(error);
       });
-  },
-
-  remove(dataviews) {
-    const promises = _.map(dataviews, (dataview) => this.Connection.DataViews.remove(dataview.name));
-
-    this.Promise.all(promises)
-      .then(this.completed)
-      .error(this.failure);
   }
 };

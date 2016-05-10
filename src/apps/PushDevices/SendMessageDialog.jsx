@@ -146,10 +146,8 @@ export default (store, props) => {
 
       if (type === 'GCM') {
         return {
-          notification: {
-            title: appName,
-            body: content
-          }
+          title: appName,
+          body: content
         };
       }
     },
@@ -161,51 +159,34 @@ export default (store, props) => {
       const checkedItems = props.getCheckedItems().map((item) => item.registration_id);
       const registrationIds = checkedItems.length ? checkedItems : [registration_id];
       let payload = {
-        content: {
-          registration_ids: registrationIds,
-          environment
-        }
+        environment
       };
 
       if (!isJSONMessage && type === 'APNS') {
-        payload = _.merge(
-          payload,
-          {
-            content: {
-              aps: {
-                alert: {
-                  title: appName,
-                  body: content
-                }
-              }
-            }
+        payload.aps = {
+          alert: {
+            title: appName,
+            body: content
           }
-        );
+        };
       }
 
       if (!isJSONMessage && type === 'GCM') {
-        payload = _.merge(
-          payload,
-          {
-            content: {
-              notification: {
-                title: appName,
-                body: content
-              }
-            }
-          }
-        );
+        payload.notification = {
+          title: appName,
+          body: content
+        };
       }
 
       if (isJSONMessage && type === 'APNS') {
-        payload = _.merge(payload, {content: {aps: {alert: JSON.parse(JSONMessage)}}});
+        payload = _.merge(payload, {aps: {alert: JSON.parse(JSONMessage)}});
       }
 
       if (isJSONMessage && type === 'GCM') {
-        payload = _.merge(payload, {content: JSON.parse(JSONMessage)});
+        payload = _.merge(payload, {notification: JSON.parse(JSONMessage)});
       }
 
-      onSendMessage(payload);
+      onSendMessage(registrationIds, payload);
     },
 
     handleToggleEnvironment(environment) {

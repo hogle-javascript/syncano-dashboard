@@ -1,41 +1,34 @@
-import _ from 'lodash';
-
 export default {
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Classes
-      .list(params)
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  get(className) {
-    this.Connection
-      .Classes
-      .get(className)
+  list() {
+    this.NewLibConnection
+      .Class
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
   create(payload) {
-    this.Connection
-      .Classes
+    this.NewLibConnection
+      .Class
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(classname, payload) {
-    this.Connection
-      .Classes
-      .update(classname, payload)
+  update(name, payload) {
+    this.NewLibConnection
+      .Class
+      .please()
+      .update({name}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(classnames) {
-    const promises = classnames.map((classname) => this.Connection.Classes.remove(classname));
+  remove(classes) {
+    const promises = classes.map((item) => this.NewLibConnection.Class.please().delete({name: item.name}));
 
     this.Promise.all(promises)
       .then(this.completed)

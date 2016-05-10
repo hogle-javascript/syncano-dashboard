@@ -1,24 +1,28 @@
-import _ from 'lodash';
-
 export default {
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .AccountInvitations
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Invitation
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
-  accept(items) {
-    if (typeof items === 'string') {
-      this.Connection
-        .AccountInvitations
-        .accept(items)
+  accept(invitations) {
+    if (typeof invitations === 'string') {
+      this.NewLibConnection
+        .Invitation
+        .please()
+        .accept(invitations)
         .then(this.completed)
         .catch(this.failure);
     } else {
-      let promises = items.map((item) => this.Connection.AccountInvitations.accept(item.key));
+      const promises = invitations.map((invitation) =>
+        this.NewLibConnection
+          .Invitation
+          .please()
+          .accept(invitation.key));
 
       this.Promise.all(promises)
         .then(this.completed)
@@ -26,8 +30,12 @@ export default {
     }
   },
 
-  decline(items) {
-    let promises = items.map((item) => this.Connection.AccountInvitations.remove(item.id));
+  decline(invitations) {
+    const promises = invitations.map((invitation) =>
+      this.NewLibConnection
+        .Invitation
+        .please()
+        .delete({id: invitation.id}));
 
     this.Promise.all(promises)
       .then(this.completed)

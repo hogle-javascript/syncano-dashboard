@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
+import Syncano from 'syncano';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../../mixins';
@@ -104,11 +105,11 @@ export default Radium(React.createClass({
     const state = {
       development: {
         development_certificate_name: certificate.name,
-        development_certificate: certificate
+        development_certificate: Syncano.file(certificate)
       },
       production: {
         production_certificate_name: certificate.name,
-        production_certificate: certificate
+        production_certificate: Syncano.file(certificate)
       }
     };
 

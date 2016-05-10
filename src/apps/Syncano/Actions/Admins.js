@@ -1,25 +1,25 @@
-import _ from 'lodash';
-
 export default {
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Admins
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Admin
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(name, payload) {
-    this.Connection
-      .Admins
-      .update(name, payload)
+  update(id, payload) {
+    this.NewLibConnection
+      .Admin
+      .please()
+      .update({id}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   remove(admins) {
-    let promises = admins.map((admin) => this.Connection.Admins.remove(admin));
+    const promises = admins.map((admin) => this.NewLibConnection.Admin.please().delete({id: admin.id}));
 
     this.Promise.all(promises)
       .then(this.completed)

@@ -5,92 +5,86 @@ import {Styles, FontIcon, Utils} from 'syncano-material-ui';
 import {Loading} from 'syncano-components';
 import UploadFileButton from './UploadFileButton';
 
-export default React.createClass({
-  displayName: 'DropZone',
-
-  getDefaultProps() {
-    return {
-      disableClick: false
-    };
-  },
-
-  getStyles() {
-    return {
-      dropZone: {
-        display: 'webkit-flex; display: flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 210,
-        width: '100%',
-        borderStyle: 'dashed',
-        borderWidth: 1,
-        borderColor: Styles.Colors.grey300,
-        backgroundColor: Styles.Colors.grey100,
-        color: Styles.Colors.grey400,
-        ':hover': {
-          borderColor: Styles.Colors.blue500,
-          backgroundColor: Styles.Colors.blue200,
-          color: Styles.Colors.blue500
-        }
-      },
-      dropZoneDescription: {
-        lineHeight: '36px',
-        maxWidth: 350,
-        textAlign: 'center',
-        fontSize: '24px'
-      },
-      uploadIcon: {
-        color: Styles.Colors.grey300,
-        fontSize: '70px'
+const DropZone = (props) => {
+  const dropZoneStyles = {
+    dropZone: {
+      display: 'webkit-flex; display: flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 210,
+      width: '100%',
+      borderStyle: 'dashed',
+      borderWidth: 1,
+      borderColor: Styles.Colors.grey300,
+      backgroundColor: Styles.Colors.grey100,
+      color: Styles.Colors.grey400,
+      ':hover': {
+        borderColor: Styles.Colors.blue500,
+        backgroundColor: Styles.Colors.blue200,
+        color: Styles.Colors.blue500
       }
-    };
-  },
+    },
+    dropZoneDescription: {
+      lineHeight: '36px',
+      maxWidth: 350,
+      textAlign: 'center',
+      fontSize: '24px'
+    },
+    uploadIcon: {
+      color: Styles.Colors.grey300,
+      fontSize: '70px'
+    }
+  };
 
-  renderUploadButton() {
-    if (this.props.withButton) {
+  const renderUploadButton = () => {
+    const {withButton, handleButtonClick, uploadButtonLabel} = props;
+
+    if (withButton) {
       return (
         <UploadFileButton
-          getFile={this.props.handleButtonClick}
-          uploadButtonLabel={this.props.uploadButtonLabel}/>
+          getFile={handleButtonClick}
+          uploadButtonLabel={uploadButtonLabel}/>
       );
     }
-  },
+  };
 
-  renderDescription() {
-    const styles = this.getStyles();
+  const renderDescription = () => {
+    const {children, certificateType} = props;
 
-    if (this.props.children) {
-      return this.props.children;
+    if (children) {
+      return children;
     }
 
     return (
-      <div style={styles.dropZoneDescription}>
+      <div style={dropZoneStyles.dropZoneDescription}>
         <FontIcon
-          style={styles.uploadIcon}
+          style={dropZoneStyles.uploadIcon}
           className="synicon-cloud-upload"/>
         <div>
-          {`Drag & Drop to upload ${this.props.certificateType} certificate`}
+          {`Drag & Drop to upload ${certificateType} certificate`}
         </div>
       </div>
     );
-  },
+  };
 
-  render() {
-    const styles = this.getStyles();
+  const {isLoading, disableClick, onDrop, containerStyle, styles} = props;
 
-    return (
-      <div style={Utils.Styles.mergeStyles({}, this.props.containerStyle)}>
-        <Loading show={this.props.isLoading}>
-          {this.renderUploadButton()}
-          <Dropzone
-            multiple={false}
-            disableClick={this.props.disableClick}
-            onDrop={this.props.onDrop}
-            style={Utils.Styles.mergeStyles(styles.dropZone, this.props.styles)}>
-            {this.renderDescription()}
-          </Dropzone>
-        </Loading>
-      </div>
-    );
-  }
-});
+  return (
+    <div style={Utils.Styles.mergeStyles({}, containerStyle)}>
+      <Loading show={isLoading}>
+        {renderUploadButton()}
+        <Dropzone
+          multiple={false}
+          disableClick={disableClick}
+          onDrop={onDrop}
+          style={Utils.Styles.mergeStyles(dropZoneStyles.dropZone, styles)}>
+          {renderDescription()}
+        </Dropzone>
+      </Loading>
+    </div>
+  );
+};
+
+DropZone.defaultProps = {disableClick: false};
+
+export default DropZone;

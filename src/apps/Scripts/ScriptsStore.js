@@ -187,7 +187,7 @@ export default Reflux.createStore({
 
   onFetchScriptsCompleted(scripts) {
     console.debug('ScriptsStore::onFetchScriptsCompleted');
-    Actions.setScripts(this.saveListFromSyncano(scripts));
+    Actions.setScripts(scripts);
   },
 
   onFetchTriggersCompleted(triggers) {

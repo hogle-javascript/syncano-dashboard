@@ -6,13 +6,6 @@ export default CreateActions({
   setCurrentScript: {},
   fetch: {},
 
-  runScriptWithUpdate: {
-    asyncResult: true,
-    loading: true,
-    children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Scripts.runWithUpdate'
-  },
-
   fetchScript: {
     asyncResult: true,
     loading: true,

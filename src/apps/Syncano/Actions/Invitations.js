@@ -1,33 +1,41 @@
-import _ from 'lodash';
-
 export default {
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Invitations
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .InstanceInvitation
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
   create(payload) {
-    this.Connection
-      .Invitations
+    this.NewLibConnection
+      .InstanceInvitation
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(items) {
-    const promises = items.map((item) => this.Connection.Invitations.remove(item.id));
+  remove(invitations) {
+    const promises = invitations.map((invitation) =>
+      this.NewLibConnection
+        .InstanceInvitation
+        .please()
+        .delete({id: invitation.id}));
 
     this.Promise.all(promises)
       .then(this.completed)
       .error(this.failure);
   },
 
-  resend(items) {
-    const promises = items.map((item) => this.Connection.Invitations.resend(item.id));
+  resend(invitations) {
+    const promises = invitations.map((invitation) =>
+      this.NewLibConnection
+        .InstanceInvitation
+        .please()
+        .resend({id: invitation.id}));
 
     this.Promise.all(promises)
       .then(this.completed)
