@@ -6,8 +6,12 @@ import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import Actions from './TracesActions';
 
+import {StoreLoadingMixin} from '../../mixins';
+
 export default Reflux.createStore({
   listenables: Actions,
+
+  mixins: [StoreLoadingMixin],
 
   getInitialState() {
     return {
@@ -28,6 +32,7 @@ export default Reflux.createStore({
         SessionActions.setInstance,
         this.refreshData
     );
+    this.setLoadingStates();
   },
 
   refreshData() {

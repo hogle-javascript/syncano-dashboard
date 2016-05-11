@@ -47,6 +47,7 @@ export default Reflux.createStore({
       isPayloadValid: true,
 
       traces: [],
+      traceIsLoading: true,
       lastTraceResult: null,
       lastTraceStatus: null,
       lastTraceDuration: null,
@@ -116,11 +117,23 @@ export default Reflux.createStore({
     Actions.fetchScriptTraces(this.data.currentScript.id);
   },
 
+  onFetchScriptTraces() {
+    console.debug('ScriptStore::onFetchScriptTraces');
+    this.data.traceIsLoading = true;
+    this.trigger(this.data);
+  },
+
   onFetchScriptTracesCompleted(traces) {
     console.debug('ScriptStore::onFetchScriptTracesCompleted');
     this.data.traces = traces._items;
     this.data.isLoading = false;
     this.getScriptLastTraceResult();
+  },
+
+  onFetchScriptTracesFailure() {
+    console.debug('ScriptStore::onFetchScriptTracesFailure');
+    this.data.traceIsLoading = false;
+    this.trigger(this.data);
   },
 
   onRunScriptCompleted() {
@@ -142,6 +155,7 @@ export default Reflux.createStore({
           this.fetchTraces();
         }, 300);
       } else {
+        this.data.traceIsLoading = false;
         this.data.lastTraceResult = lastTrace.result.stdout !== '' ? lastTrace.result.stdout : 'Success';
         if (lastTrace.result.stderr !== '') {
           this.data.lastTraceResult = lastTrace.result.stderr;
