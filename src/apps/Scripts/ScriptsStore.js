@@ -72,7 +72,7 @@ export default Reflux.createStore({
     );
     this.setLoadingStates();
     this.listenTo(Actions.setCurrentScriptId, this.fetchTraces);
-    this.listenTo(SocketsActions.fetchSockets.completed, this.saveScripts);
+    this.listenTo(SocketsActions.fetchSockets.completed, Actions.fetchScripts);
   },
 
   fetchTraces() {
