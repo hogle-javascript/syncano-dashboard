@@ -25,12 +25,15 @@ export default {
       {% for key, value in object.iteritems() %}{{- key -}}{{',' -}}{% endfor %}{% endfor %}{% endif %}`;
   },
   randomString(length) {
-    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const possible = 'ABCDEFabcdef0123456789';
     let apiKey = '';
 
     for (let i = 0; i < length; i++) {
       apiKey += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return apiKey;
+  },
+  randomInt(min, max) {
+    return Math.floor((Math.random() * max) + min);
   }
 };

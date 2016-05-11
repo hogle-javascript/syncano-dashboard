@@ -53,6 +53,23 @@ export default {
     },
     inputContentType: {
       selector: 'input[name="content_type"]'
+    },
+    inputLabel: {
+      selector: 'input[name="label"]'
+    },
+    inputRegistrationId: {
+      selector: 'input[name="registration_id"]'
+    },
+    inputDeviceId: {
+      selector: 'input[name="device_id"]'
+    },
+    firstAndroidCheckbox: {
+      selector: '(//span[@class="synicon-android"])[1]',
+      locateStrategy: 'xpath'
+    },
+    firstAppleCheckbox: {
+      selector: '(//span[@class="synicon-apple"])[1]',
+      locateStrategy: 'xpath'
     }
   }
 };
