@@ -114,7 +114,9 @@ export default Reflux.createStore({
 
   onFetchScriptTraces() {
     console.debug('ScriptStore::onFetchScriptTraces');
-    this.data.traceIsLoading = true;
+    if (this.data.lastTraceReady) {
+      this.data.traceIsLoading = true;
+    }
     this.trigger(this.data);
   },
 
@@ -144,7 +146,7 @@ export default Reflux.createStore({
     if (this.data.traces && this.data.traces.length > 0) {
       const lastTrace = this.data.traces[0];
 
-      if (lastTrace.status === 'processing' && lastTrace.status === 'pending') {
+      if (lastTrace.status === 'pending' || lastTrace.status === 'processing') {
         this.data.lastTraceReady = false;
         setTimeout(() => {
           this.fetchTraces();
