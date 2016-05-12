@@ -89,6 +89,10 @@ export default Radium(React.createClass({
       }
     }[item.status];
 
+    if (item.executed_at && item.duration === null) {
+      status.duration = 'execution problem';
+    }
+
     if (item.id === this.state.visibleTraceId) {
       styles.traceResult = {
         maxHeight: '500px',
