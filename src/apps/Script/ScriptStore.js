@@ -155,7 +155,6 @@ export default Reflux.createStore({
           this.fetchTraces();
         }, 300);
       } else {
-        this.data.traceIsLoading = false;
         this.data.lastTraceResult = lastTrace.result.stdout !== '' ? lastTrace.result.stdout : 'Success';
         if (lastTrace.result.stderr !== '') {
           this.data.lastTraceResult = lastTrace.result.stderr;
@@ -165,6 +164,7 @@ export default Reflux.createStore({
         this.data.lastTraceReady = true;
       }
     }
+    this.data.traceIsLoading = false;
     this.trigger(this.data);
   },
 
