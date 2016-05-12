@@ -86,11 +86,6 @@ export default Reflux.createStore({
     return _.sortBy(config, 'key');
   },
 
-  getCurrentScript() {
-    console.debug('ScriptStore::getCurrentScript');
-    return this.data.currentScript;
-  },
-
   clearCurrentScript() {
     this.data.currentScript = null;
   },
