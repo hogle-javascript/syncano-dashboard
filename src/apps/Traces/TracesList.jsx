@@ -154,8 +154,9 @@ export default Radium(React.createClass({
   },
 
   renderEmptyContent() {
+    const {tracesFor} = this.props;
     const styles = this.getStyles();
-    const tracesFor = {
+    const tracesForConfig = {
       script: {
         name: 'Script',
         icon: 'synicon-package-variant'
@@ -178,8 +179,8 @@ export default Radium(React.createClass({
       <div style={styles.noTracesContainer}>
         <FontIcon
           style={styles.noTracesIcon}
-          className={tracesFor[this.props.tracesFor].icon}/>
-        <p style={styles.noTracesText}>There are no traces for this {tracesFor[this.props.tracesFor].name} yet</p>
+          className={tracesForConfig[tracesFor].icon}/>
+        <p style={styles.noTracesText}>There are no traces for this {tracesForConfig[tracesFor].name} yet</p>
       </div>
     );
   },

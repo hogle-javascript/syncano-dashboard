@@ -260,7 +260,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading, traces} = this.state;
+    const {traceIsLoading, traces} = this.state;
 
     return [
       {
@@ -272,7 +272,7 @@ export default React.createClass({
           actions: [],
           onRequestClose: () => this.handleCancel('scriptTraces'),
           children: <Traces.List
-                      isLoading={isLoading}
+                      isLoading={traceIsLoading}
                       tracesFor="script"
                       name="Traces"
                       items={traces}/>

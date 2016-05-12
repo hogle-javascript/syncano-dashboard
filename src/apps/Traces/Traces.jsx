@@ -86,11 +86,12 @@ export default Radium(React.createClass({
   },
 
   getToolbarTitleText() {
+    const {currentObjectName} = this.state;
     const tracesFor = this.getTracesFor();
     const toolbarIdText = this.props.hasHeaderId ? `(id: ${this.props.objectId})` : '';
 
-    if (this.state.currentObjectName) {
-      return `${tracesFor}: ${this.state.currentObjectName} ${toolbarIdText}`;
+    if (currentObjectName) {
+      return `${tracesFor}: ${currentObjectName} ${toolbarIdText}`;
     }
 
     return '';
@@ -103,6 +104,8 @@ export default Radium(React.createClass({
   },
 
   render() {
+    const {items, isLoading} = this.state;
+    const {tracesFor} = this.props;
     const styles = this.getStyles();
     const config = this.getConfig();
     const toolbarTitleText = this.getToolbarTitleText();
@@ -117,9 +120,10 @@ export default Radium(React.createClass({
         <div style={[styles.list, this.isActive('script-traces') && styles.scriptsList]}>
           <Container>
             <TracesList
-              tracesFor={this.props.tracesFor}
+              isLoading={isLoading}
+              tracesFor={tracesFor}
               name="Traces"
-              items={this.state.items}/>
+              items={items}/>
           </Container>
         </div>
       </div>
