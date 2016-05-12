@@ -131,7 +131,7 @@ export default Reflux.createStore({
     if (this.data.traces && this.data.traces.length > 0) {
       const lastTrace = this.data.traces[0];
 
-      if (lastTrace.status !== 'success' && lastTrace.status !== 'failure') {
+      if (lastTrace.status === 'processing' && lastTrace.status === 'pending') {
         this.data.lastTraceReady = false;
         setTimeout(() => {
           this.fetchTraces();
