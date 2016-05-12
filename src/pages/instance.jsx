@@ -116,6 +116,23 @@ export default React.createClass({
                   primaryText="Instance Settings"
                   onTouchTap={() => InstanceDialogActions.showDialog(SessionStore.getInstance())}/>
                 <Sidebar.LinkListItem
+                  key="backupAndRestore"
+                  routeName="all-backups"
+                  iconClassName="synicon-backup-restore"
+                  primaryText="Backup & Restore"
+                  initiallyOpen={true}
+                  autoGenerateNestedIndicator={false}
+                  nestedItems={[
+                    <Sidebar.NestedLinkListItem
+                      key="fullBackups"
+                      routeName="full-backups"
+                      primaryText="Full Backups" />,
+                    <Sidebar.NestedLinkListItem
+                      key="partialBackups"
+                      routeName="partial-backups"
+                      primaryText="Partial Backups" />
+                  ]}/>
+                <Sidebar.LinkListItem
                   key="Administrators"
                   routeName="admins"
                   iconClassName="synicon-account-star-variant"
