@@ -542,14 +542,16 @@ export default React.createClass({
                 </TogglePanel>
               </div>
 
-              <div>
+              <div style={{paddingBottom: 50}}>
                 <TogglePanel
                   title="Result"
                   initialOpen={true}>
                   <div style={{
                     color: '#444',
                     fontFamily: "Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace",
-                    fontSize: 12
+                    fontSize: 12,
+                    maxHeight: 300,
+                    overflowY: 'scroll'
                   }}>
                     {lastTraceResult}
                   </div>
