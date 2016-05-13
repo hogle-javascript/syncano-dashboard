@@ -221,13 +221,15 @@ export default React.createClass({
           }
         } else if (item.type === 'geopoint') {
           const field = this.state[item.name];
-          const isFieldEmpty = field ? !_.isNumber(field.latitude) && !_.isNumber(field.longitude) : true;
+          const isFieldEmpty = field ? !field.latitude && !field.longitude : true;
 
           if (!field || isFieldEmpty) {
             params[item.name] = null
           }
 
           if (field && !isFieldEmpty) {
+            field.latitude = parseFloat(field.latitude);
+            field.longitude = parseFloat(field.longitude);
             params[item.name] = field;
           }
 
@@ -365,17 +367,13 @@ export default React.createClass({
 
   handleGeopointFieldChange(fieldName, key, value) {
     const field = this.state[fieldName] || {};
-    const isNumberRegExp = /^-?[0-9]\d*(\.\d+)?$/;
+    const isNumberRegExp = /^(\-?\d+(\.\d+)?)/;
     const isEmptyField = _.isString(value) && _.isEmpty(value);
     const onlyMinus = value.length === 1 && _.startsWith(value, '-');
 
     field[key] = '';
 
-    if (!isEmptyField && !onlyMinus && isNumberRegExp.test(value)) {
-      field[key] = Number(value);
-    }
-
-    if (onlyMinus) {
+    if (!isEmptyField && !onlyMinus && isNumberRegExp.test(value) || onlyMinus) {
       field[key] = value;
     }
 
