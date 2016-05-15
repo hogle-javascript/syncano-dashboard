@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
 import {RaisedButton} from 'syncano-material-ui';
-import {Container, Loading} from 'syncano-components';
+import {Container, Loading} from '../../common/';
 
 import SnippetsInnerToolbar from './SnippetsInnerToolbar';
 import ScriptsActions from '../Scripts/ScriptsActions';

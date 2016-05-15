@@ -6,8 +6,7 @@ import _ from 'lodash';
 import {DialogMixin, FormMixin} from '../../mixins';
 
 import {TextField, Toggle, SelectField, MenuItem, Utils, Styles} from 'syncano-material-ui';
-import {Show, Truncate} from 'syncano-components';
-import {Dialog, Editor, Notification} from '../../common';
+import {Show, Truncate, Dialog, Editor, Notification} from '../../common/';
 
 export default (store, props) => {
   return Radium(React.createClass({

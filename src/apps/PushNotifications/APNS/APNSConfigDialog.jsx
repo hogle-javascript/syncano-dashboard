@@ -13,8 +13,7 @@ import Store from './APNSConfigDialogStore';
 
 // Components
 import {IconButton, TextField, Styles} from 'syncano-material-ui';
-import {Show} from 'syncano-components';
-import {Dialog, DropZone, Notification} from '../../../common';
+import {Show, Dialog, DropZone, Notification} from '../../../common/';
 
 export default Radium(React.createClass({
   displayName: 'APNSConfigDialog',

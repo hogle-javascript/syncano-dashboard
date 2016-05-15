@@ -13,9 +13,8 @@ import Store from './SocketsStore';
 import {DialogsMixin} from '../../mixins';
 
 // Components
-import {Container, Loading, Show} from 'syncano-components';
-import {Dialog} from '../../common';
 import {FlatButton, RaisedButton} from 'syncano-material-ui';
+import {Container, Loading, Show, Dialog} from '../../common/';
 
 // Apps
 import DataEndpoints from '../DataEndpoints';

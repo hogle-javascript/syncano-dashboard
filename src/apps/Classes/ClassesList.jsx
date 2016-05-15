@@ -10,8 +10,7 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 import ListItem from './ClassesListItem';
-import {ColumnList, Loading} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Loading, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 

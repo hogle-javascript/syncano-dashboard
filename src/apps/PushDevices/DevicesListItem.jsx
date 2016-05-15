@@ -3,7 +3,7 @@ import React from 'react';
 import {SnackbarNotificationMixin} from '../../mixins';
 
 import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList, Clipboard, Truncate} from 'syncano-components';
+import {Color, ColumnList, Clipboard, Truncate} from '../../common/';
 
 let Column = ColumnList.Column;
 

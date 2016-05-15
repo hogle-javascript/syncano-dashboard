@@ -1,7 +1,7 @@
 import React from 'react';
 import {RouteHandler} from 'react-router';
 
-import {Sidebar} from '../common';
+import {Sidebar} from '../common/';
 
 export default React.createClass({
   displayName: 'ProfileBilling',

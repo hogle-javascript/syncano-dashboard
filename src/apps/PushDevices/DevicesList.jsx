@@ -8,8 +8,7 @@ import {Styles} from 'syncano-material-ui';
 import UsersActions from '../Users/UsersActions';
 import UsersStore from '../Users/UsersStore';
 
-import {ColumnList, Loading} from 'syncano-components';
-import {Container, Lists, Dialog, ShowMore} from '../../common';
+import {ColumnList, Loading, Container, Lists, Dialog, ShowMore} from '../../common/';
 import ListItem from './DevicesListItem';
 import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
 import APNSSendMessageDialog from './APNSDevices/APNSSendMessageDialog';
