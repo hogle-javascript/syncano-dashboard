@@ -36,7 +36,7 @@ export default Reflux.createStore({
     });
     this.onPasswordSignInCompleted(payload);
     setTimeout(function() {
-      SessionStore.getRouter().transitionTo(AuthConstans.LOGIN_REDIRECT_PATH);
+      SessionStore.getRouter().push(AuthConstans.LOGIN_REDIRECT_PATH);
     }, 3000);
   },
 
@@ -78,7 +78,7 @@ export default Reflux.createStore({
 
   onPasswordResetConfirmCompleted(payload) {
     this.onPasswordSignInCompleted(payload);
-    SessionStore.getRouter().transitionTo('password-update');
+    SessionStore.getRouter().push('password-update');
   },
 
   checkSession(Session) {

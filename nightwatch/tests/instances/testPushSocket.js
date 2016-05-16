@@ -25,12 +25,12 @@ export default {
     const gcmDevKey = utils.randomString(39);
 
     socketsPage
-      .goToUrl('temp', '/sockets')
+      .goToUrl('temp', 'sockets')
       .waitForElementVisible('@addCodeBoxModalTitle')
       .clickElement('@addGcmSocket')
       .fillInput('@inputGcmDevKey', gcmDevKey)
       .clickElement('@confirmButton')
-      .goToUrl('temp', '/push-notifications/config')
+      .goToUrl('temp', 'push-notifications/config')
       .waitForElementVisible('@gcmSocket');
   },
   'Test Admin Edits GCM Socket': (client) => {
@@ -39,12 +39,16 @@ export default {
     const gcmProdKey = utils.randomString(39);
 
     socketsPage
-      .goToUrl('temp', '/push-notifications/config')
+      .goToUrl('temp', 'push-notifications/config')
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
       .fillInput('@inputGcmDevKey', gcmDevKey)
       .fillInput('@inputGcmProdKey', gcmProdKey)
       .clickElement('@confirmButton')
-      .waitForElementVisible('@gcmSocket')
+      .waitForElementVisible('@gcmSocket');
+
+    client.pause(1000);
+
+    socketsPage
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
       .waitForElementVisible('@gcmTitleHeading')
       .verify.valueContains('@inputGcmDevKey', gcmDevKey)
@@ -56,7 +60,7 @@ export default {
     const pushDevicesPage = client.page.pushDevicesPage();
 
     socketsPage
-      .goToUrl('temp', '/push-notifications/config')
+      .goToUrl('temp', 'push-notifications/config')
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Devices list');
     pushDevicesPage
       .waitForElementVisible('@androidDevicesHeading');
@@ -66,7 +70,7 @@ export default {
   //   const filePath = '/Users/marcin/Downloads/ApplePushDevelopment.p12';
 
   //   socketsPage
-  //     .goToUrl('temp', '/sockets')
+  //     .goToUrl('temp', 'sockets')
   //     .clickElement('@addCodeBoxButton')
   //     .waitForElementVisible('@addCodeBoxModalTitle')
   //     .clickElement('@addApnsSocket')
@@ -74,7 +78,7 @@ export default {
   //     .fillInput('@apnsBundleInput', '1')
   //     .clickElement('@confirmButton')
   //     .assert.elementNotPresent('//div[@class="notification notification--error"]')
-  //     .goToUrl('temp', '/push-notifications/config')
+  //     .goToUrl('temp', 'push-notifications/config')
   //     .waitForElementVisible('@apnsSocket');
   // },
   // 'Test Admin Edits APNS Socket': (client) => {
@@ -82,7 +86,7 @@ export default {
   //   const filePath = '/Users/marcin/Downloads/ApplePushDevelopment.p12';
 
   //   socketsPage
-  //     .goToUrl('temp', '/push-notifications/config')
+  //     .goToUrl('temp', 'push-notifications/config')
   //     .clickListItemDropdown('Apple Push Notification service (APNs)', 'Edit')
   //     .clickElement('@removeCert')
   //     .verify.visible('@certDragAndDrop')
@@ -100,7 +104,7 @@ export default {
   //   const pushDevicesPage = client.page.pushDevicesPage();
 
   //   socketsPage
-  //     .goToUrl('temp', '/push-notifications/config')
+  //     .goToUrl('temp', 'push-notifications/config')
   //     .clickListItemDropdown('Apple Push Notification service (APNs)', 'Devices list');
   //   pushDevicesPage
   //     .waitForElementVisible('@iosDevicesHeading');

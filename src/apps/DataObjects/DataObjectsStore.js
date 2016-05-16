@@ -110,7 +110,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('DataObjectsStore::refreshData');
-    DataObjectsActions.fetchCurrentClassObj(SessionStore.router.getCurrentParams().className);
+    DataObjectsActions.fetchCurrentClassObj(SessionStore.getParams().className);
   },
 
   refreshDataObjects() {

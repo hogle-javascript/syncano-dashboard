@@ -190,7 +190,7 @@ export default Reflux.createStore({
     console.debug('AddVersionViewStore::onCreateSolutionCompleted');
     SessionStore.getRouter().transitionTo(
       'solutions-edit',
-      SessionStore.getRouter().getCurrentParams()
+      SessionStore.getParams()
     );
   },
 
@@ -198,6 +198,5 @@ export default Reflux.createStore({
     console.debug('SolutionVersionDialogStore::onFetchInstancesCompleted');
     Actions.setInstances(instances);
   }
-
 });
 

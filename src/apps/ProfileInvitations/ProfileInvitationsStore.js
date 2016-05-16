@@ -48,7 +48,7 @@ export default Reflux.createStore({
   },
 
   onFetchInvitationsCompleted(items) {
-    let invKey = SessionStore.getRouter().getCurrentQuery().invitation_key || null;
+    let invKey = SessionStore.getLocation().query.invitation_key || null;
     let isInvitedByEmail = _.some(items._items, 'key', invKey);
 
     if (invKey !== null && isInvitedByEmail) {

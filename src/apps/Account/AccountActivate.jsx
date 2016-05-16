@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 import Store from './AuthStore';
 import Actions from './AuthActions';
@@ -11,28 +10,24 @@ export default React.createClass({
   displayName: 'AccountActivate',
 
   contextTypes: {
-    router: React.PropTypes.func
+    params: React.PropTypes.object
   },
 
-  mixins: [
-    Reflux.connect(Store),
-    Router.State
-  ],
+  mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
-    let params = this.getParams();
+    const {uid, token} = this.context.params;
 
-    Actions.activate({
-      uid: params.uid,
-      token: params.token
-    });
+    Actions.activate({uid, token});
   },
 
   render() {
+    const {status} = this.state;
+
     return (
       <AccountContainer ref="loginPage">
         <div className="account-container__content__header">
-          <p className="vm-0-b">{this.state.status}</p>
+          <p className="vm-0-b">{status}</p>
         </div>
       </AccountContainer>
     );

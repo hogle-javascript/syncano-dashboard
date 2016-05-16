@@ -1,5 +1,5 @@
 import React from 'react';
-import {State, Navigation, RouteHandler} from 'react-router';
+import {withRouter} from 'react-router';
 
 // Stores and Action
 import SessionStore from '../apps/Session/SessionStore';
@@ -10,22 +10,12 @@ import {Sidebar} from '../common/';
 import HeaderInstancesDropdown from '../common/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
 
-export default React.createClass({
-
+const Instance = React.createClass({
   displayName: 'Instance',
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-
-  mixins: [
-    State,
-    Navigation
-  ],
 
   componentDidMount() {
     console.debug('Instance::componentWillMount');
-    const params = this.getParams();
+    const {params} = this.props;
 
     if (params.instanceName) {
       SessionActions.fetchInstance(params.instanceName);
@@ -33,10 +23,11 @@ export default React.createClass({
   },
 
   redirectToNewInstance() {
+    const {router} = this.props;
     const instanceName = this.refs.addInstanceDialog.refs.name.getValue();
 
     SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName});
+    router.push({name: 'instance', params: {instanceName}});
   },
 
   render() {
@@ -131,7 +122,7 @@ export default React.createClass({
           <div
             className="col-flex-1"
             style={{maxWidth: 'calc(100% - 256px)', display: 'flex', flexDirection: 'column'}}>
-            <RouteHandler />
+            {this.props.children}
           </div>
         </div>
         <InstanceDialog
@@ -141,3 +132,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(Instance);

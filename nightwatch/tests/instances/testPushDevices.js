@@ -41,6 +41,7 @@ export default {
 
     client
       .goToUrl('temp', 'push-notifications/devices/gcm')
+      .pause(2000)
       .multipleItems('Select', 2, optionsMenu, selectedItems)
       .pause(2000);
 
@@ -68,6 +69,7 @@ export default {
 
     client
       .goToUrl('temp', 'push-notifications/devices/apns')
+      .pause(2000)
       .multipleItems('Select', 2, optionsMenu, selectedItems)
       .pause(2000);
 

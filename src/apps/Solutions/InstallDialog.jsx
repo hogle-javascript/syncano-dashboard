@@ -1,6 +1,5 @@
 import React from 'react' ;
 import Reflux from 'reflux';
-import Router from 'react-router';
 import _ from 'lodash';
 
 // Utils
@@ -19,12 +18,8 @@ export default React.createClass({
   displayName: 'SolutionInstallDialog',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-
     DialogMixin,
     FormMixin,
-
     Reflux.connect(Store)
   ],
 

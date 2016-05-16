@@ -1,15 +1,21 @@
 import React from 'react';
-import _ from 'lodash';
-import {State, Navigation} from 'react-router';
+import {withRouter} from 'react-router';
 import {IconButton, Styles} from 'syncano-material-ui';
 
-export default React.createClass({
+const DataObjectsAmount = React.createClass({
   displayName: 'DataObjectsAmount',
 
-  mixins: [
-    State,
-    Navigation
-  ],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
+  handleIconTap() {
+    const {params} = this.context;
+    const {router, className} = this.props;
+    const pushParams = {...params, className};
+
+    router.push({name: 'classes-data-objects', params: pushParams});
+  },
 
   render() {
     const {className, dataObjects} = this.props;
@@ -19,7 +25,7 @@ export default React.createClass({
       <div>
         {itemsAmount}
         <IconButton
-          onTouchTap={() => this.transitionTo('classes-data-objects', _.merge({}, this.getParams(), {className}))}
+          onTouchTap={this.handleIconTap}
           iconClassName="synicon-table"
           tooltip={<div>Data Objects in <strong>{className}</strong> Class</div>}
           iconStyle={{color: Styles.Colors.blue400, fontSize: 18, verticalAlign: 'bottom'}} />
@@ -28,3 +34,4 @@ export default React.createClass({
   }
 });
 
+export default withRouter(DataObjectsAmount);

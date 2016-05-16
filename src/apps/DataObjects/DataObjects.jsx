@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
@@ -9,7 +9,6 @@ import {DialogsMixin} from '../../mixins';
 import Constants from '../../constants/Constants';
 
 // Stores and Actions
-import SessionStore from '../Session/SessionStore';
 import Actions from './DataObjectsActions';
 import Store from './DataObjectsStore';
 
@@ -22,13 +21,10 @@ import ColumnsFilterMenu from './ColumnsFilterMenu';
 import DataObjectDialog from './DataObjectDialog';
 import ReadOnlyTooltip from './ReadOnlyTooltip';
 
-export default React.createClass({
+const DataObjects = React.createClass({
   displayName: 'DataObjects',
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store),
     DialogsMixin
   ],
@@ -52,7 +48,9 @@ export default React.createClass({
   },
 
   isClassProtected() {
-    return _.includes(Constants.PROTECTED_FROM_DELETE_CLASS_NAMES, this.getParams().className);
+    const {className} = this.props.params;
+
+    return _.includes(Constants.PROTECTED_FROM_DELETE_CLASS_NAMES, className);
   },
 
   handleDelete() {
@@ -93,12 +91,9 @@ export default React.createClass({
   },
 
   handleBackClick() {
-    SessionStore.getRouter().transitionTo(
-      'classes',
-      {
-        instanceName: SessionStore.getInstance().name
-      }
-    );
+    const {router, params} = this.props;
+
+    router.push({name: 'classes', params});
   },
 
   initDialogs() {
@@ -184,8 +179,8 @@ export default React.createClass({
   },
 
   render() {
+    const {className} = this.props.params;
     const {items, selectedRows, isLoading} = this.state;
-    const className = this.getParams().className;
     const title = `Class: ${className}`;
     let selectedMessageText = '';
 
@@ -238,3 +233,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(DataObjects);

@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
@@ -17,13 +16,11 @@ export default React.createClass({
   displayName: 'Template',
 
   contextTypes: {
+    params: React.PropTypes.object,
     muiTheme: React.PropTypes.object
   },
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store),
     SnackbarNotificationMixin,
     AutosaveMixin,
@@ -211,8 +208,8 @@ export default React.createClass({
   },
 
   render() {
+    const {instanceName} = this.context.params;
     const {template, isLoading} = this.state;
-    const instanceName = this.getParams().instanceName;
     const title = `Template: ${template.name}`;
 
     return (

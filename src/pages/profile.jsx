@@ -1,6 +1,4 @@
 import React from 'react';
-import {RouteHandler} from 'react-router';
-
 import {Sidebar} from '../common/';
 
 export default React.createClass({
@@ -48,7 +46,7 @@ export default React.createClass({
           </Sidebar.List>
         </Sidebar>
         <div className="col-flex-1" style={{maxWidth: 'calc(100% - 256px)'}}>
-          <RouteHandler />
+          {this.props.children}
         </div>
       </div>
     );

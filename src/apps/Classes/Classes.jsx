@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import Helmet from 'react-helmet';
 
 // Utils
@@ -21,9 +20,11 @@ import ClassesList from './ClassesList';
 export default React.createClass({
   displayName: 'Classes',
 
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
   mixins: [
-    State,
-    Navigation,
     Reflux.connect(Store),
     DialogsMixin
   ],
@@ -34,7 +35,7 @@ export default React.createClass({
   },
 
   componentWillUpdate() {
-    const {action, className} = this.getParams();
+    const {action, className} = this.context.params;
     const classObject = Store.getClassByName(className);
 
     if (action === 'edit' && classObject) {

@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 // Stores & Actions
 import Store from '../Traces/TracesStore';
@@ -11,13 +10,10 @@ import Traces from '../Traces';
 export default React.createClass({
   displayName: 'ScheduleTraces',
 
-  mixins: [
-    Router.State,
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   render() {
-    let scheduleId = this.getParams().scheduleId;
+    const {scheduleId} = this.props.params;
 
     return (
       <Traces
