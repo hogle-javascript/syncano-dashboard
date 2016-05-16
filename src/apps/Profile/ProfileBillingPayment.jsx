@@ -44,7 +44,8 @@ export default Radium(React.createClass({
       presence: true,
       numericality: {
         onlyInteger: true,
-        greaterThan: 0
+        greaterThanOrEqualTo: new Date().getFullYear() - 20,
+        lessThanOrEqualTo: new Date().getFullYear() + 20
       }
     }
   },

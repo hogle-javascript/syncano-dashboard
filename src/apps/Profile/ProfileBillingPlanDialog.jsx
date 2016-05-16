@@ -58,10 +58,8 @@ export default React.createClass({
         presence: true,
         numericality: {
           onlyInteger: true,
-          greaterThanOrEqualTo: new Date().getFullYear()
-        },
-        length: {
-          is: 4
+          greaterThanOrEqualTo: new Date().getFullYear() - 20,
+          lessThanOrEqualTo: new Date().getFullYear() + 20
         }
       }
     };
@@ -170,6 +168,7 @@ export default React.createClass({
     }
     return (
     <div>
+      {this.renderFormNotifications()}
       <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
       <div className="row">
         <div className="col-flex-1">
