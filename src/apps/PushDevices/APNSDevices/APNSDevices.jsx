@@ -6,7 +6,7 @@ import Store from './APNSDevicesStore';
 import Actions from './APNSDevicesActions';
 import SendMessagesActions from './APNSSendMessagesActions';
 
-import {Container} from 'syncano-components';
+import {Container} from '../../../common/';
 import DevicesList from '../DevicesList';
 import APNSDialog from './APNSDeviceDialog';
 

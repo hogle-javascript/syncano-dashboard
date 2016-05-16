@@ -1,6 +1,6 @@
 import React from 'react';
 import {RaisedButton} from 'syncano-material-ui';
-import {Socket} from 'syncano-components';
+import {Socket} from '../../common/';
 
 const styles = {
   container: {

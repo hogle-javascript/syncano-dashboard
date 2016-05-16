@@ -10,8 +10,7 @@ import Store from './TracesStore';
 import Actions from './TracesActions';
 
 // Components
-import {Container} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {Container, InnerToolbar} from '../../common/';
 
 // Local components
 import TracesList from './TracesList';

@@ -10,8 +10,7 @@ import Store from './GCMConfigDialogStore';
 
 // Components
 import {TextField, Styles} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
-import {Dialog} from '../../../common';
+import {Loading, Dialog} from '../../../common/';
 
 export default React.createClass({
   displayName: 'GCMConfigDialog',

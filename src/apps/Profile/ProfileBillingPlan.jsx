@@ -13,8 +13,7 @@ import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
 import {FlatButton, IconButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
-import {Billing, Container, Loading, Color} from 'syncano-components';
-import {Dialog, InnerToolbar} from '../../common';
+import {Billing, Container, Loading, Color, Dialog, InnerToolbar} from '../../common/';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 import Chart from './ProfileBillingChart';

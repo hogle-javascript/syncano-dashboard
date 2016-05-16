@@ -7,7 +7,7 @@ import {DialogMixin, FormMixin} from '../../mixins';
 
 // Components
 import {TextField, Toggle} from 'syncano-material-ui';
-import {Dialog, Editor} from '../../common';
+import {Dialog, Editor} from '../../common/';
 
 export default (type, Store, Actions, sidebar) => {
   return React.createClass({

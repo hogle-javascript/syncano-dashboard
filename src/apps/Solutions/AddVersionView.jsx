@@ -12,8 +12,7 @@ import Actions from './AddVersionViewActions';
 
 // Components
 import {Checkbox, FlatButton, RaisedButton} from 'syncano-material-ui';
-import {Container, Loading, SelectFieldWrapper} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {Container, Loading, SelectFieldWrapper, InnerToolbar} from '../../common/';
 
 export default Radium(React.createClass({
   displayName: 'AddVersionView',

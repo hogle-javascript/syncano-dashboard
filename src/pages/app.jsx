@@ -7,7 +7,7 @@ import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
 import {Styles} from 'syncano-material-ui';
 import {SnackbarNotification} from './../apps';
-import {SyncanoTheme} from 'syncano-components';
+import {SyncanoTheme} from '../common/';
 
 export default React.createClass({
   displayName: 'App',

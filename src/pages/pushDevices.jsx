@@ -6,8 +6,8 @@ import APNSDevicesActions from '../../src/apps/PushDevices/APNSDevices/APNSDevic
 import GCMDevicesActions from '../../src/apps/PushDevices/GCMDevices/GCMDevicesActions';
 
 import {ListItem, FontIcon, RaisedButton, Styles} from 'syncano-material-ui';
-import {Popover} from '../common';
-import {InnerToolbar} from '../common';
+import {Popover} from '../common/';
+import {InnerToolbar} from '../common/';
 
 export default React.createClass({
   displayName: 'PushDevicesPage',

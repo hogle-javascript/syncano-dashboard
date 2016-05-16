@@ -8,8 +8,7 @@ import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
 
 import {TextField, FlatButton} from 'syncano-material-ui';
-import {CreditCard, Loading, Slider} from 'syncano-components';
-import {Dialog} from '../../common';
+import {CreditCard, Loading, Slider, Dialog} from '../../common/';
 import SliderSection from './SliderSection';
 
 export default React.createClass({

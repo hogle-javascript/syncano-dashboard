@@ -3,7 +3,7 @@ import Store from './APNSDeviceDialogStore';
 import React from 'react';
 
 import DeviceDialog from '../DeviceDialog';
-import {Dialog} from '../../../common';
+import {Dialog} from '../../../common/';
 
 const sidebar = (
   <Dialog.SidebarBox>

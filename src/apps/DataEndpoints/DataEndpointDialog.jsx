@@ -12,8 +12,7 @@ import ClassesStore from '../Classes/ClassesStore';
 
 // Components
 import {TextField, Toggle, Checkbox, AutoComplete} from 'syncano-material-ui';
-import {SelectFieldWrapper, Show} from 'syncano-components';
-import {Dialog, Notification} from '../../common';
+import {SelectFieldWrapper, Show, Dialog, Notification} from '../../common/';
 
 export default React.createClass({
   displayName: 'DataEndpointDialog',

@@ -8,8 +8,8 @@ import SessionStore from '../../apps/Session/SessionStore';
 import ProfileInvitationsStore from '../../apps/ProfileInvitations/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../../apps/ProfileInvitations/ProfileInvitationsActions';
 
-import {Popover, Utils, Styles, FontIcon, MenuItem, Divider, Badge, IconButton} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
+import {Popover, FontIcon, MenuItem, Divider, Badge, IconButton, Styles, Utils} from 'syncano-material-ui';
+import {Loading} from '../';
 import {SnackbarNotificationMixin} from '../../mixins';
 import InvitationItem from './InvitationItem';
 

@@ -5,7 +5,7 @@ import {Grid, Breakpoint} from 'react-responsive-grid';
 import SessionStore from '../apps/Session/SessionStore';
 import AuthConstants from '../apps/Account/AuthConstants';
 
-import {Header, ConversionPixel, Sidebar, NoMobileInfo} from '../common';
+import {Header, ConversionPixel, Sidebar, NoMobileInfo} from '../common/';
 
 export default React.createClass({
   displayName: 'Dashboard',

@@ -2,8 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 import {Styles, Paper, FontIcon} from 'syncano-material-ui';
-import {ColumnList, Loading, Trace} from 'syncano-components';
-import {Lists} from '../../common';
+import {ColumnList, Loading, Trace, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 

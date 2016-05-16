@@ -13,7 +13,7 @@ import {GroupsStore} from './../Groups';
 
 // Components
 import {TextField} from 'syncano-material-ui';
-import {Dialog} from '../../common';
+import {Dialog} from '../../common/';
 
 import 'react-select/dist/react-select.min.css';
 

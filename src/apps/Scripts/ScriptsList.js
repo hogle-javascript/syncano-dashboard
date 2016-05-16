@@ -12,8 +12,7 @@ import Store from './ScriptsStore';
 
 // Components
 import ListItem from './ScriptsListItem';
-import {ColumnList, Loading} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Loading, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 

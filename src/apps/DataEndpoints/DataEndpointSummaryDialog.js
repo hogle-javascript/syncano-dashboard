@@ -8,7 +8,7 @@ import DataEndpointsStore from './DataEndpointsStore';
 import SessionStore from '../Session/SessionStore';
 
 import {DialogMixin} from '../../mixins';
-import {CodePreview, Dialog, Notification} from '../../common';
+import {CodePreview, Dialog, Notification} from '../../common/';
 import {Card, CardTitle, CardText, RaisedButton, Styles} from 'syncano-material-ui';
 
 export default React.createClass({

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {Avatar, IconButton} from 'syncano-material-ui';
-import {ColumnList} from 'syncano-components';
+import {ColumnList} from '../../common/';
 
 let Column = ColumnList.Column;
 

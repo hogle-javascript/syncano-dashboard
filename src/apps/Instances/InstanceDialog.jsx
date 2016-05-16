@@ -8,8 +8,7 @@ import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
 
 import {TextField, FlatButton, Utils, Styles} from 'syncano-material-ui';
-import {Color} from 'syncano-components';
-import {Dialog, Icon, Notification, ColorIconPicker} from '../../common';
+import {Color, Dialog, Icon, Notification, ColorIconPicker} from '../../common/';
 
 export default React.createClass({
   displayName: 'InstanceDialog',
