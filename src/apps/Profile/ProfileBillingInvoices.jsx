@@ -30,6 +30,29 @@ export default React.createClass({
     location.href = pdfUrl;
   },
 
+  handleRetryPaymentClick(invoice) {
+    Actions.retryPayment(invoice);
+  },
+
+  renderActionButton(invoice) {
+    if (invoice.status === 'payment failed') {
+      return (
+        <RaisedButton
+          label="RETRY PAYMENT"
+          secondary={true}
+          disabled={invoice.actionDisabled}
+          onClick={() => this.handleRetryPaymentClick(invoice)}/>
+      );
+    }
+
+    return (
+      <RaisedButton
+        label="VIEW"
+        primary={true}
+        onClick={() => this.handlePDFClick(invoice)}/>
+    );
+  },
+
   render() {
     const {isLoading, invoices} = this.state;
     const title = 'Invoices';
@@ -63,10 +86,7 @@ export default React.createClass({
                     <Column.Desc>{invoice.amount}</Column.Desc>
                     <Column.Desc>{invoice.status}</Column.Desc>
                     <Column.Desc>
-                      <RaisedButton
-                        label="VIEW"
-                        primary={true}
-                        onClick={() => this.handlePDFClick(invoice)}/>
+                      {this.renderActionButton(invoice)}
                     </Column.Desc>
                   </ColumnList.Item>
                 ))}
