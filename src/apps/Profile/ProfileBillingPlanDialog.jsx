@@ -57,10 +57,8 @@ export default React.createClass({
         presence: true,
         numericality: {
           onlyInteger: true,
-          greaterThanOrEqualTo: new Date().getFullYear()
-        },
-        length: {
-          is: 4
+          greaterThanOrEqualTo: new Date().getFullYear() - 20,
+          lessThanOrEqualTo: new Date().getFullYear() + 20
         }
       }
     };
