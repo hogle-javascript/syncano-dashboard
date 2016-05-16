@@ -415,7 +415,8 @@ var Syncano = (function () {
       getPlans: this.getBillingPlans.bind(this),
       subscribePlan: this.subscribeBillingPlan.bind(this),
       getSubscriptions: this.getSubscriptions.bind(this),
-      cancelSubscription: this.cancelSubscription.bind(this)
+      cancelSubscription: this.cancelSubscription.bind(this),
+      retryPayment: this.retryPayment.bind(this)
     };
 
     this.Usage = {
@@ -1813,6 +1814,10 @@ var Syncano = (function () {
 
     cancelSubscription: function (id, callbackOK, callbackError) {
       return this.request('POST', 'v1/billing/subscriptions/' + id + '/cancel/', {}, callbackOK, callbackError);
+    },
+
+    retryPayment: function (id, callbackOK, callbackError) {
+      return this.request('POST', '/v1/billing/invoices/' + id + '/retry_payment/', {}, callbackOK, callbackError);
     },
 
     /***********************
