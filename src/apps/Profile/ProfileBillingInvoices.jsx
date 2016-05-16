@@ -35,8 +35,7 @@ export default React.createClass({
   },
 
   renderActionButton(invoice) {
-    // if (invoice.status === 'payment failed') {
-    if (invoice.status === 'payment succeeded') {
+    if (invoice.status === 'payment failed') {
       return (
         <RaisedButton
           label="RETRY PAYMENT"
