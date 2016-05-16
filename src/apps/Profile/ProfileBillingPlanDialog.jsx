@@ -168,7 +168,6 @@ export default React.createClass({
     }
     return (
     <div>
-      {this.renderFormNotifications()}
       <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
       <div className="row">
         <div className="col-flex-1">
