@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {RouteHandler} from 'react-router';
 
 import BackupsInnerToolbar from './BackupsInnerToolbar';
 import {ListItem, FontIcon, RaisedButton, Styles} from 'syncano-material-ui';
 import {Popover} from '../../common';
 
-export default React.createClass({
+export default class BackupAndRestore extends Component {
   handleCreateBackup(type) {
     const createBackup = {
       full: () => console.log('create full backup'),
@@ -14,13 +14,13 @@ export default React.createClass({
 
     createBackup[type]();
     this.refs.createBackupPopover.hide();
-  },
+  }
 
   togglePopover(event) {
     if (this.refs.createBackupPopover) {
       this.refs.createBackupPopover.toggle(event);
     }
-  },
+  }
 
   render() {
     return (
@@ -55,4 +55,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+};
