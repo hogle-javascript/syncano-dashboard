@@ -27,7 +27,7 @@ export default React.createClass({
         key: 'deleteFullBackupDialog',
         ref: 'deleteFullBackupDialog',
         title: 'Remove Full Backup',
-        handleConfirm: Actions.removeBackups,
+        handleConfirm: Actions.removeFullBackups,
         items: Store.getCheckedItems(),
         itemLabelName: 'label',
         groupName: 'Backup',

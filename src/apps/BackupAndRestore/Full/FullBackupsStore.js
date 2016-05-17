@@ -41,5 +41,10 @@ export default Reflux.createStore({
     console.debug('FullBackupsStore::onFetchFullBackupsCompleted');
     this.data.items = items;
     this.trigger(this.data);
+  },
+
+  onRemoveFullBackupsCompleted() {
+    console.debug('FullBackupsStore::onRemoveFullBackupsCompleted');
+    this.refreshData();
   }
 });

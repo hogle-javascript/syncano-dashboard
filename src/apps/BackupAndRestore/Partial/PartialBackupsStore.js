@@ -41,5 +41,10 @@ export default Reflux.createStore({
     console.debug('PartialBackupsStore::onFetchPartialBackupsCompleted');
     this.data.items = items;
     this.trigger(this.data);
+  },
+
+  onRemovePartialBackupsCompleted() {
+    console.debug('PartialBackupsStore::onRemovePartialBackupsCompleted');
+    this.refreshData();
   }
 });
