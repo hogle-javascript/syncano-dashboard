@@ -30,7 +30,7 @@ export default class BackupAndRestore extends Component {
             label="Create Backup"
             primary={true}
             style={{marginRight: 0}}
-            onTouchTap={this.togglePopover}/>
+            onTouchTap={this.togglePopover.bind(this)}/>
           <Popover
             ref="createBackupPopover"
             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
