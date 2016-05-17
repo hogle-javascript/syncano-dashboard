@@ -14,7 +14,7 @@ import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
 import {TextField, FlatButton, Checkbox} from 'syncano-material-ui';
-import {Color, Show, SelectFieldWrapper, Dialog, Icon, Notification} from '../../common/';
+import {Color, Show, SelectFieldWrapper, Tooltip, Dialog, Icon, Notification} from '../../common/';
 
 export default React.createClass({
   displayName: 'ClassDialog',
@@ -289,18 +289,28 @@ export default React.createClass({
           <span className="col-xs-8">{item.fieldType}</span>
           <span className="col-xs-8">{item.fieldTarget}</span>
           <span className="col-xs-3">
-            <Checkbox
-              name="filter"
-              defaultChecked={item.fieldFilter}
-              disabled={!this.hasFilter(item.fieldType)}
-              onCheck={this.handleOnCheck.bind(this, item)}/>
+            <Tooltip
+              label={!this.hasFilter(item.fieldType) && `${item.fieldType} doesn't support filtering`}
+              verticalPosition="bottom"
+              horizontalPosition="center">
+              <Checkbox
+                name="filter"
+                defaultChecked={item.fieldFilter}
+                disabled={!this.hasFilter(item.fieldType)}
+                onCheck={this.handleOnCheck.bind(this, item)}/>
+            </Tooltip>
           </span>
           <span className="col-xs-3">
-            <Checkbox
-              name="order"
-              defaultChecked={item.fieldOrder}
-              disabled={!this.hasOrder(item.fieldType)}
-              onCheck={this.handleOnCheck.bind(this, item)}/>
+            <Tooltip
+              label={!this.hasOrder(item.fieldType) && `${item.fieldType} doesn't support sorting`}
+              verticalPosition="bottom"
+              horizontalPosition="center">
+              <Checkbox
+                name="order"
+                defaultChecked={item.fieldOrder}
+                disabled={!this.hasOrder(item.fieldType)}
+                onCheck={this.handleOnCheck.bind(this, item)} />
+            </Tooltip>
           </span>
           <span className="col-xs-5">
             <FlatButton
@@ -484,23 +494,32 @@ export default React.createClass({
           <div
             className="col-xs-3"
             style={styles.checkBox}>
-            <Show if={this.hasFilter(fieldType)}>
+            <Tooltip
+              label={!this.hasFilter(fieldType) && `${fieldType} doesn't support filtering`}
+              verticalPosition="bottom"
+              horizontalPosition="center">
               <Checkbox
                 ref="fieldFilter"
-                name="filter"/>
-            </Show>
+                disabled={!this.hasFilter(fieldType)}
+                name="filter" />
+            </Tooltip>
           </div>
           <div
             className="col-xs-3"
             style={styles.checkBox}>
-            <Show if={this.hasOrder(fieldType)}>
+            <Tooltip
+              label={!this.hasOrder(fieldType) && `${fieldType} doesn't support sorting`}
+              verticalPosition="bottom"
+              horizontalPosition="center">
               <Checkbox
                 ref="fieldOrder"
-                name="order"/>
-            </Show>
+                disabled={!this.hasOrder(fieldType)}
+                name="order" />
+            </Tooltip>
           </div>
-          <div className="col-xs-5"
-               style={styles.checkBox}>
+          <div
+            className="col-xs-5"
+            style={styles.checkBox}>
             <FlatButton
               style={{marginBottom: 4}}
               label="Add"

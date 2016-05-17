@@ -109,5 +109,14 @@ export default {
       .getUsage()
       .then(this.completed)
       .catch(this.failure);
+  },
+
+  retryPayment(invoice) {
+    return this.Connection
+      .Billing
+      .retryPayment(invoice.id)
+      .then(this.completed)
+      .catch(this.failure);
   }
+
 };
