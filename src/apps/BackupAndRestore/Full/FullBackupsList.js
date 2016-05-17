@@ -2,7 +2,7 @@ import React from 'react';
 
 import {DialogsMixin} from '../../../mixins';
 
-import Actions from './FulBackupsActions';
+import Actions from './FullBackupsActions';
 import Store from './FullBackupsStore';
 
 import ListItem from './FullBackupsListItem';

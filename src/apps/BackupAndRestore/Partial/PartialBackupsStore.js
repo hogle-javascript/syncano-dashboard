@@ -5,7 +5,7 @@ import {CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../.
 
 // Stores & Actions
 import SessionActions from '../../Session/SessionActions';
-import Actions from './FullBackupsActions';
+import Actions from './PartialBackupsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -33,12 +33,12 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('FullBackupsStore::refreshData');
-    Actions.fetchFullBackups();
+    console.debug('PartialBackupsStore::refreshData');
+    Actions.fetchPartialBackups();
   },
 
-  onFetchFullBackupsCompleted(items) {
-    console.debug('FullBackupsStore::onFetchFullBackupsCompleted');
+  onFetchPartialBackupsCompleted(items) {
+    console.debug('PartialBackupsStore::onFetchPartialBackupsCompleted');
     this.data.items = items;
     this.trigger(this.data);
   }

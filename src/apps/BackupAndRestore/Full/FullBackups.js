@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Actions from './FulBackupsActions';
+import Actions from './FullBackupsActions';
 import Store from './FullBackupsStore';
 
 import FullBackupsList from './FullBackupsList';

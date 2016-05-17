@@ -1,11 +1,32 @@
 import React from 'react';
+import Reflux from 'reflux';
 
-export default class extends React.Component {
+import Actions from './PartialBackupsActions';
+import Store from './PartialBackupsStore';
+
+import PartialBackupsList from './PartialBackupsList';
+import {Container} from 'syncano-components';
+
+export default React.createClass({
+  displayName: 'PartialBackups',
+
+  mixins: [
+    Reflux.connect(Store)
+  ],
+
+  componentDidMount() {
+    Actions.fetch();
+  },
+
   render() {
+    const {isLoading, items} = this.state;
+
     return (
-      <div>
-        Partial Backups
-      </div>
+      <Container>
+        <PartialBackupsList
+          isLoading={isLoading}
+          items={items} />
+      </Container>
     );
   }
-}
+});
