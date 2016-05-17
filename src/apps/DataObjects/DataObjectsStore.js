@@ -1,5 +1,4 @@
 import Reflux from 'reflux';
-import URI from 'urijs';
 
 // Utils & Mixins
 import {CheckListStoreMixin, StoreFormMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../mixins';
@@ -184,19 +183,13 @@ export default Reflux.createStore({
   setDataObjects(items) {
     console.debug('DataObjectsStore::setDataObjects');
 
-    this.data.hasNextPage = items.hasNextPage();
-    this.data.nextParams = new URI(items.next() || '').search(true);
-    this.data.prevParams = new URI(items.prev() || '').search(true);
+    this.data.hasNextPage = items.hasNext();
 
     if (!this.data.items) {
       this.data.items = [];
     }
 
-    let newItems = [];
-
-    Object.keys(items).map((key) => newItems.splice(0, 0, items[key]));
-
-    this.data.items = this.data.items.concat(newItems);
+    this.data.items = this.data.items.concat(items);
     this.data.isLoading = false;
     this.trigger(this.data);
   },

@@ -1,24 +1,29 @@
 import Constants from '../../../constants/Constants';
 import _ from 'lodash';
 
+let next = null;
+
 export default {
-  list(params = {}) {
-    _.defaults(params, {
-      page_size: Constants.DATAOBJECTS_PAGE_SIZE,
-      order_by: '-created_at'
-    });
-    this.Connection
-      .DataObjects
-      .list(params)
-      .then(this.completed)
+  list() {
+    this.NewLibConnection
+      .DataObject
+      .please()
+      .list()
+      .orderBy('created_at')
+      .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
+      .then((dataObjects) => {
+        next = dataObjects.next;
+        this.completed(dataObjects);
+      })
       .catch(this.failure);
   },
 
-  subList(payload) {
-    this.Connection
-      .DataObjects
-      .list(payload.className, payload)
-      .then(this.completed)
+  subList() {
+    next()
+      .then((dataObjects) => {
+        next = dataObjects.next;
+        this.completed(dataObjects);
+      })
       .catch(this.failure);
   },
 
@@ -79,6 +84,7 @@ export default {
   },
 
   getClass(name) {
+    this.NewLibConnection.defaults.className = name;
     this.NewLibConnection
       .Class
       .please()

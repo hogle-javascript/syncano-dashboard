@@ -85,12 +85,7 @@ export default React.createClass({
   },
 
   handleMoreRows() {
-    const {classObj, nextParams} = this.state;
-
-    Actions.subFetchDataObjects({
-      className: classObj.name,
-      params: nextParams
-    });
+    Actions.subFetchDataObjects();
   },
 
   handleBackClick() {
