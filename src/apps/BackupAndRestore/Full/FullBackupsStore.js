@@ -38,7 +38,6 @@ export default Reflux.createStore({
   },
 
   onFetchFullBackupsCompleted(items) {
-    console.error(items);
     console.debug('FullBackupsStore::onFetchFullBackupsCompleted');
     this.data.items = items;
     this.trigger(this.data);
