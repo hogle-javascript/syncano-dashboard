@@ -12,7 +12,7 @@ import Actions from './TemplateActions';
 
 import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
 import {Show, Loading, TogglePanel, Truncate} from 'syncano-components';
-import {InnerToolbar, Editor, Notification} from '../../common';
+import {InnerToolbar, Editor} from '../../common';
 
 export default React.createClass({
   displayName: 'Template',
@@ -184,20 +184,6 @@ export default React.createClass({
     Actions.setFlag(successValidationAction, this.handleFormValidation);
   },
 
-  renderErrorNotifications(errorsKey) {
-    const styles = this.getStyles();
-
-    return (
-      <Show if={this.getValidationMessages(errorsKey).length}>
-        <div style={styles.notification}>
-          <Notification type="error">
-            {this.getValidationMessages(errorsKey).join(' ')}
-          </Notification>
-        </div>
-      </Show>
-    );
-  },
-
   renderRunButtons(label, iconName, flagName) {
     return (
       <RaisedButton
@@ -259,8 +245,8 @@ export default React.createClass({
                     width="100%"
                     height="calc(100% - 60px)"
                     style={{position: 'absolute'}} />
-                  <div style={{position: 'absolute', bottom: 0, margin: '5px auto -20px auto', width: '100%'}}>
-                    {this.renderErrorNotifications('content')}
+                  <div style={{position: 'absolute', bottom: 0, margin: '15px auto -10px auto', width: '100%'}}>
+                    {this.renderFormNotifications()}
                   </div>
                 </div>
               </TogglePanel>
@@ -300,9 +286,6 @@ export default React.createClass({
                       '}'
                     ].join('\n')} />
                 </TogglePanel>
-                <div style={{padding: '10px 20px 10px 20px'}}>
-                  {this.renderErrorNotifications('context')}
-                </div>
               </div>
 
               <div style={{flex: 1, display: 'flex'}}>
