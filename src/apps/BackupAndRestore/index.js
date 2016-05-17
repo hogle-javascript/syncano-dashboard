@@ -1,10 +1,16 @@
 import BackupAndRestore from './BackupAndRestore';
 import AllBackupsList from './AllBackupsList';
-import FullBackupsList from './FullBackupsList';
-import PartialBackupsList from './PartialBackupsList';
+import FullBackups from './Full//FullBackups';
+import FullBackupsList from './Full/FullBackupsList';
+import FullBackupsListItem from './Full/FullBackupsListItem';
+import PartialBackups from './Partial/PartialBackups';
+import PartialBackupsList from './Partial/PartialBackupsList';
 
 BackupAndRestore.All = AllBackupsList;
-BackupAndRestore.Full = FullBackupsList;
-BackupAndRestore.Partial = PartialBackupsList;
+BackupAndRestore.Full = FullBackups;
+BackupAndRestore.FullList = FullBackupsList;
+BackupAndRestore.FullListItem = FullBackupsListItem;
+BackupAndRestore.Partial = PartialBackups;
+BackupAndRestore.PartialList = PartialBackupsList;
 
 export default BackupAndRestore;
