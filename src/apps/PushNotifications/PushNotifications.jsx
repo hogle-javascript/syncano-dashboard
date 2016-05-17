@@ -13,7 +13,7 @@ import APNSConfigDialog from './APNS/APNSConfigDialog';
 import GCMConfigDialog from './GCM/GCMConfigDialog';
 import ConfigPushNotificationsPopover from './ConfigPushNotificationsPopover';
 import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {Container} from '../../common/';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 
 export default React.createClass({

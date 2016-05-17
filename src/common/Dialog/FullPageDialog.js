@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import DialogMixin from '../../mixins/DialogMixin';
 import {Dialog, IconButton, Utils} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
+import {Loading} from '../';
 import DialogSidebar from './DialogSidebar';
 
 export default React.createClass({

@@ -11,8 +11,8 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 
 // Components
 import Sticky from 'react-stickydiv';
-import {Utils, FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'syncano-material-ui';
-import Logo from '../Logo';
+import {FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu, Utils} from 'syncano-material-ui';
+import {Logo} from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
 import './Header.sass';

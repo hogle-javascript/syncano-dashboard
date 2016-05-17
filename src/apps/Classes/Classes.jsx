@@ -12,8 +12,7 @@ import Store from './ClassesStore';
 
 // Components
 import {RaisedButton} from 'syncano-material-ui';
-import {Container, Loading} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {Container, Loading, InnerToolbar} from '../../common/';
 
 // Local components
 import ClassDialog from './ClassDialog';

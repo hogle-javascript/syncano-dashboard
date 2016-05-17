@@ -1,0 +1,5 @@
+/* Border radius and box shadow don't work together well on Safari */
+
+_::-webkit-full-page-media, _:future, :root .tour-focus {
+    border-radius: 0 !important;
+}

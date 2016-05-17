@@ -6,7 +6,7 @@ import Store from './GCMDevicesStore';
 import Actions from './GCMDevicesActions';
 import SendMessagesActions from './GCMSendMessagesActions';
 
-import {Container} from 'syncano-components';
+import {Container} from '../../../common/';
 import DevicesList from '../DevicesList';
 import GCMDialog from './GCMDeviceDialog';
 

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {RaisedButton, FontIcon, Styles} from 'syncano-material-ui';
 
 export default React.createClass({

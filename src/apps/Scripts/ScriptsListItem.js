@@ -6,8 +6,7 @@ import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Truncate} from 'syncano-components';
-import {LinkWrapper} from '../../common';
+import {ColumnList, Truncate, LinkWrapper} from '../../common/';
 
 const Column = ColumnList.Column;
 

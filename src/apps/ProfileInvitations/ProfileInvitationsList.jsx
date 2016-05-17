@@ -8,8 +8,7 @@ import Actions from './ProfileInvitationsActions';
 import Store from './ProfileInvitationsStore';
 
 // Components
-import {ColumnList} from 'syncano-components';
-import {Container, Dialog, Lists} from '../../common';
+import {ColumnList, Container, Dialog, Lists} from '../../common/';
 import ListItem from './ProfileInvitationsListItem';
 
 const Column = ColumnList.Column;

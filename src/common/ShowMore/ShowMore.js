@@ -26,6 +26,5 @@ export default ({routeName, params, style, label = 'SHOW MORE', visible = true})
     );
   }
 
-  // stateless components cant return null
   return <span />;
 };

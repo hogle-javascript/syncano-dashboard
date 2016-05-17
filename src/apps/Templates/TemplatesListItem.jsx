@@ -4,8 +4,7 @@ import _ from 'lodash';
 import Actions from './TemplatesActions';
 
 import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList, Truncate} from 'syncano-components';
-import {LinkWrapper} from '../../common/';
+import {Color, ColumnList, Truncate, LinkWrapper} from '../../common/';
 
 const Column = ColumnList.Column;
 

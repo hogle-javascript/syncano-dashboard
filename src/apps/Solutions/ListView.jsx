@@ -10,8 +10,7 @@ import SessionStore from '../Session/SessionStore';
 
 // Components
 import {Styles, List, ListItem, Divider, RaisedButton} from 'syncano-material-ui';
-import {Container, Loading, Tags, Show, Solutions} from 'syncano-components';
-import {InnerToolbar, Sidebar} from '../../common';
+import {Container, Loading, Tags, Show, Solutions, InnerToolbar, Sidebar} from '../../common/';
 
 import CreateDialog from './CreateDialog';
 import CreateDialogActions from './CreateDialogActions';

@@ -11,7 +11,7 @@ import Store from './CreateDialogStore';
 
 // Components
 import {TextField, Toggle} from 'syncano-material-ui';
-import {Dialog} from '../../common';
+import {Dialog} from '../../common/';
 
 export default React.createClass({
 

@@ -11,8 +11,7 @@ import Store from './ChannelDialogStore';
 
 // Components
 import {TextField, Toggle} from 'syncano-material-ui';
-import {SelectFieldWrapper} from 'syncano-components';
-import {Dialog} from '../../common';
+import {Dialog, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
   displayName: 'ChannelDialog',

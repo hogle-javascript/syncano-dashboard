@@ -11,8 +11,7 @@ import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
 import {RaisedButton} from 'syncano-material-ui';
-import {Container, Show} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {Container, Show, InnerToolbar} from '../../common/';
 
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';

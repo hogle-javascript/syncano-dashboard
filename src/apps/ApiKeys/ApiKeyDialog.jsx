@@ -11,7 +11,7 @@ import Store from './ApiKeyDialogStore';
 
 // Components
 import {Toggle, TextField} from 'syncano-material-ui';
-import {Dialog} from '../../common';
+import {Dialog} from '../../common/';
 
 export default React.createClass({
   displayName: 'ApiKeyDialog',

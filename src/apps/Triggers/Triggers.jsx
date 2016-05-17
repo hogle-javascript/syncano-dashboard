@@ -9,7 +9,7 @@ import Store from './TriggersStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {Container} from '../../common/';
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';

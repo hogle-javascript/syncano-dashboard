@@ -10,8 +10,7 @@ import Store from './ApiKeysStore';
 
 // Components
 import ListItem from './ApiKeysListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 
