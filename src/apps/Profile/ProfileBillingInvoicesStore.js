@@ -1,11 +1,13 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 import Actions from './ProfileActions';
-import {StoreHelpersMixin} from '../../mixins';
+import {StoreHelpersMixin, SnackbarNotificationMixin} from '../../mixins';
+
 
 export default Reflux.createStore({
   listenables: Actions,
 
-  mixins: [StoreHelpersMixin],
+  mixins: [StoreHelpersMixin, SnackbarNotificationMixin],
 
   getInitialState() {
     return {
@@ -14,16 +16,43 @@ export default Reflux.createStore({
     };
   },
 
+  init() {
+    this.data = this.getInitialState();
+  },
+
   onFetchInvoicesCompleted(invoices) {
     console.debug('ProfileBillingInvoicesStore::onFetchInvoicesCompleted');
-    this.trigger({
-      isLoading: false,
-      invoices: this.saveListFromSyncano(invoices)
-    });
+
+    this.data.isLoading = false;
+    this.data.invoices = this.saveListFromSyncano(invoices);
+    this.trigger(this.data);
   },
 
   onFetchInvoicesFailure() {
     console.debug('ProfileBillingInvoicesStore::onFetchInvoicesFailure');
-    this.trigger({isLoading: false});
+
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
+  onRetryPayment(invoice) {
+    this.data.invoices = _.map(this.data.invoices, (_invoice) => {
+      _invoice.actionDisabled = _invoice.id === invoice.id;
+      return _invoice;
+    });
+    this.trigger(this.data);
+  },
+
+  onRetryPaymentCompleted() {
+    Actions.fetchInvoices();
+  },
+
+  onRetryPaymentFailure(message) {
+    this.data.invoices = _.map(this.data.invoices, (invoice) => {
+      invoice.actionDisabled = false;
+      return invoice;
+    });
+    this.setSnackbarNotification({message: message.detail || message});
+    this.trigger(this.data);
   }
 });

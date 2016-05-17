@@ -5,6 +5,7 @@ import _ from 'lodash';
 import Helmet from 'react-helmet';
 
 // Stores & Actions
+import ScriptsActions from '../Scripts/ScriptsActions';
 import Actions from './SocketsActions';
 import Store from './SocketsStore';
 
@@ -41,6 +42,7 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('Sockets::componentDidMount');
+    ScriptsActions.fetch();
     Actions.addSocketsListeners();
     _.debounce(Actions.fetch, 1000)();
 

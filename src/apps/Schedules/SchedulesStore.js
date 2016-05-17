@@ -5,6 +5,7 @@ import {CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../m
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 import Actions from './SchedulesActions';
 
 export default Reflux.createStore({
@@ -27,6 +28,7 @@ export default Reflux.createStore({
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setInstance,
+      ScriptsActions.fetchScripts.completed,
       this.refreshData
     );
     this.setLoadingStates();

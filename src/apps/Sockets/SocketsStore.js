@@ -6,7 +6,8 @@ import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin, CheckListStoreM
 import SessionActions from '../Session/SessionActions';
 import Actions from './SocketsActions';
 import DataActions from '../DataEndpoints/DataEndpointsActions';
-import ScriptsActions from '../ScriptEndpoints/ScriptEndpointsActions';
+import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 import ChannelsActions from '../Channels/ChannelsActions';
@@ -45,9 +46,9 @@ export default Reflux.createStore({
     DataActions.updateDataEndpoint.completed,
     DataActions.updateDataEndpointWithClass.completed,
     DataActions.removeDataEndpoints.completed,
-    ScriptsActions.createScriptEndpoint.completed,
-    ScriptsActions.updateScriptEndpoint.completed,
-    ScriptsActions.removeScriptEndpoints.completed,
+    ScriptEndpointsActions.createScriptEndpoint.completed,
+    ScriptEndpointsActions.updateScriptEndpoint.completed,
+    ScriptEndpointsActions.removeScriptEndpoints.completed,
     TriggersActions.createTrigger.completed,
     TriggersActions.updateTrigger.completed,
     TriggersActions.removeTriggers.completed,
@@ -66,6 +67,7 @@ export default Reflux.createStore({
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setInstance,
+      ScriptsActions.fetchScripts.completed,
       this.refreshData
     );
     this.setLoadingStates();

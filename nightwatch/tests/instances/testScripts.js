@@ -26,9 +26,7 @@ export default {
     const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
 
     // ToDO: Delete client.pause after dissappearing of scripts will be solved
-    client
-      .pause(2000)
-      .url(tempUrl);
+    client.url(tempUrl);
 
     scriptsPage
       .waitForElementVisible('@scriptMenuSelect')

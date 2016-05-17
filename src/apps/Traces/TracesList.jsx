@@ -55,37 +55,42 @@ export default Radium(React.createClass({
   },
 
   renderItem(item) {
-    let duration = item.duration !== null ? item.duration + 'ms' : 'not executed';
     const styles = this.getStyles();
     const status = {
       blocked: {
         background: 'rgba(0,0,0,0.2)',
-        icon: 'alert'
+        icon: 'alert',
+        duration: 'not executed'
       },
       processing: {
         background: Styles.Colors.lightBlue500,
-        icon: 'play'
+        icon: 'play',
+        duration: 'processing'
       },
       pending: {
         background: Styles.Colors.lightBlue500,
-        icon: 'timelapse'
+        icon: 'timelapse',
+        duration: 'pending'
       },
       success: {
         background: Styles.Colors.green400,
-        icon: 'check'
+        icon: 'check',
+        duration: `${item.duration}ms`
       },
       failure: {
         background: Styles.Colors.red400,
-        icon: 'alert'
+        icon: 'alert',
+        duration: `${item.duration}ms`
       },
       timeout: {
         background: Styles.Colors.red400,
-        icon: 'alert'
+        icon: 'alert',
+        duration: `${item.duration}ms`
       }
     }[item.status];
 
-    if (item.status === 'processing') {
-      duration = 'processing';
+    if (item.executed_at && item.duration === null) {
+      status.duration = 'execution problem';
     }
 
     if (item.id === this.state.visibleTraceId) {
@@ -109,7 +114,7 @@ export default Radium(React.createClass({
           checked={item.checked}
           id={item.id}
           zDepth={0}
-          handleClick={this.toggleTrace.bind(null, item.id)}>
+          handleClick={() => this.toggleTrace(item.id)}>
           <Column.CheckIcon
             id={item.id.toString()}
             className="col-flex-1"
@@ -118,7 +123,7 @@ export default Radium(React.createClass({
             checkable={false}
             primaryText={item.status}
             secondaryText={`ID: ${item.id}`}/>
-          <Column.Desc className="col-flex-1">{duration}</Column.Desc>
+          <Column.Desc className="col-flex-1">{status.duration}</Column.Desc>
           <Column.Date
             date={item.executed_at}
             ifInvalid={item.status}/>
@@ -153,8 +158,9 @@ export default Radium(React.createClass({
   },
 
   renderEmptyContent() {
+    const {tracesFor} = this.props;
     const styles = this.getStyles();
-    const tracesFor = {
+    const tracesForConfig = {
       script: {
         name: 'Script',
         icon: 'synicon-package-variant'
@@ -177,8 +183,8 @@ export default Radium(React.createClass({
       <div style={styles.noTracesContainer}>
         <FontIcon
           style={styles.noTracesIcon}
-          className={tracesFor[this.props.tracesFor].icon}/>
-        <p style={styles.noTracesText}>There are no traces for this {tracesFor[this.props.tracesFor].name} yet</p>
+          className={tracesForConfig[tracesFor].icon}/>
+        <p style={styles.noTracesText}>There are no traces for this {tracesForConfig[tracesFor].name} yet</p>
       </div>
     );
   },
