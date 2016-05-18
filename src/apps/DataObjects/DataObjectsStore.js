@@ -1,6 +1,5 @@
 import Reflux from 'reflux';
 import URI from 'urijs';
-
 // Utils & Mixins
 import {CheckListStoreMixin, StoreFormMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../mixins';
 import DataObjectsRenderer from './DataObjectsRenderer';
@@ -181,22 +180,17 @@ export default Reflux.createStore({
     return column;
   },
 
-  setDataObjects(items) {
+  setDataObjects(items, rawData) {
     console.debug('DataObjectsStore::setDataObjects');
 
-    this.data.hasNextPage = items.hasNextPage();
-    this.data.nextParams = new URI(items.next() || '').search(true);
-    this.data.prevParams = new URI(items.prev() || '').search(true);
+    this.data.hasNextPage = items.hasNext();
 
     if (!this.data.items) {
       this.data.items = [];
     }
 
-    let newItems = [];
-
-    Object.keys(items).map((key) => newItems.splice(0, 0, items[key]));
-
-    this.data.items = this.data.items.concat(newItems);
+    this.data.items = this.data.items.concat(items);
+    this.data.nextParams = new URI(rawData.next || '').search(true);
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -272,15 +266,15 @@ export default Reflux.createStore({
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjectsCompleted(items) {
+  onFetchDataObjectsCompleted(items, rawData) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
     this.data.items = [];
-    DataObjectsActions.setDataObjects(items);
+    DataObjectsActions.setDataObjects(items, rawData);
   },
 
-  onSubFetchDataObjectsCompleted(items) {
+  onSubFetchDataObjectsCompleted(items, rawData) {
     console.debug('DataObjectsStore::onSubFetchDataObjectsCompleted');
-    DataObjectsActions.setDataObjects(items);
+    DataObjectsActions.setDataObjects(items, rawData);
   },
 
   onCreateDataObjectCompleted() {
