@@ -5,9 +5,7 @@ import NewLibConnection from './NewLibConnection';
 import _ from 'lodash';
 
 import SessionActions from './SessionActions';
-
 import Colors from 'syncano-material-ui/lib/styles/colors';
-import {SyncanoTheme} from 'syncano-components';
 
 export default Reflux.createStore({
   listenables: SessionActions,
@@ -202,9 +200,6 @@ export default Reflux.createStore({
 
   removeInstance() {
     this.instance = null;
-    if (this.theme) {
-      this.theme.setTheme(SyncanoTheme);
-    }
   },
 
   removeSignUpMode() {

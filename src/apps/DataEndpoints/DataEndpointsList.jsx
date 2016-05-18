@@ -10,8 +10,7 @@ import Store from './DataEndpointsStore';
 
 // Components
 import ListItem from './DataEndpointsListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 

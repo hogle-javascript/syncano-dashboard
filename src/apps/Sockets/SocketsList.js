@@ -9,8 +9,7 @@ import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
 import TriggersList from '../Triggers/TriggersList';
 import SchedulesList from '../Schedules/SchedulesList';
 import ChannelsList from '../Channels/ChannelsList';
-import {Show} from 'syncano-components';
-import {ShowMore} from '../../common';
+import {Show, ShowMore} from '../../common/';
 
 const SocketsList = ({sockets, handleTitleClick, visibleItems = 3}, context) => {
   const router = context.router;

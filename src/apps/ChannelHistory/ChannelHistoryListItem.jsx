@@ -4,7 +4,7 @@ import Radium from 'radium';
 import _ from 'lodash';
 
 import {Paper} from 'syncano-material-ui';
-import {ColumnList, Color} from 'syncano-components';
+import {ColumnList, Color} from '../../common/';
 
 let Column = ColumnList.Column;
 

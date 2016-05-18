@@ -3,8 +3,7 @@ import Radium from 'radium';
 
 import ListItem from './ChannelHistoryListItem';
 import {FontIcon} from 'syncano-material-ui';
-import {ColumnList, Loading} from 'syncano-components';
-import {Lists} from '../../common';
+import {ColumnList, Loading, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 

@@ -6,7 +6,7 @@ import SessionStore from '../apps/Session/SessionStore';
 import SessionActions from '../apps/Session/SessionActions';
 import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 
-import {Sidebar} from '../common';
+import {Sidebar} from '../common/';
 import HeaderInstancesDropdown from '../common/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {InnerToolbar} from '../../common';
+import {InnerToolbar} from '../../common/';
 import SocketsDropdown from './SocketsDropdown';
 
 export default ({empty = false, children}) => (

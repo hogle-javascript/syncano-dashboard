@@ -3,7 +3,7 @@ import {State, Navigation} from 'react-router';
 
 // Components
 import {MenuItem, Styles} from 'syncano-material-ui';
-import {Color, ColumnList} from 'syncano-components';
+import {Color, ColumnList} from '../../common/';
 
 let Column = ColumnList.Column;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Show} from 'syncano-components';
+import {Show} from '../../common/';
 
 export default React.createClass({
   displayName: 'Limits',

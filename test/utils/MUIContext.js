@@ -1,6 +1,6 @@
 var React        = require('react'),
     ThemeManager = require('syncano-material-ui/lib/styles/theme-manager'),
-    SyncanoComponents = require('syncano-components');
+    SyncanoTheme = require('../common/SyncanoTheme');
 
 var MUIContext = function MUIContext(Component, props) {
   return React.createClass({
@@ -11,7 +11,7 @@ var MUIContext = function MUIContext(Component, props) {
 
     getChildContext: function() {
       return {
-        muiTheme: ThemeManager.getMuiTheme(SyncanoComponents.SyncanoTheme)
+        muiTheme: ThemeManager.getMuiTheme(SyncanoTheme)
       };
     },
 

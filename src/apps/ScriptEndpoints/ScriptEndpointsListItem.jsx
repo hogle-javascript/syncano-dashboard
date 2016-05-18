@@ -7,7 +7,7 @@ import Actions from './ScriptEndpointsActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
 import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList, Clipboard} from 'syncano-components';
+import {Color, ColumnList, Clipboard} from '../../common/';
 
 const Column = ColumnList.Column;
 
