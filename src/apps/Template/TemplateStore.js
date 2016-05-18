@@ -37,7 +37,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('TemplateStore::refreshData');
-    Actions.fetchTemplate(SessionStore.getRouter().getCurrentParams().templateName);
+    Actions.fetchTemplate(SessionStore.getParams().templateName);
   },
 
   getTemplate() {

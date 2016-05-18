@@ -34,6 +34,7 @@ export default {
     solutionsPage
       .navigate()
       .waitForElementVisible('@tagsList')
+      .clickElement('@allSolutions')
       .clickElement('@tagsListJs')
       .waitForElementVisible('@tagsJs');
 

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import {Link, State} from 'react-router';
+import {Link} from 'react-router';
 import Reflux from 'reflux';
 
 import Store from './DataEndpointSummaryDialogStore';
@@ -14,14 +14,18 @@ import {Card, CardTitle, CardText, RaisedButton, Styles} from 'syncano-material-
 export default React.createClass({
   displayName: 'DataEndpointSummaryDialog',
 
+  contextTypes: {
+    params: React.PropTypes.object
+  },  
+
   mixins: [
     Reflux.connect(Store),
     Reflux.connect(DataEndpointsStore, 'dataEndpoints'),
-    DialogMixin,
-    State
+    DialogMixin
   ],
 
   render() {
+    const {params} = this.context;
     const {open, dataEndpoints} = this.state;
     const item = DataEndpointsStore.data.items[0];
     const token = SessionStore.getToken();
@@ -63,8 +67,10 @@ export default React.createClass({
                   You have chosen to use class "{item.class}", but it does not contain any custom fields in the class
                   schema. To use the full power of Data Endpoints, we suggest
                   <Link
-                    to="classEdit"
-                    params={{...this.getParams(), className: item.class, action: 'edit'}}
+                    to={{
+                      name: 'classEdit',
+                      params: {...params, className: item.class, action: 'edit'}
+                    }}
                     style={{fontWeight: 700}}>
                     {` clicking here to add custom fields for your data objects.`}
                   </Link>

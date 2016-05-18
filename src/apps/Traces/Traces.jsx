@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import Radium from 'radium';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
@@ -16,7 +16,7 @@ import {Container, InnerToolbar} from '../../common/';
 import TracesList from './TracesList';
 
 
-export default Radium(React.createClass({
+const Traces = Radium(React.createClass({
   displayName: 'Traces',
 
   propTypes: {
@@ -24,12 +24,11 @@ export default Radium(React.createClass({
     objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
   },
 
-  mixins: [
-    Router.Navigation,
-    Router.State,
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   getDefaultProps() {
     return {
@@ -40,7 +39,9 @@ export default Radium(React.createClass({
   },
 
   componentDidMount() {
-    Actions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
+    const {objectId, tracesFor} = this.props;
+
+    Actions.setCurrentObjectId(objectId, tracesFor);
   },
 
   getStyles() {
@@ -97,14 +98,17 @@ export default Radium(React.createClass({
   },
 
   handleBackClick() {
+    const {params} = this.context;
+    const {router} = this.props;
     const config = this.getConfig();
 
-    this.transitionTo(config.route, this.getParams());
+    router.push({name: config.route, params});
   },
 
   render() {
+    const {params} = this.context;
     const {items, isLoading} = this.state;
-    const {tracesFor} = this.props;
+    const {tracesFor, router} = this.props;
     const styles = this.getStyles();
     const config = this.getConfig();
     const toolbarTitleText = this.getToolbarTitleText();
@@ -116,7 +120,10 @@ export default Radium(React.createClass({
           title={toolbarTitleText}
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}/>
-        <div style={[styles.list, this.isActive('script-traces') && styles.scriptsList]}>
+        <div style={[
+          styles.list,
+          router.isActive({name: 'scriptEndpoint-traces', params}, true) && styles.scriptsList
+        ]}>
           <Container>
             <TracesList
               isLoading={isLoading}
@@ -129,3 +136,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default withRouter(Traces);

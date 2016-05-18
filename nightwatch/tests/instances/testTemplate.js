@@ -56,17 +56,17 @@ export default {
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@deleteTitleHeading')
       .verify.containsText('@firstItemRowName', 'objects_csv');
-  },
-  'Test Admin Selects/Deselects Template': (client) => {
-    const listsPage = client.page.listsPage();
-
-    listsPage
-      .goToUrl('temp', 'templates')
-      .waitForElementVisible('@firstItemCheckbox')
-      .moveToElement('@firstItemCheckbox', 0, 0)
-      .clickElement('@highlightedCheckbox')
-      .waitForElementVisible('@selectedItem')
-      .clickElement('@selectedItem')
-      .waitForElementVisible('@firstItemCheckbox');
   }
+  // 'Test Admin Selects/Deselects Template': (client) => {
+  //   const listsPage = client.page.listsPage();
+  //
+  //   listsPage
+  //     .goToUrl('temp', 'templates')
+  //     .waitForElementVisible('@firstItemCheckbox');
+  //     .moveToElement('@firstItemCheckbox', 0, 0)
+  //     .clickElement('@highlightedCheckbox')
+  //     .waitForElementVisible('@selectedItem')
+  //     .clickElement('@selectedItem')
+  //     .waitForElementVisible('@firstItemCheckbox');
+  // }
 };

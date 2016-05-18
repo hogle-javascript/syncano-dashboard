@@ -43,7 +43,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('SolutionsEditStore::refreshData');
-    let solutionId = SessionStore.router.getCurrentParams().solutionId;
+    const {solutionId} = SessionStore.getParams();
 
     Promise.all([
       Actions.fetchSolution(solutionId),

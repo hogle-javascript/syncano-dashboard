@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import {Navigation, State, Link} from 'react-router';
+import {withRouter, Link} from 'react-router';
 import Gravatar from 'gravatar';
 
 // Stores & Actions
@@ -17,18 +17,15 @@ import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
 import './Header.sass';
 
-export default Radium(React.createClass({
+const Header = Radium(React.createClass({
   displayName: 'Header',
 
   contextTypes: {
-    router: React.PropTypes.func.isRequired,
     muiTheme: React.PropTypes.object
   },
 
   mixins: [
     Reflux.connect(InstancesStore),
-    Navigation,
-    State,
     Utils.Styles
   ],
 
@@ -69,6 +66,7 @@ export default Radium(React.createClass({
   },
 
   getDropdownItems() {
+    const {router} = this.props;
     let styles = this.getStyles();
     let user = SessionStore.getUser() || '';
     let billingIcon = <FontIcon className="synicon-credit-card"/>;
@@ -87,16 +85,16 @@ export default Radium(React.createClass({
       <List>
         <ListItem
           leftAvatar={this.renderIconButton()}
-          onTouchTap={() => this.transitionTo('profile-settings')}
+          onTouchTap={() => router.push('profile-settings')}
           primaryText={`${user.first_name} ${user.last_name}`}
           secondaryText={user.email}/>
         <Divider/>
         <ListItem
-          onTouchTap={() => this.transitionTo('instances')}
+          onTouchTap={() => router.push('instances')}
           leftIcon={instancesListIcon}
           primaryText="Instances list"/>
         <ListItem
-          onTouchTap={() => this.transitionTo('profile-billing-plan')}
+          onTouchTap={() => router.push('profile-billing-plan')}
           leftIcon={billingIcon}
           primaryText="Billing"/>
         <ListItem
@@ -199,3 +197,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default withRouter(Header);

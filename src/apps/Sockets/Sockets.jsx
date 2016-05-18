@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
@@ -32,9 +31,6 @@ export default React.createClass({
   displayName: 'Sockets',
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store, 'sockets'),
     DialogsMixin
   ],
@@ -45,8 +41,11 @@ export default React.createClass({
     Actions.addSocketsListeners();
     _.debounce(Actions.fetch, 1000)();
 
-    if (this.refs.prolongDialog && this.getQuery().showProlongDialog) {
-      this.refs.prolongDialog.show();
+    const {prolongDialog} = this.refs;
+    const {showProlongDialog} = this.props.location.query;
+
+    if (prolongDialog && showProlongDialog) {
+      prolongDialog.show();
     }
   },
 
@@ -64,7 +63,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const params = this.getParams();
+    const {instanceName} = this.props.params;
 
     return [{
       dialog: Dialog.Delete,
@@ -73,7 +72,7 @@ export default React.createClass({
         key: 'prolongDialog',
         ref: 'prolongDialog',
         title: 'Prolong instance lifetime',
-        children: `You've canceled the deletion of your instance ${params.instanceName}.
+        children: `You've canceled the deletion of your instance ${instanceName}.
         Close this dialog to continue working with your instance.`,
         actions: (
           <FlatButton
@@ -89,6 +88,7 @@ export default React.createClass({
 
   renderLists() {
     const {sockets} = this.state;
+    const {params} = this.props;
 
     if (!sockets.hasAnyItem && !sockets.isLoading) {
       return (
@@ -100,11 +100,10 @@ export default React.createClass({
       <div style={{clear: 'both', height: '100%'}}>
         <Loading show={sockets.isLoading}>
           <SocketsList sockets={sockets}/>
-
           <Show if={this.getPushNotificationItems().length}>
             <PushNotifications.List
               name="Push Notification Sockets (BETA)"
-              handleTitleClick={() => this.transitionTo('push-notification-config', this.getParams())}
+              handleTitleClick={() => this.props.history.push({pathName: 'push-notification-config', params})}
               items={this.getPushNotificationItems()}/>
           </Show>
         </Loading>

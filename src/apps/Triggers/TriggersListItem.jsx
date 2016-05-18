@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, State} from 'react-router';
+import {Link} from 'react-router';
 
 import {DialogsMixin} from '../../mixins';
 
@@ -20,16 +20,17 @@ export default React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [
-    State,
-    DialogsMixin
-  ],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
+  mixins: [DialogsMixin],
 
   render() {
+    const {instanceName} = this.context.params;
     const {item, onIconClick, showDeleteDialog} = this.props;
     const script = ScriptsStore.getScriptById(item.script);
     const scriptLabel = script ? script.label : '';
-    const instanceName = this.getParams().instanceName;
     const itemClass = ClassesStore.getClassByName(item.class);
 
     return (
@@ -49,19 +50,24 @@ export default React.createClass({
             dataObjects={itemClass ? itemClass.objects_count : null} />
         </Column.Desc>
         <Column.Desc className="col-flex-1">
-          <Link to="script" params={{
-            instanceName,
-            scriptId: item.script
+          <Link to={{
+            name: 'script',
+            params: {
+              instanceName,
+              scriptId: item.script
+            }
           }}>
             {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link
-            to="trigger-traces"
-            params={{
-              instanceName,
-              triggerId: item.id
+            to={{
+              name: 'trigger-traces',
+              params: {
+                instanceName,
+                triggerId: item.id
+              }
             }}>
             Traces
           </Link>

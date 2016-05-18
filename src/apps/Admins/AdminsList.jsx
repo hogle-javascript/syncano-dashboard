@@ -1,6 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
-
 import Actions from './AdminsActions';
 import Store from './AdminsStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
@@ -17,11 +15,7 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'AdminsList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('Admins::componentWillUpdate');

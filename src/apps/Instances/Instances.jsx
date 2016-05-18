@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {withRouter} from 'react-router';
 import Helmet from 'react-helmet';
 
 // Stores and Actions
@@ -20,21 +20,13 @@ import InstanceDialog from './InstanceDialog';
 
 import './Instances.sass';
 
-export default React.createClass({
+const Instances = React.createClass({
   displayName: 'Instances',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
     console.info('Instances::componentDidMount');
-    if (this.getParams().action === 'add') {
-      this.showDialog('addInstanceDialog');
-    }
     Actions.fetch();
   },
 
@@ -43,12 +35,14 @@ export default React.createClass({
   },
 
   transitionToFirstInstance() {
+    const {router} = this.props;
     const {myInstances} = this.state;
     const firstInstance = myInstances.length ? myInstances[0].name : null;
 
     if (firstInstance) {
-      this.transitionTo('instance', {instanceName: firstInstance});
+      router.push({name: 'instance', instanceName: firstInstance});
     }
+
     SessionStore.hideWelcomeDialog();
   },
 
@@ -102,3 +96,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(Instances);

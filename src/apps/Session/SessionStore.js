@@ -17,6 +17,9 @@ export default Reflux.createStore({
     this.user = null;
     this.instance = null;
     this.router = null;
+    this.params = null;
+    this.location = null;
+    this.routes = null;
     this.theme = null;
     this.signUpMode = null;
     this.isWelcomeDialogVisible = false;
@@ -48,6 +51,18 @@ export default Reflux.createStore({
 
   getRouter(empty) {
     return this.router || empty || null;
+  },
+
+  getParams(empty) {
+    return this.params || empty || null;
+  },
+
+  getLocation(empty) {
+    return this.location || empty || null;
+  },
+
+  getRoutes(empty) {
+    return this.routes || empty || null;
   },
 
   getSignUpMode() {
@@ -157,6 +172,21 @@ export default Reflux.createStore({
   setRouter(router) {
     console.info('SessionStore::setRouter');
     this.router = router;
+  },
+
+  setParams(params) {
+    console.info('SessionStore::setParams');
+    this.params = params;
+  },
+
+  setLocation(location) {
+    console.info('SessionStore::setLocation');
+    this.location = location;
+  },
+
+  setRoutes(routes) {
+    console.info('SessionStore::setRoutes');
+    this.routes = routes;
   },
 
   setSignUpMode() {

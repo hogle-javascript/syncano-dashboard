@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -14,14 +13,9 @@ import {ColumnList, Dialog, Lists} from '../../common/';
 const Column = ColumnList.Column;
 
 export default React.createClass({
-
   displayName: 'TemplatesList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('TemplatesList::componentWillUpdate');

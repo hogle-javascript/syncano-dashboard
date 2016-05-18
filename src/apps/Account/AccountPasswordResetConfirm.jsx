@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 // Utils
 import {FormMixin} from '../../mixins';
@@ -14,12 +13,14 @@ import {TextField, RaisedButton} from 'syncano-material-ui';
 import AccountContainer from './AccountContainer';
 
 export default React.createClass({
-
   displayName: 'AccountPasswordResetConfirm',
+
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
   mixins: [
     Reflux.connect(Store),
-    Router.State,
     FormMixin
   ],
 
@@ -34,12 +35,13 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    let params = this.getParams();
+    const {uid, token} = this.context.params;
+    const {password} = this.state;
 
     Actions.passwordResetConfirm({
-      new_password: this.state.password,
-      uid: params.uid,
-      token: params.token
+      new_password: password,
+      uid,
+      token
     });
   },
 

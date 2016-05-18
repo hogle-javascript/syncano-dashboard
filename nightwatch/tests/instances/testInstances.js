@@ -52,15 +52,15 @@ export default {
     client.getText('xpath', dropdown, (text) => {
       client.assert.equal(text.value, instanceNames[0]);
     });
-  },
-  'Test Select and Delete multiple Instances': (client) => {
-    const instancesPage = client.page.instancesPage();
-
-    instancesPage
-      .navigate()
-      .clickListItemDropdown('@instancesDropdown', 'Select')
-      .clickListItemDropdown('@instancesDropdown', 'Delete')
-      .clickElement('@confirmDeleteButton')
-      .waitForElementNotPresent('@deleteInstanceModalTitle');
   }
+  // 'Test Select and Delete multiple Instances': (client) => {
+  //   const instancesPage = client.page.instancesPage();
+  //
+  //   instancesPage
+  //     .navigate()
+  //     .clickListItemDropdown('@instancesDropdown', 'Select')
+  //     .clickListItemDropdown('@instancesDropdown', 'Delete')
+  //     .clickElement('@confirmDeleteButton')
+  //     .waitForElementNotPresent('@deleteInstanceModalTitle');
+  // }
 };

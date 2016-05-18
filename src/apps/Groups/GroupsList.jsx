@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
 import Radium from 'radium';
 
 import Actions from './GroupsActions';
@@ -17,11 +16,7 @@ const Column = ColumnList.Column;
 export default Radium(React.createClass({
   displayName: 'GroupsList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('Users::componentWillUpdate');

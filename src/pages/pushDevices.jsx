@@ -1,5 +1,5 @@
 import React from 'react';
-import {RouteHandler, State} from 'react-router';
+import {withRouter} from 'react-router';
 import Helmet from 'react-helmet';
 
 import APNSDevicesActions from '../../src/apps/PushDevices/APNSDevices/APNSDevicesActions';
@@ -9,10 +9,13 @@ import {ListItem, FontIcon, RaisedButton, Styles} from 'syncano-material-ui';
 import {Popover} from '../common/';
 import {InnerToolbar} from '../common/';
 
-export default React.createClass({
+const PushDevicesPage = React.createClass({
   displayName: 'PushDevicesPage',
 
-  mixins: [State],
+  contextTypes: {
+    params: React.PropTypes.object,
+    routes: React.PropTypes.array
+  },
 
   handleAddDevice(type) {
     const addDevice = {
@@ -25,14 +28,18 @@ export default React.createClass({
   },
 
   handleTouchTapAddIcon(event) {
-    if (this.isActive('all-push-notification-devices') && this.refs.addDevicePopover) {
+    const {params, routes} = this.context;
+    const {router} = this.props;
+
+    if (router.isActive({name: 'all-push-notification-devices', params}, true) && this.refs.addDevicePopover) {
       this.refs.addDevicePopover.toggle(event);
     } else {
-      this.handleAddDevice(this.getRoutes()[this.getRoutes().length - 1].name);
+      this.handleAddDevice(routes[routes.length - 1].name);
     }
   },
 
   render() {
+    const {children} = this.props;
     const title = 'Push Notification Devices (BETA)';
 
     return (
@@ -64,8 +71,10 @@ export default React.createClass({
               primaryText="iOS Device"/>
           </Popover>
         </InnerToolbar>
-        <RouteHandler />
+        {children}
       </div>
     );
   }
 });
+
+export default withRouter(PushDevicesPage);

@@ -1,15 +1,15 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
+import {withRouter} from 'react-router';
 import ListItem from './ListItem';
 import {Styles, Utils} from 'syncano-material-ui';
 
-export default React.createClass({
+const LinkListItem = React.createClass({
   displayName: 'LinkListItem',
 
-  mixins: [
-    State,
-    Navigation
-  ],
+  contextTypes: {
+    location: React.PropTypes.object,
+    params: React.PropTypes.object
+  },
 
   getStyles() {
     return {
@@ -19,19 +19,26 @@ export default React.createClass({
     };
   },
 
-  getMenuItemHref(route) {
-    return this.makeHref(route, this.getParams());
+  getMenuItemHref(pathName) {
+    const {params} = this.context;
+    const {router} = this.props;
+
+    return router.createHref({name: pathName, params});
   },
 
-  handleTouchTap(routeName, event) {
+  handleTouchTap(pathName, event) {
+    const {params} = this.context;
+    const {router} = this.props;
+
     event.preventDefault();
-    this.transitionTo(routeName, this.getParams());
+    router.push({name: pathName, params});
   },
 
   render() {
     const styles = this.getStyles();
-    const {routeName, style, ...other} = this.props;
-    const isActive = this.isActive(routeName, this.getParams());
+    const {routeName, style, router, ...other} = this.props;
+    const {params} = this.context;
+    const isActive = router.isActive({name: routeName, params}, true);
 
     return (
       <ListItem
@@ -43,3 +50,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(LinkListItem);

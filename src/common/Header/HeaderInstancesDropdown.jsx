@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import Radium from 'radium';
 
 import SessionActions from '../../apps/Session/SessionActions';
@@ -12,19 +12,16 @@ import InstanceDialogActions from '../../apps/Instances/InstanceDialogActions';
 import {FontIcon, List, ListItem, IconMenu, Utils} from 'syncano-material-ui';
 import {ColumnList, Color, Show} from '../../common/';
 
-export default Radium(React.createClass({
+const HeaderInstancesDropdown = Radium(React.createClass({
   displayName: 'HeaderInstancesDropdown',
 
   contextTypes: {
-    router: React.PropTypes.func.isRequired,
     muiTheme: React.PropTypes.object
   },
 
   mixins: [
     Reflux.connect(InstancesStore),
     Reflux.connectFilter(SessionStore, 'currentInstance', (sessionData) => sessionData.instance),
-    Router.Navigation,
-    Router.State,
     Utils.Styles
   ],
 
@@ -110,11 +107,13 @@ export default Radium(React.createClass({
   },
 
   handleDropdownItemClick(instanceName) {
+    const {router} = this.props;
+
     // Redirect to main instance screen
     this.refs.instancesDropdown.close();
     SessionActions.fetchInstance(instanceName);
     localStorage.setItem('lastInstance', instanceName);
-    this.transitionTo('instance', {instanceName});
+    router.push({name: 'instance', params: {instanceName}});
   },
 
   renderAddInstanceItem() {
@@ -228,3 +227,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default withRouter(HeaderInstancesDropdown);

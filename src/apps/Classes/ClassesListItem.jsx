@@ -1,7 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import {Link, State} from 'react-router';
-import _ from 'lodash';
+import {Link} from 'react-router';
 
 import {DialogsMixin} from '../../mixins';
 
@@ -20,12 +19,14 @@ export default Radium(React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [
-    State,
-    DialogsMixin
-  ],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
+  mixins: [DialogsMixin],
 
   render() {
+    const {params} = this.context;
     const {item, onIconClick, showDeleteDialog} = this.props;
     const metadata = item.metadata;
 
@@ -43,8 +44,10 @@ export default Radium(React.createClass({
           handleIconClick={onIconClick}
           primaryText={
             <LinkWrapper
-              to="classes-data-objects"
-              params={_.merge({}, this.getParams(), {className: item.name})}>
+              to={{
+                name: 'classes-data-objects',
+                params: {...params, className: item.name}
+              }}>
               <Truncate text={item.name}/>
             </LinkWrapper>
           }
@@ -56,9 +59,9 @@ export default Radium(React.createClass({
         </Column.Desc>
         <Column.ID className="col-flex-1">
           <Link
-            to="users"
-            params={{
-              instanceName: this.getParams().instanceName
+            to={{
+              name: 'users',
+              params
             }}>
             {item.group}
           </Link>

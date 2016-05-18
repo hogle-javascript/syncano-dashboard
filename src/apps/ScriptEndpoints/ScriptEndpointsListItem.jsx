@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, State} from 'react-router';
+import {Link} from 'react-router';
 
 import {SnackbarNotificationMixin} from '../../mixins';
 
@@ -19,12 +19,14 @@ export default React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [
-    State,
-    SnackbarNotificationMixin
-  ],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
+  mixins: [SnackbarNotificationMixin],
 
   render() {
+    const {instanceName} = this.context.params;
     const {item, onIconClick, showDeleteDialog} = this.props;
     const publicString = item.public.toString();
     const link = item.public ? item.links['public-link'] : item.links.self;
@@ -60,20 +62,24 @@ export default React.createClass({
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link
-            to="script"
-            params={{
-              instanceName: this.getParams().instanceName,
-              scriptId: item.script
+            to={{
+              name: 'script',
+              params: {
+                instanceName,
+                scriptId: item.script
+              }
             }}>
             {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link
-            to="scriptEndpoint-traces"
-            params={{
-              instanceName: this.getParams().instanceName,
-              scriptEndpointName: item.name
+            to={{
+              name: 'scriptEndpoint-traces',
+              params: {
+                instanceName,
+                scriptEndpointName: item.name
+              }
             }}>
             Traces
           </Link>

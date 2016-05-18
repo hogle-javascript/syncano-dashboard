@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -17,11 +16,7 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'SharedInstancesList',
 
-  mixins: [
-    State,
-    Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   handleCheckInstance(checkId, value) {
     Actions.uncheckAll('myInstances');

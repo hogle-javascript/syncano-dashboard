@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import Radium from 'radium';
 
 // Utils
@@ -14,13 +14,10 @@ import Actions from './AddVersionViewActions';
 import {Checkbox, FlatButton, RaisedButton} from 'syncano-material-ui';
 import {Container, Loading, SelectFieldWrapper, InnerToolbar} from '../../common/';
 
-export default Radium(React.createClass({
+const AddVersionView = Radium(React.createClass({
   displayName: 'AddVersionView',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-
     FormMixin,
     Reflux.connect(Store)
   ],
@@ -73,7 +70,10 @@ export default Radium(React.createClass({
   },
 
   handleBackClick() {
-    this.transitionTo('solutions-edit', this.getParams());
+    const {params} = this.context;
+    const {router} = this.props;
+
+    router.push({name: 'solutions-edit', params});
   },
 
   handleEditSubmit() {
@@ -97,7 +97,9 @@ export default Radium(React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createVersion(this.getParams().solutionId, this.prepareVersionData());
+    const {solutionId} = this.context.params;
+
+    Actions.createVersion(solutionId, this.prepareVersionData());
   },
 
   handleOnCheck(name, type, event, status) {
@@ -221,7 +223,8 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const {solutionId} = this.context.params;
+    const styles = this.getStyles();
 
     return (
       <form
@@ -230,7 +233,7 @@ export default Radium(React.createClass({
         method="post">
 
         <InnerToolbar
-          title={`Solution: ${this.getParams().solutionId}`}
+          title={`Solution: ${solutionId}`}
           backFallback={this.handleBackClick}/>
 
         <Container style={{width: '80%', margin: '65px auto', maxWidth: 800}}>
@@ -293,3 +296,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default withRouter(AddVersionView);
