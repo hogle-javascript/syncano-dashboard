@@ -6,7 +6,7 @@ import Actions from './FullBackupsActions';
 import Store from './FullBackupsStore';
 
 import ListItem from './FullBackupsListItem';
-import {ColumnList} from 'syncano-components';
+import {ColumnList} from '../../../common';
 import {Lists, Dialog} from '../../../common';
 
 const Column = ColumnList.Column;
@@ -74,6 +74,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent="Create Full Backup"
           checkItem={this.checkItem}
           key="full-backups-list"
           renderItem={this.renderItem}/>

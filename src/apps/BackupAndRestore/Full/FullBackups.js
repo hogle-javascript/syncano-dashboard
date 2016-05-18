@@ -5,7 +5,7 @@ import Actions from './FullBackupsActions';
 import Store from './FullBackupsStore';
 
 import FullBackupsList from './FullBackupsList';
-import {Container} from 'syncano-components';
+import {Container} from '../../../common';
 
 export default React.createClass({
   displayName: 'FullBackups',

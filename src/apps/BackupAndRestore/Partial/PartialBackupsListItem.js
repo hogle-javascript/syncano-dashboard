@@ -2,7 +2,7 @@ import React from 'react';
 import Filesize from 'filesize';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
+import {ColumnList, Color, Truncate} from '../../../common';
 
 const Column = ColumnList.Column;
 

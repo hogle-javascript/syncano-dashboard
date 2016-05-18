@@ -6,8 +6,7 @@ import Actions from './PartialBackupsActions';
 import Store from './PartialBackupsStore';
 
 import ListItem from './PartialBackupsListItem';
-import {ColumnList} from 'syncano-components';
-import {Lists, Dialog} from '../../../common';
+import {ColumnList, Lists, Dialog} from '../../../common';
 
 const Column = ColumnList.Column;
 
@@ -74,6 +73,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          emptyItemContent='Create Partial Backup'
           checkItem={this.checkItem}
           key="partial-backups-list"
           renderItem={this.renderItem}/>

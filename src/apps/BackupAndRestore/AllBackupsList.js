@@ -8,7 +8,7 @@ import PartialBackupsActions from './Partial/PartialBackupsActions';
 
 import FullBackupsList from './Full/FullBackupsList';
 import PartialBackupsList from './Partial/PartialBackupsList';
-import {Container} from 'syncano-components';
+import {Container} from '../../common';
 
 export default React.createClass({
   displayName: 'AllBackups',
