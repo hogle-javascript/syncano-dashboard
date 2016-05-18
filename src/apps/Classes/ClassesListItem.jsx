@@ -8,8 +8,7 @@ import {DialogsMixin} from '../../mixins';
 import Actions from './ClassesActions';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
-import {DataObjectsAmount, LinkWrapper} from '../../common';
+import {ColumnList, Color, Truncate, DataObjectsAmount, LinkWrapper} from '../../common/';
 
 const Column = ColumnList.Column;
 

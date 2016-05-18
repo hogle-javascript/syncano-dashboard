@@ -9,8 +9,7 @@ import Store from './ScriptEndpointsStore';
 
 // Components
 import ListItem from './ScriptEndpointsListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 

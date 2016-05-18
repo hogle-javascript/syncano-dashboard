@@ -9,7 +9,7 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
+import {ColumnList, Color, Truncate} from '../../common/';
 
 let Column = ColumnList.Column;
 

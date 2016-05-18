@@ -10,8 +10,7 @@ import Store from './InstancesStore';
 import SessionStore from '../Session/SessionStore';
 
 import ListItem from './InstancesListItem';
-import {Loading, ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {Loading, ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 

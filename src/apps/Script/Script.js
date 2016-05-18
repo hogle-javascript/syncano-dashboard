@@ -11,8 +11,7 @@ import Store from './ScriptStore';
 import Actions from './ScriptActions';
 
 import {RaisedButton, FontIcon, Checkbox, FlatButton, TextField, IconButton} from 'syncano-material-ui';
-import {Loading, Show, TogglePanel, SelectFieldWrapper} from 'syncano-components';
-import {Dialog, InnerToolbar, Editor, Notification} from '../../common';
+import {Loading, Show, TogglePanel, SelectFieldWrapper, Dialog, InnerToolbar, Editor, Notification} from '../../common';
 import Traces from '../Traces';
 
 export default React.createClass({

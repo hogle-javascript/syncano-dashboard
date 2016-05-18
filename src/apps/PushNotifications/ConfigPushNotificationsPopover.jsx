@@ -6,7 +6,7 @@ import APNSActions from './APNS/APNSPushNotificationsActions';
 import APNSStore from './APNS/APNSPushNotificationsStore';
 
 import {FontIcon, ListItem, Styles} from 'syncano-material-ui';
-import {Popover} from '../../common';
+import {Popover} from '../../common/';
 
 export default React.createClass({
   displayName: 'ConfigPushNotificationsPopover',

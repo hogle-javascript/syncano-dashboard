@@ -5,7 +5,7 @@ import Actions from './SchedulesActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
 import {MenuItem, Styles} from 'syncano-material-ui';
-import {ColumnList} from 'syncano-components';
+import {ColumnList} from '../../common/';
 
 let Column = ColumnList.Column;
 

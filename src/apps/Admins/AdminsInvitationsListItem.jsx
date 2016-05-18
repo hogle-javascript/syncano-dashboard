@@ -3,7 +3,7 @@ import React from 'react';
 import {DialogsMixin} from '../../mixins';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from 'syncano-components';
+import {ColumnList, Color} from '../../common/';
 
 export default React.createClass({
   displayName: 'AdminsInvitationsListItem',

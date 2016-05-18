@@ -11,8 +11,7 @@ import Store from './TemplateStore';
 import Actions from './TemplateActions';
 
 import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
-import {Show, Loading, TogglePanel, Truncate} from 'syncano-components';
-import {InnerToolbar, Editor} from '../../common';
+import {InnerToolbar, Editor, Show, Loading, TogglePanel, Truncate} from '../../common/';
 
 export default React.createClass({
   displayName: 'Template',

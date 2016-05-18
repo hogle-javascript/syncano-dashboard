@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {MenuItem, Divider, FontIcon, Styles} from 'syncano-material-ui';
 import StandardButtons from '../Dialog/DialogStandardButtons';
 

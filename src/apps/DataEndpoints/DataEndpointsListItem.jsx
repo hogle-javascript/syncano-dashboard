@@ -4,7 +4,7 @@ import Actions from './DataEndpointsActions';
 import {SnackbarNotificationMixin} from '../../mixins';
 
 import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList, Clipboard} from 'syncano-components';
+import {Color, ColumnList, Clipboard} from '../../common/';
 
 const Column = ColumnList.Column;
 

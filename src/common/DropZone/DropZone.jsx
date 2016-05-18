@@ -1,8 +1,8 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 
-import {Styles, FontIcon, Utils} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
+import {FontIcon, Styles, Utils} from 'syncano-material-ui';
+import {Loading} from '../';
 import UploadFileButton from './UploadFileButton';
 
 const DropZone = (props) => {

@@ -9,8 +9,7 @@ import Store from './TemplatesStore';
 
 // Components
 import ListItem from './TemplatesListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 

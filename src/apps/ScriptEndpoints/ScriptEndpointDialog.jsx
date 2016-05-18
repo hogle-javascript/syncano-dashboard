@@ -12,8 +12,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
 import {TextField, Toggle, Styles} from 'syncano-material-ui';
-import {SelectFieldWrapper} from 'syncano-components';
-import {Dialog, LinkWrapper} from '../../common';
+import {Dialog, LinkWrapper, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
   displayName: 'ScriptEndpointDialog',

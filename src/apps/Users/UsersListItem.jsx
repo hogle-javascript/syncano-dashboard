@@ -4,7 +4,7 @@ import Actions from './UsersActions';
 
 import UserInfo from './UserInfo';
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from 'syncano-components';
+import {ColumnList, Color} from '../../common/';
 
 let Column = ColumnList.Column;
 

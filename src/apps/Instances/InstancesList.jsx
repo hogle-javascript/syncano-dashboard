@@ -9,8 +9,7 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
 import ListItem from './InstancesListItem';
-import {Loading, ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {Loading, ColumnList, Dialog, Lists} from '../../common/';
 
 let Column = ColumnList.Column;
 

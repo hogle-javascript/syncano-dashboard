@@ -9,8 +9,7 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import ListItem from './TriggersListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 

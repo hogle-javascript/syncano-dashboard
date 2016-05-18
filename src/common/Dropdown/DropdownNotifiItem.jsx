@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {FontIcon, FlatButton, List, ListItem} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
+import {Loading} from '../../common/';
 
 export default React.createClass({
   displayName: 'DropdownNotifiItem',
