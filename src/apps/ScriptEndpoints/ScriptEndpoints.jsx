@@ -12,7 +12,7 @@ import Store from './ScriptEndpointsStore';
 
 // Components
 import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {Container} from '../../common/';
 
 // Local components
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';

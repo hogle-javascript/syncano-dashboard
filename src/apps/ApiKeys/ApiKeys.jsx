@@ -9,8 +9,7 @@ import Store from './ApiKeysStore';
 
 // Components
 import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {Container, InnerToolbar} from '../../common/';
 
 // Local components
 import ApiKeysList from './ApiKeysList';

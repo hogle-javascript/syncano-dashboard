@@ -8,7 +8,7 @@ import Store from './TemplatesStore';
 
 // Components
 import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {Container} from '../../common/';
 import SnippetsInnerToolbar from '../Snippets/SnippetsInnerToolbar';
 
 // Local components

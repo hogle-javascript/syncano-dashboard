@@ -6,7 +6,7 @@ import Actions from './GroupsActions';
 import UserActions from '../Users/UsersActions';
 
 import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from 'syncano-components';
+import {ColumnList, Color} from '../../common/';
 
 let Column = ColumnList.Column;
 

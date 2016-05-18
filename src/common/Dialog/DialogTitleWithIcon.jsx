@@ -1,9 +1,7 @@
 import React from 'react';
-
 import {FontIcon, Styles} from 'syncano-material-ui';
 
 export default React.createClass({
-
   displayName: 'DialogtitleWithIcon',
 
   propTypes: {

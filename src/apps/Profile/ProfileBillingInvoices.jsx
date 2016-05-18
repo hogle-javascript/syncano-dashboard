@@ -7,8 +7,7 @@ import Actions from './ProfileActions';
 import Store from './ProfileBillingInvoicesStore';
 
 import {RaisedButton} from 'syncano-material-ui';
-import {ColumnList, Container, Loading, Show} from 'syncano-components';
-import {InnerToolbar, Lists} from '../../common';
+import {ColumnList, Container, Loading, Show, InnerToolbar, Lists} from '../../common/';
 
 let Column = ColumnList.Column;
 

@@ -8,8 +8,7 @@ import ScriptsStore from '../Scripts/ScriptsStore';
 import ClassesStore from '../Classes/ClassesStore';
 
 import {MenuItem, Styles} from 'syncano-material-ui';
-import {ColumnList} from 'syncano-components';
-import {DataObjectsAmount} from '../../common';
+import {ColumnList, DataObjectsAmount} from '../../common/';
 
 let Column = ColumnList.Column;
 

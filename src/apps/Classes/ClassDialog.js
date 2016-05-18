@@ -14,8 +14,7 @@ import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
 import {TextField, FlatButton, Checkbox, Tabs, Tab, Styles} from 'syncano-material-ui';
-import {Color, Show, SelectFieldWrapper, Tooltip} from 'syncano-components';
-import {Dialog, Icon, Notification, ColorIconPicker} from '../../common';
+import {Color, Show, SelectFieldWrapper, Tooltip, Dialog, Icon, Notification, ColorIconPicker} from '../../common/';
 
 export default React.createClass({
   displayName: 'ClassDialog',

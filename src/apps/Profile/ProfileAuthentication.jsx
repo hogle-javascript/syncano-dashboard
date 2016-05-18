@@ -10,8 +10,7 @@ import Actions from './ProfileActions';
 import SessionStore from '../Session/SessionStore';
 
 import {TextField, FlatButton, RaisedButton} from 'syncano-material-ui';
-import {Clipboard, Container} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {Clipboard, Container, InnerToolbar} from '../../common/';
 
 export default Radium(React.createClass({
   displayName: 'ProfileAuthentication',

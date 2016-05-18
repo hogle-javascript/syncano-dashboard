@@ -6,7 +6,7 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
 import {IconButton, Styles} from 'syncano-material-ui';
-import {Tour} from 'syncano-components';
+import {Tour} from '../../common/';
 
 export default React.createClass({
   displayName: 'InstancesTour',
