@@ -1,29 +1,26 @@
 import Constants from '../../../constants/Constants';
 import _ from 'lodash';
 
-let next = null;
-
 export default {
   list() {
     this.NewLibConnection
       .DataObject
       .please()
       .list()
-      .orderBy('created_at')
+      .orderBy('-created_at')
       .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
-      .then((dataObjects) => {
-        next = dataObjects.next;
-        this.completed(dataObjects);
-      })
+      .then(this.completed)
       .catch(this.failure);
   },
 
-  subList() {
-    next()
-      .then((dataObjects) => {
-        next = dataObjects.next;
-        this.completed(dataObjects);
-      })
+  subList(nextParams) {
+    this.NewLibConnection
+      .DataObject
+      .please()
+      .list({}, nextParams)
+      .orderBy('-created_at')
+      .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
+      .then(this.completed)
       .catch(this.failure);
   },
 
