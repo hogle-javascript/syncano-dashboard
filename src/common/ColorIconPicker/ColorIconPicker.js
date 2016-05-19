@@ -6,7 +6,7 @@ import ColorPicker from './ColorPicker';
 import IconPicker from './IconPicker';
 
 export default Radium(({icon, color, onIconChange, onColorChange}) => {
-  const getStyles = () => ({
+  const styles = {
     headline: {
       color: 'rgba(0, 0, 0, 0.498039)',
       fontSize: 12,
@@ -28,11 +28,11 @@ export default Radium(({icon, color, onIconChange, onColorChange}) => {
       background: 'transparent',
       borderBottom: '1px solid #b8c0c9'
     }
-  });
+  };
 
   return (
     <div>
-      <p style={getStyles().headline}>
+      <p style={styles.headline}>
         Instance icon
       </p>
 
@@ -41,18 +41,18 @@ export default Radium(({icon, color, onIconChange, onColorChange}) => {
         icon={icon}/>
 
       <Tabs
-        inkBarStyle={getStyles().inkBarStyle}
-        contentContainerStyle={getStyles().contentContainerStyle}
-        tabItemContainerStyle={getStyles().tabItemContainerStyle}>
+        inkBarStyle={styles.inkBarStyle}
+        contentContainerStyle={styles.contentContainerStyle}
+        tabItemContainerStyle={styles.tabItemContainerStyle}>
         <Tab
-          style={getStyles().tab}
+          style={styles.tab}
           label="COLOR">
           <ColorPicker
             selectedColor={color}
             onColorChange={onColorChange} />
         </Tab>
         <Tab
-          style={getStyles().tab}
+          style={styles.tab}
           label="ICON">
           <IconPicker
             selectedIcon={icon}
