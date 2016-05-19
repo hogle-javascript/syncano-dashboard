@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {Link} from 'react-router';
 
 // Utils
 import {FormMixin} from '../../mixins';
@@ -13,10 +13,7 @@ import Actions from './AuthActions';
 import {TextField, RaisedButton} from 'syncano-material-ui';
 import AccountContainer from './AccountContainer';
 
-let Link = Router.Link;
-
 export default React.createClass({
-
   displayName: 'AccountPasswordReset',
 
   mixins: [
@@ -32,7 +29,6 @@ export default React.createClass({
       }
     }
   },
-
 
   handleSuccessfullValidation() {
     Actions.passwordReset(this.state.email);

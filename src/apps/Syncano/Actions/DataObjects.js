@@ -2,22 +2,24 @@ import Constants from '../../../constants/Constants';
 import _ from 'lodash';
 
 export default {
-  list(params = {}) {
-    _.defaults(params, {
-      page_size: Constants.DATAOBJECTS_PAGE_SIZE,
-      order_by: '-created_at'
-    });
-    this.Connection
-      .DataObjects
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .DataObject
+      .please()
+      .list()
+      .orderBy('-created_at')
+      .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  subList(payload) {
-    this.Connection
-      .DataObjects
-      .list(payload.className, payload)
+  subList(nextParams) {
+    this.NewLibConnection
+      .DataObject
+      .please()
+      .list({}, nextParams)
+      .orderBy('-created_at')
+      .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -79,6 +81,7 @@ export default {
   },
 
   getClass(name) {
+    this.NewLibConnection.defaults.className = name;
     this.NewLibConnection
       .Class
       .please()

@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import Helmet from 'react-helmet';
 
 // Utils
@@ -23,17 +22,18 @@ export default React.createClass({
   displayName: 'Scripts',
 
   mixins: [
-    State,
-    Navigation,
     Reflux.connect(Store),
     DialogsMixin
   ],
 
   componentDidMount() {
     console.info('Scripts::componentDidMount');
-    if (this.getParams().action === 'add') {
+    const {action} = this.props.params;
+
+    if (action === 'add') {
       Actions.showDialog();
     }
+
     Actions.fetch();
   },
 

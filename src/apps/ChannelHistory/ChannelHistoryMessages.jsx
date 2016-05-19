@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 // Stores & Actions
 import Store from './ChannelHistoryStore';
@@ -9,17 +8,16 @@ import Store from './ChannelHistoryStore';
 import ChannelHistory from './ChannelHistory';
 
 export default React.createClass({
-
   displayName: 'ChannelHistory',
 
-  mixins: [
-    Router.State,
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   render() {
-    let channelName = this.getParams().channelName;
+    const {channelName} = this.context.params;
 
     return (
       <ChannelHistory channelName={channelName}/>

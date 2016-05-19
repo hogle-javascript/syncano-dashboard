@@ -19,8 +19,7 @@ export default ({routeName, params, style, label = 'SHOW MORE', visible = true})
       <LinkWrapper
         className="row align-center vp-3-t"
         style={Utils.Styles.mergeStyles(styles, style)}
-        to={routeName}
-        params={params}>
+        to={{name: routeName, params}}>
         {label}
       </LinkWrapper>
     );

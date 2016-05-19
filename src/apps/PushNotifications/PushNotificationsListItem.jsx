@@ -1,5 +1,5 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
+import {withRouter} from 'react-router';
 
 // Components
 import {MenuItem, Styles} from 'syncano-material-ui';
@@ -7,17 +7,16 @@ import {Color, ColumnList} from '../../common/';
 
 let Column = ColumnList.Column;
 
-export default React.createClass({
+const DeviceListItem = React.createClass({
   displayName: 'DeviceListItem',
 
   propTypes: {
     showConfigDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [
-    State,
-    Navigation
-  ],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
   getStyles() {
     return {
@@ -38,7 +37,8 @@ export default React.createClass({
   },
 
   render() {
-    const {item} = this.props;
+    const {params} = this.context;
+    const {item, devicesRoute, router} = this.props;
     const styles = this.getStyles();
 
     return (
@@ -64,7 +64,7 @@ export default React.createClass({
               </span>
               <span
                 key="devices"
-                onClick={() => this.transitionTo(this.props.devicesRoute, this.getParams())}
+                onClick={() => router.push({name: devicesRoute, params})}
                 style={styles.linkItem}>
                 Devices
               </span>
@@ -85,10 +85,12 @@ export default React.createClass({
             primaryText="Edit"/>
           <MenuItem
             className="dropdown-item-devices"
-            onTouchTap={() => this.transitionTo(this.props.devicesRoute, this.getParams())}
+            onTouchTap={() => router.push({name: devicesRoute, params})}
             primaryText="Devices list"/>
         </Column.Menu>
       </ColumnList.Item>
     );
   }
 });
+
+export default withRouter(DeviceListItem);

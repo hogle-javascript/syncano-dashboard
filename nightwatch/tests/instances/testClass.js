@@ -59,17 +59,17 @@ export default {
       .waitForElementNotPresent('@deleteClassModalTitle')
       .waitForElementNotPresent('@classTableName');
   },
-  'Test Admin selects/deselects class': (client) => {
-    const classesPage = client.page.classesPage();
-
-    classesPage
-      .navigate()
-      .waitForElementVisible('@selectUserClass')
-      .moveToElement('@selectUserClass', 0, 0)
-      .clickElement('@classToSelect')
-      .clickElement('@checkboxSelected')
-      .waitForElementVisible('@classToSelect');
-  },
+  // 'Test Admin selects/deselects class': (client) => {
+  //   const classesPage = client.page.classesPage();
+  //
+  //   classesPage
+  //     .navigate()
+  //     .waitForElementVisible('@selectUserClass')
+  //     .moveToElement('@selectUserClass', 0, 0)
+  //     .clickElement('@classToSelect')
+  //     .clickElement('@checkboxSelected')
+  //     .waitForElementVisible('@classToSelect');
+  // },
   'Test Admin cannot delete user_profile class': (client) => {
     const classesPage = client.page.classesPage();
 

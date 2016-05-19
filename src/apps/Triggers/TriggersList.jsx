@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
 
 import Actions from './TriggersActions';
 import Store from './TriggersStore';
@@ -16,11 +15,7 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'TriggersList',
 
-  mixins: [
-    State,
-    Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   getDefaultProps() {
     return {

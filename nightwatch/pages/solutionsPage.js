@@ -12,6 +12,10 @@ export default {
       selector: '//div[text()="Favorite"]',
       locateStrategy: 'xpath'
     },
+    allSolutions: {
+      selector: '//div[text()="All solutions"]',
+      locateStrategy: 'xpath'
+    },
     mySolutions: {
       selector: '//div[text()="My solutions"]',
       locateStrategy: 'xpath'

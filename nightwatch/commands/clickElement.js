@@ -3,7 +3,7 @@ exports.command = function clickElement(element) {
     .waitForElementPresent(element)
     .moveToElement(element, 0, 0)
     .click(element)
-    .pause(500);
+    .pause(1000);
 
   return this;
 };

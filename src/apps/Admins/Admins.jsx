@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import Helmet from 'react-helmet';
 
 // Utils
@@ -25,9 +24,6 @@ export default React.createClass({
   displayName: 'Admins',
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store, 'admins'),
     Reflux.connect(AdminsInvitationsStore, 'invitations'),
     DialogsMixin

@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import Radium from 'radium';
 import Helmet from 'react-helmet';
 
@@ -15,19 +15,18 @@ import {Container, InnerToolbar} from '../../common/';
 import ChannelHistoryList from './ChannelHistoryList';
 
 
-export default Radium(React.createClass({
+const ChannelHistory = Radium(React.createClass({
   displayName: 'ChannelHistory',
 
   propTypes: {
     channelName: React.PropTypes.string
   },
 
-  mixins: [
-    Router.Navigation,
-    Router.State,
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   getDefaultProps() {
     return {
@@ -52,11 +51,14 @@ export default Radium(React.createClass({
   },
 
   handleBackClick() {
-    this.transitionTo('channels', this.getParams());
+    const {params} = this.context;
+    const {router} = this.props;
+
+    router.push({name: 'channels', params});
   },
 
   render() {
-    const {channelName} = this.props;
+    const {channelName, router} = this.props;
     const {items, isLoading} = this.state;
     const styles = this.getStyles();
     const title = `Channel History for ${channelName}`;
@@ -68,7 +70,7 @@ export default Radium(React.createClass({
           title={title}
           backFallback={this.handleBackClick}
           backButtonTooltip='Go back to Channels list'/>
-        <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>
+        <div style={[styles.list, router.isActive('snippet-traces') && styles.snippetsList]}>
           <Container>
             <ChannelHistoryList
               name="Channel History"
@@ -80,3 +82,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default withRouter(ChannelHistory);

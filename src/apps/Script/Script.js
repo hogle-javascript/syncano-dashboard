@@ -1,7 +1,7 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
 import _ from 'lodash';
-import {State, Navigation} from 'react-router';
 import Helmet from 'react-helmet';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
@@ -14,7 +14,7 @@ import {RaisedButton, FontIcon, Checkbox, FlatButton, TextField, IconButton} fro
 import {Loading, Show, TogglePanel, SelectFieldWrapper, Dialog, InnerToolbar, Editor, Notification} from '../../common';
 import Traces from '../Traces';
 
-export default React.createClass({
+const Script = React.createClass({
   displayName: 'Script',
 
   contextTypes: {
@@ -22,9 +22,6 @@ export default React.createClass({
   },
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store),
     SnackbarNotificationMixin,
     AutosaveMixin,
@@ -429,6 +426,7 @@ export default React.createClass({
   },
 
   render() {
+    const {router, params} = this.props;
     const styles = this.getStyles();
     const {currentScript, lastTraceStatus, isLoading, lastTraceDuration, lastTraceResult} = this.state;
     let source = null;
@@ -445,7 +443,7 @@ export default React.createClass({
         {this.getDialogs()}
         <InnerToolbar
           title={this.getToolbarTitle()}
-          backFallback={() => this.transitionTo('scripts', this.getParams())}
+          backFallback={() => router.push({name: 'scripts', params})}
           forceBackFallback={true}
           backButtonTooltip="Go back to Scripts list">
           <Show if={!isLoading}>
@@ -570,3 +568,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(Script);

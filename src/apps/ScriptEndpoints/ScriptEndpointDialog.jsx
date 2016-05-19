@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
 import Reflux from 'reflux';
 
 // Utils
@@ -17,12 +16,14 @@ import {Dialog, LinkWrapper, SelectFieldWrapper} from '../../common/';
 export default React.createClass({
   displayName: 'ScriptEndpointDialog',
 
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(DialogStore),
     DialogMixin,
-    FormMixin,
-    State,
-    Navigation
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -71,6 +72,7 @@ export default React.createClass({
   },
 
   render() {
+    const {params} = this.context;
     const {open, isLoading, canSubmit, scripts, script} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
@@ -99,8 +101,10 @@ export default React.createClass({
               If you haven&#39;t created one you can do so&nbsp;
               <LinkWrapper
                 style={{color: Styles.Colors.blue400}}
-                to="scripts"
-                params={this.getParams()}>
+                to={{
+                  name: 'scripts',
+                  params
+                }}>
                 here
               </LinkWrapper>
             </Dialog.SidebarSection>

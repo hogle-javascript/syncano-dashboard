@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
 import {ListItem, Utils, FontIcon} from 'syncano-material-ui';
 
 export default React.createClass({
@@ -8,11 +7,6 @@ export default React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object
   },
-
-  mixins: [
-    State,
-    Navigation
-  ],
 
   getStyles() {
     return {

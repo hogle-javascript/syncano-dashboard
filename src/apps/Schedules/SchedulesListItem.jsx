@@ -1,5 +1,5 @@
 import React from 'react';
-import {State, Link} from 'react-router';
+import {Link} from 'react-router';
 
 import Actions from './SchedulesActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
@@ -17,9 +17,12 @@ export default React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [State],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
   render() {
+    const {instanceName} = this.context.params;
     const {item, onIconClick, showDeleteDialog} = this.props;
     const script = ScriptsStore.getScriptById(item.script);
     const scriptLabel = script ? script.label : '';
@@ -40,17 +43,23 @@ export default React.createClass({
           className="col-flex-1"
           date={item.scheduled_next} />
         <Column.Desc className="col-flex-1">
-          <Link to="script" params={{
-            instanceName: this.getParams().instanceName,
-            scriptId: item.script
+          <Link to={{
+            name: 'script',
+            params: {
+              instanceName,
+              scriptId: item.script
+            }
           }}>
             {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">
-          <Link to="schedule-traces" params={{
-            instanceName: this.getParams().instanceName,
-            scheduleId: item.id
+          <Link to={{
+            name: 'schedule-traces',
+            params: {
+              instanceName,
+              scheduleId: item.id
+            }
           }}>
             Traces
           </Link>

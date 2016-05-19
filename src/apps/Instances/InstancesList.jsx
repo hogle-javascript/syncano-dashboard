@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -16,11 +15,7 @@ let Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'InstancesList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('Channels::componentWillUpdate');
