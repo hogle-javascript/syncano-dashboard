@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {Navigation, State} from 'react-router';
 import Radium from 'radium';
 
 import AuthActions from '../../apps/Account/AuthActions';
@@ -17,14 +16,11 @@ export default Radium(React.createClass({
   displayName: 'HeaderNotificationsDropdown',
 
   contextTypes: {
-    router: React.PropTypes.func,
     muiTheme: React.PropTypes.object
   },
 
   mixins: [
     Reflux.connect(ProfileInvitationsStore),
-    Navigation,
-    State,
     SnackbarNotificationMixin,
     Utils.Styles
   ],

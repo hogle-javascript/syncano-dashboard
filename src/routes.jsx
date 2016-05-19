@@ -1,6 +1,11 @@
-/* eslint-disable */
+/* eslint-disable no-inline-comments */
 import React from 'react';
-import Router from 'react-router';
+import {Route, Redirect, IndexRedirect, IndexRoute} from 'react-router';
+import auth from './apps/Account/auth';
+import URI from 'urijs';
+import _ from 'lodash';
+
+import SessionStore from './apps/Session/SessionStore';
 
 // Pages
 import AppPage from './pages/app';
@@ -43,120 +48,171 @@ import Schedules from './apps/Schedules';
 import PushNotifications from './apps/PushNotifications';
 import PushDevices from './apps/PushDevices';
 
-const Route = Router.Route;
-const Redirect = Router.Redirect;
-const NotFoundRoute = Router.NotFoundRoute;
-const DefaultRoute = Router.DefaultRoute;
+function redirectToLogin(nextState, replace) {
+  if (!auth.loggedIn()) {
+    replace({
+      pathname: '/login',
+      state: {nextPathname: nextState.location.pathname}
+    });
+  }
+}
+
+function redirectToDashboard(nextState, replace) {
+  if (auth.loggedIn()) {
+    replace('/');
+  }
+}
+
+function onRootEnter(nextState, replace) {
+  let uri = new URI();
+  let originalUri = uri.normalize().toString();
+  let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
+  let query = _.extend({}, uri.search(true), nextState.location.query);
+
+  SessionStore.setUTMData(nextState.location.query);
+
+  if (nextState.location.query.token) {
+    SessionStore.setToken(nextState.location.query.token);
+    replace('/');
+  }
+
+  // Remove trailing slash
+  if (pathname.length > 1 && pathname.match('/$') !== null) {
+    pathname = pathname.slice(0, -1);
+  }
+
+  uri.search(query);
+  uri.hash(`${pathname}${uri.search()}`);
+  uri.search('');
+
+  let normalizedUri = uri.normalize().toString();
+
+  if (originalUri !== normalizedUri) {
+    location.href = normalizedUri;
+    return;
+  }
+
+  let name = 'app';
+  let names = nextState.routes.map((route) => route.name).filter((routeName) => typeof routeName !== 'undefined');
+
+  if (names.length > 0) {
+    name = names[names.length - 1];
+  }
+
+  if (name === 'login' || name === 'signup') {
+    window.analytics.page(`Dashboard ${_.capitalize(name)}`, {
+      path: nextState.location.pathname
+    });
+  } else {
+    window.analytics.page('Dashboard', {
+      Page: name,
+      path: nextState.location.pathname
+    });
+  }
+}
 
 export default (
   <Route
     name="app"
-    handler={AppPage}
+    component={AppPage}
+    onEnter={onRootEnter}
     path="/">
 
-    <NotFoundRoute handler={NotFoundPage}/>
     <Route
       name="login"
-      handler={Account.Login}/>
+      path="login"
+      component={Account.Login}
+      onEnter={redirectToDashboard}/>
     <Route
       name="signup"
-      handler={Account.Signup}/>
+      path="signup"
+      component={Account.Signup}
+      onEnter={redirectToDashboard}/>
     <Route
       name="activate"
-      handler={Account.Activate}
+      component={Account.Activate}
       path="/activate/:uid/:token"/>
     <Route
       name="password-update"
-      handler={Account.PasswordUpdate}
+      component={Account.PasswordUpdate}
       path="/password/update"/>
     <Route
       name="password-reset"
-      handler={Account.PasswordReset}
+      component={Account.PasswordReset}
       path="/password/reset"/>
     <Route
       name="password-reset-confirm"
-      handler={Account.PasswordResetConfirm}
+      component={Account.PasswordResetConfirm}
       path="/password/reset/:uid/:token"/>
 
     {/* Dashboard */}
     <Route
       name="dashboard"
-      handler={DashboardPage}
-      path="/">
+      component={DashboardPage}
+      onEnter={redirectToLogin}
+    >
       <Route
         name="instances"
-        handler={Instances}
+        component={Instances}
         path="instances"/>
 
       <Route
         name="instance"
-        handler={InstancePage}
+        component={InstancePage}
         path="instances/:instanceName">
 
         <Redirect
-          from="/instances/:instanceName"
-          to="sockets"/>
-
-        {/* Prolong */}
-        <Route
-          name="prolong"
-          path="prolong">
-
-
-          <Redirect
-            query={{showProlongDialog: true}}
-            from="/instances/:instanceName/prolong"
-            to="sockets"/>
-
-        </Route>
+          from="prolong"
+          to="sockets"
+          query={{showProlongDialog: true}} />
 
         {/* Sockets */}
         <Route
           name="sockets"
           path="sockets"
-          handler={Sockets}/>
+          component={Sockets}/>
 
         {/* Data */}
         <Route
           name="data"
           path="data-endpoints"
-          handler={DataEndpoints}/>
+          component={DataEndpoints}/>
 
         {/* Admins */}
         <Route
           name="admins"
-          handler={Admins}
+          component={Admins}
           path="admins"/>
 
         {/* API keys */}
         <Route
           name="api-keys"
-          handler={ApiKeys}
+          component={ApiKeys}
           path="api-keys"/>
 
         {/* General */}
         <Route
           name="instance-edit"
-          handler={InstanceEdit}
+          component={InstanceEdit}
           path="edit"/>
 
         {/* Classes */}
         <Route
           name="classes"
-          handler={ClassesPage}
+          component={ClassesPage}
           path="classes">
 
           <Route
             name="classes-data-objects"
-            handler={DataObjects}
+            component={DataObjects}
             path=":className/objects"/>
 
           <Route
             name="classEdit"
-            handler={Classes}
+            component={Classes}
             path=":className/:action"/>
 
-          <DefaultRoute handler={Classes}/>
+          <IndexRoute component={Classes}/>
         </Route>
 
         {/* Push Notifications */}
@@ -168,24 +224,24 @@ export default (
           <Route
             name="push-notification-config"
             path="config"
-            handler={PushNotifications}/>
+            component={PushNotifications}/>
 
           <Route
             name="push-notification-devices"
             path="devices"
-            handler={PushDevicesPage}>
+            component={PushDevicesPage}>
             <Route
               name="all-push-notification-devices"
               path="all"
-              handler={PushDevices.AllDevices}/>
+              component={PushDevices.AllDevices}/>
             <Route
               name="apns-devices"
               path="apns"
-              handler={PushDevices.APNS}/>
+              component={PushDevices.APNS}/>
             <Route
               name="gcm-devices"
               path="gcm"
-              handler={PushDevices.GCM}/>
+              component={PushDevices.GCM}/>
             <Redirect
               from="/instances/:instanceName/push-notifications/devices"
               to="all-push-notification-devices"/>
@@ -228,17 +284,17 @@ export default (
           {/* ScriptEndpoints Traces */}
           <Route
             name="scriptEndpoint-traces"
-            handler={ScriptEndpoints.Traces}
+            component={ScriptEndpoints.Traces}
             path=":scriptEndpointName/traces"/>
 
-          <DefaultRoute handler={ScriptEndpoints}/>
+          <IndexRoute component={ScriptEndpoints}/>
 
         </Route>
 
         <Route
           name="snippets"
           path="snippets"
-          handler={Snippets} />
+          component={Snippets} />
 
         {/* Templates */}
         <Route
@@ -246,31 +302,31 @@ export default (
           path="templates">
           <Route
             name="template"
-            handler={Template}
+            component={Template}
             path=":templateName"/>
-          <DefaultRoute handler={Templates}/>
+          <IndexRoute component={Templates}/>
         </Route>
 
         {/* Scripts */}
         <Route
           name="scripts"
-          handler={ScriptsPage}
+          component={ScriptsPage}
           path="scripts">
           <Route
             name="script"
-            handler={Script}
+            component={Script}
             path=":scriptId"/>
-          <DefaultRoute handler={Scripts}/>
+          <IndexRoute component={Scripts}/>
         </Route>
         <Route
           name="scripts-add"
-          handler={Scripts}
+          component={Scripts}
           path="scripts/:action"/>
 
         {/* Data Objects */}
         <Route
           name="data-objects"
-          handler={DataObjects}
+          component={DataObjects}
           path="objects"/>
 
         {/* Triggers */}
@@ -280,10 +336,10 @@ export default (
 
           <Route
             name='trigger-traces'
-            handler={Triggers.Traces}
+            component={Triggers.Traces}
             path=':triggerId/traces'/>
 
-          <DefaultRoute handler={Triggers}/>
+          <IndexRoute component={Triggers}/>
         </Route>
 
         {/* Schedules */}
@@ -293,10 +349,10 @@ export default (
 
           <Route
             name='schedule-traces'
-            handler={Schedules.Traces}
+            component={Schedules.Traces}
             path=':scheduleId/traces'/>
 
-          <DefaultRoute handler={Schedules}/>
+          <IndexRoute component={Schedules}/>
         </Route>
 
         {/* Channels */}
@@ -305,55 +361,57 @@ export default (
           path="channels">
           <Route
             name='channel-history'
-            handler={ChannelHistory.Messages}
+            component={ChannelHistory.Messages}
             path=':channelName/history'/>
 
-          <DefaultRoute handler={Channels}/>
+          <IndexRoute component={Channels}/>
         </Route>
 
         {/* Users */}
         <Route
           name="users"
-          handler={Users}
+          component={Users}
           path="users"/>
 
+        <IndexRedirect to="sockets"/>
       </Route>
 
       {/* Profile Billing */}
       <Route
         name="profile"
-        handler={ProfilePage}
+        component={ProfilePage}
         path="/account">
 
         <Route
           name="profile-billing-plan"
-          handler={Profile.BillingPlan}
+          component={Profile.BillingPlan}
           path="plan"/>
         <Route
           name="profile-billing-address"
-          handler={Profile.BillingAddress}
+          component={Profile.BillingAddress}
           path="address"/>
         <Route
           name="profile-billing-payment"
-          handler={Profile.BillingPayment}
+          component={Profile.BillingPayment}
           path="payment-methods"/>
         <Route
           name="profile-billing-invoices"
-          handler={Profile.BillingInvoices}
+          component={Profile.BillingInvoices}
           path="invoices"/>
         <Route
           name="profile-settings"
-          handler={Profile.Settings}
+          component={Profile.Settings}
           path="/account"/>
         <Route
           name="profile-authentication"
-          handler={Profile.Authentication}
+          component={Profile.Authentication}
           path="/account/authentication"/>
         <Route
           name="profile-invitations"
-          handler={Profile.Invitations}
+          component={Profile.Invitations}
           path="/account/invitations"/>
-        <DefaultRoute handler={Profile.BillingPlan}/>
+
+        <IndexRoute component={Profile.Settings}/>
       </Route>
 
       {/* Solutions */}
@@ -362,27 +420,28 @@ export default (
         path="/solutions">
         <Route
           name="solutions-list"
-          handler={Solutions.ListView}
+          component={Solutions.ListView}
           path="list"/>
         <Route
           name="solutions-install"
-          handler={Solutions.EditView}
+          component={Solutions.EditView}
           path="/solutions/:solutionId/:action"/>
         <Route
           name="solutions-edit"
-          handler={Solutions.EditView}
+          component={Solutions.EditView}
           path="/solutions/:solutionId/edit"/>
         <Route
           name="solutions-add-version"
-          handler={Solutions.AddVersionView}
+          component={Solutions.AddVersionView}
           path="/solutions/:solutionId/versions/add"/>
         <Redirect
           from="/solutions"
           to="solutions-list"/>
-        <DefaultRoute handler={Solutions.ListView}/>
+        <IndexRoute component={Solutions.ListView}/>
       </Route>
 
-      <DefaultRoute handler={Instances}/>
+      <IndexRoute component={Instances}/>
     </Route>
+    <Route path="*" component={NotFoundPage}/>
   </Route>
 );

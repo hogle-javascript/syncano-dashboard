@@ -40,6 +40,9 @@ export default {
   'Test Delete multiple Templates': (client) => {
     const listsPage = client.page.listsPage();
 
+    client
+      .pause(2000);
+
     listsPage
       .goToUrl('temp', 'templates')
       .clickListItemDropdown('@optionsMenu', 'Select');

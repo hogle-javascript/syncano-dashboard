@@ -42,8 +42,10 @@ export default {
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
+    instancesPage.navigate();
+    client.pause(1000);
+
     instancesPage
-      .navigate()
       .clickListItemDropdown('@instanceDropdown', 'Delete')
       .clickElement('@confirmDeleteButton')
       .waitForElementNotPresent('@deleteInstanceModalTitle');

@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import Helmet from 'react-helmet';
 
 // Stores and Actions
@@ -18,11 +17,7 @@ import ApiKeyDialog from './ApiKeyDialog';
 export default React.createClass({
   displayName: 'ApiKeys',
 
-  mixins: [
-    State,
-    Navigation,
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
     console.info('ApiKeys::componentWillMount');

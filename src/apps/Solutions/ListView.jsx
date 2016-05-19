@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import Helmet from 'react-helmet';
 
 // Stores and Actions
@@ -17,14 +17,10 @@ import CreateDialogActions from './CreateDialogActions';
 import InstallDialog from './InstallDialog';
 import InstallDialogActions from './InstallDialogActions';
 
-export default React.createClass({
-  displayName: 'Solutions',
+const SolutionsListView = React.createClass({
+  displayName: 'SolutionsListView',
 
-  mixins: [
-    State,
-    Navigation,
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
     console.info('Solutions::componentWillMount');
@@ -41,6 +37,7 @@ export default React.createClass({
 
   render() {
     const {filter, tags, selectedTags, items} = this.state;
+    const {router} = this.props;
     const styles = this.getStyles();
 
     return (
@@ -84,7 +81,7 @@ export default React.createClass({
                 <Solutions.List
                   items={items}
                   onInstall={(solutionId) => InstallDialogActions.showDialogWithPreFetch(solutionId)}
-                  onSeeMore={(solutionId) => this.transitionTo('solutions-edit', {solutionId})}
+                  onSeeMore={(solutionId) => router.push({name: 'solutions-edit', params: {solutionId}})}
                   onTagClick={(tag) => Actions.selectOneTag(tag)}
                   onUnstar={(solutionId) => Actions.unstarSolution(solutionId)}
                   onStar={(solutionId) => Actions.starSolution(solutionId)} />
@@ -98,3 +95,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(SolutionsListView);

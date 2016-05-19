@@ -1,12 +1,11 @@
 import React from 'react';
 import Radium from 'radium';
-import {History} from 'react-router';
+import {withRouter} from 'react-router';
 import Sticky from 'react-stickydiv';
 
-import {Store as SessionStore} from '../../apps/Session';
 import {Toolbar, ToolbarGroup, ToolbarTitle, IconButton} from 'syncano-material-ui';
 
-export default Radium(React.createClass({
+const InnerToolbar = Radium(React.createClass({
   displayName: 'InnerToolbar',
 
   propTypes: {
@@ -37,14 +36,16 @@ export default Radium(React.createClass({
   },
 
   isHistory() {
-    return History.length > 1;
+    // it has to be fixed
+    // return History.length > 1;
+    return false;
   },
 
   handleBackButtonTouchTap() {
-    const {backFallback, forceBackFallback} = this.props;
+    const {backFallback, forceBackFallback, router} = this.props;
 
     if (this.isHistory() && !forceBackFallback) {
-      return SessionStore.getRouter().goBack();
+      return router.goBack();
     }
 
     return backFallback();
@@ -113,3 +114,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default withRouter(InnerToolbar);

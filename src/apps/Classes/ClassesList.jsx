@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
@@ -17,11 +16,7 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'ClassesList',
 
-  mixins: [
-    State,
-    Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('ClassesList::componentWillUpdate');

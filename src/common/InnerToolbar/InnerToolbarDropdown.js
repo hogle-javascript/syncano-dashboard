@@ -1,34 +1,39 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
+import {withRouter} from 'react-router';
 import {DropDownMenu} from 'syncano-material-ui';
 
-export default React.createClass({
-  displayName: 'SocketsDropdown',
+const InnerToolbarDropdown = React.createClass({
+  displayName: 'InnerToolbarDropdown',
 
-  mixins: [
-    State,
-    Navigation
-  ],
+  contextTypes: {
+    routes: React.PropTypes.array,
+    params: React.PropTypes.object
+  },
 
   getActiveItem() {
-    const lastItem = this.getRoutes()[this.getRoutes().length - 1].name;
-    const notLastItem = this.getRoutes()[this.getRoutes().length - 2].name;
+    const {routes} = this.context;
+
+    const lastItem = routes[routes.length - 1].name;
+    const notLastItem = routes[routes.length - 2].name;
 
     return lastItem ? lastItem : notLastItem;
   },
 
   render() {
-    const {children} = this.props;
+    const {children, router} = this.props;
+    const {params} = this.context;
 
     return (
       <DropDownMenu
         value={this.getActiveItem()}
         labelStyle={{fontSize: 20, color: 'rgba(0, 0, 0, 0.4)'}}
         iconStyle={{fill: 'rgba(0, 0, 0, 0.4)'}}
-        onChange={(event, index, value) => this.transitionTo(value, this.getParams())}
+        onChange={(event, index, value) => router.push({name: value, params})}
         underlineStyle={{display: 'none'}}>
         {children}
       </DropDownMenu>
     );
   }
 });
+
+export default withRouter(InnerToolbarDropdown);

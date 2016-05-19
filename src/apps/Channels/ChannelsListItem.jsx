@@ -2,7 +2,7 @@ import React from 'react';
 
 import Actions from './ChannelsActions';
 
-import {Link, State} from 'react-router';
+import {Link} from 'react-router';
 import {SnackbarNotificationMixin} from '../../mixins';
 
 import {MenuItem} from 'syncano-material-ui';
@@ -18,9 +18,14 @@ export default React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [SnackbarNotificationMixin, State],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
+  mixins: [SnackbarNotificationMixin],
 
   render() {
+    const {instanceName} = this.context.params;
     const {item, onIconClick, showDeleteDialog} = this.props;
 
     return (
@@ -54,10 +59,12 @@ export default React.createClass({
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link
-            to="channel-history"
-            params={{
-              instanceName: this.getParams().instanceName,
-              channelName: item.name
+            to={{
+              name: 'channel-history',
+              params: {
+                instanceName,
+                channelName: item.name
+              }
             }}>
             History
           </Link>

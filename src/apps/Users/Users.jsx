@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import Helmet from 'react-helmet';
 
 import Actions from './UsersActions';
@@ -19,9 +18,6 @@ export default React.createClass({
   displayName: 'Users',
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store, 'users'),
     Reflux.connect(GroupsStore, 'groups')
   ],

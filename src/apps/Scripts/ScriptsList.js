@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import _ from 'lodash';
 
 // Utils
@@ -20,9 +19,6 @@ export default React.createClass({
   displayName: 'ScriptsList',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-
     Reflux.connect(Store),
     DialogsMixin
   ],

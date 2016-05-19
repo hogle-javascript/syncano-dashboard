@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation, Link} from 'react-router';
+import {withRouter, Link} from 'react-router';
 
 // Utils
 import {FormMixin} from '../../mixins';
@@ -17,27 +17,13 @@ import AccountContainer from './AccountContainer';
 import {TextField, RaisedButton} from 'syncano-material-ui';
 import {SocialAuthButtonsList} from '../../common/';
 
-export default React.createClass({
+const AccountLogin = React.createClass({
   displayName: 'AccountLogin',
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   mixins: [
     Reflux.connect(Store),
-    State,
-    Navigation,
     FormMixin
   ],
-
-  statics: {
-    willTransitionTo(transition) {
-      if (SessionStore.isAuthenticated()) {
-        transition.redirect(Constants.LOGIN_REDIRECT_PATH, {}, {});
-      }
-    }
-  },
 
   validatorConstraints: {
     email: {
@@ -52,15 +38,17 @@ export default React.createClass({
   },
 
   componentWillUpdate() {
+    const {location, router} = this.props;
+
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
-      let queryNext = this.getQuery().next || null;
+      let queryNext = location.query.next || null;
       let lastInstance = localStorage.getItem('lastInstance') || null;
 
       if (queryNext !== null) {
-        this.replaceWith(queryNext);
+        router.replace(queryNext);
       } else if (lastInstance !== null) {
-        this.replaceWith('instance', {instanceName: lastInstance});
+        router.replace({name: 'instance', params: {instanceName: lastInstance}});
       } else {
         SessionStore
           .getConnection()
@@ -71,18 +59,18 @@ export default React.createClass({
               let instance = instances._items[0];
 
               localStorage.setItem('lastInstance', instance.name);
-              this.replaceWith('instance', {instanceName: instance.name});
+              router.replace({name: 'instance', params: {instanceName: instance.name}});
             } else {
-              this.replaceWith('sockets');
+              router.replace('sockets');
             }
           })
           .catch(() => {
-            this.replaceWith('sockets');
+            router.replace('sockets');
           });
       }
     }
 
-    let invKey = this.getQuery().invitation_key || null;
+    let invKey = location.query.invitation_key || null;
 
     if (invKey !== null && SessionActions.getInvitationFromUrl() !== invKey) {
       SessionActions.setInvitationFromUrl(invKey);
@@ -102,6 +90,8 @@ export default React.createClass({
   },
 
   render() {
+    const {query} = this.props.location;
+
     return (
       <AccountContainer>
         <div className="account-container__content__header vm-3-b">
@@ -160,8 +150,10 @@ export default React.createClass({
               <p>
                 <span>Don't have an account? </span>
                 <Link
-                  to="signup"
-                  query={this.getQuery()}>
+                  to={{
+                    name: 'signup',
+                    query
+                  }}>
                   Sign up here
                 </Link>
               </p>
@@ -175,3 +167,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(AccountLogin);

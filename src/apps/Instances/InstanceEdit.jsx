@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import Helmet from 'react-helmet';
 
 // Actions & Stores
@@ -24,8 +23,6 @@ export default React.createClass({
   },
 
   mixins: [
-    State,
-    Navigation,
     Reflux.connect(SessionStore),
     Reflux.connect(Store),
     DialogsMixin,
@@ -41,10 +38,10 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    const params = this.getParams();
+    const {instanceName} = this.props.params;
 
-    if (params.instanceName) {
-      SessionActions.fetchInstance(params.instanceName);
+    if (instanceName) {
+      SessionActions.fetchInstance(instanceName);
       Actions.fetch();
     }
   },

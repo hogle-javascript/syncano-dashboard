@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 import Store from './AuthStore';
 import Constants from './AuthConstants';
@@ -8,19 +8,10 @@ import Constants from './AuthConstants';
 import {RaisedButton} from 'syncano-material-ui';
 import AccountContainer from './AccountContainer';
 
-export default React.createClass({
-
+const AccountPasswordUpdate = React.createClass({
   displayName: 'AccountPasswordUpdate',
 
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-
-  mixins: [
-    Reflux.connect(Store),
-    Router.State,
-    Router.Navigation
-  ],
+  mixins: [Reflux.connect(Store)],
 
   getStyles() {
     return {
@@ -43,7 +34,9 @@ export default React.createClass({
   },
 
   handleButtonClick() {
-    this.transitionTo(Constants.LOGIN_REDIRECT_PATH);
+    const {router} = this.props;
+
+    router.push(Constants.LOGIN_REDIRECT_PATH);
   },
 
   render() {
@@ -71,3 +64,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(AccountPasswordUpdate);

@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 import {DialogMixin, FormMixin} from '../../mixins';
 
@@ -11,14 +11,10 @@ import {TextField, FlatButton} from 'syncano-material-ui';
 import {CreditCard, Loading, Slider, Dialog} from '../../common/';
 import SliderSection from './SliderSection';
 
-export default React.createClass({
-
+const ProfileBillingPlanDialog = React.createClass({
   displayName: 'ProfileBillingPlanDialog',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-
     DialogMixin,
     FormMixin,
 
@@ -145,21 +141,24 @@ export default React.createClass({
   },
 
   renderCard() {
-    if (typeof this.state.card === 'undefined') {
+    const {router} = this.props;
+    const {card} = this.state;
+
+    if (typeof card === 'undefined') {
       return <Loading show={true}/>;
     }
 
-    if (this.state.card) {
+    if (card) {
       return (
       <div>
         <div style={this.getStyles().sectionTopic}>Credit card info:</div>
         <div className="row" style={{marginTop: 20, height: 110}}>
           <div className="col-md-18">
-            <CreditCard card={this.state.card}/>
+            <CreditCard card={card}/>
           </div>
           <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
             Want to use a different method of payment?
-            Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
+            Update your card <a onClick={() => router.push('profile-billing-payment')}>here</a>.
           </div>
         </div>
       </div>
@@ -380,3 +379,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(ProfileBillingPlanDialog);

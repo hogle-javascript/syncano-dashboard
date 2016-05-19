@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navigation, State} from 'react-router';
+import {withRouter} from 'react-router';
 import Radium from 'radium';
 
 import {DialogsMixin} from '../../mixins';
@@ -15,18 +15,18 @@ import APNSSendMessageDialog from './APNSDevices/APNSSendMessageDialog';
 
 const Column = ColumnList.Column;
 
-export default Radium(React.createClass({
+const DevicesList = Radium(React.createClass({
   displayName: 'DevicesList',
 
   propTypes: {
     showSendMessagesDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [
-    Navigation,
-    State,
-    DialogsMixin
-  ],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
+  mixins: [DialogsMixin],
 
   getInitialState() {
     return {
@@ -114,8 +114,9 @@ export default Radium(React.createClass({
   },
 
   render() {
+    const {params} = this.context;
     const styles = this.getStyles();
-    const {items, getCheckedItems, type, actions, isLoading, showSendMessagesDialog, ...other} = this.props;
+    const {items, getCheckedItems, type, actions, isLoading, showSendMessagesDialog, router, ...other} = this.props;
     const checkedItemsCount = getCheckedItems().length;
     const titleText = {
       apns: 'iOS Devices',
@@ -126,7 +127,7 @@ export default Radium(React.createClass({
         label="MORE DEVICES"
         visible={items.length > 3}
         routeName={`${type}-devices`}
-        params={this.getParams()}/>
+        params={params}/>
     );
 
     return (
@@ -173,10 +174,12 @@ export default Radium(React.createClass({
               {...other}
               items={this.sliceItems(items)}
               renderItem={this.renderItem}/>
-            {this.isActive('all-push-notification-devices') && !isLoading ? moreLink : null}
+            {router.isActive({name: 'all-push-notification-devices', params}, true) && !isLoading ? moreLink : null}
           </Lists.Container>
         </Loading>
       </div>
     );
   }
 }));
+
+export default withRouter(DevicesList);

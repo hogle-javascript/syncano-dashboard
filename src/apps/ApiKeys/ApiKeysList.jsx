@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -17,11 +16,7 @@ const Column = ColumnList.Column;
 export default React.createClass({
   displayName: 'ApiKeysList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('ApiKeysList::componentWillUpdate');
