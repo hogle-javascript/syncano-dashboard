@@ -3,6 +3,7 @@ import React from 'react';
 import {DialogsMixin} from '../../../mixins';
 
 import Actions from './PartialBackupsActions';
+import RestoreDialogActions from '../RestoreDialogActions';
 import Store from './PartialBackupsStore';
 
 import ListItem from './PartialBackupsListItem';
@@ -41,6 +42,7 @@ export default React.createClass({
         key={`partial-backup-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
+        showRestoreDialog={RestoreDialogActions.showDialog}
         showDeleteDialog={() => this.showDialog('deletePartialBackupDialog', item)} />
     );
   },

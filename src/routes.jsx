@@ -256,19 +256,19 @@ export default (
         <Route
           name="backup-and-restore"
           path="backup-and-restore"
-          handler={BackupAndRestore}>
+          component={BackupAndRestore}>
           <Route
             name="all-backups"
             path="all"
-            handler={BackupAndRestore.All}/>
+            component={BackupAndRestore.All}/>
           <Route
             name="partial-backups"
             path="partial"
-            handler={BackupAndRestore.Partial}/>
+            component={BackupAndRestore.Partial}/>
           <Route
             name="full-backups"
             path="full"
-            handler={BackupAndRestore.Full}/>
+            component={BackupAndRestore.Full}/>
           <Redirect
             from="/instances/:instanceName/backup-and-restore"
             to="all-backups"/>

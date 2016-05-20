@@ -1,12 +1,14 @@
 import React from 'react';
 import Filesize from 'filesize';
 
+import RestoreDialogActions from '../RestoreDialogActions';
+
 import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Color, Truncate} from '../../../common';
 
 const Column = ColumnList.Column;
 
-const PartialBackupsListItem = ({item, onIconClick, showDeleteDialog}) =>
+const PartialBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestoreDialog}) =>
   <ColumnList.Item
     checked={item.checked}
     key={item.id}
@@ -25,7 +27,7 @@ const PartialBackupsListItem = ({item, onIconClick, showDeleteDialog}) =>
     <ColumnList.Column.Text>{item.status}</ColumnList.Column.Text>
     <ColumnList.Column.Text>{Filesize(item.size)}</ColumnList.Column.Text>
     <Column.Date date={item.created_at}/>
-    <Column.Menu>
+    <Column.Menu handleClick={() => RestoreDialogActions.setClickedBackup(item)}>
       <MenuItem
         className="dropdown-partial-backup-details"
         onTouchTap={() => console.log('details')}
@@ -36,7 +38,7 @@ const PartialBackupsListItem = ({item, onIconClick, showDeleteDialog}) =>
         primaryText="Download" />
       <MenuItem
         className="dropdown-partial-backup-download"
-        onTouchTap={() => console.log('restore')}
+        onTouchTap={showRestoreDialog}
         primaryText="Restore" />
       <MenuItem
         className="dropdown-partial-backup-delete"

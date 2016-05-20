@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {RouteHandler} from 'react-router';
 
 import BackupsInnerToolbar from './BackupsInnerToolbar';
 import {ListItem, FontIcon, RaisedButton, Styles} from 'syncano-material-ui';
-import {Popover} from '../../common';
+import {Popover} from '../../common/';
 
 export default class BackupAndRestore extends Component {
   handleCreateBackup(type) {
@@ -51,7 +50,7 @@ export default class BackupAndRestore extends Component {
               primaryText="Partial Backup"/>
           </Popover>
         </BackupsInnerToolbar>
-        <RouteHandler />
+        {this.props.children}
       </div>
     );
   }
