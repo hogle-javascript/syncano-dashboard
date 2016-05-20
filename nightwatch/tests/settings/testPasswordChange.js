@@ -3,7 +3,7 @@ import Globals from '../../globals';
 import Async from 'async';
 
 export default {
-  tags: ['settings'],
+  tags: ['passwordSettings'],
   after(client) {
     client.end();
   },

@@ -14,11 +14,9 @@ module.exports = {
   },
   beforeEach(client) {
     const instancesPage = client.page.instancesPage();
-    const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
     instancesPage.clickElement('@instancesTableName');
-    socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
   afterEach(client, done) {
     if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
@@ -37,9 +35,7 @@ module.exports = {
     const schedulesPage = client.page.schedulesPage();
     const triggersPage = client.page.triggersPage();
 
-    socketsPage
-      .waitForElementPresent('@codeBoxSocketItem')
-      .waitForElementPresent('@dataListItem');
+    socketsPage.waitForElementPresent('@dataListItem');
     channelsPage.waitForElementPresent('@channelListItem');
     schedulesPage.waitForElementPresent('@scheduleListItem');
     triggersPage.waitForElementPresent('@triggerListItem');

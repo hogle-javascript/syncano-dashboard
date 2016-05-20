@@ -64,7 +64,7 @@ export default {
       selector: 'input[name="device_id"]'
     },
     firstAndroidCheckbox: {
-      selector: '(//span[@class="synicon-android"])[1]',
+      selector: '(//span[contains(@class, "synicon-android")]/../../../button[@type="button"])[1]',
       locateStrategy: 'xpath'
     },
     firstAppleCheckbox: {

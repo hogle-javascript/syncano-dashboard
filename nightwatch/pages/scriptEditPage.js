@@ -1,7 +1,8 @@
 export default {
   elements: {
     scriptEditView: {
-      selector: '#brace-editor'
+      selector: '//div[@id="brace-editor"]',
+      locateStrategy: 'xpath'
     },
     config: {
       selector: '//div/span[text()="Config"]',

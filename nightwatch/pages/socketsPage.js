@@ -132,6 +132,10 @@ export default {
       selector: '//div[text()="Script Endpoint"]/following::div[2]',
       locateStrategy: 'xpath'
     },
+    addScriptButton: {
+      selector: '//button//span[text()="Add"]',
+      locateStrategy: 'xpath'
+    },
     addApnsSocket: {
       selector: '//div[text()="APNS Push Notifications (BETA)"]/following::div[2]',
       locateStrategy: 'xpath'

@@ -12,9 +12,9 @@ export default {
       if (err) throw err;
       const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .login(globals.tempEmail, globals.tempPass);
+      loginPage.navigate();
+      client.resizeWindow(1280, 1024);
+      loginPage.login(globals.tempEmail, globals.tempPass);
     });
   },
   after: (client) => {
@@ -39,16 +39,10 @@ export default {
     const gcmProdKey = utils.randomString(39);
 
     socketsPage
-      .goToUrl('temp', 'push-notifications/config')
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
       .fillInput('@inputGcmDevKey', gcmDevKey)
       .fillInput('@inputGcmProdKey', gcmProdKey)
       .clickElement('@confirmButton')
-      .waitForElementVisible('@gcmSocket');
-
-    client.pause(1000);
-
-    socketsPage
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
       .waitForElementVisible('@gcmTitleHeading')
       .verify.valueContains('@inputGcmDevKey', gcmDevKey)
@@ -60,7 +54,6 @@ export default {
     const pushDevicesPage = client.page.pushDevicesPage();
 
     socketsPage
-      .goToUrl('temp', 'push-notifications/config')
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Devices list');
     pushDevicesPage
       .waitForElementVisible('@androidDevicesHeading');

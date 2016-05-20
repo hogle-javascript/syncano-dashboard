@@ -1,4 +1,4 @@
-import Utils from '../../utils';
+import utils from '../../utils';
 
 export default {
   tags: ['class'],
@@ -14,14 +14,14 @@ export default {
   },
   'Test Add Class': (client) => {
     const classesPage = client.page.classesPage();
-    const className = Utils.addSuffix('class');
+    const className = utils.addSuffix('class');
 
     classesPage
       .navigate()
       .clickElement('@addClassButton')
       .waitForElementVisible('@addClassTitle')
       .fillInput('@createModalNameInput', className)
-      .fillInput('@createModalDescriptionInput', Utils.addSuffix())
+      .fillInput('@createModalDescriptionInput', utils.addSuffix())
       .fillInput('@createModalFieldNameInput', 'string')
       .selectDropdownValue('@createModalDropdownType', 'string')
       .clickElement('@addButton')
@@ -29,11 +29,11 @@ export default {
       .waitForElementNotPresent('@addClassTitle')
       .waitForElementVisible('@classTableRow');
 
-    classesPage.verify.containsText('@classTableRowDescription', Utils.addSuffix());
+    classesPage.verify.containsText('@classTableRowDescription', utils.addSuffix());
   },
   'Test Edit Class': (client) => {
     const classesPage = client.page.classesPage();
-    const edit = Utils.addSuffix('edit');
+    const edit = utils.addSuffix('edit');
 
     classesPage
       .navigate()
@@ -59,17 +59,15 @@ export default {
       .waitForElementNotPresent('@deleteClassModalTitle')
       .waitForElementNotPresent('@classTableName');
   },
-  // 'Test Admin selects/deselects class': (client) => {
-  //   const classesPage = client.page.classesPage();
-  //
-  //   classesPage
-  //     .navigate()
-  //     .waitForElementVisible('@selectUserClass')
-  //     .moveToElement('@selectUserClass', 0, 0)
-  //     .clickElement('@classToSelect')
-  //     .clickElement('@checkboxSelected')
-  //     .waitForElementVisible('@classToSelect');
-  // },
+  'Test Admin selects/deselects class': (client) => {
+    const listsPage = client.page.listsPage();
+    const selectedItem = listsPage.elements.selectedItem.selector;
+    const optionsMenu = listsPage.elements.firstItemOptionsMenu.selector;
+
+    client
+      .goToUrl('', 'classes')
+      .singleItemSelectUnselect('synicon-cloud', optionsMenu, selectedItem);
+  },
   'Test Admin cannot delete user_profile class': (client) => {
     const classesPage = client.page.classesPage();
 
@@ -77,6 +75,6 @@ export default {
     classesPage.waitForElementVisible('@inactiveDeleteButton');
 
   // assert that Delete Class element is greyed out
-    classesPage.assert.attributeContains('@inactiveDeleteButton', 'style', 'color: rgba(0, 0, 0, 0.298039)');
+    classesPage.assert.attributeContains('@inactiveDeleteButton', 'style', utils.getGreyedOutStyle(client));
   }
 };

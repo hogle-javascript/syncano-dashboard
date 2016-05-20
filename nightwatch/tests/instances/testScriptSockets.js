@@ -1,27 +1,24 @@
-import Utils from '../../utils';
+import utils from '../../utils';
 
 export default {
   tags: ['scriptSockets'],
   before(client) {
     const loginPage = client.page.loginPage();
 
-    loginPage
-      .navigate()
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+    loginPage.navigate();
+    client.resizeWindow(1280, 1024);
+    loginPage.login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();
   },
   'User adds a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
-    const script = Utils.addSuffix('script');
+    const script = utils.addSuffix('script');
 
     socketsPage
-      .navigate()
-      .waitForElementVisible('@codeBoxSocketItem')
-      .clickElement('@addCodeBoxButton')
-      .waitForElementVisible('@addCodeBoxModalTitle')
-      .clickElement('@addScriptEndpoint')
+      .goToUrl('', 'script-endpoints')
+      .clickElement('@addScriptButton')
       .fillInput('@modalNameInput', script)
       .selectDropdownValue('@addCodeBoxModalScriptDropdown', 'snippet')
       .clickElement('@confirmButton')
@@ -29,12 +26,12 @@ export default {
   },
   'User edits a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
-    const edited = Utils.addSuffix('edited');
+    const edited = utils.addSuffix('edited');
 
     socketsPage
-      .navigate()
+      .goToUrl('', 'script-endpoints')
       .waitForElementVisible('@codeBoxSocketItem')
-      .clickListItemDropdown(Utils.addSuffix('script'), 'Edit')
+      .clickListItemDropdown(utils.addSuffix('script'), 'Edit')
       .waitForElementVisible('@editCodeBoxModalTitle')
       .fillInput('@modalDescriptionInput', edited)
       .clickElement('@confirmButton')
@@ -45,10 +42,10 @@ export default {
   },
   'User deletes a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
-    const script = Utils.addSuffix('script');
+    const script = utils.addSuffix('script');
 
     socketsPage
-      .navigate()
+      .goToUrl('', 'script-endpoints')
       .waitForElementVisible('@codeBoxSocketItem')
       .clickListItemDropdown(script, 'Delete')
       .waitForElementVisible('@deleteCodeBoxModalTitle')

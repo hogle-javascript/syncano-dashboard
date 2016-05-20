@@ -15,9 +15,9 @@ export default {
       if (err) throw err;
       const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .login(globals.tempEmail, globals.tempPass);
+      loginPage.navigate();
+      client.resizeWindow(1280, 1024);
+      loginPage.login(globals.tempEmail, globals.tempPass);
     });
   },
   'Test Add Template': (client) => {
@@ -37,7 +37,6 @@ export default {
     const listsPage = client.page.listsPage();
 
     listsPage
-      .goToUrl('temp', 'templates')
       .waitForElementVisible('@firstItemOptionsMenu')
       .clickListItemDropdown('@firstItemOptionsMenu', 'Edit')
       .fillInput('@inputContentType', 'text/html')
@@ -49,24 +48,17 @@ export default {
     const listsPage = client.page.listsPage();
 
     listsPage
-      .goToUrl('temp', 'templates')
-      .waitForElementVisible('@firstItemOptionsMenu')
       .clickListItemDropdown('@firstItemOptionsMenu', 'Delete')
-      .waitForElementVisible('@deleteTitleHeading')
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@deleteTitleHeading')
       .verify.containsText('@firstItemRowName', 'objects_csv');
+  },
+  'Test Admin Selects/Deselects Template': (client) => {
+    const listsPage = client.page.listsPage();
+    const selectedItem = listsPage.elements.selectedItem.selector;
+    const optionsMenu = listsPage.elements.firstItemOptionsMenu.selector;
+
+    client
+      .singleItemSelectUnselect('synicon-arrow-up-bold', optionsMenu, selectedItem);
   }
-  // 'Test Admin Selects/Deselects Template': (client) => {
-  //   const listsPage = client.page.listsPage();
-  //
-  //   listsPage
-  //     .goToUrl('temp', 'templates')
-  //     .waitForElementVisible('@firstItemCheckbox');
-  //     .moveToElement('@firstItemCheckbox', 0, 0)
-  //     .clickElement('@highlightedCheckbox')
-  //     .waitForElementVisible('@selectedItem')
-  //     .clickElement('@selectedItem')
-  //     .waitForElementVisible('@firstItemCheckbox');
-  // }
 };

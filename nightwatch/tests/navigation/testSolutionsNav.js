@@ -14,12 +14,10 @@ module.exports = {
   },
   beforeEach(client) {
     const instancesPage = client.page.instancesPage();
-    const socketsPage = client.page.socketsPage();
 
     instancesPage
       .navigate()
       .clickElement('@instancesTableName');
-    socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
   afterEach(client, done) {
     if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {

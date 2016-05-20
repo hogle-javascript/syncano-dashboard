@@ -1,14 +1,14 @@
 export default {
   tags: ['solutions'],
-  before(client) {
+  beforeEach(client) {
     const loginPage = client.page.loginPage();
 
     loginPage
       .navigate()
       .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
-  after(client) {
-    client.end();
+  afterEach(client, done) {
+    client.end(done);
   },
   'Administrator can view Favorite Solutions': (client) => {
     const solutionsPage = client.page.solutionsPage();

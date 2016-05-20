@@ -14,9 +14,9 @@ export default {
       if (err) throw err;
       const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .login(globals.tempEmail, globals.tempPass);
+      loginPage.navigate();
+      client.resizeWindow(1280, 1024);
+      loginPage.login(globals.tempEmail, globals.tempPass);
     });
   },
   'Test Select/Deselect multiple Templates': (client) => {
@@ -25,10 +25,8 @@ export default {
 
     listsPage
       .goToUrl('temp', 'templates')
-      .waitForElementVisible('@optionsMenu')
       .clickListItemDropdown('@optionsMenu', 'Select')
-      .assertSelectedCount('xpath', selectedItems, 2)
-      .waitForElementVisible('@optionsMenu');
+      .assertSelectedCount('xpath', selectedItems, 2);
 
     client
       .pause(2000);
@@ -52,7 +50,6 @@ export default {
 
     listsPage
       .clickListItemDropdown('@optionsMenu', 'Delete')
-      .waitForElementVisible('@deleteTitleHeading')
       .clickElement('@confirmButton')
       .waitForElementVisible('@emptyListItem');
   }

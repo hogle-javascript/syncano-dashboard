@@ -1,4 +1,4 @@
-import Globals from '../../globals';
+import globals from '../../globals';
 import async from 'async';
 
 export default {
@@ -16,8 +16,7 @@ export default {
 
       loginPage
         .navigate()
-        .waitForElementPresent('@emailInput', 60000)
-        .login(Globals.tempEmail, Globals.tempPass);
+        .login(globals.tempEmail, globals.tempPass);
     });
   },
   'Test Instances Dropdown': (client) => {
@@ -40,7 +39,6 @@ export default {
       });
     });
     instancesPage
-      .waitForElementPresent('@instancesTableName')
       .clickElement('@instancesTableName');
     leftMenuPage
       .clickElement('@instancesDropdown')
@@ -52,15 +50,20 @@ export default {
     client.getText('xpath', dropdown, (text) => {
       client.assert.equal(text.value, instanceNames[0]);
     });
+  },
+  'Test Select and Delete multiple Instances': (client) => {
+    const listsPage = client.page.listsPage();
+    const selectedItems = listsPage.elements.selectedItem.selector;
+    const optionsMenu = listsPage.elements.optionsMenu.selector;
+
+    client
+      .url('https://localhost:8080/#/instances/')
+      .multipleItems('Select', 2, optionsMenu, selectedItems)
+      .pause(2500);
+
+    listsPage
+      .clickListItemDropdown('@optionsMenu', 'Delete')
+      .clickElement('@confirmButton')
+      .waitForElementVisible('@emptyListItem');
   }
-  // 'Test Select and Delete multiple Instances': (client) => {
-  //   const instancesPage = client.page.instancesPage();
-  //
-  //   instancesPage
-  //     .navigate()
-  //     .clickListItemDropdown('@instancesDropdown', 'Select')
-  //     .clickListItemDropdown('@instancesDropdown', 'Delete')
-  //     .clickElement('@confirmDeleteButton')
-  //     .waitForElementNotPresent('@deleteInstanceModalTitle');
-  // }
 };
