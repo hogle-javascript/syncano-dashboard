@@ -9,6 +9,15 @@ export default {
       .catch(this.failure);
   },
 
+  createFullBackup(params) {
+    this.NewLibConnection
+      .FullBackup
+      .please()
+      .create(params)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   removeFullBackups(backups) {
     const promises = backups.map((backup) =>
       this.NewLibConnection

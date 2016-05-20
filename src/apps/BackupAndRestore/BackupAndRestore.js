@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
-import {RouteHandler} from 'react-router';
+
+import FullBackupActions from './Full/FullBackupsActions';
 
 import BackupsInnerToolbar from './BackupsInnerToolbar';
+import FullBackupDialog from './Full/FullBackupsDialog';
 import {ListItem, FontIcon, RaisedButton, Styles} from 'syncano-material-ui';
 import {Popover} from '../../common';
 
 export default class BackupAndRestore extends Component {
   handleCreateBackup(type) {
     const createBackup = {
-      full: () => console.log('create full backup'),
+      full: FullBackupActions.showDialog,
       partial: () => console.log('create partial backup')
     };
 
@@ -23,8 +25,11 @@ export default class BackupAndRestore extends Component {
   }
 
   render() {
+    const {children} = this.props;
+
     return (
       <div>
+        <FullBackupDialog />
         <BackupsInnerToolbar>
           <RaisedButton
             label="Create Backup"
@@ -51,7 +56,7 @@ export default class BackupAndRestore extends Component {
               primaryText="Partial Backup"/>
           </Popover>
         </BackupsInnerToolbar>
-        <RouteHandler />
+        {children}
       </div>
     );
   }
