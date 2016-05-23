@@ -6,9 +6,10 @@ module.exports = {
   before(client) {
     const loginPage = client.page.loginPage();
 
-    loginPage.navigate();
-    client.resizeWindow(1280, 1024);
-    loginPage.login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();

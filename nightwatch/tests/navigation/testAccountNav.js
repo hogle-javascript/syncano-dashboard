@@ -7,6 +7,7 @@ module.exports = {
 
     loginPage
       .navigate()
+      .setResolution(client)
       .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
@@ -18,6 +19,7 @@ module.exports = {
 
     instancesPage
       .navigate()
+      .setResolution(client)
       .clickElement('@instancesTableName');
     socketsPage.waitForElementPresent('@dataEndpointListItemTitle');
   },

@@ -5,6 +5,7 @@ module.exports = {
 
     signupPage
       .navigate()
+      .setResolution(client)
       .clickTermsOfUseLink();
     client.pause(1000);
 

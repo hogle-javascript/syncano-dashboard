@@ -12,8 +12,10 @@ export default {
       if (err) throw err;
       const loginPage = client.page.loginPage();
 
-      loginPage.navigate();
-      loginPage.login(globals.tempEmail, globals.tempPass);
+      loginPage
+        .navigate()
+        .setResolution(client)
+        .login(globals.tempEmail, globals.tempPass);
     });
   },
   after(client) {

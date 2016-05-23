@@ -25,7 +25,7 @@
       "silent": true,
       "skip_testcases_on_fail": false,
       "end_session_on_fail": false,
-      "resolution": "1280x1024",
+      "resolution": "1920x1080",
       "exclude": "utils.js",
       "screenshots" : {
         "enabled" : true,
@@ -33,14 +33,23 @@
         "path" : "./reports/screenshots"
       }
     },
-    "1280x1024" : {
+    "chrome" : {
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
         "chromeOptions" : {
-         "args" : ["window-position=0,0", "window-size=1280,1024", "--disable-popup-blocking"]
+         "args" : ["window-position=0,0", "window-size=1920,1080", "--disable-popup-blocking"]
         }
+      }
+    },
+    "firefox" : {
+      "desiredCapabilities": {
+        "browserName": "firefox",
+        "unexpectedAlertBehaviour": "dismiss",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true,
+        "elementScrollBehavior": "1"
       }
     },
     "360x640" : {
@@ -63,15 +72,6 @@
         "chromeOptions" : {
          "args" : ["window-position=0,0", "window-size=768,1024"]
         }
-      }
-    },
-    "firefox" : {
-      "desiredCapabilities": {
-        "browserName": "firefox",
-        "unexpectedAlertBehaviour": "dismiss",
-        "javascriptEnabled": true,
-        "acceptSslCerts": true,
-        "elementScrollBehavior": "1"
       }
     }
   }
