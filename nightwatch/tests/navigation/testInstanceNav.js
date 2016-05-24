@@ -33,14 +33,8 @@ module.exports = {
   },
   'User goes to Sockets View': (client) => {
     const socketsPage = client.page.socketsPage();
-    const channelsPage = client.page.channelsPage();
-    const schedulesPage = client.page.schedulesPage();
-    const triggersPage = client.page.triggersPage();
 
-    socketsPage.waitForElementPresent('@dataListItem');
-    channelsPage.waitForElementPresent('@channelListItem');
-    schedulesPage.waitForElementPresent('@scheduleListItem');
-    triggersPage.waitForElementPresent('@triggerListItem');
+    socketsPage.waitForElementPresent('@socketsDropDownAll');
   },
   'User goes to Classes View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
