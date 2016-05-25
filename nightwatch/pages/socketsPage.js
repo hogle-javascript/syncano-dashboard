@@ -180,6 +180,10 @@ export default {
     gcmTitleHeading: {
       selector: '//h3[text()="Configure Push Notification Socket - GCM"]',
       locateStrategy: 'xpath'
+    },
+    socketsDropDownAll: {
+      selector: '//span[text()="Sockets:"]/../..//div[text()="All"]',
+      locateStrategy: 'xpath'
     }
   }
 };
