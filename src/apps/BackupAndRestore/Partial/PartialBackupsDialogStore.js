@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 
 import {StoreLoadingMixin, StoreFormMixin, DialogStoreMixin} from '../../../mixins';
 
-import Actions from './FullBackupsActions';
+import Actions from './PartialBackupsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -15,7 +15,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      isLoading: false
+      isLoading: false,
+      queryArgs: ['{', '  ', '}'].join('\n')
     };
   },
 
@@ -25,9 +26,9 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  onCreateFullBackupCompleted() {
-    console.debug('FullBackupsDialogStore::onCreateFullBackupCompleted');
-    Actions.fetchFullBackups();
+  onCreatePartialBackupCompleted() {
+    console.debug('PartialBackupsDialogStore::onCreatePartialBackupCompleted');
+    Actions.fetchPartialBackups();
     this.dismissDialog();
   }
 });

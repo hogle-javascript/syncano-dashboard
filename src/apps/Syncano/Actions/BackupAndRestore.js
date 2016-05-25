@@ -41,6 +41,15 @@ export default {
       .catch(this.failure);
   },
 
+  createPartialBackup(payload) {
+    this.NewLibConnection
+      .PartialBackup
+      .please()
+      .create(payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   removePartialBackups(backups) {
     const promises = backups.map((backup) =>
       this.NewLibConnection

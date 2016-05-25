@@ -47,7 +47,7 @@ export default React.createClass({
         key="dialog"
         ref="dialog"
         contentSize="medium"
-        title="Create Instance Backup"
+        title="Create Instance Full Backup"
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
@@ -71,6 +71,9 @@ export default React.createClass({
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Backup's description"
             floatingLabelText="Description" />
+        </div>
+        <div className="vm-2-t">
+          {this.renderFormNotifications()}
         </div>
       </Dialog.FullPage>
     );
