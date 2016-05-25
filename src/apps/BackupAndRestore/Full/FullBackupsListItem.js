@@ -1,7 +1,7 @@
 import React from 'react';
 import Filesize from 'filesize';
 
-import RestoreDialogActions from '../RestoreDialogActions'
+import RestoreDialogActions from '../RestoreDialogActions';
 
 import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Color, Truncate} from '../../../common';
@@ -26,6 +26,11 @@ const FullBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestoreDi
     <Column.Desc>{item.description}</Column.Desc>
     <ColumnList.Column.Text>{item.status}</ColumnList.Column.Text>
     <ColumnList.Column.Text>{Filesize(item.size)}</ColumnList.Column.Text>
+    <ColumnList.Column.Text>
+      <Truncate
+        withTooltip={true}
+        text={item.author.email}/>
+    </ColumnList.Column.Text>
     <Column.Date date={item.created_at}/>
     <Column.Menu handleClick={() => RestoreDialogActions.setClickedBackup(item)} >
       <MenuItem

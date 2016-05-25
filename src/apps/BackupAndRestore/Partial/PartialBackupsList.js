@@ -63,6 +63,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="TEXT">Status</Column.ColumnHeader>
           <Column.ColumnHeader columnName="TEXT">Size</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="TEXT">Author</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE"></Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
