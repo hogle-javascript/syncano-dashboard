@@ -38,7 +38,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onRestoreFromBackupCompleted(resp) {
+  onRestoreFromBackupCompleted() {
     console.debug('RestoreDialogStore::onRestoreFromBackupCompleted');
     this.dismissDialog();
     this.refreshData();

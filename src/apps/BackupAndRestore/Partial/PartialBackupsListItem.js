@@ -26,6 +26,11 @@ const PartialBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestor
     <Column.Desc>{item.description}</Column.Desc>
     <ColumnList.Column.Text>{item.status}</ColumnList.Column.Text>
     <ColumnList.Column.Text>{Filesize(item.size)}</ColumnList.Column.Text>
+    <ColumnList.Column.Text>
+      <Truncate
+        withTooltip={true}
+        text={item.author.email} />
+    </ColumnList.Column.Text>
     <Column.Date date={item.created_at}/>
     <Column.Menu handleClick={() => RestoreDialogActions.setClickedBackup(item)}>
       <MenuItem
