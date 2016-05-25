@@ -25,18 +25,21 @@ export default {
     const listsPage = client.page.listsPage();
     const scriptEditPage = client.page.scriptEditPage();
 
-    listsPage
-      .goToUrl('', 'scripts')
-      .clickElement('@firstItemRowName');
+    // ToDo: Remove pause when endless loarding bug will disappear
+    client
+      .pause(2500)
+      .goToUrl('temp', 'scripts');
+    listsPage.clickElement('@firstItemRowName');
     scriptEditPage.waitForElementPresent('@scriptEditView');
   },
   'User goes to Script traces view': (client) => {
     const listsPage = client.page.listsPage();
     const scriptEditPage = client.page.scriptEditPage();
 
-    listsPage
-      .goToUrl('', 'scripts')
-      .clickElement('@firstItemRowName');
+    client
+      .pause(2500)
+      .goToUrl('temp', 'scripts');
+    listsPage.clickElement('@firstItemRowName');
     scriptEditPage.clickElement('@traces');
     scriptEditPage.waitForElementPresent('@tracesEmpty');
   }
