@@ -10,6 +10,13 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.BackupAndRestore.listPartialBackups'
     },
+    createPartialBackup: {
+      asyncResult: true,
+      asyncForm: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.BackupAndRestore.createPartialBackup'
+    },
     removePartialBackups: {
       asyncResult: true,
       loading: true,

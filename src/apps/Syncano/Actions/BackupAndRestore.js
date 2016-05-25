@@ -9,6 +9,15 @@ export default {
       .catch(this.failure);
   },
 
+  createFullBackup(params) {
+    this.NewLibConnection
+      .FullBackup
+      .please()
+      .create(params)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   removeFullBackups(backups) {
     const promises = backups.map((backup) =>
       this.NewLibConnection
@@ -28,6 +37,15 @@ export default {
       .please()
       .list()
       .ordering('desc')
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  createPartialBackup(payload) {
+    this.NewLibConnection
+      .PartialBackup
+      .please()
+      .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
