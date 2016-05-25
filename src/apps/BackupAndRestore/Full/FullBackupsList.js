@@ -1,13 +1,15 @@
 import React from 'react';
+import Reflux from 'reflux';
 
 import {DialogsMixin} from '../../../mixins';
 
 import Actions from './FullBackupsActions';
+import RestoreDialogActions from '../RestoreDialogActions';
 import Store from './FullBackupsStore';
 
 import ListItem from './FullBackupsListItem';
-import {ColumnList} from '../../../common';
-import {Lists, Dialog} from '../../../common';
+import RestoreDialog from '../RestoreDialog';
+import {ColumnList, Lists, Dialog} from '../../../common';
 
 const Column = ColumnList.Column;
 
@@ -15,6 +17,7 @@ export default React.createClass({
   displayName: 'FullBackupsList',
 
   mixins: [
+    Reflux.connect(Store),
     DialogsMixin
   ],
 
@@ -42,6 +45,7 @@ export default React.createClass({
         key={`full-backup-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
+        showRestoreDialog={RestoreDialogActions.showDialog}
         showDeleteDialog={() => this.showDialog('deleteFullBackupDialog', item)} />
     );
   },
@@ -51,6 +55,7 @@ export default React.createClass({
 
     return (
       <Lists.Container className="full-backups-list">
+        <RestoreDialog />
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
@@ -62,6 +67,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="TEXT">Status</Column.ColumnHeader>
           <Column.ColumnHeader columnName="TEXT">Size</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="TEXT">Author</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE"></Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu

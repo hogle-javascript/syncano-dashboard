@@ -1,12 +1,14 @@
 import React from 'react';
 import Filesize from 'filesize';
 
+import RestoreDialogActions from '../RestoreDialogActions';
+
 import {MenuItem} from 'syncano-material-ui';
 import {ColumnList, Color, Truncate} from '../../../common';
 
 const Column = ColumnList.Column;
 
-const FullBackupsListItem = ({item, onIconClick, showDeleteDialog}) =>
+const FullBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestoreDialog}) =>
   <ColumnList.Item
     checked={item.checked}
     key={item.id}
@@ -24,15 +26,20 @@ const FullBackupsListItem = ({item, onIconClick, showDeleteDialog}) =>
     <Column.Desc>{item.description}</Column.Desc>
     <ColumnList.Column.Text>{item.status}</ColumnList.Column.Text>
     <ColumnList.Column.Text>{Filesize(item.size)}</ColumnList.Column.Text>
+    <ColumnList.Column.Text>
+      <Truncate
+        withTooltip={true}
+        text={item.author.email}/>
+    </ColumnList.Column.Text>
     <Column.Date date={item.created_at}/>
-    <Column.Menu>
+    <Column.Menu handleClick={() => RestoreDialogActions.setClickedBackup(item)} >
       <MenuItem
         className="dropdown-full-backup-details"
         onTouchTap={() => console.log('details')}
         primaryText="Details" />
       <MenuItem
         className="dropdown-full-backup-download"
-        onTouchTap={() => console.log('restore')}
+        onTouchTap={showRestoreDialog}
         primaryText="Restore" />
       <MenuItem
         className="dropdown-full-backup-delete"
@@ -44,7 +51,8 @@ const FullBackupsListItem = ({item, onIconClick, showDeleteDialog}) =>
 FullBackupsListItem.displayName = 'FullBackupListItem';
 FullBackupsListItem.propTypes = {
   onIconClick: React.PropTypes.func.isRequired,
-  showDeleteDialog: React.PropTypes.func.isRequired
+  showDeleteDialog: React.PropTypes.func.isRequired,
+  showRestoreDialog: React.PropTypes.func.isRequired
 };
 
 export default FullBackupsListItem;

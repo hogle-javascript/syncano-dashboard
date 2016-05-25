@@ -61,5 +61,14 @@ export default {
     this.Promise.all(promises)
       .then(this.completed)
       .catch(this.failure);
+  },
+
+  restoreFromBackup(backup) {
+    this.NewLibConnection
+      .Restore
+      .please()
+      .restore({}, {backup: backup.id})
+      .then(this.completed)
+      .catch(this.failure);
   }
 };
