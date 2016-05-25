@@ -1,14 +1,21 @@
+import Async from 'async';
+import globals from '../../globals';
 import utils from '../../utils';
 
 export default {
   tags: ['class'],
   before(client) {
-    const loginPage = client.page.loginPage();
+    Async.waterfall([
+      client.createTempAccount
+    ], (err) => {
+      if (err) throw err;
+      const loginPage = client.page.loginPage();
 
-    loginPage
-      .navigate()
-      .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      loginPage
+        .navigate()
+        .setResolution(client)
+        .login(globals.tempEmail, globals.tempPass);
+    });
   },
   after(client) {
     client.end();
@@ -18,9 +25,8 @@ export default {
     const className = utils.addSuffix('class');
 
     classesPage
-      .navigate()
+      .goToUrl('temp', 'classes')
       .clickElement('@addClassButton')
-      .waitForElementVisible('@addClassTitle')
       .fillInput('@createModalNameInput', className)
       .fillInput('@createModalDescriptionInput', utils.addSuffix())
       .fillInput('@createModalFieldNameInput', 'string')
@@ -37,8 +43,6 @@ export default {
     const edit = utils.addSuffix('edit');
 
     classesPage
-      .navigate()
-      .waitForElementVisible('@classesListItemDropDown')
       .clickElement('@classesListItemDropDown')
       .clickElement('@editButton')
       .waitForElementVisible('@createModalDescriptionInput')
@@ -52,7 +56,6 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .waitForElementVisible('@classesListItemDropDown')
       .clickElement('@classesListItemDropDown')
       .clickElement('@deleteButton')
       .waitForElementVisible('@deleteClassModalTitle')
@@ -65,9 +68,7 @@ export default {
     const selectedItem = listsPage.elements.selectedItem.selector;
     const optionsMenu = listsPage.elements.firstItemOptionsMenu.selector;
 
-    client
-      .goToUrl('', 'classes')
-      .singleItemSelectUnselect('synicon-cloud', optionsMenu, selectedItem);
+    client.singleItemSelectUnselect('synicon-cloud', optionsMenu, selectedItem);
   },
   'Test Admin cannot delete user_profile class': (client) => {
     const classesPage = client.page.classesPage();
