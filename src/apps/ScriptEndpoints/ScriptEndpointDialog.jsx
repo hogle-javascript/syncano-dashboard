@@ -10,7 +10,8 @@ import DialogStore from './ScriptEndpointDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {TextField, Toggle, Styles} from 'syncano-material-ui';
+import {TextField, Toggle} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Dialog, LinkWrapper, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
@@ -100,7 +101,7 @@ export default React.createClass({
               A Script is an object that contains a piece of code that can be run on Syncano servers.
               If you haven&#39;t created one you can do so&nbsp;
               <LinkWrapper
-                style={{color: Styles.Colors.blue400}}
+                style={{color: Colors.blue400}}
                 to={{
                   name: 'scripts',
                   params
@@ -127,7 +128,8 @@ export default React.createClass({
             autoFocus={true}
             fullWidth={true}
             disabled={this.hasEditMode()}
-            valueLink={this.linkState('name')}
+            value={this.state.name}
+            onChange={(event, value) => this.setState({name: value})}
             errorText={this.getValidationMessages('name').join(' ')}
             hintText="Script Endpoint's name"
             floatingLabelText="Name"/>
@@ -135,7 +137,8 @@ export default React.createClass({
             ref="description"
             name="description"
             fullWidth={true}
-            valueLink={this.linkState('description')}
+            value={this.state.description}
+            onChange={(event, value) => this.setState({description: value})}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Script Endpoint's description"
             floatingLabelText="Description (optional)"/>

@@ -9,7 +9,8 @@ import Actions from './GCMPushNotificationsActions';
 import Store from './GCMConfigDialogStore';
 
 // Components
-import {TextField, Styles} from 'syncano-material-ui';
+import {TextField} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Loading, Dialog} from '../../../common/';
 
 export default React.createClass({
@@ -53,7 +54,7 @@ export default React.createClass({
       GDClink: {
         margin: '80px 0',
         cursor: 'pointer',
-        color: Styles.Colors.blue400
+        color: Colors.blue400
       }
     };
   },
@@ -117,14 +118,16 @@ export default React.createClass({
                 ref="development_api_key"
                 name="development_api_key"
                 autoFocus={true}
-                valueLink={this.linkState('development_api_key')}
+                value={this.state.development_api_key}
+                onChange={(event, value) => this.setState({development_api_key: value})}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Development API key"
                 errorText={this.getValidationMessages('development_api_key').join(' ')}/>
               <TextField
                 ref="production_api_key"
                 name="production_api_key"
-                valueLink={this.linkState('production_api_key')}
+                value={this.state.production_api_key}
+                onChange={(event, value) => this.setState({production_api_key: value})}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Production API key"
                 errorText={this.getValidationMessages('production_api_key').join(' ')}/>

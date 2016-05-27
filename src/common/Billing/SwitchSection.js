@@ -1,10 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'syncano-material-ui';
+import {Toggle} from 'material-ui';
 
 export default Radium(React.createClass({
-
   displayName: 'SwitchSection',
 
   propTypes: {
@@ -17,8 +16,6 @@ export default Radium(React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object
   },
-
-  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     return {
@@ -141,10 +138,10 @@ export default Radium(React.createClass({
     }
 
     return (
-      <MUI.Toggle
+      <Toggle
         ref="toggle"
         defaultToggled={defaultToggled}
-        onToggle={toggleHandler}/>
+        onToggle={toggleHandler} />
     );
   },
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import Radium from 'radium';
-import {Styles, Utils} from 'syncano-material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 const RadiumLink = Radium(Link);
 
@@ -10,13 +10,13 @@ export default Radium(({style, children, ...other}) => {
     color: '#444',
     cursor: 'pointer',
     ':hover': {
-      color: Styles.Colors.blue400
+      color: Colors.blue400
     }
   };
 
   return (
     <RadiumLink
-      style={Utils.Styles.mergeStyles(styles, style)}
+      style={{...styles, ...style}}
       {...other}>
       {children}
     </RadiumLink>

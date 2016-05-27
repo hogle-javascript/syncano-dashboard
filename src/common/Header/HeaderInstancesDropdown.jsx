@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import {withRouter} from 'react-router';
 import Reflux from 'reflux';
@@ -9,7 +10,7 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 import InstancesActions from '../../apps/Instances/InstancesActions';
 import InstanceDialogActions from '../../apps/Instances/InstanceDialogActions';
 
-import {FontIcon, List, ListItem, IconMenu, Utils} from 'syncano-material-ui';
+import {FontIcon, Subheader, List, ListItem, IconMenu} from 'material-ui';
 import {ColumnList, Color, Show} from '../../common/';
 
 const HeaderInstancesDropdown = Radium(React.createClass({
@@ -21,8 +22,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
 
   mixins: [
     Reflux.connect(InstancesStore),
-    Reflux.connectFilter(SessionStore, 'currentInstance', (sessionData) => sessionData.instance),
-    Utils.Styles
+    Reflux.connectFilter(SessionStore, 'currentInstance', (sessionData) => sessionData.instance)
   ],
 
   componentDidMount() {
@@ -49,7 +49,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         height: 32,
         fontSize: 18,
         lineHeight: '18px',
-        display: '-webkit-inline-flex; display: inline-flex',
+        display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: '50%',
@@ -121,7 +121,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
     const icon = (
       <FontIcon
         className="synicon-plus"
-        style={this.mergeStyles(styles.dropdownInstanceIcon, styles.addInstanceIcon)}/>
+        style={{...styles.dropdownInstanceIcon, ...styles.addInstanceIcon}}/>
     );
 
     return (
@@ -146,7 +146,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
       const icon = (
         <FontIcon
           className={iconName}
-          style={this.mergeStyles(styles.dropdownInstanceIcon, iconBackground)}/>
+          style={{...styles.dropdownInstanceIcon, ...iconBackground}}/>
       );
 
       return (
@@ -165,16 +165,19 @@ const HeaderInstancesDropdown = Radium(React.createClass({
     const styles = this.getStyles();
     const subheaderText = InstancesStore.amIOwner(instances[0]) ? 'My Instances' : 'Shared with me';
 
+    if (!instances.length) {
+      return null;
+    }
+
     return (
-      <Show if={instances.length > 0}>
-        <List
-          className={InstancesStore.amIOwner(instances[0]) ? 'my-instances-list' : 'shared-instances-list'}
-          style={styles.list}
-          subheader={subheaderText}
-          subheaderStyle={styles.separator}>
-          {this.renderListItems(instances)}
-        </List>
-      </Show>
+      <List
+        className={InstancesStore.amIOwner(instances[0]) ? 'my-instances-list' : 'shared-instances-list'}
+        style={styles.list}>
+        <Subheader style={styles.separator}>
+          {subheaderText}
+        </Subheader>
+        {this.renderListItems(instances)}
+      </List>
     );
   },
 
@@ -193,7 +196,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
       <div style={styles.dropdownIcon}>
         <FontIcon
           className={`synicon-${iconName}`}
-          style={this.mergeStyles(styles.dropdownInstanceIcon, iconStyle)}/>
+          style={{...styles.dropdownInstanceIcon, ...iconStyle}}/>
         <div style={styles.dropdownText}>
           {currentInstance.name}
         </div>
@@ -216,7 +219,6 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         <IconMenu
           ref="instancesDropdown"
           iconButtonElement={this.renderDropdownIcon()}
-          openDirection="bottom-right"
           style={styles.iconMenu}
           menuStyle={styles.dropdownMenu}>
           {this.renderAddInstanceItem()}

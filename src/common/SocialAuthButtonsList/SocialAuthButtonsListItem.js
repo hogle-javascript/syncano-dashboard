@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-
-import {Styles, FontIcon, ListItem} from 'syncano-material-ui';
+import {FontIcon, ListItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'SocialAuthButtonsList',
@@ -15,9 +15,9 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       listItem: {
-        color: Styles.Colors.blue700,
+        color: Colors.blue700,
         ':hover': {
-          backgroundColor: Styles.Colors.blue700,
+          backgroundColor: Colors.blue700,
           color: '#fff'
         }
       },

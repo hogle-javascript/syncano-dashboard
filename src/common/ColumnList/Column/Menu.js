@@ -1,11 +1,10 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-
-import MUI from 'syncano-material-ui';
+import {IconButton, IconMenu} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default Radium(React.createClass({
-
   displayName: 'ColumnDesc',
 
   propTypes: {
@@ -16,7 +15,7 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       color: 'rgba(0,0,0,.54)',
-      hoverColor: MUI.Styles.Colors.blue600,
+      hoverColor: Colors.blue600,
       className: ColumnListConstans.DEFAULT_CLASSNAME.MENU
     };
   },
@@ -30,7 +29,7 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
-      display: '-webkit-flex; display: flex',
+      display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-end',
@@ -50,10 +49,10 @@ export default Radium(React.createClass({
 
   renderItemIconMenuButton() {
     return (
-      <MUI.IconButton
+      <IconButton
         touch={true}
         tooltipPosition='bottom-left'
-        iconClassName='synicon-dots-vertical'/>
+        iconClassName='synicon-dots-vertical' />
     );
   },
 
@@ -64,13 +63,13 @@ export default Radium(React.createClass({
       <div
         className={this.props.className}
         style={styles}>
-        <MUI.IconMenu
+        <IconMenu
           onTouchTap={this.handleTouchTap}
           iconButtonElement={this.renderItemIconMenuButton()}
           anchorOrigin={{horizontal: 'middle', vertical: 'center'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}>
           {this.props.children}
-        </MUI.IconMenu>
+        </IconMenu>
       </div>
     );
   }

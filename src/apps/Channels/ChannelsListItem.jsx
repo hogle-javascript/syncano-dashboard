@@ -5,7 +5,7 @@ import Actions from './ChannelsActions';
 import {Link} from 'react-router';
 import {SnackbarNotificationMixin} from '../../mixins';
 
-import {MenuItem} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
 import {Color, ColumnList, Clipboard} from '../../common/';
 
 const Column = ColumnList.Column;

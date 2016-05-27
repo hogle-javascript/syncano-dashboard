@@ -6,7 +6,7 @@ import {DialogsMixin} from '../../mixins';
 
 import Actions from './ClassesActions';
 
-import {MenuItem} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
 import {ColumnList, Color, Truncate, DataObjectsAmount, LinkWrapper} from '../../common/';
 
 const Column = ColumnList.Column;

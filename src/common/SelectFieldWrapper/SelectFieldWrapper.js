@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import {SelectField, TextField, MenuItem} from 'syncano-material-ui';
+import {SelectField, TextField, MenuItem} from 'material-ui';
 
 export default React.createClass({
   displayName: 'SelectFieldWrapper',

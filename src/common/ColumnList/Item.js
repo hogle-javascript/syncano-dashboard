@@ -1,15 +1,12 @@
 import React from 'react';
 import Radium from 'radium';
-
-import MUI from 'syncano-material-ui';
-
+import {Paper} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import ColumnListConstans from './ColumnListConstans';
+import _ from 'lodash';
 
 export default Radium(React.createClass({
-
   displayName: 'Item',
-
-  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {
@@ -33,12 +30,12 @@ export default Radium(React.createClass({
         marginTop: '-1px'
       },
       checked: {
-        background: MUI.Styles.Colors.lightBlue50
+        background: Colors.lightBlue50
       },
       hoverable: {
         cursor: 'pointer',
         ':hover': {
-          background: MUI.Styles.Colors.grey100
+          background: Colors.grey100
         }
       }
     };
@@ -48,17 +45,18 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-      <MUI.Paper
+      <Paper
         onTouchTap={this.props.handleClick}
         zDepth={this.props.zDepth}
-        style={this.mergeStyles(
+        style={_.merge(
+          {},
           styles.base,
           styles.hoverable,
           this.props.checked === true && styles.checked
         )}
         rounded={false}>
         {this.props.children}
-      </MUI.Paper>
+      </Paper>
     );
   },
 
@@ -66,16 +64,17 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-      <MUI.Paper
+      <Paper
         zDepth={0}
-        style={this.mergeStyles(
+        style={_.merge(
+          {},
           styles.base,
           styles.noBackground,
           this.props.checked === true && styles.checked
         )}
         rounded={false}>
         {this.props.children}
-      </MUI.Paper>
+      </Paper>
     );
   },
 

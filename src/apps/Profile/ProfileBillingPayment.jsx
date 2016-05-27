@@ -9,7 +9,7 @@ import {FormMixin} from '../../mixins';
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
 
-import {TextField, RaisedButton} from 'syncano-material-ui';
+import {TextField, RaisedButton} from 'material-ui';
 import {Container, CreditCard, Show, Loading, InnerToolbar} from '../../common/';
 
 export default Radium(React.createClass({
@@ -94,7 +94,8 @@ export default Radium(React.createClass({
                     name="number"
                     ref="number"
                     fullWidth={true}
-                    valueLink={this.linkState('number')}
+                    value={this.state.number}
+                    onChange={(event, value) => this.setState({number: value})}
                     errorText={this.getValidationMessages('number').join(' ')}
                     hintText="Card Number"
                     floatingLabelText="Card Number"
@@ -107,7 +108,8 @@ export default Radium(React.createClass({
                     name="cvc"
                     ref="cvc"
                     fullWidth={true}
-                    valueLink={this.linkState('cvc')}
+                    value={this.state.cvc}
+                    onChange={(event, value) => this.setState({cvc: value})}
                     errorText={this.getValidationMessages('cvc').join(' ')}
                     hintText="CVC"
                     floatingLabelText="CVC"
@@ -123,7 +125,8 @@ export default Radium(React.createClass({
                         ref="exp_month"
                         size={2}
                         fullWidth={true}
-                        valueLink={this.linkState('exp_month')}
+                        value={this.state.exp_month}
+                        onChange={(event, value) => this.setState({exp_month: value})}
                         errorText={this.getValidationMessages('exp_month').join(' ')}
                         hintText="Expiration month (MM)"
                         floatingLabelText="Expiration month (MM)"
@@ -135,7 +138,8 @@ export default Radium(React.createClass({
                         ref="exp_year"
                         size={4}
                         fullWidth={true}
-                        valueLink={this.linkState('exp_year')}
+                        value={this.state.exp_year}
+                        onChange={(event, value) => this.setState({exp_year: value})}
                         errorText={this.getValidationMessages('exp_year').join(' ')}
                         hintText="Expiration year (YYYY)"
                         floatingLabelText="Expiration year (YYYY)"
@@ -145,7 +149,7 @@ export default Radium(React.createClass({
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-20" style={{display: '-webkit-flex; display: flex'}}>
+                <div className="col-lg-20" style={{display: 'flex'}}>
                   <Show if={hasCard}>
                     <RaisedButton
                       onClick={this.toggleForm.bind(this, false)}

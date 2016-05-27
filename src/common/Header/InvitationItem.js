@@ -1,5 +1,6 @@
 import React from 'react';
-import {MenuItem, Divider, FontIcon, Styles} from 'syncano-material-ui';
+import {MenuItem, Divider, FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import StandardButtons from '../Dialog/DialogStandardButtons';
 
 export default ({item, handleAccept, handleDecline}) => {
@@ -20,7 +21,7 @@ export default ({item, handleAccept, handleDecline}) => {
         leftIcon={
           <FontIcon
             className="synicon-share-variant"
-            color={Styles.Colors.lightGreen500} />
+            color={Colors.lightGreen500} />
         }
         innerDivStyle={{opacity: 1}}
         style={menuItemStyles}>

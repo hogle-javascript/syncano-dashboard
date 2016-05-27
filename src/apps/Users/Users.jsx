@@ -7,7 +7,7 @@ import Store from './UsersStore';
 import {GroupsActions, GroupsStore, GroupsList, GroupDialog} from './../Groups';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {Container, InnerToolbar, Lists} from '../../common/';
 
 // Local components

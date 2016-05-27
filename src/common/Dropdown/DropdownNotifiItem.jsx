@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {FontIcon, FlatButton, List, ListItem} from 'syncano-material-ui';
+import {FontIcon, FlatButton, List, ListItem} from 'material-ui';
 import {Loading} from '../../common/';
 
 export default React.createClass({

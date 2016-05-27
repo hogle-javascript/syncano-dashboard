@@ -4,7 +4,8 @@ import _ from 'lodash';
 import Helmet from 'react-helmet';
 
 import SessionStore from '../apps/Session/SessionStore';
-import {Styles} from 'syncano-material-ui';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {SnackbarNotification} from './../apps';
 import {SyncanoTheme} from '../common/';
 
@@ -14,31 +15,19 @@ const App = React.createClass({
   childContextTypes: {
     location: React.PropTypes.object,
     params: React.PropTypes.object,
-    routes: React.PropTypes.array,
-    muiTheme: React.PropTypes.object
-  },
-
-  getInitialState() {
-    return {
-      muiTheme: Styles.ThemeManager.getMuiTheme(SyncanoTheme)
-    };
+    routes: React.PropTypes.array
   },
 
   getChildContext() {
     return {
       location: this.props.location,
       params: this.props.params,
-      routes: this.props.routes,
-      muiTheme: this.state.muiTheme
+      routes: this.props.routes
     };
   },
 
   componentWillMount() {
-    let palette = this.state.muiTheme.rawTheme.palette;
-    let newMuiTheme = _.merge(this.state.muiTheme, SyncanoTheme.getComponentThemes(palette));
-
     this.handleRouterSetup();
-    this.setState({muiTheme: newMuiTheme});
   },
 
   componentWillUpdate() {
@@ -60,13 +49,15 @@ const App = React.createClass({
 
   render() {
     return (
-      <div style={{display: 'flex', flexDirection: 'column', flex: 1, maxWidth: '100%'}}>
-        <Helmet
-          titleTemplate="%s - Syncano Dashboard"
-          link={[{rel: 'icon', type: 'image/png', href: 'img/favicon-32x32.png', sizes: '32x32'}]} />
-        {this.props.children}
-        <SnackbarNotification />
-      </div>
+      <MuiThemeProvider muiTheme={getMuiTheme(SyncanoTheme)}>
+        <div style={{display: 'flex', flexDirection: 'column', flex: 1, maxWidth: '100%'}}>
+          <Helmet
+            titleTemplate="%s - Syncano Dashboard"
+            link={[{rel: 'icon', type: 'image/png', href: 'img/favicon-32x32.png', sizes: '32x32'}]} />
+          {this.props.children}
+          <SnackbarNotification />
+        </div>
+      </MuiThemeProvider>
     );
   }
 });

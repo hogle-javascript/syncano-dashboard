@@ -11,7 +11,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 import Store from './ScriptEndpointsStore';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {Container} from '../../common/';
 
 // Local components

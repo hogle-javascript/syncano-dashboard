@@ -12,7 +12,7 @@ import Store from './SocketsStore';
 import {DialogsMixin} from '../../mixins';
 
 // Components
-import {FlatButton, RaisedButton} from 'syncano-material-ui';
+import {FlatButton, RaisedButton} from 'material-ui';
 import {Container, Loading, Show, Dialog} from '../../common/';
 
 // Apps

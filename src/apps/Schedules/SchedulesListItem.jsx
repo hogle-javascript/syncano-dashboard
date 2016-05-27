@@ -4,7 +4,8 @@ import {Link} from 'react-router';
 import Actions from './SchedulesActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
-import {MenuItem, Styles} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {ColumnList} from '../../common/';
 
 let Column = ColumnList.Column;
@@ -34,7 +35,7 @@ export default React.createClass({
         <Column.CheckIcon.Socket
           id={item.id.toString()}
           iconClassName="socket-schedule"
-          iconColor={Styles.Colors.lime400}
+          iconColor={Colors.lime400}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.label}

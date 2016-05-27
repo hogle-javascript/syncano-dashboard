@@ -12,7 +12,8 @@ import Actions from './APNSPushNotificationsActions';
 import Store from './APNSConfigDialogStore';
 
 // Components
-import {IconButton, TextField, Styles} from 'syncano-material-ui';
+import {IconButton, TextField} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Show, Dialog, DropZone, Notification} from '../../../common/';
 
 export default Radium(React.createClass({
@@ -65,13 +66,13 @@ export default Radium(React.createClass({
       GDClink: {
         margin: '80px 0',
         cursor: 'pointer',
-        color: Styles.Colors.blue400
+        color: Colors.blue400
       },
       actionsContainer: {
         padding: 20
       },
       dropzoneWithFileTitle: {
-        color: Styles.Colors.black,
+        color: Colors.black,
         fontSize: 16,
         fontWeight: 500
       },
@@ -84,7 +85,7 @@ export default Radium(React.createClass({
         paddingBottom: 10
       },
       closeIconColor: {
-        color: Styles.Colors.grey400
+        color: Colors.grey400
       },
       closeIcon: {
         position: 'absolute',
@@ -154,7 +155,8 @@ export default Radium(React.createClass({
               <div className="col-xs-23">
                 <TextField
                   fullWidth={true}
-                  valueLink={this.linkState(`${type}_certificate_name`)}
+                  value={this.state[`${type}_certificate_name`]}
+                  onChange={(event, value) => this.setState({[`${type}_certificate_name`]: value})}
                   defaultValue={state[`${type}_certificate_name`]}
                   errorText={this.getValidationMessages(`${type}_certificate_name`).join(' ')}
                   floatingLabelText="Apple Push Notification Certificate Name"/>
@@ -173,7 +175,8 @@ export default Radium(React.createClass({
               <div className="col-xs-23">
                 <TextField
                   fullWidth={true}
-                  valueLink={this.linkState(`${type}_bundle_identifier`)}
+                  value={this.state[`${type}_bundle_identifier`]}
+                  onChange={(event, value) => this.setState({[`${type}_bundle_identifier`]: value})}
                   defaultValue={state[`${type}_bundle_identifier`]}
                   errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}
                   floatingLabelText="Bundle Identifier"/>

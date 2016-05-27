@@ -9,7 +9,7 @@ import AutosaveMixin from '../Script/ScriptAutosaveMixin';
 import Store from './TemplateStore';
 import Actions from './TemplateActions';
 
-import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
+import {Checkbox, FontIcon, RaisedButton, TextField} from 'material-ui';
 import {InnerToolbar, Editor, Show, Loading, TogglePanel, Truncate} from '../../common/';
 
 export default React.createClass({
@@ -229,7 +229,7 @@ export default React.createClass({
               <TogglePanel
                 title="Code"
                 initialOpen={true}
-                style={{display: 'flex', flexDirection: 'column'}}>
+                style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                 <div style={{position: 'relative', flex: 1}}>
                   <Editor
                     ref="contentEditor"
@@ -257,7 +257,8 @@ export default React.createClass({
                     ref="dataSourceUrl"
                     name="dataSourceUrl"
                     fullWidth={true}
-                    valueLink={this.linkState('dataSourceUrl')}
+                    value={this.state.dataSourceUrl}
+                    onChange={(event, value) => this.setState({dataSourceUrl: value})}
                     errorText={this.getValidationMessages('dataSourceUrl').join(' ')}
                     hintText={<Truncate text={`e.g. ${SYNCANO_BASE_URL}v1.1/instances/${instanceName}/classes/`}/>}
                     floatingLabelText="Data source URL"/>
@@ -267,7 +268,8 @@ export default React.createClass({
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
                 <TogglePanel
                   title="Context"
-                  initialOpen={true}>
+                  initialOpen={true}
+                  style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                   <Editor
                     name="contextEditor"
                     ref="contextEditor"
@@ -288,7 +290,7 @@ export default React.createClass({
                 <TogglePanel
                   title="Preview"
                   initialOpen={true}
-                  style={{display: 'flex', flexDirection: 'column'}}>
+                  style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                   <div style={{position: 'relative', flex: 1, minHeight: 200}}>
                     <Editor
                       name="previewEditor"

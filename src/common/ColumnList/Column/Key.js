@@ -21,7 +21,7 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       key: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         fontSize: 14,

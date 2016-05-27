@@ -5,7 +5,8 @@ import Helmet from 'react-helmet';
 import APNSDevicesActions from '../../src/apps/PushDevices/APNSDevices/APNSDevicesActions';
 import GCMDevicesActions from '../../src/apps/PushDevices/GCMDevices/GCMDevicesActions';
 
-import {ListItem, FontIcon, RaisedButton, Styles} from 'syncano-material-ui';
+import {ListItem, FontIcon, RaisedButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Popover} from '../common/';
 import {InnerToolbar} from '../common/';
 
@@ -59,14 +60,14 @@ const PushDevicesPage = React.createClass({
             <ListItem
               leftIcon={
                 <FontIcon
-                  color={Styles.Colors.green400}
+                  color={Colors.green400}
                   className="synicon-android"
                 />
               }
               onTouchTap={() => this.handleAddDevice('gcm-devices')}
               primaryText="Android Device"/>
             <ListItem
-              leftIcon={<FontIcon color={Styles.Colors.black} className="synicon-apple"/>}
+              leftIcon={<FontIcon color={Colors.black} className="synicon-apple"/>}
               onTouchTap={() => this.handleAddDevice('apns-devices')}
               primaryText="iOS Device"/>
           </Popover>

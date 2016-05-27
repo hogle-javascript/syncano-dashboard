@@ -10,7 +10,7 @@ import Actions from './ChannelsActions';
 import Store from './ChannelDialogStore';
 
 // Components
-import {TextField, Toggle} from 'syncano-material-ui';
+import {TextField, Toggle} from 'material-ui';
 import {Dialog, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
@@ -103,7 +103,8 @@ export default React.createClass({
             <TextField
               ref="name"
               autoFocus={true}
-              valueLink={this.linkState('name')}
+              value={this.state.name}
+              onChange={(event, value) => this.setState({name: value})}
               errorText={this.getValidationMessages('name').join(' ')}
               name="name"
               disabled={this.hasEditMode()}
@@ -125,7 +126,8 @@ export default React.createClass({
             <TextField
               ref="description"
               name="description"
-              valueLink={this.linkState('description')}
+              value={this.state.description}
+              onChange={(event, value) => this.setState({description: value})}
               errorText={this.getValidationMessages('description').join(' ')}
               fullWidth={true}
               multiLine={true}

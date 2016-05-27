@@ -1,10 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
-
-import MUI from 'syncano-material-ui';
+import {FlatButton} from 'material-ui';
 
 export default Radium(React.createClass({
-
   displayName: 'PlanExplorerButton',
 
   propTypes: {
@@ -14,28 +12,13 @@ export default Radium(React.createClass({
     onPlanDialog: React.PropTypes.func
   },
 
-  mixins: [MUI.Utils.Styles],
-
-  getStyles() {
-    let styles = {
-    };
-
-    return this.mergeStyles(styles, this.props.style);
-  },
-
-  handleDeleteSubscription() {
-    this.props.onDeleteSubscription();
-  },
-
-  handleShowPlanDialog() {
-    this.props.onPlanDialog();
-  },
-
   renderExplorerButtonLabel() {
-    if (this.props.plan === 'builder') {
+    const {plan, isNewSubscription} = this.props;
+
+    if (plan === 'builder') {
       return 'Open Plans Explorer';
-    } else if (this.props.plan === 'paid-commitment') {
-      if (this.props.isNewSubscription) {
+    } else if (plan === 'paid-commitment') {
+      if (isNewSubscription) {
         return 'Change your next commitment';
       }
       return 'Upgrade your plan';
@@ -43,34 +26,31 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const {style, isNewSubscription, onDeleteSubscription, onPlanDialog} = this.props;
 
-    if (this.props.isNewSubscription) {
+    if (isNewSubscription) {
       return (
         <div className="row" style={{flexDirection: 'column'}}>
-          <div style={styles.explorerButton}>
-            <MUI.FlatButton
+          <div style={style.explorerButton}>
+            <FlatButton
               primary={true}
               label={'Cancel Change'}
-              onTouchTap={this.handleDeleteSubscription}
-              />
-            <MUI.FlatButton
+              onTouchTap={onDeleteSubscription} />
+            <FlatButton
               primary={true}
               style={{marginLeft: 8}}
               label={'Upgrade'}
-              onTouchTap={this.handleShowPlanDialog}
-              />
+              onTouchTap={onPlanDialog} />
           </div>
         </div>
       );
     }
 
     return (
-      <MUI.FlatButton
+      <FlatButton
         primary={true}
         label={this.renderExplorerButtonLabel() || ''}
-        onTouchTap={this.handleShowPlanDialog}
-        />
+        onTouchTap={this.handleShowPlanDialog} />
     );
   }
 }));

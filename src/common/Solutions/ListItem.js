@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import MUI from 'syncano-material-ui';
-
+import {FontIcon, Card, CardTitle, Avatar, CardText, FlatButton, IconButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import SolutionStar from './Star';
 
 export default Radium(React.createClass({
@@ -10,12 +10,12 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       cardTitleContainer: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         position: 'relative'
       },
       cardTitleRoot: {
         flex: 1,
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         alignItems: 'center',
         maxWidth: 'calc(100% - 87px)'
       },
@@ -39,7 +39,7 @@ export default Radium(React.createClass({
       },
       cardTextList: {
         color: '#9b9b9b',
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         alignItems: 'center',
         fontSize: 12,
         padding: '4px 0'
@@ -51,7 +51,7 @@ export default Radium(React.createClass({
       cardFooter: {
         borderTop: '1px solid #ddd',
         padding: 8,
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between'
       },
@@ -59,10 +59,10 @@ export default Radium(React.createClass({
         padding: 16
       },
       installIcon: {
-        color: MUI.Styles.Colors.blue500
+        color: Colors.blue500
       },
       seeDetailsButton: {
-        color: MUI.Styles.Colors.blue500,
+        color: Colors.blue500,
         letterSpacing: 0.5
       },
       tag: {
@@ -106,7 +106,7 @@ export default Radium(React.createClass({
 
     return (
       <div style={styles.cardTextList}>
-        <MUI.FontIcon
+        <FontIcon
           style={styles.cardTextListIcon}
           className="synicon-information-outline"
           color={color}/>
@@ -139,34 +139,34 @@ export default Radium(React.createClass({
     let item = this.props.data;
 
     return (
-      <MUI.Card>
+      <Card>
         <div style={styles.cardTitleContainer}>
-          <MUI.CardTitle
+          <CardTitle
             style={styles.cardTitleRoot}
             title={item.label}
             titleStyle={styles.cardTitle}/>
 
           <div style={styles.cardAvatarContainer}>
-            <MUI.Avatar
+            <Avatar
               size={55}
               src={item.author ? item.author.avatar_url : null}/>
           </div>
         </div>
 
-        <MUI.CardText style={styles.cardSubtitle}>
+        <CardText style={styles.cardSubtitle}>
           {item.description}
-        </MUI.CardText>
+        </CardText>
 
-        <MUI.CardText>
+        <CardText>
           <div style={styles.cardTextList}>
-            <MUI.FontIcon
+            <FontIcon
               style={styles.cardTextListIcon}
               className="synicon-tag"
               color="rgba(222, 222, 222, 0.54)"/>
             {this.renderItemTags()}
           </div>
           {this.renderVersion()}
-        </MUI.CardText>
+        </CardText>
 
         <div style={styles.cardFooter}>
           <SolutionStar
@@ -174,18 +174,18 @@ export default Radium(React.createClass({
             onUnstar={this.props.onUnstar}
             onStar={this.props.onStar}
             />
-          <MUI.FlatButton
+          <FlatButton
             label="SEE DETAILS"
             labelStyle={styles.seeDetailsButton}
             onClick={this.handleSeeMoreClick.bind(null, item.id)}/>
-          <MUI.IconButton
+          <IconButton
             iconClassName="synicon-download"
             disabled={this.isNoVersions()}
             iconStyle={this.isNoVersions() ? {} : styles.installIcon}
             onClick={this.handleInstallClick.bind(null, item.id)}
             touch={true}/>
         </div>
-      </MUI.Card>
+      </Card>
     );
   }
 }));

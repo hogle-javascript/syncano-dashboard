@@ -6,7 +6,7 @@ import SessionStore from '../Session/SessionStore';
 import Actions from './ProfileActions';
 import Store from './ProfileBillingInvoicesStore';
 
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {ColumnList, Container, Loading, Show, InnerToolbar, Lists} from '../../common/';
 
 let Column = ColumnList.Column;

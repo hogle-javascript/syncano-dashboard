@@ -9,7 +9,8 @@ import Actions from './ListViewActions';
 import SessionStore from '../Session/SessionStore';
 
 // Components
-import {Styles, List, ListItem, Divider, RaisedButton} from 'syncano-material-ui';
+import {List, ListItem, Divider, RaisedButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Container, Loading, Tags, Show, Solutions, InnerToolbar, Sidebar} from '../../common/';
 
 import CreateDialog from './CreateDialog';
@@ -30,7 +31,7 @@ const SolutionsListView = React.createClass({
   getStyles() {
     return {
       listItemChecked: {
-        background: Styles.Colors.lightBlue50
+        background: Colors.lightBlue50
       }
     };
   },

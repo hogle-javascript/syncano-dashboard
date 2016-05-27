@@ -2,10 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import _ from 'lodash';
 
-import MUI from 'syncano-material-ui';
-
 export default Radium(React.createClass({
-
   displayName: 'ChartLegend',
 
   propTypes: {
@@ -18,8 +15,6 @@ export default Radium(React.createClass({
     }))
   },
 
-  mixins: [MUI.Utils.Styles],
-
   getDefaultProps() {
     return {
       rows: [],
@@ -28,7 +23,7 @@ export default Radium(React.createClass({
   },
 
   getStyles() {
-    let styles = {
+    const styles = {
       legendSquere: {
         marginTop: 3,
         height: 10,
@@ -46,7 +41,7 @@ export default Radium(React.createClass({
       }
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return {...styles, ...this.props.style};
   },
 
   renderPercent(row) {

@@ -13,7 +13,8 @@ import ClassesStore from './ClassesStore';
 import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
-import {TextField, FlatButton, Checkbox, Tabs, Tab, Styles} from 'syncano-material-ui';
+import {TextField, FlatButton, Checkbox, Tabs, Tab} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Color, Show, SelectFieldWrapper, Tooltip, Dialog, Icon, Notification, ColorIconPicker} from '../../common/';
 
 export default React.createClass({
@@ -75,7 +76,7 @@ export default React.createClass({
         padding: '0 24px'
       },
       groupItemContainer: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         justifyContent: 'space-between',
         flexWrap: 'nowrap'
       },
@@ -87,13 +88,13 @@ export default React.createClass({
         flexShrink: 0
       },
       tab: {
-        color: Styles.Colors.blue400,
+        color: Colors.blue400,
         fontSize: 13,
         lineHeight: '18px',
         fontWeight: 800
       },
       inkBarStyle: {
-        background: Styles.Colors.blue400
+        background: Colors.blue400
       },
       contentContainerStyle: {
         padding: '0 8px 0 8px'
@@ -439,7 +440,8 @@ export default React.createClass({
                   autoFocus={true}
                   disabled={this.hasEditMode()}
                   fullWidth={true}
-                  valueLink={this.linkState('name')}
+                  value={this.state.name}
+                  onChange={(event, value) => this.setState({name: value})}
                   errorText={this.getValidationMessages('name').join(' ')}
                   hintText="Class's name"
                   floatingLabelText="Name"/>
@@ -447,7 +449,8 @@ export default React.createClass({
                   ref="description"
                   name="description"
                   fullWidth={true}
-                  valueLink={this.linkState('description')}
+                  value={this.state.description}
+                  onChange={(event, value) => this.setState({description: value})}
                   errorText={this.getValidationMessages('description').join(' ')}
                   hintText="Class's description"
                   floatingLabelText="Description (optional)"/>
@@ -508,7 +511,8 @@ export default React.createClass({
                   ref="fieldName"
                   name="fieldName"
                   fullWidth={true}
-                  valueLink={this.linkState('fieldName')}
+                  value={this.state.fieldName}
+                  onChange={(event, value) => this.setState({fieldName: value})}
                   hintText="Field's name"
                   floatingLabelText="Name"/>
               </div>

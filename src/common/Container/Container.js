@@ -1,5 +1,4 @@
 import React from 'react';
-import {Utils} from 'syncano-material-ui';
 
 export default React.createClass({
   displayName: 'Container',
@@ -8,14 +7,12 @@ export default React.createClass({
     style: React.PropTypes.object
   },
 
-  mixins: [Utils.Styles],
-
   getStyles() {
     let styles = {
       padding: '32px 24px 64px'
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return {...styles, ...this.props.style};
   },
 
   render() {

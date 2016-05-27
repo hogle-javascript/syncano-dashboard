@@ -10,7 +10,7 @@ import AdminsInvitationsActions from './AdminsInvitationsActions';
 import Store from './AdminDialogStore';
 
 // Components
-import {TextField} from 'syncano-material-ui';
+import {TextField} from 'material-ui';
 import {Dialog, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
@@ -84,7 +84,8 @@ export default React.createClass({
           autoFocus={true}
           fullWidth={true}
           disabled={this.hasEditMode()}
-          valueLink={this.linkState('email')}
+          value={this.state.email}
+          onChange={(event, value) => this.setState({email: value})}
           errorText={this.getValidationMessages('email').join(' ')}
           hintText="Administrator's email"
           floatingLabelText="Email"/>

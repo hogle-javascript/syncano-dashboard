@@ -1,17 +1,14 @@
 import React from 'react';
 import _ from 'lodash';
 import DialogMixin from '../../mixins/DialogMixin';
-import {Dialog, IconButton, Utils} from 'syncano-material-ui';
+import {Dialog, IconButton} from 'material-ui';
 import {Loading} from '../';
 import DialogSidebar from './DialogSidebar';
 
 export default React.createClass({
   displayName: 'FullPageDialog',
 
-  mixins: [
-    DialogMixin,
-    Utils.Styles
-  ],
+  mixins: [DialogMixin],
 
   getDefaultProps() {
     return {
@@ -46,7 +43,8 @@ export default React.createClass({
       content: {
         transform: 'none',
         width: '100%',
-        maxWidth: 'none'
+        maxWidth: 'none',
+        background: 'red'
       },
       title: {
         paddingTop: 0
@@ -103,18 +101,17 @@ export default React.createClass({
       <Dialog
         {...other}
         open={_.isBoolean(open) ? open : this.state.open}
-        style={this.mergeStyles(styles.style, style)}
+        style={{...styles.style, ...style}}
         overlayStyle={styles.overlay}
-        contentStyle={this.mergeStyles(styles.content, this.getContentConfig(contentSize), contentStyle)}
+        contentClassName="full-page-dialog__content"
+        contentStyle={{...styles.content, ...this.getContentConfig(contentSize), contentStyle}}
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}
-        titleStyle={this.mergeStyles(styles.title, titleStyle)}
+        titleStyle={{...styles.title, ...titleStyle}}
         bodyStyle={styles.body}
-        actionsContainerStyle={this.mergeStyles(styles.actionsContainer, sidebar && styles.actionsContainerWhenSidebar)}
-        onRequestClose={onRequestClose}
-        zDepth={0}>
-
+        actionsContainerStyle={{...styles.actionsContainer, ...(sidebar && styles.actionsContainerWhenSidebar)}}
+        onRequestClose={onRequestClose}>
         <IconButton
           style={styles.closeButton}
           iconStyle={styles.closeButtonIcon}

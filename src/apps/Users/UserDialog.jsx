@@ -12,7 +12,7 @@ import UsersActions from './UsersActions';
 import {GroupsStore} from './../Groups';
 
 // Components
-import {TextField} from 'syncano-material-ui';
+import {TextField} from 'material-ui';
 import {Dialog} from '../../common/';
 
 import 'react-select/dist/react-select.min.css';
@@ -151,7 +151,8 @@ export default React.createClass({
             ref="username"
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('username')}
+            value={this.state.username}
+            onChange={(event, value) => this.setState({username: value})}
             errorText={this.getValidationMessages('username').join(' ')}
             hintText="User's name"
             floatingLabelText="Username" />
@@ -159,7 +160,8 @@ export default React.createClass({
             ref="password"
             type="password"
             fullWidth={true}
-            valueLink={this.linkState('password')}
+            value={this.state.password}
+            onChange={(event, value) => this.setState({password: value})}
             errorText={this.getValidationMessages('password').join(' ')}
             hintText="User's password"
             floatingLabelText="Password"

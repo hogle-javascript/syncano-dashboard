@@ -1,5 +1,5 @@
 import React from 'react';
-import {Styles, Utils} from 'syncano-material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
@@ -14,7 +14,7 @@ export default React.createClass({
   getStyles() {
     return {
       iconStyle: {
-        color: Styles.Colors.red300
+        color: Colors.red300
       }
     };
   },
@@ -32,7 +32,7 @@ export default React.createClass({
         {...other}
         iconClassName="synicon-socket-script-endpoint"
         style={style}
-        iconStyle={Utils.Styles.mergeStyles(styles.iconStyle, iconStyle)}/>
+        iconStyle={{...styles.iconStyle, ...iconStyle}}/>
     );
   }
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Checkbox, IconMenu, ListItem, IconButton} from 'syncano-material-ui';
+import {Checkbox, IconMenu, ListItem, IconButton} from 'material-ui';
 
 export default React.createClass({
   displayName: 'ColumnsFilterMenu',

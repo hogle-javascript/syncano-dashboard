@@ -7,7 +7,8 @@ import SessionStore from '../../apps/Session/SessionStore';
 import ProfileInvitationsStore from '../../apps/ProfileInvitations/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../../apps/ProfileInvitations/ProfileInvitationsActions';
 
-import {Popover, FontIcon, MenuItem, Divider, Badge, IconButton, Styles, Utils} from 'syncano-material-ui';
+import {Popover, FontIcon, MenuItem, Divider, Badge, IconButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Loading} from '../';
 import {SnackbarNotificationMixin} from '../../mixins';
 import InvitationItem from './InvitationItem';
@@ -21,8 +22,7 @@ export default Radium(React.createClass({
 
   mixins: [
     Reflux.connect(ProfileInvitationsStore),
-    SnackbarNotificationMixin,
-    Utils.Styles
+    SnackbarNotificationMixin
   ],
 
   componentDidMount() {
@@ -38,11 +38,11 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       icon: {
-        color: Styles.Colors.white,
+        color: Colors.white,
         fontSize: 21
       },
       badgeContainer: {
-        padding: '0'
+        padding: 0
       },
       badgeContainerFilled: {
         padding: '0 6px 0 0'
@@ -56,7 +56,7 @@ export default Radium(React.createClass({
       },
       resendEmailText: {
         cursor: 'pointer',
-        color: Styles.Colors.lightBlueA700,
+        color: Colors.lightBlueA700,
         lineHeight: '48px'
       },
       menuItem: {
@@ -124,7 +124,7 @@ export default Radium(React.createClass({
           leftIcon={
             <FontIcon
               className="synicon-information"
-              color={Styles.Colors.lightBlueA700} />
+              color={Colors.lightBlueA700} />
           }/>
       );
     }
@@ -146,7 +146,7 @@ export default Radium(React.createClass({
           leftIcon={
             <FontIcon
               className="synicon-alert"
-              color={Styles.Colors.orange500}/>
+              color={Colors.orange500}/>
           }>
           <div style={styles.resendEmailText}>
             Your email address is not yet verified. Click here to resend activation email.
@@ -164,8 +164,8 @@ export default Radium(React.createClass({
     const notificationCountIcon = isBadge ? notifications.length : '';
     const iconClassName = notifications.length ? 'synicon-bell' : 'synicon-bell-outline';
     const styles = this.getStyles();
-    const badgeContainerStyle = this.mergeStyles(styles.badgeContainer, isBadge && styles.badgeContainerFilled);
-    const badgeStyle = this.mergeStyles(styles.badge, isBadge && styles.badgeFilled);
+    const badgeContainerStyle = {...styles.badgeContainer, ...(isBadge && styles.badgeContainerFilled)};
+    const badgeStyle = {...styles.badge, ...(isBadge && styles.badgeFilled)};
 
     return (
       <Badge

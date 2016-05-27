@@ -1,6 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import {Styles, Slider} from 'syncano-material-ui';
+import {Slider} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'Slider',
@@ -44,7 +45,7 @@ export default Radium(React.createClass({
         textAlign: 'right !important'
       },
       selectedItem: {
-        color: Styles.Colors.lightBlueA700
+        color: Colors.lightBlueA700
       }
     };
   },

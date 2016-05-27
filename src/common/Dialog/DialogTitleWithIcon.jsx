@@ -1,5 +1,6 @@
 import React from 'react';
-import {FontIcon, Styles} from 'syncano-material-ui';
+import {FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'DialogtitleWithIcon',
@@ -17,8 +18,8 @@ export default React.createClass({
       titleIconContainer: {
         marginRight: 10,
         padding: '7px 7px 1px 7px',
-        backgroundColor: Styles.Colors.grey50,
-        border: '1px solid ' + Styles.Colors.grey200,
+        backgroundColor: Colors.grey50,
+        border: '1px solid ' + Colors.grey200,
         borderRadius: '6px'
       }
     };

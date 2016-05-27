@@ -1,18 +1,14 @@
 import React from 'react';
 import Radium from 'radium';
-
-import MUI from 'syncano-material-ui';
+import {FontIcon, Avatar, ListItem} from 'material-ui';
 
 export default Radium(React.createClass({
-
   displayName: 'Item',
-
-  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     let styles = {
       listItem: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         marginBottom: 0,
         border: '1px dashed #ddd',
         backgroundColor: '#fff',
@@ -24,26 +20,29 @@ export default Radium(React.createClass({
       icon: {
         margin: 0,
         height: 40,
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
       },
       avatar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         top: '50%',
         transform: 'translateY(-50%)'
       }
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return {...styles, ...this.props.style};
   },
 
   getIcon() {
     let styles = this.getStyles();
 
     return (
-      <MUI.FontIcon
+      <FontIcon
         className="synicon-plus"
-        style={styles.icon}/>
+        style={styles.icon} />
     );
   },
 
@@ -51,9 +50,9 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-      <MUI.Avatar
+      <Avatar
         icon={this.getIcon()}
-        style={styles.avatar}/>
+        style={styles.avatar} />
     );
   },
 
@@ -61,13 +60,13 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-      <MUI.ListItem
+      <ListItem
         className="empty-list-item"
         onTouchTap={this.props.handleClick}
         style={styles.listItem}
         leftAvatar={this.getAvatar()}>
         {this.props.children}
-      </MUI.ListItem>
+      </ListItem>
     );
   }
 }));

@@ -1,7 +1,5 @@
 import React from 'react';
 import Radium from 'radium';
-
-import {Utils} from 'syncano-material-ui';
 import PaymentIcon from '../PaymentIcon';
 
 export default Radium(React.createClass({
@@ -10,8 +8,6 @@ export default Radium(React.createClass({
   propTypes: {
     handleClick: React.PropTypes.func
   },
-
-  mixins: [Utils.Styles],
 
   getStyles() {
     return {
@@ -23,7 +19,7 @@ export default Radium(React.createClass({
         borderRadius: 10,
         padding: 16,
         color: 'rgba(0, 0, 0, 0.87)',
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         flexDirection: 'column'
       },
       cardHeadline: {
@@ -32,7 +28,7 @@ export default Radium(React.createClass({
         lineHeight: '16px'
       },
       cardFooter: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         margin: 'auto 0 0',
         justifyContent: 'space-between',
         alignItems: 'flex-end'

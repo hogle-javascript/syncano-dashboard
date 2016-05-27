@@ -1,10 +1,7 @@
 import React from 'react';
-import {Utils} from 'syncano-material-ui';
 
 export default React.createClass({
   displayName: 'Truncate',
-
-  mixins: [Utils.Styles],
 
   getStyles() {
     return {
@@ -21,7 +18,7 @@ export default React.createClass({
 
     return (
       <div
-        style={this.mergeStyles(style, styles)}
+        style={{...style, ...styles}}
         {...other}>
         {text}
       </div>

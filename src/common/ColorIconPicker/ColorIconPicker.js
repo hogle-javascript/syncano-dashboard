@@ -1,6 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import {Tabs, Tab, Styles} from 'syncano-material-ui';
+import {Tabs, Tab} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import Preview from './Preview';
 import ColorPicker from './ColorPicker';
 import IconPicker from './IconPicker';
@@ -13,13 +14,13 @@ export default Radium(({icon, color, onIconChange, onColorChange}) => {
       lineHeight: '18px'
     },
     tab: {
-      color: Styles.Colors.blue400,
+      color: Colors.blue400,
       fontSize: 13,
       lineHeight: '18px',
       fontWeight: 800
     },
     inkBarStyle: {
-      background: Styles.Colors.blue400
+      background: Colors.blue400
     },
     contentContainerStyle: {
       paddingTop: 25
@@ -35,11 +36,9 @@ export default Radium(({icon, color, onIconChange, onColorChange}) => {
       <p style={styles.headline}>
         Instance icon
       </p>
-
       <Preview
         color={color}
         icon={icon}/>
-
       <Tabs
         inkBarStyle={styles.inkBarStyle}
         contentContainerStyle={styles.contentContainerStyle}
