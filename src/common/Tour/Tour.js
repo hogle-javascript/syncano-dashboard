@@ -174,7 +174,6 @@ export default Radium(React.createClass({
             <RaisedButton
               label={currentStep === config.length - 1 ? 'End tour' : 'Next'}
               labelStyle={{fontSize: '16px'}}
-              fullWidth={false}
               style={{boxShadow: 'none', height: '48px'}}
               primary={true}/>
           </div>

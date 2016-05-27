@@ -229,7 +229,7 @@ export default React.createClass({
               <TogglePanel
                 title="Code"
                 initialOpen={true}
-                style={{display: 'flex', flexDirection: 'column'}}>
+                style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                 <div style={{position: 'relative', flex: 1}}>
                   <Editor
                     ref="contentEditor"
@@ -268,7 +268,8 @@ export default React.createClass({
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
                 <TogglePanel
                   title="Context"
-                  initialOpen={true}>
+                  initialOpen={true}
+                  style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                   <Editor
                     name="contextEditor"
                     ref="contextEditor"
@@ -289,7 +290,7 @@ export default React.createClass({
                 <TogglePanel
                   title="Preview"
                   initialOpen={true}
-                  style={{display: 'flex', flexDirection: 'column'}}>
+                  style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                   <div style={{position: 'relative', flex: 1, minHeight: 200}}>
                     <Editor
                       name="previewEditor"

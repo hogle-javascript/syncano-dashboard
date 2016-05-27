@@ -61,9 +61,8 @@ export default React.createClass({
           <RaisedButton
             type="submit"
             label="Reset password"
-            fullWidth={true}
-            labelStyle={{fontSize: '16px'}}
-            style={{boxShadow: 'none', height: '48px'}}
+            labelStyle={{fontSize: '16px', lineHeight: '48px'}}
+            style={{boxShadow: 'none', height: '48px', width: '100%'}}
             disabled={!this.state.canSubmit}
             primary={true}/>
         </form>

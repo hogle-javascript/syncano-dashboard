@@ -53,7 +53,9 @@ export default React.createClass({
   },
 
   handleCrontabChange(value) {
-    this.setState({crontab: value.text});
+    const crontab = value.text ? value.text : value;
+
+    this.setState({crontab});
   },
 
   renderCrontabDataSource() {

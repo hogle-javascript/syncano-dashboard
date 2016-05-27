@@ -152,10 +152,9 @@ const AccountSignup = React.createClass({
           <RaisedButton
             type="submit"
             label="Create my account"
-            labelStyle={{fontSize: '16px'}}
-            fullWidth={true}
+            labelStyle={{fontSize: '16px', lineHeight: '48px'}}
             disabled={!this.state.canSubmit}
-            style={{boxShadow: 'none', height: '48px'}}
+            style={{boxShadow: 'none', height: '48px', width: '100%'}}
             primary={true}/>
         </form>
 
