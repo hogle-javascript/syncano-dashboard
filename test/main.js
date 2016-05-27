@@ -126,5 +126,4 @@ import './pages/app';
 import './pages/dashboard';
 import './pages/instance';
 import './pages/notfound';
-import './utils/MUIContext';
 import './utils/ReactRouterContext';

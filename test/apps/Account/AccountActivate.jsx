@@ -1,7 +1,6 @@
 import TestUtils from 'react-addons-test-utils';
 
 import ReactRouterContext from '../../utils/ReactRouterContext';
-import MUIContext from '../../utils/MUIContext';
 import AccountActivate from '../../../src/apps/Account/AccountActivate';
 
 
