@@ -6,7 +6,7 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
 import {IconButton} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/'
+import {colors as Colors} from 'material-ui/styles/';
 import {Tour} from '../../common/';
 
 export default React.createClass({
