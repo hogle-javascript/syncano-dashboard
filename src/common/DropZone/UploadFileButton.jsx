@@ -1,5 +1,6 @@
 import React from 'react';
-import {RaisedButton, FontIcon, Styles} from 'syncano-material-ui';
+import {RaisedButton, FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'UploadFileButton',
@@ -9,10 +10,10 @@ export default React.createClass({
       uploadButton: {
         marginBottom: 20,
         fontWeight: 600,
-        color: Styles.Colors.grey500
+        color: Colors.grey500
       },
       uploadButtonIcon: {
-        color: Styles.Colors.grey500,
+        color: Colors.grey500,
         fontSize: 18,
         paddingRight: 8
       }
@@ -53,8 +54,8 @@ export default React.createClass({
           onChange={this.handleFile}/>
         <RaisedButton
           style={styles.uploadButton}
-          backgroundColor={Styles.Colors.grey200}
-          labelColor={Styles.Colors.grey500}
+          backgroundColor={Colors.grey200}
+          labelColor={Colors.grey500}
           onTouchTap={this.handleClickIpnut}>
           <div className="row align-center align-middle hp-2-l hp-2-r">
             <FontIcon

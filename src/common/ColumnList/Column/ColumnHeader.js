@@ -1,10 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-import {Styles} from 'syncano-material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default Radium(React.createClass({
-
   displayName: 'ColumnHeader',
 
   propTypes: {
@@ -16,7 +15,7 @@ export default Radium(React.createClass({
     children: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.node
-    ]).isRequired
+    ])
   },
 
   getClassName() {
@@ -40,7 +39,7 @@ export default Radium(React.createClass({
         cursor: 'pointer',
         display: 'inline-block',
         ':hover': {
-          color: Styles.Colors.blue400
+          color: Colors.blue400
         }
       }
     };

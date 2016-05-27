@@ -1,6 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import {DropDownMenu} from 'syncano-material-ui';
+import {DropDownMenu} from 'material-ui';
 
 const InnerToolbarDropdown = React.createClass({
   displayName: 'InnerToolbarDropdown',

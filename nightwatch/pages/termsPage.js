@@ -3,7 +3,7 @@ export default {
   commands: [],
   elements: {
     termsOfUseContainer: {
-      selector: '//h1[text()="Terms of Service"]',
+      selector: '//h2[text()="Terms and Legal"]',
       locateStrategy: 'xpath'
     }
   }

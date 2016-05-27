@@ -4,7 +4,7 @@ import {SnackbarNotificationMixin} from '../../mixins/';
 
 import Actions from './ApiKeysActions';
 
-import {MenuItem} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
 import {Clipboard, ColumnList, Color} from '../../common/';
 
 let Column = ColumnList.Column;

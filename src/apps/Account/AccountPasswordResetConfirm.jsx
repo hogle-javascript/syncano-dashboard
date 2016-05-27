@@ -9,7 +9,7 @@ import Store from './AuthStore';
 import Actions from './AuthActions';
 
 // Components
-import {TextField, RaisedButton} from 'syncano-material-ui';
+import {TextField, RaisedButton} from 'material-ui';
 import AccountContainer from './AccountContainer';
 
 export default React.createClass({
@@ -60,7 +60,8 @@ export default React.createClass({
 
           <TextField
             ref="password"
-            valueLink={this.linkState('password')}
+            value={this.state.password}
+            onChange={(event, value) => this.setState({password: value})}
             errorText={this.getValidationMessages('password').join(' ')}
             type="password"
             name="password"
@@ -71,7 +72,8 @@ export default React.createClass({
 
           <TextField
             ref="confirmPassword"
-            valueLink={this.linkState('confirmPassword')}
+            value={this.state.confirmPassword}
+            onChange={(event, value) => this.setState({confirmPassword: value})}
             errorText={this.getValidationMessages('confirmPassword').join(' ')}
             type="password"
             name="confirmPassword"

@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 import ListItem from './ChannelHistoryListItem';
-import {FontIcon} from 'syncano-material-ui';
+import {FontIcon} from 'material-ui';
 import {ColumnList, Loading, Lists} from '../../common/';
 
 const Column = ColumnList.Column;

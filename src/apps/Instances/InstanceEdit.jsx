@@ -12,7 +12,7 @@ import SessionActions from '../Session/SessionActions';
 import {DialogsMixin} from '../../mixins';
 
 // Components
-import {Utils, IconButton, RaisedButton, TextField} from 'syncano-material-ui';
+import {IconButton, RaisedButton, TextField} from 'material-ui';
 import {Container, Loading, InnerToolbar, Dialog} from '../../common/';
 
 export default React.createClass({
@@ -25,8 +25,7 @@ export default React.createClass({
   mixins: [
     Reflux.connect(SessionStore),
     Reflux.connect(Store),
-    DialogsMixin,
-    Utils.Styles
+    DialogsMixin
   ],
 
   validatorConstraints: {
@@ -60,7 +59,7 @@ export default React.createClass({
         left: 50
       },
       customizeSection: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         flexDirection: 'column',
         marginBottom: 48
       },
@@ -72,7 +71,7 @@ export default React.createClass({
         height: 48,
         fontSize: 18,
         lineHeight: '20px',
-        display: '-webkit-inline-flex; display: inline-flex',
+        display: 'inline-flex',
         borderRadius: '50%',
         color: '#FFF',
         marginBottom: 16

@@ -1,9 +1,8 @@
 import React from 'react';
-import {Styles, Utils} from 'syncano-material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
-
   displayName: 'DataSocket',
 
   getDefaultProps() {
@@ -15,7 +14,7 @@ export default React.createClass({
   getStyles() {
     return {
       iconStyle: {
-        color: Styles.Colors.green400
+        color: Colors.green400
       }
     };
   },
@@ -33,7 +32,7 @@ export default React.createClass({
         {...other}
         iconClassName="synicon-socket-data"
         style={style}
-        iconStyle={Utils.Styles.mergeStyles(styles.iconStyle, iconStyle)}/>
+        iconStyle={{...styles.iconStyle, ...iconStyle}}/>
     );
   }
 });

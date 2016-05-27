@@ -5,7 +5,7 @@ import Reflux from 'reflux';
 import Store from './AuthStore';
 import Constants from './AuthConstants';
 
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import AccountContainer from './AccountContainer';
 
 const AccountPasswordUpdate = React.createClass({

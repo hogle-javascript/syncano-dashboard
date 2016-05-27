@@ -16,7 +16,7 @@ import CreateDialogActions from './CreateDialogActions';
 import InstallDialogActions from './InstallDialogActions';
 
 // Components
-import {FontIcon, IconButton, RaisedButton, Avatar} from 'syncano-material-ui';
+import {FontIcon, IconButton, RaisedButton, Avatar} from 'material-ui';
 import {Container, Solutions, Show, Loading, Dialog, InnerToolbar} from '../../common/';
 import VersionsList from './VersionsList';
 

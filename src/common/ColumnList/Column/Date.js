@@ -4,14 +4,7 @@ import Moment from 'moment';
 import ColumnListConstans from '../ColumnListConstans';
 
 export default Radium(React.createClass({
-
   displayName: 'ColumnDate',
-
-  propTypes: {
-    color: React.PropTypes.string,
-    date: React.PropTypes.string,
-    ifInvalid: React.PropTypes.string
-  },
 
   getDefaultProps() {
     return {
@@ -22,7 +15,7 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
-      display: '-webkit-flex; display: flex',
+      display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       fontSize: '12px',

@@ -1,11 +1,23 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 
-import {FontIcon, Styles, Utils} from 'syncano-material-ui';
+import {FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Loading} from '../';
 import UploadFileButton from './UploadFileButton';
 
-const DropZone = (props) => {
+const DropZone = ({
+  isLoading,
+  disableClick,
+  onDrop,
+  containerStyle,
+  styles,
+  withButton,
+  handleButtonClick,
+  uploadButtonLabel,
+  certificateType,
+  children
+}) => {
   const dropZoneStyles = {
     dropZone: {
       display: 'webkit-flex; display: flex',
@@ -15,13 +27,13 @@ const DropZone = (props) => {
       width: '100%',
       borderStyle: 'dashed',
       borderWidth: 1,
-      borderColor: Styles.Colors.grey300,
-      backgroundColor: Styles.Colors.grey100,
-      color: Styles.Colors.grey400,
+      borderColor: Colors.grey300,
+      backgroundColor: Colors.grey100,
+      color: Colors.grey400,
       ':hover': {
-        borderColor: Styles.Colors.blue500,
-        backgroundColor: Styles.Colors.blue200,
-        color: Styles.Colors.blue500
+        borderColor: Colors.blue500,
+        backgroundColor: Colors.blue200,
+        color: Colors.blue500
       }
     },
     dropZoneDescription: {
@@ -31,14 +43,12 @@ const DropZone = (props) => {
       fontSize: '24px'
     },
     uploadIcon: {
-      color: Styles.Colors.grey300,
+      color: Colors.grey300,
       fontSize: '70px'
     }
   };
 
   const renderUploadButton = () => {
-    const {withButton, handleButtonClick, uploadButtonLabel} = props;
-
     if (withButton) {
       return (
         <UploadFileButton
@@ -49,8 +59,6 @@ const DropZone = (props) => {
   };
 
   const renderDescription = () => {
-    const {children, certificateType} = props;
-
     if (children) {
       return children;
     }
@@ -67,17 +75,15 @@ const DropZone = (props) => {
     );
   };
 
-  const {isLoading, disableClick, onDrop, containerStyle, styles} = props;
-
   return (
-    <div style={Utils.Styles.mergeStyles({}, containerStyle)}>
+    <div style={containerStyle}>
       <Loading show={isLoading}>
         {renderUploadButton()}
         <Dropzone
           multiple={false}
           disableClick={disableClick}
           onDrop={onDrop}
-          style={Utils.Styles.mergeStyles(dropZoneStyles.dropZone, styles)}>
+          style={{...dropZoneStyles.dropZone, ...styles}}>
           {renderDescription()}
         </Dropzone>
       </Loading>

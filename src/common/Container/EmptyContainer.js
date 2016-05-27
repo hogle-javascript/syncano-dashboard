@@ -1,5 +1,5 @@
 import React from 'react';
-import {Utils, FontIcon} from 'syncano-material-ui';
+import {FontIcon} from 'material-ui';
 
 export default React.createClass({
   displayName: 'EmptyContainer',
@@ -9,8 +9,6 @@ export default React.createClass({
     icon: React.PropTypes.string,
     text: React.PropTypes.string
   },
-
-  mixins: [Utils.Styles],
 
   getStyles() {
     return {

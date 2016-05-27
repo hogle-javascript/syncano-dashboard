@@ -7,7 +7,8 @@ import {DialogMixin, DialogsMixin, FormMixin} from '../../mixins';
 import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
 
-import {TextField, FlatButton, Utils, Styles} from 'syncano-material-ui';
+import {TextField, FlatButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Color, Dialog, Icon, Notification, ColorIconPicker} from '../../common/';
 
 export default React.createClass({
@@ -17,8 +18,7 @@ export default React.createClass({
     Reflux.connect(Store),
     Reflux.ListenerMixin,
     DialogMixin,
-    FormMixin,
-    Utils.Styles
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -131,7 +131,7 @@ export default React.createClass({
             {this.hasEditMode()
               ? <FlatButton
                   style={{float: 'left'}}
-                  labelStyle={{color: Styles.Colors.red400}}
+                  labelStyle={{color: Colors.red400}}
                   label="DELETE AN INSTANCE"
                   onTouchTap={() => this.refs.deleteInstanceDialog.show()} />
               : null
@@ -169,7 +169,8 @@ export default React.createClass({
             name="name"
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('name')}
+            value={this.state.name}
+            onChange={(event, value) => this.setState({name: value})}
             errorText={this.getValidationMessages('name').join(' ')}
             hintText="Instance's name"
             onFocus={this.handleInstanceNameFieldFocus}
@@ -182,7 +183,8 @@ export default React.createClass({
             name="description"
             fullWidth={true}
             multiLine={true}
-            valueLink={this.linkState('description')}
+            value={this.state.description}
+            onChange={(event, value) => this.setState({description: value})}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Instance's description"
             floatingLabelText="Description (optional)"/>

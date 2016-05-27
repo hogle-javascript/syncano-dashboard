@@ -1,5 +1,5 @@
 import React from 'react';
-import {IconButton, Utils} from 'syncano-material-ui';
+import {IconButton} from 'material-ui';
 
 export default ({style, iconStyle, ...other}) => {
   const styles = {
@@ -14,7 +14,7 @@ export default ({style, iconStyle, ...other}) => {
   return (
     <IconButton
       {...other}
-      style={Utils.Styles.mergeStyles(styles.style, style)}
-      iconStyle={Utils.Styles.mergeStyles(styles.iconStyle, iconStyle)} />
+      style={{...styles.style, ...style}}
+      iconStyle={{...styles.iconStyle, ...iconStyle}} />
   );
 };

@@ -1,11 +1,10 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-
-import MUI from 'syncano-material-ui';
+import {Paper} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default Radium(React.createClass({
-
   displayName: 'ColumnIconName',
 
   propTypes: {
@@ -19,7 +18,7 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       color: 'black',
-      hoverColor: MUI.Styles.Colors.blue600,
+      hoverColor: Colors.blue600,
       className: ColumnListConstans.DEFAULT_CLASSNAME.ICON_NAME
     };
   },
@@ -37,7 +36,7 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       container: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         fontSize: 12,
@@ -46,7 +45,7 @@ export default Radium(React.createClass({
       name: {
         fontSize: 16,
         lineHeight: '20px',
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         cursor: 'pointer',
@@ -84,10 +83,9 @@ export default Radium(React.createClass({
       <div
         className={this.props.className}
         style={styles.container}>
-        <MUI.Paper
+        <Paper
           circle={true}
-          style={styles.icon}/>
-
+          style={styles.icon} />
         <div
           style={styles.name}
           onClick={this.handleNameClick}>

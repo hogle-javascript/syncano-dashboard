@@ -2,7 +2,8 @@ import React from 'react';
 import {withRouter} from 'react-router';
 
 // Components
-import {MenuItem, Styles} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Color, ColumnList} from '../../common/';
 
 let Column = ColumnList.Column;
@@ -30,7 +31,7 @@ const DeviceListItem = React.createClass({
       linkItem: {
         cursor: 'pointer',
         ':hover': {
-          color: Styles.Colors.blue400
+          color: Colors.blue400
         }
       }
     };

@@ -1,6 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import {IconButton, Styles} from 'syncano-material-ui';
+import {IconButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 const DataObjectsAmount = React.createClass({
   displayName: 'DataObjectsAmount',
@@ -28,7 +29,7 @@ const DataObjectsAmount = React.createClass({
           onTouchTap={this.handleIconTap}
           iconClassName="synicon-table"
           tooltip={<div>Data Objects in <strong>{className}</strong> Class</div>}
-          iconStyle={{color: Styles.Colors.blue400, fontSize: 18, verticalAlign: 'bottom'}} />
+          iconStyle={{color: Colors.blue400, fontSize: 18, verticalAlign: 'bottom'}} />
       </div>
     );
   }

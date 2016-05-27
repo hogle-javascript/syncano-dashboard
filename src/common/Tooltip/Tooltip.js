@@ -1,7 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {FontIcon, Tooltip} from 'syncano-material-ui';
+import {FontIcon} from 'material-ui';
+import Tooltip from 'material-ui/internal/Tooltip';
 
 export default Radium(React.createClass({
   displayName: 'Tooltip',

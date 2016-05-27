@@ -1,6 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import MUI from 'syncano-material-ui';
+import {IconButton} from 'material-ui';
+import * as Colors from 'material-ui/styles/colors';
 
 export default Radium(React.createClass({
   displayName: 'SolutionStar',
@@ -22,18 +23,18 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       container: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         alignItems: 'center'
       },
       icon: {
         color: 'rgba(0, 0, 0, 0.24)'
       },
       starred: {
-        color: MUI.Styles.Colors.blue500
+        color: Colors.blue500
       },
       starsCount: {
         fontSize: 13,
-        color: MUI.Styles.Colors.grey500
+        color: Colors.grey500
       }
     };
   },
@@ -61,11 +62,10 @@ export default Radium(React.createClass({
 
     return (
       <div style={styles.container}>
-        <MUI.IconButton
+        <IconButton
           onClick={this.handleIconClick.bind(null, this.props.solution.id)}
           iconClassName={iconClassName}
           iconStyle={iconStyle}/>
-
         <div style={styles.starsCount}>
           {this.state.stars_count.toString()}
         </div>

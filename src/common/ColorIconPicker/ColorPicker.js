@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import {Color} from '../';
-import {Paper, FontIcon} from 'syncano-material-ui';
+import {Paper, FontIcon} from 'material-ui';
 
 export default Radium(({selectedColor, onColorChange}) => {
   const getStyles = () => ({

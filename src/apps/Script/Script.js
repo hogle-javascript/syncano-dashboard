@@ -10,7 +10,7 @@ import AutosaveMixin from './ScriptAutosaveMixin';
 import Store from './ScriptStore';
 import Actions from './ScriptActions';
 
-import {RaisedButton, FontIcon, Checkbox, FlatButton, TextField, IconButton} from 'syncano-material-ui';
+import {RaisedButton, FontIcon, Checkbox, FlatButton, TextField, IconButton} from 'material-ui';
 import {Loading, Show, TogglePanel, SelectFieldWrapper, Dialog, InnerToolbar, Editor, Notification} from '../../common';
 import Traces from '../Traces';
 

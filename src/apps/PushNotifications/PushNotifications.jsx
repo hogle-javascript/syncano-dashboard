@@ -12,7 +12,7 @@ import PushNotificationsList from './PushNotificationsList';
 import APNSConfigDialog from './APNS/APNSConfigDialog';
 import GCMConfigDialog from './GCM/GCMConfigDialog';
 import ConfigPushNotificationsPopover from './ConfigPushNotificationsPopover';
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {Container} from '../../common/';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 

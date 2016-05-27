@@ -14,7 +14,7 @@ import Constants from './AuthConstants';
 
 // Components
 import AccountContainer from './AccountContainer';
-import {TextField, RaisedButton} from 'syncano-material-ui';
+import {TextField, RaisedButton} from 'material-ui';
 import {SocialAuthButtonsList} from '../../common/';
 
 const AccountSignup = React.createClass({
@@ -128,7 +128,8 @@ const AccountSignup = React.createClass({
           method="post">
           <TextField
             ref="email"
-            valueLink={this.linkState('email')}
+            value={this.state.email}
+            onChange={(event, value) => this.setState({email: value})}
             errorText={this.getValidationMessages('email').join(' ')}
             name="email"
             className="text-field"
@@ -138,7 +139,8 @@ const AccountSignup = React.createClass({
 
           <TextField
             ref="password"
-            valueLink={this.linkState('password')}
+            value={this.state.password}
+            onChange={(event, value) => this.setState({password: value})}
             errorText={this.getValidationMessages('password').join(' ')}
             type="password"
             name="password"

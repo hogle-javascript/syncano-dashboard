@@ -10,7 +10,7 @@ import Store from './AuthStore';
 import Actions from './AuthActions';
 
 // Components
-import {TextField, RaisedButton} from 'syncano-material-ui';
+import {TextField, RaisedButton} from 'material-ui';
 import AccountContainer from './AccountContainer';
 
 export default React.createClass({
@@ -49,7 +49,8 @@ export default React.createClass({
 
           <TextField
             ref="email"
-            valueLink={this.linkState('email')}
+            value={this.state.email}
+            onChange={(event, value) => this.setState({email: value})}
             errorText={this.getValidationMessages('email').join(' ')}
             name="email"
             className="text-field vm-4-b"

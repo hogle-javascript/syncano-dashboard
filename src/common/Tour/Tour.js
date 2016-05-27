@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import Radium from 'radium';
 
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 
 // import './Tour.css';
 

@@ -1,15 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import DialogMixin from '../../mixins/DialogMixin';
-import {Dialog, Utils} from 'syncano-material-ui';
+import {Dialog} from 'material-ui';
 
 export default React.createClass({
   displayName: 'Dialog',
 
-  mixins: [
-    Utils.Styles,
-    DialogMixin
-  ],
+  mixins: [DialogMixin],
 
   getStyles() {
     return {
@@ -21,9 +18,9 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let {children, style, open, ...other} = this.props;
-    let dialogStyle = this.mergeStyles(style, styles.style);
+    const styles = this.getStyles();
+    const {children, style, open, ...other} = this.props;
+    const dialogStyle = {...style, ...styles.style};
 
     return (
       <Dialog

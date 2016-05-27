@@ -1,6 +1,4 @@
-import {Styles} from 'syncano-material-ui';
-
-const Colors = Styles.Colors;
+import {colors as Colors} from 'material-ui/styles/';
 
 export default {
   syncanoThemeColorName: 'blue',

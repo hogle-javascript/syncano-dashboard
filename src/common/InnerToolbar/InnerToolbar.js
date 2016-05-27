@@ -3,7 +3,7 @@ import Radium from 'radium';
 import {withRouter} from 'react-router';
 import Sticky from 'react-stickydiv';
 
-import {Toolbar, ToolbarGroup, ToolbarTitle, IconButton} from 'syncano-material-ui';
+import {Toolbar, ToolbarGroup, ToolbarTitle, IconButton} from 'material-ui';
 
 const InnerToolbar = Radium(React.createClass({
   displayName: 'InnerToolbar',
@@ -25,12 +25,15 @@ const InnerToolbar = Radium(React.createClass({
       toolbar: {
         background: 'rgba(243,243,243,0.90)',
         padding: '0px 24px 0 24px',
-        zIndex: 6
+        zIndex: 6,
+        justifyContent: 'flex-start'
       },
       toolbarRight: {
         height: '100%',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'flex-end'
       }
     };
   },
@@ -72,9 +75,7 @@ const InnerToolbar = Radium(React.createClass({
     const styles = this.getStyles();
 
     return (
-      <ToolbarGroup
-        float="right"
-        style={styles.toolbarRight}>
+      <ToolbarGroup style={styles.toolbarRight}>
         {children}
       </ToolbarGroup>
     );

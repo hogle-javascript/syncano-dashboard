@@ -1,13 +1,12 @@
 /* eslint-disable max-len */
 
 import React from 'react';
-import MUI from 'syncano-material-ui';
+import {SvgIcon} from 'material-ui';
 
 export default React.createClass({
-
   render() {
     return (
-      <MUI.SvgIcon {...this.props}>
+      <SvgIcon {...this.props}>
         <svg enable-background="new 0 0 512 512" height="100%" id="Layer_1" version="1.1" viewBox="0 0 512 512"
              width="100%">
           <g>
@@ -38,7 +37,7 @@ export default React.createClass({
             </g>
           </g>
         </svg>
-      </MUI.SvgIcon>
+      </SvgIcon>
     );
   }
 

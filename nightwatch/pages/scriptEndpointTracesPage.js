@@ -7,7 +7,7 @@ export default {
       selector: '.instances-dropdown'
     },
     scriptEndpointTracesEmptyView: {
-      selector: '//span[text()="There are no traces for this "]',
+      selector: '//p[text()="There are no traces for this "]',
       locateStrategy: 'xpath'
     }
   }

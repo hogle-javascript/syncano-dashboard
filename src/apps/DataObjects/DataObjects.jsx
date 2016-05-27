@@ -13,7 +13,7 @@ import Actions from './DataObjectsActions';
 import Store from './DataObjectsStore';
 
 // Components
-import {IconButton, RaisedButton, Table, TableBody} from 'syncano-material-ui';
+import {IconButton, RaisedButton, Table, TableBody} from 'material-ui';
 import {Container, Show, Loading, Dialog, InnerToolbar} from '../../common/';
 
 // Local components

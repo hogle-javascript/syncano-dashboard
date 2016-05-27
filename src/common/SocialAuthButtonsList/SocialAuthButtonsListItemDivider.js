@@ -1,13 +1,13 @@
 import React from 'react';
-
-import {Styles, Divider} from 'syncano-material-ui';
+import {Divider} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'SocialAuthButtonsListItemDivider',
 
   getStyles() {
     return {
-      backgroundColor: Styles.Colors.blue700
+      backgroundColor: Colors.blue700
     };
   },
 

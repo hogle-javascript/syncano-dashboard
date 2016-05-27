@@ -7,7 +7,7 @@ import {FormMixin} from '../../mixins';
 import Actions from './ProfileActions';
 import Store from './ProfileSettingsStore';
 
-import {TextField, RaisedButton} from 'syncano-material-ui';
+import {TextField, RaisedButton} from 'material-ui';
 import {Container, InnerToolbar} from '../../common/';
 
 export default React.createClass({
@@ -67,7 +67,8 @@ export default React.createClass({
             method="post">
             <TextField
               ref="firstName"
-              valueLink={this.linkState('firstName')}
+              value={this.state.firstName}
+              onChange={(event, value) => this.setState({firstName: value})}
               defaultValue={this.state.firstName}
               errorText={this.getValidationMessages('firstName').join(' ')}
               name="firstName"
@@ -77,7 +78,8 @@ export default React.createClass({
               fullWidth={true}/>
             <TextField
               ref="lastName"
-              valueLink={this.linkState('lastName')}
+              value={this.state.lastName}
+              onChange={(event, value) => this.setState({lastName: value})}
               defaultValue={this.state.lastName}
               errorText={this.getValidationMessages('lastName').join(' ')}
               name="lastName"

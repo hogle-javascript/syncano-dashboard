@@ -9,7 +9,7 @@ import Actions from './GroupsActions';
 import Store from './GroupDialogStore';
 
 // Components
-import {TextField} from 'syncano-material-ui';
+import {TextField} from 'material-ui';
 import {Dialog} from '../../common/';
 
 export default React.createClass({
@@ -75,7 +75,8 @@ export default React.createClass({
           label="label"
           autoFocus={true}
           fullWidth={true}
-          valueLink={this.linkState('label')}
+          value={this.state.label}
+          onChange={(event, value) => this.setState({label: value})}
           errorText={this.getValidationMessages('label').join(' ')}
           hintText="Group's name"
           floatingLabelText="Name"/>

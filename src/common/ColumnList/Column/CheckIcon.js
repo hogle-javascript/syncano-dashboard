@@ -1,8 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-
-import {Styles} from 'syncano-material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import Truncate from '../../Truncate';
 
 export default Radium(React.createClass({
@@ -21,7 +20,7 @@ export default Radium(React.createClass({
       color: '#4a4a4a',
       icon: ColumnListConstans.DEFAULT_ICON,
       background: ColumnListConstans.DEFAULT_BACKGROUND,
-      hoverColor: Styles.Colors.blue600,
+      hoverColor: Colors.blue600,
       className: ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
       checkable: true,
       checked: false

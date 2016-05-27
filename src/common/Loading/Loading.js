@@ -1,9 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
-import MUI from 'syncano-material-ui';
+import {LinearProgress, CircularProgress} from 'material-ui';
 
 export default Radium(React.createClass({
-
   displayName: 'Loading',
 
   propTypes: {
@@ -55,11 +54,11 @@ export default Radium(React.createClass({
     }
 
     if (this.props.type === 'linear') {
-      return <MUI.LinearProgress mode='indeterminate'/>;
+      return <LinearProgress mode='indeterminate'/>;
     }
 
     return (
-      <MUI.CircularProgress
+      <CircularProgress
         mode='indeterminate'
         size={this.props.size}/>
     );

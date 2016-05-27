@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import {Paper, FontIcon} from 'syncano-material-ui';
+import {Paper, FontIcon} from 'material-ui';
 import {Color} from '../../common/';
 
 export default Radium(({color, icon}) => {

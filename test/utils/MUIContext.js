@@ -1,5 +1,5 @@
 var React        = require('react'),
-    ThemeManager = require('syncano-material-ui/lib/styles/theme-manager'),
+    ThemeManager = require('material-ui/styles/theme-manager'),
     SyncanoTheme = require('../common/SyncanoTheme');
 
 var MUIContext = function MUIContext(Component, props) {

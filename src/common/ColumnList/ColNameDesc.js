@@ -1,9 +1,7 @@
 import React from 'react';
-
-import MUI from 'syncano-material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default React.createClass({
-
   displayName: 'ColNameDesc',
 
   propTypes: {
@@ -18,7 +16,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       color: '#999',
-      hoverColor: MUI.Styles.Colors.blue600
+      hoverColor: Colors.blue600
     };
   },
 

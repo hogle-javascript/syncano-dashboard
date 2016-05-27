@@ -9,7 +9,7 @@ import Actions from './TemplatesActions';
 import DialogStore from './TemplateDialogStore';
 
 // Components
-import {TextField} from 'syncano-material-ui';
+import {TextField} from 'material-ui';
 import {Dialog} from '../../common/';
 
 export default React.createClass({
@@ -67,7 +67,8 @@ export default React.createClass({
           autoFocus={true}
           fullWidth={true}
           disabled={this.hasEditMode()}
-          valueLink={this.linkState('name')}
+          value={this.state.name}
+          onChange={(event, value) => this.setState({name: value})}
           errorText={this.getValidationMessages('name').join(' ')}
           hintText="Name of the Template"
           floatingLabelText="Name"/>
@@ -75,7 +76,8 @@ export default React.createClass({
           ref="content_type"
           name="content_type"
           fullWidth={true}
-          valueLink={this.linkState('content_type')}
+          value={this.state.content_type}
+          onChange={(event, value) => this.setState({content_type: value})}
           errorText={this.getValidationMessages('content_type').join(' ')}
           hintText="Content type of the Template"
           floatingLabelText="Content type"/>

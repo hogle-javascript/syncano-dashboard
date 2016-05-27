@@ -7,7 +7,8 @@ import Actions from './TriggersActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 import ClassesStore from '../Classes/ClassesStore';
 
-import {MenuItem, Styles} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {ColumnList, DataObjectsAmount} from '../../common/';
 
 let Column = ColumnList.Column;
@@ -40,7 +41,7 @@ export default React.createClass({
         <Column.CheckIcon.Socket
           id={item.id.toString()}
           iconClassName="socket-trigger"
-          iconColor={Styles.Colors.amberA200}
+          iconColor={Colors.amberA200}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.label}/>

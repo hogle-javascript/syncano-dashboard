@@ -11,7 +11,7 @@ import Store from './ScheduleDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {AutoComplete, TextField} from 'syncano-material-ui';
+import {AutoComplete, TextField} from 'material-ui';
 import {Dialog, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
@@ -53,11 +53,7 @@ export default React.createClass({
   },
 
   handleCrontabChange(value) {
-    this.setState({crontab: value});
-  },
-
-  handleCrontabOpen() {
-    this.refs.crontab._open();
+    this.setState({crontab: value.text});
   },
 
   renderCrontabDataSource() {
@@ -120,7 +116,8 @@ export default React.createClass({
             name="label"
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('label')}
+            value={this.state.label}
+            onChange={(event, value) => this.setState({label: value})}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Schedule's label"
             floatingLabelText="Label"/>
@@ -138,11 +135,11 @@ export default React.createClass({
             animated={false}
             fullWidth={true}
             searchText={crontab}
+            openOnFocus={true}
             onNewRequest={this.handleCrontabChange}
             onUpdateInput={this.handleCrontabChange}
             dataSource={this.renderCrontabDataSource()}
-            errorText={this.getValidationMessages('crontab').join(' ')}
-            onTouchTap={this.handleCrontabOpen}/>
+            errorText={this.getValidationMessages('crontab').join(' ')} />
         </Dialog.ContentSection>
       </Dialog.FullPage>
     );

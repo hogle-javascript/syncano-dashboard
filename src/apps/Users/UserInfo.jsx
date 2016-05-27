@@ -1,16 +1,15 @@
 import React from 'react';
 import Radium from 'radium';
 import pluralize from 'pluralize';
-import {Styles} from 'syncano-material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default Radium(React.createClass({
-
   displayName: 'UserInfo',
 
   getStyles() {
     return {
       base: {
-        backgroundColor: Styles.Colors.grey100,
+        backgroundColor: Colors.grey100,
         borderRight: '1px solid #DDD',
         borderLeft: '1px solid #DDD',
         color: '#9B9B9B'

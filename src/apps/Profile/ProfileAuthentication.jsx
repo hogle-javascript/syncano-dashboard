@@ -9,7 +9,7 @@ import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
 import SessionStore from '../Session/SessionStore';
 
-import {TextField, FlatButton, RaisedButton} from 'syncano-material-ui';
+import {TextField, FlatButton, RaisedButton} from 'material-ui';
 import {Clipboard, Container, InnerToolbar} from '../../common/';
 
 export default Radium(React.createClass({
@@ -122,7 +122,8 @@ export default Radium(React.createClass({
                     ? <TextField
                         ref="currentPassword"
                         type="password"
-                        valueLink={this.linkState('current_password')}
+                        value={this.state.current_password}
+                        onChange={(event, value) => this.setState({current_password: value})}
                         errorText={this.getValidationMessages('current_password').join(' ')}
                         name="currentPassword"
                         floatingLabelText="Current password"
@@ -133,7 +134,8 @@ export default Radium(React.createClass({
                   <TextField
                     ref="newPassword"
                     type="password"
-                    valueLink={this.linkState('newPassword')}
+                    value={this.state.newPassword}
+                    onChange={(event, value) => this.setState({newPassword: value})}
                     errorText={this.getValidationMessages('newPassword').join(' ')}
                     name="newPassword"
                     floatingLabelText="New password"
@@ -143,7 +145,8 @@ export default Radium(React.createClass({
                   <TextField
                     ref="confirmNewPassword"
                     type="password"
-                    valueLink={this.linkState('confirmNewPassword')}
+                    value={this.state.confirmNewPassword}
+                    onChange={(event, value) => this.setState({confirmNewPassword: value})}
                     errorText={this.getValidationMessages('confirmNewPassword').join(' ')}
                     name="confirmNewPassword"
                     floatingLabelText="Confirm new password"

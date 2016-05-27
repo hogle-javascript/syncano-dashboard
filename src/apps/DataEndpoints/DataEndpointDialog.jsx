@@ -11,7 +11,7 @@ import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 // Components
-import {TextField, Toggle, Checkbox, AutoComplete} from 'syncano-material-ui';
+import {TextField, Toggle, Checkbox, AutoComplete} from 'material-ui';
 import {SelectFieldWrapper, Show, Dialog, Notification} from '../../common/';
 
 export default React.createClass({
@@ -186,7 +186,8 @@ export default React.createClass({
           ref="page_size"
           name="page_size"
           fullWidth={true}
-          valueLink={this.linkState('page_size')}
+          value={this.state.page_size}
+          onChange={(event, value) => this.setState({page_size: value})}
           errorText={this.getValidationMessages('page_size').join(' ')}
           hintText="Number"
           floatingLabelText="Number of records in data set"/>
@@ -245,7 +246,8 @@ export default React.createClass({
               autoFocus={true}
               fullWidth={true}
               disabled={this.hasEditMode()}
-              valueLink={this.linkState('name')}
+              value={this.state.name}
+              onChange={(event, value) => this.setState({name: value})}
               errorText={this.getValidationMessages('name').join(' ')}
               hintText="Data Endpoint's name"
               floatingLabelText="Name"/>
@@ -257,7 +259,8 @@ export default React.createClass({
               ref="description"
               name="description"
               fullWidth={true}
-              valueLink={this.linkState('description')}
+              value={this.state.description}
+              onChange={(event, value) => this.setState({description: value})}
               errorText={this.getValidationMessages('description').join(' ')}
               hintText="Data Endpoint's description"
               floatingLabelText="Description (optional)"/>
@@ -276,7 +279,7 @@ export default React.createClass({
               onNewRequest={(value) => this.setState({class: value})}
               onUpdateInput={(value) => this.setState({class: value})}
               fullWidth={true}
-              triggerUpdateOnFocus={true}
+              openOnFocus={true}
               onFocus={() => this.refs.class._open()}
               onClick={() => this.refs.class._open()}
               errorText={this.getValidationMessages('class').join(' ')}/>

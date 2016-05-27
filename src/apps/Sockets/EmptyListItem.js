@@ -1,5 +1,5 @@
 import React from 'react';
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {Socket} from '../../common/';
 
 const styles = {
