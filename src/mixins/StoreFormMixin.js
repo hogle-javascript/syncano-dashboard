@@ -57,7 +57,9 @@ export default {
         state.errors.feedback = payload.message;
       }
 
-      _.forEach(payload, (errors, field) => {
+      const errorsObject = payload.errors || payload;
+
+      _.forEach(errorsObject, (errors, field) => {
         state.errors[field] = [].concat(errors);
       });
     }

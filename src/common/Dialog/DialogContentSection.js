@@ -1,6 +1,7 @@
 import React from 'react';
+import classNames from 'classnames';
 
-export default ({title, last, children, style}) => {
+export default ({className, noMargin, title, last, children, style}) => {
   const styles = {
     title: {
       color: '#aaa',
@@ -9,8 +10,12 @@ export default ({title, last, children, style}) => {
     }
   };
 
+  const rootClassName = classNames({
+    'vm-3-b': !last && !noMargin
+  }, className);
+
   return (
-    <div className={!last ? 'vm-3-b' : ''}>
+    <div className={rootClassName}>
       {title ? <div style={styles.title}>{title}</div> : null}
       <div
         style={style}
