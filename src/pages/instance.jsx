@@ -6,7 +6,6 @@ import SessionStore from '../apps/Session/SessionStore';
 import SessionActions from '../apps/Session/SessionActions';
 import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 
-import {Subheader} from 'material-ui';
 import {Sidebar} from '../common/';
 import HeaderInstancesDropdown from '../common/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
@@ -38,8 +37,9 @@ const Instance = React.createClass({
           <Sidebar>
             <HeaderInstancesDropdown />
             <div style={{paddingTop: 56}}>
-              <Sidebar.List key="General">
-                <Subheader>General</Subheader>
+              <Sidebar.List
+                key="General"
+                subheader="General">
                 <Sidebar.LinkListItem
                   key="Sockets"
                   routeName="sockets"
@@ -47,8 +47,9 @@ const Instance = React.createClass({
                   iconClassName="synicon-hexagon-outline"
                   iconStyle={{transform: 'rotate(30deg)'}} />
               </Sidebar.List>
-              <Sidebar.List key="Components">
-                <Subheader>Components</Subheader>
+              <Sidebar.List
+                key="Components"
+                subheader="Components">
                 <Sidebar.LinkListItem
                   key="Users"
                   routeName="users"
@@ -97,8 +98,9 @@ const Instance = React.createClass({
                   ]}/>
 
               </Sidebar.List>
-              <Sidebar.List key="Settings">
-                <Subheader>Settings</Subheader>
+              <Sidebar.List
+                key="Settings"
+                subheader="Settings">
                 <Sidebar.ListItem
                   key="Instance Settings"
                   iconClassName="synicon-settings"
