@@ -33,7 +33,7 @@ export default React.createClass({
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         itemLabelName: 'email',
-        groupName: 'Channel'
+        groupName: 'Administrator'
       }
     }];
   },
