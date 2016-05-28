@@ -74,10 +74,11 @@ const DataObjects = React.createClass({
     console.info('DataObjects::handleSelectAll', selectAll);
   },
 
-  handleCellClick(cellNumber, cellName) {
+  handleCellClick(rowNumber, columnNumber) {
     console.info('DataObjects::handleCellClick', arguments);
-    if (typeof cellName !== 'undefined' && cellName !== 0) {
-      this.showDataObjectEditDialog(cellNumber);
+
+    if (columnNumber > -1) {
+      this.showDataObjectEditDialog(columnNumber);
     }
   },
 
