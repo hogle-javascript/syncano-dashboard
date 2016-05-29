@@ -36,7 +36,9 @@ export default {
     );
   },
 
-  handleFileOnClick(value) {
+  handleFileOnClick(event, value) {
+    event.preventDefault();
+    event.stopPropagation();
     window.open(value, '_blank');
   },
 
@@ -44,7 +46,8 @@ export default {
     return (
       <IconButton
         iconClassName="synicon-download"
-        onClick={() => this.handleFileOnClick(obj.value)}/>
+        onClick={(event) => this.handleFileOnClick(event, obj.value)}
+        onTouchTap={(event) => this.handleFileOnClick(event, obj.value)} />
     );
   },
 
