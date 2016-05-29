@@ -8,6 +8,7 @@ module.exports = {
 
     loginPage
       .navigate()
+      .setResolution(client)
       .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {

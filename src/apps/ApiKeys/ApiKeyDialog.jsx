@@ -10,7 +10,7 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeyDialogStore';
 
 // Components
-import {Toggle, TextField} from 'syncano-material-ui';
+import {Toggle, TextField} from 'material-ui';
 import {Dialog} from '../../common/';
 
 export default React.createClass({
@@ -126,7 +126,8 @@ export default React.createClass({
           name="description"
           autoFocus={true}
           fullWidth={true}
-          valueLink={this.linkState('description')}
+          value={this.state.description}
+          onChange={(event, value) => this.setState({description: value})}
           errorText={this.getValidationMessages('description').join(' ')}
           hintText="API key's description"
           floatingLabelText="Description (optional)"

@@ -10,7 +10,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 
 import SchedulesList from './SchedulesList';
 import ScheduleDialog from './ScheduleDialog';
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {Container} from '../../common/';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 

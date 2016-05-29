@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import ListItem from './ListItem';
-import {Styles, Utils} from 'syncano-material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 const LinkListItem = React.createClass({
   displayName: 'LinkListItem',
@@ -14,7 +14,7 @@ const LinkListItem = React.createClass({
   getStyles() {
     return {
       active: {
-        color: Styles.Colors.blue400
+        color: Colors.blue400
       }
     };
   },
@@ -42,7 +42,7 @@ const LinkListItem = React.createClass({
 
     return (
       <ListItem
-        style={Utils.Styles.mergeStyles(style, isActive && styles.active)}
+        style={{...style, ...(isActive && styles.active)}}
         onTouchTap={this.handleTouchTap.bind(null, routeName)}
         href={this.getMenuItemHref(routeName)}
         iconColor={isActive ? styles.active.color : null}

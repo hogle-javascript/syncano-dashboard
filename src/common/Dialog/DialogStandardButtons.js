@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import {FlatButton, RaisedButton} from 'syncano-material-ui';
+import {FlatButton, RaisedButton} from 'material-ui';
 
 export default (props) => {
   let {

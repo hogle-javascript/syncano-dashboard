@@ -1,14 +1,10 @@
 import React from 'react';
-import MUI from 'syncano-material-ui';
 
 export default React.createClass({
   displayName: 'SliderSection',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   getStyles() {
     return {
-      root: {},
       sectionTopic: {
         fontSize: '1.3em'
       }
@@ -16,34 +12,34 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let rootStyle = this.mergeStyles(styles.root, this.props.style);
+    const styles = this.getStyles();
+    const {style, title, suggestion, slider, sliderSummary} = this.props;
 
     return (
       <div
         className="row"
-        style={rootStyle}>
+        style={style}>
         <div className="col-sm-8">
           <div className="row">
             <div
               className="col-sm-6"
               style={styles.sectionTopic}>
-              {this.props.title}
+              {title}
             </div>
             <div
               className="col-sm-6"
               style={{color: '#9B9B9B', textAlign: 'right'}}>
-              {this.props.suggestion ? `suggestion based on usage: ${this.props.suggestion}` : null}
+              {suggestion ? `suggestion based on usage: ${suggestion}` : null}
             </div>
           </div>
           <div style={{marginTop: 10, padding: 10}}>
-            {this.props.slider}
+            {slider}
           </div>
         </div>
         <div
           className="col-sm-4"
           style={{paddingLeft: 35}}>
-          {this.props.sliderSummary}
+          {sliderSummary}
         </div>
       </div>
     );

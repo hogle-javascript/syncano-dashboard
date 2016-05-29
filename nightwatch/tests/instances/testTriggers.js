@@ -7,6 +7,7 @@ export default {
 
     loginPage
       .navigate()
+      .setResolution(client)
       .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
@@ -15,14 +16,9 @@ export default {
   'Administrator adds a Trigger': (client) => {
     const triggersPage = client.page.triggersPage();
     const suffix = utils.addSuffix('trigger');
-    const socketsPage = client.page.socketsPage();
-
-    socketsPage
-      .navigate()
-      .waitForElementVisible('@codeBoxSocketItem');
 
     triggersPage
-      .navigate()
+      .goToUrl('', 'triggers')
       .clickElement('@addTriggerButton')
       .waitForElementPresent('@addTriggerModalTitle')
       .fillInput('@addTriggerModalLabel', suffix)
@@ -36,7 +32,7 @@ export default {
     const triggersPage = client.page.triggersPage();
 
     triggersPage
-      .navigate()
+      .goToUrl('', 'triggers')
       .clickListItemDropdown('@triggerDropdown', 'Edit')
       .waitForElementVisible('@confirm')
       .selectDropdownValue('@addTriggerModalSignal', 'update')
@@ -47,7 +43,7 @@ export default {
     const triggersPage = client.page.triggersPage();
 
     triggersPage
-      .navigate()
+      .goToUrl('', 'triggers')
       .clickListItemDropdown('@triggerDropdown', 'Delete')
       .waitForElementVisible('@confirm')
       .clickElement('@confirm')

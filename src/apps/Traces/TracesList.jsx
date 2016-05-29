@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-
-import {Styles, Paper, FontIcon} from 'syncano-material-ui';
+import {Paper, FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {ColumnList, Loading, Trace, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
@@ -62,27 +62,27 @@ export default Radium(React.createClass({
         duration: 'not executed'
       },
       processing: {
-        background: Styles.Colors.lightBlue500,
+        background: Colors.lightBlue500,
         icon: 'play',
         duration: 'processing'
       },
       pending: {
-        background: Styles.Colors.lightBlue500,
+        background: Colors.lightBlue500,
         icon: 'timelapse',
         duration: 'pending'
       },
       success: {
-        background: Styles.Colors.green400,
+        background: Colors.green400,
         icon: 'check',
         duration: `${item.duration}ms`
       },
       failure: {
-        background: Styles.Colors.red400,
+        background: Colors.red400,
         icon: 'alert',
         duration: `${item.duration}ms`
       },
       timeout: {
-        background: Styles.Colors.red400,
+        background: Colors.red400,
         icon: 'alert',
         duration: `${item.duration}ms`
       }

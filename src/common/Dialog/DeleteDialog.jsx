@@ -3,16 +3,15 @@ import Reflux from 'reflux';
 import pluralize from 'pluralize';
 import _ from 'lodash';
 
-import {FontIcon, Styles} from 'syncano-material-ui';
+import {FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import Dialog from './FullPageDialog';
 import StandardButtons from './DialogStandardButtons';
 
 export default React.createClass({
   displayName: 'DeleteDialog',
 
-  mixins: [
-    Reflux.ListenerMixin
-  ],
+  mixins: [Reflux.ListenerMixin],
 
   getDefaultProps() {
     return {
@@ -117,7 +116,7 @@ export default React.createClass({
         {...other}>
         <div className="row">
           <FontIcon
-            style={{fontSize: 60, color: Styles.Colors.grey500}}
+            style={{fontSize: 60, color: Colors.grey500}}
             className={`${icon} col-sm-7`}/>
           <div className="vm-1-t col-sm-28">
             {children ? children : this.renderContent()}

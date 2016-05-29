@@ -8,7 +8,7 @@ import Actions from './TriggersActions';
 import Store from './TriggersStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {Container} from '../../common/';
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';

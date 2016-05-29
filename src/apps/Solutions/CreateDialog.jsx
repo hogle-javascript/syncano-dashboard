@@ -10,7 +10,7 @@ import Actions from './CreateDialogActions';
 import Store from './CreateDialogStore';
 
 // Components
-import {TextField, Toggle} from 'syncano-material-ui';
+import {TextField, Toggle} from 'material-ui';
 import {Dialog} from '../../common/';
 
 export default React.createClass({
@@ -82,7 +82,8 @@ export default React.createClass({
             name="label"
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('label')}
+            value={this.state.label}
+            onChange={(event, value) => this.setState({label: value})}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Solution's name"
             floatingLabelText="Name" />
@@ -90,7 +91,8 @@ export default React.createClass({
             ref="description"
             name="description"
             fullWidth={true}
-            valueLink={this.linkState('description')}
+            value={this.state.description}
+            onChange={(event, value) => this.setState({description: value})}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Solution's description"
             floatingLabelText="Description (optional)"

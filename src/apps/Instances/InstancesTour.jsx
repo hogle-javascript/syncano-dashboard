@@ -5,15 +5,14 @@ import Reflux from 'reflux';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
-import {IconButton, Styles} from 'syncano-material-ui';
+import {IconButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Tour} from '../../common/';
 
 export default React.createClass({
   displayName: 'InstancesTour',
 
-  mixins: [
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
     console.info('Instances::componentDidMount');
@@ -23,7 +22,7 @@ export default React.createClass({
   getStyles() {
     return {
       tourHighlight: {
-        color: Styles.Colors.blue500
+        color: Colors.blue500
       },
       secondLine: {
         marginTop: 16,
@@ -31,7 +30,7 @@ export default React.createClass({
         lineHeight: '1.5em'
       },
       link: {
-        color: Styles.Colors.blue500
+        color: Colors.blue500
       }
     };
   },

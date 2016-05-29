@@ -5,7 +5,8 @@ import _ from 'lodash';
 
 import {DialogMixin, FormMixin} from '../../mixins';
 
-import {TextField, Toggle, SelectField, MenuItem, Utils, Styles} from 'syncano-material-ui';
+import {TextField, Toggle, SelectField, MenuItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Show, Truncate, Dialog, Editor, Notification} from '../../common/';
 
 export default (store, props) => {
@@ -16,8 +17,7 @@ export default (store, props) => {
     mixins: [
       Reflux.connect(store),
       DialogMixin,
-      FormMixin,
-      Utils.Styles
+      FormMixin
     ],
 
     getInitialState() {
@@ -35,34 +35,34 @@ export default (store, props) => {
       return {
         sendDialogHeaderContainer: {
           borderRadius: '4px',
-          borderTop: '1px solid ' + Styles.Colors.grey200,
-          borderRight: '1px solid ' + Styles.Colors.grey200,
-          borderLeft: '1px solid ' + Styles.Colors.grey200,
-          color: Styles.Colors.grey400
+          borderTop: '1px solid ' + Colors.grey200,
+          borderRight: '1px solid ' + Colors.grey200,
+          borderLeft: '1px solid ' + Colors.grey200,
+          color: Colors.grey400
         },
         greyBoxContainer: {
-          borderBottom: '1px solid ' + Styles.Colors.grey200,
-          backgroundColor: Styles.Colors.grey100
+          borderBottom: '1px solid ' + Colors.grey200,
+          backgroundColor: Colors.grey100
         },
         sendDialogHeader: {
           margin: 0,
-          borderBottom: '1px solid ' + Styles.Colors.grey200,
+          borderBottom: '1px solid ' + Colors.grey200,
           padding: '8px 6px',
           fontSize: 12
         },
         sendDialogHeaderItem: {
           fontWeight: 600,
           margin: 0,
-          backgroundColor: Styles.Colors.grey50,
-          borderBottom: '1px solid ' + Styles.Colors.grey200,
+          backgroundColor: Colors.grey50,
+          borderBottom: '1px solid ' + Colors.grey200,
           padding: '8px 6px',
           fontSize: 12
         },
         sendDialogHeaderEvenItem: {
-          backgroundColor: Styles.Colors.grey100
+          backgroundColor: Colors.grey100
         },
         seeMoreVisible: {
-          color: Styles.Colors.blue500,
+          color: Colors.blue500,
           visibility: 'visible',
           cursor: 'pointer',
           ':hover': {
@@ -77,9 +77,9 @@ export default (store, props) => {
           lineHeight: '12px'
         },
         messagePreview: {
-          backgroundColor: Styles.Colors.grey50,
-          color: Styles.Colors.grey400,
-          border: '1px solid ' + Styles.Colors.grey200,
+          backgroundColor: Colors.grey50,
+          color: Colors.grey400,
+          border: '1px solid ' + Colors.grey200,
           padding: 4,
           display: 'flex',
           justifyContent: 'center',
@@ -98,7 +98,7 @@ export default (store, props) => {
           minWidth: 20,
           height: 20,
           borderRadius: '50%',
-          backgroundColor: Styles.Colors.blueGrey200
+          backgroundColor: Colors.blueGrey200
         },
         messageAPNSCircle: {
           minWidth: 11,
@@ -119,7 +119,7 @@ export default (store, props) => {
           paddingRight: 4
         },
         messageText: {
-          display: '-webkit-box',
+          display: 'flex',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           WebkitLineClamp: 2,
@@ -223,13 +223,15 @@ export default (store, props) => {
           <TextField
             ref="appName"
             name="content"
-            valueLink={this.linkState('appName')}
+            value={this.state.appName}
+            onChange={(event, value) => this.setState({appName: value})}
             fullWidth={true}
             floatingLabelText="App name"/>
           <TextField
             ref="content"
             name="content"
-            valueLink={this.linkState('content')}
+            value={this.state.content}
+            onChange={(event, value) => this.setState({content: value})}
             fullWidth={true}
             floatingLabelText="Push notification Text"/>
         </div>

@@ -21,11 +21,11 @@ export default {
       locateStrategy: 'xpath'
     },
     favoriteSolutionTitle: {
-      selector: '//div[@title="SlackNotifications"]',
+      selector: '//span[text()="SlackNotifications"]',
       locateStrategy: 'xpath'
     },
     mySolutionTitle: {
-      selector: '//div[@title="my solution"]',
+      selector: '//span[text()="my solution"]',
       locateStrategy: 'xpath'
     },
     tagsList: {
@@ -49,7 +49,7 @@ export default {
       locateStrategy: 'xpath'
     },
     solutionAvatars: {
-      selector: '//div[@class="row"]//img',
+      selector: '//div[@class="row"]//div[@size="55"]',
       locateStrategy: 'xpath'
     }
   }

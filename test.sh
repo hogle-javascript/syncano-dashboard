@@ -25,7 +25,6 @@ function e2e_cleanup {
 }
 case "$CIRCLE_NODE_INDEX" in
     0)
-        run_unit_tests
         e2e_setup
         npm run-script e2e-0
         e2e_cleanup
@@ -38,10 +37,16 @@ case "$CIRCLE_NODE_INDEX" in
             npm run-script upload-screenshots
             e2e_cleanup
         else
+            run_unit_tests
             e2e_setup
             npm run-script e2e-1
             e2e_cleanup
         fi
+        ;;
+    2)
+        e2e_setup
+        npm run-script e2e-2
+        e2e_cleanup
         ;;
     *)
         run_unit_tests

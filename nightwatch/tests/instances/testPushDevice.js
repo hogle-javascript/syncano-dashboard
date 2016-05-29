@@ -14,6 +14,7 @@ export default {
 
       loginPage
         .navigate()
+        .setResolution(client)
         .login(globals.tempEmail, globals.tempPass);
     });
   },
@@ -62,19 +63,15 @@ export default {
     pushDevicesPage
       .verify.containsText('@firstDevice', labelName);
   },
-  // 'Test Admin Selects/Deselects Android Device': (client) => {
-  //   const listsPage = client.page.listsPage();
-  //
-  //   listsPage
-  //     .goToUrl('temp', 'push-notifications/devices/gcm')
-  //     .waitForElementVisible('@firstAndroidCheckbox')
-  //     .moveToElement('@firstAndroidCheckbox', 0, 0)
-  //     .clickElement('@highlightedCheckbox')
-  //     .waitForElementVisible('@selectedItem')
-  //     .clickElement('@selectedItem')
-  //     .moveToElement('@firstItemOptionsMenu', 0, 0)
-  //     .waitForElementVisible('@firstAndroidCheckbox');
-  // },
+  'Test Admin Selects/Deselects Android Device': (client) => {
+    const listsPage = client.page.listsPage();
+    const selectedItem = listsPage.elements.selectedItem.selector;
+    const optionsMenu = listsPage.elements.firstItemOptionsMenu.selector;
+
+    client
+      .goToUrl('temp', 'push-notifications/devices/gcm')
+      .singleItemSelectUnselect('synicon-android', optionsMenu, selectedItem);
+  },
   'Test Admin Deletes Android Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
@@ -129,19 +126,15 @@ export default {
     pushDevicesPage
       .verify.containsText('@firstDevice', labelName);
   },
-  // 'Test Admin Selects/Deselects iOS Device': (client) => {
-  //   const listsPage = client.page.listsPage();
-  //
-  //   listsPage
-  //     .goToUrl('temp', 'push-notifications/devices/apns')
-  //     .waitForElementVisible('@firstAppleCheckbox')
-  //     .moveToElement('@firstAppleCheckbox', 0, 0)
-  //     .clickElement('@highlightedCheckbox')
-  //     .waitForElementVisible('@selectedItem')
-  //     .clickElement('@selectedItem')
-  //     .moveToElement('@firstItemOptionsMenu', 0, 0)
-  //     .waitForElementVisible('@firstAppleCheckbox');
-  // },
+  'Test Admin Selects/Deselects iOS Device': (client) => {
+    const listsPage = client.page.listsPage();
+    const selectedItem = listsPage.elements.selectedItem.selector;
+    const optionsMenu = listsPage.elements.firstItemOptionsMenu.selector;
+
+    client
+      .goToUrl('temp', 'push-notifications/devices/apns')
+      .singleItemSelectUnselect('synicon-apple', optionsMenu, selectedItem);
+  },
   'Test Admin Deletes iOS Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();

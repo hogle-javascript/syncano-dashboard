@@ -13,19 +13,19 @@ export default {
       locateStrategy: 'xpath'
     },
     accountDropdown: {
-      selector: '//div[@id="menu-account--dropdown"]/div/div[1]',
+      selector: '//div[@id="menu-account--dropdown"]/div[1]',
       locateStrategy: 'xpath'
     },
     instancesListDropdown: {
-      selector: '//div[@id="menu-account--dropdown"]/div/div[2]',
+      selector: '//div[@id="menu-account--dropdown"]/div[2]',
       locateStrategy: 'xpath'
     },
     billingDropdown: {
-      selector: '//div[@id="menu-account--dropdown"]/div/div[3]',
+      selector: '//div[@id="menu-account--dropdown"]/div[3]',
       locateStrategy: 'xpath'
     },
     logoutDropdown: {
-      selector: '//div[@id="menu-account--dropdown"]/div/div[4]',
+      selector: '//div[@id="menu-account--dropdown"]/div[4]',
       locateStrategy: 'xpath'
     },
     support: {
@@ -45,7 +45,7 @@ export default {
       locateStrategy: 'xpath'
     },
     fox: {
-      selector: '//div[@id="menu-account--dropdown"]//img',
+      selector: '//div[@id="menu-account--dropdown"]//div[@size="40"]',
       locateStrategy: 'xpath'
     }
   }

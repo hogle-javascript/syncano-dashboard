@@ -11,7 +11,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
-import {TextField} from 'syncano-material-ui';
+import {TextField} from 'material-ui';
 import {Dialog, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
@@ -115,7 +115,8 @@ export default React.createClass({
             name="label"
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('label')}
+            value={this.state.label}
+            onChange={(event, value) => this.setState({label: value})}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Trigger's label"
             floatingLabelText="Label"/>

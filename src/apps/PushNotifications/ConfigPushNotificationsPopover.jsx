@@ -5,7 +5,8 @@ import GCMStore from './GCM/GCMPushNotificationsStore';
 import APNSActions from './APNS/APNSPushNotificationsActions';
 import APNSStore from './APNS/APNSPushNotificationsStore';
 
-import {FontIcon, ListItem, Styles} from 'syncano-material-ui';
+import {FontIcon, ListItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Popover} from '../../common/';
 
 export default React.createClass({
@@ -30,17 +31,17 @@ export default React.createClass({
     const hasAPNSConfig = APNSStore.hasConfig();
     const androidIcon = (
       <FontIcon
-        color={Styles.Colors.green400}
+        color={Colors.green400}
         className="synicon-android"/>
     );
     const appleIcon = (
       <FontIcon
-        color={Styles.Colors.black}
+        color={Colors.black}
         className="synicon-apple"/>
     );
     const doneIcon = (
       <FontIcon
-        color={Styles.Colors.green400}
+        color={Colors.green400}
         className="synicon-checkbox-marked-circle"/>
     );
 

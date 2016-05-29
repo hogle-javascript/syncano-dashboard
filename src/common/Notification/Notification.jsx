@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import {FontIcon, Utils} from 'syncano-material-ui';
+import {FontIcon} from 'material-ui';
 
 import './Notification.sass';
 
@@ -12,8 +12,6 @@ export default React.createClass({
     type: React.PropTypes.string.isRequired,
     children: React.PropTypes.any.isRequired
   },
-
-  mixins: [Utils.Styles],
 
   getDefaultProps() {
     return {

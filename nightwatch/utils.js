@@ -35,5 +35,12 @@ export default {
   },
   randomInt(min, max) {
     return Math.floor((Math.random() * max) + min);
+  },
+  getGreyedOutStyle(client) {
+    if (client.capabilities.browserName === 'chrome') {
+      return 'color: rgba(0, 0, 0, 0.298039)';
+    } else if (client.capabilities.browserName === 'firefox') {
+      return 'color: rgba(0, 0, 0, 0.3)';
+    }
   }
 };

@@ -1,12 +1,8 @@
 import React from 'react';
-
-import {Utils} from 'syncano-material-ui';
 import Container from './Container';
 
 export default React.createClass({
   displayName: 'TabsContainer',
-
-  mixins: [Utils.Styles],
 
   getStyles() {
     return {

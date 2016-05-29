@@ -15,6 +15,7 @@ export default {
 
       loginPage
         .navigate()
+        .setResolution(client)
         .login(Globals.tempEmail, Globals.tempPass);
     });
   },

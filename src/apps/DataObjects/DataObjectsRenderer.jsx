@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'moment';
 import _ from 'lodash';
 
-import {IconButton, TableHeaderColumn, TableRowColumn, TableHeader, TableRow} from 'syncano-material-ui';
+import {IconButton, TableHeaderColumn, TableRowColumn, TableHeader, TableRow} from 'material-ui';
 
 export default {
 

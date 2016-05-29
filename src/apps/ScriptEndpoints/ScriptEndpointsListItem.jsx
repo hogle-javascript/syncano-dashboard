@@ -6,7 +6,7 @@ import {SnackbarNotificationMixin} from '../../mixins';
 import Actions from './ScriptEndpointsActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
-import {MenuItem} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
 import {Color, ColumnList, Clipboard} from '../../common/';
 
 const Column = ColumnList.Column;

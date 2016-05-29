@@ -11,7 +11,7 @@ import Store from './InstallDialogStore';
 import Actions from './InstallDialogActions';
 
 // Components
-import {TextField} from 'syncano-material-ui' ;
+import {TextField} from 'material-ui' ;
 import {Loading, SelectFieldWrapper, Show, Notification, Dialog} from '../../common/';
 
 export default React.createClass({

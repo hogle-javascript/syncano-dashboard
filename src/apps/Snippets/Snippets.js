@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {Container, Loading} from '../../common/';
 
 import SnippetsInnerToolbar from './SnippetsInnerToolbar';

@@ -4,11 +4,11 @@ export default {
   url: `${Utils.testBaseUrl()}/#/account/authentication/`,
   elements: {
     updateButton: {
-      selector: '//button[@class="raised-button"]',
+      selector: '//div[@class="raised-button"]',
       locateStrategy: 'xpath'
     },
     accountKey: {
-      selector: '//div[@style="font-family:monospace;"]',
+      selector: '//div[@style="font-family: monospace;"]',
       locateStrategy: 'xpath'
     },
     copyButton: {

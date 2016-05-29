@@ -3,7 +3,9 @@ export default {
   beforeEach(client) {
     const loginPage = client.page.loginPage();
 
-    loginPage.navigate();
+    loginPage
+      .navigate()
+      .setResolution(client);
   },
   afterEach(client, done) {
     client.end(done);

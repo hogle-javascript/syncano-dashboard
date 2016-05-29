@@ -7,6 +7,7 @@ module.exports = {
 
     loginPage
       .navigate()
+      .setResolution(client)
       .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
@@ -14,12 +15,11 @@ module.exports = {
   },
   beforeEach(client) {
     const instancesPage = client.page.instancesPage();
-    const socketsPage = client.page.socketsPage();
 
     instancesPage
       .navigate()
+      .setResolution(client)
       .clickElement('@instancesTableName');
-    socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
   afterEach(client, done) {
     if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {

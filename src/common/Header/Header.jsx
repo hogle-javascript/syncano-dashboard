@@ -11,7 +11,7 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 
 // Components
 import Sticky from 'react-stickydiv';
-import {FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu, Utils} from 'syncano-material-ui';
+import {FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'material-ui';
 import {Logo} from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
@@ -24,10 +24,7 @@ const Header = Radium(React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  mixins: [
-    Reflux.connect(InstancesStore),
-    Utils.Styles
-  ],
+  mixins: [Reflux.connect(InstancesStore)],
 
   componentDidMount() {
     SessionStore.getInstance();
@@ -38,7 +35,8 @@ const Header = Radium(React.createClass({
       topToolbar: {
         background: this.context.muiTheme.rawTheme.palette.primary1Color,
         height: 50,
-        padding: 0
+        padding: 0,
+        justifyContent: 'flex-start'
       },
       logotypeContainer: {
         paddingLeft: 24,
@@ -82,7 +80,7 @@ const Header = Radium(React.createClass({
     }
 
     return (
-      <List>
+      <List id="menu-account--dropdown">
         <ListItem
           leftAvatar={this.renderIconButton()}
           onTouchTap={() => router.push('profile-settings')}
@@ -107,26 +105,27 @@ const Header = Radium(React.createClass({
   },
 
   getGravatarUrl() {
-    let userEmail = SessionStore.getUser() ? SessionStore.getUser().email : null;
+    const {gravatarUrl} = this.state;
+    const userEmail = SessionStore.getUser() ? SessionStore.getUser().email : null;
+    const fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
 
-    if (this.state.gravatarUrl) {
-      return this.state.gravatarUrl;
+    if (gravatarUrl) {
+      return gravatarUrl;
     }
 
-    return Gravatar.url(userEmail, {default: '404'}, true);
-  },
-
-  onAvatarError() {
-    let fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
-
-    this.setState({gravatarUrl: fallBackAvatar});
+    /* eslint-disable */
+    const gravatar = Gravatar.url(userEmail, {d: '404'}, true);
+    /* eslint-enable */
+    return gravatar ? gravatar : fallBackAvatar;
   },
 
   renderIconButton() {
     return (
       <Avatar
-        src={this.getGravatarUrl()}
-        onError={this.onAvatarError}/>
+        style={{
+          backgroundImage: `url(${this.getGravatarUrl()})`,
+          backgroundSize: '40px 40px'
+        }} />
     );
   },
 
@@ -143,37 +142,7 @@ const Header = Radium(React.createClass({
                 className="logo-white"/>
             </Link>
           </ToolbarGroup>
-          <ToolbarGroup
-            float="right"
-            style={{marginLeft: 100, height: '100%'}}>
-            <ul
-              className="toolbar-list"
-              style={styles.toolbarList}>
-              <li
-                id="menu-notifications"
-                style={styles.toolbarListItem}>
-                <HeaderNotificationsDropdown id="menu-notifications--dropdown"/>
-              </li>
-              <li id="menu-account">
-                <IconMenu
-                  id="menu-account--dropdown"
-                  iconButtonElement={this.renderIconButton()}
-                  anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'middle'
-                  }}
-                  targetOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}>
-                  {this.getDropdownItems()}
-                </IconMenu>
-              </li>
-            </ul>
-          </ToolbarGroup>
-          <ToolbarGroup
-            float="left"
-            style={{marginLeft: '-5', height: '100%'}}>
+          <ToolbarGroup style={{height: '100%'}}>
             <ul
               className="toolbar-list"
               style={styles.toolbarList}>
@@ -189,6 +158,31 @@ const Header = Radium(React.createClass({
                   target="_blank">
                   Docs
                 </a>
+              </li>
+            </ul>
+          </ToolbarGroup>
+          <ToolbarGroup style={{marginLeft: -5, height: '100%', flex: 1, justifyContent: 'flex-end'}}>
+            <ul
+              className="toolbar-list"
+              style={styles.toolbarList}>
+              <li
+                id="menu-notifications"
+                style={styles.toolbarListItem}>
+                <HeaderNotificationsDropdown id="menu-notifications--dropdown"/>
+              </li>
+              <li id="menu-account">
+                <IconMenu
+                  iconButtonElement={this.renderIconButton()}
+                  anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'middle'
+                  }}
+                  targetOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}>
+                  {this.getDropdownItems()}
+                </IconMenu>
               </li>
             </ul>
           </ToolbarGroup>

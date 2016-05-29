@@ -18,40 +18,42 @@
     }
   },
   "test_settings" : {
-    "1280x1024" : {
+    "default": {
       "launch_url" : "https://localhost:8080/",
       "selenium_port"  : 4444,
       "selenium_host"  : "localhost",
       "silent": true,
       "skip_testcases_on_fail": false,
-      "resolution": "1280x1024",
+      "end_session_on_fail": false,
+      "resolution": "1920x1080",
+      "exclude": "utils.js",
       "screenshots" : {
         "enabled" : true,
         "on_failure" : true,
         "path" : "./reports/screenshots"
-      },
+      }
+    },
+    "chrome" : {
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
         "chromeOptions" : {
-         "args" : ["window-position=0,0", "window-size=1280,1024", "--disable-popup-blocking"]
+         "args" : ["window-position=0,0", "window-size=1920,1080", "--disable-popup-blocking"]
         }
-      },
-      "exclude": "utils.js"
+      }
+    },
+    "firefox" : {
+      "desiredCapabilities": {
+        "browserName": "firefox",
+        "unexpectedAlertBehaviour": "dismiss",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true,
+        "elementScrollBehavior": "1"
+      }
     },
     "360x640" : {
-      "launch_url" : "https://localhost:8080/",
-      "selenium_port"  : 4444,
-      "selenium_host"  : "localhost",
-      "silent": true,
-      "skip_testcases_on_fail": false,
       "resolution": "360x640",
-      "screenshots" : {
-        "enabled" : true,
-        "on_failure" : true,
-        "path" : "./reports/screenshots"
-      },
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
@@ -59,21 +61,10 @@
         "chromeOptions" : {
          "args" : ["window-position=0,0", "window-size=360,640"]
         }
-      },
-      "exclude": "utils.js"
+      }
     },
     "768x1024" : {
-      "launch_url" : "https://localhost:8080/",
-      "selenium_port"  : 4444,
-      "selenium_host"  : "localhost",
-      "silent": true,
-      "skip_testcases_on_fail": false,
       "resolution": "768x1024",
-      "screenshots" : {
-        "enabled" : true,
-        "on_failure" : true,
-        "path" : "./reports/screenshots"
-      },
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
@@ -81,28 +72,7 @@
         "chromeOptions" : {
          "args" : ["window-position=0,0", "window-size=768,1024"]
         }
-      },
-      "exclude": "utils.js"
-    },
-    "firefox" : {
-      "launch_url" : "https://localhost:8080/",
-      "selenium_port"  : 4444,
-      "selenium_host"  : "localhost",
-      "silent": true,
-      "skip_testcases_on_fail": false,
-      "resolution": "1280x1024",
-      "screenshots" : {
-        "enabled" : true,
-        "on_failure" : true,
-        "path" : "./reports/screenshots"
-      },
-      "desiredCapabilities": {
-        "unexpectedAlertBehaviour": "dismiss",
-        
-        "javascriptEnabled": true,
-        "acceptSslCerts": true
-      },
-      "exclude": "utils.js"
+      }
     }
   }
 }

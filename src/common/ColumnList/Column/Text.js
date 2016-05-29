@@ -1,11 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-
-import MUI from 'syncano-material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default Radium(React.createClass({
-
   displayName: 'ColumnText',
 
   propTypes: {
@@ -17,7 +15,7 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       color: 'rgba(0,0,0,.54)',
-      hoverColor: MUI.Styles.Colors.blue600,
+      hoverColor: Colors.blue600,
       className: ColumnListConstans.DEFAULT_CLASSNAME.TEXT
     };
   },
@@ -31,7 +29,7 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
-      display: '-webkit-flex; display: flex',
+      display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       fontSize: '12px',

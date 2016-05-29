@@ -7,7 +7,7 @@ import {FormMixin} from '../../mixins';
 import Actions from './ProfileActions';
 import Store from './ProfileBillingAddressStore';
 
-import {TextField, RaisedButton} from 'syncano-material-ui';
+import {TextField, RaisedButton} from 'material-ui';
 import {Container, InnerToolbar} from '../../common/';
 
 export default React.createClass({
@@ -109,13 +109,15 @@ export default React.createClass({
                 <TextField
                   name="company_name"
                   fullWidth={true}
-                  valueLink={this.linkState('company_name')}
+                  value={this.state.company_name}
+                  onChange={(event, value) => this.setState({company_name: value})}
                   defaultValue={company_name}
                   errorText={this.getValidationMessages('company_name').join(' ')}
                   hintText="Company name"
                   floatingLabelText="Company name"/>
                 <TextField
-                  valueLink={this.linkState('first_name')}
+                  value={this.state.first_name}
+                  onChange={(event, value) => this.setState({first_name: value})}
                   defaultValue={first_name}
                   errorText={this.getValidationMessages('first_name').join(' ')}
                   name="first_name"
@@ -123,7 +125,8 @@ export default React.createClass({
                   hintText="First name"
                   fullWidth={true}/>
                 <TextField
-                  valueLink={this.linkState('last_name')}
+                  value={this.state.last_name}
+                  onChange={(event, value) => this.setState({last_name: value})}
                   defaultValue={last_name}
                   errorText={this.getValidationMessages('last_name').join(' ')}
                   name="last_name"
@@ -131,7 +134,8 @@ export default React.createClass({
                   hintText="Last name"
                   fullWidth={true}/>
                 <TextField
-                  valueLink={this.linkState('tax_number')}
+                  value={this.state.tax_number}
+                  onChange={(event, value) => this.setState({tax_number: value})}
                   defaultValue={tax_number}
                   errorText={this.getValidationMessages('tax_number').join(' ')}
                   name="tax_number"
@@ -141,7 +145,8 @@ export default React.createClass({
               </div>
               <div className="col-flex-1">
                 <TextField
-                  valueLink={this.linkState('address_line1')}
+                  value={this.state.address_line1}
+                  onChange={(event, value) => this.setState({address_line1: value})}
                   defaultValue={address_line1}
                   errorText={this.getValidationMessages('address_line1').join(' ')}
                   name="address_line1"
@@ -149,7 +154,8 @@ export default React.createClass({
                   hintText="Address"
                   fullWidth={true}/>
                 <TextField
-                  valueLink={this.linkState('address_line2')}
+                  value={this.state.address_line2}
+                  onChange={(event, value) => this.setState({address_line2: value})}
                   defaultValue={address_line2}
                   errorText={this.getValidationMessages('address_line2').join(' ')}
                   name="address_line2"
@@ -157,7 +163,8 @@ export default React.createClass({
                   hintText="Address"
                   fullWidth={true}/>
                 <TextField
-                  valueLink={this.linkState('address_country')}
+                  value={this.state.address_country}
+                  onChange={(event, value) => this.setState({address_country: value})}
                   defaultValue={address_country}
                   errorText={this.getValidationMessages('address_country').join(' ')}
                   name="address_country"
@@ -165,7 +172,8 @@ export default React.createClass({
                   hintText="Country"
                   fullWidth={true}/>
                 <TextField
-                  valueLink={this.linkState('address_state')}
+                  value={this.state.address_state}
+                  onChange={(event, value) => this.setState({address_state: value})}
                   defaultValue={address_state}
                   errorText={this.getValidationMessages('address_state').join(' ')}
                   name="address_state"
@@ -177,7 +185,8 @@ export default React.createClass({
                 <div className="row">
                   <div className="col-md-15">
                     <TextField
-                      valueLink={this.linkState('address_zip')}
+                      value={this.state.address_zip}
+                      onChange={(event, value) => this.setState({address_zip: value})}
                       defaultValue={address_zip}
                       errorText={this.getValidationMessages('address_zip').join(' ')}
                       name="address_zip"
@@ -187,7 +196,8 @@ export default React.createClass({
                   </div>
                   <div className="col-flex-1">
                     <TextField
-                      valueLink={this.linkState('address_city')}
+                      value={this.state.address_city}
+                      onChange={(event, value) => this.setState({address_city: value})}
                       defaultValue={address_city}
                       errorText={this.getValidationMessages('address_city').join(' ')}
                       name="address_city"

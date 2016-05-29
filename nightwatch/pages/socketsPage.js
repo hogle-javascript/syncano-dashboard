@@ -132,6 +132,10 @@ export default {
       selector: '//div[text()="Script Endpoint"]/following::div[2]',
       locateStrategy: 'xpath'
     },
+    addScriptButton: {
+      selector: '//button//span[text()="Add"]',
+      locateStrategy: 'xpath'
+    },
     addApnsSocket: {
       selector: '//div[text()="APNS Push Notifications (BETA)"]/following::div[2]',
       locateStrategy: 'xpath'
@@ -175,6 +179,10 @@ export default {
     },
     gcmTitleHeading: {
       selector: '//h3[text()="Configure Push Notification Socket - GCM"]',
+      locateStrategy: 'xpath'
+    },
+    socketsDropDownAll: {
+      selector: '//span[text()="Sockets:"]/../..//div[text()="All"]',
       locateStrategy: 'xpath'
     }
   }

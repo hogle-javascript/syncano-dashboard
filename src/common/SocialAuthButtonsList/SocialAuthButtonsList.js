@@ -1,8 +1,8 @@
 import React from 'react';
-
 import ListItem from './SocialAuthButtonsListItem';
 import ListItemDivider from './SocialAuthButtonsListItemDivider';
-import {Styles, List} from 'syncano-material-ui';
+import {List} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'SocialAuthButtonsList',
@@ -18,7 +18,7 @@ export default React.createClass({
       paddingTop: 0,
       paddingBottom: 0,
       marginBottom: 24,
-      border: `1px solid ${Styles.Colors.blue700}`
+      border: `1px solid ${Colors.blue700}`
     };
   },
 

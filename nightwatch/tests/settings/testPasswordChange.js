@@ -3,7 +3,7 @@ import Globals from '../../globals';
 import Async from 'async';
 
 export default {
-  tags: ['settings'],
+  tags: ['passwordSettings'],
   after(client) {
     client.end();
   },
@@ -16,6 +16,7 @@ export default {
 
       loginPage
         .navigate()
+        .setResolution(client)
         .waitForElementPresent('@emailInput', 60000)
         .login(Globals.tempEmail, Globals.tempPass);
     });

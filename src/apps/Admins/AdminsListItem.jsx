@@ -5,7 +5,7 @@ import {DialogsMixin} from '../../mixins/';
 import Actions from './AdminsActions';
 import SessionStore from '../Session/SessionStore';
 
-import {MenuItem} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
 import {ColumnList, Color} from '../../common/';
 
 export default React.createClass({

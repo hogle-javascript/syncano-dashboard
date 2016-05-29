@@ -2,7 +2,7 @@ import React from 'react';
 
 import {DialogsMixin} from '../../mixins';
 
-import {MenuItem} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
 import {ColumnList, Color} from '../../common/';
 
 export default React.createClass({

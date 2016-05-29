@@ -1,7 +1,8 @@
 export default {
   elements: {
     scriptEditView: {
-      selector: '#brace-editor'
+      selector: '//div[@id="brace-editor"]',
+      locateStrategy: 'xpath'
     },
     config: {
       selector: '//div/span[text()="Config"]',
@@ -24,7 +25,7 @@ export default {
       locateStrategy: 'xpath'
     },
     tracesEmpty: {
-      selector: '//span[text()="There are no traces for this "]',
+      selector: '//p[text()="There are no traces for this "]',
       locateStrategy: 'xpath'
     }
   }

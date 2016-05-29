@@ -1,6 +1,6 @@
 import React from 'react';
-
-import {MenuItem, Styles} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {ColumnList} from '../../common/';
 
 let Column = ColumnList.Column;
@@ -15,7 +15,7 @@ export default React.createClass({
   },
 
   render() {
-    let item = this.props.item;
+    const item = this.props.item;
 
     return (
       <ColumnList.Item
@@ -24,7 +24,7 @@ export default React.createClass({
         <Column.CheckIcon
           id={item.id.toString()}
           iconClassName='account'
-          background={Styles.Colors.blue500}
+          background={Colors.blue500}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}
           primaryText={item.instance}/>

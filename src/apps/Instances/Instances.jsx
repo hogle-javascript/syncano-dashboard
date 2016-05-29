@@ -10,7 +10,7 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {Container, Show, InnerToolbar} from '../../common/';
 
 import InstancesList from './InstancesList';

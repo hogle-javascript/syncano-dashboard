@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-
-import {Styles, List, ListItem} from 'syncano-material-ui';
+import {List, ListItem, Subheader} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import Show from '../Show';
 
 export default React.createClass({
@@ -17,7 +17,7 @@ export default React.createClass({
   getStyles() {
     return {
       listItemChecked: {
-        background: Styles.Colors.lightBlue50
+        background: Colors.lightBlue50
       },
       tagsCounter: {
         marginTop: 12,
@@ -69,8 +69,8 @@ export default React.createClass({
     return (
       <Show if={!_.isEmpty(this.props.items)}>
         <List
-          subheader="Tags"
           className="tags-list">
+          <Subheader>Tags</Subheader>
           {this.renderAllTagsListItem()}
           {this.renderTagsListItems()}
         </List>

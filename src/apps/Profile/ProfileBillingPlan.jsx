@@ -12,7 +12,8 @@ import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
-import {FlatButton, IconButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
+import {FlatButton, IconButton, RaisedButton, TextField} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 import {Billing, Container, Loading, Color, Dialog, InnerToolbar} from '../../common/';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
@@ -254,7 +255,8 @@ export default Radium(React.createClass({
             <div className="col-md-8 col-lg-5">
               <TextField
                 ref="soft_limit"
-                valueLink={this.linkState('soft_limit')}
+                value={this.state.soft_limit}
+                onChange={(event, value) => this.setState({soft_limit: value})}
                 errorText={this.getValidationMessages('soft_limit').join(' ')}
                 name="soft_limit"
                 floatingLabelText="Soft Limit"
@@ -263,7 +265,8 @@ export default Radium(React.createClass({
             <div className="col-md-8 col-lg-5">
               <TextField
                 ref="hard_limit"
-                valueLink={this.linkState('hard_limit')}
+                value={this.state.hard_limit}
+                onChange={(event, value) => this.setState({hard_limit: value})}
                 errorText={this.getValidationMessages('hard_limit').join(' ')}
                 name="hard_limit"
                 floatingLabelText="Hard Limit"
@@ -278,7 +281,7 @@ export default Radium(React.createClass({
                   disabled={(!this.state.hard_limit && !this.state.soft_limit)}/>
                 <IconButton
                   iconClassName="synicon-information-outline"
-                  iconStyle={{color: Styles.Colors.blue500}}
+                  iconStyle={{color: Colors.blue500}}
                   tooltip={toolTip}/>
               </div>
             </div>

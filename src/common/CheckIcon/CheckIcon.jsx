@@ -1,10 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
-
-import {IconButton, Styles, Utils} from 'syncano-material-ui';
+import {IconButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default Radium(React.createClass({
-
   displayName: 'CheckIcon',
 
   propTypes: {
@@ -17,14 +16,12 @@ export default Radium(React.createClass({
     handleClick: React.PropTypes.func
   },
 
-  mixins: [Utils.Styles],
-
   getDefaultProps() {
     return {
       checkedIcon: {
         className: 'checkbox-marked-outline',
         color: '#FFF',
-        circleColor: Styles.Colors.lightBlue500
+        circleColor: Colors.lightBlue500
       },
       hoveredIcon: {
         className: 'checkbox-blank-outline',
@@ -34,7 +31,7 @@ export default Radium(React.createClass({
       icon: {
         className: 'cloud',
         color: '#FFF',
-        circleColor: Styles.Colors.indigo700
+        circleColor: Colors.indigo700
       },
       checkable: true
     };
@@ -108,20 +105,21 @@ export default Radium(React.createClass({
   },
 
   render() {
+    const {iconStyle, style, checkable} = this.props;
     const styles = this.getStyles();
     const icon = this.getIconState();
 
-    styles.iconButton.backgroundColor = icon.circleColor;
+    styles.iconButton.backgroundColor = icon.circleColor !== 'none' ? icon.circleColor : '#FFF';
     styles.icon.color = icon.color;
 
     return (
       <IconButton
         iconClassName={`synicon-${icon.className}`}
-        iconStyle={this.mergeStyles(styles.icon, this.props.iconStyle)}
-        style={this.mergeStyles(styles.iconButton, this.props.style)}
-        onMouseEnter={this.props.checkable ? this.toggleHover : null}
-        onMouseLeave={this.props.checkable ? this.toggleHover : null}
-        onTouchTap={this.props.checkable ? this.handleClick : null}/>
+        iconStyle={{...styles.icon, ...iconStyle}}
+        style={{...styles.iconButton, ...style}}
+        onMouseEnter={checkable ? this.toggleHover : null}
+        onMouseLeave={checkable ? this.toggleHover : null}
+        onTouchTap={checkable ? this.handleClick : null}/>
     );
   }
 }));

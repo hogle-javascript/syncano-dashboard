@@ -5,6 +5,7 @@ module.exports = {
 
     signupPage
       .navigate()
+      .setResolution(client)
       .clickTermsOfUseLink();
     client.pause(1000);
 
@@ -17,7 +18,7 @@ module.exports = {
     const termsPage = client.page.termsPage();
 
     termsPage.expect.element('@termsOfUseContainer').to.be.present.after(10000);
-    termsPage.expect.element('@termsOfUseContainer').to.contain.text('Terms of Service');
+    termsPage.expect.element('@termsOfUseContainer').to.contain.text('Terms and Legal');
     client.end();
   }
 };

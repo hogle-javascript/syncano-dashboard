@@ -1,6 +1,6 @@
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import {IconButton, FlatButton, FontIcon} from 'syncano-material-ui';
+import {IconButton, FlatButton, FontIcon} from 'material-ui';
 import Tooltip from '../Tooltip';
 import Truncate from '../Truncate';
 

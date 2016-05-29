@@ -16,6 +16,7 @@ export default {
 
       loginPage
         .navigate()
+        .setResolution(client)
         .login(globals.tempEmail, globals.tempPass);
     });
   },
@@ -25,10 +26,8 @@ export default {
 
     listsPage
       .goToUrl('temp', 'templates')
-      .waitForElementVisible('@optionsMenu')
       .clickListItemDropdown('@optionsMenu', 'Select')
-      .assertSelectedCount('xpath', selectedItems, 2)
-      .waitForElementVisible('@optionsMenu');
+      .assertSelectedCount('xpath', selectedItems, 2);
 
     client
       .pause(2000);
@@ -52,7 +51,6 @@ export default {
 
     listsPage
       .clickListItemDropdown('@optionsMenu', 'Delete')
-      .waitForElementVisible('@deleteTitleHeading')
       .clickElement('@confirmButton')
       .waitForElementVisible('@emptyListItem');
   }

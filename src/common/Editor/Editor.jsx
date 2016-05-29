@@ -2,7 +2,6 @@
 
 import React from 'react';
 import ace from 'brace';
-import {Utils} from 'syncano-material-ui';
 
 import 'brace/mode/python';
 import 'brace/mode/javascript';
@@ -100,6 +99,6 @@ export default React.createClass({
       height
     };
 
-    return <div id={name} onChange={this.onChange} style={Utils.Styles.mergeStyles(style, divStyle)}></div>;
+    return <div id={name} onChange={this.onChange} style={{...style, ...divStyle}}></div>;
   }
 });

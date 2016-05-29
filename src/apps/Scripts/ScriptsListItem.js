@@ -3,7 +3,7 @@ import React from 'react';
 import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
 
-import {MenuItem} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
 import {ColumnList, Truncate, LinkWrapper} from '../../common/';
 
 const Column = ColumnList.Column;

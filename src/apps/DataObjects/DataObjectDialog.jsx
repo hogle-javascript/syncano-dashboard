@@ -16,7 +16,7 @@ import ChannelsActions from '../Channels/ChannelsActions';
 import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
-import {TextField, FlatButton, IconButton, DatePicker, TimePicker} from 'syncano-material-ui';
+import {TextField, FlatButton, IconButton, DatePicker, TimePicker} from 'material-ui';
 import {Dialog, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
@@ -111,7 +111,7 @@ export default React.createClass({
         padding: '0 24px'
       },
       groupItemContainer: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         justifyContent: 'space-between',
         flexWrap: 'nowrap'
       },
@@ -440,7 +440,8 @@ export default React.createClass({
             style={styles.dialogField}
             fullWidth={true}
             disabled={this.hasEditMode() || !channel || channel === 'no channel'}
-            valueLink={this.linkState('channel_room')}
+            value={this.state.channel_room}
+            onChange={(event, value) => this.setState({channel_room: value})}
             errorText={this.getValidationMessages('channel_room').join(' ')}
             hintText="Channel Room"
             floatingLabelText="Channel Room"/>
@@ -459,7 +460,8 @@ export default React.createClass({
             name="owner"
             style={styles.dialogField}
             fullWidth={true}
-            valueLink={this.linkState('owner')}
+            value={this.state.owner}
+            onChange={(event, value) => this.setState({owner: value})}
             errorText={this.getValidationMessages('owner').join(' ')}
             hintText="User ID"
             floatingLabelText="Owner"/>
@@ -707,7 +709,8 @@ export default React.createClass({
             name={item.name}
             style={styles.dialogField}
             fullWidth={true}
-            valueLink={this.linkState(item.name)}
+            value={this.state[item.name]}
+            onChange={(event, value) => this.setState({[item.name]: value})}
             errorText={this.getValidationMessages(item.name).join(' ')}
             hintText={`Field ${item.name}`}
             floatingLabelText={`${item.name} (${item.type})`}/>

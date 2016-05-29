@@ -22,7 +22,8 @@ export default Reflux.createStore({
       name: null,
       group_permissions: 'create_objects',
       other_permissions: 'create_objects',
-      fields: []
+      fields: [],
+      metadata: {}
     };
   },
 

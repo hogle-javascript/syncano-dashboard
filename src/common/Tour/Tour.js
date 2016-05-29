@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import Radium from 'radium';
 
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 
 // import './Tour.css';
 
@@ -174,7 +174,6 @@ export default Radium(React.createClass({
             <RaisedButton
               label={currentStep === config.length - 1 ? 'End tour' : 'Next'}
               labelStyle={{fontSize: '16px'}}
-              fullWidth={false}
               style={{boxShadow: 'none', height: '48px'}}
               primary={true}/>
           </div>

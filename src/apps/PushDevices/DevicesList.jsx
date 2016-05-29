@@ -3,11 +3,11 @@ import {withRouter} from 'react-router';
 import Radium from 'radium';
 
 import {DialogsMixin} from '../../mixins';
-import {Styles} from 'syncano-material-ui';
 
 import UsersActions from '../Users/UsersActions';
 import UsersStore from '../Users/UsersStore';
 
+import {colors as Colors} from 'material-ui/styles/';
 import {ColumnList, Loading, Container, Lists, Dialog, ShowMore} from '../../common/';
 import ListItem from './DevicesListItem';
 import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
@@ -52,7 +52,7 @@ const DevicesList = Radium(React.createClass({
         fontSize: 18
       },
       moreLink: {
-        color: Styles.Colors.blue500,
+        color: Colors.blue500,
         cursor: 'pointer',
         ':hover': {
           textDecoration: 'underline'

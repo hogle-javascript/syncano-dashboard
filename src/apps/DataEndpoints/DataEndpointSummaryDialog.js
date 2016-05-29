@@ -9,7 +9,8 @@ import SessionStore from '../Session/SessionStore';
 
 import {DialogMixin} from '../../mixins';
 import {CodePreview, Dialog, Notification} from '../../common/';
-import {Card, CardTitle, CardText, RaisedButton, Styles} from 'syncano-material-ui';
+import {Card, CardTitle, CardText, RaisedButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/'
 
 export default React.createClass({
   displayName: 'DataEndpointSummaryDialog',
@@ -44,7 +45,7 @@ export default React.createClass({
           <span
             className="synicon-socket-data"
             style={{
-              color: Styles.Colors.green400,
+              color: Colors.green400,
               fontSize: 32
             }} />
         </div>

@@ -10,7 +10,7 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
+import {RaisedButton} from 'material-ui';
 import {Container, Loading, InnerToolbar} from '../../common/';
 
 // Local components
