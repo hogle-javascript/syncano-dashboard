@@ -232,6 +232,10 @@ export default React.createClass({
             params[item.name] = field;
           }
 
+        } else if (item.type === 'relation') {
+          const fieldValue = this.refs[`field-${item.name}`].getValue();
+
+          params[item.name] = `[${fieldValue}]`;
         } else {
           let fieldValue = this.refs[`field-${item.name}`].getValue();
 
@@ -699,6 +703,23 @@ export default React.createClass({
                 </div>
               </div>
             </div>
+          );
+        }
+
+        if (item.type === 'relation') {
+          const defaultValue = this.state[item.name] && this.state[item.name].value;
+
+          return (
+            <TextField
+              key={`field-${item.name}`}
+              ref={`field-${item.name}`}
+              name={item.name}
+              style={styles.dialogField}
+              fullWidth={true}
+              defaultValue={defaultValue}
+              errorText={this.getValidationMessages(item.name).join(' ')}
+              hintText={`Field ${item.name}`}
+              floatingLabelText={`${item.name} (${item.type})`}/>
           );
         }
 
