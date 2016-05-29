@@ -1,11 +1,11 @@
 import React from 'react';
 import Moment from 'moment';
 import _ from 'lodash';
+import Actions from './DataObjectsActions';
 
 import {IconButton, TableHeaderColumn, TableRowColumn, TableHeader, TableRow} from 'material-ui';
 
 export default {
-
   columnsRenderers() {
     return {
       created_at: this.renderColumnDate,
@@ -93,6 +93,7 @@ export default {
         const renderer = this.getColumnRenderer(column.id);
         const typesMap = {
           reference: () => this.renderReference(value),
+          relation: () => this.renderReference(value),
           file: () => this.renderFile(value),
           datetime: () => this.renderColumnDate(value.value)
         };
@@ -125,6 +126,7 @@ export default {
 
       return (
         <TableRow
+          onTouchTap={() => Actions.showDialog(item)}
           style={{cursor: 'pointer'}}
           key={`row-${index}`}
           selected={selected}>
