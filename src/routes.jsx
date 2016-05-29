@@ -14,6 +14,7 @@ import DashboardPage from './pages/dashboard';
 import InstancePage from './pages/instance';
 import ProfilePage from './pages/profile';
 import ScriptsPage from './pages/scripts';
+import SetupPage from './pages/setup';
 import NotFoundPage from './pages/notfound';
 import PushDevicesPage from './pages/pushDevices';
 
@@ -154,6 +155,11 @@ export default (
         name="instances"
         component={Instances}
         path="instances"/>
+
+      <Route
+        name="setup"
+        component={SetupPage}
+        path="setup" />
 
       <Route
         name="instance"

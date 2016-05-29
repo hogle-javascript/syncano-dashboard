@@ -13,7 +13,8 @@ export default React.createClass({
   getDefaultProps() {
     return {
       actions: [],
-      contentSize: 'large'
+      contentSize: 'large',
+      showCloseButton: true
     };
   },
 
@@ -81,6 +82,19 @@ export default React.createClass({
     return config[size];
   },
 
+  renderCloseButton() {
+    const styles = this.getStyles();
+    const {onRequestClose} = this.props;
+
+    return (
+      <IconButton
+        style={styles.closeButton}
+        iconStyle={styles.closeButtonIcon}
+        onTouchTap={onRequestClose}
+        iconClassName="synicon-close"/>
+    );
+  },
+
   render() {
     const styles = this.getStyles();
     const {
@@ -94,6 +108,7 @@ export default React.createClass({
       isLoading,
       onRequestClose,
       sidebar,
+      showCloseButton,
       ...other
     } = this.props;
 
@@ -112,11 +127,8 @@ export default React.createClass({
         bodyStyle={styles.body}
         actionsContainerStyle={{...styles.actionsContainer, ...(sidebar && styles.actionsContainerWhenSidebar)}}
         onRequestClose={onRequestClose}>
-        <IconButton
-          style={styles.closeButton}
-          iconStyle={styles.closeButtonIcon}
-          onTouchTap={onRequestClose}
-          iconClassName="synicon-close"/>
+
+        {showCloseButton && this.renderCloseButton()}
 
         <div className="row">
           {sidebar ? <DialogSidebar>{sidebar}</DialogSidebar> : null}
