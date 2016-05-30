@@ -122,7 +122,7 @@ export default Reflux.createStore({
 
   onFetchScriptTracesCompleted(traces) {
     console.debug('ScriptStore::onFetchScriptTracesCompleted');
-    this.data.traces = traces._items;
+    this.data.traces = traces;
     this.data.isLoading = false;
     this.getScriptLastTraceResult();
   },
