@@ -182,15 +182,6 @@ export default React.createClass({
       <div>
         <div>Response options</div>
         {orderField}
-        <TextField
-          ref="page_size"
-          name="page_size"
-          fullWidth={true}
-          value={this.state.page_size}
-          onChange={(event, value) => this.setState({page_size: value})}
-          errorText={this.getValidationMessages('page_size').join(' ')}
-          hintText="Number"
-          floatingLabelText="Number of records in data set"/>
       </div>
     );
   },
@@ -237,8 +228,7 @@ export default React.createClass({
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
         }>
-        {this.renderFormNotifications()}
-        <Dialog.ContentSection>
+        <Dialog.ContentSection noMargin={true}>
           <div className="col-flex-1">
             <TextField
               ref="name"
@@ -266,7 +256,20 @@ export default React.createClass({
               floatingLabelText="Description (optional)"/>
           </div>
         </Dialog.ContentSection>
-        <Dialog.ContentSection style={{height: 72}}>
+        <Dialog.ContentSection noMargin={true}>
+          <div className="col-flex-1">
+            <TextField
+              ref="page_size"
+              name="page_size"
+              fullWidth={true}
+              value={this.state.page_size}
+              onChange={(event, value) => this.setState({page_size: value})}
+              errorText={this.getValidationMessages('page_size').join(' ')}
+              hintText="Number"
+              floatingLabelText="Number of records in data set"/>
+          </div>
+        </Dialog.ContentSection>
+        <Dialog.ContentSection>
           <div className="col-flex-1" style={{position: 'relative'}}>
             <AutoComplete
               ref="class"
@@ -280,8 +283,6 @@ export default React.createClass({
               onUpdateInput={(value) => this.setState({class: value})}
               fullWidth={true}
               openOnFocus={true}
-              onFocus={() => this.refs.class._open()}
-              onClick={() => this.refs.class._open()}
               errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
         </Dialog.ContentSection>
