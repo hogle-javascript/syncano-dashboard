@@ -23,7 +23,6 @@ import Trace from './Trace';
 import Truncate from './Truncate';
 import CodePreview from './CodePreview';
 import ColorIconPicker from './ColorIconPicker';
-import ConversionPixel from './ConversionPixel';
 import DataObjectsAmount from './DataObjectsAmount';
 import Dialog from './Dialog';
 import Dropdown from './Dropdown';
@@ -67,7 +66,6 @@ export {Trace};
 export {Truncate};
 export {CodePreview};
 export {ColorIconPicker};
-export {ConversionPixel};
 export {DataObjectsAmount};
 export {Dialog};
 export {Dropdown};
@@ -112,7 +110,6 @@ export default {
   Truncate,
   CodePreview,
   ColorIconPicker,
-  ConversionPixel,
   DataObjectsAmount,
   Dialog,
   Dropdown,

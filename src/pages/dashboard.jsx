@@ -3,7 +3,7 @@ import {Grid, Breakpoint} from 'react-responsive-grid';
 
 import SessionStore from '../apps/Session/SessionStore';
 
-import {Header, ConversionPixel, Sidebar, NoMobileInfo} from '../common/';
+import {Header, Sidebar, NoMobileInfo} from '../common/';
 
 export default React.createClass({
   displayName: 'Dashboard',
@@ -14,7 +14,6 @@ export default React.createClass({
 
       return (
         <div>
-          <ConversionPixel.Adroll />
         </div>
       );
     }
