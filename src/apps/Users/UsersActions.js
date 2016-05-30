@@ -10,6 +10,12 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.list'
     },
+    subFetchUsers: {
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Users.subList'
+    },
     createUser: {
       asyncResult: true,
       asyncForm: true,

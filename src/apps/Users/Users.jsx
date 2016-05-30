@@ -8,7 +8,7 @@ import {GroupsActions, GroupsStore, GroupsList, GroupDialog} from './../Groups';
 
 // Components
 import {RaisedButton} from 'material-ui';
-import {Container, InnerToolbar, Lists} from '../../common/';
+import {Container, InnerToolbar, Lists, Loading, Show} from '../../common/';
 
 // Local components
 import UsersList from './UsersList';
@@ -26,6 +26,12 @@ export default React.createClass({
     console.info('Users::componentDidMount');
     Actions.fetch();
     GroupsActions.fetch();
+  },
+
+  handleMoreRows() {
+    const {nextParams} = this.state.users;
+
+    Actions.subFetchUsers(nextParams);
   },
 
   showUserDialog(group) {
@@ -70,9 +76,23 @@ export default React.createClass({
             </div>
             <div className="col-lg-27">
               <UsersList
-                isLoading={users.isLoading}
                 items={users.items}
                 hideDialogs={users.hideDialogs} />
+              <div
+                className="row align-center"
+                style={{margin: 50}}>
+                <div>Loaded {users.items.length} Users</div>
+              </div>
+              <Loading show={users.isLoading}/>
+              <Show if={users.hasNextPage && !users.isLoading}>
+                <div
+                  className="row align-center"
+                  style={{margin: 50}}>
+                  <RaisedButton
+                    label="Load more"
+                    onClick={this.handleMoreRows}/>
+                </div>
+              </Show>
             </div>
           </Lists.Container>
         </Container>

@@ -1,5 +1,6 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
+import URI from 'urijs';
 
 // Utils & Mixins
 import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../mixins';
@@ -48,14 +49,29 @@ export default Reflux.createStore({
     return _.filter(this.data.items, {id: userId}).length > 0 ? _.filter(this.data.items, {id: userId})[0] : null;
   },
 
-  setUsers(users) {
-    this.data.items = users;
+  setUsers(items, rawData) {
+    console.debug('UsersStore::setUsers');
+
+    this.data.hasNextPage = items.hasNext();
+
+    if (!this.data.items) {
+      this.data.items = [];
+    }
+
+    this.data.items = _.uniqBy(this.data.items.concat(items), 'id');
+    this.data.nextParams = new URI(rawData.next || '').search(true);
+    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
-  onFetchUsersCompleted(payload) {
+  onFetchUsersCompleted(payload, rawData) {
     console.debug('UsersStore::onFetchUsersCompleted');
-    Actions.setUsers(payload);
+    Actions.setUsers(payload, rawData);
+  },
+
+  onSubFetchUsersCompleted(payload, rawData) {
+    console.debug('UsersStore::onSubFetchUsersCompleted');
+    Actions.setUsers(payload, rawData);
   },
 
   onRemoveUsersCompleted() {
