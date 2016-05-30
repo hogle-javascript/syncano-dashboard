@@ -15,17 +15,26 @@ export default {
   after(client) {
     client.end();
   },
-  'Add an Instance from empty list item': (client) => {
+  // 'Add an Instance from empty list item': (client) => {
+  //   const instancesPage = client.page.instancesPage();
+  //
+  //   instancesPage
+  //     .navigate()
+  //     .waitForElementPresent('@emptyListItem')
+  //     .clickElement('@emptyListItem')
+  //     .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
+  //     .clickElement('@confirmButton')
+  //     .waitForElementNotPresent('@addInstanceModalTitle')
+  //     .waitForElementVisible('@instanceDescription');
+  // },
+  'Check if Instance has been created': (client) => {
     const instancesPage = client.page.instancesPage();
 
     instancesPage
+      .waitForElementNotPresent('@setupText')
       .navigate()
-      .waitForElementPresent('@emptyListItem')
-      .clickElement('@emptyListItem')
-      .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
-      .clickElement('@confirmButton')
-      .waitForElementNotPresent('@addInstanceModalTitle')
-      .waitForElementVisible('@instanceDescription');
+      .waitForElementNotPresent('@emptyListItem')
+      .waitForElementVisible('@selectInstance');
   },
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();

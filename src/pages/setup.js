@@ -14,7 +14,7 @@ class SetupPage extends Component {
     const name = InstanceDialogStore.genUniqueName();
 
     connection.Instance.please().create({name}).then((instance) => {
-      SessionActions.setInstance(instance.name);
+      SessionActions.fetchInstance(instance.name);
       router.push({name: 'instance', params: {instanceName: instance.name}});
     });
   }

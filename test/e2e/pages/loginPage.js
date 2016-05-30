@@ -6,7 +6,7 @@ const loginCommands = {
       .setValue('@passInput', pass)
       .waitForElementVisible('@loginButton')
       .click('@loginButton')
-      .waitForElementVisible('@socketsHeaderTitle');
+      .waitForElementVisible('@instancesHeaderTitle');
   }
 };
 
@@ -70,6 +70,10 @@ export default {
     },
     instancesDiv: {
       selector: 'div[id=instances]'
+    },
+    instancesHeaderTitle: {
+      selector: '//span[text()="Instances"]',
+      locateStrategy: 'xpath'
     },
     socketsHeaderTitle: {
       selector: '//span[text()="Sockets"]',

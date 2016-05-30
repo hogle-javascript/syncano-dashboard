@@ -24,10 +24,9 @@ export default {
   },
   'Test Select/Deselect multiple Scripts': (client) => {
     const scriptsPage = client.page.scriptsPage();
-    const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
 
     // ToDO: Delete client.pause after dissappearing of scripts will be solved
-    client.url(tempUrl);
+    client.goToUrl('temp', 'scripts');
 
     scriptsPage
       .waitForElementVisible('@scriptMenuSelect')

@@ -146,7 +146,6 @@ export default Reflux.createStore({
 
     this.setAnalyticsIdentifying(user);
     this.trigger(this);
-    this.router.push({name: 'dashboard'});
   },
 
   setUTMData(query) {
@@ -260,6 +259,7 @@ export default Reflux.createStore({
     this.connection.setApiKey(this.token);
     localStorage.setItem('token', this.token);
     SessionActions.setUser(payload);
+    this.router.push({name: 'dashboard'});
   },
 
   onLogout() {

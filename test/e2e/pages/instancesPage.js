@@ -117,6 +117,10 @@ export default {
     socketsHeaderTitle: {
       selector: '//span[text()="Sockets"]',
       locateStrategy: 'xpath'
+    },
+    setupText: {
+      selector: '//div[text()="We\'re preparing your account, please wait..."]',
+      locateStrategy: 'xpath'
     }
   }
 };

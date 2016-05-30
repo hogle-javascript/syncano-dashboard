@@ -39,7 +39,10 @@ export default withRouter(React.createClass({
           handleIconClick={onIconClick}
           primaryText={
             <Truncate
-              onClick={() => router.push({name: 'instance', params: {instanceName: item.name}})}
+              onClick={() => {
+                localStorage.setItem('lastInstance', item.name);
+                router.push({name: 'instance', params: {instanceName: item.name}});
+              }}
               style={{cursor: 'pointer'}}
               text={item.name}/>
           }/>

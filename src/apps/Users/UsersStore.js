@@ -66,6 +66,7 @@ export default Reflux.createStore({
 
   onFetchUsersCompleted(payload, rawData) {
     console.debug('UsersStore::onFetchUsersCompleted');
+    this.data.items = [];
     Actions.setUsers(payload, rawData);
   },
 
