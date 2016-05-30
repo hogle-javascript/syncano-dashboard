@@ -88,7 +88,7 @@ export default Reflux.createStore({
 
   onFetchScriptTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchScriptTracesCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+    this.setTraces(tracesObj);
   },
 
   onFetchScriptEndpointTracesCompleted(scriptEndpointTraces) {
