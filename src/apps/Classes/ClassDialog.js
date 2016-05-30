@@ -230,7 +230,7 @@ export default React.createClass({
       fieldFilter: this.refs.fieldFilter ? this.refs.fieldFilter.isChecked() : null
     };
 
-    if (fieldType === 'reference') {
+    if (fieldType === 'reference' || fieldType === 'relation') {
       field.fieldTarget = fieldTarget;
     }
 
@@ -526,7 +526,7 @@ export default React.createClass({
                   errorText={this.getValidationMessages('fieldType').join(' ')}/>
               </div>
               <div className="col-xs-8">
-                <Show if={fieldType === 'reference'}>
+                <Show if={fieldType === 'reference' || fieldType === 'relation'}>
                   <SelectFieldWrapper
                     name="fieldTarget"
                     options={this.getFieldTargetOptions()}

@@ -4,12 +4,12 @@ module.exports = function(config) {
   config.set({
 
     files: [
-      './test/polyfill.js',
-      './test/main.js'
+      './test/unit/polyfill.js',
+      './test/unit/main.js'
     ],
 
     preprocessors: {
-      './test/main.js': ['webpack']
+      './test/unit/main.js': ['webpack']
     },
 
     browsers: ['PhantomJS'],
@@ -25,8 +25,8 @@ module.exports = function(config) {
     coverageReporter: {
       dir: 'coverage/',
       reporters: [
-        { type: 'lcovonly', subdir: '.', file: 'lcov.info' },
-        { type: 'html', subdir: 'html' }
+        {type: 'lcovonly', subdir: '.', file: 'lcov.info'},
+        {type: 'html', subdir: 'html'}
       ]
     },
 
@@ -44,6 +44,6 @@ module.exports = function(config) {
       'karma-coverage',
       'karma-sinon-chai',
       'karma-phantomjs-launcher'
-    ],
+    ]
   });
 };

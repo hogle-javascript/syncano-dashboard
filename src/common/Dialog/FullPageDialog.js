@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import DialogMixin from '../../mixins/DialogMixin';
+import {DialogMixin, MousetrapMixin} from '../../mixins/';
 import {Dialog, IconButton} from 'material-ui';
 import {Loading} from '../';
 import DialogSidebar from './DialogSidebar';
@@ -8,7 +8,10 @@ import DialogSidebar from './DialogSidebar';
 export default React.createClass({
   displayName: 'FullPageDialog',
 
-  mixins: [DialogMixin],
+  mixins: [
+    DialogMixin,
+    MousetrapMixin
+  ],
 
   getDefaultProps() {
     return {
@@ -16,6 +19,29 @@ export default React.createClass({
       contentSize: 'large',
       showCloseButton: true
     };
+  },
+
+  componentDidUpdate(prevProps) {
+    const {onRequestClose, actions} = this.props;
+
+    if (!prevProps.open && this.props.open) {
+      this.bindShortcut('esc', () => {
+        onRequestClose();
+        return false;
+      });
+
+      if (actions.props.handleConfirm) {
+        this.bindShortcut('enter', () => {
+          actions.props.handleConfirm();
+          return false;
+        });
+      }
+    }
+
+    if (prevProps.open && !this.props.open) {
+      this.unbindShortcut('esc');
+      this.unbindShortcut('enter');
+    }
   },
 
   getStyles() {

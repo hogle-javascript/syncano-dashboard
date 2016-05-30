@@ -1,7 +1,7 @@
 import TestUtils from 'react-addons-test-utils';
 
 import ReactRouterContext from '../../utils/ReactRouterContext';
-import AccountActivate from '../../../src/apps/Account/AccountActivate';
+import AccountActivate from '../../../../src/apps/Account/AccountActivate';
 
 
 describe('AccountActivate', function() {

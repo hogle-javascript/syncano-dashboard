@@ -74,14 +74,6 @@ const DataObjects = React.createClass({
     console.info('DataObjects::handleSelectAll', selectAll);
   },
 
-  handleCellClick(rowNumber, columnNumber) {
-    console.info('DataObjects::handleCellClick', arguments);
-
-    if (columnNumber > -1) {
-      this.showDataObjectEditDialog(columnNumber);
-    }
-  },
-
   handleMoreRows() {
     const {nextParams} = this.state;
 
@@ -118,7 +110,7 @@ const DataObjects = React.createClass({
     dataObject = _.reduce(dataObject, (result, val, key) => {
       let value = val;
 
-      if (_.isObject(value) && value.type === 'reference') {
+      if (_.isObject(value) && (value.type === 'reference' || value.type === 'relation')) {
         value = value.value;
       }
       if (_.isBoolean(value)) {
@@ -143,7 +135,6 @@ const DataObjects = React.createClass({
           ref="table"
           multiSelectable={true}
           showRowHover={true}
-          onCellClick={this.handleCellClick}
           onRowSelection={this.handleRowSelection}
           wrapperStyle={{minHeight: '120px'}}
           bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>

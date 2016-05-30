@@ -11,6 +11,16 @@ export default {
       .catch(this.failure);
   },
 
+  subList(nextParams) {
+    this.NewLibConnection
+      .User
+      .please()
+      .list({}, nextParams)
+      .ordering('desc')
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   create(userParams, groups) {
     const userGroups = groups.newGroups ? groups.newGroups : null;
     const userGroupsArray = _.isArray(userGroups) ? userGroups : [userGroups];
