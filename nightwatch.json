@@ -1,10 +1,10 @@
 {
-  "src_folders" : ["nightwatch/tests"],
+  "src_folders" : ["test/e2e/tests"],
   "output_folder" : "./reports",
-  "custom_commands_path" : "nightwatch/commands",
+  "custom_commands_path" : "test/e2e/commands",
   "custom_assertions_path" : "",
-  "page_objects_path" : "nightwatch/pages",
-  "globals_path" : "nightwatch/globals.js",
+  "page_objects_path" : "test/e2e/pages",
+  "globals_path" : "test/e2e/globals.js",
 
   "selenium" : {
     "start_process" : true,

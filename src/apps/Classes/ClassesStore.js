@@ -109,7 +109,7 @@ export default Reflux.createStore({
     let relationFields = [];
 
     allFields.map((item) => {
-      if (item.type === 'reference') {
+      if (item.type === 'reference' || item.type === 'relation') {
         relationFields.push(item);
       }
     });

@@ -146,6 +146,7 @@ export default Reflux.createStore({
 
     this.setAnalyticsIdentifying(user);
     this.trigger(this);
+    this.router.push({name: 'dashboard'});
   },
 
   setUTMData(query) {

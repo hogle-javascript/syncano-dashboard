@@ -41,6 +41,7 @@ export default Reflux.createStore({
   },
 
   socketsListenables: [
+    SessionActions.setInstance,
     DataActions.createDataEndpoint.completed,
     DataActions.createDataEndpointWithClass.completed,
     DataActions.updateDataEndpoint.completed,

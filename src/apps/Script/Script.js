@@ -447,7 +447,7 @@ const Script = React.createClass({
           forceBackFallback={true}
           backButtonTooltip="Go back to Scripts list">
           <Show if={!isLoading}>
-            <div style={{display: 'inline-block'}}>
+            <div style={{display: 'inline-block', verticalAlign: 'middle'}}>
               <Checkbox
                 ref="autosaveCheckbox"
                 name="autosaveCheckbox"
@@ -480,7 +480,7 @@ const Script = React.createClass({
               <TogglePanel
                 title="Code"
                 initialOpen={true}
-                style={{display: 'flex', flexDirection: 'column'}}>
+                style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                 <Show if={this.getValidationMessages('source').length > 0}>
                   <div style={styles.notification}>
                     <Notification type="error">

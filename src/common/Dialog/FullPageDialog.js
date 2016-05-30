@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import DialogMixin from '../../mixins/DialogMixin';
+import {DialogMixin, MousetrapMixin} from '../../mixins/';
 import {Dialog, IconButton} from 'material-ui';
 import {Loading} from '../';
 import DialogSidebar from './DialogSidebar';
@@ -8,13 +8,40 @@ import DialogSidebar from './DialogSidebar';
 export default React.createClass({
   displayName: 'FullPageDialog',
 
-  mixins: [DialogMixin],
+  mixins: [
+    DialogMixin,
+    MousetrapMixin
+  ],
 
   getDefaultProps() {
     return {
       actions: [],
-      contentSize: 'large'
+      contentSize: 'large',
+      showCloseButton: true
     };
+  },
+
+  componentDidUpdate(prevProps) {
+    const {onRequestClose, actions} = this.props;
+
+    if (!prevProps.open && this.props.open) {
+      this.bindShortcut('esc', () => {
+        onRequestClose();
+        return false;
+      });
+
+      if (actions.props.handleConfirm) {
+        this.bindShortcut('enter', () => {
+          actions.props.handleConfirm();
+          return false;
+        });
+      }
+    }
+
+    if (prevProps.open && !this.props.open) {
+      this.unbindShortcut('esc');
+      this.unbindShortcut('enter');
+    }
   },
 
   getStyles() {
@@ -81,6 +108,19 @@ export default React.createClass({
     return config[size];
   },
 
+  renderCloseButton() {
+    const styles = this.getStyles();
+    const {onRequestClose} = this.props;
+
+    return (
+      <IconButton
+        style={styles.closeButton}
+        iconStyle={styles.closeButtonIcon}
+        onTouchTap={onRequestClose}
+        iconClassName="synicon-close"/>
+    );
+  },
+
   render() {
     const styles = this.getStyles();
     const {
@@ -94,6 +134,7 @@ export default React.createClass({
       isLoading,
       onRequestClose,
       sidebar,
+      showCloseButton,
       ...other
     } = this.props;
 
@@ -112,11 +153,8 @@ export default React.createClass({
         bodyStyle={styles.body}
         actionsContainerStyle={{...styles.actionsContainer, ...(sidebar && styles.actionsContainerWhenSidebar)}}
         onRequestClose={onRequestClose}>
-        <IconButton
-          style={styles.closeButton}
-          iconStyle={styles.closeButtonIcon}
-          onTouchTap={onRequestClose}
-          iconClassName="synicon-close"/>
+
+        {showCloseButton && this.renderCloseButton()}
 
         <div className="row">
           {sidebar ? <DialogSidebar>{sidebar}</DialogSidebar> : null}

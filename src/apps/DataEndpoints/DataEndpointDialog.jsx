@@ -138,7 +138,7 @@ export default React.createClass({
                 onToggle={this.handleToggle.bind(this, 'showFields', field.name)} />
             </div>
             <div className="col-xs-8">
-              <Show if={field.type === 'reference'}>
+              <Show if={field.type === 'reference' || field.type === 'relation'}>
                 <Checkbox
                   name="expand"
                   defaultChecked={this.isEnabled(this.state.expand, field.name)}
