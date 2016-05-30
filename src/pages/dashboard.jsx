@@ -1,23 +1,18 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {withRouter} from 'react-router';
 import {Grid, Breakpoint} from 'react-responsive-grid';
-
 import SessionStore from '../apps/Session/SessionStore';
-
 import {Header, Sidebar, NoMobileInfo} from '../common/';
 
-export default React.createClass({
-  displayName: 'Dashboard',
+class Dashboard extends Component {
+  componentDidMount() {
+    const {router} = this.props;
 
-  renderConversionPixels() {
-    if (SessionStore.getSignUpMode() && ENV === 'production') {
+    if (SessionStore.getSignUpMode()) {
       SessionStore.removeSignUpMode();
-
-      return (
-        <div>
-        </div>
-      );
+      router.push({name: 'setup'});
     }
-  },
+  }
 
   render() {
     return (
@@ -40,8 +35,9 @@ export default React.createClass({
             </div>
           </Breakpoint>
         </Grid>
-        {this.renderConversionPixels()}
       </div>
     );
   }
-});
+}
+
+export default withRouter(Dashboard);
