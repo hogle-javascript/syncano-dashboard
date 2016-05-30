@@ -72,18 +72,21 @@ export default {
       .error(this.failure);
   },
 
-  getTrace(scriptId, traceId) {
-    this.Connection
-      .CodeBoxes.trace(traceId, scriptId, {})
+  getTrace(scriptId, id) {
+    this.NewLibConnection
+      .ScriptTrace
+      .please()
+      .get({scriptId, id})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  listTraces(scriptId, params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .CodeBoxes
-      .traces(scriptId, params)
+  listTraces(scriptId) {
+    this.NewLibConnection
+      .ScriptTrace
+      .please()
+      .ordering('desc')
+      .list({scriptId})
       .then(this.completed)
       .catch(this.failure);
   },
