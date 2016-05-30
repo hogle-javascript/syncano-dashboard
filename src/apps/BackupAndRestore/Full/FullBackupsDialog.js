@@ -6,7 +6,7 @@ import {DialogMixin, FormMixin} from '../../../mixins';
 import Actions from './FullBackupsActions';
 import Store from './FullBackupsDialogStore';
 
-import {TextField} from 'syncano-material-ui';
+import {TextField} from 'material-ui';
 import {Dialog} from '../../../common';
 
 export default React.createClass({

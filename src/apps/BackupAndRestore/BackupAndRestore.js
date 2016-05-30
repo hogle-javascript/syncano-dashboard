@@ -6,7 +6,7 @@ import PartialBackupsActions from './Partial/PartialBackupsActions';
 import BackupsInnerToolbar from './BackupsInnerToolbar';
 import FullBackupsDialog from './Full/FullBackupsDialog';
 import PartialBackupsDialog from './Partial/PartialBackupsDialog';
-import {ListItem, FontIcon, RaisedButton, Styles} from 'syncano-material-ui';
+import {ListItem, FontIcon, RaisedButton, Styles} from 'material-ui';
 import {Popover} from '../../common';
 
 export default class BackupAndRestore extends Component {

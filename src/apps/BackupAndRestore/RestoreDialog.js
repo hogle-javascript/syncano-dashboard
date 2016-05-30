@@ -7,7 +7,7 @@ import Actions from './RestoreDialogActions';
 import Store from './RestoreDialogStore';
 import SessionStore from '../Session/SessionStore';
 
-import {FontIcon, Styles} from 'syncano-material-ui';
+import {FontIcon, Styles} from 'material-ui';
 import {Dialog} from '../../common';
 
 export default React.createClass({

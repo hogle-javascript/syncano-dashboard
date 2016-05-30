@@ -3,7 +3,7 @@ import Filesize from 'filesize';
 
 import RestoreDialogActions from '../RestoreDialogActions';
 
-import {MenuItem} from 'syncano-material-ui';
+import {MenuItem} from 'material-ui';
 import {ColumnList, Color, Truncate} from '../../../common';
 
 const Column = ColumnList.Column;
@@ -22,7 +22,8 @@ const FullBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestoreDi
       handleIconClick={onIconClick}
       primaryText={
         <Truncate text={item.label}/>
-      }/>
+      }
+      secondaryText={`ID ${item.id}`}/>
     <Column.Desc>{item.description}</Column.Desc>
     <ColumnList.Column.Text>{item.status}</ColumnList.Column.Text>
     <ColumnList.Column.Text>{Filesize(item.size)}</ColumnList.Column.Text>
