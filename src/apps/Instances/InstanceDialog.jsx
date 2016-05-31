@@ -174,6 +174,18 @@ export default React.createClass({
       return <MenuItem value={'None'} primaryText="No backups"/>;
     }
 
+    const fileItem = (
+      <MenuItem
+        key="dropdownBackupFile"
+        value={'File'}
+        primaryText="From file" />
+    );
+    const emptyItem = (
+      <MenuItem
+        key="dropdownBackupEmpty"
+        value={'None'}
+        primaryText="None" />
+    );
     let dropDownListItems = _.map(_.sortBy(backups, 'instance'), (backup) => {
       const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
       const text = <Truncate text={`${backup.label} ${createdAt}`} />;
@@ -190,8 +202,8 @@ export default React.createClass({
       );
     });
 
-    dropDownListItems.unshift(<MenuItem value={'File'} primaryText="From file"/>);
-    dropDownListItems.unshift(<MenuItem value={'None'} primaryText="None"/>);
+    dropDownListItems.unshift(fileItem);
+    dropDownListItems.unshift(emptyItem);
 
     return dropDownListItems;
   },

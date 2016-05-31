@@ -32,13 +32,14 @@ export default {
       .please()
       .create(instanceData)
       .then((createdInstance) => {
-        this.NewLibConnection
+        return this.NewLibConnection
           .Restore
           .please()
-          .restore({instanceName: createdInstance.name}, query)
-          .then(this.completed)
-          .catch(this.failure);
+          .restore({
+            instanceName: createdInstance.name
+          }, query);
       })
+      .then(this.completed)
       .catch(this.failure);
   },
 
@@ -70,13 +71,12 @@ export default {
       .please()
       .rename({name}, {new_name: newName})
       .then(() => {
-        this.NewLibConnection
+        return this.NewLibConnection
           .Instance
           .please()
-          .update({name: newName}, {description, metadata})
-          .then(this.completed)
-          .catch(this.failure);
+          .update({name: newName}, {description, metadata});
       })
+      .then(this.completed)
       .catch(this.failure);
   },
 
