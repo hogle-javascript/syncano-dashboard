@@ -121,7 +121,7 @@ export default React.createClass({
               value={queryArgs}/>
           </div>
           <div className="vm-2-t">
-            You can read more about query args&nbsp;
+            {'You can read more about query args '}
             <a
               href="http://docs.syncano.io/v1.1/docs/backup-and-restore"
               style={styles.link}

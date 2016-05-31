@@ -2,8 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor';
 
 export default CreateActions(
   {
-    setClickedBackup: {},
-
     restoreFromFile: {
       asyncResult: true,
       asyncForm: true,

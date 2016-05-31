@@ -8,7 +8,7 @@ import PartialBackupsActions from './Partial/PartialBackupsActions';
 
 import FullBackupsList from './Full/FullBackupsList';
 import PartialBackupsList from './Partial/PartialBackupsList';
-import {Container} from '../../common';
+import {Container, ShowMore} from '../../common';
 
 export default React.createClass({
   displayName: 'AllBackups',
@@ -24,6 +24,8 @@ export default React.createClass({
   },
 
   render() {
+    const visibleItems = 3;
+    const {params} = this.props;
     const fullBackup = this.state.full;
     const partialBackup = this.state.partial;
 
@@ -31,10 +33,20 @@ export default React.createClass({
       <Container>
         <FullBackupsList
           isLoading={fullBackup.isLoading}
-          items={fullBackup.items} />
+          items={fullBackup.items.slice(0, visibleItems)} />
+        <ShowMore
+          style={{margin: '-30px 0 40px 0'}}
+          visible={fullBackup.items.length > visibleItems && !fullBackup.isLoading}
+          routeName="full-backups"
+          params={params}/>
         <PartialBackupsList
           isLoading={partialBackup.isLoading}
-          items={partialBackup.items} />
+          items={partialBackup.items.slice(0, visibleItems)} />
+        <ShowMore
+          style={{margin: '-30px 0 40px 0'}}
+          visible={partialBackup.items.length > visibleItems && !partialBackup.isLoading}
+          routeName="partial-backups"
+          params={params}/>
       </Container>
     );
   }
