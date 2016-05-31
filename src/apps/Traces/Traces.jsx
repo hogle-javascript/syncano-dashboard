@@ -44,18 +44,6 @@ const Traces = Radium(React.createClass({
     Actions.setCurrentObjectId(objectId, tracesFor);
   },
 
-  getStyles() {
-    return {
-      list: {
-        position: 'relative',
-        top: '35px'
-      },
-      scriptsList: {
-        top: '-45px'
-      }
-    };
-  },
-
   getConfig() {
     return {
       scriptEndpoint: {
@@ -106,10 +94,8 @@ const Traces = Radium(React.createClass({
   },
 
   render() {
-    const {params} = this.context;
     const {items, isLoading} = this.state;
-    const {tracesFor, router} = this.props;
-    const styles = this.getStyles();
+    const {tracesFor} = this.props;
     const config = this.getConfig();
     const toolbarTitleText = this.getToolbarTitleText();
 
@@ -120,10 +106,7 @@ const Traces = Radium(React.createClass({
           title={toolbarTitleText}
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}/>
-        <div style={[
-          styles.list,
-          router.isActive({name: 'scriptEndpoint-traces', params}, true) && styles.scriptsList
-        ]}>
+        <div style={{position: 'relative', top: '35px'}}>
           <Container>
             <TracesList
               isLoading={isLoading}
