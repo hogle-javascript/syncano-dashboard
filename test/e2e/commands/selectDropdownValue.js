@@ -1,7 +1,7 @@
 exports.command = function selectDropdownValue(element, dropdownValue) {
   const value = `//iframe//following-sibling::div//div[text()="${dropdownValue}"]`;
 
-  this
+  return this
     .waitForElementVisible(element)
     .moveToElement(element, 0, 0)
     .pause(500)
@@ -10,6 +10,4 @@ exports.command = function selectDropdownValue(element, dropdownValue) {
     .pause(500)
     .click(value)
     .pause(500);
-
-  return this;
 };

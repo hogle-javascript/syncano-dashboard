@@ -8,7 +8,7 @@ exports.command = function(listItem, dropdownChoice) {
   : `//div[text()="${listItem}"]/../../../following-sibling::div//span[@class="synicon-dots-vertical"]`;
   const choice = `//div[contains(text(), "${dropdownChoice}")]`;
 
-  this
+  return this
     .useXpath()
     .waitForElementVisible(listItemDropdown)
     .click(listItemDropdown)
@@ -18,6 +18,4 @@ exports.command = function(listItem, dropdownChoice) {
     // Waiting for dropdown to be removed from DOM
     .waitForElementNotPresent('//iframe/following-sibling::div[@style]/div')
     .pause(1000);
-
-  return this;
 };

@@ -1,5 +1,5 @@
 exports.command = function clickDropdownDelete(element) {
-  this
+  return this
     .waitForElementVisible(element)
     .click(element)
     .waitForElementNotPresent('//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div')
@@ -9,6 +9,4 @@ exports.command = function clickDropdownDelete(element) {
     .click('//span[text()="Confirm"]')
     .waitForElementNotPresent('//iframe/following-sibling::div/div')
     .pause(1000);
-
-  return this;
 };

@@ -1,7 +1,7 @@
 exports.command = function clearAceEditor(element) {
   const mainKey = process.platform === 'darwin' ? this.Keys.COMMAND : this.Keys.CONTROL;
 
-  this
+  return this
     .moveToElement(element, 0, 0)
     .click(element)
     .keys(mainKey)
@@ -10,6 +10,4 @@ exports.command = function clearAceEditor(element) {
     .pause(1000)
     .keys(this.Keys.DELETE)
     .keys(this.Keys.NULL);
-
-  return this;
 };

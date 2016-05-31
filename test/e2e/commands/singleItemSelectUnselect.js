@@ -9,7 +9,7 @@
 exports.command = function singleItemSelectUnselect(iconClassName, optionsMenuSelector, selectedItemSelector) {
   const button = `(//span[contains(@class, "${iconClassName}")]/../../../button[@type="button"])[1]`;
 
-  this
+  return this
     .useXpath()
     .waitForElementVisible(button)
     .moveToElement(button, 0, 0)
@@ -17,6 +17,4 @@ exports.command = function singleItemSelectUnselect(iconClassName, optionsMenuSe
     .clickElement(selectedItemSelector)
     .moveToElement(optionsMenuSelector, 0, 0)
     .waitForElementPresent(button);
-
-  return this;
 };
