@@ -7,7 +7,8 @@ import Actions from './RestoreDialogActions';
 import Store from './RestoreDialogStore';
 import SessionStore from '../Session/SessionStore';
 
-import {FontIcon, Styles} from 'material-ui';
+import {FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles';
 import {Dialog} from '../../common';
 
 export default React.createClass({
@@ -40,7 +41,7 @@ export default React.createClass({
         }>
         <div className="row">
           <FontIcon
-            style={{fontSize: 60, color: Styles.Colors.orange400}}
+            style={{fontSize: 60, color: Colors.orange400}}
             className="synicon-alert col-sm-7"/>
           <div className="vm-1-t col-sm-28">
             This action will restore instance

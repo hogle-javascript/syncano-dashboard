@@ -23,7 +23,7 @@ const FullBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestoreDi
       primaryText={
         <Truncate text={item.label}/>
       }
-      secondaryText={`ID ${item.id}`}/>
+      secondaryText={`ID: ${item.id}`}/>
     <Column.Desc>{item.description}</Column.Desc>
     <ColumnList.Column.Text>{item.status}</ColumnList.Column.Text>
     <ColumnList.Column.Text>{Filesize(item.size)}</ColumnList.Column.Text>

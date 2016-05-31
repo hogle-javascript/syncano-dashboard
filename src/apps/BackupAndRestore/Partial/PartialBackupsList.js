@@ -7,6 +7,7 @@ import RestoreDialogActions from '../RestoreDialogActions';
 import Store from './PartialBackupsStore';
 
 import ListItem from './PartialBackupsListItem';
+import RestoreDialog from '../RestoreDialog';
 import {ColumnList, Lists, Dialog} from '../../../common';
 
 const Column = ColumnList.Column;
@@ -52,6 +53,7 @@ export default React.createClass({
 
     return (
       <Lists.Container className="partial-backups-list">
+        <RestoreDialog />
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader

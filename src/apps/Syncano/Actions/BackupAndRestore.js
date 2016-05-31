@@ -9,6 +9,16 @@ export default {
       .catch(this.failure);
   },
 
+  listAllFullBackups() {
+    this.NewLibConnection
+      .FullBackup
+      .please()
+      .listAll()
+      .ordering('desc')
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   createFullBackup(params) {
     this.NewLibConnection
       .FullBackup

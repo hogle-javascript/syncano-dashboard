@@ -1,15 +1,17 @@
 import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
+import moment from 'moment';
 
 import {DialogMixin, DialogsMixin, FormMixin} from '../../mixins';
 
 import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
 
-import {TextField, FlatButton} from 'material-ui';
+import {TextField, FlatButton, DropDownMenu, MenuItem, FontIcon} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles/';
-import {Color, Dialog, Icon, Notification, ColorIconPicker} from '../../common/';
+import DropZone from 'react-dropzone';
+import {Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show} from '../../common/';
 
 export default React.createClass({
   displayName: 'InstanceDialog',
@@ -37,6 +39,7 @@ export default React.createClass({
 
   componentWillUpdate(nextProps, nextState) {
     if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
+      Actions.fetchAllFullBackups();
       this.setState({
         name: Store.genUniqueName(),
         metadata: {
@@ -47,11 +50,47 @@ export default React.createClass({
     }
   },
 
+  getStyles() {
+    return {
+      dropZone: {
+        marginLeft: -8,
+        height: 140,
+        width: '70%',
+        borderStyle: 'dashed',
+        borderWidth: 1,
+        borderColor: '#AAA',
+        color: '#AAA',
+        backgroundColor: '#EEE'
+      },
+      dropZoneContainer: {
+        marginTop: 25
+      },
+      dropZoneDescription: {
+        padding: 15,
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        minHeight: '100%'
+      },
+      uploadIcon: {
+        fontSize: 56,
+        color: '#AAA'
+      }
+    };
+  },
+
   handleAddSubmit() {
-    const {name, description, metadata} = this.state;
+    const {name, description, metadata, selectedBackup, backupFile} = this.state;
 
     if (this.props.handleSubmit) {
       this.listenTo(Actions.createInstance.completed, this.extendSubmit);
+    }
+
+    if (selectedBackup !== 'None') {
+      const backup = selectedBackup === 'File' ? backupFile : selectedBackup;
+
+      return Actions.createInstanceFromBackup({name, description, metadata}, backup);
     }
 
     Actions.createInstance({name, description, metadata});
@@ -80,13 +119,29 @@ export default React.createClass({
   },
 
   handleInstanceNameFieldFocus() {
+    const {name} = this.state;
+
     this.setState({
       notificationShowed: true,
-      initialName: this.state.name
+      initialName: name
+    });
+  },
+
+  handleChangeBackup(event, index, value) {
+    this.setState({
+      selectedBackup: value
+    });
+  },
+
+  handleDropBackupFile(file) {
+    this.setState({
+      backupFile: file[0]
     });
   },
 
   initDialogs() {
+    const {isLoading} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -94,9 +149,9 @@ export default React.createClass({
         ref: 'deleteInstanceDialog',
         title: 'Delete an Instance',
         handleConfirm: Actions.removeInstances,
-        isLoading: this.props.isLoading,
         items: [this.state],
-        groupName: 'Instance'
+        groupName: 'Instance',
+        isLoading
       }
     }];
   },
@@ -114,8 +169,48 @@ export default React.createClass({
     );
   },
 
+  renderDropDownItems(backups) {
+    if (!backups) {
+      return <MenuItem value={'None'} primaryText="No backups"/>;
+    }
+
+    let dropDownListItems = _.map(_.sortBy(backups, 'instance'), (backup) => {
+      const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
+      const text = <Truncate text={`${backup.label} ${createdAt}`} />;
+
+      return (
+        <MenuItem
+          key={`dropdownBackup${backup.id}`}
+          value={backup.id}
+          primaryText={text}>
+          <div style={{fontSize: 11, color: '#aaa', fontWeight: 800, height: 15}}>
+            {backup.instance}
+          </div>
+        </MenuItem>
+      );
+    });
+
+    dropDownListItems.unshift(<MenuItem value={'File'} primaryText="From file"/>);
+    dropDownListItems.unshift(<MenuItem value={'None'} primaryText="None"/>);
+
+    return dropDownListItems;
+  },
+
   render() {
-    const {open, metadata, notificationShowed, isLoading, canSubmit} = this.state;
+    const {
+      name,
+      open,
+      metadata,
+      notificationShowed,
+      isLoading,
+      canSubmit,
+      backups,
+      description,
+      selectedBackup,
+      backupFile
+    } = this.state;
+    const styles = this.getStyles();
+    const dropZoneDescription = backupFile ? backupFile.name : null;
     const title = this.hasEditMode() ? 'Update' : 'Add';
 
     return (
@@ -169,7 +264,7 @@ export default React.createClass({
             name="name"
             autoFocus={true}
             fullWidth={true}
-            value={this.state.name}
+            value={name}
             onChange={(event, value) => this.setState({name: value})}
             errorText={this.getValidationMessages('name').join(' ')}
             hintText="Instance's name"
@@ -177,18 +272,42 @@ export default React.createClass({
             floatingLabelText="Name"/>
           {this.hasEditMode() && notificationShowed ? this.renderNotification() : null}
         </Dialog.ContentSection>
-        <Dialog.ContentSection last={true}>
+        <Dialog.ContentSection>
           <TextField
             ref="description"
             name="description"
             fullWidth={true}
             multiLine={true}
-            value={this.state.description}
+            value={description}
             onChange={(event, value) => this.setState({description: value})}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Instance's description"
             floatingLabelText="Description (optional)"/>
         </Dialog.ContentSection>
+        <Show if={!this.hasEditMode()}>
+          <DropDownMenu
+            style={{width: '80%', marginLeft: -32}}
+            onChange={this.handleChangeBackup}
+            value={selectedBackup}>
+            {this.renderDropDownItems(backups)}
+          </DropDownMenu>
+        </Show>
+        <Show if={!this.hasEditMode() && selectedBackup === 'File'}>
+          <div style={styles.dropZoneContainer}>
+            <DropZone
+              onDrop={this.handleDropBackupFile}
+              style={styles.dropZone}>
+              <div style={styles.dropZoneDescription}>
+                <FontIcon
+                  style={styles.uploadIcon}
+                  className={backupFile ? 'synicon-file' : 'synicon-cloud-upload'} />
+                <div>
+                  {dropZoneDescription || 'Click or Drag & Drop to upload partial backup file'}
+                </div>
+              </div>
+            </DropZone>
+          </div>
+        </Show>
       </Dialog.FullPage>
     );
   }

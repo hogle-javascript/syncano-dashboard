@@ -23,7 +23,7 @@ const PartialBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestor
       primaryText={
         <Truncate text={item.label}/>
       }
-      secondaryText={`ID ${item.id}`}/>
+      secondaryText={`ID: ${item.id}`}/>
     <Column.Desc>{item.description}</Column.Desc>
     <ColumnList.Column.Text>{item.status}</ColumnList.Column.Text>
     <ColumnList.Column.Text>{Filesize(item.size)}</ColumnList.Column.Text>
@@ -34,10 +34,6 @@ const PartialBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestor
     </ColumnList.Column.Text>
     <Column.Date date={item.created_at}/>
     <Column.Menu handleClick={() => RestoreDialogActions.setClickedBackup(item)}>
-      <MenuItem
-        className="dropdown-partial-backup-details"
-        onTouchTap={() => console.log('details')}
-        primaryText="Details" />
       <MenuItem
         className="dropdown-partial-backup-download"
         onTouchTap={() => window.open(item.archive, '_self')}

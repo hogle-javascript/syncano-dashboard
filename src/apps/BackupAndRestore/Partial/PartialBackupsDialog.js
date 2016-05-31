@@ -57,9 +57,9 @@ export default React.createClass({
     };
   },
 
-  handleQueryArgsChange(value) {
+  handleChange(value, key) {
     this.setState({
-      queryArgs: value
+      [key]: value
     });
   },
 
@@ -70,7 +70,7 @@ export default React.createClass({
   },
 
   render() {
-    const {isLoading, open, queryArgs} = this.state;
+    const {isLoading, open, label, description, queryArgs} = this.state;
     const styles = this.getStyles();
 
     return (
@@ -92,13 +92,15 @@ export default React.createClass({
           <TextField
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('label')}
+            value={label}
+            onChange={(event, value) => this.handleChange(value, 'label')}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Backup's label"
             floatingLabelText="Label" />
           <TextField
             fullWidth={true}
-            valueLink={this.linkState('description')}
+            value={description}
+            onChange={(event, value) => this.handleChange(value, 'description')}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Backup's description"
             floatingLabelText="Description" />
@@ -109,7 +111,7 @@ export default React.createClass({
               ref="queryArgsEditor"
               mode="json"
               height="400px"
-              onChange={this.handleQueryArgsChange}
+              onChange={(value) => this.handleChange(value, 'queryArgs')}
               value={queryArgs}/>
           </div>
           <div className="vm-2-t">
