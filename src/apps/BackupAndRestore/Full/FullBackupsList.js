@@ -81,6 +81,7 @@ export default React.createClass({
         <Lists.List
           {...this.props}
           emptyItemContent="Create Full Backup"
+          emptyItemHandleClick={Actions.showDialog}
           checkItem={this.checkItem}
           key="full-backups-list"
           renderItem={this.renderItem}/>
