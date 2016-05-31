@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 
 import FullBackupActions from './Full/FullBackupsActions';
 import PartialBackupsActions from './Partial/PartialBackupsActions';
+import RestoreFromFileDialogActions from './RestoreFromFileDialogActions';
 
 import BackupsInnerToolbar from './BackupsInnerToolbar';
 import FullBackupsDialog from './Full/FullBackupsDialog';
 import PartialBackupsDialog from './Partial/PartialBackupsDialog';
+import RestoreFromFileDialog from './RestoreFromFileDialog';
 import {ListItem, FontIcon, RaisedButton} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles';
 import {Popover} from '../../common';
@@ -34,7 +36,13 @@ export default class BackupAndRestore extends Component {
       <div>
         <FullBackupsDialog />
         <PartialBackupsDialog />
+        <RestoreFromFileDialog />
         <BackupsInnerToolbar>
+          <RaisedButton
+            label="Restore from file"
+            primary={true}
+            style={{marginRight: 0}}
+            onTouchTap={RestoreFromFileDialogActions.showDialog} />
           <RaisedButton
             label="Create Backup"
             primary={true}

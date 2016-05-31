@@ -7,6 +7,7 @@ import Actions from './PartialBackupsActions';
 import Store from './PartialBackupsDialogStore';
 
 import {TextField} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles';
 import {Dialog, Editor, Notification, Show} from '../../../common';
 
 export default React.createClass({
@@ -53,6 +54,11 @@ export default React.createClass({
         fontSize: 10,
         fontWeight: 800,
         margin: '20px 0 10px 0'
+      },
+      link: {
+        fontWeight: 'bold',
+        textDecoration: 'underline',
+        color: Colors.blue400
       }
     };
   },
@@ -113,6 +119,15 @@ export default React.createClass({
               height="400px"
               onChange={(value) => this.handleChange(value, 'queryArgs')}
               value={queryArgs}/>
+          </div>
+          <div className="vm-2-t">
+            You can read more about query args&nbsp;
+            <a
+              href="http://docs.syncano.io/v1.1/docs/backup-and-restore"
+              style={styles.link}
+              target="_blank">
+              here
+            </a>
           </div>
           <div className="vm-2-t">
             {this.renderFormNotifications()}
