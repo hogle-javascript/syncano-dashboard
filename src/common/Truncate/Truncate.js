@@ -1,4 +1,5 @@
 import React from 'react';
+import Tooltip from '../Tooltip';
 
 export default React.createClass({
   displayName: 'Truncate',
@@ -12,7 +13,7 @@ export default React.createClass({
     };
   },
 
-  render() {
+  renderContent() {
     const styles = this.getStyles();
     const {text, style, ...other} = this.props;
 
@@ -23,5 +24,21 @@ export default React.createClass({
         {text}
       </div>
     );
+  },
+
+  render() {
+    const {text, withTooltip} = this.props;
+
+    if (withTooltip) {
+      return (
+        <Tooltip
+          label={withTooltip ? text : null}
+          verticalPosition="bottom"
+          horizontalPosition="center">
+          {this.renderContent()}
+        </Tooltip>
+      );
+    }
+    return this.renderContent();
   }
 });

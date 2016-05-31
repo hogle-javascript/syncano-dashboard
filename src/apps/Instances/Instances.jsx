@@ -6,8 +6,8 @@ import Helmet from 'react-helmet';
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
-import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
+import Store from './InstancesStore';
 
 // Components
 import {RaisedButton} from 'material-ui';

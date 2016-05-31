@@ -30,6 +30,7 @@ import Solutions from './apps/Solutions';
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
+import BackupAndRestore from './apps/BackupAndRestore';
 import ChannelHistory from './apps/ChannelHistory';
 import Channels from './apps/Channels';
 import Classes from './apps/Classes';
@@ -256,6 +257,29 @@ export default (
             from="/instances/:instanceName/push-notifications"
             to="push-notification-config"/>
         </Route>
+
+        {/* Backup & Restore */}
+        <Route
+          name="backup-and-restore"
+          path="backup-and-restore"
+          component={BackupAndRestore}>
+          <Route
+            name="all-backups"
+            path="all"
+            component={BackupAndRestore.All}/>
+          <Route
+            name="partial-backups"
+            path="partial"
+            component={BackupAndRestore.Partial}/>
+          <Route
+            name="full-backups"
+            path="full"
+            component={BackupAndRestore.Full}/>
+          <Redirect
+            from="/instances/:instanceName/backup-and-restore"
+            to="all-backups"/>
+        </Route>
+
 
         {/* ScriptEndpoints */}
         <Route

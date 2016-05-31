@@ -20,7 +20,8 @@ export default Reflux.createStore({
     return {
       name: null,
       isLoading: false,
-      metadata: {}
+      metadata: {},
+      selectedBackup: 'None'
     };
   },
 
@@ -120,5 +121,15 @@ export default Reflux.createStore({
     this.dismissDialog();
     InstancesActions.fetchInstances();
     InstancesStore.redirectToInstancesList();
+  },
+
+  onFetchAllFullBackupsCompleted(backups) {
+    this.backups = backups;
+    this.trigger({backups});
+  },
+
+  onCreateInstanceFromBackupCompleted() {
+    this.dismissDialog();
+    InstancesActions.fetchInstances();
   }
 });
