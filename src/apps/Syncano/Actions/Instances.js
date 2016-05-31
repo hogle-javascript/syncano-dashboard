@@ -24,6 +24,25 @@ export default {
       .catch(this.failure);
   },
 
+  createFromBackup(instanceData, backup) {
+    const query = _.isNumber(backup) ? {backup} : {archive: this.NewLibConnection.file(backup)};
+
+    this.NewLibConnection
+      .Instance
+      .please()
+      .create(instanceData)
+      .then((createdInstance) => {
+        return this.NewLibConnection
+          .Restore
+          .please()
+          .restore({
+            instanceName: createdInstance.name
+          }, query);
+      })
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   update(name, payload) {
     const {description, metadata} = payload;
 
@@ -52,13 +71,12 @@ export default {
       .please()
       .rename({name}, {new_name: newName})
       .then(() => {
-        this.NewLibConnection
+        return this.NewLibConnection
           .Instance
           .please()
-          .update({name: newName}, {description, metadata})
-          .then(this.completed)
-          .catch(this.failure);
+          .update({name: newName}, {description, metadata});
       })
+      .then(this.completed)
       .catch(this.failure);
   },
 

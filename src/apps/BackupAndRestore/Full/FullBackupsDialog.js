@@ -6,7 +6,7 @@ import {DialogMixin, FormMixin} from '../../../mixins';
 import Actions from './FullBackupsActions';
 import Store from './FullBackupsDialogStore';
 
-import {TextField} from 'syncano-material-ui';
+import {TextField} from 'material-ui';
 import {Dialog} from '../../../common';
 
 export default React.createClass({
@@ -39,8 +39,14 @@ export default React.createClass({
     Actions.createFullBackup({label, description});
   },
 
+  handleChange(value, key) {
+    this.setState({
+      [key]: value
+    });
+  },
+
   render() {
-    const {isLoading, open} = this.state;
+    const {isLoading, open, label, description} = this.state;
 
     return (
       <Dialog.FullPage
@@ -61,13 +67,15 @@ export default React.createClass({
           <TextField
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('label')}
+            value={label}
+            onChange={(event, value) => this.handleChange(value, 'label')}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Backup's label"
             floatingLabelText="Label" />
           <TextField
             fullWidth={true}
-            valueLink={this.linkState('description')}
+            value={description}
+            onChange={(event, value) => this.handleChange(value, 'description')}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Backup's description"
             floatingLabelText="Description" />

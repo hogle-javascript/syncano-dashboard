@@ -6,7 +6,8 @@ import PartialBackupsActions from './Partial/PartialBackupsActions';
 import BackupsInnerToolbar from './BackupsInnerToolbar';
 import FullBackupsDialog from './Full/FullBackupsDialog';
 import PartialBackupsDialog from './Partial/PartialBackupsDialog';
-import {ListItem, FontIcon, RaisedButton, Styles} from 'syncano-material-ui';
+import {ListItem, FontIcon, RaisedButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles';
 import {Popover} from '../../common';
 
 export default class BackupAndRestore extends Component {
@@ -47,14 +48,14 @@ export default class BackupAndRestore extends Component {
             <ListItem
               leftIcon={
                 <FontIcon
-                  color={Styles.Colors.blue400}
+                  color={Colors.blue400}
                   className="synicon-backup-restore"
                 />
               }
               onTouchTap={() => this.handleCreateBackup('full')}
               primaryText="Full Backup"/>
             <ListItem
-              leftIcon={<FontIcon color={Styles.Colors.blue400} className="synicon-backup-restore"/>}
+              leftIcon={<FontIcon color={Colors.blue400} className="synicon-backup-restore"/>}
               onTouchTap={() => this.handleCreateBackup('partial')}
               primaryText="Partial Backup"/>
           </Popover>
