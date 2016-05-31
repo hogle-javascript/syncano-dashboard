@@ -7,7 +7,7 @@ import Actions from './PartialBackupsActions';
 import Store from './PartialBackupsDialogStore';
 
 import {TextField} from 'material-ui';
-import {Dialog, Editor, Notification, Show, TogglePanel} from '../../../common';
+import {Dialog, Editor, Notification, Show} from '../../../common';
 
 export default React.createClass({
   displayName: 'CreatePartialBackupDialog',
