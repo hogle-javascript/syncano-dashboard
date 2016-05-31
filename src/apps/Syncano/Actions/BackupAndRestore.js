@@ -80,5 +80,14 @@ export default {
       .restore({}, {backup: backup.id})
       .then(this.completed)
       .catch(this.failure);
+  },
+
+  restoreFromFile(backupFile) {
+    this.NewLibConnection
+      .Restore
+      .please()
+      .restore({}, {archive: this.NewLibConnection.file(backupFile)})
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

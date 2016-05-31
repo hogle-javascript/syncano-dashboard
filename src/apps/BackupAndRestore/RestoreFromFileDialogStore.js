@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin} from '../../mixins';
 
 // Stores & Actions
-import Actions from './RestoreDialogActions';
+import Actions from './RestoreFromFileDialogActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -16,24 +16,18 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      clickedItem: null,
       isLoading: false
     };
   },
 
   init() {
     this.data = this.getInitialState();
-    this.setLoadingStates();
     this.listenToForms();
+    this.setLoadingStates();
   },
 
-  onSetClickedBackup(item) {
-    this.data.clickedItem = item;
-    this.trigger(this.data);
-  },
-
-  onRestoreFromBackupCompleted() {
-    console.debug('RestoreDialogStore::onRestoreFromBackupCompleted');
+  onRestoreFromFileCompleted() {
+    console.debug('RestoreFromFileDialogStore::onRestoreFromFileCompleted');
     this.dismissDialog();
   }
 });
