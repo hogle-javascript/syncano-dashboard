@@ -79,6 +79,7 @@ export default React.createClass({
         <Lists.List
           {...this.props}
           emptyItemContent='Create Partial Backup'
+          emptyItemHandleClick={Actions.showDialog}
           checkItem={this.checkItem}
           key="partial-backups-list"
           renderItem={this.renderItem}/>
