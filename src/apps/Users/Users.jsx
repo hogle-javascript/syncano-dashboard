@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
+import _ from 'lodash';
 
 import Actions from './UsersActions';
 import Store from './UsersStore';
@@ -75,23 +76,27 @@ export default React.createClass({
                 hideDialogs={groups.hideDialogs} />
             </div>
             <div className="col-lg-27">
-              <UsersList
-                items={users.items}
-                hideDialogs={users.hideDialogs} />
-              <div
-                className="row align-center"
-                style={{margin: 50}}>
-                <div>Loaded {users.items.length} Users</div>
-              </div>
-              <Loading show={users.isLoading}/>
-              <Show if={users.hasNextPage && !users.isLoading}>
+              <Show if={users.items}>
+                <UsersList
+                  items={users.items}
+                  hideDialogs={users.hideDialogs} />
+              </Show>
+              <Loading show={_.isNull(users.items) || users.isLoading}/>
+              <Show if={!users.isLoading}>
                 <div
                   className="row align-center"
                   style={{margin: 50}}>
-                  <RaisedButton
-                    label="Load more"
-                    onClick={this.handleMoreRows}/>
+                  <div>Loaded {users.items && users.items.length} Users</div>
                 </div>
+                <Show if={users.hasNextPage}>
+                  <div
+                    className="row align-center"
+                    style={{margin: 50}}>
+                    <RaisedButton
+                      label="Load more"
+                      onClick={this.handleMoreRows}/>
+                  </div>
+                </Show>
               </Show>
             </div>
           </Lists.Container>
