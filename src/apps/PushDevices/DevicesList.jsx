@@ -10,6 +10,7 @@ import UsersStore from '../Users/UsersStore';
 import {colors as Colors} from 'material-ui/styles/';
 import {ColumnList, Loading, Container, Lists, Dialog, ShowMore} from '../../common/';
 import ListItem from './DevicesListItem';
+import NoConfigView from './NoConfigView';
 import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
 import APNSSendMessageDialog from './APNSDevices/APNSSendMessageDialog';
 
@@ -116,7 +117,17 @@ const DevicesList = Radium(React.createClass({
   render() {
     const {params} = this.context;
     const styles = this.getStyles();
-    const {items, getCheckedItems, type, actions, isLoading, showSendMessagesDialog, router, ...other} = this.props;
+    const {
+      hasConfig,
+      items,
+      getCheckedItems,
+      type,
+      actions,
+      isLoading,
+      showSendMessagesDialog,
+      router,
+      ...other
+    } = this.props;
     const checkedItemsCount = getCheckedItems().length;
     const titleText = {
       apns: 'iOS Devices',
@@ -129,6 +140,15 @@ const DevicesList = Radium(React.createClass({
         routeName={`${type}-devices`}
         params={params}/>
     );
+
+    if (!hasConfig && !isLoading) {
+      return (
+        <div style={styles.listTitleContainer}>
+          <span style={styles.listTitle}>{titleText[type]}</span>
+          <NoConfigView type={type}/>
+        </div>
+      );
+    }
 
     return (
       <div>

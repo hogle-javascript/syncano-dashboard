@@ -18,12 +18,8 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
-  componentWillMount() {
-    Actions.fetch();
-  },
-
   render() {
-    const {hideDialogs, isLoading, items} = this.state;
+    const {hasConfig, hideDialogs, isLoading, items} = this.state;
     const {visibleItems} = this.props;
 
     return (
@@ -32,6 +28,7 @@ export default React.createClass({
         <GCMDialog />
         <DevicesList
           type="gcm"
+          hasConfig={hasConfig}
           visibleItems={visibleItems}
           getCheckedItems={Store.getCheckedItems}
           actions={Actions}
