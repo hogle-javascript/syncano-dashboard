@@ -1,27 +1,51 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import {DialogMixin} from '../../mixins';
+import {DialogMixin, FormMixin} from '../../mixins';
 
 import Actions from './RestoreDialogActions';
 import Store from './RestoreDialogStore';
-import SessionStore from '../Session/SessionStore';
 
-import {FontIcon} from 'material-ui';
+import {FontIcon, TextField} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles';
 import {Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'RestoreDialog',
 
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(Store),
-    DialogMixin
+    DialogMixin,
+    FormMixin
   ],
 
+  validatorConstraints() {
+    return {
+      instanceNameValidation: {
+        presence: {
+          message: '^You must type instance name to continue restoring'
+        },
+        inclusion: {
+          within: [this.context.params.instanceName],
+          message: '^Incorrect instance name'
+        }
+      }
+    };
+  },
+
+  handleAddSubmit() {
+    const {clickedItem} = this.state;
+
+    Actions.restoreFromBackup(clickedItem);
+  },
+
   render() {
-    const {isLoading, open, clickedItem} = this.state;
-    const instanceName = SessionStore.getInstance() ? SessionStore.getInstance().name : '';
+    const {isLoading, open, clickedItem, instanceNameValidation} = this.state;
+    const instanceName = this.context.params.instanceName;
     const backupLabel = clickedItem ? clickedItem.label : '';
 
     return (
@@ -37,7 +61,7 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={isLoading}
             handleCancel={this.handleCancel}
-            handleConfirm={() => Actions.restoreFromBackup(clickedItem)}/>
+            handleConfirm={this.handleFormValidation}/>
         }>
         <div className="row align-middle">
           <FontIcon
@@ -49,6 +73,18 @@ export default React.createClass({
             <div className="vm-2-t">
               All current application data for <strong>{instanceName}</strong> will be lost.
               This cannot be undone or stopped.
+            </div>
+            <div className="vm-2-t">
+              To confirm restoring type your instance name.
+            </div>
+            <div>
+              <TextField
+                value={instanceNameValidation}
+                onChange={(event, value) => this.setState({instanceNameValidation: value})}
+                errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
+                fullWidth={true}
+                floatingLabelText="Instance name"
+                hintText="Instance name" />
             </div>
           </div>
         </div>
