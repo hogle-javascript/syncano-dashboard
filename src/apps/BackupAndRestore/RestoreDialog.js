@@ -27,11 +27,11 @@ export default React.createClass({
     return {
       instanceNameValidation: {
         presence: {
-          message: '^You must type instance name to continue restoring'
+          message: '^Type current Instance name to continue'
         },
         inclusion: {
           within: [this.context.params.instanceName],
-          message: '^Incorrect instance name'
+          message: '^Incorrect Instance name'
         }
       }
     };
@@ -53,7 +53,7 @@ export default React.createClass({
         key="dialog"
         ref="dialog"
         contentSize="small"
-        title={`Restore instance from backup`}
+        title={`Restore Instance from backup`}
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
@@ -68,25 +68,23 @@ export default React.createClass({
             style={{fontSize: 60, color: Colors.orange400}}
             className="synicon-alert col-sm-7"/>
           <div className="vm-1-t col-sm-28">
-            This action will restore instance
+            This action will restore Instance
             <strong> {instanceName}</strong> from backup <strong>{backupLabel}</strong>.
             <div className="vm-2-t">
               All current application data for <strong>{instanceName}</strong> will be lost.
               This cannot be undone or stopped.
             </div>
-            <div className="vm-2-t">
-              To confirm restoring type your instance name.
-            </div>
-            <div>
-              <TextField
-                value={instanceNameValidation}
-                onChange={(event, value) => this.setState({instanceNameValidation: value})}
-                errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
-                fullWidth={true}
-                floatingLabelText="Instance name"
-                hintText="Instance name" />
-            </div>
           </div>
+          <div className="vm-4-t">
+            To confirm restoring type your Instance name.
+          </div>
+          <TextField
+            value={instanceNameValidation}
+            onChange={(event, value) => this.setState({instanceNameValidation: value})}
+            errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
+            fullWidth={true}
+            floatingLabelText="Instance name"
+            hintText="Instance name" />
         </div>
       </Dialog.FullPage>
     );
