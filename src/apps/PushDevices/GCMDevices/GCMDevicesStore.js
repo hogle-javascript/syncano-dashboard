@@ -1,6 +1,5 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
-import Promise from 'bluebird';
 
 // Utils & Mixins
 import {CheckListStoreMixin, WaitForStoreMixin, StoreHelpersMixin, StoreLoadingMixin} from '../../../mixins';
