@@ -25,11 +25,6 @@ const PushDevicesPage = React.createClass({
     Reflux.connect(GCMDevicesStore, 'gcmDevices')
   ],
 
-  componentDidMount() {
-    APNSDevicesActions.fetch();
-    GCMDevicesActions.fetch();
-  },
-
   handleAddDevice(type) {
     const addDevice = {
       'apns-devices': APNSDevicesActions.showDialog,

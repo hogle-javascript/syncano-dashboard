@@ -18,6 +18,10 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
+  componentDidMount() {
+    Actions.fetch();
+  },
+
   render() {
     const {hasConfig, hideDialogs, isLoading, items} = this.state;
     const {visibleItems} = this.props;

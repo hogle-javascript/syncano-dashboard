@@ -7,6 +7,7 @@ export default {
     Async.waterfall([
       client.createTempAccount,
       client.createTempInstance,
+      client.configTempGCMPushNotificationSocket,
       client.createTempGcmDevice,
       client.createTempGcmDevice,
       client.createTempApnsDevice,
@@ -50,32 +51,33 @@ export default {
       .clickListItemDropdown('@optionsMenu', 'Delete')
       .clickElement('@confirmButton')
       .waitForElementVisible('@emptyListItem');
-  },
-  'Test Select/Deselect multiple iOS Devices': (client) => {
-    const listsPage = client.page.listsPage();
-    const selectedItems = listsPage.elements.selectedItem.selector;
-    const optionsMenu = listsPage.elements.optionsMenu.selector;
-
-    client
-      .goToUrl('temp', 'push-notifications/devices/apns')
-      .multipleItems('Select', 2, optionsMenu, selectedItems)
-      .pause(2500)
-      .multipleItems('Unselect', 0, optionsMenu, selectedItems);
-  },
-  'Test Delete multiple iOS Devices': (client) => {
-    const listsPage = client.page.listsPage();
-    const selectedItems = listsPage.elements.selectedItem.selector;
-    const optionsMenu = listsPage.elements.optionsMenu.selector;
-
-    client
-      .goToUrl('temp', 'push-notifications/devices/apns')
-      .pause(2000)
-      .multipleItems('Select', 2, optionsMenu, selectedItems)
-      .pause(2500);
-
-    listsPage
-      .clickListItemDropdown('@optionsMenu', 'Delete')
-      .clickElement('@confirmButton')
-      .waitForElementVisible('@emptyListItem');
   }
+  // First we have to config APNS Push Notification Socket
+  // 'Test Select/Deselect multiple iOS Devices': (client) => {
+  //   const listsPage = client.page.listsPage();
+  //   const selectedItems = listsPage.elements.selectedItem.selector;
+  //   const optionsMenu = listsPage.elements.optionsMenu.selector;
+  //
+  //   client
+  //     .goToUrl('temp', 'push-notifications/devices/apns')
+  //     .multipleItems('Select', 2, optionsMenu, selectedItems)
+  //     .pause(2500)
+  //     .multipleItems('Unselect', 0, optionsMenu, selectedItems);
+  // },
+  // 'Test Delete multiple iOS Devices': (client) => {
+  //   const listsPage = client.page.listsPage();
+  //   const selectedItems = listsPage.elements.selectedItem.selector;
+  //   const optionsMenu = listsPage.elements.optionsMenu.selector;
+  //
+  //   client
+  //     .goToUrl('temp', 'push-notifications/devices/apns')
+  //     .pause(2000)
+  //     .multipleItems('Select', 2, optionsMenu, selectedItems)
+  //     .pause(2500);
+  //
+  //   listsPage
+  //     .clickListItemDropdown('@optionsMenu', 'Delete')
+  //     .clickElement('@confirmButton')
+  //     .waitForElementVisible('@emptyListItem');
+  // }
 };
