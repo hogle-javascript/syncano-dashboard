@@ -16,7 +16,7 @@ const PartialBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestor
     <ColumnList.Column.CheckIcon
       className="col-sm-10"
       id={item.id.toString()}
-      iconClassName='backup-restore'
+      iconClassName='file-restore'
       background={Color.getColorByName('blue', 'xlight')}
       checked={item.checked}
       handleIconClick={onIconClick}
