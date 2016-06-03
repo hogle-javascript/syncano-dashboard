@@ -42,7 +42,7 @@ export default React.createClass({
     return {
       dropZone: {
         height: 140,
-        width: '60%',
+        width: '100%',
         borderStyle: 'dashed',
         borderWidth: 1,
         borderColor: '#AAA',
@@ -50,6 +50,7 @@ export default React.createClass({
         backgroundColor: '#EEE'
       },
       dropZoneContainer: {
+        lineHeight: '1.4',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center'
@@ -103,49 +104,51 @@ export default React.createClass({
             handleConfirm={this.handleFormValidation}/>
         }>
         <div style={styles.dropZoneContainer}>
-          <div className="row align-middle vm-4-b">
-            <div className="hp-2-r">
+          <div className="row align-top vm-4-b">
+            <div className="hp-2-r vm-1-t">
               <FontIcon
                 style={{fontSize: 60, color: Colors.orange400}}
                 className="synicon-alert col-sm-7"/>
             </div>
             <div>
-              <div className="vm-3-b">
-                This action will restore Instance
+              <div className="vm-1-b">
+                <strong>This action cannot be undone or stopped.</strong>
+              </div>
+              <div className="vm-1-b">
+                This will restore Instance
                 <strong> {instanceName}</strong> to previous state.
               </div>
-              <div className="vm-2-t">
+              <div>
                 All current application data for <strong>{instanceName}</strong> will be lost.
-                This cannot be undone or stopped.
               </div>
-            </div>
-          </div>
-          <div className="row align-center">
-            <DropZone
-              onDrop={this.handleDropBackupFile}
-              style={styles.dropZone}>
-              <div style={styles.dropZoneDescription}>
-                <FontIcon
-                  style={styles.uploadIcon}
-                  className={backupFile ? 'synicon-file' : 'synicon-cloud-upload'} />
-                <div>
-                  {backupLabel || 'Click or Drag & Drop to upload partial backup file'}
+              <div className="vm-3-t">
+                <DropZone
+                  onDrop={this.handleDropBackupFile}
+                  style={styles.dropZone}>
+                  <div style={styles.dropZoneDescription}>
+                    <FontIcon
+                      style={styles.uploadIcon}
+                      className={backupFile ? 'synicon-file' : 'synicon-cloud-upload'} />
+                    <div>
+                      {backupLabel || 'Click or Drag & Drop to upload partial backup file'}
+                    </div>
+                  </div>
+                </DropZone>
+              </div>
+              <Show if={this.state.backupFile}>
+                <div className="vm-4-t">
+                  To confirm restoring type your Instance name.
                 </div>
-              </div>
-            </DropZone>
-          </div>
-          <Show if={this.state.backupFile}>
-            <div className="vm-4-t">
-              To confirm restoring type your Instance name.
+                <TextField
+                  value={instanceNameValidation}
+                  onChange={(event, value) => this.setState({instanceNameValidation: value})}
+                  errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
+                  fullWidth={true}
+                  floatingLabelText="Instance name"
+                  hintText="Instance name" />
+              </Show>
             </div>
-            <TextField
-              value={instanceNameValidation}
-              onChange={(event, value) => this.setState({instanceNameValidation: value})}
-              errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
-              fullWidth={true}
-              floatingLabelText="Instance name"
-              hintText="Instance name" />
-          </Show>
+          </div>
           <div className="vm-2-t">
             {this.renderFormNotifications()}
           </div>
