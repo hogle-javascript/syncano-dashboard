@@ -9,7 +9,7 @@ import Store from './RestoreFromFileDialogStore';
 import {FontIcon, TextField} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles';
 import DropZone from 'react-dropzone';
-import {Dialog} from '../../common';
+import {Dialog, Show, Notification} from '../../common';
 
 export default React.createClass({
   displayName: 'RestoreFromFileDialog',
@@ -26,6 +26,11 @@ export default React.createClass({
 
   validatorConstraints() {
     return {
+      backupFile: {
+        presence: {
+          message: '^Please choose a backup file first'
+        }
+      },
       instanceNameValidation: {
         presence: {
           message: '^Type current Instance name to continue'
@@ -152,6 +157,11 @@ export default React.createClass({
           <div className="vm-2-t">
             {this.renderFormNotifications()}
           </div>
+          <Show if={this.getValidationMessages('backupFile').length}>
+            <div className="vm-2-t">
+              <Notification type="error">{this.getValidationMessages().join(' ')}</Notification>
+            </div>
+          </Show>
         </div>
       </Dialog.FullPage>
     );
