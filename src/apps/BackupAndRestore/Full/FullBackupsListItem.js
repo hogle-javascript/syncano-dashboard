@@ -35,10 +35,6 @@ const FullBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestoreDi
     <Column.Date date={item.created_at}/>
     <Column.Menu handleClick={() => RestoreDialogActions.setClickedBackup(item)} >
       <MenuItem
-        className="dropdown-full-backup-details"
-        onTouchTap={() => console.log('details')}
-        primaryText="Details" />
-      <MenuItem
         className="dropdown-full-backup-download"
         onTouchTap={showRestoreDialog}
         primaryText="Restore" />

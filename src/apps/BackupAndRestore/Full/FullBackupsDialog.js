@@ -52,7 +52,7 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        contentSize="medium"
+        contentSize="small"
         title="Create Instance Full Backup"
         onRequestClose={this.handleCancel}
         open={open}

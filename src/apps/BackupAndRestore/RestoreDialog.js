@@ -39,13 +39,17 @@ export default React.createClass({
             handleCancel={this.handleCancel}
             handleConfirm={() => Actions.restoreFromBackup(clickedItem)}/>
         }>
-        <div className="row">
+        <div className="row align-middle">
           <FontIcon
             style={{fontSize: 60, color: Colors.orange400}}
             className="synicon-alert col-sm-7"/>
           <div className="vm-1-t col-sm-28">
             This action will restore instance
             <strong> {instanceName}</strong> from backup <strong>{backupLabel}</strong>.
+            <div className="vm-2-t">
+              All current application data for <strong>{instanceName}</strong> will be lost.
+              This cannot be undone or stopped.
+            </div>
           </div>
         </div>
       </Dialog.FullPage>
