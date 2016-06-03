@@ -9,7 +9,7 @@ import Store from './RestoreFromFileDialogStore';
 import {FontIcon, TextField} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles';
 import DropZone from 'react-dropzone';
-import {Dialog, Show} from '../../common';
+import {Dialog} from '../../common';
 
 export default React.createClass({
   displayName: 'RestoreFromFileDialog',
@@ -105,12 +105,12 @@ export default React.createClass({
         }>
         <div style={styles.dropZoneContainer}>
           <div className="row align-top vm-4-b">
-            <div className="hp-2-r vm-1-t">
+            <div className="hp-2-r vm-1-t col-sm-4">
               <FontIcon
                 style={{fontSize: 60, color: Colors.orange400}}
-                className="synicon-alert col-sm-7"/>
+                className="synicon-alert"/>
             </div>
-            <div>
+            <div className="col-sm-31">
               <div className="vm-1-b">
                 <strong>This action cannot be undone or stopped.</strong>
               </div>
@@ -135,7 +135,7 @@ export default React.createClass({
                   </div>
                 </DropZone>
               </div>
-              <Show if={this.state.backupFile}>
+              <div>
                 <div className="vm-4-t">
                   To confirm restoring type your Instance name.
                 </div>
@@ -146,7 +146,7 @@ export default React.createClass({
                   fullWidth={true}
                   floatingLabelText="Instance name"
                   hintText="Instance name" />
-              </Show>
+              </div>
             </div>
           </div>
           <div className="vm-2-t">
