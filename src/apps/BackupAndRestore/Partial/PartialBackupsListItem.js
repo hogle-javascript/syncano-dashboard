@@ -35,6 +35,7 @@ const PartialBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestor
     <Column.Date date={item.created_at}/>
     <Column.Menu handleClick={() => RestoreDialogActions.setClickedBackup(item)}>
       <MenuItem
+        disabled={item.status !== 'success'}
         className="dropdown-partial-backup-download"
         onTouchTap={() => window.open(item.archive, '_self')}
         primaryText="Download" />
