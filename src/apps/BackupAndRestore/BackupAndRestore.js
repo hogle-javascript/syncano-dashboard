@@ -58,14 +58,17 @@ export default class BackupAndRestore extends Component {
             <ListItem
               leftIcon={
                 <FontIcon
-                  color={Colors.blue400}
-                  className="synicon-backup-restore"
-                />
+                  style={{color: Colors.blue400}}
+                  className="synicon-backup-restore"/>
               }
               onTouchTap={() => this.handleCreateBackup('full')}
               primaryText="Full Backup"/>
             <ListItem
-              leftIcon={<FontIcon color={Colors.blue400} className="synicon-backup-restore"/>}
+              leftIcon={
+                <FontIcon
+                  style={{color: Colors.blue400}}
+                  className="synicon-file-restore"/>
+              }
               onTouchTap={() => this.handleCreateBackup('partial')}
               primaryText="Partial Backup"/>
           </Popover>
