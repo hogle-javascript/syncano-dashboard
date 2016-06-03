@@ -58,6 +58,7 @@ const ChannelHistory = Radium(React.createClass({
   },
 
   render() {
+    const {params} = this.context;
     const {channelName, router} = this.props;
     const {items, isLoading} = this.state;
     const styles = this.getStyles();
@@ -70,7 +71,7 @@ const ChannelHistory = Radium(React.createClass({
           title={title}
           backFallback={this.handleBackClick}
           backButtonTooltip='Go back to Channels list'/>
-        <div style={[styles.list, router.isActive('snippet-traces') && styles.snippetsList]}>
+        <div style={[styles.list, router.isActive({name: 'snippet-traces', params}) && styles.snippetsList]}>
           <Container>
             <ChannelHistoryList
               name="Channel History"
