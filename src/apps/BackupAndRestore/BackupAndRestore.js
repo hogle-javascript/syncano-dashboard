@@ -8,6 +8,7 @@ import BackupsInnerToolbar from './BackupsInnerToolbar';
 import FullBackupsDialog from './Full/FullBackupsDialog';
 import PartialBackupsDialog from './Partial/PartialBackupsDialog';
 import RestoreFromFileDialog from './RestoreFromFileDialog';
+import RestoreDialog from './RestoreDialog';
 import {ListItem, FontIcon, RaisedButton} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles';
 import {Popover} from '../../common';
@@ -34,6 +35,7 @@ export default class BackupAndRestore extends Component {
 
     return (
       <div>
+        <RestoreDialog />
         <FullBackupsDialog />
         <PartialBackupsDialog />
         <RestoreFromFileDialog />
