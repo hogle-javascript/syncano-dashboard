@@ -4,7 +4,7 @@ import Syncano from 'syncano';
 exports.command = (callback) => {
   const accountKey = Globals.tempAccountKey;
   const baseUrl = 'https://api.syncano.rocks';
-  const label = 'script' + Date.now();
+  const label = 'script_' + Date.now();
   const data = {
     label,
     source: 'print "foo"',

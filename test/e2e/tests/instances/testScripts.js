@@ -23,45 +23,29 @@ export default {
     client.end();
   },
   'Test Select/Deselect multiple Scripts': (client) => {
-    const scriptsPage = client.page.scriptsPage();
+    const listsPage = client.page.listsPage();
+    const selectedItems = listsPage.elements.selectedItem.selector;
+    const optionsMenu = listsPage.elements.optionsMenu.selector;
 
-    // ToDO: Delete client.pause after dissappearing of scripts will be solved
-    client.goToUrl('temp', 'scripts');
-
-    scriptsPage
-      .waitForElementVisible('@scriptMenuSelect')
-      .clickListItemDropdown('@scriptMenuSelect', 'Select');
-
-    client.elements('css selector', scriptsPage.elements.scriptsSelected.selector, (result) => {
-      client.assert.equal(result.value.length, 3);
-    });
-
-    scriptsPage
-      .waitForElementVisible('@scriptMenuSelect');
     client
-      .pause(2000);
-    scriptsPage
-      .clickListItemDropdown('@scriptMenuSelect', 'Unselect');
-
-    client.elements('css selector', scriptsPage.elements.scriptsSelected.selector, (result) => {
-      client.assert.equal(result.value.length, 0);
-    });
+      .goToUrl('temp', 'scripts')
+      .multipleItems('Select', 3, optionsMenu, selectedItems)
+      .pause(2500)
+      .multipleItems('Unselect', 0, optionsMenu, selectedItems);
   },
   'Test Delete multiple Scripts': (client) => {
-    const scriptsPage = client.page.scriptsPage();
-    const tempUrl = `https://localhost:8080/#/instances/${Globals.tempInstanceName}/scripts`;
+    const listsPage = client.page.listsPage();
+    const selectedItems = listsPage.elements.selectedItem.selector;
+    const optionsMenu = listsPage.elements.optionsMenu.selector;
 
     client
-      .url(tempUrl)
-      .pause(2000);
+      .goToUrl('temp', 'scripts')
+      .pause(2000)
+      .multipleItems('Select', 3, optionsMenu, selectedItems)
+      .pause(2500);
 
-    scriptsPage
-      .clickListItemDropdown('@scriptMenuSelect', 'Select');
-    client
-      .pause(2000);
-    scriptsPage
-      .clickListItemDropdown('@scriptMenuSelect', 'Delete')
-      .waitForElementVisible('@deleteScriptsDialogTitle')
+    listsPage
+      .clickListItemDropdown('@optionsMenu', 'Delete')
       .clickElement('@confirmButton')
       .waitForElementVisible('@emptyListItem');
   }

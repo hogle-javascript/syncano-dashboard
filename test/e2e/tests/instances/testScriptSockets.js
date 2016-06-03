@@ -30,7 +30,6 @@ export default {
     const edited = utils.addSuffix('edited');
 
     socketsPage
-      .goToUrl('', 'script-endpoints')
       .waitForElementVisible('@codeBoxSocketItem')
       .clickListItemDropdown(utils.addSuffix('script'), 'Edit')
       .waitForElementVisible('@editCodeBoxModalTitle')
@@ -46,7 +45,6 @@ export default {
     const script = utils.addSuffix('script');
 
     socketsPage
-      .goToUrl('', 'script-endpoints')
       .waitForElementVisible('@codeBoxSocketItem')
       .clickListItemDropdown(script, 'Delete')
       .waitForElementVisible('@deleteCodeBoxModalTitle')
