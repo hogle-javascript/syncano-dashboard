@@ -24,7 +24,7 @@ export default Reflux.createStore({
     console.debug('ProfileBillingInvoicesStore::onFetchInvoicesCompleted');
 
     this.data.isLoading = false;
-    this.data.invoices = this.saveListFromSyncano(invoices);
+    this.data.invoices = invoices;
     this.trigger(this.data);
   },
 

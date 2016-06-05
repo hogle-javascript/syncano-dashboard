@@ -62,7 +62,7 @@ export default Reflux.createStore({
   onFetchTagsCompleted(tags) {
     console.debug('SolutionsStore::onFetchTagsCompleted');
     this.data.isLoading = false;
-    this.data.allTags = tags.objects;
+    this.data.allTags = tags.data.objects;
     this.trigger(this.data);
   },
 

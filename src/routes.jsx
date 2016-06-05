@@ -72,11 +72,6 @@ function onRootEnter(nextState, replace) {
 
   SessionStore.setUTMData(nextState.location.query);
 
-  if (nextState.location.query.token) {
-    SessionStore.setToken(nextState.location.query.token);
-    replace('/');
-  }
-
   // Remove trailing slash
   if (pathname.length > 1 && pathname.match('/$') !== null) {
     pathname = pathname.slice(0, -1);

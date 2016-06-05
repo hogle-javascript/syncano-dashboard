@@ -64,18 +64,18 @@ export default {
   },
 
   renderFromEndpoint(templateName, endpointUrl) {
-    let endpointUrlWithoutDomain = endpointUrl.substring(endpointUrl.indexOf('/v1'));
+    const {accountKey} = this.NewLibConnection;
     const params = {
+      api_key: accountKey,
       template_response: templateName,
       serialize: false
     };
 
-    if (!endpointUrlWithoutDomain.endsWith('/')) {
-      endpointUrlWithoutDomain += '/';
+    if (!endpointUrl.endsWith('/')) {
+      endpointUrl += '/';
     }
 
-    this.Connection
-      .request('GET', endpointUrlWithoutDomain, params)
+    this.Promise.get(endpointUrl, {params})
       .then(this.completed)
       .catch(this.failure);
   }

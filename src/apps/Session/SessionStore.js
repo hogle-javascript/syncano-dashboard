@@ -1,6 +1,5 @@
 import Reflux from 'reflux';
 import Raven from '../../raven';
-import Connection from './Connection';
 import NewLibConnection from './NewLibConnection';
 import _ from 'lodash';
 
@@ -11,8 +10,7 @@ export default Reflux.createStore({
   listenables: SessionActions,
 
   init() {
-    this.connection = Connection.get();
-    this.NewLibConnection = NewLibConnection.get();
+    this.connection = NewLibConnection.get();
     this.token = localStorage.getItem('token') || null;
     this.user = null;
     this.instance = null;
@@ -25,11 +23,11 @@ export default Reflux.createStore({
     this.isWelcomeDialogVisible = false;
 
     if (this.isAuthenticated() && !this.user) {
-      SessionActions.fetchUser(this.token);
+      SessionActions.fetchUser();
     }
 
     if (this.token !== null) {
-      this.connection.setApiKey(this.token);
+      this.connection.setAccountKey(this.token);
     }
   },
 
@@ -114,7 +112,10 @@ export default Reflux.createStore({
 
   setToken(token) {
     console.info('SessionStore::setToken');
+    this.token = token;
+    this.connection.setAccountKey(token);
     localStorage.setItem('token', token);
+    SessionActions.fetchUser();
   },
 
   setInvitationFromUrl(invitationKey) {
@@ -134,8 +135,7 @@ export default Reflux.createStore({
       this.user.account_key = this.token;
     } else {
       this.token = user.account_key;
-      this.connection.setApiKey(this.token);
-      this.NewLibConnection.setAccountKey(this.token);
+      this.connection.setAccountKey(this.token);
       localStorage.setItem('token', this.token);
     }
 
@@ -187,6 +187,7 @@ export default Reflux.createStore({
   setRoutes(routes) {
     console.info('SessionStore::setRoutes');
     this.routes = routes;
+    this.trigger(this);
   },
 
   setSignUpMode() {
@@ -220,7 +221,7 @@ export default Reflux.createStore({
 
   onFetchUserCompleted(payload) {
     console.info('SessionStore::onFetchUserCompleted');
-    SessionActions.setUser(payload);
+    SessionActions.setUser(payload.data);
   },
 
   onFetchUserFailure() {
@@ -256,7 +257,7 @@ export default Reflux.createStore({
     }
 
     this.token = payload.account_key;
-    this.connection.setApiKey(this.token);
+    this.connection.setAccountKey(this.token);
     localStorage.setItem('token', this.token);
     SessionActions.setUser(payload);
     this.router.push({name: 'dashboard'});
@@ -265,23 +266,21 @@ export default Reflux.createStore({
   onLogout() {
     this.token = null;
     this.user = null;
-    this.connection = Connection.reset();
+    this.removeInstance();
+    this.connection = NewLibConnection.reset();
 
+    localStorage.removeItem('lastInstance');
     localStorage.removeItem('token');
     localStorage.removeItem('invitationKey');
-    this.removeInstance();
-    this.trigger(this);
 
     Raven.setUserContext();
     window.analytics.identify();
-    location.reload(true);
+    this.router.push('/login');
+    this.trigger(this);
   },
 
   isAuthenticated() {
-    if (this.token === 'undefined') {
-      return false;
-    }
-    return this.token !== null;
+    return Boolean(localStorage.token);
   },
 
   isReady() {

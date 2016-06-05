@@ -1,29 +1,31 @@
 import Stripe from '../../../stripe';
-import _ from 'lodash';
 
 export default {
   getProfile() {
-    return this.Connection
-            .Billing
-            .getProfile()
-            .then(this.completed)
-            .catch(this.failure);
+    this.NewLibConnection
+      .Profile
+      .please()
+      .get()
+      .then(this.completed)
+      .catch(this.failure);
   },
 
   updateProfile(payload) {
-    return this.Connection
-            .Billing
-            .updateProfile(payload)
-            .then(this.completed)
-            .catch(this.failure);
+    this.NewLibConnection
+      .Profile
+      .please()
+      .update(payload)
+      .then(this.completed)
+      .catch(this.failure);
   },
 
   getCard() {
-    return this.Connection
-            .Billing
-            .getCard()
-            .then(this.completed)
-            .catch(this.failure);
+    this.NewLibConnection
+      .Card
+      .please()
+      .get()
+      .then(this.completed)
+      .catch(this.failure);
   },
 
   updateCard(payload) {
@@ -31,41 +33,46 @@ export default {
       if (response.error) {
         return this.failure(response.error);
       }
-      return this.Connection
-              .Billing
-              .updateCard(response.id)
-              .then(this.completed)
-              .catch(this.failure);
+
+      this.NewLibConnection
+        .Card
+        .please()
+        .update({id: response.id})
+        .then(this.completed)
+        .catch(this.failure);
     });
   },
 
-  listInvoices(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    return this.Connection
-            .Billing
-            .getInvoices(params)
-            .then(this.completed)
-            .catch(this.failure);
+  listInvoices() {
+    this.NewLibConnection
+      .Invoice
+      .please()
+      .list()
+      .then(this.completed)
+      .catch(this.failure);
   },
 
   subscribePlan(plan, payload) {
-    return this.Connection
-            .Billing
-            .subscribePlan(plan, payload)
-            .then(this.completed)
-            .catch(this.failure);
+    this.NewLibConnection
+      .Plan
+      .please()
+      .subscribe({name: plan}, payload)
+      .then(this.completed)
+      .catch(this.failure);
   },
 
   cancelNewPlan(subscriptions) {
     const currentPlan = subscriptions[0];
 
-    this.Connection
-      .Billing
-      .cancelSubscription(subscriptions[1].id)
+    this.NewLibConnection
+      .Subscription
+      .please()
+      .cancel(subscriptions[1].id)
       .then(
-        this.Connection
-          .Billing
-          .subscribePlan(currentPlan.plan, {
+        this.NewLibConnection
+          .Plan
+          .please()
+          .subscribe(currentPlan.plan, {
             commitment: JSON.stringify({
               api: currentPlan.commitment.api,
               cbx: currentPlan.commitment.cbx
@@ -77,46 +84,41 @@ export default {
       .catch(this.failure);
   },
 
-  listPlans(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Billing
-      .getPlans(params)
+  listPlans() {
+    this.NewLibConnection
+      .Plan
+      .please()
+      .list()
       .then(this.completed)
       .catch(this.failure);
   },
 
-  listSubscriptions(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Billing
-      .getSubscriptions(params)
+  listSubscriptions() {
+    this.NewLibConnection
+      .Subscription
+      .please()
+      .list()
       .then(this.completed)
       .catch(this.failure);
   },
 
   cancelSubscriptions(ids) {
-    const promises = ids.map((id) => this.Connection.Billing.cancelSubscription(id));
+    const promises = ids.map((id) => {
+      this.NewLibConnection.Subscription.please().cancelSubscription({id})
+    });
 
-    return this.Promise.all(promises)
-            .then(this.completed)
-            .error(this.failure);
-  },
-
-  getUsage() {
-    this.Connection
-      .Billing
-      .getUsage()
+    this.Promise
+      .all(promises)
       .then(this.completed)
       .catch(this.failure);
   },
 
   retryPayment(invoice) {
-    return this.Connection
-      .Billing
-      .retryPayment(invoice.id)
+    this.NewLibConnection
+      .Invoice
+      .please()
+      .retryPayment({id: invoice.id})
       .then(this.completed)
       .catch(this.failure);
   }
-
 };

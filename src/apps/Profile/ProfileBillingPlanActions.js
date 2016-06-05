@@ -24,13 +24,6 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Billing.cancelNewPlan'
   },
-  fetchBillingUsage: {
-    asyncResult: true,
-    asyncForm: true,
-    loading: true,
-    children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Billing.getUsage'
-  },
   fetchBillingCard: {
     asyncResult: true,
     asyncForm: true,

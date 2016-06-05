@@ -19,10 +19,7 @@ export default Radium(React.createClass({
     console.log('ProfileBillingChart::componentDidMount');
 
     Actions.fetchBillingProfile();
-    Actions.fetchTotalDailyUsage({
-      start: Store.getStartDate(),
-      end: Store.getEndDate()
-    });
+    Actions.fetchTotalDailyUsage();
   },
 
   componentDidUpdate() {

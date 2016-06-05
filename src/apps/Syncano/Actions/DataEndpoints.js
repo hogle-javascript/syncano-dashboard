@@ -21,8 +21,9 @@ export default {
   },
 
   createWithClass(payload) {
-    this.Connection
-      .Classes
+    this.NewLibConnection
+      .Class
+      .please()
       .create({
         name: payload.class,
         schema: ''
@@ -40,7 +41,7 @@ export default {
           return this.failure({class: error.name});
         }
         this.failure(error);
-      });
+      });   
   },
 
   update(name, payload) {
@@ -65,8 +66,9 @@ export default {
   },
 
   updateWithClass(id, payload) {
-    this.Connection
-      .Classes
+    this.NewLibConnection
+      .Class
+      .please()
       .create({
         name: payload.class,
         schema: ''
@@ -75,7 +77,7 @@ export default {
         this.NewLibConnection
           .DataEndpoint
           .please()
-          .create(payload)
+          .update(id, payload)
           .then(this.completed)
           .catch(this.failure);
       })

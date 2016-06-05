@@ -1,88 +1,89 @@
-import _ from 'lodash';
-
 export default {
-  get(solutionId) {
-    return this.Connection
-            .Solutions
-            .get(solutionId)
-            .then(this.completed)
-            .catch(this.failure);
-  },
-  listVersions(solutionId, params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Solutions
-      .listVersions(solutionId, params)
+  get(id) {
+    this.NewLibConnection
+      .Solution
+      .please()
+      .get({id})
       .then(this.completed)
       .catch(this.failure);
   },
-  createVersion(solutionId, payload) {
-    this.Connection
-      .Solutions
-      .createVersion(solutionId, payload)
+  listVersions(id) {
+    this.NewLibConnection
+      .Solution
+      .please()
+      .getVersions({id})
+      .then(this.completed)
+      .catch(this.failure);
+  },
+  createVersion({id}, payload) {
+    this.NewLibConnection
+      .Solution
+      .please()
+      .createVersion({id}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
   install(payload) {
-    return this.Connection
-            .Solutions
-            .install(
-              payload.solutionId,
-              payload.versionId,
-              payload.instanceName
-            )
-            .then(this.completed)
-            .catch(this.failure);
+    this.NewLibConnection
+      .Solution
+      .please()
+      .installVersion(payload.versionId, payload)
+      .then(this.completed)
+      .catch(this.failure);
   },
-  remove(solutionId) {
-    return this.Connection
-            .Solutions
-            .remove(solutionId)
-            .then(this.completed)
-            .catch(this.failure);
+  remove(id) {
+    this.NewLibConnection
+      .Solution
+      .please()
+      .remove({id})
+      .then(this.completed)
+      .catch(this.failure);
   },
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Solutions
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Solution
+      .please()
+      .list()
       .then(this.completed)
       .catch(this.failure);
   },
   create(payload) {
-    this.Connection
-      .Solutions
+    this.NewLibConnection
+      .Solution
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
   update(id, payload) {
-    this.Connection
-      .Solutions
-      .update(id, payload)
+    this.NewLibConnection
+      .Solution
+      .please()
+      .update({id}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
   star(id) {
-    this.Connection
-      .Solutions
-      .star(id)
+    this.NewLibConnection
+      .Solution
+      .please()
+      .unstar({id})
       .then(this.completed)
       .catch(this.failure);
   },
   unstar(id) {
-    this.Connection
-      .Solutions
-      .unstar(id)
+    this.NewLibConnection
+      .Solution
+      .please()
+      .unstar({id})
       .then(this.completed)
       .catch(this.failure);
   },
-  listTags(id) {
-    this.Connection
-      .Solutions
-      .listTags(id)
+  listTags() {
+    const {baseUrl} = this.NewLibConnection;
+
+    this.Promise.get(`${baseUrl}/v1.1/marketplace/tags/`)
       .then(this.completed)
       .catch(this.failure);
   }
-
 };

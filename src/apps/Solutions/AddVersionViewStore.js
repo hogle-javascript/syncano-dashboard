@@ -159,31 +159,31 @@ export default Reflux.createStore({
   },
 
   onFetchClassesCompleted(obj) {
-    this.data.instanceData.classes = this.saveListFromSyncano(obj);
+    this.data.instanceData.classes = obj;
   },
 
   onFetchCodeBoxesCompleted(obj) {
-    this.data.instanceData.CodeBoxes = this.saveListFromSyncano(obj);
+    this.data.instanceData.CodeBoxes = obj;
   },
 
   onFetchTriggersCompleted(obj) {
-    this.data.instanceData.triggers = this.saveListFromSyncano(obj);
+    this.data.instanceData.triggers = obj;
   },
 
   onFetchSchedulesCompleted(obj) {
-    this.data.instanceData.schedules = this.saveListFromSyncano(obj);
+    this.data.instanceData.schedules = obj;
   },
 
   onFetchDataViewsCompleted(obj) {
-    this.data.instanceData.views = this.saveListFromSyncano(obj);
+    this.data.instanceData.views = obj;
   },
 
   onFetchChannelsCompleted(obj) {
-    this.data.instanceData.channels = this.saveListFromSyncano(obj);
+    this.data.instanceData.channels = obj;
   },
 
   onFetchScriptsCompleted(obj) {
-    this.data.instanceData.scripts = this.saveListFromSyncano(obj);
+    this.data.instanceData.scripts = obj;
   },
 
   onCreateVersionCompleted() {

@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-import Promise from 'bluebird';
+import Promise from 'axios';
 import _ from 'lodash';
 
 import {StoreHelpersMixin, CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
@@ -139,7 +139,7 @@ export default Reflux.createStore({
 
   saveScripts(sockets) {
     console.debug('ScriptsStore::onFetchSocketsCompleted');
-    Actions.setScripts(this.saveListFromSyncano(sockets.scripts));
+    Actions.setScripts(sockets.scripts);
   },
 
   setScripts(items) {

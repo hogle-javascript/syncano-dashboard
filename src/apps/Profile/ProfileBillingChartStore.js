@@ -279,18 +279,5 @@ export default Reflux.createStore({
     let {year, month} = this.getDate();
 
     return new Date(year, month + 1, 0).getDate();
-  },
-
-  getStartDate() {
-    let {year, month} = this.getDate();
-
-    return moment(new Date(year, month, 1)).format(this.format);
-  },
-
-  getEndDate() {
-    let {year, month} = this.getDate();
-
-    return moment(new Date(year, month, this.getNumberOfDays())).format(this.format);
   }
-
 });

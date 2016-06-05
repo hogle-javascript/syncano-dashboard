@@ -74,7 +74,7 @@ export default Reflux.createStore({
     if (!this.data.subscriptions || this.data.subscriptions.length > 1) {
       return false;
     }
-    return this.data.subscriptions._items[0].end || false;
+    return this.data.subscriptions[0].end || false;
   },
 
   isNewSubscription() {

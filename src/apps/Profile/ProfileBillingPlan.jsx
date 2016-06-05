@@ -89,7 +89,7 @@ export default Radium(React.createClass({
   },
 
   handleCancelProductionPlan() {
-    Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => item.id));
+    Actions.cancelSubscriptions(this.state.subscriptions.map((item) => item.id));
   },
 
   handleShowPlanDialog() {
@@ -193,7 +193,7 @@ export default Radium(React.createClass({
       );
     } else if (plan === 'paid-commitment') {
       if (Store.isNewSubscription()) {
-        const subscription = this.state.subscriptions._items[1];
+        const subscription = this.state.subscriptions[1];
         const total = Store.getTotalPlanValue(subscription);
         const limitsData = Store.getLimitsData(subscription, plan);
 
@@ -409,7 +409,7 @@ export default Radium(React.createClass({
                   plan={this.state.profile.subscription.plan}
                   isNewSubscription={Store.isNewSubscription()}
                   onPlanDialog={this.handleShowPlanDialog}
-                  onDeleteSubscription={() => Actions.cancelNewPlan(this.state.subscriptions._items)}/>
+                  onDeleteSubscription={() => Actions.cancelNewPlan(this.state.subscriptions)}/>
               </div>
             </div>
             <div

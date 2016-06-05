@@ -1,15 +1,13 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
-import Promise from 'bluebird';
+import Promise from 'axios';
 
-import Connection from '../apps/Session/Connection';
 import NewLibConnection from '../apps/Session/NewLibConnection';
 import Syncano from '../apps/Syncano';
 
 const Libraries = {Syncano};
 const Context = {
   NewLibConnection: NewLibConnection.get(),
-  Connection: Connection.get(),
   Promise
 };
 
