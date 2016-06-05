@@ -64,7 +64,7 @@ function redirectToDashboard(nextState, replace) {
   }
 }
 
-function onRootEnter(nextState, replace) {
+function onRootEnter(nextState) {
   let uri = new URI();
   let originalUri = uri.normalize().toString();
   let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');

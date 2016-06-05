@@ -41,7 +41,7 @@ export default {
           return this.failure({class: error.name});
         }
         this.failure(error);
-      });   
+      });
   },
 
   update(name, payload) {

@@ -70,12 +70,13 @@ export default {
       template_response: templateName,
       serialize: false
     };
+    let url = endpointUrl;
 
-    if (!endpointUrl.endsWith('/')) {
-      endpointUrl += '/';
+    if (!url.endsWith('/')) {
+      url += '/';
     }
 
-    this.Promise.get(endpointUrl, {params})
+    this.Promise.get(url, {params})
       .then(this.completed)
       .catch(this.failure);
   }
