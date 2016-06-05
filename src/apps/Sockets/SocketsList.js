@@ -26,7 +26,7 @@ const SocketsList = ({router, sockets, handleTitleClick, visibleItems = 3}, {par
       return handleTitleClick();
     }
 
-    router.push({pathName, params});
+    router.push({name: pathName, params});
   };
 
   return (
