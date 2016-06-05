@@ -60,13 +60,13 @@ export default Reflux.createStore({
 
   setSolutions(solutions) {
     console.debug('SolutionsStore::setSolutions');
-    this.data.items = this.saveListFromSyncano(solutions);
+    this.data.items = solutions;
     this.data.items = this.data.filter === 'public' ? this.getPublicSolutions() : this.data.items;
     this.trigger(this.data);
   },
 
   setTags(tags) {
-    this.data.tags = tags._items || tags.objects;
+    this.data.tags = tags;
   },
 
   onSelectOneTag(tag) {
@@ -111,7 +111,8 @@ export default Reflux.createStore({
   onFetchTagsCompleted(tags) {
     console.debug('SolutionsStore::onFetchTagsCompleted');
     this.data.isLoading = false;
-    Actions.setTags(tags);
+    this.data.tags = tags.data.objects;
+    this.trigger(this.data);
   },
 
   onFetchTagsFailure() {

@@ -52,11 +52,12 @@ const AccountLogin = React.createClass({
       } else {
         SessionStore
           .getConnection()
-          .Instances
+          .Instance
+          .please()
           .list()
           .then((instances) => {
             if (instances.length > 0) {
-              let instance = instances._items[0];
+              let instance = instances[0];
 
               localStorage.setItem('lastInstance', instance.name);
               router.replace({name: 'instance', params: {instanceName: instance.name}});

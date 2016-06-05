@@ -29,12 +29,11 @@ export default {
       .catch(this.failure);
   },
 
-  getUser(token) {
-    this.NewLibConnection.setAccountKey(token);
-    this.Connection
-      .setApiKey(token)
-      .Accounts
-      .get()
+  getUser() {
+    const {baseUrl, accountKey} = this.NewLibConnection;
+
+    this.Promise
+      .get(`${baseUrl}/v1.1/account/`, {params: {api_key: accountKey}})
       .then(this.completed)
       .catch(this.failure);
   },

@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import URL from 'url';
-import Promise from 'bluebird';
+import Promise from 'axios';
 
 // Utils & Mixins
 import {StoreFormMixin, WaitForStoreMixin} from '../../mixins';
@@ -45,14 +45,16 @@ export default Reflux.createStore({
     console.debug('SolutionsEditStore::refreshData');
     const {solutionId} = SessionStore.getParams();
 
-    Promise.all([
-      Actions.fetchSolution(solutionId),
-      Actions.fetchSolutionVersions(solutionId)
-    ]).then(() => {
-      console.log('applyIsLoading::refreshData');
-      this.data.isLoading = false;
-      this.trigger(this.data);
-    });
+    if (solutionId) {
+      Promise.all([
+        Actions.fetchSolution(solutionId),
+        Actions.fetchSolutionVersions(solutionId)
+      ]).then(() => {
+        console.log('applyIsLoading::refreshData');
+        this.data.isLoading = false;
+        this.trigger(this.data);
+      });
+    }
   },
 
   getSolution() {

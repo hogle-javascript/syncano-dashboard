@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
-import Promise from 'bluebird';
+import Promise from 'axios';
 
 // Utils & Mixins
 import Constans from '../../constants/Constants';

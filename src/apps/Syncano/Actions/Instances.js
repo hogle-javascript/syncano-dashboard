@@ -93,7 +93,9 @@ export default {
   },
 
   removeShared(names, adminId) {
-    const promises = _.map(names, (name) => this.Connection.Instances.removeShared(name, adminId));
+    const promises = _.map(names, (name) => {
+      this.NewLibConnection.Instance.please().delete({instanceName: name, id: adminId});
+    });
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -101,13 +103,12 @@ export default {
   },
 
   set(name) {
-    this.NewLibConnection.setInstanceName(name);
     this.NewLibConnection
       .Instance
       .please()
       .get({name})
       .then(this.completed)
       .catch(this.failure);
-    this.Connection.setInstance(name);
+    this.NewLibConnection.setInstanceName(name);
   }
 };
