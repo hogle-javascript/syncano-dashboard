@@ -233,6 +233,7 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
+        onConfirm={this.handleFormValidation}
         actions={
           <div>
             {this.hasEditMode()
