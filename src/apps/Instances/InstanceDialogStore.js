@@ -21,6 +21,8 @@ export default Reflux.createStore({
       name: null,
       isLoading: false,
       metadata: {},
+      fullBackups: [],
+      partialBackups: [],
       selectedBackup: 'None'
     };
   },
@@ -123,9 +125,14 @@ export default Reflux.createStore({
     InstancesStore.redirectToInstancesList();
   },
 
-  onFetchAllFullBackupsCompleted(backups) {
-    this.backups = backups;
-    this.trigger({backups});
+  onFetchAllFullBackupsCompleted(fullBackups) {
+    this.fullBackups = fullBackups;
+    this.trigger({fullBackups});
+  },
+
+  onFetchAllPartialBackupsCompleted(partialBackups) {
+    this.partialBackups = partialBackups;
+    this.trigger({partialBackups});
   },
 
   onCreateInstanceFromBackupCompleted() {
