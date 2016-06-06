@@ -3,7 +3,9 @@ import Reflux from 'reflux';
 import pluralize from 'pluralize';
 import _ from 'lodash';
 
-import {FontIcon} from 'material-ui';
+import {FormMixin} from '../../mixins';
+
+import {FontIcon, TextField} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles/';
 import Dialog from './FullPageDialog';
 import StandardButtons from './DialogStandardButtons';
@@ -11,10 +13,34 @@ import StandardButtons from './DialogStandardButtons';
 export default React.createClass({
   displayName: 'DeleteDialog',
 
-  mixins: [Reflux.ListenerMixin],
+  mixins: [
+    Reflux.ListenerMixin,
+    FormMixin
+  ],
+
+  validatorConstraints() {
+    const {itemLabelName, groupName, withConfirm} = this.props;
+    const items = this.getItems();
+    const confirmText = items.length ? items[0][itemLabelName] : '';
+
+    if (withConfirm) {
+      return {
+        validationText: {
+          presence: {
+            message: `^Type first from the list ${groupName} name to continue`
+          },
+          inclusion: {
+            within: [confirmText],
+            message: `^Incorrect ${groupName} name`
+          }
+        }
+      };
+    }
+  },
 
   getDefaultProps() {
     return {
+      withConfirm: false,
       actionName: 'delete',
       itemLabelName: 'name',
       isLoading: false,
@@ -65,7 +91,7 @@ export default React.createClass({
     return <ul>{listItems}</ul>;
   },
 
-  handleConfirm() {
+  handleSuccessfullValidation() {
     const {handleConfirm, handleConfirmParam} = this.props;
 
     handleConfirm(this.getItems(), handleConfirmParam);
@@ -85,10 +111,55 @@ export default React.createClass({
     this.setState({open: true, items});
   },
 
-  renderContent() {
-    const {actionName, groupName, itemLabelName} = this.props;
+  renderConfirmContent() {
+    const {validationText} = this.state;
+    const {itemLabelName, groupName, actionName} = this.props;
     const listItems = this.getItems();
     const itemsCount = listItems.length;
+    const pluralizedGroup = pluralize(groupName, itemsCount);
+    let confirmDescription = `To confirm ${actionName} type first ${pluralizedGroup} name from the list.`;
+
+    if (itemsCount === 1) {
+      confirmDescription = `To confirm ${actionName} type ${pluralizedGroup} name.`;
+    }
+
+    return (
+      <div style={{lineHeight: '1.4'}}>
+        <div className="vm-1-t">
+          <div className="vm-1-b">
+            <strong>This action cannot be undone or stopped.</strong>
+          </div>
+          <div className="vm-1-b">
+            All current data for {pluralizedGroup} <strong>will be lost.</strong>
+          </div>
+          <div>
+            This will permanently {actionName} {pluralizedGroup}:
+            {this.getDialogList(listItems, itemLabelName)}
+          </div>
+          <div className="vm-4-t">
+            {confirmDescription}
+          </div>
+          <TextField
+            className="confirmation-text-field"
+            value={validationText}
+            onChange={(event, value) => this.setState({validationText: value})}
+            errorText={this.getValidationMessages('validationText').join(' ')}
+            fullWidth={true}
+            floatingLabelText="Instance name"
+            hintText="Instance name" />
+        </div>
+      </div>
+    );
+  },
+
+  renderContent() {
+    const {actionName, groupName, itemLabelName, withConfirm} = this.props;
+    const listItems = this.getItems();
+    const itemsCount = listItems.length;
+
+    if (withConfirm) {
+      return this.renderConfirmContent();
+    }
 
     return (
       <div>
@@ -99,7 +170,7 @@ export default React.createClass({
   },
 
   render() {
-    const {children, icon, ...other} = this.props;
+    const {children, withConfirm, icon, ...other} = this.props;
     const {open} = this.state;
 
     return (
@@ -111,13 +182,13 @@ export default React.createClass({
         actions={
           <StandardButtons
             handleCancel={this.dismiss}
-            handleConfirm={this.handleConfirm}/>
+            handleConfirm={this.handleFormValidation}/>
         }
         {...other}>
         <div className="row">
           <FontIcon
-            style={{fontSize: 60, color: Colors.grey500}}
-            className={`${icon} col-sm-7`}/>
+            style={{fontSize: 60, color: withConfirm ? Colors.orange400 : Colors.grey500}}
+            className={`${withConfirm ? 'synicon-alert' : icon} col-sm-7 vm-2-t`}/>
           <div className="vm-1-t col-sm-28">
             {children ? children : this.renderContent()}
           </div>

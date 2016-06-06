@@ -10,7 +10,7 @@ import Store from './InstancesStore';
 import ListItem from './InstancesListItem';
 import {Loading, ColumnList, Dialog, Lists} from '../../common/';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'InstancesList',
@@ -36,9 +36,10 @@ export default React.createClass({
         key: 'deleteInstanceDialog',
         ref: 'deleteInstanceDialog',
         title: 'Delete an Instance',
-        handleConfirm: Actions.removeInstances,
         items: Store.getCheckedItems('myInstances'),
+        handleConfirm: Actions.removeInstances,
         groupName: 'Instance',
+        withConfirm: true,
         isLoading
       }
     }];
@@ -56,16 +57,17 @@ export default React.createClass({
 
   render() {
     const checkedItems = Store.getNumberOfChecked('myInstances');
+    const {name, isLoading} = this.props;
 
     return (
-      <Loading show={this.props.isLoading}>
+      <Loading show={isLoading}>
         <Lists.Container className='instances-list'>
           {this.getDialogs()}
           <ColumnList.Header>
             <Column.ColumnHeader
               primary={true}
               columnName="CHECK_ICON">
-              {this.props.name}
+              {name}
             </Column.ColumnHeader>
             <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
             <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
