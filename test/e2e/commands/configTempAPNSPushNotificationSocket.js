@@ -22,7 +22,8 @@ exports.command = (callback) => {
   let connection = Syncano({
     baseUrl,
     defaults: {
-      instanceName: Globals.instanceName
+      instanceName: Globals.instanceName,
+      className: Globals.certClassName
     }
   });
 
@@ -30,14 +31,7 @@ exports.command = (callback) => {
     .Account
     .login(credentials)
     .then((accountDetails) => {
-      connection = Syncano({
-        baseUrl,
-        accountKey: accountDetails.account_key,
-        defaults: {
-          instanceName: Globals.instanceName,
-          className: Globals.certClassName
-        }
-      });
+      connection.accountKey = accountDetails.account_key;
 
       return connection
         .DataObject
