@@ -43,9 +43,6 @@ const ChannelHistory = Radium(React.createClass({
       list: {
         position: 'relative',
         top: '35px'
-      },
-      snippetsList: {
-        top: '-45px'
       }
     };
   },
@@ -71,7 +68,7 @@ const ChannelHistory = Radium(React.createClass({
           title={title}
           backFallback={this.handleBackClick}
           backButtonTooltip='Go back to Channels list'/>
-        <div style={[styles.list, router.isActive({name: 'snippet-traces', params}) && styles.snippetsList]}>
+        <div style={styles.list}>
           <Container>
             <ChannelHistoryList
               name="Channel History"
