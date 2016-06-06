@@ -51,6 +51,16 @@ export default {
       .catch(this.failure);
   },
 
+  listAllPartialBackups() {
+    this.NewLibConnection
+      .PartialBackup
+      .please()
+      .listAll()
+      .ordering('desc')
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   createPartialBackup(payload) {
     this.NewLibConnection
       .PartialBackup
