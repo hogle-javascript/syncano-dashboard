@@ -46,7 +46,6 @@ export default {
     return (
       <IconButton
         iconClassName="synicon-download"
-        onClick={(event) => this.handleFileOnClick(event, obj.value)}
         onTouchTap={(event) => this.handleFileOnClick(event, obj.value)} />
     );
   },

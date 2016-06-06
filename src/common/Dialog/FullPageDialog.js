@@ -23,7 +23,7 @@ export default React.createClass({
 
   componentDidUpdate(prevProps) {
     const {onRequestClose, onConfirm, actions} = this.props;
-    const handleConfirm = onConfirm || actions.props.handleConfirm;
+    const handleConfirm = onConfirm || actions.props && actions.props.handleConfirm;
 
     if (!prevProps.open && this.props.open) {
       this.bindShortcut('esc', () => {
