@@ -22,11 +22,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleCheckInstance(checkId, value) {
-    Actions.uncheckAll('sharedInstances');
-    Actions.checkItem(checkId, value, 'name', 'myInstances');
-  },
-
   initDialogs() {
     const {isLoading} = this.props;
 
@@ -49,14 +44,13 @@ export default React.createClass({
     return (
       <ListItem
         key={`instances-list-item-${item.name}`}
-        onIconClick={this.handleCheckInstance}
+        checkable={false}
         item={item}
         showDeleteDialog={() => this.showDialog('deleteInstanceDialog', item)}/>
     );
   },
 
   render() {
-    const checkedItems = Store.getNumberOfChecked('myInstances');
     const {name, isLoading} = this.props;
 
     return (
@@ -71,14 +65,7 @@ export default React.createClass({
             </Column.ColumnHeader>
             <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
             <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-            <Column.ColumnHeader columnName="MENU">
-              <Lists.Menu
-                checkedItemsCount={checkedItems}
-                handleSelectAll={() => Actions.selectAll('myInstances')}
-                handleUnselectAll={() => Actions.uncheckAll('myInstances')}>
-                <Lists.MenuItem onTouchTap={() => this.showDialog('deleteInstanceDialog')} />
-              </Lists.Menu>
-            </Column.ColumnHeader>
+            <Column.ColumnHeader columnName="MENU" />
           </ColumnList.Header>
           <Lists.List
             {...this.props}

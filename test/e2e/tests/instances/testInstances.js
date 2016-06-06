@@ -52,7 +52,7 @@ export default {
       client.assert.equal(text.value, instanceNames[0]);
     });
   },
-  'Test Select and Delete multiple Instances': (client) => {
+  'Test Select multiple Instances': (client) => {
     const listsPage = client.page.listsPage();
     const selectedItems = listsPage.elements.selectedItem.selector;
     const optionsMenu = listsPage.elements.optionsMenu.selector;
@@ -62,10 +62,5 @@ export default {
       .pause(2000)
       .multipleItems('Select', 2, optionsMenu, selectedItems)
       .pause(2500);
-
-    listsPage
-      .clickListItemDropdown('@optionsMenu', 'Delete')
-      .clickElement('@confirmButton')
-      .waitForElementVisible('@emptyListItem');
   }
 };

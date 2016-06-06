@@ -27,7 +27,7 @@ export default React.createClass({
       return {
         validationText: {
           presence: {
-            message: `^Type first from the list ${groupName} name to continue`
+            message: `^Type ${groupName} name to continue`
           },
           inclusion: {
             within: [confirmText],
@@ -117,11 +117,7 @@ export default React.createClass({
     const listItems = this.getItems();
     const itemsCount = listItems.length;
     const pluralizedGroup = pluralize(groupName, itemsCount);
-    let confirmDescription = `To confirm ${actionName} type first ${pluralizedGroup} name from the list.`;
-
-    if (itemsCount === 1) {
-      confirmDescription = `To confirm ${actionName} type ${pluralizedGroup} name.`;
-    }
+    let confirmDescription = `To confirm ${actionName} type ${pluralizedGroup} name.`;
 
     return (
       <div style={{lineHeight: '1.4'}}>
