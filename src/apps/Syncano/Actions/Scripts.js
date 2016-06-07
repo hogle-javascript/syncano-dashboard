@@ -19,14 +19,21 @@ export default {
       .catch(this.failure);
   },
 
-  run(params) {
-    const {id, payload} = params;
+  run(updateParams, runParams) {
+    const {id, payload} = runParams;
 
     this.NewLibConnection
       .Script
       .please()
-      .run({id}, {payload})
-      .then(this.completed)
+      .update({id}, updateParams)
+      .then(() => {
+        return this.NewLibConnection
+          .Script
+          .please()
+          .run({id}, {payload})
+          .then(this.completed)
+          .catch(this.failure);
+      })
       .catch(this.failure);
   },
 

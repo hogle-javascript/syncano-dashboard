@@ -108,7 +108,7 @@ const Script = React.createClass({
   getStyles() {
     return {
       notification: {
-        marginTop: 20
+        margin: '20px 20px 10px 10px'
       },
       lastResultContainer: {
         zIndex: 1,
@@ -165,17 +165,21 @@ const Script = React.createClass({
   },
 
   handleRunScript() {
-    const {isPayloadValid, currentScript, payloadValue} = this.state;
+    const {currentScript, payload} = this.state;
+    const config = this.getConfigObject();
+    const source = this.refs.editorSource.editor.getValue();
+    const updateParams = {
+      config,
+      source
+    };
+    const runParams = {
+      id: currentScript.id,
+      payload
+    };
 
-    this.handleUpdate();
-    if (isPayloadValid) {
-      this.runScript({
-        id: currentScript.id,
-        payload: payloadValue
-      });
-    } else {
-      this.setSnackbarNotification({message: "Can't run Script with invalid payload"});
-    }
+    this.clearAutosaveTimer();
+    this.setSnackbarNotification({message: 'Saving...'});
+    this.runScript(updateParams, runParams);
   },
 
   handleAddField(event) {
@@ -382,7 +386,7 @@ const Script = React.createClass({
             hintText="Key"
             floatingLabelText="Key"
             defaultValue=""
-            errorText={this.getValidationMessages(`newFieldKey`).join(' ')}
+            errorText={this.getValidationMessages('newFieldKey').join(' ')}
             fullWidth={true}
             style={styles.field}/>
         </div>
@@ -395,7 +399,7 @@ const Script = React.createClass({
             floatingLabelText="Value Type"
             options={Store.getScriptConfigValueTypes()}
             value={configValueType}
-            onChange={(event, index, value) => this.setSelectFieldValue('configValueType', event, index, value)}
+            onChange={(event, index, value) => this.setSelectFieldValue('configValueType', value)}
             errorText={this.getValidationMessages('configValueType').join(' ')}
             fullWidth={true}
             style={styles.field}/>
@@ -481,7 +485,7 @@ const Script = React.createClass({
                 title="Code"
                 initialOpen={true}
                 style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                <Show if={this.getValidationMessages('source').length > 0}>
+                <Show if={this.getValidationMessages('source').length}>
                   <div style={styles.notification}>
                     <Notification type="error">
                       {this.getValidationMessages('source').join(' ')}
@@ -509,7 +513,7 @@ const Script = React.createClass({
                   <div>
                     {this.renderFields()}
                     {this.renderNewFieldSection()}
-                    <Show if={this.getValidationMessages('config').length > 0}>
+                    <Show if={this.getValidationMessages('config').length}>
                       <div style={styles.notification}>
                         <Notification type="error">
                           {this.getValidationMessages('config').join(' ')}
@@ -529,7 +533,7 @@ const Script = React.createClass({
                     ref="payloadSource"
                     mode="json"
                     height="200px"
-                    onChange={(payload) => this.setState({payloadValue: payload})}
+                    onChange={(payload) => this.setState({payload})}
                     value={[
                       '{',
                       '    "foo": "bar",',
@@ -537,6 +541,13 @@ const Script = React.createClass({
                       '}'
                     ].join('\n')} />
                 </TogglePanel>
+                <Show if={this.getValidationMessages('payload').length}>
+                  <div style={styles.notification}>
+                    <Notification type="error">
+                      {this.getValidationMessages('payload').join(' ')}
+                    </Notification>
+                  </div>
+                </Show>
               </div>
 
               <div style={{paddingBottom: 50}}>
