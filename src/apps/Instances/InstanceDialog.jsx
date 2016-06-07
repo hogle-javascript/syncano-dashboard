@@ -8,10 +8,9 @@ import {DialogMixin, DialogsMixin, FormMixin} from '../../mixins';
 import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
 
-import {TextField, FlatButton, DropDownMenu, MenuItem, FontIcon} from 'material-ui';
+import {TextField, FlatButton, DropDownMenu, MenuItem} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles/';
-import DropZone from 'react-dropzone';
-import {Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show} from '../../common/';
+import {DropZone, Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show} from '../../common/';
 
 export default React.createClass({
   displayName: 'InstanceDialog',
@@ -53,31 +52,6 @@ export default React.createClass({
 
   getStyles() {
     return {
-      dropZone: {
-        marginLeft: -8,
-        height: 140,
-        width: '70%',
-        borderStyle: 'dashed',
-        borderWidth: 1,
-        borderColor: '#AAA',
-        color: '#AAA',
-        backgroundColor: '#EEE'
-      },
-      dropZoneContainer: {
-        marginTop: 25
-      },
-      dropZoneDescription: {
-        padding: 15,
-        textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        minHeight: '100%'
-      },
-      uploadIcon: {
-        fontSize: 56,
-        color: '#AAA'
-      },
       dropdownHeaderItem: {
         paddingTop: 6,
         paddingBottom: 6,
@@ -104,8 +78,8 @@ export default React.createClass({
       this.listenTo(Actions.createInstance.completed, this.extendSubmit);
     }
 
-    if (selectedBackup !== 'None') {
-      const backup = selectedBackup === 'File' ? backupFile : selectedBackup;
+    if (selectedBackup !== 'None' || backupFile) {
+      const backup = backupFile ? backupFile : selectedBackup;
 
       return Actions.createInstanceFromBackup({name, description, metadata}, backup);
     }
@@ -146,13 +120,15 @@ export default React.createClass({
 
   handleChangeBackup(event, index, value) {
     this.setState({
-      selectedBackup: value
+      selectedBackup: value,
+      backupFile: null
     });
   },
 
-  handleDropBackupFile(file) {
+  handleUploadBackupFile(file) {
     this.setState({
-      backupFile: file[0]
+      backupFile: file,
+      selectedBackup: 'None'
     });
   },
 
@@ -187,20 +163,15 @@ export default React.createClass({
   },
 
   renderDropDownItems(fullBackups, partialBackups) {
+    let partialBackupsItems = [];
+    let fullBackupsItems = [];
+    let allBackupsItems = [];
     const styles = this.getStyles();
-    const fileItem = (
-      <MenuItem
-        key="dropdownBackupFile"
-        style={styles.restoreFromFileListItem}
-        value="File"
-        primaryText="Restore Instance from file" />
-    );
     const emptyItem = (
       <MenuItem
         key="dropdownBackupEmpty"
         style={styles.restoreFromFileListItem}
         value="None"
-        label="Restore instance from backup"
         primaryText="None" />
     );
     const fullBackupsHeader = (
@@ -217,49 +188,53 @@ export default React.createClass({
         disabled={true}
         primaryText="PARTIAL BACKUPS" />
     );
-    let partialBackupsItems = _.map(_.sortBy(partialBackups, 'instance'), (backup) => {
-      const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
-      const text = <Truncate text={`${backup.label} ${createdAt}`} />;
 
-      return (
-        <MenuItem
-          key={`dropdownPartialBackup${backup.id}`}
-          value={backup.id}
-          primaryText={text}>
-          <div style={styles.backupListItem}>
-            {backup.instance}
-          </div>
-        </MenuItem>
-      );
-    });
-
-    partialBackupsItems.unshift(fileItem);
-    partialBackupsItems.unshift(partialBackupsHeader);
-    partialBackupsItems.unshift(emptyItem);
-
-    if (!fullBackups.length) {
-      return partialBackupsItems;
+    if (!fullBackups.length && !partialBackups.length) {
+      return emptyItem;
     }
 
-    let fullBackupsItems = _.map(_.sortBy(fullBackups, 'instance'), (backup) => {
-      const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
-      const text = <Truncate text={`${backup.label} ${createdAt}`} />;
+    if (partialBackups.length) {
+      partialBackupsItems = _.map(_.sortBy(partialBackups, 'instance'), (backup) => {
+        const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
+        const text = <Truncate text={`${backup.label} ${createdAt}`} />;
 
-      return (
-        <MenuItem
-          key={`dropdownFullBackup${backup.id}`}
-          value={backup.id}
-          primaryText={text}>
-          <div style={styles.backupListItem}>
-            {backup.instance}
-          </div>
-        </MenuItem>
-      );
-    });
+        return (
+          <MenuItem
+            key={`dropdownPartialBackup${backup.id}`}
+            value={backup.id}
+            primaryText={text}>
+            <div style={styles.backupListItem}>
+              {backup.instance}
+            </div>
+          </MenuItem>
+        );
+      });
+      partialBackupsItems.unshift(partialBackupsHeader);
+    }
 
-    fullBackupsItems.unshift(fullBackupsHeader);
+    if (fullBackups.length) {
+      fullBackupsItems = _.map(_.sortBy(fullBackups, 'instance'), (backup) => {
+        const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
+        const text = <Truncate text={`${backup.label} ${createdAt}`} />;
 
-    return partialBackupsItems.concat(fullBackupsItems);
+        return (
+          <MenuItem
+            key={`dropdownFullBackup${backup.id}`}
+            value={backup.id}
+            primaryText={text}>
+            <div style={styles.backupListItem}>
+              {backup.instance}
+            </div>
+          </MenuItem>
+        );
+      });
+      fullBackupsItems.unshift(fullBackupsHeader);
+    }
+
+    allBackupsItems = partialBackupsItems.concat(fullBackupsItems);
+    allBackupsItems.unshift(emptyItem);
+
+    return allBackupsItems;
   },
 
   render() {
@@ -272,12 +247,10 @@ export default React.createClass({
       canSubmit,
       fullBackups,
       partialBackups,
+      backupFile,
       description,
-      selectedBackup,
-      backupFile
+      selectedBackup
     } = this.state;
-    const styles = this.getStyles();
-    const dropZoneDescription = backupFile ? backupFile.name : null;
     const title = this.hasEditMode() ? 'Update' : 'Add';
 
     return (
@@ -352,28 +325,24 @@ export default React.createClass({
             floatingLabelText="Description (optional)"/>
         </Dialog.ContentSection>
         <Show if={!this.hasEditMode()}>
-          <DropDownMenu
-            style={{width: '80%', marginLeft: -32}}
-            onChange={this.handleChangeBackup}
-            value={selectedBackup}>
-            {this.renderDropDownItems(fullBackups, partialBackups)}
-          </DropDownMenu>
-        </Show>
-        <Show if={!this.hasEditMode() && selectedBackup === 'File'}>
-          <div style={styles.dropZoneContainer}>
-            <DropZone
-              onDrop={this.handleDropBackupFile}
-              style={styles.dropZone}>
-              <div style={styles.dropZoneDescription}>
-                <FontIcon
-                  style={styles.uploadIcon}
-                  className={backupFile ? 'synicon-file' : 'synicon-cloud-upload'} />
-                <div>
-                  {dropZoneDescription || 'Click or Drag & Drop to upload partial backup file'}
-                </div>
-              </div>
-            </DropZone>
-          </div>
+          <Dialog.ContentSection title="Restore Instance from backup">
+            <DropDownMenu
+              className="col-sm-20"
+              style={{marginLeft: -24}}
+              onChange={this.handleChangeBackup}
+              value={selectedBackup}>
+              {this.renderDropDownItems(fullBackups, partialBackups)}
+            </DropDownMenu>
+            <DropZone.UploadFileButton
+              key="uploadBackupFile"
+              style={{marginTop: 12}}
+              backgroundColor={Colors.blue700}
+              labelColor="#FFF"
+              iconStyle={{color: '#FFF'}}
+              iconClassName={backupFile ? 'synicon-file' : 'synicon-cloud-upload'}
+              uploadButtonLabel={backupFile ? backupFile.name : 'Upload partial backup file'}
+              getFile={this.handleUploadBackupFile} />
+          </Dialog.ContentSection>
         </Show>
       </Dialog.FullPage>
     );

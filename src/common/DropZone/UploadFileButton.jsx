@@ -5,17 +5,27 @@ import {colors as Colors} from 'material-ui/styles/';
 export default React.createClass({
   displayName: 'UploadFileButton',
 
+  getDefaultProps() {
+    return {
+      backgroundColor: Colors.grey200,
+      labelColor: Colors.grey500,
+      iconClassName: 'synicon-cloud-upload'
+    };
+  },
+
   getStyles() {
+    const {labelColor} = this.props;
+
     return {
       uploadButton: {
         marginBottom: 20,
         fontWeight: 600,
-        color: Colors.grey500
+        color: labelColor
       },
       uploadButtonIcon: {
-        color: Colors.grey500,
         fontSize: 18,
-        paddingRight: 8
+        paddingRight: 8,
+        paddingTop: 2
       }
     };
   },
@@ -43,6 +53,7 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
+    const {backgroundColor, labelColor, style, iconStyle, iconClassName} = this.props;
 
     return (
       <div>
@@ -53,15 +64,17 @@ export default React.createClass({
           type="file"
           onChange={this.handleFile}/>
         <RaisedButton
-          style={styles.uploadButton}
-          backgroundColor={Colors.grey200}
-          labelColor={Colors.grey500}
+          style={{...styles.uploadButton, ...style}}
+          backgroundColor={backgroundColor}
+          labelColor={labelColor}
           onTouchTap={this.handleClickIpnut}>
           <div className="row align-center align-middle hp-2-l hp-2-r">
             <FontIcon
-              style={styles.uploadButtonIcon}
-              className="synicon-cloud-upload"/>
-            <div>{this.props.uploadButtonLabel}</div>
+              style={{...styles.uploadButtonIcon, ...iconStyle}}
+              className={iconClassName}/>
+            <div>
+              {this.props.uploadButtonLabel}
+            </div>
           </div>
         </RaisedButton>
       </div>
