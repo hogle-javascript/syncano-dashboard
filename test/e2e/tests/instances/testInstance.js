@@ -48,18 +48,18 @@ export default {
       .waitForElementVisible('@instancesTableName');
 
     instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
-  },
-  'Test Delete Instance': (client) => {
-    const instancesPage = client.page.instancesPage();
-
-    instancesPage.navigate();
-    client.pause(1000);
-
-    instancesPage
-      .clickListItemDropdown('@instanceDropdown', 'Delete')
-      .clickElement('@confirmDeleteButton')
-      .waitForElementNotPresent('@deleteInstanceModalTitle');
-
-    instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   }
+  // 'Test Delete Instance': (client) => {
+  //   const instancesPage = client.page.instancesPage();
+  //
+  //   instancesPage.navigate();
+  //   client.pause(1000);
+  //
+  //   instancesPage
+  //     .clickListItemDropdown('@instanceDropdown', 'Delete')
+  //     .clickElement('@confirmDeleteButton')
+  //     .waitForElementNotPresent('@deleteInstanceModalTitle');
+  //
+  //   instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
+  // }
 };

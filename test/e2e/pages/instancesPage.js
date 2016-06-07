@@ -121,6 +121,10 @@ export default {
     setupText: {
       selector: '//div[text()="We\'re preparing your account, please wait..."]',
       locateStrategy: 'xpath'
+    },
+    confirmTextField: {
+      selector: '//div[@class="confirmation-text-field"]/input',
+      locateStrategy: 'xpath'
     }
   }
 };

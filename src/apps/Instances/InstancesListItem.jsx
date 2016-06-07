@@ -11,20 +11,20 @@ import InstanceDialogActions from './InstanceDialogActions';
 import {MenuItem} from 'material-ui';
 import {ColumnList, Color, Truncate} from '../../common/';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
 export default withRouter(React.createClass({
   displayName: 'InstancesListItem',
 
   propTypes: {
-    onIconClick: React.PropTypes.func.isRequired,
+    onIconClick: React.PropTypes.func,
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
   mixins: [DialogsMixin],
 
   render() {
-    const {item, onIconClick, showDeleteDialog, router} = this.props;
+    const {item, onIconClick, showDeleteDialog, router, checkable} = this.props;
 
     return (
       <ColumnList.Item
@@ -35,6 +35,7 @@ export default withRouter(React.createClass({
           id={item.name}
           iconClassName={item.metadata.icon}
           background={Color.getColorByName(item.metadata.color)}
+          checkable={checkable}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={

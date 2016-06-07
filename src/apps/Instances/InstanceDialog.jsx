@@ -143,6 +143,7 @@ export default React.createClass({
         title: 'Delete an Instance',
         handleConfirm: Actions.removeInstances,
         items: [this.state],
+        withConfirm: true,
         groupName: 'Instance',
         isLoading
       }

@@ -89,13 +89,13 @@ export default Radium(React.createClass({
 
   handleClick(event) {
     event.stopPropagation();
-    if (this.props.handleClick) {
+    if (this.props.handleClick && this.props.checkable) {
       this.props.handleClick(this.props.id, !this.props.checked, this.props.keyName);
-    }
 
-    this.setState({
-      checked: !this.state.checked
-    });
+      this.setState({
+        checked: !this.state.checked
+      });
+    }
   },
 
   toggleHover() {
@@ -119,7 +119,7 @@ export default Radium(React.createClass({
         style={{...styles.iconButton, ...style}}
         onMouseEnter={checkable ? this.toggleHover : null}
         onMouseLeave={checkable ? this.toggleHover : null}
-        onTouchTap={checkable ? this.handleClick : null}/>
+        onTouchTap={this.handleClick}/>
     );
   }
 }));
