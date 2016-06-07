@@ -103,7 +103,7 @@ export default React.createClass({
           <Show if={this.getPushNotificationItems().length}>
             <PushNotifications.List
               name="Push Notification Sockets (BETA)"
-              handleTitleClick={() => this.props.history.push({pathName: 'push-notification-config', params})}
+              handleTitleClick={() => this.props.history.push({name: 'push-notification-config', params})}
               items={this.getPushNotificationItems()}/>
           </Show>
         </Loading>
