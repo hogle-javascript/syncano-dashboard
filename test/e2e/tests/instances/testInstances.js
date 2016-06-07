@@ -51,16 +51,19 @@ export default {
     client.getText('xpath', dropdown, (text) => {
       client.assert.equal(text.value, instanceNames[0]);
     });
-  },
-  'Test Select multiple Instances': (client) => {
-    const listsPage = client.page.listsPage();
-    const selectedItems = listsPage.elements.selectedItem.selector;
-    const optionsMenu = listsPage.elements.optionsMenu.selector;
-
-    client
-      .url('https://localhost:8080/#/instances/')
-      .pause(2000)
-      .multipleItems('Select', 2, optionsMenu, selectedItems)
-      .pause(2500);
   }
+  // We decided to not allow users to delete multiple instances so header dropdown is removed
+  // and there is no option to select multiple instances
+  //
+  // 'Test Select multiple Instances': (client) => {
+  //   const listsPage = client.page.listsPage();
+  //   const selectedItems = listsPage.elements.selectedItem.selector;
+  //   const optionsMenu = listsPage.elements.optionsMenu.selector;
+  //
+  //   client
+  //     .url('https://localhost:8080/#/instances/')
+  //     .pause(2000)
+  //     .multipleItems('Select', 2, optionsMenu, selectedItems)
+  //     .pause(2500);
+  // }
 };

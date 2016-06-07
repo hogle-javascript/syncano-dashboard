@@ -21,7 +21,7 @@ export default {
   commands: [instancesCommands],
   elements: {
     instanceDropdown: {
-      selector: '(//span[@class="synicon-dots-vertical"])[2]',
+      selector: '(//span[@class="synicon-dots-vertical"])[1]',
       locateStrategy: 'xpath'
     },
     instancesDropdown: {
