@@ -1,4 +1,4 @@
-exports.command = function clearAceEditor(element) {
+exports.command = function clearInput(element) {
   const mainKey = process.platform === 'darwin' ? this.Keys.COMMAND : this.Keys.CONTROL;
 
   return this
