@@ -44,7 +44,6 @@ export default Reflux.createStore({
     return {
       currentScript: null,
       scriptConfig: [],
-      isPayloadValid: true,
 
       traces: [],
       traceIsLoading: true,
@@ -135,7 +134,13 @@ export default Reflux.createStore({
 
   onRunScriptCompleted() {
     console.debug('ScriptStore::onRunScriptCompleted');
+    this.dismissSnackbarNotification();
     this.refreshData();
+  },
+
+  onRunScriptFailure() {
+    console.debug('ScriptStore::onRunScriptFailure');
+    this.dismissSnackbarNotification();
   },
 
   getScriptLastTraceResult() {
