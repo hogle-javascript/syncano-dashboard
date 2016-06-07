@@ -5,11 +5,9 @@ import utils from '../utils';
 exports.command = (callback) => {
   const accountKey = Globals.tempAccountKey;
   const baseUrl = Globals.apiBaseUrl;
-  const label = 'android_' + Date.now();
-  const registration_id = utils.randomString(64);
   const data = {
-    label,
-    registration_id
+    production_api_key: utils.randomString(32),
+    development_api_key: utils.randomString(32)
   };
   const connection = Syncano({
     baseUrl,
@@ -20,10 +18,10 @@ exports.command = (callback) => {
   });
 
   connection
-    .GCMDevice
+    .GCMConfig
     .please()
-    .create(data)
-    .then((response) => {
+    .update({}, data)
+    .then(() => {
       if (typeof callback === 'function') {
         callback.call(this);
       }

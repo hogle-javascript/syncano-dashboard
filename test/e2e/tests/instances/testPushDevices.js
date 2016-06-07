@@ -7,6 +7,8 @@ export default {
     Async.waterfall([
       client.createTempAccount,
       client.createTempInstance,
+      client.configTempAPNSPushNotificationSocket,
+      client.configTempGCMPushNotificationSocket,
       client.createTempGcmDevice,
       client.createTempGcmDevice,
       client.createTempApnsDevice,

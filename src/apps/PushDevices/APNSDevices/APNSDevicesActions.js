@@ -4,6 +4,12 @@ export default CreateActions(
   {
     fetch: {},
     setDevices: {},
+    fetchAPNSConfig: {
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushNotifications.getAPNSPushNotificationConfig'
+    },
     fetchDevices: {
       asyncResult: true,
       loading: true,

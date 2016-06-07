@@ -1,14 +1,16 @@
 import React from 'react';
+import Reflux from 'reflux';
 import {withRouter} from 'react-router';
 import Helmet from 'react-helmet';
 
 import APNSDevicesActions from '../../src/apps/PushDevices/APNSDevices/APNSDevicesActions';
 import GCMDevicesActions from '../../src/apps/PushDevices/GCMDevices/GCMDevicesActions';
+import APNSDevicesStore from '../../src/apps/PushDevices/APNSDevices/APNSDevicesStore';
+import GCMDevicesStore from '../../src/apps/PushDevices/GCMDevices/GCMDevicesStore';
 
 import {ListItem, FontIcon, RaisedButton} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles/';
-import {Popover} from '../common/';
-import {InnerToolbar} from '../common/';
+import {Popover, InnerToolbar} from '../common/';
 
 const PushDevicesPage = React.createClass({
   displayName: 'PushDevicesPage',
@@ -17,6 +19,11 @@ const PushDevicesPage = React.createClass({
     params: React.PropTypes.object,
     routes: React.PropTypes.array
   },
+
+  mixins: [
+    Reflux.connect(APNSDevicesStore, 'apnsDevices'),
+    Reflux.connect(GCMDevicesStore, 'gcmDevices')
+  ],
 
   handleAddDevice(type) {
     const addDevice = {
@@ -42,12 +49,15 @@ const PushDevicesPage = React.createClass({
   render() {
     const {children} = this.props;
     const title = 'Push Notification Devices (BETA)';
+    const hasGCMConfig = this.state.gcmDevices.hasConfig;
+    const hasAPNSConfig = this.state.apnsDevices.hasConfig;
 
     return (
       <div>
         <Helmet title={title} />
         <InnerToolbar title={title}>
           <RaisedButton
+            disabled={!hasAPNSConfig && !hasGCMConfig}
             label="Add"
             primary={true}
             style={{marginRight: 0}}
@@ -58,18 +68,25 @@ const PushDevicesPage = React.createClass({
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             style={{padding: '8px 0'}}>
             <ListItem
+              style={!hasGCMConfig && {color: '#AAA'}}
+              disabled={!hasGCMConfig}
               leftIcon={
                 <FontIcon
-                  color={Colors.green400}
-                  className="synicon-android"
-                />
+                  style={{color: !hasGCMConfig ? '#AAA' : Colors.green400}}
+                  className="synicon-android" />
               }
               onTouchTap={() => this.handleAddDevice('gcm-devices')}
-              primaryText="Android Device"/>
+              primaryText="Android Device" />
             <ListItem
-              leftIcon={<FontIcon color={Colors.black} className="synicon-apple"/>}
+              style={!hasAPNSConfig && {color: '#AAA'}}
+              disabled={!hasAPNSConfig}
+              leftIcon={
+                <FontIcon
+                  style={{color: !hasAPNSConfig ? '#AAA' : Colors.black}}
+                  className="synicon-apple" />
+              }
               onTouchTap={() => this.handleAddDevice('apns-devices')}
-              primaryText="iOS Device"/>
+              primaryText="iOS Device" />
           </Popover>
         </InnerToolbar>
         {children}

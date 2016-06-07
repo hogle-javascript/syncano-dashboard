@@ -18,26 +18,30 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
-  componentWillMount() {
+  componentDidMount() {
     Actions.fetch();
   },
 
   render() {
+    const {hasConfig, hideDialogs, isLoading, items} = this.state;
+    const {visibleItems} = this.props;
+
     return (
       <Container>
         <Helmet title="iOS Devices" />
         <APNSDialog />
         <DevicesList
           type="apns"
-          visibleItems={this.props.visibleItems}
+          hasConfig={hasConfig}
+          visibleItems={visibleItems}
           getCheckedItems={Store.getCheckedItems}
           actions={Actions}
           showSendMessagesDialog={SendMessagesActions.showDialog}
           emptyItemHandleClick={Actions.showDialog}
           emptyItemContent="Add APNS Device"
-          hideDialogs={this.state.hideDialogs}
-          isLoading={this.state.isLoading}
-          items={this.state.items}/>
+          hideDialogs={hideDialogs}
+          isLoading={isLoading}
+          items={items}/>
       </Container>
     );
   }

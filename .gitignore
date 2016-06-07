@@ -31,3 +31,6 @@ bin/
 
 # OS files
 .DS_Store
+
+# Temp devel cert for APNS config
+*.p12

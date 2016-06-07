@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils & Mixins
 import {CheckListStoreMixin, WaitForStoreMixin, StoreHelpersMixin, StoreLoadingMixin} from '../../../mixins';
@@ -19,6 +20,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: [],
+      hasConfig: false,
       isLoading: true
     };
   },
@@ -30,6 +32,10 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.setLoadingStates();
+  },
+
+  isConfigured() {
+    return this.data.hasConfig;
   },
 
   getDevices() {
@@ -45,6 +51,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('GCMDevicesStore::refreshData');
+    Actions.fetchGCMConfig();
     Actions.fetchDevices();
   },
 
@@ -56,5 +63,11 @@ export default Reflux.createStore({
   onRemoveDevicesCompleted() {
     console.debug('GCMDevicesStore::onRemoveDevicesCompleted');
     this.refreshData();
+  },
+
+  onFetchGCMConfigCompleted(config) {
+    console.debug('GCMDevicesStore::onFetchGCMConfigCompleted');
+    this.data.hasConfig = !_.isEmpty(config.development_api_key) || !_.isEmpty(config.production_api_key);
+    this.trigger({hasConfig: this.data.hasConfig});
   }
 });

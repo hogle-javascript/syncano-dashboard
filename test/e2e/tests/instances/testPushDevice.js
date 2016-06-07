@@ -7,7 +7,9 @@ export default {
   before: (client) => {
     Async.waterfall([
       client.createTempAccount,
-      client.createTempInstance
+      client.createTempInstance,
+      client.configTempAPNSPushNotificationSocket,
+      client.configTempGCMPushNotificationSocket
     ], (err) => {
       if (err) throw err;
       const loginPage = client.page.loginPage();
@@ -31,6 +33,8 @@ export default {
     pushDevicesPage
       .goToUrl('temp', 'push-notifications/devices/gcm')
       .waitForElementVisible('@androidDevicesHeading');
+
+    client.pause(500);
 
     listsPage
       .clickElement('@addButton')
