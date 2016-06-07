@@ -52,7 +52,7 @@ export default React.createClass({
         <div
           className="vm-3-b"
           style={{textAlign: 'center'}}>
-          We're restoring your backup, please wait...
+          {`We're restoring your backup, please wait...`}
         </div>
         <Loading show={true} />
       </div>
