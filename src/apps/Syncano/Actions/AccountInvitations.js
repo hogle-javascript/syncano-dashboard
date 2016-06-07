@@ -26,7 +26,7 @@ export default {
 
       this.Promise.all(promises)
         .then(this.completed)
-        .error(this.failure);
+        .catch(this.failure);
     }
   },
 
@@ -39,6 +39,6 @@ export default {
 
     this.Promise.all(promises)
       .then(this.completed)
-      .error(this.failure);
+      .catch(this.failure);
   }
 };

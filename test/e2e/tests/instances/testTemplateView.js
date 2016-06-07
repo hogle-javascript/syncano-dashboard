@@ -23,7 +23,7 @@ module.exports = {
     templateViewPage
       .clickElement('@htmlTestTemplateRow')
       .waitForElementPresent('@codeEditor')
-      .clearAceEditor('@codeEditorContent')
+      .clearInput('@codeEditorContent')
       .setValue('@codeEditor', codeText)
       .verify.containsText('@codeEditorContent', codeText)
       .clickElement('@saveButton');
@@ -45,10 +45,10 @@ module.exports = {
     templateViewPage
       .clickElement('@htmlTestTemplateRow')
       .waitForElementPresent('@codeEditor')
-      .clearAceEditor('@codeEditorContent')
+      .clearInput('@codeEditorContent')
       .setValue('@codeEditor', utils.jinjaTemplate())
       .fillInput('@inputDataSourceUrl', dataSourceUrl)
-      .clearAceEditor('@contextEditorContent')
+      .clearInput('@contextEditorContent')
       .setValue('@contextEditor', `{"timestamp": "${controlTimestamp}"}`)
       .clickElement('@saveButton')
       .clickElement('@renderButton')
@@ -66,7 +66,7 @@ module.exports = {
       .clickElement('@htmlTestTemplateRow')
       .waitForElementPresent('@codeEditor')
       .fillInput('@inputDataSourceUrl', dataSourceUrl)
-      .clearAceEditor('@contextEditorContent')
+      .clearInput('@contextEditorContent')
       .setValue('@contextEditor', `{"timestamp": "${controlTimestamp}"}`)
       .clickElement('@saveButton')
       .clickElement('@renderInTabButton');
