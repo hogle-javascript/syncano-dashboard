@@ -64,18 +64,13 @@ function redirectToDashboard(nextState, replace) {
   }
 }
 
-function onRootEnter(nextState, replace) {
+function onRootEnter(nextState) {
   let uri = new URI();
   let originalUri = uri.normalize().toString();
   let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
   let query = _.extend({}, uri.search(true), nextState.location.query);
 
   SessionStore.setUTMData(nextState.location.query);
-
-  if (nextState.location.query.token) {
-    SessionStore.setToken(nextState.location.query.token);
-    replace('/');
-  }
 
   // Remove trailing slash
   if (pathname.length > 1 && pathname.match('/$') !== null) {

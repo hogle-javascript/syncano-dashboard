@@ -11,7 +11,7 @@ import Store from './InstanceDialogStore';
 import {TextField, FlatButton, DropDownMenu, MenuItem, FontIcon} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles/';
 import DropZone from 'react-dropzone';
-import {Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show} from '../../common/';
+import {Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show, Loading} from '../../common/';
 
 export default React.createClass({
   displayName: 'InstanceDialog',
@@ -40,6 +40,7 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
       Actions.fetchAllFullBackups();
+      Actions.fetchAllPartialBackups();
       this.setState({
         name: Store.genUniqueName(),
         metadata: {
@@ -76,6 +77,22 @@ export default React.createClass({
       uploadIcon: {
         fontSize: 56,
         color: '#AAA'
+      },
+      dropdownHeaderItem: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        borderBottom: '1px solid #DDD',
+        borderTop: '1px solid #DDD'
+      },
+      backupListItem: {
+        fontSize: 11,
+        color: '#AAA',
+        fontWeight: 800,
+        height: 15
+      },
+      restoreFromFileListItem: {
+        paddingTop: 8,
+        paddingBottom: 8
       }
     };
   },
@@ -169,105 +186,97 @@ export default React.createClass({
     );
   },
 
-  renderDropDownItems(backups) {
-    if (!backups) {
-      return <MenuItem value={'None'} primaryText="No backups"/>;
-    }
-
+  renderDropDownItems(fullBackups, partialBackups) {
+    const styles = this.getStyles();
     const fileItem = (
       <MenuItem
         key="dropdownBackupFile"
-        value={'File'}
-        primaryText="From file" />
+        style={styles.restoreFromFileListItem}
+        value="File"
+        primaryText="Restore Instance from file" />
     );
     const emptyItem = (
       <MenuItem
         key="dropdownBackupEmpty"
-        value={'None'}
+        style={styles.restoreFromFileListItem}
+        value="None"
+        label="Restore instance from backup"
         primaryText="None" />
     );
-    let dropDownListItems = _.map(_.sortBy(backups, 'instance'), (backup) => {
+    const fullBackupsHeader = (
+      <MenuItem
+        key="dropdownFullBackupHeader"
+        style={styles.dropdownHeaderItem}
+        disabled={true}
+        primaryText="FULL BACKUPS" />
+    );
+    const partialBackupsHeader = (
+      <MenuItem
+        key="dropdownPartialBackupHeader"
+        style={styles.dropdownHeaderItem}
+        disabled={true}
+        primaryText="PARTIAL BACKUPS" />
+    );
+    let partialBackupsItems = _.map(_.sortBy(partialBackups, 'instance'), (backup) => {
       const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
       const text = <Truncate text={`${backup.label} ${createdAt}`} />;
 
       return (
         <MenuItem
-          key={`dropdownBackup${backup.id}`}
+          key={`dropdownPartialBackup${backup.id}`}
           value={backup.id}
           primaryText={text}>
-          <div style={{fontSize: 11, color: '#aaa', fontWeight: 800, height: 15}}>
+          <div style={styles.backupListItem}>
             {backup.instance}
           </div>
         </MenuItem>
       );
     });
 
-    dropDownListItems.unshift(fileItem);
-    dropDownListItems.unshift(emptyItem);
+    partialBackupsItems.unshift(fileItem);
+    partialBackupsItems.unshift(partialBackupsHeader);
+    partialBackupsItems.unshift(emptyItem);
 
-    return dropDownListItems;
+    if (!fullBackups.length) {
+      return partialBackupsItems;
+    }
+
+    let fullBackupsItems = _.map(_.sortBy(fullBackups, 'instance'), (backup) => {
+      const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
+      const text = <Truncate text={`${backup.label} ${createdAt}`} />;
+
+      return (
+        <MenuItem
+          key={`dropdownFullBackup${backup.id}`}
+          value={backup.id}
+          primaryText={text}>
+          <div style={styles.backupListItem}>
+            {backup.instance}
+          </div>
+        </MenuItem>
+      );
+    });
+
+    fullBackupsItems.unshift(fullBackupsHeader);
+
+    return partialBackupsItems.concat(fullBackupsItems);
   },
 
-  render() {
+  renderContent() {
     const {
       name,
-      open,
-      metadata,
       notificationShowed,
-      isLoading,
-      canSubmit,
-      backups,
+      fullBackups,
+      partialBackups,
       description,
       selectedBackup,
       backupFile
     } = this.state;
     const styles = this.getStyles();
     const dropZoneDescription = backupFile ? backupFile.name : null;
-    const title = this.hasEditMode() ? 'Update' : 'Add';
 
     return (
-      <Dialog.FullPage
-        key="dialog"
-        ref="dialog"
-        title={`${title} an Instance`}
-        onRequestClose={this.handleCancel}
-        open={open}
-        isLoading={isLoading}
-        actions={
-          <div>
-            {this.hasEditMode()
-              ? <FlatButton
-                  style={{float: 'left'}}
-                  labelStyle={{color: Colors.red400}}
-                  label="DELETE AN INSTANCE"
-                  onTouchTap={() => this.refs.deleteInstanceDialog.show()} />
-              : null
-            }
-            <Dialog.StandardButtons
-              disabled={!canSubmit}
-              handleCancel={this.handleCancel}
-              handleConfirm={this.handleFormValidation}/>
-          </div>
-        }
-        sidebar={[
-          <Dialog.SidebarBox key="sidebarbox">
-            <Dialog.SidebarSection>
-              Instance gathers all the data associated with a project into a shared space. It can be an equivalent
-               of an app or a piece of functionality.
-            </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
-              <Dialog.SidebarLink to="http://docs.syncano.io/#adding-an-instance">
-                Learn more
-              </Dialog.SidebarLink>
-            </Dialog.SidebarSection>
-          </Dialog.SidebarBox>,
-          <ColorIconPicker
-            key="coloriconpicker"
-            icon={metadata.icon}
-            color={metadata.color}
-            onIconChange={this.handleIconChange}
-            onColorChange={this.handleColorChange} />
-        ]}>
+      <div>
         {DialogsMixin.getDialogs(this.initDialogs())}
         {this.renderFormNotifications()}
         <Dialog.ContentSection>
@@ -301,7 +310,7 @@ export default React.createClass({
             style={{width: '80%', marginLeft: -32}}
             onChange={this.handleChangeBackup}
             value={selectedBackup}>
-            {this.renderDropDownItems(backups)}
+            {this.renderDropDownItems(fullBackups, partialBackups)}
           </DropDownMenu>
         </Show>
         <Show if={!this.hasEditMode() && selectedBackup === 'File'}>
@@ -320,6 +329,79 @@ export default React.createClass({
             </DropZone>
           </div>
         </Show>
+      </div>
+    );
+  },
+
+  renderLoading() {
+    return (
+      <div>
+        <div
+          className="vm-3-b"
+          style={{textAlign: 'center'}}>
+          {`We're restoring your backup, please wait...`}
+        </div>
+        <Loading show={true} />
+      </div>
+    );
+  },
+
+  render() {
+    const {
+      open,
+      metadata,
+      isLoading,
+      canSubmit,
+      isRestoring
+    } = this.state;
+    const title = this.hasEditMode() ? 'Update' : 'Add';
+
+    return (
+      <Dialog.FullPage
+        key="dialog"
+        ref="dialog"
+        title={!isRestoring && `${title} an Instance`}
+        onRequestClose={this.handleCancel}
+        open={open}
+        isLoading={isLoading}
+        onConfirm={this.handleFormValidation}
+        showCloseButton={!isRestoring}
+        actions={!isRestoring &&
+          <div>
+            {this.hasEditMode()
+              ? <FlatButton
+                  style={{float: 'left'}}
+                  labelStyle={{color: Colors.red400}}
+                  label="DELETE AN INSTANCE"
+                  onTouchTap={() => this.refs.deleteInstanceDialog.show()} />
+              : null
+            }
+            <Dialog.StandardButtons
+              disabled={!canSubmit}
+              handleCancel={this.handleCancel}
+              handleConfirm={this.handleFormValidation}/>
+          </div>
+        }
+        sidebar={!isRestoring && [
+          <Dialog.SidebarBox key="sidebarbox">
+            <Dialog.SidebarSection>
+              Instance gathers all the data associated with a project into a shared space. It can be an equivalent
+               of an app or a piece of functionality.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/#adding-an-instance">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>,
+          <ColorIconPicker
+            key="coloriconpicker"
+            icon={metadata.icon}
+            color={metadata.color}
+            onIconChange={this.handleIconChange}
+            onColorChange={this.handleColorChange} />
+        ]}>
+        {!isRestoring ? this.renderContent() : this.renderLoading()}
       </Dialog.FullPage>
     );
   }

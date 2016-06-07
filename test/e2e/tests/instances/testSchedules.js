@@ -23,7 +23,9 @@ export default {
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInput('@addScheduleModalLabel', schedule)
       .selectDropdownValue('@addScheduleModalScript', 'snippet')
-      .sendKeys('@addScheduleModalCronTab', ['0 0 1 1 *', client.Keys.ENTER])
+      .sendKeys('@addScheduleModalCronTab', '0 0 1 1 *')
+      // click into title as workaround for enter key closing modal view
+      .clickElement('@addScheduleModalTitle')
       .clickElement('@confirm')
       .waitForElementPresent('@scheduleTableRow');
   },
@@ -35,8 +37,10 @@ export default {
       .navigate()
       .clickListItemDropdown(schedule, 'Edit')
       .waitForElementVisible('@editScheduleModalTitle')
-      .selectDropdownValue('@addScheduleModalCronTab', 'Run every 5 minutes')
-      .sendKeys('@addScheduleModalCronTab', client.Keys.ENTER)
+      .clearInput('@addScheduleModalCronTab')
+      .sendKeys('@addScheduleModalCronTab', '0 0 * * *')
+      // click into title as workaround for enter key closing modal view
+      .clickElement('@editScheduleModalTitle')
       .clickElement('@confirm')
       .waitForElementVisible('@cronTabScheduleTableRow');
   },

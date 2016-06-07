@@ -59,6 +59,7 @@ export default {
 
     client
       .url('https://localhost:8080/#/instances/')
+      .pause(2000)
       .multipleItems('Select', 2, optionsMenu, selectedItems)
       .pause(2500);
 

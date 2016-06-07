@@ -1,7 +1,8 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
+import SessionStore from '../Session/SessionStore';
+import {StoreFormMixin, DialogStoreMixin, SnackbarNotificationMixin} from '../../mixins';
 
 // Stores & Actions
 import Actions from './InstanceDialogActions';
@@ -13,7 +14,8 @@ export default Reflux.createStore({
 
   mixins: [
     StoreFormMixin,
-    DialogStoreMixin
+    DialogStoreMixin,
+    SnackbarNotificationMixin
   ],
 
   getInitialState() {
@@ -21,6 +23,8 @@ export default Reflux.createStore({
       name: null,
       isLoading: false,
       metadata: {},
+      fullBackups: [],
+      partialBackups: [],
       selectedBackup: 'None'
     };
   },
@@ -123,13 +127,34 @@ export default Reflux.createStore({
     InstancesStore.redirectToInstancesList();
   },
 
-  onFetchAllFullBackupsCompleted(backups) {
-    this.backups = backups;
-    this.trigger({backups});
+  onFetchAllFullBackupsCompleted(fullBackups) {
+    this.fullBackups = fullBackups;
+    this.trigger({fullBackups});
   },
 
-  onCreateInstanceFromBackupCompleted() {
-    this.dismissDialog();
+  onFetchAllPartialBackupsCompleted(partialBackups) {
+    this.partialBackups = partialBackups;
+    this.trigger({partialBackups});
+  },
+
+  onCreateInstanceFromBackup() {
+    this.trigger({isRestoring: true});
+  },
+
+  onCreateInstanceFromBackupCompleted(data) {
+    const {instanceName} = data;
+
     InstancesActions.fetchInstances();
+
+    setTimeout(() => {
+      this.trigger({isRestoring: false});
+      this.dismissDialog();
+      SessionStore.getRouter().push({name: 'sockets', params: {instanceName}});
+      this.setSnackbarNotification({message: 'Your instance was successfully restored'});
+    }, 10000);
+  },
+
+  onCreateInstanceFromBackupFailure() {
+    this.trigger({isRestoring: false});
   }
 });

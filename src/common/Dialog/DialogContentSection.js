@@ -16,7 +16,7 @@ export default ({className, noMargin, title, last, children, style}) => {
 
   return (
     <div className={rootClassName}>
-      {title ? <div style={styles.title}>{title}</div> : null}
+      {title && <div style={styles.title}>{title}</div>}
       <div
         style={style}
         className="row">

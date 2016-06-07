@@ -55,7 +55,7 @@ export default Reflux.createStore({
     this.setSnackbarNotification({
       message: 'Password changed successfully'
     });
-    SessionActions.fetchUser(SessionStore.getToken());
+    SessionActions.fetchUser();
     this.trigger({
       current_password: null,
       newPassword: null,

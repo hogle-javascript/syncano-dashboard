@@ -3,6 +3,7 @@ import {withRouter} from 'react-router';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
+import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -27,6 +28,7 @@ const App = React.createClass({
   },
 
   componentWillMount() {
+    this.handleTokenSave();
     this.handleRouterSetup();
   },
 
@@ -38,6 +40,26 @@ const App = React.createClass({
 
   componentDidUpdate() {
     this.handleRouterSetup();
+  },
+
+  handleTokenSave() {
+    const {token} = this.props.location.query;
+
+    if (token) {
+      localStorage.setItem('token', token);
+      SessionStore.setToken(token);
+      SessionActions.setToken(token);
+
+      const {query, state} = this.props.location;
+
+      delete query.token;
+
+      this.props.router.push({
+        pathname: '/',
+        query,
+        state
+      });
+    }
   },
 
   handleRouterSetup() {

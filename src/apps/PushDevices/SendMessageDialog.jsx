@@ -138,8 +138,12 @@ export default (store, props) => {
 
       if (type === 'APNS') {
         return {
-          title: appName,
-          body: content
+          alert: {
+            title: appName,
+            body: content
+          },
+          sound: 'default',
+          badge: 0
         };
       }
 
@@ -178,7 +182,7 @@ export default (store, props) => {
       }
 
       if (isJSONMessage && type === 'APNS') {
-        payload = _.merge(payload, {aps: {alert: JSON.parse(JSONMessage)}});
+        payload = _.merge(payload, JSON.parse(JSONMessage));
       }
 
       if (isJSONMessage && type === 'GCM') {

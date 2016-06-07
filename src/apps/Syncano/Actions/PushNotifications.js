@@ -36,9 +36,9 @@ export default {
   },
 
   removeCertificate(params = {}) {
-    this.Connection
-      .PushNotifications
-      .APNS
+    this.NewLibConnection
+      .APNSConfig
+      .please()
       .removeCertificate(params)
       .then(this.completed)
       .catch(this.failure);

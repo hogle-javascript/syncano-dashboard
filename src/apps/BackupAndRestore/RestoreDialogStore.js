@@ -1,23 +1,27 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin} from '../../mixins';
+import SessionStore from '../Session/SessionStore';
+import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin, SnackbarNotificationMixin} from '../../mixins';
 
 // Stores & Actions
 import Actions from './RestoreDialogActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     StoreFormMixin,
     DialogStoreMixin,
-    StoreLoadingMixin
+    StoreLoadingMixin,
+    SnackbarNotificationMixin
   ],
 
   getInitialState() {
     return {
       clickedItem: null,
-      isLoading: false
+      isLoading: false,
+      isRestoring: false
     };
   },
 
@@ -32,8 +36,26 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onRestoreFromBackupCompleted() {
+  onRestoreFromBackup() {
+    this.data.isRestoring = true;
+    this.trigger(this.data);
+  },
+
+  onRestoreFromBackupCompleted(data) {
     console.debug('RestoreDialogStore::onRestoreFromBackupCompleted');
-    this.dismissDialog();
+    const {instanceName} = data;
+
+    setTimeout(() => {
+      this.data.isRestoring = false;
+      this.trigger(this.data);
+      this.dismissDialog();
+      SessionStore.getRouter().push({name: 'sockets', params: {instanceName}});
+      this.setSnackbarNotification({message: 'Your instance was successfully restored'});
+    }, 10000);
+  },
+
+  onRestoreFromBackupFailure() {
+    this.data.isRestoring = false;
+    this.trigger(this.data);
   }
 });

@@ -22,7 +22,8 @@ export default React.createClass({
   },
 
   componentDidUpdate(prevProps) {
-    const {onRequestClose, actions} = this.props;
+    const {onRequestClose, onConfirm, actions} = this.props;
+    const handleConfirm = onConfirm || actions.props && actions.props.handleConfirm;
 
     if (!prevProps.open && this.props.open) {
       this.bindShortcut('esc', () => {
@@ -30,9 +31,9 @@ export default React.createClass({
         return false;
       });
 
-      if (actions.props.handleConfirm) {
+      if (handleConfirm) {
         this.bindShortcut('enter', () => {
-          actions.props.handleConfirm();
+          handleConfirm();
           return false;
         });
       }
