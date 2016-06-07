@@ -5,7 +5,6 @@ import {DialogMixin, FormMixin} from '../../mixins';
 
 import Actions from './RestoreDialogActions';
 import Store from './RestoreDialogStore';
-import SessionStore from '../Session/SessionStore';
 
 import {FontIcon, TextField} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles';
@@ -26,7 +25,7 @@ export default React.createClass({
 
   validatorConstraints() {
     const {instanceName} = this.context.params;
-    
+
     return {
       instanceNameValidation: {
         presence: {
@@ -56,7 +55,7 @@ export default React.createClass({
         </div>
         <Loading show={true} />
       </div>
-    )
+    );
   },
 
   renderContent() {
@@ -94,7 +93,7 @@ export default React.createClass({
             hintText="Instance name" />
         </div>
       </div>
-    )
+    );
   },
 
   render() {

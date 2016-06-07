@@ -55,8 +55,7 @@ const ChannelHistory = Radium(React.createClass({
   },
 
   render() {
-    const {params} = this.context;
-    const {channelName, router} = this.props;
+    const {channelName} = this.props;
     const {items, isLoading} = this.state;
     const styles = this.getStyles();
     const title = `Channel History for ${channelName}`;

@@ -88,7 +88,7 @@ export default React.createClass({
       backupFile: file[0]
     });
   },
-  
+
   renderLoading() {
     return (
       <div>
@@ -99,9 +99,9 @@ export default React.createClass({
         </div>
         <Loading show={true} />
       </div>
-    )
+    );
   },
-  
+
   renderContent() {
     const styles = this.getStyles();
     const {backupFile, instanceNameValidation} = this.state;
@@ -164,7 +164,7 @@ export default React.createClass({
           </div>
         </Show>
       </div>
-    )
+    );
   },
 
   render() {

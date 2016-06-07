@@ -274,7 +274,6 @@ export default React.createClass({
     } = this.state;
     const styles = this.getStyles();
     const dropZoneDescription = backupFile ? backupFile.name : null;
-    const title = this.hasEditMode() ? 'Update' : 'Add';
 
     return (
       <div>
@@ -331,7 +330,7 @@ export default React.createClass({
           </div>
         </Show>
       </div>
-    )
+    );
   },
 
   renderLoading() {
@@ -344,7 +343,7 @@ export default React.createClass({
         </div>
         <Loading show={true} />
       </div>
-    )
+    );
   },
 
   render() {
