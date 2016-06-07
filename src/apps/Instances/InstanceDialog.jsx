@@ -194,40 +194,42 @@ export default React.createClass({
     }
 
     if (partialBackups.length) {
-      partialBackupsItems = _.map(_.sortBy(partialBackups, 'instance'), (backup) => {
-        const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
-        const text = <Truncate text={`${backup.label} ${createdAt}`} />;
+      partialBackupsItems = _.filter(_.sortBy(partialBackups, 'instance'), {status: 'success'})
+        .map((backup) => {
+          const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
+          const text = <Truncate text={`${backup.label} ${createdAt}`} />;
 
-        return (
-          <MenuItem
-            key={`dropdownPartialBackup${backup.id}`}
-            value={backup.id}
-            primaryText={text}>
-            <div style={styles.backupListItem}>
-              {backup.instance}
-            </div>
-          </MenuItem>
-        );
-      });
+          return (
+            <MenuItem
+              key={`dropdownPartialBackup${backup.id}`}
+              value={backup.id}
+              primaryText={text}>
+              <div style={styles.backupListItem}>
+                {backup.instance}
+              </div>
+            </MenuItem>
+          );
+        });
       partialBackupsItems.unshift(partialBackupsHeader);
     }
 
     if (fullBackups.length) {
-      fullBackupsItems = _.map(_.sortBy(fullBackups, 'instance'), (backup) => {
-        const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
-        const text = <Truncate text={`${backup.label} ${createdAt}`} />;
+      fullBackupsItems = _.filter(_.sortBy(fullBackups, 'instance'), {status: 'success'})
+        .map((backup) => {
+          const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
+          const text = <Truncate text={`${backup.label} ${createdAt}`} />;
 
-        return (
-          <MenuItem
-            key={`dropdownFullBackup${backup.id}`}
-            value={backup.id}
-            primaryText={text}>
-            <div style={styles.backupListItem}>
-              {backup.instance}
-            </div>
-          </MenuItem>
-        );
-      });
+          return (
+            <MenuItem
+              key={`dropdownFullBackup${backup.id}`}
+              value={backup.id}
+              primaryText={text}>
+              <div style={styles.backupListItem}>
+                {backup.instance}
+              </div>
+            </MenuItem>
+          );
+        });
       fullBackupsItems.unshift(fullBackupsHeader);
     }
 
@@ -285,15 +287,15 @@ export default React.createClass({
             title="Restore Instance from backup">
             <DropDownMenu
               className="col-sm-20"
-              style={{marginLeft: -24}}
+              style={{marginLeft: -24, maxWidth: 280}}
               onChange={this.handleChangeBackup}
               value={selectedBackup}>
               {this.renderDropDownItems(fullBackups, partialBackups)}
             </DropDownMenu>
             <DropZone.UploadFileButton
               key="uploadBackupFile"
+              primary={true}
               style={{marginTop: 12}}
-              backgroundColor={Colors.blue700}
               labelColor="#FFF"
               iconStyle={{color: '#FFF'}}
               iconClassName={backupFile ? 'synicon-file' : 'synicon-cloud-upload'}

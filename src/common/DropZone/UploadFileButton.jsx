@@ -23,6 +23,7 @@ export default React.createClass({
         color: labelColor
       },
       uploadButtonIcon: {
+        color: labelColor,
         fontSize: 18,
         paddingRight: 8,
         paddingTop: 2
@@ -53,7 +54,7 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {backgroundColor, labelColor, style, iconStyle, iconClassName} = this.props;
+    const {backgroundColor, labelColor, style, iconStyle, iconClassName, ...other} = this.props;
 
     return (
       <div>
@@ -67,7 +68,8 @@ export default React.createClass({
           style={{...styles.uploadButton, ...style}}
           backgroundColor={backgroundColor}
           labelColor={labelColor}
-          onTouchTap={this.handleClickIpnut}>
+          onTouchTap={this.handleClickIpnut}
+          {...other}>
           <div className="row align-center align-middle hp-2-l hp-2-r">
             <FontIcon
               style={{...styles.uploadButtonIcon, ...iconStyle}}
