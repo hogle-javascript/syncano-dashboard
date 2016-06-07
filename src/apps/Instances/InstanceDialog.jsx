@@ -11,7 +11,7 @@ import Store from './InstanceDialogStore';
 import {TextField, FlatButton, DropDownMenu, MenuItem, FontIcon} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles/';
 import DropZone from 'react-dropzone';
-import {Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show} from '../../common/';
+import {Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show, Loading} from '../../common/';
 
 export default React.createClass({
   displayName: 'InstanceDialog',
@@ -262,14 +262,10 @@ export default React.createClass({
     return partialBackupsItems.concat(fullBackupsItems);
   },
 
-  render() {
+  renderContent() {
     const {
       name,
-      open,
-      metadata,
       notificationShowed,
-      isLoading,
-      canSubmit,
       fullBackups,
       partialBackups,
       description,
@@ -281,49 +277,7 @@ export default React.createClass({
     const title = this.hasEditMode() ? 'Update' : 'Add';
 
     return (
-      <Dialog.FullPage
-        key="dialog"
-        ref="dialog"
-        title={`${title} an Instance`}
-        onRequestClose={this.handleCancel}
-        open={open}
-        isLoading={isLoading}
-        onConfirm={this.handleFormValidation}
-        actions={
-          <div>
-            {this.hasEditMode()
-              ? <FlatButton
-                  style={{float: 'left'}}
-                  labelStyle={{color: Colors.red400}}
-                  label="DELETE AN INSTANCE"
-                  onTouchTap={() => this.refs.deleteInstanceDialog.show()} />
-              : null
-            }
-            <Dialog.StandardButtons
-              disabled={!canSubmit}
-              handleCancel={this.handleCancel}
-              handleConfirm={this.handleFormValidation}/>
-          </div>
-        }
-        sidebar={[
-          <Dialog.SidebarBox key="sidebarbox">
-            <Dialog.SidebarSection>
-              Instance gathers all the data associated with a project into a shared space. It can be an equivalent
-               of an app or a piece of functionality.
-            </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
-              <Dialog.SidebarLink to="http://docs.syncano.io/#adding-an-instance">
-                Learn more
-              </Dialog.SidebarLink>
-            </Dialog.SidebarSection>
-          </Dialog.SidebarBox>,
-          <ColorIconPicker
-            key="coloriconpicker"
-            icon={metadata.icon}
-            color={metadata.color}
-            onIconChange={this.handleIconChange}
-            onColorChange={this.handleColorChange} />
-        ]}>
+      <div>
         {DialogsMixin.getDialogs(this.initDialogs())}
         {this.renderFormNotifications()}
         <Dialog.ContentSection>
@@ -376,6 +330,79 @@ export default React.createClass({
             </DropZone>
           </div>
         </Show>
+      </div>
+    )
+  },
+
+  renderLoading() {
+    return (
+      <div>
+        <div
+          className="vm-3-b"
+          style={{textAlign: 'center'}}>
+          We're restoring your backup, please wait...
+        </div>
+        <Loading show={true} />
+      </div>
+    )
+  },
+
+  render() {
+    const {
+      open,
+      metadata,
+      isLoading,
+      canSubmit,
+      isRestoring
+    } = this.state;
+    const title = this.hasEditMode() ? 'Update' : 'Add';
+
+    return (
+      <Dialog.FullPage
+        key="dialog"
+        ref="dialog"
+        title={!isRestoring && `${title} an Instance`}
+        onRequestClose={this.handleCancel}
+        open={open}
+        isLoading={isLoading}
+        onConfirm={this.handleFormValidation}
+        showCloseButton={!isRestoring}
+        actions={!isRestoring &&
+          <div>
+            {this.hasEditMode()
+              ? <FlatButton
+                  style={{float: 'left'}}
+                  labelStyle={{color: Colors.red400}}
+                  label="DELETE AN INSTANCE"
+                  onTouchTap={() => this.refs.deleteInstanceDialog.show()} />
+              : null
+            }
+            <Dialog.StandardButtons
+              disabled={!canSubmit}
+              handleCancel={this.handleCancel}
+              handleConfirm={this.handleFormValidation}/>
+          </div>
+        }
+        sidebar={!isRestoring && [
+          <Dialog.SidebarBox key="sidebarbox">
+            <Dialog.SidebarSection>
+              Instance gathers all the data associated with a project into a shared space. It can be an equivalent
+               of an app or a piece of functionality.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/#adding-an-instance">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>,
+          <ColorIconPicker
+            key="coloriconpicker"
+            icon={metadata.icon}
+            color={metadata.color}
+            onIconChange={this.handleIconChange}
+            onColorChange={this.handleColorChange} />
+        ]}>
+        {!isRestoring ? this.renderContent() : this.renderLoading()}
       </Dialog.FullPage>
     );
   }

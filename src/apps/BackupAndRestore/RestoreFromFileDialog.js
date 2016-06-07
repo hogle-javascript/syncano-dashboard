@@ -9,7 +9,7 @@ import Store from './RestoreFromFileDialogStore';
 import {FontIcon, TextField} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles';
 import DropZone from 'react-dropzone';
-import {Dialog, Show, Notification} from '../../common';
+import {Dialog, Loading, Show, Notification} from '../../common';
 
 export default React.createClass({
   displayName: 'RestoreFromFileDialog',
@@ -25,6 +25,8 @@ export default React.createClass({
   ],
 
   validatorConstraints() {
+    const {instanceName} = this.context.params;
+
     return {
       backupFile: {
         presence: {
@@ -33,10 +35,10 @@ export default React.createClass({
       },
       instanceNameValidation: {
         presence: {
-          message: '^Type current Instance name to continue'
+          message: `^Type ${instanceName} to continue`
         },
         inclusion: {
-          within: [this.context.params.instanceName],
+          within: [instanceName],
           message: '^Incorrect Instance name'
         }
       }
@@ -86,83 +88,105 @@ export default React.createClass({
       backupFile: file[0]
     });
   },
-
-  render() {
+  
+  renderLoading() {
+    return (
+      <div>
+        <div
+          className="vm-3-b"
+          style={{textAlign: 'center'}}>
+          We're restoring your backup, please wait...
+        </div>
+        <Loading show={true} />
+      </div>
+    )
+  },
+  
+  renderContent() {
     const styles = this.getStyles();
-    const {isLoading, open, backupFile, instanceNameValidation} = this.state;
+    const {backupFile, instanceNameValidation} = this.state;
     const instanceName = this.context.params.instanceName;
     const backupLabel = backupFile ? backupFile.name : null;
+
+    return (
+      <div style={styles.dropZoneContainer}>
+        <div className="row align-top vm-4-b">
+          <div className="hp-2-r vm-1-t col-sm-4">
+            <FontIcon
+              style={{fontSize: 60, color: Colors.orange400}}
+              className="synicon-alert"/>
+          </div>
+          <div className="col-sm-31">
+            <div className="vm-1-b">
+              <strong>This action cannot be undone or stopped.</strong>
+            </div>
+            <div className="vm-1-b">
+              This will restore Instance
+              <strong> {instanceName}</strong> to previous state.
+            </div>
+            <div>
+              All current application data for <strong>{instanceName}</strong> will be lost.
+            </div>
+            <div className="vm-3-t">
+              <DropZone
+                onDrop={this.handleDropBackupFile}
+                style={styles.dropZone}>
+                <div style={styles.dropZoneDescription}>
+                  <FontIcon
+                    style={styles.uploadIcon}
+                    className={backupFile ? 'synicon-file' : 'synicon-cloud-upload'} />
+                  <div>
+                    {backupLabel || 'Click or Drag & Drop to upload partial backup file'}
+                  </div>
+                </div>
+              </DropZone>
+            </div>
+            <div>
+              <div className="vm-4-t">
+                To confirm restoring type your Instance name.
+              </div>
+              <TextField
+                value={instanceNameValidation}
+                onChange={(event, value) => this.setState({instanceNameValidation: value})}
+                errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
+                fullWidth={true}
+                floatingLabelText="Instance name"
+                hintText="Instance name" />
+            </div>
+          </div>
+        </div>
+        <div className="vm-2-t">
+          {this.renderFormNotifications()}
+        </div>
+        <Show if={this.getValidationMessages('backupFile').length}>
+          <div className="vm-2-t">
+            <Notification type="error">{this.getValidationMessages().join(' ')}</Notification>
+          </div>
+        </Show>
+      </div>
+    )
+  },
+
+  render() {
+    const {isLoading, isRestoring, open} = this.state;
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
         contentSize="medium"
-        title={`Restore Instance from file`}
+        title={!isRestoring && `Restore Instance from file`}
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
-        actions={
+        showCloseButton={!isRestoring}
+        actions={!isRestoring &&
           <Dialog.StandardButtons
             disabled={isLoading}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }>
-        <div style={styles.dropZoneContainer}>
-          <div className="row align-top vm-4-b">
-            <div className="hp-2-r vm-1-t col-sm-4">
-              <FontIcon
-                style={{fontSize: 60, color: Colors.orange400}}
-                className="synicon-alert"/>
-            </div>
-            <div className="col-sm-31">
-              <div className="vm-1-b">
-                <strong>This action cannot be undone or stopped.</strong>
-              </div>
-              <div className="vm-1-b">
-                This will restore Instance
-                <strong> {instanceName}</strong> to previous state.
-              </div>
-              <div>
-                All current application data for <strong>{instanceName}</strong> will be lost.
-              </div>
-              <div className="vm-3-t">
-                <DropZone
-                  onDrop={this.handleDropBackupFile}
-                  style={styles.dropZone}>
-                  <div style={styles.dropZoneDescription}>
-                    <FontIcon
-                      style={styles.uploadIcon}
-                      className={backupFile ? 'synicon-file' : 'synicon-cloud-upload'} />
-                    <div>
-                      {backupLabel || 'Click or Drag & Drop to upload partial backup file'}
-                    </div>
-                  </div>
-                </DropZone>
-              </div>
-              <div>
-                <div className="vm-4-t">
-                  To confirm restoring type your Instance name.
-                </div>
-                <TextField
-                  value={instanceNameValidation}
-                  onChange={(event, value) => this.setState({instanceNameValidation: value})}
-                  errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
-                  fullWidth={true}
-                  floatingLabelText="Instance name"
-                  hintText="Instance name" />
-              </div>
-            </div>
-          </div>
-          <div className="vm-2-t">
-            {this.renderFormNotifications()}
-          </div>
-          <Show if={this.getValidationMessages('backupFile').length}>
-            <div className="vm-2-t">
-              <Notification type="error">{this.getValidationMessages().join(' ')}</Notification>
-            </div>
-          </Show>
-        </div>
+        {!isRestoring ? this.renderContent() : this.renderLoading()}
       </Dialog.FullPage>
     );
   }
