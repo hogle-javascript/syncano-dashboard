@@ -93,6 +93,25 @@ export default React.createClass({
             disabled={isLoading}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Partial backups allow you to export some of your Instance data
+              (Classes, Scripts, Data Objects, Users) and files into an archive,
+              which you can download for later use.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Query Args">
+              Query Args is a JSON object where keys are what type of objects you want to include in
+              your backup. Values are arrays of IDs or names of objects that you want to include
+              in backup file. If you don't pass a key in the query args, all objects will be saved.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/partial-backups">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
         <div>
           <TextField
@@ -119,15 +138,6 @@ export default React.createClass({
               height="400px"
               onChange={(value) => this.handleChange(value, 'queryArgs')}
               value={queryArgs}/>
-          </div>
-          <div className="vm-2-t">
-            {'You can read more about query args '}
-            <a
-              href="http://docs.syncano.io/v1.1/docs/backup-and-restore"
-              style={styles.link}
-              target="_blank">
-              here
-            </a>
           </div>
           <div className="vm-2-t">
             {this.renderFormNotifications()}

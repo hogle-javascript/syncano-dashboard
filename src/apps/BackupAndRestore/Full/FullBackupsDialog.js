@@ -62,6 +62,19 @@ export default React.createClass({
             disabled={isLoading}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Full backups work like snapshots. They allow you to save the current
+              state of your Instance and files into a backup object.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/full-backups">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
         <div>
           <TextField
