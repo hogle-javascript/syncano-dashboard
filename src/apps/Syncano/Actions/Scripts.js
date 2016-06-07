@@ -27,13 +27,14 @@ export default {
       .please()
       .update({id}, updateParams)
       .then(() => {
-        this.NewLibConnection
+        return this.NewLibConnection
           .Script
           .please()
           .run({id}, {payload})
           .then(this.completed)
           .catch(this.failure);
-      });
+      })
+      .catch(this.failure);
   },
 
   list() {

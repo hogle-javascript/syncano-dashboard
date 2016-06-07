@@ -108,7 +108,7 @@ const Script = React.createClass({
   getStyles() {
     return {
       notification: {
-        marginTop: 20
+        margin: '20px 20px 10px 10px'
       },
       lastResultContainer: {
         zIndex: 1,
@@ -168,16 +168,18 @@ const Script = React.createClass({
     const {currentScript, payload} = this.state;
     const config = this.getConfigObject();
     const source = this.refs.editorSource.editor.getValue();
+    const updateParams = {
+      config,
+      source
+    };
+    const runParams = {
+      id: currentScript.id,
+      payload
+    };
 
     this.clearAutosaveTimer();
     this.setSnackbarNotification({message: 'Saving...'});
-    this.runScript({
-      config,
-      source
-    }, {
-      id: currentScript.id,
-      payload
-    });
+    this.runScript(updateParams, runParams);
   },
 
   handleAddField(event) {
@@ -483,7 +485,7 @@ const Script = React.createClass({
                 title="Code"
                 initialOpen={true}
                 style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                <Show if={this.getValidationMessages('source').length > 0}>
+                <Show if={this.getValidationMessages('source').length}>
                   <div style={styles.notification}>
                     <Notification type="error">
                       {this.getValidationMessages('source').join(' ')}
