@@ -29,7 +29,7 @@ class SetupPage extends Component {
         <div
           className="vm-3-b"
           style={{textAlign: 'center'}}>
-          We're preparing your account, please wait...
+          {`We're preparing your account, please wait...`}
         </div>
         <Loading show={true} />
       </Dialog.FullPage>
