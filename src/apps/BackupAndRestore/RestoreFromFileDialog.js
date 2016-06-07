@@ -56,6 +56,11 @@ export default React.createClass({
         color: '#AAA',
         backgroundColor: '#EEE'
       },
+      dropZoneError: {
+        borderColor: '#F50057',
+        color: '#F50057',
+        backgroundColor: '#FCE4EC'
+      },
       dropZoneContainer: {
         lineHeight: '1.4',
         display: 'flex',
@@ -73,6 +78,9 @@ export default React.createClass({
       uploadIcon: {
         fontSize: 56,
         color: '#AAA'
+      },
+      uploadIconError: {
+        color: '#F50057'
       }
     };
   },
@@ -87,6 +95,7 @@ export default React.createClass({
     this.setState({
       backupFile: file[0]
     });
+    this.clearValidations();
   },
 
   renderLoading() {
@@ -107,6 +116,9 @@ export default React.createClass({
     const {backupFile, instanceNameValidation} = this.state;
     const instanceName = this.context.params.instanceName;
     const backupLabel = backupFile ? backupFile.name : null;
+    const hasBackupFileError = this.getValidationMessages('backupFile').length;
+    const dropZoneErrorStyle = hasBackupFileError ? styles.dropZoneError : null;
+    const iconErrorStyle = hasBackupFileError ? styles.uploadIconError : null;
 
     return (
       <div style={styles.dropZoneContainer}>
@@ -130,10 +142,10 @@ export default React.createClass({
             <div className="vm-3-t">
               <DropZone
                 onDrop={this.handleDropBackupFile}
-                style={styles.dropZone}>
+                style={{...styles.dropZone, ...dropZoneErrorStyle}}>
                 <div style={styles.dropZoneDescription}>
                   <FontIcon
-                    style={styles.uploadIcon}
+                    style={{...styles.uploadIcon, ...iconErrorStyle}}
                     className={backupFile ? 'synicon-file' : 'synicon-cloud-upload'} />
                   <div>
                     {backupLabel || 'Click or Drag & Drop to upload partial backup file'}
@@ -141,6 +153,11 @@ export default React.createClass({
                 </div>
               </DropZone>
             </div>
+            <Show if={hasBackupFileError}>
+              <div className="vm-2-t">
+                <Notification type="error">{this.getValidationMessages('backupFile').join('. ')}</Notification>
+              </div>
+            </Show>
             <div>
               <div className="vm-4-t">
                 To confirm restoring type your Instance name.
@@ -148,7 +165,7 @@ export default React.createClass({
               <TextField
                 value={instanceNameValidation}
                 onChange={(event, value) => this.setState({instanceNameValidation: value})}
-                errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
+                errorText={this.getValidationMessages('instanceNameValidation').join('. ')}
                 fullWidth={true}
                 floatingLabelText="Instance name"
                 hintText="Instance name" />
@@ -158,11 +175,6 @@ export default React.createClass({
         <div className="vm-2-t">
           {this.renderFormNotifications()}
         </div>
-        <Show if={this.getValidationMessages('backupFile').length}>
-          <div className="vm-2-t">
-            <Notification type="error">{this.getValidationMessages().join(' ')}</Notification>
-          </div>
-        </Show>
       </div>
     );
   },

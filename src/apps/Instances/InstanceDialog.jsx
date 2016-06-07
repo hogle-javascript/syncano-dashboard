@@ -279,7 +279,10 @@ export default React.createClass({
             floatingLabelText="Description (optional)"/>
         </Dialog.ContentSection>
         <Show if={!this.hasEditMode()}>
-          <Dialog.ContentSection title="Restore Instance from backup">
+          <Dialog.ContentSection
+            className="vp-3-t"
+            style={{paddingTop: 16, marginLeft: -16}}
+            title="Restore Instance from backup">
             <DropDownMenu
               className="col-sm-20"
               style={{marginLeft: -24}}
