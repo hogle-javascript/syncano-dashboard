@@ -43,9 +43,10 @@ const App = React.createClass({
   },
 
   handleTokenSave() {
-    const {token} = this.props.location.query;
+    const {token, signUpMode} = this.props.location.query;
 
     if (token) {
+      signUpMode && SessionStore.setSignUpMode();
       localStorage.setItem('token', token);
       SessionStore.setToken(token);
       SessionActions.setToken(token);
