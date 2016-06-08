@@ -46,6 +46,26 @@ const PushDevicesPage = React.createClass({
     }
   },
 
+  renderAddButton() {
+    const {routes} = this.context;
+    const hasGCMConfig = this.state.gcmDevices.hasConfig;
+    const hasAPNSConfig = this.state.apnsDevices.hasConfig;
+    const disableMap = {
+      'all-push-notification-devices': !hasAPNSConfig && !hasGCMConfig,
+      'apns-devices': !hasAPNSConfig,
+      'gmc-devices': !hasGCMConfig
+    };
+
+    return (
+      <RaisedButton
+        disabled={disableMap[routes[routes.length - 1].name]}
+        label="Add"
+        primary={true}
+        style={{marginRight: 0}}
+        onTouchTap={this.handleTouchTapAddIcon} />
+    );
+  },
+
   render() {
     const {children} = this.props;
     const title = 'Push Notification Devices (BETA)';
@@ -56,12 +76,7 @@ const PushDevicesPage = React.createClass({
       <div>
         <Helmet title={title} />
         <InnerToolbar title={title}>
-          <RaisedButton
-            disabled={!hasAPNSConfig && !hasGCMConfig}
-            label="Add"
-            primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={this.handleTouchTapAddIcon}/>
+          {this.renderAddButton()}
           <Popover
             ref="addDevicePopover"
             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
