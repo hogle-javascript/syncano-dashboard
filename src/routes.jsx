@@ -102,7 +102,9 @@ function onRootEnter(nextState) {
   } else {
     window.analytics.page('Dashboard', {
       Page: name,
-      path: nextState.location.pathname
+      path: nextState.location.pathname,
+      category: 'Dashboard',
+      label: name
     });
   }
 }
