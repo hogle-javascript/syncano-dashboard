@@ -102,9 +102,9 @@ export default React.createClass({
               which you can download for later use.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Query Args">
-              Query Args is a JSON object where keys are what type of objects you want to include in
+              {`Query Args is a JSON object where keys are what type of objects you want to include in
               your backup. Values are arrays of IDs or names of objects that you want to include
-              in backup file. If you don't pass a key in the query args, all objects will be saved.
+              in backup file. If you don't pass a key in the query args, all objects will be saved.`}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/partial-backups">
