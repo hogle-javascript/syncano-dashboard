@@ -4,6 +4,7 @@ export default CreateActions(
   {
     fetch: {},
     setDevices: {},
+    setGCMApiKey: {},
     fetchGCMPushNotificationConfig: {
       loading: true,
       asyncForm: true,

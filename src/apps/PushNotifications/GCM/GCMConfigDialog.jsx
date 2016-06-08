@@ -75,6 +75,7 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
+    const {open, isLoading, canSubmit, isCertLoading, development_api_key, production_api_key} = this.state;
 
     return (
       <Dialog.FullPage
@@ -83,11 +84,11 @@ export default React.createClass({
         title="Configure Push Notification Socket - GCM"
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -113,21 +114,21 @@ export default React.createClass({
           <div dangerouslySetInnerHTML={{__html: require('./phone-android.svg')}}>
           </div>
           <div className="col-flex-1 hm-3-l">
-            <Loading show={this.state.isCertLoading}>
+            <Loading show={isCertLoading}>
               <TextField
                 ref="development_api_key"
                 name="development_api_key"
                 autoFocus={true}
-                value={this.state.development_api_key}
-                onChange={(event, value) => this.setState({development_api_key: value})}
+                value={development_api_key}
+                onChange={(event, value) => Actions.setGCMApiKey('development', value)}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Development API key"
                 errorText={this.getValidationMessages('development_api_key').join(' ')}/>
               <TextField
                 ref="production_api_key"
                 name="production_api_key"
-                value={this.state.production_api_key}
-                onChange={(event, value) => this.setState({production_api_key: value})}
+                value={production_api_key}
+                onChange={(event, value) => Actions.setGCMApiKey('production', value)}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Production API key"
                 errorText={this.getValidationMessages('production_api_key').join(' ')}/>

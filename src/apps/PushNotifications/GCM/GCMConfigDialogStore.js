@@ -38,6 +38,11 @@ export default Reflux.createStore({
     Actions.fetchGCMPushNotificationConfig();
   },
 
+  onSetGCMApiKey(type, value) {
+    this.data[`${type}_api_key`] = value;
+    this.trigger({[`${type}_api_key`]: value});
+  },
+
   onFetchGCMPushNotificationConfig() {
     this.data.isCertLoading = true;
     this.trigger(this.data);
@@ -52,7 +57,7 @@ export default Reflux.createStore({
   },
 
   onConfigGCMPushNotificationCompleted() {
-    console.debug('GCMConfigDialogStore::onConfigGCMPushNotification');
+    console.debug('GCMConfigDialogStore::onConfigGCMPushNotificationCompleted');
     this.dismissDialog();
     this.refreshData();
   }
