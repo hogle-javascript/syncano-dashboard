@@ -363,11 +363,23 @@ export default React.createClass({
               Instance gathers all the data associated with a project into a shared space. It can be an equivalent
                of an app or a piece of functionality.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
+            <Dialog.SidebarSection>
               <Dialog.SidebarLink to="http://docs.syncano.io/#adding-an-instance">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
+            <Show if={!this.hasEditMode()}>
+              <Dialog.SidebarSection title="Restore from Backup">
+                When adding a new instance, you can restore it from an existing backup. Use the dropdown menu
+                to do a restore from a full or partial backup that is available within your account.
+                You can also do a partial backup restore from a zip archive.
+              </Dialog.SidebarSection>
+              <Dialog.SidebarSection last={true}>
+                <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/overview-9">
+                  Learn more
+                </Dialog.SidebarLink>
+              </Dialog.SidebarSection>
+            </Show>
           </Dialog.SidebarBox>,
           <ColorIconPicker
             key="coloriconpicker"
