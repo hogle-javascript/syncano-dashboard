@@ -102,6 +102,8 @@ export default {
       .goToUrl('temp', 'push-notifications/devices/apns')
       .waitForElementVisible('@iosDevicesHeading');
 
+    client.pause(500);
+
     listsPage
       .clickElement('@addButton')
       .fillInput('@inputLabel', labelName)
