@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import {Grid, Breakpoint} from 'react-responsive-grid';
 import SessionStore from '../apps/Session/SessionStore';
-import {Header, NoMobileInfo} from '../common/';
+import {UpgradeNowToolbar, Header, NoMobileInfo} from '../common/';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -24,6 +24,7 @@ class Dashboard extends Component {
             style={{display: 'flex', flexDirection: 'column', flex: 1}}>
             <Header/>
             {this.props.children}
+            <UpgradeNowToolbar />
           </Breakpoint>
           <Breakpoint maxWidth={767} widthMethod="componentWidth">
             <NoMobileInfo/>

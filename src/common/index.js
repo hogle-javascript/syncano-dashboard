@@ -40,6 +40,7 @@ import Popover from './Popover';
 import Request from './Request';
 import Sidebar from './Sidebar';
 import ShowMore from './ShowMore';
+import UpgradeNowToolbar from './UpgradeNowToolbar';
 
 export {Billing};
 export {CheckIcon};
@@ -83,6 +84,7 @@ export {Popover};
 export {Request};
 export {Sidebar};
 export {ShowMore};
+export {UpgradeNowToolbar};
 
 export default {
   Billing,
@@ -126,5 +128,6 @@ export default {
   Popover,
   Request,
   Sidebar,
-  ShowMore
+  ShowMore,
+  UpgradeNowToolbar
 };
