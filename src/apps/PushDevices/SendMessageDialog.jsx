@@ -182,7 +182,7 @@ export default (store, props) => {
       }
 
       if (isJSONMessage && type === 'APNS') {
-        payload = _.merge(payload, JSON.parse(JSONMessage));
+        payload = _.merge(payload, {aps: JSON.parse(JSONMessage)});
       }
 
       if (isJSONMessage && type === 'GCM') {
