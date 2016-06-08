@@ -39,13 +39,18 @@ export default {
     const gcmDevKey = utils.randomString(39);
     const gcmProdKey = utils.randomString(39);
 
+    client.pause(500);
+
     socketsPage
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
+      .waitForElementVisible('@gcmTitleHeading')
+      .waitForElementVisible('@inputGcmDevKey')
       .fillInput('@inputGcmDevKey', gcmDevKey)
       .fillInput('@inputGcmProdKey', gcmProdKey)
       .clickElement('@confirmButton')
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
       .waitForElementVisible('@gcmTitleHeading')
+      .waitForElementVisible('@inputGcmDevKey')
       .verify.valueContains('@inputGcmDevKey', gcmDevKey)
       .verify.valueContains('@inputGcmProdKey', gcmProdKey)
       .clickElement('@confirmButton');

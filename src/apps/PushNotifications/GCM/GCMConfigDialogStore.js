@@ -38,11 +38,6 @@ export default Reflux.createStore({
     Actions.fetchGCMPushNotificationConfig();
   },
 
-  onSetGCMApiKey(type, value) {
-    this.data[`${type}_api_key`] = value;
-    this.trigger({[`${type}_api_key`]: value});
-  },
-
   onFetchGCMPushNotificationConfig() {
     this.data.isCertLoading = true;
     this.trigger(this.data);
@@ -54,6 +49,11 @@ export default Reflux.createStore({
     this.data.development_api_key = config.development_api_key;
     this.data.isCertLoading = false;
     this.trigger(this.data);
+  },
+
+  onConfigGCMPushNotification() {
+    this.data.isCertLoading = true;
+    this.trigger({isCertLoading: true});
   },
 
   onConfigGCMPushNotificationCompleted() {

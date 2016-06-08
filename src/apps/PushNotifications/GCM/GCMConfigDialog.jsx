@@ -120,7 +120,7 @@ export default React.createClass({
                 name="development_api_key"
                 autoFocus={true}
                 value={development_api_key}
-                onChange={(event, value) => Actions.setGCMApiKey('development', value)}
+                onChange={(event, value) => this.setState({development_api_key: value})}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Development API key"
                 errorText={this.getValidationMessages('development_api_key').join(' ')}/>
@@ -128,7 +128,7 @@ export default React.createClass({
                 ref="production_api_key"
                 name="production_api_key"
                 value={production_api_key}
-                onChange={(event, value) => Actions.setGCMApiKey('production', value)}
+                onChange={(event, value) => this.setState({production_api_key: value})}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Production API key"
                 errorText={this.getValidationMessages('production_api_key').join(' ')}/>
