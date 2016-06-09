@@ -10,7 +10,7 @@ import Store from './InstanceDialogStore';
 
 import {TextField, FlatButton, DropDownMenu, MenuItem} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles/';
-import {DropZone, Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show, Loading} from '../../common/';
+import {Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show, Loading} from '../../common/';
 
 export default React.createClass({
   displayName: 'InstanceDialog',
@@ -39,7 +39,7 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
       Actions.fetchAllFullBackups();
-      Actions.fetchAllPartialBackups();
+      // Actions.fetchAllPartialBackups();
       this.setState({
         name: Store.genUniqueName(),
         metadata: {
@@ -246,7 +246,7 @@ export default React.createClass({
       notificationShowed,
       fullBackups,
       partialBackups,
-      backupFile,
+      // backupFile,
       description,
       selectedBackup
     } = this.state;
@@ -293,7 +293,8 @@ export default React.createClass({
               value={selectedBackup}>
               {this.renderDropDownItems(fullBackups, partialBackups)}
             </DropDownMenu>
-            <DropZone.UploadFileButton
+            {/* eslint-disable no-inline-comments*/}
+            {/* <DropZone.UploadFileButton
               key="uploadBackupFile"
               primary={true}
               style={{marginTop: 12}}
@@ -301,7 +302,7 @@ export default React.createClass({
               iconStyle={{color: '#FFF'}}
               iconClassName={backupFile ? 'synicon-file' : 'synicon-cloud-upload'}
               uploadButtonLabel={backupFile ? backupFile.name : 'Upload partial backup file'}
-              getFile={this.handleUploadBackupFile} />
+              getFile={this.handleUploadBackupFile} /> */}
           </Dialog.ContentSection>
         </Show>
       </div>
