@@ -184,18 +184,20 @@ const Script = React.createClass({
 
   handleAddField(event) {
     event.preventDefault();
-    const {scriptConfig} = this.state;
+    const {scriptConfig, newFieldKey, newFieldValue, configValueType} = this.state;
 
     const newField = {
-      key: this.refs.newFieldKey.getValue(),
-      value: this.refs.newFieldValue.getValue(),
-      type: this.refs.newFieldType.refs.configValueType.props.value
+      key: newFieldKey,
+      value: newFieldValue,
+      type: configValueType
     };
 
     scriptConfig.push(newField);
-    this.setState({scriptConfig});
-    this.refs.newFieldKey.clearValue();
-    this.refs.newFieldValue.clearValue();
+    this.setState({
+      newFieldKey: '',
+      newFieldValue: '',
+      scriptConfig
+    });
     this.refs.newFieldKey.focus();
   },
 
@@ -232,6 +234,12 @@ const Script = React.createClass({
 
     scriptConfig[index] = newField;
     this.setState({scriptConfig});
+  },
+
+  handleUpdateNewField(fieldKey, value) {
+    this.setState({
+      [fieldKey]: value
+    });
   },
 
   handleSuccessfullValidation() {
@@ -321,7 +329,6 @@ const Script = React.createClass({
               ref={`fieldKey${index}`}
               hintText="Key"
               floatingLabelText="Key"
-              defaultValue={field.key}
               value={scriptConfig[index].key}
               style={styles.field}
               fullWidth={true}
@@ -349,7 +356,6 @@ const Script = React.createClass({
               ref={`fieldValue${index}`}
               hintText="Value"
               floatingLabelText="Value"
-              defaultValue={field.value}
               value={scriptConfig[index].value}
               style={styles.field}
               fullWidth={true}
@@ -371,7 +377,7 @@ const Script = React.createClass({
 
   renderNewFieldSection() {
     const styles = this.getStyles();
-    const {configValueType} = this.state;
+    const {configValueType, newFieldKey, newFieldValue} = this.state;
 
     return (
       <form
@@ -385,7 +391,8 @@ const Script = React.createClass({
             key="newFieldKey"
             hintText="Key"
             floatingLabelText="Key"
-            defaultValue=""
+            value={newFieldKey}
+            onChange={(event, value) => this.handleUpdateNewField('newFieldKey', value)}
             errorText={this.getValidationMessages('newFieldKey').join(' ')}
             fullWidth={true}
             style={styles.field}/>
@@ -411,7 +418,8 @@ const Script = React.createClass({
             key="newFieldValue"
             hintText="Value"
             floatingLabelText="Value"
-            defaultValue=""
+            value={newFieldValue}
+            onChange={(event, value) => this.handleUpdateNewField('newFieldValue', value)}
             fullWidth={true}
             style={styles.field}/>
         </div>
