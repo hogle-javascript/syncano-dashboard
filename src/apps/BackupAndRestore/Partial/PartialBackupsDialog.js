@@ -137,7 +137,7 @@ export default React.createClass({
               mode="json"
               height="400px"
               onChange={(value) => this.handleChange(value, 'queryArgs')}
-              value={queryArgs}/>
+              value={queryArgs || ['{', '  ', '}'].join('\n')}/>
           </div>
           <div className="vm-2-t">
             {this.renderFormNotifications()}

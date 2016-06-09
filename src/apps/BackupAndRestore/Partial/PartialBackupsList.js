@@ -26,7 +26,7 @@ export default React.createClass({
       params: {
         key: 'deletePartialBackupDialog',
         ref: 'deletePartialBackupDialog',
-        title: 'Remove Partial Backup',
+        title: 'Delete Partial Backup',
         handleConfirm: Actions.removePartialBackups,
         items: Store.getCheckedItems(),
         itemLabelName: 'label',
