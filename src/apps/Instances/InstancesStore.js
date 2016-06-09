@@ -47,7 +47,7 @@ export default Reflux.createStore({
     this.listenToForms();
     this.setLoadingStates();
   },
-  
+
   clearStore() {
     this.data = this.getInitialState();
     this.trigger(this.data);

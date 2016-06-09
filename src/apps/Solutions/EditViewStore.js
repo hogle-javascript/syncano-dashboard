@@ -1,5 +1,4 @@
 import Reflux from 'reflux';
-import URL from 'url';
 import Promise from 'axios';
 
 // Utils & Mixins
