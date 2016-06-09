@@ -77,7 +77,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, isLoading, scripts, script, crontab, canSubmit} = this.state;
+    const {open, isLoading, scripts, script, crontab, canSubmit, interval_sec, label} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -121,7 +121,7 @@ export default React.createClass({
             name="label"
             autoFocus={true}
             fullWidth={true}
-            value={this.state.label}
+            value={label}
             onChange={(event, value) => this.setState({label: value})}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Schedule's label"
@@ -149,7 +149,7 @@ export default React.createClass({
             ref="Interval"
             name="interval_sec"
             fullWidth={true}
-            value={this.state.interval_sec}
+            value={interval_sec}
             onChange={this.handleIntervalSecChange}
             errorText={this.getValidationMessages('interval_sec').join(' ')}
             hintText="Type interval time in miliseconds"
