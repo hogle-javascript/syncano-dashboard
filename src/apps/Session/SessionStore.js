@@ -4,6 +4,7 @@ import NewLibConnection from './NewLibConnection';
 import _ from 'lodash';
 
 import SessionActions from './SessionActions';
+import InstancesStore from '../Instances/InstancesStore';
 import Colors from 'material-ui/styles/colors';
 
 export default Reflux.createStore({
@@ -256,10 +257,10 @@ export default Reflux.createStore({
       return;
     }
 
-    this.token = payload.account_key;
-    this.connection.setAccountKey(this.token);
-    localStorage.setItem('token', this.token);
     SessionActions.setUser(payload);
+    this.token = payload.account_key;
+    localStorage.setItem('token', payload.account_key);
+    this.connection.setAccountKey(payload.account_key);
     this.router.push({name: 'dashboard'});
   },
 
@@ -267,7 +268,7 @@ export default Reflux.createStore({
     this.token = null;
     this.user = null;
     this.removeInstance();
-    this.connection = NewLibConnection.reset();
+    this.connection.setAccountKey(null);
 
     localStorage.removeItem('lastInstance');
     localStorage.removeItem('token');

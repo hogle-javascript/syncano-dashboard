@@ -14,8 +14,6 @@ export default {
   },
 
   reset() {
-    connection = new Syncano({baseUrl: SYNCANO_BASE_URL});
     connection.setAccountKey(null);
-    return connection;
   }
 };
