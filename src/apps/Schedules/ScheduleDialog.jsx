@@ -29,9 +29,6 @@ export default React.createClass({
     },
     script: {
       presence: true
-    },
-    crontab: {
-      presence: true
     }
   },
 
@@ -41,21 +38,27 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {label, crontab, script} = this.state;
-
-    Actions.createSchedule({label, crontab, script});
+    const {label, crontab, script, interval_sec} = this.state;
+    
+    Actions.createSchedule({label, crontab, script, interval_sec});
   },
 
   handleEditSubmit() {
-    const {id, label, crontab, script} = this.state;
+    const {id, label, crontab, script, interval_sec} = this.state;
 
-    Actions.updateSchedule(id, {label, crontab, script});
+    Actions.updateSchedule(id, {label, crontab, script, interval_sec});
   },
 
   handleCrontabChange(value) {
     const crontab = value.text ? value.text : value;
 
     this.setState({crontab});
+  },
+
+  handleIntervalSecChange(event, value) {
+    const newValue = !_.isEmpty(value) ? value : null;
+  
+    this.setState({interval_sec: newValue});
   },
 
   renderCrontabDataSource() {
@@ -142,6 +145,15 @@ export default React.createClass({
             onUpdateInput={this.handleCrontabChange}
             dataSource={this.renderCrontabDataSource()}
             errorText={this.getValidationMessages('crontab').join(' ')} />
+          <TextField
+            ref="Interval"
+            name="interval_sec"
+            fullWidth={true}
+            value={this.state.interval_sec}
+            onChange={this.handleIntervalSecChange}
+            errorText={this.getValidationMessages('interval_sec').join(' ')}
+            hintText="Type interval time in miliseconds"
+            floatingLabelText="Interval"/>
         </Dialog.ContentSection>
       </Dialog.FullPage>
     );

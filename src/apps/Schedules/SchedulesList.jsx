@@ -94,7 +94,7 @@ export default React.createClass({
           <Column.ColumnHeader
             className="col-flex-1"
             columnName="DESC">
-            Crontab
+            Crontab/Interval
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
