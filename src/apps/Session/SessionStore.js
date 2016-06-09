@@ -4,7 +4,6 @@ import NewLibConnection from './NewLibConnection';
 import _ from 'lodash';
 
 import SessionActions from './SessionActions';
-import InstancesStore from '../Instances/InstancesStore';
 import Colors from 'material-ui/styles/colors';
 
 export default Reflux.createStore({
