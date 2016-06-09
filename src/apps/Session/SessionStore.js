@@ -275,8 +275,8 @@ export default Reflux.createStore({
 
     Raven.setUserContext();
     window.analytics.identify();
-    this.router.push('/login');
     this.trigger(this);
+    this.router.push('/login');
   },
 
   isAuthenticated() {

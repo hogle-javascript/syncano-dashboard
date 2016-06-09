@@ -30,6 +30,10 @@ const Instances = React.createClass({
     Actions.fetch();
   },
 
+  componentWillUnmount() {
+    Store.clearStore();
+  },
+
   showInstanceDialog() {
     InstanceDialogActions.showDialog();
   },
