@@ -39,7 +39,7 @@ export default React.createClass({
 
   handleAddSubmit() {
     const {label, crontab, script, interval_sec} = this.state;
-    
+
     Actions.createSchedule({label, crontab, script, interval_sec});
   },
 
@@ -57,7 +57,7 @@ export default React.createClass({
 
   handleIntervalSecChange(event, value) {
     const newValue = !_.isEmpty(value) ? value : null;
-  
+    
     this.setState({interval_sec: newValue});
   },
 
