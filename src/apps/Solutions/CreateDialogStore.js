@@ -39,12 +39,11 @@ export default Reflux.createStore({
 
   onCreateSolutionCompleted(solution) {
     console.debug('SolutionDialogStore::onCreateSolutionCompleted');
-    SessionStore.getRouter().transitionTo(
-      'solutions-edit',
-      {
-        solutionId: solution.id
-      }
-    );
+    const params = {
+      solutionId: solution.id
+    };
+
+    SessionStore.getRouter().push({name: 'solutions-edit', params});
   },
 
   onUpdateSolutionCompleted() {

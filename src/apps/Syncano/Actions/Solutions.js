@@ -15,7 +15,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-  createVersion({id}, payload) {
+  createVersion(id, payload) {
     this.NewLibConnection
       .Solution
       .please()

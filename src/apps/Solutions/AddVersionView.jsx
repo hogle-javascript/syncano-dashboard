@@ -17,6 +17,10 @@ import {Container, Loading, SelectFieldWrapper, InnerToolbar} from '../../common
 const AddVersionView = Radium(React.createClass({
   displayName: 'AddVersionView',
 
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
   mixins: [
     FormMixin,
     Reflux.connect(Store)
@@ -82,13 +86,13 @@ const AddVersionView = Radium(React.createClass({
     });
   },
 
-  handleInstanceChange(event, index, obj) {
-    Actions.setInstance(obj.payload);
+  handleInstanceChange(event, index, instanceName) {
+    Actions.setInstance(instanceName);
     Actions.clearExportSpec();
   },
 
   handleTypeChange(event, index, type) {
-    Actions.setType(type.payload);
+    Actions.setType(type);
   },
 
   handleSubmit(type) {
@@ -96,13 +100,13 @@ const AddVersionView = Radium(React.createClass({
     this.handleFormValidation();
   },
 
-  handleAddSubmit() {
+  handleSuccessfullValidation() {
     const {solutionId} = this.context.params;
 
     Actions.createVersion(solutionId, this.prepareVersionData());
   },
 
-  handleOnCheck(name, type, event, status) {
+  handleOnCheck(name, type, status) {
     let exportSpec = this.state.exportSpec;
 
     exportSpec[type][name] = status;
@@ -124,9 +128,9 @@ const AddVersionView = Radium(React.createClass({
 
   pkMap(section) {
     let map = {
-      views: 'name',
+      dataEndpoints: 'name',
       classes: 'name',
-      codeboxes: 'name',
+      scriptEndpoints: 'name',
       channels: 'name',
       scripts: 'id',
       triggers: 'id',
@@ -160,7 +164,7 @@ const AddVersionView = Radium(React.createClass({
   prepareVersionData() {
     return {
       type: this.state.type,
-      export_spec: JSON.stringify(this.prepareExportSpec()),
+      data: JSON.stringify(this.prepareExportSpec()),
       instance: this.state.instance
     };
   },
@@ -183,9 +187,9 @@ const AddVersionView = Radium(React.createClass({
             iconStyle={{fill: '#4D4D4D'}}
             labelStyle={{color: '#4D4D4D'}}
             name={item[pk]}
-            value={item[pk]}
+            checked={this.state.exportSpec[type][item[pk]]}
             label={item[labelPk].substring(0, 25)}
-            onCheck={this.handleOnCheck.bind(this, item[pk], type)}
+            onCheck={(event, status) => this.handleOnCheck(item[pk], type, status)}
             />
         </div>
       );
@@ -225,6 +229,15 @@ const AddVersionView = Radium(React.createClass({
   render() {
     const {solutionId} = this.context.params;
     const styles = this.getStyles();
+    const {
+      classes,
+      dataEndpoints,
+      scripts,
+      scriptEndpoints,
+      triggers,
+      schedules,
+      channels
+    } = this.state.instanceData;
 
     return (
       <form
@@ -266,13 +279,13 @@ const AddVersionView = Radium(React.createClass({
             {this.renderInfo()}
           </div>
           <div className="row" style={{marginTop: 30}}>
-            {this.renderCheckboxes('Classes', this.state.instanceData.classes, 'name', 'name', 'classes')}
-            {this.renderCheckboxes('Data', this.state.instanceData.views, 'name', 'name', 'views')}
-            {this.renderCheckboxes('Scripts', this.state.instanceData.scripts, 'id', 'label', 'scripts')}
-            {this.renderCheckboxes('CodeBoxes', this.state.instanceData.codeboxes, 'name', 'name', 'codeboxes')}
-            {this.renderCheckboxes('Triggers', this.state.instanceData.triggers, 'id', 'label', 'triggers')}
-            {this.renderCheckboxes('Schedules', this.state.instanceData.schedules, 'id', 'label', 'schedules')}
-            {this.renderCheckboxes('Channels', this.state.instanceData.channels, 'name', 'name', 'channels')}
+            {this.renderCheckboxes('Classes', classes, 'name', 'name', 'classes')}
+            {this.renderCheckboxes('Data Endpoints', dataEndpoints, 'name', 'name', 'dataEndpoints')}
+            {this.renderCheckboxes('Scripts', scripts, 'id', 'label', 'scripts')}
+            {this.renderCheckboxes('Script Endpoints', scriptEndpoints, 'name', 'name', 'scriptEndpoints')}
+            {this.renderCheckboxes('Triggers', triggers, 'id', 'label', 'triggers')}
+            {this.renderCheckboxes('Schedules', schedules, 'id', 'label', 'schedules')}
+            {this.renderCheckboxes('Channels', channels, 'name', 'name', 'channels')}
           </div>
           <div className="row" style={{paddingTop: 30}}>
             <div className="col-flex-1" style={{display: 'flex', justifyContent: 'flex-end'}}>
