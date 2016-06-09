@@ -260,21 +260,20 @@ export default (
           name="backup-and-restore"
           path="backup-and-restore"
           component={BackupAndRestore}>
-          <Route
+          {/* <Route
             name="all-backups"
             path="all"
             component={BackupAndRestore.All}/>
           <Route
             name="partial-backups"
             path="partial"
-            component={BackupAndRestore.Partial}/>
+            component={BackupAndRestore.Partial}/> */}
           <Route
             name="full-backups"
             path="full"
             component={BackupAndRestore.Full}/>
-          <Redirect
-            from="/instances/:instanceName/backup-and-restore"
-            to="all-backups"/>
+
+          <IndexRoute component={BackupAndRestore.Full} />
         </Route>
 
 

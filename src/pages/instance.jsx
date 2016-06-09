@@ -108,21 +108,9 @@ const Instance = React.createClass({
                   onTouchTap={() => InstanceDialogActions.showDialog(SessionStore.getInstance())}/>
                 <Sidebar.LinkListItem
                   key="backupAndRestore"
-                  routeName="all-backups"
+                  routeName="full-backups"
                   iconClassName="synicon-backup-restore"
-                  primaryText="Backup & Restore"
-                  initiallyOpen={true}
-                  autoGenerateNestedIndicator={false}
-                  nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="fullBackups"
-                      routeName="full-backups"
-                      primaryText="Full Backups" />,
-                    <Sidebar.NestedLinkListItem
-                      key="partialBackups"
-                      routeName="partial-backups"
-                      primaryText="Partial Backups" />
-                  ]}/>
+                  primaryText="Backup & Restore" />
                 <Sidebar.LinkListItem
                   key="Administrators"
                   routeName="admins"
@@ -134,6 +122,24 @@ const Instance = React.createClass({
                   iconClassName="synicon-key-variant"
                   primaryText="API Keys" />
               </Sidebar.List>
+              {/* eslint-disable no-inline-comments */}
+              {/* <Sidebar.LinkListItem
+                key="backupAndRestore"
+                routeName="all-backups"
+                iconClassName="synicon-backup-restore"
+                primaryText="Backup & Restore"
+                initiallyOpen={true}
+                autoGenerateNestedIndicator={false}
+                nestedItems={[
+                  <Sidebar.NestedLinkListItem
+                    key="fullBackups"
+                    routeName="full-backups"
+                    primaryText="Full Backups" />,
+                  <Sidebar.NestedLinkListItem
+                    key="partialBackups"
+                    routeName="partial-backups"
+                    primaryText="Partial Backups" />
+                ]}/> */}
             </div>
           </Sidebar>
           <div
