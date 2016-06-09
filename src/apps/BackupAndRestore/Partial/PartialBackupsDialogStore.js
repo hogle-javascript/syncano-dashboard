@@ -15,8 +15,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      isLoading: false,
-      queryArgs: ['{', '  ', '}'].join('\n')
+      isLoading: false
     };
   },
 
