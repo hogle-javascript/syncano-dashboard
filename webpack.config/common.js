@@ -53,7 +53,8 @@ module.exports = {
           "includePaths[]=" + (path.resolve(__dirname, "../node_modules/compass-mixins/lib")) + "&" +
           "includePaths[]=" + (path.resolve(__dirname, "../src/assets/sass")) + "&" +
           "includePaths[]=" + (path.resolve(__dirname, "../node_modules"))
-      }
+      },
+      {test: /\.json$/, loaders: ["json-loader"]}
     ]
   },
   resolve: {
