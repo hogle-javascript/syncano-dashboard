@@ -62,6 +62,7 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
+        bindShortcuts={false}
         onConfirm={this.handleFormValidation}
         actions={
           <Dialog.StandardButtons
@@ -72,21 +73,15 @@ export default React.createClass({
         sidebar={
           <Dialog.SidebarBox key="sidebarbox">
             <Dialog.SidebarSection>
-              Instance gathers all the data associated with a project into a shared space. It can be an equivalent
-               of an app or a piece of functionality.
+              {`Global Config allows you to save some data like tokens or api keys. This data can be
+                 accessed in all your Snippets.`}
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection>
-              <Dialog.SidebarLink to="http://docs.syncano.io/#adding-an-instance">
-                Learn more
-              </Dialog.SidebarLink>
-            </Dialog.SidebarSection>
-            <Dialog.SidebarSection title="Restore from Backup">
-              When adding a new instance, you can restore it from an existing backup. Use the dropdown menu
-              to do a restore from a full or partial backup that is available within your account.
-              You can also do a partial backup restore from a zip archive.
+            <Dialog.SidebarSection title="Globacl Config">
+              {`Global Config is a JSON object and will not overwrite you Snippet Config but will be merged
+                with it. If both Configs contains the same key the Snippets Config value will be used.`}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
-              <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/overview-9">
+              <Dialog.SidebarLink to="http://docs.syncano.io/">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>

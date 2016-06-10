@@ -88,6 +88,7 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
+        bindShortcuts={false}
         actions={
           <Dialog.StandardButtons
             disabled={isLoading}
