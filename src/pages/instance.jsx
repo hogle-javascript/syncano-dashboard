@@ -5,10 +5,12 @@ import {withRouter} from 'react-router';
 import SessionStore from '../apps/Session/SessionStore';
 import SessionActions from '../apps/Session/SessionActions';
 import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
+import GlobalConfigDialogActions from '../apps/GlobalConfig/GlobalConfigDialogActions';
 
 import {Sidebar} from '../common/';
 import HeaderInstancesDropdown from '../common/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
+import GlobalConfigDialog from '../apps/GlobalConfig/GlobalConfigDialog';
 
 const Instance = React.createClass({
   displayName: 'Instance',
@@ -133,6 +135,12 @@ const Instance = React.createClass({
                   routeName="api-keys"
                   iconClassName="synicon-key-variant"
                   primaryText="API Keys" />
+                <Sidebar.ListItem
+                  key="globalConfig"
+                  iconClassName="synicon-earth"
+                  primaryText="Global Config"
+                  onTouchTap={() => GlobalConfigDialogActions.showDialog()}/>
+
               </Sidebar.List>
             </div>
           </Sidebar>
@@ -142,6 +150,7 @@ const Instance = React.createClass({
             {this.props.children}
           </div>
         </div>
+        <GlobalConfigDialog />
         <InstanceDialog
           ref="addInstanceDialog"
           handleSubmit={this.redirectToNewInstance}/>

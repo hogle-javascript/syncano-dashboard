@@ -6,6 +6,7 @@ import Channels from './Channels';
 import Classes from './Classes';
 import DataEndpoints from './DataEndpoints';
 import DataObjects from './DataObjects';
+import GlobalConfig from './GlobalConfig';
 import Groups from './Groups';
 import Instances from './Instances';
 import Profile from './Profile';
@@ -33,6 +34,7 @@ export default {
   Classes,
   DataEndpoints,
   DataObjects,
+  GlobalConfig,
   Groups,
   Instances,
   Profile,

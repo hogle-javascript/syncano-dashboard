@@ -28,6 +28,7 @@ export default {
   },
 
   resetDialogState() {
+    console.debug('DialogMixin::resetDialogState');
     if (_.isFunction(this.getInitialState)) {
       this.replaceState(this.getInitialState());
     }
