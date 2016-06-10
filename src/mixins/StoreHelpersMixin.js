@@ -31,8 +31,5 @@ export default {
         value: item
       };
     });
-  },
-  saveListFromSyncano(obj) {
-    return obj._items;
   }
 };

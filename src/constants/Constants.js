@@ -1,13 +1,12 @@
 let host = 'https://api.syncano.rocks';
-let api = host + '/v1';
+let api = host + '/v1.1';
 
 export default {
-
   HOST: host,
   API: api,
 
   // Views constrains
-  DATAOBJECTS_PAGE_SIZE: 50,
+  DATAOBJECTS_PAGE_SIZE: 100,
   VIEW_MODES: ['cards', 'stream'],
   SORT_MODES: [
     'sortByName',
@@ -85,9 +84,11 @@ export default {
     'datetime',
     'file',
     'float',
+    'geopoint',
     'integer',
     'object',
     'reference',
+    'relation',
     'string',
     'text'
   ],

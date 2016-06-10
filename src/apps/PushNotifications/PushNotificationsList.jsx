@@ -1,7 +1,6 @@
 import React from 'react';
 
-import {ColumnList, Loading} from 'syncano-components';
-import {Container, Lists} from '../../common';
+import {ColumnList, Loading, Container, Lists} from '../../common/';
 import APNSListItem from './APNS/APNSPushNotificationsListItem';
 import GCMListItem from './GCM/GCMPushNotificationsListItem';
 

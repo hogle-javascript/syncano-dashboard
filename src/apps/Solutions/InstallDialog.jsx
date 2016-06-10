@@ -1,6 +1,5 @@
 import React from 'react' ;
 import Reflux from 'reflux';
-import Router from 'react-router';
 import _ from 'lodash';
 
 // Utils
@@ -12,20 +11,15 @@ import Store from './InstallDialogStore';
 import Actions from './InstallDialogActions';
 
 // Components
-import {TextField} from 'syncano-material-ui' ;
-import {Loading, SelectFieldWrapper, Show} from 'syncano-components';
-import {Notification, Dialog} from '../../common';
+import {TextField} from 'material-ui' ;
+import {Loading, SelectFieldWrapper, Show, Notification, Dialog} from '../../common/';
 
 export default React.createClass({
   displayName: 'SolutionInstallDialog',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-
     DialogMixin,
     FormMixin,
-
     Reflux.connect(Store)
   ],
 

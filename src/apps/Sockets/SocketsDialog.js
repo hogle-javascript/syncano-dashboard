@@ -8,7 +8,7 @@ import {DialogMixin} from '../../mixins';
 import Store from './SocketsDialogStore';
 
 // Components
-import {Dialog} from '../../common';
+import {Dialog} from '../../common/';
 import EmptyView from './EmptyView';
 
 export default React.createClass({

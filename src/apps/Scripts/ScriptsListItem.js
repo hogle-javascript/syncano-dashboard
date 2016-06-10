@@ -1,13 +1,10 @@
 import React from 'react';
-import {State} from 'react-router';
-import _ from 'lodash';
 
 import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
 
-import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Truncate} from 'syncano-components';
-import {LinkWrapper} from '../../common';
+import {MenuItem} from 'material-ui';
+import {ColumnList, Truncate, LinkWrapper} from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -19,9 +16,12 @@ export default React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [State],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
   render() {
+    const {params} = this.context;
     const {item, onIconClick, showDeleteDialog} = this.props;
     const runtime = Store.getRuntimeColorIcon(item.runtime_name) || {};
 
@@ -38,8 +38,10 @@ export default React.createClass({
           handleIconClick={onIconClick}
           primaryText={
             <LinkWrapper
-              to="script"
-              params={_.merge({}, this.getParams(), {scriptId: item.id})}>
+              to={{
+                name: 'script',
+                params: {...params, scriptId: item.id}
+              }}>
               <Truncate text={item.label}/>
             </LinkWrapper>
           }

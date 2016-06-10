@@ -6,7 +6,8 @@ import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin, CheckListStoreM
 import SessionActions from '../Session/SessionActions';
 import Actions from './SocketsActions';
 import DataActions from '../DataEndpoints/DataEndpointsActions';
-import ScriptsActions from '../ScriptEndpoints/ScriptEndpointsActions';
+import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
+import ScriptsActions from '../Scripts/ScriptsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 import ChannelsActions from '../Channels/ChannelsActions';
@@ -40,12 +41,15 @@ export default Reflux.createStore({
   },
 
   socketsListenables: [
+    SessionActions.setInstance,
     DataActions.createDataEndpoint.completed,
+    DataActions.createDataEndpointWithClass.completed,
     DataActions.updateDataEndpoint.completed,
+    DataActions.updateDataEndpointWithClass.completed,
     DataActions.removeDataEndpoints.completed,
-    ScriptsActions.createScriptEndpoint.completed,
-    ScriptsActions.updateScriptEndpoint.completed,
-    ScriptsActions.removeScriptEndpoints.completed,
+    ScriptEndpointsActions.createScriptEndpoint.completed,
+    ScriptEndpointsActions.updateScriptEndpoint.completed,
+    ScriptEndpointsActions.removeScriptEndpoints.completed,
     TriggersActions.createTrigger.completed,
     TriggersActions.updateTrigger.completed,
     TriggersActions.removeTriggers.completed,
@@ -56,6 +60,7 @@ export default Reflux.createStore({
     ChannelsActions.updateChannel.completed,
     ChannelsActions.removeChannels.completed,
     APNSActions.configAPNSPushNotification.completed,
+    APNSActions.removeCertificate.completed,
     GCMActions.configGCMPushNotification.completed
   ],
 
@@ -63,6 +68,7 @@ export default Reflux.createStore({
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setInstance,
+      ScriptsActions.fetchScripts.completed,
       this.refreshData
     );
     this.setLoadingStates();
@@ -117,16 +123,16 @@ export default Reflux.createStore({
 
   onFetchSocketsCompleted(sockets) {
     console.debug('SocketsStore::onFetchSockets');
-    const gcmDevicesCount = this.saveListFromSyncano(sockets.gcmDevices).length;
-    const apnsDevicesCount = this.saveListFromSyncano(sockets.apnsDevices).length;
+    const gcmDevicesCount = sockets.gcmDevices.length;
+    const apnsDevicesCount = sockets.apnsDevices.length;
     const gcmItems = this.getPushNotificationsItems([sockets.gcmPushNotifications], 'GCM', gcmDevicesCount);
     const apnsItems = this.getPushNotificationsItems([sockets.apnsPushNotifications], 'APNS', apnsDevicesCount);
 
-    this.data.data = this.saveListFromSyncano(sockets.data);
-    this.data.scriptEndpoints = this.saveListFromSyncano(sockets.scriptEndpoints);
-    this.data.triggers = this.saveListFromSyncano(sockets.triggers);
-    this.data.schedules = this.saveListFromSyncano(sockets.schedules);
-    this.data.channels = this.saveListFromSyncano(sockets.channels);
+    this.data.data = sockets.data;
+    this.data.scriptEndpoints = sockets.scriptEndpoints;
+    this.data.triggers = sockets.triggers;
+    this.data.schedules = sockets.schedules;
+    this.data.channels = sockets.channels;
     this.data.gcmPushNotifications = gcmItems;
     this.data.apnsPushNotifications = apnsItems;
     this.data.hasAnyItem = _.some(this.data, (value) => value.length);

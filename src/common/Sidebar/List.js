@@ -1,5 +1,5 @@
 import React from 'react';
-import {List} from 'syncano-material-ui';
+import {List} from 'material-ui';
 import ListSubheader from './ListSubheader';
 
 export default ({subheader, children}) => {

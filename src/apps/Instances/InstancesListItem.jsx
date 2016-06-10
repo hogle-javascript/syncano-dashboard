@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navigation} from 'react-router';
+import {withRouter} from 'react-router';
 
 import {DialogsMixin} from '../../mixins/';
 
@@ -8,26 +8,23 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
-import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color, Truncate} from 'syncano-components';
+import {MenuItem} from 'material-ui';
+import {ColumnList, Color, Truncate} from '../../common/';
 
-let Column = ColumnList.Column;
+const Column = ColumnList.Column;
 
-export default React.createClass({
+export default withRouter(React.createClass({
   displayName: 'InstancesListItem',
 
   propTypes: {
-    onIconClick: React.PropTypes.func.isRequired,
+    onIconClick: React.PropTypes.func,
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [
-    Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   render() {
-    const {item, onIconClick, showDeleteDialog} = this.props;
+    const {item, onIconClick, showDeleteDialog, router, checkable} = this.props;
 
     return (
       <ColumnList.Item
@@ -38,11 +35,15 @@ export default React.createClass({
           id={item.name}
           iconClassName={item.metadata.icon}
           background={Color.getColorByName(item.metadata.color)}
+          checkable={checkable}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={
             <Truncate
-              onClick={() => this.transitionTo('instance', {instanceName: item.name})}
+              onClick={() => {
+                localStorage.setItem('lastInstance', item.name);
+                router.push({name: 'instance', params: {instanceName: item.name}});
+              }}
               style={{cursor: 'pointer'}}
               text={item.name}/>
           }/>
@@ -61,4 +62,4 @@ export default React.createClass({
       </ColumnList.Item>
     );
   }
-});
+}));

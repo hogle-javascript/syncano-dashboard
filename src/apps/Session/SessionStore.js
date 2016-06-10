@@ -1,32 +1,33 @@
 import Reflux from 'reflux';
 import Raven from '../../raven';
-import Connection from './Connection';
+import NewLibConnection from './NewLibConnection';
 import _ from 'lodash';
 
 import SessionActions from './SessionActions';
-
-import Colors from 'syncano-material-ui/lib/styles/colors';
-import {SyncanoTheme} from 'syncano-components';
+import Colors from 'material-ui/styles/colors';
 
 export default Reflux.createStore({
   listenables: SessionActions,
 
   init() {
-    this.connection = Connection.get();
+    this.connection = NewLibConnection.get();
     this.token = localStorage.getItem('token') || null;
     this.user = null;
     this.instance = null;
     this.router = null;
+    this.params = null;
+    this.location = null;
+    this.routes = null;
     this.theme = null;
     this.signUpMode = null;
     this.isWelcomeDialogVisible = false;
 
     if (this.isAuthenticated() && !this.user) {
-      SessionActions.fetchUser(this.token);
+      SessionActions.fetchUser();
     }
 
     if (this.token !== null) {
-      this.connection.setApiKey(this.token);
+      this.connection.setAccountKey(this.token);
     }
   },
 
@@ -48,6 +49,18 @@ export default Reflux.createStore({
 
   getRouter(empty) {
     return this.router || empty || null;
+  },
+
+  getParams(empty) {
+    return this.params || empty || null;
+  },
+
+  getLocation(empty) {
+    return this.location || empty || null;
+  },
+
+  getRoutes(empty) {
+    return this.routes || empty || null;
   },
 
   getSignUpMode() {
@@ -99,7 +112,10 @@ export default Reflux.createStore({
 
   setToken(token) {
     console.info('SessionStore::setToken');
+    this.token = token;
+    this.connection.setAccountKey(token);
     localStorage.setItem('token', token);
+    SessionActions.fetchUser();
   },
 
   setInvitationFromUrl(invitationKey) {
@@ -119,7 +135,7 @@ export default Reflux.createStore({
       this.user.account_key = this.token;
     } else {
       this.token = user.account_key;
-      this.connection.setApiKey(this.token);
+      this.connection.setAccountKey(this.token);
       localStorage.setItem('token', this.token);
     }
 
@@ -158,6 +174,22 @@ export default Reflux.createStore({
     this.router = router;
   },
 
+  setParams(params) {
+    console.info('SessionStore::setParams');
+    this.params = params;
+  },
+
+  setLocation(location) {
+    console.info('SessionStore::setLocation');
+    this.location = location;
+  },
+
+  setRoutes(routes) {
+    console.info('SessionStore::setRoutes');
+    this.routes = routes;
+    this.trigger(this);
+  },
+
   setSignUpMode() {
     this.signUpMode = true;
   },
@@ -189,7 +221,7 @@ export default Reflux.createStore({
 
   onFetchUserCompleted(payload) {
     console.info('SessionStore::onFetchUserCompleted');
-    SessionActions.setUser(payload);
+    SessionActions.setUser(payload.data);
   },
 
   onFetchUserFailure() {
@@ -199,9 +231,6 @@ export default Reflux.createStore({
 
   removeInstance() {
     this.instance = null;
-    if (this.theme) {
-      this.theme.setTheme(SyncanoTheme);
-    }
   },
 
   removeSignUpMode() {
@@ -227,32 +256,31 @@ export default Reflux.createStore({
       return;
     }
 
-    this.token = payload.account_key;
-    this.connection.setApiKey(this.token);
-    localStorage.setItem('token', this.token);
     SessionActions.setUser(payload);
+    this.token = payload.account_key;
+    localStorage.setItem('token', payload.account_key);
+    this.connection.setAccountKey(payload.account_key);
+    this.router.push({name: 'dashboard'});
   },
 
   onLogout() {
     this.token = null;
     this.user = null;
-    this.connection = Connection.reset();
+    this.removeInstance();
+    this.connection.setAccountKey(null);
 
+    localStorage.removeItem('lastInstance');
     localStorage.removeItem('token');
     localStorage.removeItem('invitationKey');
-    this.removeInstance();
-    this.trigger(this);
 
     Raven.setUserContext();
     window.analytics.identify();
-    location.reload(true);
+    this.trigger(this);
+    this.router.push('/login');
   },
 
   isAuthenticated() {
-    if (this.token === 'undefined') {
-      return false;
-    }
-    return this.token !== null;
+    return Boolean(localStorage.token);
   },
 
   isReady() {

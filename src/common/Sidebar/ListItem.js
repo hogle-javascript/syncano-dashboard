@@ -1,6 +1,5 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
-import {ListItem, Utils, FontIcon} from 'syncano-material-ui';
+import {ListItem, FontIcon} from 'material-ui';
 
 export default React.createClass({
   displayName: 'ListItem',
@@ -8,11 +7,6 @@ export default React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object
   },
-
-  mixins: [
-    State,
-    Navigation
-  ],
 
   getStyles() {
     return {
@@ -50,7 +44,7 @@ export default React.createClass({
       return (
         <FontIcon
           color={iconColor}
-          style={Utils.Styles.mergeStyles(styles.iconStyle, iconStyle)}
+          style={{...styles.iconStyle, ...iconStyle}}
           className={iconClassName} />
       );
     }
@@ -64,8 +58,8 @@ export default React.createClass({
 
     return (
       <ListItem
-        style={Utils.Styles.mergeStyles(styles.base, style)}
-        innerDivStyle={Utils.Styles.mergeStyles(styles.innerDivStyle, iconClassName && styles.withIcon)}
+        style={{...styles.base, ...style}}
+        innerDivStyle={{...styles.innerDivStyle, ...(iconClassName && styles.withIcon)}}
         leftIcon={this.renderIcon()}
         nestedListStyle={styles.nestedListStyle}
         {...other} />

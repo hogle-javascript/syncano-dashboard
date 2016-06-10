@@ -52,10 +52,13 @@ export default Reflux.createStore({
   onCreateScriptCompleted(resp) {
     console.debug('ScriptsStore::onCreateScriptCompleted');
     this.dismissDialog();
-    SessionStore.getRouter().transitionTo('script', {
-      instanceName: SessionStore.getInstance().name,
+
+    const params = {
+      ...SessionStore.getParams(),
       scriptId: resp.id
-    });
+    };
+
+    SessionStore.getRouter().push({name: 'script', params});
   },
 
   onUpdateScriptCompleted() {

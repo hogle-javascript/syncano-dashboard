@@ -67,7 +67,7 @@ export default Reflux.createStore({
     this.data.instances = Object.keys(instances).map((key) => instances[key]);
 
     if (instances && instances.length === 1) {
-      this.data.instance = instances._items[0].name;
+      this.data.instance = instances[0].name;
     }
 
     this.trigger(this.data);

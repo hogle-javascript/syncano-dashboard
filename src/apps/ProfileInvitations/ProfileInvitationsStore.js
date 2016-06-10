@@ -48,8 +48,8 @@ export default Reflux.createStore({
   },
 
   onFetchInvitationsCompleted(items) {
-    let invKey = SessionStore.getRouter().getCurrentQuery().invitation_key || null;
-    let isInvitedByEmail = _.some(items._items, 'key', invKey);
+    let invKey = SessionStore.getLocation().query.invitation_key || null;
+    let isInvitedByEmail = _.some(items, 'key', invKey);
 
     if (invKey !== null && isInvitedByEmail) {
       Actions.acceptInvitations(invKey);
@@ -57,7 +57,7 @@ export default Reflux.createStore({
     }
 
     console.debug('ProfileInvitationsStore::onFetchInvitationsCompleted');
-    Actions.setInvitations(items._items);
+    Actions.setInvitations(items);
   },
 
   onFetchInvitationsFailure() {

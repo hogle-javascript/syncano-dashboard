@@ -1,11 +1,12 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import Store from './GCMDevicesStore';
 import Actions from './GCMDevicesActions';
 import SendMessagesActions from './GCMSendMessagesActions';
 
-import {Container} from 'syncano-components';
+import {Container} from '../../../common/';
 import DevicesList from '../DevicesList';
 import GCMDialog from './GCMDeviceDialog';
 
@@ -17,19 +18,21 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
-  componentWillMount() {
+  componentDidMount() {
     Actions.fetch();
   },
 
   render() {
-    const {hideDialogs, isLoading, items} = this.state;
+    const {hasConfig, hideDialogs, isLoading, items} = this.state;
     const {visibleItems} = this.props;
 
     return (
       <Container>
+        <Helmet title="Android Devices" />
         <GCMDialog />
         <DevicesList
           type="gcm"
+          hasConfig={hasConfig}
           visibleItems={visibleItems}
           getCheckedItems={Store.getCheckedItems}
           actions={Actions}

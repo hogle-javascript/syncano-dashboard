@@ -47,7 +47,7 @@ export default Reflux.createStore({
 
   onFetchScriptEndpointsCompleted(items) {
     console.debug('ScriptEndpointsStore::onFetchScriptEndpointsCompleted');
-    Actions.setScriptEndpoints(items._items);
+    Actions.setScriptEndpoints(items);
   },
 
   onRemoveScriptEndpointsCompleted() {

@@ -1,5 +1,6 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
+import URI from 'urijs';
 
 // Utils & Mixins
 import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../mixins';
@@ -20,7 +21,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items: [],
+      items: null,
       isLoading: true
     };
   },
@@ -48,23 +49,30 @@ export default Reflux.createStore({
     return _.filter(this.data.items, {id: userId}).length > 0 ? _.filter(this.data.items, {id: userId})[0] : null;
   },
 
-  setUsers(users) {
-    let usersArray = users._items ? users._items : users;
+  setUsers(items, rawData) {
+    console.debug('UsersStore::setUsers');
 
-    this.data.items = Object.keys(usersArray).map((key) => {
-      return usersArray[key].user ? usersArray[key].user : usersArray[key];
-    });
+    this.data.hasNextPage = items.hasNext();
+
+    if (!this.data.items) {
+      this.data.items = [];
+    }
+
+    this.data.items = _.uniqBy(this.data.items.concat(items), 'id');
+    this.data.nextParams = new URI(rawData.next || '').search(true);
+    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
-  onFetchUsersCompleted(payload) {
+  onFetchUsersCompleted(payload, rawData) {
     console.debug('UsersStore::onFetchUsersCompleted');
-    Actions.setUsers(payload);
+    this.data.items = [];
+    Actions.setUsers(payload, rawData);
   },
 
-  onFetchGroupUsersCompleted(payload) {
-    console.debug('UsersStore::onFetchGroupUsersCompleted');
-    Actions.setUsers(payload);
+  onSubFetchUsersCompleted(payload, rawData) {
+    console.debug('UsersStore::onSubFetchUsersCompleted');
+    Actions.setUsers(payload, rawData);
   },
 
   onRemoveUsersCompleted() {
@@ -80,21 +88,6 @@ export default Reflux.createStore({
 
   onUpdateUserCompleted() {
     console.debug('UsersStore::onUpdateUserCompleted');
-    this.refreshData();
-  },
-
-  onUpdateGroupCompleted() {
-    console.debug('UsersStore::onUpdateGroupCompleted');
-    this.refreshData();
-  },
-
-  onRemoveGroupsCompleted() {
-    console.debug('UsersStore::onRemoveGroupsCompleted');
-    this.refreshData();
-  },
-
-  onFetchGroupsCompleted() {
-    console.debug('UsersStore::onSetActiveGroup');
     this.refreshData();
   }
 });

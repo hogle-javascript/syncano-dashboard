@@ -1,7 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 import IconStore from '../Icon/IconStore';
-import {FontIcon, Styles} from 'syncano-material-ui';
+import {FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default Radium(({selectedIcon, onIconChange}) => {
   const getStyles = () => ({
@@ -24,10 +25,10 @@ export default Radium(({selectedIcon, onIconChange}) => {
   });
 
   const renderIconItem = (icon) => {
-    let styles = getStyles().item;
+    const styles = getStyles().item;
 
     if (icon === selectedIcon) {
-      styles.color = Styles.Colors.blue400;
+      styles.color = Colors.blue400;
     }
 
     return (

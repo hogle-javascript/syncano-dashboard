@@ -1,6 +1,7 @@
+/* eslint-disable */
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import Radium from 'radium';
 
 import SessionActions from '../../apps/Session/SessionActions';
@@ -9,23 +10,19 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 import InstancesActions from '../../apps/Instances/InstancesActions';
 import InstanceDialogActions from '../../apps/Instances/InstanceDialogActions';
 
-import {Utils, FontIcon, List, ListItem, IconMenu} from 'syncano-material-ui';
-import {ColumnList, Color, Show} from 'syncano-components';
+import {FontIcon, Subheader, List, ListItem, IconMenu} from 'material-ui';
+import {ColumnList, Color, Show} from '../../common/';
 
-export default Radium(React.createClass({
+const HeaderInstancesDropdown = Radium(React.createClass({
   displayName: 'HeaderInstancesDropdown',
 
   contextTypes: {
-    router: React.PropTypes.func.isRequired,
     muiTheme: React.PropTypes.object
   },
 
   mixins: [
     Reflux.connect(InstancesStore),
-    Reflux.connectFilter(SessionStore, 'currentInstance', (sessionData) => sessionData.instance),
-    Router.Navigation,
-    Router.State,
-    Utils.Styles
+    Reflux.connectFilter(SessionStore, 'currentInstance', (sessionData) => sessionData.instance)
   ],
 
   componentDidMount() {
@@ -52,7 +49,7 @@ export default Radium(React.createClass({
         height: 32,
         fontSize: 18,
         lineHeight: '18px',
-        display: '-webkit-inline-flex; display: inline-flex',
+        display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: '50%',
@@ -110,11 +107,13 @@ export default Radium(React.createClass({
   },
 
   handleDropdownItemClick(instanceName) {
+    const {router} = this.props;
+
     // Redirect to main instance screen
     this.refs.instancesDropdown.close();
     SessionActions.fetchInstance(instanceName);
     localStorage.setItem('lastInstance', instanceName);
-    this.transitionTo('instance', {instanceName});
+    router.push({name: 'instance', params: {instanceName}});
   },
 
   renderAddInstanceItem() {
@@ -122,7 +121,7 @@ export default Radium(React.createClass({
     const icon = (
       <FontIcon
         className="synicon-plus"
-        style={this.mergeStyles(styles.dropdownInstanceIcon, styles.addInstanceIcon)}/>
+        style={{...styles.dropdownInstanceIcon, ...styles.addInstanceIcon}}/>
     );
 
     return (
@@ -147,7 +146,7 @@ export default Radium(React.createClass({
       const icon = (
         <FontIcon
           className={iconName}
-          style={this.mergeStyles(styles.dropdownInstanceIcon, iconBackground)}/>
+          style={{...styles.dropdownInstanceIcon, ...iconBackground}}/>
       );
 
       return (
@@ -166,16 +165,19 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
     const subheaderText = InstancesStore.amIOwner(instances[0]) ? 'My Instances' : 'Shared with me';
 
+    if (!instances.length) {
+      return null;
+    }
+
     return (
-      <Show if={instances.length > 0}>
-        <List
-          className={InstancesStore.amIOwner(instances[0]) ? 'my-instances-list' : 'shared-instances-list'}
-          style={styles.list}
-          subheader={subheaderText}
-          subheaderStyle={styles.separator}>
-          {this.renderListItems(instances)}
-        </List>
-      </Show>
+      <List
+        className={InstancesStore.amIOwner(instances[0]) ? 'my-instances-list' : 'shared-instances-list'}
+        style={styles.list}>
+        <Subheader style={styles.separator}>
+          {subheaderText}
+        </Subheader>
+        {this.renderListItems(instances)}
+      </List>
     );
   },
 
@@ -194,7 +196,7 @@ export default Radium(React.createClass({
       <div style={styles.dropdownIcon}>
         <FontIcon
           className={`synicon-${iconName}`}
-          style={this.mergeStyles(styles.dropdownInstanceIcon, iconStyle)}/>
+          style={{...styles.dropdownInstanceIcon, ...iconStyle}}/>
         <div style={styles.dropdownText}>
           {currentInstance.name}
         </div>
@@ -217,7 +219,6 @@ export default Radium(React.createClass({
         <IconMenu
           ref="instancesDropdown"
           iconButtonElement={this.renderDropdownIcon()}
-          openDirection="bottom-right"
           style={styles.iconMenu}
           menuStyle={styles.dropdownMenu}>
           {this.renderAddInstanceItem()}
@@ -228,3 +229,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default withRouter(HeaderInstancesDropdown);

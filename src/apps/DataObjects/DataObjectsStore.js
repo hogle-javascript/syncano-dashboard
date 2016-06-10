@@ -110,7 +110,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('DataObjectsStore::refreshData');
-    DataObjectsActions.fetchCurrentClassObj(SessionStore.router.getCurrentParams().className);
+    DataObjectsActions.fetchCurrentClassObj(SessionStore.getParams().className);
   },
 
   refreshDataObjects() {
@@ -181,22 +181,17 @@ export default Reflux.createStore({
     return column;
   },
 
-  setDataObjects(items) {
+  setDataObjects(items, rawData) {
     console.debug('DataObjectsStore::setDataObjects');
 
-    this.data.hasNextPage = items.hasNextPage();
-    this.data.nextParams = new URI(items.next() || '').search(true);
-    this.data.prevParams = new URI(items.prev() || '').search(true);
+    this.data.hasNextPage = items.hasNext();
 
     if (!this.data.items) {
       this.data.items = [];
     }
 
-    let newItems = [];
-
-    Object.keys(items).map((key) => newItems.splice(0, 0, items[key]));
-
-    this.data.items = this.data.items.concat(newItems);
+    this.data.items = this.data.items.concat(items);
+    this.data.nextParams = new URI(rawData.next || '').search(true);
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -218,14 +213,14 @@ export default Reflux.createStore({
   updateFromLocalStorage() {
     console.debug('DataObjectsStore::updateFromLocalStorage');
 
-    let className = this.getCurrentClassName();
-    let settings = localStorage.getItem('dataobjects_checkedcolumns_' + className);
+    const className = this.getCurrentClassName();
+    const settings = localStorage.getItem('dataobjects_checkedcolumns_' + className);
 
     if (!settings) {
       return;
     }
 
-    let checkedColumns = JSON.parse(settings);
+    const checkedColumns = JSON.parse(settings);
 
     this.data.columns.map((column) => {
       column.checked = checkedColumns.indexOf(column.id) !== -1;
@@ -235,7 +230,7 @@ export default Reflux.createStore({
   },
 
   updateLocalStorage() {
-    let className = this.getCurrentClassName();
+    const className = this.getCurrentClassName();
 
     localStorage.setItem('dataobjects_checkedcolumns_' + className, JSON.stringify(this.getCheckedColumnsIDs()));
   },
@@ -272,15 +267,15 @@ export default Reflux.createStore({
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjectsCompleted(items) {
+  onFetchDataObjectsCompleted(items, rawData) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
     this.data.items = [];
-    DataObjectsActions.setDataObjects(items);
+    DataObjectsActions.setDataObjects(items, rawData);
   },
 
-  onSubFetchDataObjectsCompleted(items) {
-    console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
-    DataObjectsActions.setDataObjects(items);
+  onSubFetchDataObjectsCompleted(items, rawData) {
+    console.debug('DataObjectsStore::onSubFetchDataObjectsCompleted');
+    DataObjectsActions.setDataObjects(items, rawData);
   },
 
   onCreateDataObjectCompleted() {
@@ -304,7 +299,7 @@ export default Reflux.createStore({
 
   onRemoveDataObjectsCompleted() {
     this.data.hideDialogs = true;
-    this.data.selectedRows = null;
+    this.data.selectedRows = [];
     this.trigger(this.data);
     this.refreshDataObjects();
   },

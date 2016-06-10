@@ -1,8 +1,7 @@
 import React from 'react';
 
 import ListItem from './VersionsListItem';
-import {ColumnList} from 'syncano-components';
-import {Lists} from '../../common';
+import {ColumnList, Lists} from '../../common/';
 
 let Column = ColumnList.Column;
 

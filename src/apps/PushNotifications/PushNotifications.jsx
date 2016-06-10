@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import PushDevices from '../PushDevices';
 import APNSPushNotificationsActions from './APNS/APNSPushNotificationsActions';
@@ -11,8 +12,8 @@ import PushNotificationsList from './PushNotificationsList';
 import APNSConfigDialog from './APNS/APNSConfigDialog';
 import GCMConfigDialog from './GCM/GCMConfigDialog';
 import ConfigPushNotificationsPopover from './ConfigPushNotificationsPopover';
-import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {RaisedButton} from 'material-ui';
+import {Container} from '../../common/';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 
 export default React.createClass({
@@ -37,6 +38,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Push Notifications" />
         <APNSConfigDialog/>
         <GCMConfigDialog/>
         <SocketsInnerToolbar>

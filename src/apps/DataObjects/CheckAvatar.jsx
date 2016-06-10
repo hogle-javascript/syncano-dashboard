@@ -1,9 +1,9 @@
 import React from 'react';
 
-import MUI from 'syncano-material-ui';
+import {Avatar, FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default React.createClass({
-
   displayName: 'ColumnAvatarCheck',
 
   propTypes: {
@@ -16,7 +16,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       color: '#000',
-      hoverColor: MUI.Styles.Colors.blue600
+      hoverColor: Colors.blue600
     };
   },
 
@@ -76,9 +76,9 @@ export default React.createClass({
     let iconState = this.getIconState();
 
     return (
-      <MUI.FontIcon
+      <FontIcon
         className={`synicon-${iconState.icon}`}
-        style={styles.icon}/>
+        style={styles.icon} />
     );
   },
 
@@ -86,13 +86,13 @@ export default React.createClass({
     let iconState = this.getIconState();
 
     return (
-      <MUI.Avatar
+      <Avatar
         icon={this.renderIcon()}
         style={this.props.style}
         backgroundColor={iconState.color}
         onClick={this.handleIconClick}
         onMouseOver={this.handleMouseOver}
-        onMouseOut={this.handleMouseLeave}/>
+        onMouseOut={this.handleMouseLeave} />
     );
   }
 });

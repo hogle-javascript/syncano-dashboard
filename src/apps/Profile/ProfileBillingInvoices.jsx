@@ -1,13 +1,13 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import SessionStore from '../Session/SessionStore';
 import Actions from './ProfileActions';
 import Store from './ProfileBillingInvoicesStore';
 
-import {RaisedButton} from 'syncano-material-ui';
-import {ColumnList, Container, Loading, Show} from 'syncano-components';
-import {InnerToolbar, Lists} from '../../common';
+import {RaisedButton} from 'material-ui';
+import {ColumnList, Container, Loading, Show, InnerToolbar, Lists} from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -29,12 +29,37 @@ export default React.createClass({
     location.href = pdfUrl;
   },
 
+  handleRetryPaymentClick(invoice) {
+    Actions.retryPayment(invoice);
+  },
+
+  renderActionButton(invoice) {
+    if (invoice.status === 'payment failed') {
+      return (
+        <RaisedButton
+          label="RETRY PAYMENT"
+          secondary={true}
+          disabled={invoice.actionDisabled}
+          onClick={() => this.handleRetryPaymentClick(invoice)}/>
+      );
+    }
+
+    return (
+      <RaisedButton
+        label="VIEW"
+        primary={true}
+        onClick={() => this.handlePDFClick(invoice)}/>
+    );
+  },
+
   render() {
     const {isLoading, invoices} = this.state;
+    const title = 'Invoices';
 
     return (
       <Loading show={isLoading}>
-        <InnerToolbar title="Invoices"/>
+        <Helmet title={title} />
+        <InnerToolbar title={title} />
 
         <Show if={!invoices.length}>
           <Container.Empty
@@ -60,10 +85,7 @@ export default React.createClass({
                     <Column.Desc>{invoice.amount}</Column.Desc>
                     <Column.Desc>{invoice.status}</Column.Desc>
                     <Column.Desc>
-                      <RaisedButton
-                        label="VIEW"
-                        primary={true}
-                        onClick={() => this.handlePDFClick(invoice)}/>
+                      {this.renderActionButton(invoice)}
                     </Column.Desc>
                   </ColumnList.Item>
                 ))}

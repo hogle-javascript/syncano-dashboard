@@ -32,7 +32,7 @@ module.exports = function(cb) {
     // filter keys
     var keysToDelete = _.reduce(versionedKeys, function(result, keys, prefix) {
       if (keys.length > 3) {
-        var toDelete = _.pluck(_.sortBy(keys, 'timestamp'), 'Key');
+        var toDelete = _.map(_.sortBy(keys, 'timestamp'), 'Key');
         return result.concat(_.map(toDelete.slice(0, toDelete.length-3), function(key) {
           return {Key: key};
         }));

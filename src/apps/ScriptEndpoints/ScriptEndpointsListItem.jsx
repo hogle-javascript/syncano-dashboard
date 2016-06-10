@@ -1,13 +1,13 @@
 import React from 'react';
-import {Link, State} from 'react-router';
+import {Link} from 'react-router';
 
 import {SnackbarNotificationMixin} from '../../mixins';
 
 import Actions from './ScriptEndpointsActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
-import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList, Clipboard} from 'syncano-components';
+import {MenuItem} from 'material-ui';
+import {Color, ColumnList, Clipboard} from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -19,17 +19,19 @@ export default React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [
-    State,
-    SnackbarNotificationMixin
-  ],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
+  mixins: [SnackbarNotificationMixin],
 
   render() {
-    let {item, onIconClick, showDeleteDialog} = this.props;
-    let publicString = item.public.toString();
-    let link = item.public ? item.links['public-link'] : item.links.self;
-    let script = ScriptsStore.getScriptById(item.codebox);
-    let scriptLabel = script ? script.label : '';
+    const {instanceName} = this.context.params;
+    const {item, onIconClick, showDeleteDialog} = this.props;
+    const publicString = item.public.toString();
+    const link = item.public ? item.links['public-link'] : item.links.self;
+    const script = ScriptsStore.getScriptById(item.script);
+    const scriptLabel = script ? script.label : '';
 
     return (
       <ColumnList.Item
@@ -60,20 +62,24 @@ export default React.createClass({
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link
-            to="script"
-            params={{
-              instanceName: this.getParams().instanceName,
-              scriptId: item.codebox
+            to={{
+              name: 'script',
+              params: {
+                instanceName,
+                scriptId: item.script
+              }
             }}>
             {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link
-            to="scriptEndpoint-traces"
-            params={{
-              instanceName: this.getParams().instanceName,
-              scriptEndpointName: item.name
+            to={{
+              name: 'scriptEndpoint-traces',
+              params: {
+                instanceName,
+                scriptEndpointName: item.name
+              }
             }}>
             Traces
           </Link>
@@ -93,4 +99,3 @@ export default React.createClass({
     );
   }
 });
-

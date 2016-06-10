@@ -1,13 +1,14 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import Actions from './TemplatesActions';
 import Store from './TemplatesStore';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {RaisedButton} from 'material-ui';
+import {Container} from '../../common/';
 import SnippetsInnerToolbar from '../Snippets/SnippetsInnerToolbar';
 
 // Local components
@@ -29,6 +30,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Templates" />
         <TemplateDialog />
 
         <SnippetsInnerToolbar>

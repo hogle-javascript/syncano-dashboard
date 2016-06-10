@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -16,21 +16,21 @@ import CreateDialogActions from './CreateDialogActions';
 import InstallDialogActions from './InstallDialogActions';
 
 // Components
-import {FontIcon, IconButton, RaisedButton, Avatar} from 'syncano-material-ui';
-import {Container, Solutions, Show, Loading} from 'syncano-components';
-import {Dialog, InnerToolbar} from '../../common';
+import {FontIcon, IconButton, RaisedButton, Avatar} from 'material-ui';
+import {Container, Solutions, Show, Loading, Dialog, InnerToolbar} from '../../common/';
 import VersionsList from './VersionsList';
 
 import CreateDialog from './CreateDialog';
 import InstallDialog from './InstallDialog';
 
-export default React.createClass({
-
+const SolutionEdit = React.createClass({
   displayName: 'SolutionEdit',
 
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
   mixins: [
-    Router.State,
-    Router.Navigation,
     DialogsMixin,
     Reflux.connect(Store)
   ],
@@ -43,7 +43,9 @@ export default React.createClass({
   },
 
   componentDidUpdate() {
-    if (this.getParams().action === 'install') {
+    const {action} = this.context.params;
+
+    if (action === 'install') {
       this.handleInstallSolution();
     }
   },
@@ -92,11 +94,16 @@ export default React.createClass({
   },
 
   handleInstallSolution() {
-    InstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId);
+    const {solutionId} = this.context.params;
+
+    InstallDialogActions.showDialogWithPreFetch(solutionId);
   },
 
   handleAddVersion() {
-    SessionStore.getRouter().transitionTo('solutions-add-version', this.getParams());
+    const {params} = this.context;
+    const {router} = this.props;
+
+    router.push({name: 'solutions-add-version', params});
   },
 
   initDialogs() {
@@ -132,8 +139,9 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let item = this.state.item;
+    const {router} = this.props;
+    const {item} = this.state;
+    const styles = this.getStyles();
 
     return (
       <Loading show={this.state.isLoading}>
@@ -144,7 +152,7 @@ export default React.createClass({
 
         <InnerToolbar
           title={`Solution: ${this.state.item.label} (ID: ${this.state.item.id})`}
-          backFallback={this.transitionTo.bind(null, 'solutions')}>
+          backFallback={() => router.push('solutions')}>
           <Show if={this.isMySolution()}>
             <IconButton
               style={{fontSize: 25, marginTop: 5}}
@@ -242,3 +250,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(SolutionEdit);

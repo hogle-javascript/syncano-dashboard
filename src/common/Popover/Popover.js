@@ -1,5 +1,5 @@
 import React from 'react';
-import {Popover} from 'syncano-material-ui';
+import {Popover} from 'material-ui';
 
 export default React.createClass({
   displayName: 'Popover',

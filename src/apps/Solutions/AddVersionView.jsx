@@ -1,6 +1,6 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import Radium from 'radium';
 
 // Utils
@@ -11,17 +11,17 @@ import Store from './AddVersionViewStore';
 import Actions from './AddVersionViewActions';
 
 // Components
-import {Checkbox, FlatButton, RaisedButton} from 'syncano-material-ui';
-import {Container, Loading, SelectFieldWrapper} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {Checkbox, FlatButton, RaisedButton} from 'material-ui';
+import {Container, Loading, SelectFieldWrapper, InnerToolbar} from '../../common/';
 
-export default Radium(React.createClass({
+const AddVersionView = Radium(React.createClass({
   displayName: 'AddVersionView',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
+  mixins: [
     FormMixin,
     Reflux.connect(Store)
   ],
@@ -74,7 +74,10 @@ export default Radium(React.createClass({
   },
 
   handleBackClick() {
-    this.transitionTo('solutions-edit', this.getParams());
+    const {params} = this.context;
+    const {router} = this.props;
+
+    router.push({name: 'solutions-edit', params});
   },
 
   handleEditSubmit() {
@@ -83,13 +86,13 @@ export default Radium(React.createClass({
     });
   },
 
-  handleInstanceChange(event, index, obj) {
-    Actions.setInstance(obj.payload);
+  handleInstanceChange(event, index, instanceName) {
+    Actions.setInstance(instanceName);
     Actions.clearExportSpec();
   },
 
   handleTypeChange(event, index, type) {
-    Actions.setType(type.payload);
+    Actions.setType(type);
   },
 
   handleSubmit(type) {
@@ -97,11 +100,13 @@ export default Radium(React.createClass({
     this.handleFormValidation();
   },
 
-  handleAddSubmit() {
-    Actions.createVersion(this.getParams().solutionId, this.prepareVersionData());
+  handleSuccessfullValidation() {
+    const {solutionId} = this.context.params;
+
+    Actions.createVersion(solutionId, this.prepareVersionData());
   },
 
-  handleOnCheck(name, type, event, status) {
+  handleOnCheck(name, type, status) {
     let exportSpec = this.state.exportSpec;
 
     exportSpec[type][name] = status;
@@ -123,9 +128,9 @@ export default Radium(React.createClass({
 
   pkMap(section) {
     let map = {
-      views: 'name',
+      dataEndpoints: 'name',
       classes: 'name',
-      codeboxes: 'name',
+      scriptEndpoints: 'name',
       channels: 'name',
       scripts: 'id',
       triggers: 'id',
@@ -159,7 +164,7 @@ export default Radium(React.createClass({
   prepareVersionData() {
     return {
       type: this.state.type,
-      export_spec: JSON.stringify(this.prepareExportSpec()),
+      data: JSON.stringify(this.prepareExportSpec()),
       instance: this.state.instance
     };
   },
@@ -182,9 +187,9 @@ export default Radium(React.createClass({
             iconStyle={{fill: '#4D4D4D'}}
             labelStyle={{color: '#4D4D4D'}}
             name={item[pk]}
-            value={item[pk]}
+            checked={this.state.exportSpec[type][item[pk]]}
             label={item[labelPk].substring(0, 25)}
-            onCheck={this.handleOnCheck.bind(this, item[pk], type)}
+            onCheck={(event, status) => this.handleOnCheck(item[pk], type, status)}
             />
         </div>
       );
@@ -222,7 +227,17 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const {solutionId} = this.context.params;
+    const styles = this.getStyles();
+    const {
+      classes,
+      dataEndpoints,
+      scripts,
+      scriptEndpoints,
+      triggers,
+      schedules,
+      channels
+    } = this.state.instanceData;
 
     return (
       <form
@@ -231,7 +246,7 @@ export default Radium(React.createClass({
         method="post">
 
         <InnerToolbar
-          title={`Solution: ${this.getParams().solutionId}`}
+          title={`Solution: ${solutionId}`}
           backFallback={this.handleBackClick}/>
 
         <Container style={{width: '80%', margin: '65px auto', maxWidth: 800}}>
@@ -264,13 +279,13 @@ export default Radium(React.createClass({
             {this.renderInfo()}
           </div>
           <div className="row" style={{marginTop: 30}}>
-            {this.renderCheckboxes('Classes', this.state.instanceData.classes, 'name', 'name', 'classes')}
-            {this.renderCheckboxes('Data', this.state.instanceData.views, 'name', 'name', 'views')}
-            {this.renderCheckboxes('Scripts', this.state.instanceData.scripts, 'id', 'label', 'scripts')}
-            {this.renderCheckboxes('CodeBoxes', this.state.instanceData.codeboxes, 'name', 'name', 'codeboxes')}
-            {this.renderCheckboxes('Triggers', this.state.instanceData.triggers, 'id', 'label', 'triggers')}
-            {this.renderCheckboxes('Schedules', this.state.instanceData.schedules, 'id', 'label', 'schedules')}
-            {this.renderCheckboxes('Channels', this.state.instanceData.channels, 'name', 'name', 'channels')}
+            {this.renderCheckboxes('Classes', classes, 'name', 'name', 'classes')}
+            {this.renderCheckboxes('Data Endpoints', dataEndpoints, 'name', 'name', 'dataEndpoints')}
+            {this.renderCheckboxes('Scripts', scripts, 'id', 'label', 'scripts')}
+            {this.renderCheckboxes('Script Endpoints', scriptEndpoints, 'name', 'name', 'scriptEndpoints')}
+            {this.renderCheckboxes('Triggers', triggers, 'id', 'label', 'triggers')}
+            {this.renderCheckboxes('Schedules', schedules, 'id', 'label', 'schedules')}
+            {this.renderCheckboxes('Channels', channels, 'name', 'name', 'channels')}
           </div>
           <div className="row" style={{paddingTop: 30}}>
             <div className="col-flex-1" style={{display: 'flex', justifyContent: 'flex-end'}}>
@@ -294,3 +309,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default withRouter(AddVersionView);

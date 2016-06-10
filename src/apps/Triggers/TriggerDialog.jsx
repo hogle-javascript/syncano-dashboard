@@ -11,9 +11,8 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
-import {TextField} from 'syncano-material-ui';
-import {SelectFieldWrapper} from 'syncano-components';
-import {Dialog} from '../../common';
+import {TextField} from 'material-ui';
+import {Dialog, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
   displayName: 'TriggerDialog',
@@ -34,11 +33,23 @@ export default React.createClass({
     class: {
       presence: true
     },
-    codebox: {
+    script: {
       presence: {
         message: `^Script can't be blank`
       }
     }
+  },
+
+  getTriggerParams() {
+    const {label, script, signal} = this.state;
+    const params = {
+      class: this.state.class,
+      label,
+      script,
+      signal
+    };
+
+    return params;
   },
 
   handleDialogShow() {
@@ -48,26 +59,17 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createTrigger({
-      label: this.state.label,
-      codebox: this.state.codebox,
-      class: this.state.class,
-      signal: this.state.signal
-    });
+    Actions.createTrigger(this.getTriggerParams());
   },
 
   handleEditSubmit() {
-    Actions.updateTrigger(
-      this.state.id, {
-        label: this.state.label,
-        codebox: this.state.codebox,
-        class: this.state.class,
-        signal: this.state.signal
-      }
-    );
+    const {id} = this.state;
+
+    Actions.updateTrigger(id, this.getTriggerParams());
   },
 
   render() {
+    const {open, isLoading, canSubmit, signal, classes, script, scripts} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -76,11 +78,11 @@ export default React.createClass({
         ref="dialog"
         title={`${title} a Trigger Socket`}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -113,28 +115,29 @@ export default React.createClass({
             name="label"
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('label')}
+            value={this.state.label}
+            onChange={(event, value) => this.setState({label: value})}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Trigger's label"
             floatingLabelText="Label"/>
           <SelectFieldWrapper
             name="signal"
             options={Store.getSignalsDropdown()}
-            value={this.state.signal}
+            value={signal}
             onChange={(event, index, value) => this.setSelectFieldValue('signal', value)}
             errorText={this.getValidationMessages('signal').join(' ')}/>
           <SelectFieldWrapper
             name="class"
-            options={this.state.classes}
+            options={classes}
             value={this.state.class}
             onChange={(event, index, value) => this.setSelectFieldValue('class', value)}
             errorText={this.getValidationMessages('class').join(' ')}/>
           <SelectFieldWrapper
             name="script"
-            options={this.state.scripts}
-            value={this.state.codebox}
-            onChange={(event, index, value) => this.setSelectFieldValue('codebox', value)}
-            errorText={this.getValidationMessages('codebox').join(' ')}/>
+            options={scripts}
+            value={script}
+            onChange={(event, index, value) => this.setSelectFieldValue('script', value)}
+            errorText={this.getValidationMessages('script').join(' ')}/>
         </Dialog.ContentSection>
       </Dialog.FullPage>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import _ from 'lodash';
 
 // Utils
@@ -12,8 +11,7 @@ import Store from './ScriptsStore';
 
 // Components
 import ListItem from './ScriptsListItem';
-import {ColumnList, Loading} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Loading, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -21,9 +19,6 @@ export default React.createClass({
   displayName: 'ScriptsList',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-
     Reflux.connect(Store),
     DialogsMixin
   ],
@@ -37,7 +32,7 @@ export default React.createClass({
     const checkedScripts = Store.getCheckedItems();
 
     const associatedScripts = _.filter(checkedScripts, (script) => {
-      script[associatedWith] = _.pluck(_.filter(this.state[associatedWith], 'script', script.id), 'label');
+      script[associatedWith] = _.map(_.filter(this.state[associatedWith], 'script', script.id), 'label');
       return script[associatedWith].length > 0;
     });
 

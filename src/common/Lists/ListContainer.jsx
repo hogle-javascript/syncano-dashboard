@@ -1,5 +1,4 @@
 import React from 'react';
-import {Utils} from 'syncano-material-ui';
 
 export default React.createClass({
   displayName: 'ListContainer',
@@ -9,14 +8,12 @@ export default React.createClass({
     className: React.PropTypes.string
   },
 
-  mixins: [Utils.Styles],
-
   getStyles() {
     const styles = {
       marginBottom: 48
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return {...styles, ...this.props.style};
   },
 
   render() {

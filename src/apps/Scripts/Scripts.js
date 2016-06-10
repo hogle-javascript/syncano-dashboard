@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -10,8 +10,8 @@ import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {RaisedButton} from 'material-ui';
+import {Container} from '../../common/';
 import SnippetsInnerToolbar from '../Snippets/SnippetsInnerToolbar';
 
 // Local components
@@ -22,17 +22,18 @@ export default React.createClass({
   displayName: 'Scripts',
 
   mixins: [
-    State,
-    Navigation,
     Reflux.connect(Store),
     DialogsMixin
   ],
 
   componentDidMount() {
     console.info('Scripts::componentDidMount');
-    if (this.getParams().action === 'add') {
+    const {action} = this.props.params;
+
+    if (action === 'add') {
       Actions.showDialog();
     }
+
     Actions.fetch();
   },
 
@@ -41,6 +42,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Scripts" />
         <ScriptDialog />
 
         <SnippetsInnerToolbar>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import _ from 'lodash';
 
 import Actions from './SocketsActions';
@@ -9,11 +10,9 @@ import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
 import TriggersList from '../Triggers/TriggersList';
 import SchedulesList from '../Schedules/SchedulesList';
 import ChannelsList from '../Channels/ChannelsList';
-import {Show} from 'syncano-components';
-import {ShowMore} from '../../common';
+import {Show, ShowMore} from '../../common/';
 
-const SocketsList = ({sockets, handleTitleClick, visibleItems = 3}, context) => {
-  const router = context.router;
+const SocketsList = ({router, sockets, handleTitleClick, visibleItems = 3}, {params}) => {
   const lists = {
     data: DataList,
     scriptEndpoints: ScriptEndpointsList,
@@ -22,14 +21,12 @@ const SocketsList = ({sockets, handleTitleClick, visibleItems = 3}, context) => 
     channels: ChannelsList
   };
 
-  const onClickTitle = (routeName) => {
-    const instanceName = router.getCurrentParams().instanceName;
-
+  const onClickTitle = (pathName) => {
     if (_.isFunction(handleTitleClick)) {
       return handleTitleClick();
     }
 
-    router.transitionTo(routeName, {instanceName});
+    router.push({name: pathName, params});
   };
 
   return (
@@ -50,7 +47,7 @@ const SocketsList = ({sockets, handleTitleClick, visibleItems = 3}, context) => 
             style={{margin: '-30px 0 40px 0'}}
             visible={sockets[socketName].length > visibleItems}
             routeName={_.kebabCase(socketName)}
-            params={router.getCurrentParams()}/>
+            params={params}/>
         </Show>
       )}
     </div>
@@ -58,7 +55,7 @@ const SocketsList = ({sockets, handleTitleClick, visibleItems = 3}, context) => 
 };
 
 SocketsList.contextTypes = {
-  router: React.PropTypes.func
+  params: React.PropTypes.object
 };
 
-export default SocketsList;
+export default withRouter(SocketsList);

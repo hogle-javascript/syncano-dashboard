@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -9,19 +8,14 @@ import Store from './ScriptEndpointsStore';
 
 // Components
 import ListItem from './ScriptEndpointsListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ScriptEndpointsList',
 
-  mixins: [
-    State,
-    Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   getDefaultProps() {
     return {

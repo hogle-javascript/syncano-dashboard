@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
 
 import Actions from './TriggersActions';
 import Store from './TriggersStore';
@@ -9,19 +8,14 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import ListItem from './TriggersListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'TriggersList',
 
-  mixins: [
-    State,
-    Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   getDefaultProps() {
     return {

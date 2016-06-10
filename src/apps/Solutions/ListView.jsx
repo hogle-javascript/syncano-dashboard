@@ -1,6 +1,7 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import Store from './ListViewStore';
@@ -8,23 +9,19 @@ import Actions from './ListViewActions';
 import SessionStore from '../Session/SessionStore';
 
 // Components
-import {Styles, List, ListItem, Divider, RaisedButton} from 'syncano-material-ui';
-import {Container, Loading, Tags, Show, Solutions} from 'syncano-components';
-import {InnerToolbar, Sidebar} from '../../common';
+import {List, ListItem, Divider, RaisedButton} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
+import {Container, Loading, Tags, Show, Solutions, InnerToolbar, Sidebar} from '../../common/';
 
 import CreateDialog from './CreateDialog';
 import CreateDialogActions from './CreateDialogActions';
 import InstallDialog from './InstallDialog';
 import InstallDialogActions from './InstallDialogActions';
 
-export default React.createClass({
-  displayName: 'Solutions',
+const SolutionsListView = React.createClass({
+  displayName: 'SolutionsListView',
 
-  mixins: [
-    State,
-    Navigation,
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
     console.info('Solutions::componentWillMount');
@@ -34,17 +31,19 @@ export default React.createClass({
   getStyles() {
     return {
       listItemChecked: {
-        background: Styles.Colors.lightBlue50
+        background: Colors.lightBlue50
       }
     };
   },
 
   render() {
     const {filter, tags, selectedTags, items} = this.state;
+    const {router} = this.props;
     const styles = this.getStyles();
 
     return (
       <div id='solutions'>
+        <Helmet title="Solutions Market" />
         <div className="row">
           <Sidebar>
             <List className="vm-3-b">
@@ -83,7 +82,7 @@ export default React.createClass({
                 <Solutions.List
                   items={items}
                   onInstall={(solutionId) => InstallDialogActions.showDialogWithPreFetch(solutionId)}
-                  onSeeMore={(solutionId) => this.transitionTo('solutions-edit', {solutionId})}
+                  onSeeMore={(solutionId) => router.push({name: 'solutions-edit', params: {solutionId}})}
                   onTagClick={(tag) => Actions.selectOneTag(tag)}
                   onUnstar={(solutionId) => Actions.unstarSolution(solutionId)}
                   onStar={(solutionId) => Actions.starSolution(solutionId)} />
@@ -97,3 +96,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(SolutionsListView);

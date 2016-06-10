@@ -1,34 +1,30 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
 import Constants from '../../constants/Constants';
 
 // Stores and Actions
-import SessionStore from '../Session/SessionStore';
 import Actions from './DataObjectsActions';
 import Store from './DataObjectsStore';
 
 // Components
-import {IconButton, RaisedButton, Table, TableBody} from 'syncano-material-ui';
-import {Container, Show, Loading} from 'syncano-components';
-import {Dialog, InnerToolbar} from '../../common';
+import {IconButton, RaisedButton, Table, TableBody} from 'material-ui';
+import {Container, Show, Loading, Dialog, InnerToolbar} from '../../common/';
 
 // Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu';
 import DataObjectDialog from './DataObjectDialog';
 import ReadOnlyTooltip from './ReadOnlyTooltip';
 
-export default React.createClass({
+const DataObjects = React.createClass({
   displayName: 'DataObjects',
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store),
     DialogsMixin
   ],
@@ -52,56 +48,47 @@ export default React.createClass({
   },
 
   isClassProtected() {
-    return _.includes(Constants.PROTECTED_FROM_DELETE_CLASS_NAMES, this.getParams().className);
+    const {className} = this.props.params;
+
+    return _.includes(Constants.PROTECTED_FROM_DELETE_CLASS_NAMES, className);
   },
 
   handleDelete() {
     console.info('DataObjects::handleDelete');
-    Actions.removeDataObjects(this.state.classObj.name, Store.getIDsFromTable());
+    const {classObj} = this.state;
+
+    Actions.removeDataObjects(classObj.name, Store.getIDsFromTable());
   },
 
   handleRowSelection(selectedRows) {
     console.info('DataObjects::handleRowSelection', arguments);
-    let rowsSelection = selectedRows;
+    const selectedRowsMap = {
+      all: _.map(Store.getItems(), (item, index) => index),
+      none: []
+    };
 
-    // Writing to the store
-    if (selectedRows === 'all') {
-      rowsSelection = Store.getItems().map((item, index) => {
-        return index;
-      });
-    }
-
-    Actions.setSelectedRows(rowsSelection);
+    Actions.setSelectedRows(_.isString(selectedRows) ? selectedRowsMap[selectedRows] : selectedRows);
   },
 
   handleSelectAll(selectAll) {
     console.info('DataObjects::handleSelectAll', selectAll);
   },
 
-  handleCellClick(cellNumber, cellName) {
-    console.info('DataObjects::handleCellClick', arguments);
-    if (typeof cellName !== 'undefined' && cellName !== 0) {
-      this.showDataObjectEditDialog(cellNumber);
-    }
-  },
-
   handleMoreRows() {
-    Actions.subFetchDataObjects({
-      className: this.state.classObj.name,
-      params: this.state.nextParams
-    });
+    const {nextParams} = this.state;
+
+    Actions.subFetchDataObjects(nextParams);
   },
 
   handleBackClick() {
-    SessionStore.getRouter().transitionTo(
-      'classes',
-      {
-        instanceName: SessionStore.getInstance().name
-      }
-    );
+    const {router, params} = this.props;
+
+    router.push({name: 'classes', params});
   },
 
   initDialogs() {
+    const {isLoading} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -109,10 +96,10 @@ export default React.createClass({
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
         handleConfirm: this.handleDelete,
-        isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         groupName: 'Channel',
-        children: `Do you really want to delete ${Store.getSelectedRowsLength()} Data Object(s)?`
+        children: `Do you really want to delete ${Store.getSelectedRowsLength()} Data Object(s)?`,
+        isLoading
       }
     }];
   },
@@ -123,7 +110,7 @@ export default React.createClass({
     dataObject = _.reduce(dataObject, (result, val, key) => {
       let value = val;
 
-      if (_.isObject(value) && value.type === 'reference') {
+      if (_.isObject(value) && (value.type === 'reference' || value.type === 'relation')) {
         value = value.value;
       }
       if (_.isBoolean(value)) {
@@ -138,50 +125,52 @@ export default React.createClass({
 
   renderTable() {
     console.info('DataObjects::renderTable');
+    const {hasNextPage, isLoading} = this.state;
     const tableData = Store.renderTableData();
     const tableHeader = Store.renderTableHeader(this.handleSelectAll);
 
     return (
-    <div>
-      <Table
-        ref="table"
-        multiSelectable={true}
-        showRowHover={true}
-        onCellClick={this.handleCellClick}
-        onRowSelection={this.handleRowSelection}
-        wrapperStyle={{minHeight: '120px'}}
-        bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>
-        {tableHeader}
-        <TableBody
-          className="mui-table-body"
-          deselectOnClickaway={false}
+      <div>
+        <Table
+          ref="table"
+          multiSelectable={true}
           showRowHover={true}
-          stripedRows={false}>
-          {tableData}
-        </TableBody>
-      </Table>
+          onRowSelection={this.handleRowSelection}
+          wrapperStyle={{minHeight: '120px'}}
+          bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>
+          {tableHeader}
+          <TableBody
+            className="mui-table-body"
+            deselectOnClickaway={false}
+            showRowHover={true}
+            stripedRows={false}>
+            {tableData}
+          </TableBody>
+        </Table>
 
-      <div
-        className="row align-center"
-        style={{margin: 50}}>
-        <div>Loaded {tableData.length} Data Objects</div>
-      </div>
-      <Show if={this.state.hasNextPage}>
         <div
           className="row align-center"
           style={{margin: 50}}>
-          <RaisedButton
-            label="Load more"
-            onClick={this.handleMoreRows}/>
+          <div>Loaded {tableData.length} Data Objects</div>
         </div>
-      </Show>
-    </div>
+        <Loading show={isLoading}/>
+        <Show if={hasNextPage && !isLoading}>
+          <div
+            className="row align-center"
+            style={{margin: 50}}>
+            <RaisedButton
+              label="Load more"
+              onClick={this.handleMoreRows}/>
+          </div>
+        </Show>
+      </div>
     );
   },
 
   render() {
-    const {selectedRows, isLoading} = this.state;
-    const className = this.getParams().className;
+    const {className} = this.props.params;
+    const {items, selectedRows, isLoading} = this.state;
+    const title = `Class: ${className}`;
     let selectedMessageText = '';
 
     if (_.isArray(selectedRows) && !_.isEmpty(selectedRows)) {
@@ -190,11 +179,12 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title={title} />
         {this.getDialogs()}
         <DataObjectDialog />
 
         <InnerToolbar
-          title={`Class: ${className} ${selectedMessageText}`}
+          title={`${title} ${selectedMessageText}`}
           backFallback={this.handleBackClick}
           backButtonTooltip="Go back to Classes list">
 
@@ -209,7 +199,7 @@ export default React.createClass({
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-delete"
             tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Delete Data Objects'}
-            disabled={selectedRows && selectedRows.length < 1 || this.isClassProtected()}
+            disabled={(selectedRows && !selectedRows.length) || this.isClassProtected()}
             onTouchTap={() => this.showDialog('deleteDataObjectDialog')}/>
 
           <IconButton
@@ -224,7 +214,7 @@ export default React.createClass({
 
         </InnerToolbar>
         <Container>
-          <Loading show={isLoading}>
+          <Loading show={!items && isLoading}>
             {this.renderTable()}
           </Loading>
         </Container>
@@ -232,3 +222,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(DataObjects);

@@ -37,9 +37,9 @@ export default Reflux.createStore({
       instance: null,
       instances: null,
       instanceData: {
-        views: [],
+        dataEndpoints: [],
         classes: [],
-        codeboxes: [],
+        scriptEndpoints: [],
         scripts: [],
         triggers: [],
         schedules: [],
@@ -47,9 +47,9 @@ export default Reflux.createStore({
 
       },
       exportSpec: {
-        views: [],
+        dataEndpoints: [],
         classes: {},
-        codeboxes: [],
+        scriptEndpoints: [],
         scripts: {},
         triggers: {},
         schedules: {},
@@ -137,8 +137,8 @@ export default Reflux.createStore({
 
     const join = this.joinTrailing(
       Actions.fetchClasses.completed,
-      Actions.fetchDataViews.completed,
-      Actions.fetchCodeBoxes.completed,
+      Actions.fetchDataEndpoints.completed,
+      Actions.fetchScriptEndpoints.completed,
       Actions.fetchTriggers.completed,
       Actions.fetchScripts.completed,
       Actions.fetchSchedules.completed,
@@ -150,8 +150,8 @@ export default Reflux.createStore({
     );
 
     Actions.fetchClasses();
-    Actions.fetchDataViews();
-    Actions.fetchCodeBoxes();
+    Actions.fetchDataEndpoints();
+    Actions.fetchScriptEndpoints();
     Actions.fetchTriggers();
     Actions.fetchScripts();
     Actions.fetchSchedules();
@@ -159,45 +159,40 @@ export default Reflux.createStore({
   },
 
   onFetchClassesCompleted(obj) {
-    this.data.instanceData.classes = this.saveListFromSyncano(obj);
+    this.data.instanceData.classes = obj;
   },
 
-  onFetchCodeBoxesCompleted(obj) {
-    this.data.instanceData.CodeBoxes = this.saveListFromSyncano(obj);
+  onFetchScriptEndpointsCompleted(obj) {
+    this.data.instanceData.scriptEndpoints = obj;
   },
 
   onFetchTriggersCompleted(obj) {
-    this.data.instanceData.triggers = this.saveListFromSyncano(obj);
+    this.data.instanceData.triggers = obj;
   },
 
   onFetchSchedulesCompleted(obj) {
-    this.data.instanceData.schedules = this.saveListFromSyncano(obj);
+    this.data.instanceData.schedules = obj;
   },
 
-  onFetchDataViewsCompleted(obj) {
-    this.data.instanceData.views = this.saveListFromSyncano(obj);
+  onFetchDataEndpointsCompleted(obj) {
+    this.data.instanceData.dataEndpoints = obj;
   },
 
   onFetchChannelsCompleted(obj) {
-    this.data.instanceData.channels = this.saveListFromSyncano(obj);
+    this.data.instanceData.channels = obj;
   },
 
   onFetchScriptsCompleted(obj) {
-    this.data.instanceData.scripts = this.saveListFromSyncano(obj);
+    this.data.instanceData.scripts = obj;
   },
 
   onCreateVersionCompleted() {
     console.debug('AddVersionViewStore::onCreateSolutionCompleted');
-    SessionStore.getRouter().transitionTo(
-      'solutions-edit',
-      SessionStore.getRouter().getCurrentParams()
-    );
+    SessionStore.getRouter().push({name: 'solutions-edit', params: SessionStore.getParams()});
   },
 
   onFetchInstancesCompleted(instances) {
     console.debug('SolutionVersionDialogStore::onFetchInstancesCompleted');
     Actions.setInstances(instances);
   }
-
 });
-

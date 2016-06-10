@@ -11,9 +11,8 @@ import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 // Components
-import {TextField, Toggle, Checkbox} from 'syncano-material-ui';
-import {SelectFieldWrapper, Show} from 'syncano-components';
-import {Dialog} from '../../common';
+import {TextField, Toggle, Checkbox, AutoComplete} from 'material-ui';
+import {SelectFieldWrapper, Show, Dialog, Notification} from '../../common/';
 
 export default React.createClass({
   displayName: 'DataEndpointDialog',
@@ -47,35 +46,49 @@ export default React.createClass({
 
   handleAddSubmit() {
     const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
-
-    Actions.createDataEndpoint({
+    const className = this.state.class;
+    const isActualClass = ClassesStore.getClassByName(className);
+    const payload = {
       name,
-      class: this.state.class,
+      class: className,
       description,
       order_by,
       page_size,
       excluded_fields,
       expand
-    });
+    };
+
+    if (!isActualClass) {
+      return Actions.createDataEndpointWithClass(payload);
+    }
+
+    return Actions.createDataEndpoint(payload);
   },
 
   handleEditSubmit() {
-    const {description, order_by, page_size, excluded_fields, expand} = this.state;
+    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
+    const className = this.state.class;
+    const isActualClass = ClassesStore.getClassByName(className);
+    const payload = {
+      class: className,
+      description,
+      order_by,
+      page_size,
+      excluded_fields,
+      expand
+    };
 
-    Actions.updateDataEndpoint(
-      this.state.name, {
-        class: this.state.class,
-        description,
-        order_by,
-        page_size,
-        excluded_fields,
-        expand
-      }
-    );
+
+    if (!isActualClass) {
+      return Actions.updateDataEndpointWithClass(name, payload);
+    }
+
+    return Actions.updateDataEndpoint(name, payload);
   },
 
   handleToggle(fieldsType, fieldName, event, value) {
     console.info('DataEndpointDialog::handleToggle', arguments);
+    const {expand, excluded_fields} = this.state;
 
     let genList = (list, name, val) => {
       let arr = list.replace(/ /g, '').split(',').filter((listItem) => listItem);
@@ -92,11 +105,11 @@ export default React.createClass({
     let fields = '';
 
     if (fieldsType === 'showFields') {
-      fields = genList(this.state.excluded_fields, fieldName, !value);
+      fields = genList(excluded_fields, fieldName, !value);
       this.setState({excluded_fields: fields});
     }
     if (fieldsType === 'expandFields') {
-      fields = genList(this.state.expand, fieldName, value);
+      fields = genList(expand, fieldName, value);
       this.setState({expand: fields});
     }
   },
@@ -122,17 +135,15 @@ export default React.createClass({
                 value={field.name}
                 label={field.name}
                 defaultToggled={!this.isEnabled(this.state.excluded_fields, field.name)}
-                onToggle={this.handleToggle.bind(this, 'showFields', field.name)}
-                />
+                onToggle={this.handleToggle.bind(this, 'showFields', field.name)} />
             </div>
             <div className="col-xs-8">
-              <Show if={field.type === 'reference'}>
+              <Show if={field.type === 'reference' || field.type === 'relation'}>
                 <Checkbox
                   name="expand"
                   defaultChecked={this.isEnabled(this.state.expand, field.name)}
                   disabled={this.isEnabled(this.state.excluded_fields, field.name)}
-                  onCheck={this.handleToggle.bind(this, 'expandFields', field.name)}
-                  />
+                  onCheck={this.handleToggle.bind(this, 'expandFields', field.name)} />
               </Show>
             </div>
           </div>
@@ -143,10 +154,19 @@ export default React.createClass({
 
   renderOptions() {
     console.info('DataEndpointDialog::renderOrderBy', this.state.class);
-    let orderField = <div key="options_header" style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
     const orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
+    let orderField = (
+      <div
+        key="options_header"
+        style={{
+          paddingTop: 24,
+          paddingBottom: 24
+        }}>
+        <Notification>Add schema fields with order index</Notification>
+      </div>
+    );
 
-    if (orderFields.length > 0) {
+    if (orderFields.length) {
       orderField = (
         <SelectFieldWrapper
           name="order_by"
@@ -158,29 +178,18 @@ export default React.createClass({
       );
     }
 
-    return [
-      <div>Response options</div>,
-      orderField,
-      <TextField
-        ref="page_size"
-        name="page_size"
-        fullWidth={true}
-        valueLink={this.linkState('page_size')}
-        errorText={this.getValidationMessages('page_size').join(' ')}
-        hintText="Number"
-        floatingLabelText="Number of records in data set"/>
-    ];
+    return (
+      <div>
+        <div>Response options</div>
+        {orderField}
+      </div>
+    );
   },
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    let fields = null;
-    let options = null;
-
-    if (this.state.class) {
-      fields = this.renderFields();
-      options = this.renderOptions();
-    }
+    const {open, isLoading, canSubmit, classes} = this.state;
+    const submitLabel = !ClassesStore.getClassByName(this.state.class) ? 'Confirm and create a class' : 'Confirm';
 
     return (
       <Dialog.FullPage
@@ -188,11 +197,12 @@ export default React.createClass({
         ref="dialog"
         title={`${title} a Data Endpoint`}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
+            submitLabel={submitLabel}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -218,47 +228,70 @@ export default React.createClass({
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
         }>
-        {this.renderFormNotifications()}
-        <Dialog.ContentSection>
-          <div className="col-xs-12">
+        <Dialog.ContentSection noMargin={true}>
+          <div className="col-flex-1">
             <TextField
               ref="name"
               name="name"
               autoFocus={true}
               fullWidth={true}
               disabled={this.hasEditMode()}
-              valueLink={this.linkState('name')}
+              value={this.state.name}
+              onChange={(event, value) => this.setState({name: value})}
               errorText={this.getValidationMessages('name').join(' ')}
               hintText="Data Endpoint's name"
               floatingLabelText="Name"/>
           </div>
-          <div className="col-flex-1" style={{paddingLeft: 15}}>
+          <div
+            className="col-flex-1"
+            style={{paddingLeft: 15}}>
             <TextField
               ref="description"
               name="description"
               fullWidth={true}
-              valueLink={this.linkState('description')}
+              value={this.state.description}
+              onChange={(event, value) => this.setState({description: value})}
               errorText={this.getValidationMessages('description').join(' ')}
               hintText="Data Endpoint's description"
               floatingLabelText="Description (optional)"/>
           </div>
         </Dialog.ContentSection>
-        <Dialog.ContentSection>
+        <Dialog.ContentSection noMargin={true}>
           <div className="col-flex-1">
-            <SelectFieldWrapper
+            <TextField
+              ref="page_size"
+              name="page_size"
+              fullWidth={true}
+              value={this.state.page_size}
+              onChange={(event, value) => this.setState({page_size: value})}
+              errorText={this.getValidationMessages('page_size').join(' ')}
+              hintText="Number"
+              floatingLabelText="Number of records in data set"/>
+          </div>
+        </Dialog.ContentSection>
+        <Dialog.ContentSection>
+          <div className="col-flex-1" style={{position: 'relative'}}>
+            <AutoComplete
+              ref="class"
               name="class"
-              options={this.state.classes}
-              value={this.state.class}
-              onChange={(event, index, value) => this.setSelectFieldValue('class', value)}
+              floatingLabelText="Class"
+              hintText="Start typing to see matching classes list or type a new class name"
+              filter={(searchText, key) => !searchText ? true : searchText !== '' && key.includes(searchText)}
+              dataSource={classes}
+              searchText={this.state.class}
+              onNewRequest={(value) => this.setState({class: value})}
+              onUpdateInput={(value) => this.setState({class: value})}
+              fullWidth={true}
+              openOnFocus={true}
               errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection>
           <div className="col-flex-1">
-            {fields}
+            {this.renderFields()}
           </div>
-          <div className="col-flex-1" style={{paddingLeft: 40}}>
-            {options}
+          <div className="col-flex-1" style={{paddingLeft: 15}}>
+            {this.renderOptions()}
           </div>
         </Dialog.ContentSection>
       </Dialog.FullPage>

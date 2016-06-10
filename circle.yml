@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 4.4.1
+    version: 5.11.1
 
 general:
   artifacts:
@@ -11,7 +11,7 @@ test:
   override:
     - ./test.sh:
         parallel: true
-        timeout: 600
+        timeout: 120
 
 deployment:
   production:

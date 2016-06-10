@@ -1,7 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 import _ from 'lodash';
-import {FontIcon, Styles} from 'syncano-material-ui';
+import {FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 const RadiumIcon = Radium(FontIcon);
 
@@ -12,7 +13,7 @@ export default Radium(({className}) => {
     marginLeft: 5,
     textDecoration: 'underline',
     ':hover': {
-      color: Styles.Colors.blue400
+      color: Colors.blue400
     }
   };
 

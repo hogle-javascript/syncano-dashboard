@@ -3,6 +3,7 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 export default CreateActions({
   fetch: {},
   setFlag: {},
+  resetFlag: {},
   setDataSource: {},
 
   fetchTemplate: {
@@ -32,5 +33,4 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Templates.renderFromEndpoint'
   }
-
 });

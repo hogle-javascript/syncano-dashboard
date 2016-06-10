@@ -5,7 +5,6 @@ export default CreateActions(
     login: {},
     logout: {},
     setToken: {},
-    setRouter: {},
     setUser: {},
     setTheme: {},
     setInstance: {},

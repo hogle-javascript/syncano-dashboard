@@ -9,9 +9,9 @@ import Actions from './GCMPushNotificationsActions';
 import Store from './GCMConfigDialogStore';
 
 // Components
-import {TextField, Styles} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
-import {Dialog} from '../../../common';
+import {TextField} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
+import {Loading, Dialog} from '../../../common/';
 
 export default React.createClass({
   displayName: 'GCMConfigDialog',
@@ -26,12 +26,12 @@ export default React.createClass({
     return {
       development_api_key: {
         length: {
-          maximum: 200
+          maximum: 40
         }
       },
       production_api_key: {
         length: {
-          maximum: 200
+          maximum: 40
         }
       }
     };
@@ -54,19 +54,28 @@ export default React.createClass({
       GDClink: {
         margin: '80px 0',
         cursor: 'pointer',
-        color: Styles.Colors.blue400
+        color: Colors.blue400
       }
     };
   },
 
-  handleAddSubmit() {
+  handleSaveGCMConfig() {
     const {production_api_key, development_api_key} = this.state;
 
     Actions.configGCMPushNotification({production_api_key, development_api_key});
   },
 
+  handleAddSubmit() {
+    this.handleSaveGCMConfig();
+  },
+
+  handleEditSubmit() {
+    this.handleSaveGCMConfig();
+  },
+
   render() {
     const styles = this.getStyles();
+    const {open, isLoading, canSubmit, isCertLoading, development_api_key, production_api_key} = this.state;
 
     return (
       <Dialog.FullPage
@@ -75,31 +84,51 @@ export default React.createClass({
         title="Configure Push Notification Socket - GCM"
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              GCM Push Notification Sockets allow for sending messages directly to your users Android devices. Thanks
+               to this functionality, your users can be quickly informed about changes taking place within your
+               application.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Development and Production API keys">
+              Those are your API keys from Google Developer Console. At least one of them is required to send Push
+               Notification messages to devices.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/push-notification-sockets-android">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
-        <div className="row align-center hp-2-l hp-2-r">
+        <div className="row align-center hp-2-l hp-2-r vp-2-t">
           <div dangerouslySetInnerHTML={{__html: require('./phone-android.svg')}}>
           </div>
           <div className="col-flex-1 hm-3-l">
-            <Loading show={this.state.isCertLoading}>
+            <Loading show={isCertLoading}>
               <TextField
                 ref="development_api_key"
                 name="development_api_key"
                 autoFocus={true}
-                valueLink={this.linkState('development_api_key')}
+                value={development_api_key}
+                onChange={(event, value) => this.setState({development_api_key: value})}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Development API key"
                 errorText={this.getValidationMessages('development_api_key').join(' ')}/>
               <TextField
                 ref="production_api_key"
                 name="production_api_key"
-                valueLink={this.linkState('production_api_key')}
+                value={production_api_key}
+                onChange={(event, value) => this.setState({production_api_key: value})}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Production API key"
                 errorText={this.getValidationMessages('production_api_key').join(' ')}/>

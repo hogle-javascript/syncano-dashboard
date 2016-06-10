@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import Radium from 'radium';
 import Moment from 'moment';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import {FormMixin, DialogsMixin} from '../../mixins';
 
@@ -11,9 +12,9 @@ import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
-import {FlatButton, IconButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
-import {Billing, Container, Loading, Color} from 'syncano-components';
-import {Dialog, InnerToolbar} from '../../common';
+import {FlatButton, IconButton, RaisedButton, TextField} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
+import {Billing, Container, Loading, Color, Dialog, InnerToolbar} from '../../common/';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 import Chart from './ProfileBillingChart';
@@ -88,7 +89,7 @@ export default Radium(React.createClass({
   },
 
   handleCancelProductionPlan() {
-    Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => item.id));
+    Actions.cancelSubscriptions(this.state.subscriptions.map((item) => item.id));
   },
 
   handleShowPlanDialog() {
@@ -192,7 +193,7 @@ export default Radium(React.createClass({
       );
     } else if (plan === 'paid-commitment') {
       if (Store.isNewSubscription()) {
-        const subscription = this.state.subscriptions._items[1];
+        const subscription = this.state.subscriptions[1];
         const total = Store.getTotalPlanValue(subscription);
         const limitsData = Store.getLimitsData(subscription, plan);
 
@@ -254,7 +255,8 @@ export default Radium(React.createClass({
             <div className="col-md-8 col-lg-5">
               <TextField
                 ref="soft_limit"
-                valueLink={this.linkState('soft_limit')}
+                value={this.state.soft_limit}
+                onChange={(event, value) => this.setState({soft_limit: value})}
                 errorText={this.getValidationMessages('soft_limit').join(' ')}
                 name="soft_limit"
                 floatingLabelText="Soft Limit"
@@ -263,7 +265,8 @@ export default Radium(React.createClass({
             <div className="col-md-8 col-lg-5">
               <TextField
                 ref="hard_limit"
-                valueLink={this.linkState('hard_limit')}
+                value={this.state.hard_limit}
+                onChange={(event, value) => this.setState({hard_limit: value})}
                 errorText={this.getValidationMessages('hard_limit').join(' ')}
                 name="hard_limit"
                 floatingLabelText="Hard Limit"
@@ -278,7 +281,7 @@ export default Radium(React.createClass({
                   disabled={(!this.state.hard_limit && !this.state.soft_limit)}/>
                 <IconButton
                   iconClassName="synicon-information-outline"
-                  iconStyle={{color: Styles.Colors.blue500}}
+                  iconStyle={{color: Colors.blue500}}
                   tooltip={toolTip}/>
               </div>
             </div>
@@ -378,6 +381,7 @@ export default Radium(React.createClass({
 
     return (
       <div>
+        <Helmet title="Billing Plan" />
         {this.getDialogs()}
         <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
 
@@ -405,7 +409,7 @@ export default Radium(React.createClass({
                   plan={this.state.profile.subscription.plan}
                   isNewSubscription={Store.isNewSubscription()}
                   onPlanDialog={this.handleShowPlanDialog}
-                  onDeleteSubscription={() => Actions.cancelNewPlan(this.state.subscriptions._items)}/>
+                  onDeleteSubscription={() => Actions.cancelNewPlan(this.state.subscriptions)}/>
               </div>
             </div>
             <div

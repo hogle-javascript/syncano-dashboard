@@ -6,8 +6,12 @@ import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import Actions from './TracesActions';
 
+import {StoreLoadingMixin} from '../../mixins';
+
 export default Reflux.createStore({
   listenables: Actions,
+
+  mixins: [StoreLoadingMixin],
 
   getInitialState() {
     return {
@@ -28,6 +32,7 @@ export default Reflux.createStore({
         SessionActions.setInstance,
         this.refreshData
     );
+    this.setLoadingStates();
   },
 
   refreshData() {
@@ -83,22 +88,22 @@ export default Reflux.createStore({
 
   onFetchScriptTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchScriptTracesCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+    this.setTraces(tracesObj);
   },
 
-  onFetchScriptEndpointTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchScriptEndpointTracesCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+  onFetchScriptEndpointTracesCompleted(scriptEndpointTraces) {
+    console.debug('TracesStore::onFetchScriptEndpointTracesCompleted', scriptEndpointTraces);
+    this.setTraces(scriptEndpointTraces);
   },
 
-  onFetchTriggerTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchTriggerTracesCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+  onFetchTriggerTracesCompleted(triggerTraces) {
+    console.debug('TracesStore::onFetchTriggerTracesCompleted', triggerTraces);
+    this.setTraces(triggerTraces);
   },
 
-  onFetchScheduleTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchScheduleTracesCompleted', tracesObj);
-    this.setTraces(tracesObj._items);
+  onFetchScheduleTracesCompleted(scheduleTraces) {
+    console.debug('TracesStore::onFetchScheduleTracesCompleted', scheduleTraces);
+    this.setTraces(scheduleTraces);
   },
 
   onFetchCurrentScriptCompleted(currentObj) {
@@ -110,6 +115,7 @@ export default Reflux.createStore({
     console.debug('TracesStore::onFetchCurrentScriptEndpointCompleted', currentObj);
     this.saveCurrentObj(currentObj.name);
   },
+
   onFetchCurrentTriggerCompleted(currentObj) {
     console.debug('TracesStore::onFetchCurrentTriggerCompleted', currentObj);
     this.saveCurrentObj(currentObj.label);

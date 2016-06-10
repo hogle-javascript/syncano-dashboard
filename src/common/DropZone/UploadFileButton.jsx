@@ -1,21 +1,32 @@
 import React from 'react';
-
-import {RaisedButton, FontIcon, Styles} from 'syncano-material-ui';
+import {RaisedButton, FontIcon} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'UploadFileButton',
 
+  getDefaultProps() {
+    return {
+      backgroundColor: Colors.grey200,
+      labelColor: Colors.grey500,
+      iconClassName: 'synicon-cloud-upload'
+    };
+  },
+
   getStyles() {
+    const {labelColor} = this.props;
+
     return {
       uploadButton: {
         marginBottom: 20,
         fontWeight: 600,
-        color: Styles.Colors.grey500
+        color: labelColor
       },
       uploadButtonIcon: {
-        color: Styles.Colors.grey500,
+        color: labelColor,
         fontSize: 18,
-        paddingRight: 8
+        paddingRight: 8,
+        paddingTop: 2
       }
     };
   },
@@ -43,6 +54,7 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
+    const {backgroundColor, labelColor, style, iconStyle, iconClassName, ...other} = this.props;
 
     return (
       <div>
@@ -53,15 +65,18 @@ export default React.createClass({
           type="file"
           onChange={this.handleFile}/>
         <RaisedButton
-          style={styles.uploadButton}
-          backgroundColor={Styles.Colors.grey200}
-          labelColor={Styles.Colors.grey500}
-          onTouchTap={this.handleClickIpnut}>
+          style={{...styles.uploadButton, ...style}}
+          backgroundColor={backgroundColor}
+          labelColor={labelColor}
+          onTouchTap={this.handleClickIpnut}
+          {...other}>
           <div className="row align-center align-middle hp-2-l hp-2-r">
             <FontIcon
-              style={styles.uploadButtonIcon}
-              className="synicon-cloud-upload"/>
-            <div>{this.props.uploadButtonLabel}</div>
+              style={{...styles.uploadButtonIcon, ...iconStyle}}
+              className={iconClassName}/>
+            <div>
+              {this.props.uploadButtonLabel}
+            </div>
           </div>
         </RaisedButton>
       </div>

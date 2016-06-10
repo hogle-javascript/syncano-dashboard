@@ -48,6 +48,11 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
+  clearStore() {
+    this.data = this.getInitialState();
+    this.trigger(this.data);
+  },
+
   refreshData() {
     console.debug('InstancesStore::refreshData');
     Actions.fetchInstances();
@@ -133,10 +138,11 @@ export default Reflux.createStore({
 
   redirectToInstancesList() {
     const router = SessionStore.getRouter();
-    const activeRouteName = router.getCurrentRoutes()[router.getCurrentRoutes().length - 1].name;
+    const routes = SessionStore.getRoutes();
+    const activeRouteName = routes[routes.length - 1].name;
 
     if (!_.isUndefined(activeRouteName) && activeRouteName !== 'instances' || _.isUndefined(activeRouteName)) {
-      SessionStore.getRouter().transitionTo('instances');
+      router.push('instances');
     }
   },
 
@@ -164,7 +170,7 @@ export default Reflux.createStore({
 
   onFetchInstancesCompleted(items) {
     console.debug('InstancesStore::onFetchInstancesCompleted');
-    Actions.setInstances(this.saveListFromSyncano(items));
+    Actions.setInstances(items);
   },
 
   onFetchInstancesFailure(result) {

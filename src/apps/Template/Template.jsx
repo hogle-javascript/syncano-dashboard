@@ -1,29 +1,26 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
-import AutosaveMixin from './TemplateAutosaveMixin';
+import AutosaveMixin from '../Script/ScriptAutosaveMixin';
 
 import Store from './TemplateStore';
 import Actions from './TemplateActions';
 
-import {Checkbox, FontIcon, RaisedButton, TextField} from 'syncano-material-ui';
-import {Show, Loading, TogglePanel, Truncate} from 'syncano-components';
-import {InnerToolbar, Editor, Notification} from '../../common';
+import {Checkbox, FontIcon, RaisedButton, TextField} from 'material-ui';
+import {InnerToolbar, Editor, Show, Loading, TogglePanel, Truncate} from '../../common/';
 
 export default React.createClass({
   displayName: 'Template',
 
   contextTypes: {
+    params: React.PropTypes.object,
     muiTheme: React.PropTypes.object
   },
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store),
     SnackbarNotificationMixin,
     AutosaveMixin,
@@ -32,7 +29,10 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  autosaveAttributeName: 'templateContentAutosave',
+  mixinsConfig: {
+    autosaveAttributeName: 'templateContentAutosave',
+    editorRefs: ['contextEditor', 'contentEditor', 'previewEditor']
+  },
 
   validatorConstraints() {
     const {successValidationAction} = this.state;
@@ -80,7 +80,9 @@ export default React.createClass({
     const {renderedTemplate} = this.state;
 
     if (renderedTemplate) {
-      this.refs.previewEditor.editor.setValue(renderedTemplate);
+      const value = _.isObject(renderedTemplate) ? JSON.stringify(renderedTemplate, null, '\t') : renderedTemplate;
+
+      this.refs.previewEditor.editor.setValue(value);
     }
   },
 
@@ -121,10 +123,10 @@ export default React.createClass({
     if (template && contentEditor && contextEditor) {
       const contentEditorValue = contentEditor.editor.getValue();
       const contextEditorValue = contextEditor.editor.getValue();
-      const isNewContent = template.content === contentEditorValue;
-      const isNewContext = template.context === contextEditorValue;
+      const isContentSaved = _.isEqual(template.content, contentEditorValue);
+      const isContextSaved = _.isEqual(JSON.stringify(template.context, null, '\t'), contextEditorValue);
 
-      return !(isNewContent || isNewContext);
+      return isContentSaved && isContextSaved;
     }
 
     return true;
@@ -135,10 +137,12 @@ export default React.createClass({
     const content = this.refs.contentEditor.editor.getValue();
     const context = this.refs.contextEditor.editor.getValue();
 
-    this.clearAutosaveTimer();
-    Actions.setDataSource(this.refs.dataSourceUrl.getValue());
-    Actions.updateTemplate(template.name, {content, context});
-    this.setSnackbarNotification({message: 'Saving...'});
+    if (this.areEditorsLoaded()) {
+      this.clearAutosaveTimer();
+      Actions.setDataSource(this.refs.dataSourceUrl.getValue());
+      Actions.updateTemplate(template.name, {content, context});
+      this.setSnackbarNotification({message: 'Saving...'});
+    }
   },
 
   handleOnSourceChange() {
@@ -158,11 +162,15 @@ export default React.createClass({
   },
 
   handleRender() {
-    const {template} = this.state;
-    const dataSourceUrlValue = this.refs.dataSourceUrl.getValue();
+    if (!this.areEditorsLoaded()) {
+      return null;
+    }
 
-    if (dataSourceUrlValue.length) {
-      return Actions.renderFromEndpoint(template.name, dataSourceUrlValue);
+    const {template} = this.state;
+    const {dataSourceUrl} = this.refs;
+
+    if (dataSourceUrl && dataSourceUrl.getValue().length) {
+      return Actions.renderFromEndpoint(template.name, dataSourceUrl.getValue());
     }
 
     Actions.renderTemplate(template.name, template.context);
@@ -170,20 +178,6 @@ export default React.createClass({
 
   setFlag(successValidationAction) {
     Actions.setFlag(successValidationAction, this.handleFormValidation);
-  },
-
-  renderErrorNotifications(errorsKey) {
-    const styles = this.getStyles();
-
-    return (
-      <Show if={this.getValidationMessages(errorsKey).length}>
-        <div style={styles.notification}>
-          <Notification type="error">
-            {this.getValidationMessages(errorsKey).join(' ')}
-          </Notification>
-        </div>
-      </Show>
-    );
   },
 
   renderRunButtons(label, iconName, flagName) {
@@ -200,28 +194,31 @@ export default React.createClass({
   },
 
   render() {
+    const {instanceName} = this.context.params;
     const {template, isLoading} = this.state;
-    const instanceName = this.getParams().instanceName;
+    const title = `Template: ${template.name}`;
 
     return (
       <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'column'}}>
-        <InnerToolbar
-          title={`Template: ${template.name}`}>
-          <div style={{display: 'inline-block'}}>
-            <Checkbox
-              ref="autosaveCheckbox"
-              name="autosaveCheckbox"
-              label="Autosave"
-              labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
-              defaultChecked={this.isAutosaveEnabled()}
-              onCheck={this.saveCheckboxState}/>
-          </div>
-          <RaisedButton
-            label="SAVE"
-            style={{marginLeft: 5, marginRight: 5}}
-            onTouchTap={() => this.setFlag('update')} />
-          {this.renderRunButtons('RENDER', 'synicon-play', 'render')}
-          {this.renderRunButtons('RENDER IN TAB', 'synicon-open-in-new', 'tabRender')}
+        <Helmet title={title} />
+        <InnerToolbar title={title}>
+          <Show if={!isLoading}>
+            <div style={{display: 'inline-block'}}>
+              <Checkbox
+                ref="autosaveCheckbox"
+                name="autosaveCheckbox"
+                label="Autosave"
+                labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
+                defaultChecked={this.isAutosaveEnabled()}
+                onCheck={this.saveCheckboxState}/>
+            </div>
+            <RaisedButton
+              label="SAVE"
+              style={{marginLeft: 5, marginRight: 5}}
+              onTouchTap={() => this.setFlag('update')} />
+            {this.renderRunButtons('RENDER', 'synicon-play', 'render')}
+            {this.renderRunButtons('RENDER IN TAB', 'synicon-open-in-new', 'tabRender')}
+          </Show>
         </InnerToolbar>
 
         <Loading
@@ -232,8 +229,7 @@ export default React.createClass({
               <TogglePanel
                 title="Code"
                 initialOpen={true}
-                style={{display: 'flex', flexDirection: 'column'}}>
-                {this.renderErrorNotifications('content')}
+                style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                 <div style={{position: 'relative', flex: 1}}>
                   <Editor
                     ref="contentEditor"
@@ -243,8 +239,11 @@ export default React.createClass({
                     onLoad={this.clearAutosaveTimer}
                     value={template.content}
                     width="100%"
-                    height="100%"
+                    height="calc(100% - 60px)"
                     style={{position: 'absolute'}} />
+                  <div style={{position: 'absolute', bottom: 0, margin: '15px auto -10px auto', width: '100%'}}>
+                    {this.renderFormNotifications()}
+                  </div>
                 </div>
               </TogglePanel>
             </div>
@@ -258,10 +257,10 @@ export default React.createClass({
                     ref="dataSourceUrl"
                     name="dataSourceUrl"
                     fullWidth={true}
-                    valueLink={this.linkState('dataSourceUrl')}
+                    value={this.state.dataSourceUrl}
+                    onChange={(event, value) => this.setState({dataSourceUrl: value})}
                     errorText={this.getValidationMessages('dataSourceUrl').join(' ')}
                     hintText={<Truncate text={`e.g. ${SYNCANO_BASE_URL}v1.1/instances/${instanceName}/classes/`}/>}
-                    onChange={this.handleOnSourceChange}
                     floatingLabelText="Data source URL"/>
                 </TogglePanel>
               </div>
@@ -269,8 +268,8 @@ export default React.createClass({
               <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
                 <TogglePanel
                   title="Context"
-                  initialOpen={true}>
-                  {this.renderErrorNotifications('context')}
+                  initialOpen={true}
+                  style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                   <Editor
                     name="contextEditor"
                     ref="contextEditor"
@@ -278,7 +277,7 @@ export default React.createClass({
                     height="200px"
                     onChange={this.handleOnSourceChange}
                     onLoad={this.clearAutosaveTimer}
-                    value={JSON.stringify(this.state.template.context, null, '\t') || [
+                    value={JSON.stringify(template.context, null, '\t') || [
                       '{',
                       '    "foo": "bar",',
                       '    "bar": "foo"',
@@ -291,14 +290,13 @@ export default React.createClass({
                 <TogglePanel
                   title="Preview"
                   initialOpen={true}
-                  style={{display: 'flex', flexDirection: 'column'}}>
+                  style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                   <div style={{position: 'relative', flex: 1, minHeight: 200}}>
                     <Editor
                       name="previewEditor"
                       ref="previewEditor"
                       mode="html"
                       readOnly={true}
-                      value=""
                       width="100%"
                       height="100%"
                       style={{position: 'absolute'}} />

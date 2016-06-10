@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
 
 import Actions from './UsersActions';
 import Store from './UsersStore';
@@ -9,19 +8,14 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import ListItem from './UsersListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'UsersList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('Users::componentWillUpdate');

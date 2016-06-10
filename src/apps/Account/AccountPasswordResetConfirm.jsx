@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 // Utils
 import {FormMixin} from '../../mixins';
@@ -10,16 +9,18 @@ import Store from './AuthStore';
 import Actions from './AuthActions';
 
 // Components
-import {TextField, RaisedButton} from 'syncano-material-ui';
+import {TextField, RaisedButton} from 'material-ui';
 import AccountContainer from './AccountContainer';
 
 export default React.createClass({
-
   displayName: 'AccountPasswordResetConfirm',
+
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
   mixins: [
     Reflux.connect(Store),
-    Router.State,
     FormMixin
   ],
 
@@ -34,12 +35,13 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    let params = this.getParams();
+    const {uid, token} = this.context.params;
+    const {password} = this.state;
 
     Actions.passwordResetConfirm({
-      new_password: this.state.password,
-      uid: params.uid,
-      token: params.token
+      new_password: password,
+      uid,
+      token
     });
   },
 
@@ -58,7 +60,8 @@ export default React.createClass({
 
           <TextField
             ref="password"
-            valueLink={this.linkState('password')}
+            value={this.state.password}
+            onChange={(event, value) => this.setState({password: value})}
             errorText={this.getValidationMessages('password').join(' ')}
             type="password"
             name="password"
@@ -69,7 +72,8 @@ export default React.createClass({
 
           <TextField
             ref="confirmPassword"
-            valueLink={this.linkState('confirmPassword')}
+            value={this.state.confirmPassword}
+            onChange={(event, value) => this.setState({confirmPassword: value})}
             errorText={this.getValidationMessages('confirmPassword').join(' ')}
             type="password"
             name="confirmPassword"
@@ -81,9 +85,8 @@ export default React.createClass({
           <RaisedButton
             type="submit"
             label="Change password"
-            fullWidth={true}
-            labelStyle={{fontSize: '16px'}}
-            style={{boxShadow: 'none', height: '48px'}}
+            labelStyle={{fontSize: '16px', lineHeight: '48px'}}
+            style={{boxShadow: 'none', height: '48px', width: '100%'}}
             disabled={!this.state.canSubmit}
             primary={true}/>
         </form>

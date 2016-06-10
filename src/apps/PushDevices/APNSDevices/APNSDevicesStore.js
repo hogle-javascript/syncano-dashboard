@@ -19,6 +19,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: [],
+      hasConfig: false,
       isLoading: true
     };
   },
@@ -30,6 +31,10 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.setLoadingStates();
+  },
+
+  isConfigured() {
+    return this.data.hasConfig;
   },
 
   getDevices() {
@@ -45,18 +50,23 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('APNSDevicesStore::refreshData');
+    Actions.fetchAPNSConfig();
     Actions.fetchDevices();
   },
 
   onFetchDevicesCompleted(devices) {
     console.debug('APNSDevicesStore::onFetchDevicesCompleted');
-    let items = this.saveListFromSyncano(devices);
-
-    Actions.setDevices(items);
+    Actions.setDevices(devices);
   },
 
   onRemoveDevicesCompleted() {
     console.debug('APNSDevicesStore::onRemoveDevicesCompleted');
     this.refreshData();
+  },
+
+  onFetchAPNSConfigCompleted(config) {
+    console.debug('APNSDevicesStore::onFetchAPNSConfigCompleted');
+    this.data.hasConfig = config.development_certificate || config.production_certificate;
+    this.trigger({hasConfig: this.data.hasConfig});
   }
 });

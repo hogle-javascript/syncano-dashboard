@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -10,8 +11,7 @@ import Store from './ProfileInvitationsStore';
 
 // Components
 import ProfileInvitationsList from './ProfileInvitationsList';
-import {Container, Show, Loading} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {Container, Show, Loading, InnerToolbar} from '../../common/';
 
 export default React.createClass({
   displayName: 'ProfileInvitations',
@@ -27,23 +27,27 @@ export default React.createClass({
   },
 
   render() {
+    const {items, isLoading, hideDialogs} = this.state;
+    const title = 'Invitations';
+
     return (
       <div>
-        <InnerToolbar title="Invitations"/>
+        <Helmet title={title} />
+        <InnerToolbar title={title} />
         <Container>
-          <Loading show={this.state.isLoading}>
-            <Show if={this.state.items.length < 1}>
+          <Loading show={isLoading}>
+            <Show if={items.length < 1}>
               <Container.Empty
                 icon='synicon-email-outline'
                 text='You have no invitations'/>
             </Show>
 
-            <Show if={this.state.items.length > 0}>
+            <Show if={items.length > 0}>
               <ProfileInvitationsList
                 name="Profile Invitations"
-                isLoading={this.state.isLoading}
-                items={this.state.items}
-                hideDialogs={this.state.hideDialogs}/>
+                isLoading={isLoading}
+                items={items}
+                hideDialogs={hideDialogs}/>
             </Show>
           </Loading>
         </Container>

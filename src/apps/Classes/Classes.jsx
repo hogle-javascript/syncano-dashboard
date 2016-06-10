@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -10,9 +10,8 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
-import {Container, Loading} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {RaisedButton} from 'material-ui';
+import {Container, Loading, InnerToolbar} from '../../common/';
 
 // Local components
 import ClassDialog from './ClassDialog';
@@ -21,9 +20,11 @@ import ClassesList from './ClassesList';
 export default React.createClass({
   displayName: 'Classes',
 
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
   mixins: [
-    State,
-    Navigation,
     Reflux.connect(Store),
     DialogsMixin
   ],
@@ -33,14 +34,25 @@ export default React.createClass({
     Actions.fetch();
   },
 
+  componentWillUpdate() {
+    const {action, className} = this.context.params;
+    const classObject = Store.getClassByName(className);
+
+    if (action === 'edit' && classObject) {
+      Actions.showDialog(classObject);
+    }
+  },
+
   render() {
     const {items, triggers, hideDialogs, isLoading} = this.state;
+    const title = 'Classes';
 
     return (
       <div>
+        <Helmet title={title} />
         <ClassDialog/>
 
-        <InnerToolbar title="Classes">
+        <InnerToolbar title={title}>
           <RaisedButton
             label="Add"
             primary={true}

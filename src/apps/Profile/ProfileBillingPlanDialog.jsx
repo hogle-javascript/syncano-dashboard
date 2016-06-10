@@ -1,25 +1,20 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 
 import {DialogMixin, FormMixin} from '../../mixins';
 
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
 
-import {TextField, FlatButton} from 'syncano-material-ui';
-import {CreditCard, Loading, Slider} from 'syncano-components';
-import {Dialog} from '../../common';
+import {TextField, FlatButton} from 'material-ui';
+import {CreditCard, Loading, Slider, Dialog} from '../../common/';
 import SliderSection from './SliderSection';
 
-export default React.createClass({
-
+const ProfileBillingPlanDialog = React.createClass({
   displayName: 'ProfileBillingPlanDialog',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-
     DialogMixin,
     FormMixin,
 
@@ -58,10 +53,8 @@ export default React.createClass({
         presence: true,
         numericality: {
           onlyInteger: true,
-          greaterThanOrEqualTo: new Date().getFullYear()
-        },
-        length: {
-          is: 4
+          greaterThanOrEqualTo: new Date().getFullYear() - 20,
+          lessThanOrEqualTo: new Date().getFullYear() + 20
         }
       }
     };
@@ -148,21 +141,24 @@ export default React.createClass({
   },
 
   renderCard() {
-    if (typeof this.state.card === 'undefined') {
+    const {router} = this.props;
+    const {card} = this.state;
+
+    if (typeof card === 'undefined') {
       return <Loading show={true}/>;
     }
 
-    if (this.state.card) {
+    if (card) {
       return (
       <div>
         <div style={this.getStyles().sectionTopic}>Credit card info:</div>
         <div className="row" style={{marginTop: 20, height: 110}}>
           <div className="col-md-18">
-            <CreditCard card={this.state.card}/>
+            <CreditCard card={card}/>
           </div>
           <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
             Want to use a different method of payment?
-            Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
+            Update your card <a onClick={() => router.push('profile-billing-payment')}>here</a>.
           </div>
         </div>
       </div>
@@ -178,7 +174,8 @@ export default React.createClass({
             ref="number"
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('number')}
+            value={this.state.number}
+            onChange={(event, value) => this.setState({number: value})}
             errorText={this.getValidationMessages('number').join(' ')}
             hintText="Card Number"
             floatingLabelText="Card Number"
@@ -192,7 +189,8 @@ export default React.createClass({
             name="cvc"
             ref="cvc"
             fullWidth={true}
-            valueLink={this.linkState('cvc')}
+            value={this.state.cvc}
+            onChange={(event, value) => this.setState({cvc: value})}
             errorText={this.getValidationMessages('cvc').join(' ')}
             hintText="CVC"
             floatingLabelText="CVC"
@@ -204,7 +202,8 @@ export default React.createClass({
             name="exp_month"
             ref="exp_month"
             fullWidth={true}
-            valueLink={this.linkState('exp_month')}
+            value={this.state.exp_month}
+            onChange={(event, value) => this.setState({exp_month: value})}
             errorText={this.getValidationMessages('exp_month').join(' ')}
             hintText="MM"
             floatingLabelText="Expiration month (MM)"
@@ -216,7 +215,8 @@ export default React.createClass({
             name="exp_year"
             ref="exp_year"
             fullWidth={true}
-            valueLink={this.linkState('exp_year')}
+            value={this.state.exp_year}
+            onChange={(event, value) => this.setState({exp_year: value})}
             errorText={this.getValidationMessages('exp_year').join(' ')}
             hintText="YYYY"
             floatingLabelText="Expiration year (YYYY)"
@@ -383,3 +383,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(ProfileBillingPlanDialog);

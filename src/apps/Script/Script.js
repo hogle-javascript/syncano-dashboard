@@ -1,7 +1,8 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
 import _ from 'lodash';
-import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
 import AutosaveMixin from './ScriptAutosaveMixin';
@@ -9,12 +10,11 @@ import AutosaveMixin from './ScriptAutosaveMixin';
 import Store from './ScriptStore';
 import Actions from './ScriptActions';
 
-import {RaisedButton, FontIcon, Checkbox, FlatButton, TextField, IconButton} from 'syncano-material-ui';
-import {Loading, Show, TogglePanel, SelectFieldWrapper} from 'syncano-components';
-import {Dialog, InnerToolbar, Editor, Notification} from '../../common';
+import {RaisedButton, FontIcon, Checkbox, FlatButton, TextField, IconButton} from 'material-ui';
+import {Loading, Show, TogglePanel, SelectFieldWrapper, Dialog, InnerToolbar, Editor, Notification} from '../../common';
 import Traces from '../Traces';
 
-export default React.createClass({
+const Script = React.createClass({
   displayName: 'Script',
 
   contextTypes: {
@@ -22,9 +22,6 @@ export default React.createClass({
   },
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store),
     SnackbarNotificationMixin,
     AutosaveMixin,
@@ -33,7 +30,10 @@ export default React.createClass({
     DialogsMixin
   ],
 
-  autosaveAttributeName: 'scriptSourceAutosave',
+  mixinsConfig: {
+    autosaveAttributeName: 'scriptSourceAutosave',
+    editorRefs: ['editorSource', 'payloadSource']
+  },
 
   validatorConstraints() {
     const {scriptConfig} = this.state;
@@ -108,7 +108,7 @@ export default React.createClass({
   getStyles() {
     return {
       notification: {
-        marginTop: 20
+        margin: '20px 20px 10px 10px'
       },
       lastResultContainer: {
         zIndex: 1,
@@ -165,43 +165,51 @@ export default React.createClass({
   },
 
   handleRunScript() {
-    const {isPayloadValid, currentScript, payloadValue} = this.state;
+    const {currentScript, payload} = this.state;
+    const config = this.getConfigObject();
+    const source = this.refs.editorSource.editor.getValue();
+    const updateParams = {
+      config,
+      source
+    };
+    const runParams = {
+      id: currentScript.id,
+      payload
+    };
 
-    this.handleUpdate();
-    if (isPayloadValid) {
-      this.runScript({
-        id: currentScript.id,
-        payload: payloadValue
-      });
-    } else {
-      this.setSnackbarNotification({message: "Can't run Script with invalid payload"});
-    }
+    this.clearAutosaveTimer();
+    this.setSnackbarNotification({message: 'Saving...'});
+    this.runScript(updateParams, runParams);
   },
 
   handleAddField(event) {
     event.preventDefault();
-    const {scriptConfig} = this.state;
+    const {scriptConfig, newFieldKey, newFieldValue, configValueType} = this.state;
 
     const newField = {
-      key: this.refs.newFieldKey.getValue(),
-      value: this.refs.newFieldValue.getValue(),
-      type: this.refs.newFieldType.refs.configValueType.props.value
+      key: newFieldKey,
+      value: newFieldValue,
+      type: configValueType
     };
 
     scriptConfig.push(newField);
-    this.setState({scriptConfig});
-    this.refs.newFieldKey.clearValue();
-    this.refs.newFieldValue.clearValue();
+    this.setState({
+      newFieldKey: '',
+      newFieldValue: '',
+      scriptConfig
+    });
     this.refs.newFieldKey.focus();
   },
 
   handleUpdate() {
-    const config = this.getConfigObject();
-    const source = this.refs.editorSource.editor.getValue();
+    if (this.areEditorsLoaded()) {
+      const config = this.getConfigObject();
+      const source = this.refs.editorSource.editor.getValue();
 
-    this.clearAutosaveTimer();
-    Actions.updateScript(this.state.currentScript.id, {config, source});
-    this.setSnackbarNotification({message: 'Saving...'});
+      this.clearAutosaveTimer();
+      Actions.updateScript(this.state.currentScript.id, {config, source});
+      this.setSnackbarNotification({message: 'Saving...'});
+    }
   },
 
   handleDeleteKey(index) {
@@ -226,6 +234,12 @@ export default React.createClass({
 
     scriptConfig[index] = newField;
     this.setState({scriptConfig});
+  },
+
+  handleUpdateNewField(fieldKey, value) {
+    this.setState({
+      [fieldKey]: value
+    });
   },
 
   handleSuccessfullValidation() {
@@ -254,7 +268,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading, traces} = this.state;
+    const {traceIsLoading, traces} = this.state;
 
     return [
       {
@@ -266,7 +280,7 @@ export default React.createClass({
           actions: [],
           onRequestClose: () => this.handleCancel('scriptTraces'),
           children: <Traces.List
-                      isLoading={isLoading}
+                      isLoading={traceIsLoading}
                       tracesFor="script"
                       name="Traces"
                       items={traces}/>
@@ -315,7 +329,6 @@ export default React.createClass({
               ref={`fieldKey${index}`}
               hintText="Key"
               floatingLabelText="Key"
-              defaultValue={field.key}
               value={scriptConfig[index].key}
               style={styles.field}
               fullWidth={true}
@@ -343,7 +356,6 @@ export default React.createClass({
               ref={`fieldValue${index}`}
               hintText="Value"
               floatingLabelText="Value"
-              defaultValue={field.value}
               value={scriptConfig[index].value}
               style={styles.field}
               fullWidth={true}
@@ -365,7 +377,7 @@ export default React.createClass({
 
   renderNewFieldSection() {
     const styles = this.getStyles();
-    const {configValueType} = this.state;
+    const {configValueType, newFieldKey, newFieldValue} = this.state;
 
     return (
       <form
@@ -379,8 +391,9 @@ export default React.createClass({
             key="newFieldKey"
             hintText="Key"
             floatingLabelText="Key"
-            defaultValue=""
-            errorText={this.getValidationMessages(`newFieldKey`).join(' ')}
+            value={newFieldKey}
+            onChange={(event, value) => this.handleUpdateNewField('newFieldKey', value)}
+            errorText={this.getValidationMessages('newFieldKey').join(' ')}
             fullWidth={true}
             style={styles.field}/>
         </div>
@@ -393,7 +406,7 @@ export default React.createClass({
             floatingLabelText="Value Type"
             options={Store.getScriptConfigValueTypes()}
             value={configValueType}
-            onChange={(event, index, value) => this.setSelectFieldValue('configValueType', event, index, value)}
+            onChange={(event, index, value) => this.setSelectFieldValue('configValueType', value)}
             errorText={this.getValidationMessages('configValueType').join(' ')}
             fullWidth={true}
             style={styles.field}/>
@@ -405,7 +418,8 @@ export default React.createClass({
             key="newFieldValue"
             hintText="Value"
             floatingLabelText="Value"
-            defaultValue=""
+            value={newFieldValue}
+            onChange={(event, value) => this.handleUpdateNewField('newFieldValue', value)}
             fullWidth={true}
             style={styles.field}/>
         </div>
@@ -424,6 +438,7 @@ export default React.createClass({
   },
 
   render() {
+    const {router, params} = this.props;
     const styles = this.getStyles();
     const {currentScript, lastTraceStatus, isLoading, lastTraceDuration, lastTraceResult} = this.state;
     let source = null;
@@ -436,35 +451,38 @@ export default React.createClass({
 
     return (
       <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'column'}}>
+        <Helmet title={this.getToolbarTitle()} />
         {this.getDialogs()}
         <InnerToolbar
           title={this.getToolbarTitle()}
-          backFallback={() => this.transitionTo('scripts', this.getParams())}
+          backFallback={() => router.push({name: 'scripts', params})}
           forceBackFallback={true}
           backButtonTooltip="Go back to Scripts list">
-          <div style={{display: 'inline-block'}}>
-            <Checkbox
-              ref="autosaveCheckbox"
-              name="autosaveCheckbox"
-              label="Autosave"
-              labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
-              defaultChecked={this.isAutosaveEnabled()}
-              onCheck={this.saveCheckboxState}/>
-          </div>
-          <RaisedButton
-            label="TRACES"
-            style={{marginRight: 5, marginLeft: 20}}
-            onTouchTap={() => this.showDialog('scriptTraces')}/>
-          <RaisedButton
-            label="SAVE"
-            style={{marginLeft: 5, marginRight: 5}}
-            onTouchTap={() => this.setFlag(false)} />
-          <RaisedButton
-            label="RUN"
-            primary={true}
-            style={{marginLeft: 5, marginRight: 0}}
-            icon={<FontIcon className="synicon-play"/>}
-            onTouchTap={() => this.setFlag(true)}/>
+          <Show if={!isLoading}>
+            <div style={{display: 'inline-block', verticalAlign: 'middle'}}>
+              <Checkbox
+                ref="autosaveCheckbox"
+                name="autosaveCheckbox"
+                label="Autosave"
+                labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
+                defaultChecked={this.isAutosaveEnabled()}
+                onCheck={this.saveCheckboxState}/>
+            </div>
+            <RaisedButton
+              label="TRACES"
+              style={{marginRight: 5, marginLeft: 20}}
+              onTouchTap={() => this.showDialog('scriptTraces')}/>
+            <RaisedButton
+              label="SAVE"
+              style={{marginLeft: 5, marginRight: 5}}
+              onTouchTap={() => this.setFlag(false)} />
+            <RaisedButton
+              label="RUN"
+              primary={true}
+              style={{marginLeft: 5, marginRight: 0}}
+              icon={<FontIcon className="synicon-play"/>}
+              onTouchTap={() => this.setFlag(true)}/>
+          </Show>
         </InnerToolbar>
         <Loading
           show={isLoading || !currentScript}
@@ -474,8 +492,8 @@ export default React.createClass({
               <TogglePanel
                 title="Code"
                 initialOpen={true}
-                style={{display: 'flex', flexDirection: 'column'}}>
-                <Show if={this.getValidationMessages('source').length > 0}>
+                style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                <Show if={this.getValidationMessages('source').length}>
                   <div style={styles.notification}>
                     <Notification type="error">
                       {this.getValidationMessages('source').join(' ')}
@@ -503,7 +521,7 @@ export default React.createClass({
                   <div>
                     {this.renderFields()}
                     {this.renderNewFieldSection()}
-                    <Show if={this.getValidationMessages('config').length > 0}>
+                    <Show if={this.getValidationMessages('config').length}>
                       <div style={styles.notification}>
                         <Notification type="error">
                           {this.getValidationMessages('config').join(' ')}
@@ -523,7 +541,7 @@ export default React.createClass({
                     ref="payloadSource"
                     mode="json"
                     height="200px"
-                    onChange={(payload) => this.setState({payloadValue: payload})}
+                    onChange={(payload) => this.setState({payload})}
                     value={[
                       '{',
                       '    "foo": "bar",',
@@ -531,16 +549,25 @@ export default React.createClass({
                       '}'
                     ].join('\n')} />
                 </TogglePanel>
+                <Show if={this.getValidationMessages('payload').length}>
+                  <div style={styles.notification}>
+                    <Notification type="error">
+                      {this.getValidationMessages('payload').join(' ')}
+                    </Notification>
+                  </div>
+                </Show>
               </div>
 
-              <div>
+              <div style={{paddingBottom: 50}}>
                 <TogglePanel
                   title="Result"
                   initialOpen={true}>
                   <div style={{
                     color: '#444',
                     fontFamily: "Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace",
-                    fontSize: 12
+                    fontSize: 12,
+                    maxHeight: 300,
+                    overflowY: 'scroll'
                   }}>
                     {lastTraceResult}
                   </div>
@@ -560,3 +587,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(Script);

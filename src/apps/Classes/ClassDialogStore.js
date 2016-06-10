@@ -2,6 +2,7 @@ import Reflux from 'reflux';
 
 import {StoreFormMixin, DialogStoreMixin, WaitForStoreMixin} from '../../mixins';
 
+import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import Actions from './ClassesActions';
 
@@ -22,7 +23,8 @@ export default Reflux.createStore({
       name: null,
       group_permissions: 'create_objects',
       other_permissions: 'create_objects',
-      fields: []
+      fields: [],
+      metadata: {}
     };
   },
 
@@ -51,11 +53,13 @@ export default Reflux.createStore({
     console.debug('ClassDialogStore::onCreateClassCompleted');
     this.dismissDialog();
     this.refreshData();
+    SessionStore.getRouter().push({name: 'classes', params: SessionStore.getParams()});
   },
 
   onUpdateClassCompleted() {
     console.debug('ClassDialogStore::onUpdateClassCompleted');
     this.dismissDialog();
     this.refreshData();
+    SessionStore.getRouter().push({name: 'classes', params: SessionStore.getParams()});
   }
 });

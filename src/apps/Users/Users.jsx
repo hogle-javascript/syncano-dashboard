@@ -1,15 +1,15 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
+import _ from 'lodash';
 
 import Actions from './UsersActions';
 import Store from './UsersStore';
 import {GroupsActions, GroupsStore, GroupsList, GroupDialog} from './../Groups';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
-import {InnerToolbar, Lists} from '../../common';
+import {RaisedButton} from 'material-ui';
+import {Container, InnerToolbar, Lists, Loading, Show} from '../../common/';
 
 // Local components
 import UsersList from './UsersList';
@@ -19,9 +19,6 @@ export default React.createClass({
   displayName: 'Users',
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store, 'users'),
     Reflux.connect(GroupsStore, 'groups')
   ],
@@ -30,6 +27,12 @@ export default React.createClass({
     console.info('Users::componentDidMount');
     Actions.fetch();
     GroupsActions.fetch();
+  },
+
+  handleMoreRows() {
+    const {nextParams} = this.state.users;
+
+    Actions.subFetchUsers(nextParams);
   },
 
   showUserDialog(group) {
@@ -47,6 +50,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Users & Groups" />
         <UserDialog />
         <GroupDialog />
 
@@ -72,10 +76,28 @@ export default React.createClass({
                 hideDialogs={groups.hideDialogs} />
             </div>
             <div className="col-lg-27">
-              <UsersList
-                isLoading={users.isLoading}
-                items={users.items}
-                hideDialogs={users.hideDialogs} />
+              <Show if={users.items}>
+                <UsersList
+                  items={users.items}
+                  hideDialogs={users.hideDialogs} />
+              </Show>
+              <Loading show={_.isNull(users.items) || users.isLoading}/>
+              <Show if={!users.isLoading}>
+                <div
+                  className="row align-center"
+                  style={{margin: 50}}>
+                  <div>Loaded {users.items && users.items.length} Users</div>
+                </div>
+                <Show if={users.hasNextPage}>
+                  <div
+                    className="row align-center"
+                    style={{margin: 50}}>
+                    <RaisedButton
+                      label="Load more"
+                      onClick={this.handleMoreRows}/>
+                  </div>
+                </Show>
+              </Show>
             </div>
           </Lists.Container>
         </Container>

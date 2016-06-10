@@ -47,7 +47,7 @@ export default Reflux.createStore({
 
   onFetchTemplatesCompleted(items) {
     console.debug('TemplatesStore::onFetchTemplatesCompleted');
-    Actions.setTemplates(items._items);
+    Actions.setTemplates(items);
   },
 
   onRemoveTemplatesCompleted() {

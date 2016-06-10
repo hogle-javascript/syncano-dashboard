@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -9,13 +10,14 @@ import Actions from './DataEndpointsActions';
 import Store from './DataEndpointsStore';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {RaisedButton} from 'material-ui';
+import {Container} from '../../common/';
 
 // Local components
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import DataEndpointsList from './DataEndpointsList';
 import DataEndpointDialog from './DataEndpointDialog';
+import DataEndpointSummaryDialog from './DataEndpointSummaryDialog';
 
 export default React.createClass({
   displayName: 'Data',
@@ -35,7 +37,9 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Data Endpoints" />
         <DataEndpointDialog/>
+        <DataEndpointSummaryDialog/>
 
         <SocketsInnerToolbar>
           <RaisedButton

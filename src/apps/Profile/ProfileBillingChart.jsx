@@ -1,6 +1,6 @@
 import 'd3';
-import 'syncano-c3/c3.css';
-import c3 from 'syncano-c3';
+import 'c3/c3.css';
+import c3 from 'c3';
 import _ from 'lodash';
 
 import React from 'react';
@@ -19,10 +19,7 @@ export default Radium(React.createClass({
     console.log('ProfileBillingChart::componentDidMount');
 
     Actions.fetchBillingProfile();
-    Actions.fetchTotalDailyUsage({
-      start: Store.getStartDate(),
-      end: Store.getEndDate()
-    });
+    Actions.fetchTotalDailyUsage();
   },
 
   componentDidUpdate() {

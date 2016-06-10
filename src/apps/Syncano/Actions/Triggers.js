@@ -1,51 +1,55 @@
-import _ from 'lodash';
-
 export default {
   create(payload) {
-    this.Connection
-      .Triggers
+    this.NewLibConnection
+      .Trigger
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  get(triggerId) {
-    this.Connection
-      .Triggers
-      .get(triggerId)
+  get(id) {
+    this.NewLibConnection
+      .Trigger
+      .please()
+      .get({id})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .Triggers
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Trigger
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
   update(id, payload) {
-    this.Connection
-      .Triggers
-      .update(id, payload)
+    this.NewLibConnection
+      .Trigger
+      .please()
+      .update({id}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(ids) {
-    const promises = ids.map((id) => this.Connection.Triggers.remove(id));
+  remove(triggers) {
+    const promises = triggers.map((trigger) => this.NewLibConnection.Trigger.please().delete({id: trigger.id}));
 
     this.Promise.all(promises)
       .then(this.completed)
-      .error(this.failure);
+      .catch(this.failure);
   },
 
   listTraces(triggerId) {
-    this.Connection
-      .Triggers
-      .traces(triggerId, {ordering: 'desc'})
+    this.NewLibConnection
+      .TriggerTrace
+      .please()
+      .list({triggerId})
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   }

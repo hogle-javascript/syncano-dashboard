@@ -1,6 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
-
 import Actions from './AdminsInvitationsActions';
 import Store from './AdminsInvitationsStore';
 import AdminsActions from './AdminsActions';
@@ -10,19 +8,14 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import ListItem from './AdminsInvitationsListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'AdminsInvitationsList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('Admins::componentWillUpdate');

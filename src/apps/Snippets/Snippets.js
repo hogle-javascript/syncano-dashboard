@@ -1,7 +1,10 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {RaisedButton} from 'syncano-material-ui';
-import {Container, Loading} from 'syncano-components';
+import Helmet from 'react-helmet';
+
+import {RaisedButton} from 'material-ui';
+import {Container, Loading} from '../../common/';
+
 import SnippetsInnerToolbar from './SnippetsInnerToolbar';
 import ScriptsActions from '../Scripts/ScriptsActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
@@ -31,6 +34,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Snippets" />
         <ScriptDialog/>
         <TemplateDialog/>
 

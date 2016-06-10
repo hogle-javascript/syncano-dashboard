@@ -1,10 +1,10 @@
 import Reflux from 'reflux';
-import Promise from 'bluebird';
+import Promise from 'axios';
+import _ from 'lodash';
 
 import {StoreHelpersMixin, CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
-import SocketsActions from '../Sockets/SocketsActions';
 import Actions from './ScriptsActions';
 
 export default Reflux.createStore({
@@ -72,7 +72,6 @@ export default Reflux.createStore({
     );
     this.setLoadingStates();
     this.listenTo(Actions.setCurrentScriptId, this.fetchTraces);
-    this.listenTo(SocketsActions.fetchSockets.completed, this.saveScripts);
   },
 
   fetchTraces() {
@@ -92,13 +91,15 @@ export default Reflux.createStore({
   },
 
   getRuntimeColorIcon(runtimeName) {
-    let runtime = this.runtimeColors[runtimeName] ? runtimeName : 'default';
+    const runtime = this.runtimeColors[runtimeName] ? runtimeName : 'default';
 
     return this.runtimeColors[runtime];
   },
 
   getScriptsDropdown() {
-    return this.data.items.map((item) => {
+    const {items} = this.data;
+
+    return _.map(items, (item) => {
       return {
         payload: item.id,
         text: item.label
@@ -106,32 +107,10 @@ export default Reflux.createStore({
     });
   },
 
-  getCurrentScript() {
-    if (!this.data.currentScriptId) {
-      return null;
-    }
-
-    let currentItem = null;
-
-    this.data.items.some((item) => {
-      if (item.id.toString() === this.data.currentScriptId.toString()) {
-        currentItem = item;
-        return true;
-      }
-    });
-    return currentItem;
-  },
-
   getScriptById(id) {
-    let script = null;
+    const {items} = this.data;
 
-    this.data.items.some((item) => {
-      if (item.id.toString() === id.toString()) {
-        script = item;
-        return true;
-      }
-    });
-    return script;
+    return _.find(items, ['id', id]);
   },
 
   getScriptIndex(id) {
@@ -160,7 +139,7 @@ export default Reflux.createStore({
 
   saveScripts(sockets) {
     console.debug('ScriptsStore::onFetchSocketsCompleted');
-    Actions.setScripts(this.saveListFromSyncano(sockets.scripts));
+    Actions.setScripts(sockets.scripts);
   },
 
   setScripts(items) {
@@ -187,7 +166,7 @@ export default Reflux.createStore({
 
   onFetchScriptsCompleted(scripts) {
     console.debug('ScriptsStore::onFetchScriptsCompleted');
-    Actions.setScripts(this.saveListFromSyncano(scripts));
+    Actions.setScripts(scripts);
   },
 
   onFetchTriggersCompleted(triggers) {
@@ -218,10 +197,10 @@ export default Reflux.createStore({
   onFetchScriptTraceCompleted(trace) {
     console.debug('ScriptsStore::onFetchScriptTrace');
     if (trace.status === 'pending') {
-      let scriptId = this.data.currentScriptId;
+      const {currentScriptId} = this.data;
 
       setTimeout(() => {
-        Actions.fetchScriptTrace(scriptId, trace.id);
+        Actions.fetchScriptTrace(currentScriptId, trace.id);
       }, 300);
     } else {
       this.data.lastTraceResult = trace.result;

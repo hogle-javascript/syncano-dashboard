@@ -51,8 +51,13 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onConfigGCMPushNotification() {
+    this.data.isCertLoading = true;
+    this.trigger({isCertLoading: true});
+  },
+
   onConfigGCMPushNotificationCompleted() {
-    console.debug('GCMConfigDialogStore::onConfigGCMPushNotification');
+    console.debug('GCMConfigDialogStore::onConfigGCMPushNotificationCompleted');
     this.dismissDialog();
     this.refreshData();
   }

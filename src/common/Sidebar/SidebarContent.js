@@ -18,7 +18,7 @@ export default React.createClass({
     return {
       width: 256,
       paddingBottom: 56,
-      maxHeight: '100%',
+      maxHeight: 'calc(100% - 56px)',
       overflow: 'auto',
       position: 'fixed'
     };

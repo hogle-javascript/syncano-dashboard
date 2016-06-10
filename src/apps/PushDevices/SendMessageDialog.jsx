@@ -5,9 +5,9 @@ import _ from 'lodash';
 
 import {DialogMixin, FormMixin} from '../../mixins';
 
-import {TextField, Toggle, SelectField, MenuItem, Utils, Styles} from 'syncano-material-ui';
-import {Show} from 'syncano-components';
-import {Dialog, Editor, Notification} from '../../common';
+import {TextField, Toggle, SelectField, MenuItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
+import {Show, Truncate, Dialog, Editor, Notification} from '../../common/';
 
 export default (store, props) => {
   return Radium(React.createClass({
@@ -17,8 +17,7 @@ export default (store, props) => {
     mixins: [
       Reflux.connect(store),
       DialogMixin,
-      FormMixin,
-      Utils.Styles
+      FormMixin
     ],
 
     getInitialState() {
@@ -36,34 +35,34 @@ export default (store, props) => {
       return {
         sendDialogHeaderContainer: {
           borderRadius: '4px',
-          borderTop: '1px solid ' + Styles.Colors.grey200,
-          borderRight: '1px solid ' + Styles.Colors.grey200,
-          borderLeft: '1px solid ' + Styles.Colors.grey200,
-          color: Styles.Colors.grey400
+          borderTop: '1px solid ' + Colors.grey200,
+          borderRight: '1px solid ' + Colors.grey200,
+          borderLeft: '1px solid ' + Colors.grey200,
+          color: Colors.grey400
         },
         greyBoxContainer: {
-          borderBottom: '1px solid ' + Styles.Colors.grey200,
-          backgroundColor: Styles.Colors.grey100
+          borderBottom: '1px solid ' + Colors.grey200,
+          backgroundColor: Colors.grey100
         },
         sendDialogHeader: {
           margin: 0,
-          borderBottom: '1px solid ' + Styles.Colors.grey200,
+          borderBottom: '1px solid ' + Colors.grey200,
           padding: '8px 6px',
           fontSize: 12
         },
         sendDialogHeaderItem: {
           fontWeight: 600,
           margin: 0,
-          backgroundColor: Styles.Colors.grey50,
-          borderBottom: '1px solid ' + Styles.Colors.grey200,
+          backgroundColor: Colors.grey50,
+          borderBottom: '1px solid ' + Colors.grey200,
           padding: '8px 6px',
           fontSize: 12
         },
         sendDialogHeaderEvenItem: {
-          backgroundColor: Styles.Colors.grey100
+          backgroundColor: Colors.grey100
         },
         seeMoreVisible: {
-          color: Styles.Colors.blue500,
+          color: Colors.blue500,
           visibility: 'visible',
           cursor: 'pointer',
           ':hover': {
@@ -78,9 +77,9 @@ export default (store, props) => {
           lineHeight: '12px'
         },
         messagePreview: {
-          backgroundColor: Styles.Colors.grey50,
-          color: Styles.Colors.grey400,
-          border: '1px solid ' + Styles.Colors.grey200,
+          backgroundColor: Colors.grey50,
+          color: Colors.grey400,
+          border: '1px solid ' + Colors.grey200,
           padding: 4,
           display: 'flex',
           justifyContent: 'center',
@@ -99,7 +98,7 @@ export default (store, props) => {
           minWidth: 20,
           height: 20,
           borderRadius: '50%',
-          backgroundColor: Styles.Colors.blueGrey200
+          backgroundColor: Colors.blueGrey200
         },
         messageAPNSCircle: {
           minWidth: 11,
@@ -120,7 +119,7 @@ export default (store, props) => {
           paddingRight: 4
         },
         messageText: {
-          display: '-webkit-box',
+          display: 'flex',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           WebkitLineClamp: 2,
@@ -139,17 +138,19 @@ export default (store, props) => {
 
       if (type === 'APNS') {
         return {
-          title: appName,
-          body: content
+          alert: {
+            title: appName,
+            body: content
+          },
+          sound: 'default',
+          badge: 0
         };
       }
 
       if (type === 'GCM') {
         return {
-          notification: {
-            title: appName,
-            body: content
-          }
+          title: appName,
+          body: content
         };
       }
     },
@@ -161,51 +162,34 @@ export default (store, props) => {
       const checkedItems = props.getCheckedItems().map((item) => item.registration_id);
       const registrationIds = checkedItems.length ? checkedItems : [registration_id];
       let payload = {
-        content: {
-          registration_ids: registrationIds,
-          environment
-        }
+        environment
       };
 
       if (!isJSONMessage && type === 'APNS') {
-        payload = _.merge(
-          payload,
-          {
-            content: {
-              aps: {
-                alert: {
-                  title: appName,
-                  body: content
-                }
-              }
-            }
+        payload.aps = {
+          alert: {
+            title: appName,
+            body: content
           }
-        );
+        };
       }
 
       if (!isJSONMessage && type === 'GCM') {
-        payload = _.merge(
-          payload,
-          {
-            content: {
-              notification: {
-                title: appName,
-                body: content
-              }
-            }
-          }
-        );
+        payload.notification = {
+          title: appName,
+          body: content
+        };
       }
 
       if (isJSONMessage && type === 'APNS') {
-        payload = _.merge(payload, {content: {aps: {alert: JSON.parse(JSONMessage)}}});
+        payload = _.merge(payload, {aps: JSON.parse(JSONMessage)});
       }
 
       if (isJSONMessage && type === 'GCM') {
-        payload = _.merge(payload, {content: JSON.parse(JSONMessage)});
+        payload = _.merge(payload, {notification: JSON.parse(JSONMessage)});
       }
 
-      onSendMessage(payload);
+      onSendMessage(registrationIds, payload);
     },
 
     handleToggleEnvironment(environment) {
@@ -243,13 +227,15 @@ export default (store, props) => {
           <TextField
             ref="appName"
             name="content"
-            valueLink={this.linkState('appName')}
+            value={this.state.appName}
+            onChange={(event, value) => this.setState({appName: value})}
             fullWidth={true}
             floatingLabelText="App name"/>
           <TextField
             ref="content"
             name="content"
-            valueLink={this.linkState('content')}
+            value={this.state.content}
+            onChange={(event, value) => this.setState({content: value})}
             fullWidth={true}
             floatingLabelText="Push notification Text"/>
         </div>
@@ -258,7 +244,7 @@ export default (store, props) => {
 
     renderCheckedItemsData() {
       const styles = this.getStyles();
-      const {userName, label, device_id, isHeaderExpanded} = this.state;
+      const {userName, label, registration_id, isHeaderExpanded} = this.state;
       const checkedItems = props.getCheckedItems();
       let itemNodes = [
         <div
@@ -272,10 +258,10 @@ export default (store, props) => {
             {userName}
           </div>
           <div className="col-sm-9">
-            {label}
+            <Truncate text={label} />
           </div>
           <div className="col-sm-15">
-            {device_id}
+            <Truncate text={registration_id} />
           </div>
         </div>
       ];
@@ -294,10 +280,10 @@ export default (store, props) => {
                 {item.userName}
               </div>
               <div className="col-sm-9">
-                {item.label}
+                <Truncate text={item.label} />
               </div>
               <div className="col-sm-15">
-                {item.device_id}
+                <Truncate text={item.registration_id} />
               </div>
             </div>
           );
@@ -378,7 +364,7 @@ export default (store, props) => {
                 Device label
               </div>
               <div className="col-sm-15">
-                Device UUID
+                Registration ID
               </div>
             </div>
             {this.renderCheckedItemsData()}
@@ -389,7 +375,7 @@ export default (store, props) => {
             className="row align-center vp-2-t">
             {isHeaderExpanded ? `SHOW LESS` : `SHOW MORE (${props.getCheckedItems().length - 3})`}
           </div>
-          <div className="row hp-1-l hp-1-r vm-4-t">
+          <div className="row hp-1-l hp-1-r vm-4-t vm-3-b">
             <div style={styles.phoneContainer}>
               {props.phoneIcon}
               <div style={styles.messagePreview}>
@@ -426,8 +412,9 @@ export default (store, props) => {
               {this.renderMessageFields()}
             </div>
           </div>
+          {this.renderFormNotifications()}
           <Show if={this.getValidationMessages('content').length}>
-            <div className="vm-3-t">
+            <div className="vm-2-t">
               <Notification type="error">
                 {this.getValidationMessages('content').join(' ')}
               </Notification>

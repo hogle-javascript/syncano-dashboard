@@ -2,70 +2,90 @@ import Constants from '../../../constants/Constants';
 import _ from 'lodash';
 
 export default {
-  list(className, params = {}) {
-    _.defaults(params, {
-      page_size: Constants.DATAOBJECTS_PAGE_SIZE,
-      order_by: '-created_at'
-    });
-    this.Connection
-      .DataObjects
-      .list(className, params)
+  list() {
+    this.NewLibConnection
+      .DataObject
+      .please()
+      .list()
+      .orderBy('-created_at')
+      .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  subList(payload) {
-    this.Connection
-      .DataObjects
-      .list(payload.className, payload.params)
+  subList(nextParams) {
+    this.NewLibConnection
+      .DataObject
+      .please()
+      .list({}, nextParams)
+      .orderBy('-created_at')
+      .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
       .then(this.completed)
       .catch(this.failure);
   },
 
   create(payload) {
-    this.Connection
-      .DataObjects
-      .create(payload.className, payload.params)
-      .then((createdItem) => {
-        const promises = payload.fileFields.map((file) => {
-          return this.Connection.DataObjects.uploadFile(payload.className, createdItem, file);
-        });
+    this.NewLibConnection
+      .DataObject
+      .please()
+      .create(payload)
+      .then((createdObject) => {
+        const promises = _.map(payload.fileFields, (file) =>
+          this.NewLibConnection
+            .DataObject
+            .please()
+            .update({
+              className: payload.className,
+              id: createdObject.id
+            }, {[file.name]: this.NewLibConnection.file(file.file)}));
 
         this.Promise.all(promises)
           .then(this.completed)
-          .error(this.failure);
+          .catch(this.failure);
       })
       .catch(this.failure);
   },
 
   update(payload) {
-    this.Connection
-      .DataObjects
-      .update(payload.className, payload.params)
-      .then((updatedItem) => {
-        const promises = payload.fileFields.map((file) => {
-          return this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file);
-        });
+    this.NewLibConnection
+      .DataObject
+      .please()
+      .update({className: payload.className, id: payload.id}, payload)
+      .then((updatedObject) => {
+        const promises = _.map(payload.fileFields, (file) =>
+          this.NewLibConnection
+            .DataObject
+            .please()
+            .update({
+              className: payload.className,
+              id: updatedObject.id
+            }, {[file.name]: this.NewLibConnection.file(file.file)}));
 
         this.Promise.all(promises)
           .then(this.completed)
-          .error(this.failure);
+          .catch(this.failure);
       })
       .catch(this.failure);
   },
 
-  remove(className, dataobjects) {
-    const promises = dataobjects.map((dataobject) => this.Connection.DataObjects.remove(className, dataobject));
+  remove(className, ids) {
+    const promises = _.map(ids, (id) =>
+      this.NewLibConnection
+        .DataObject
+        .please()
+        .delete({className, id}));
 
     this.Promise.all(promises)
       .then(this.completed)
-      .error(this.failure);
+      .catch(this.failure);
   },
 
-  getClass(className) {
-    this.Connection
-      .Classes
-      .get(className)
+  getClass(name) {
+    this.NewLibConnection.defaults.className = name;
+    this.NewLibConnection
+      .Class
+      .please()
+      .get({name})
       .then(this.completed)
       .catch(this.failure);
   }

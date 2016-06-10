@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
 import Radium from 'radium';
 
 import Actions from './GroupsActions';
@@ -10,19 +9,14 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import ListItem from './GroupsListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 
 export default Radium(React.createClass({
   displayName: 'GroupsList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
     console.info('Users::componentWillUpdate');
@@ -30,6 +24,8 @@ export default Radium(React.createClass({
   },
 
   initDialogs() {
+    const {isLoading} = this.props;
+
     return [{
       dialog: Dialog.Delete,
       params: {
@@ -37,10 +33,10 @@ export default Radium(React.createClass({
         ref: 'removeGroupDialog',
         title: 'Delete a Group',
         handleConfirm: Actions.removeGroups,
-        isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         itemLabelName: 'label',
-        groupName: 'Group'
+        groupName: 'Group',
+        isLoading
       }
     }];
   },

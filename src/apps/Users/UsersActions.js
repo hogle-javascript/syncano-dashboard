@@ -10,6 +10,12 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.list'
     },
+    subFetchUsers: {
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Users.subList'
+    },
     createUser: {
       asyncResult: true,
       asyncForm: true,
@@ -27,21 +33,6 @@ export default CreateActions(
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.remove'
-    },
-    addToGroup: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Users.addToGroup'
-    },
-    removeFromGroup: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Users.removeFromGroup'
-    },
-    getUserGroups: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Users.listUserGroups'
     }
   },
   {

@@ -2,35 +2,90 @@ import _ from 'lodash';
 
 export default {
   create(payload) {
-    this.Connection
-      .DataViews
+    this.NewLibConnection
+      .DataEndpoint
+      .please()
       .create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .DataViews
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .DataEndpoint
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(id, payload) {
-    this.Connection
-      .DataViews
-      .update(id, payload)
+  createWithClass(payload) {
+    this.NewLibConnection
+      .Class
+      .please()
+      .create({
+        name: payload.class,
+        schema: ''
+      })
+      .then(() => {
+        this.NewLibConnection
+          .DataEndpoint
+          .please()
+          .create(payload)
+          .then(this.completed)
+          .catch(this.failure);
+      })
+      .catch((error) => {
+        if (error.name) {
+          return this.failure({class: error.name});
+        }
+        this.failure(error);
+      });
+  },
+
+  update(name, payload) {
+    this.NewLibConnection
+      .DataEndpoint
+      .please()
+      .update({name}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(dataviews) {
-    const promises = _.map(dataviews, (dataview) => this.Connection.DataViews.remove(dataview.name));
+  remove(dataEndpoints) {
+    const promises = _.map(dataEndpoints, (dataEndpoint) =>
+      this.NewLibConnection
+        .DataEndpoint
+        .please()
+        .delete({name: dataEndpoint.name}));
 
     this.Promise.all(promises)
       .then(this.completed)
-      .error(this.failure);
+      .catch(this.failure);
+  },
+
+  updateWithClass(id, payload) {
+    this.NewLibConnection
+      .Class
+      .please()
+      .create({
+        name: payload.class,
+        schema: ''
+      })
+      .then(() => {
+        this.NewLibConnection
+          .DataEndpoint
+          .please()
+          .update(id, payload)
+          .then(this.completed)
+          .catch(this.failure);
+      })
+      .catch((error) => {
+        if (error.name) {
+          return this.failure({class: error.name});
+        }
+        this.failure(error);
+      });
   }
 };

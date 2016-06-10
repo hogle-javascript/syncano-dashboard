@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import {DialogsMixin} from '../../mixins';
 
@@ -9,8 +10,8 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 
 import SchedulesList from './SchedulesList';
 import ScheduleDialog from './ScheduleDialog';
-import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
+import {RaisedButton} from 'material-ui';
+import {Container} from '../../common/';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 
 export default React.createClass({
@@ -31,6 +32,7 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title="Schedules" />
         <ScheduleDialog />
 
         <SocketsInnerToolbar>

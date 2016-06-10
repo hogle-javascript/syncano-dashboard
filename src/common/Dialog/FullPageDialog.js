@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import DialogMixin from '../../mixins/DialogMixin';
-import {Dialog, IconButton, Utils} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
+import {DialogMixin, MousetrapMixin} from '../../mixins/';
+import {Dialog, IconButton} from 'material-ui';
+import {Loading} from '../';
 import DialogSidebar from './DialogSidebar';
 
 export default React.createClass({
@@ -10,14 +10,39 @@ export default React.createClass({
 
   mixins: [
     DialogMixin,
-    Utils.Styles
+    MousetrapMixin
   ],
 
   getDefaultProps() {
     return {
       actions: [],
-      contentSize: 'large'
+      contentSize: 'large',
+      showCloseButton: true
     };
+  },
+
+  componentDidUpdate(prevProps) {
+    const {onRequestClose, onConfirm, actions} = this.props;
+    const handleConfirm = onConfirm || actions.props && actions.props.handleConfirm;
+
+    if (!prevProps.open && this.props.open) {
+      this.bindShortcut('esc', () => {
+        onRequestClose();
+        return false;
+      });
+
+      if (handleConfirm) {
+        this.bindShortcut('enter', () => {
+          handleConfirm();
+          return false;
+        });
+      }
+    }
+
+    if (prevProps.open && !this.props.open) {
+      this.unbindShortcut('esc');
+      this.unbindShortcut('enter');
+    }
   },
 
   getStyles() {
@@ -46,7 +71,8 @@ export default React.createClass({
       content: {
         transform: 'none',
         width: '100%',
-        maxWidth: 'none'
+        maxWidth: 'none',
+        background: 'red'
       },
       title: {
         paddingTop: 0
@@ -83,10 +109,24 @@ export default React.createClass({
     return config[size];
   },
 
+  renderCloseButton() {
+    const styles = this.getStyles();
+    const {onRequestClose} = this.props;
+
+    return (
+      <IconButton
+        style={styles.closeButton}
+        iconStyle={styles.closeButtonIcon}
+        onTouchTap={onRequestClose}
+        iconClassName="synicon-close"/>
+    );
+  },
+
   render() {
     const styles = this.getStyles();
     const {
       style,
+      titleStyle,
       contentSize,
       contentStyle,
       children,
@@ -95,6 +135,7 @@ export default React.createClass({
       isLoading,
       onRequestClose,
       sidebar,
+      showCloseButton,
       ...other
     } = this.props;
 
@@ -102,23 +143,19 @@ export default React.createClass({
       <Dialog
         {...other}
         open={_.isBoolean(open) ? open : this.state.open}
-        style={this.mergeStyles(styles.style, style)}
+        style={{...styles.style, ...style}}
         overlayStyle={styles.overlay}
-        contentStyle={this.mergeStyles(styles.content, this.getContentConfig(contentSize), contentStyle)}
+        contentClassName="full-page-dialog__content"
+        contentStyle={{...styles.content, ...this.getContentConfig(contentSize), contentStyle}}
         actions={actions}
         modal={true}
         autoDetectWindowHeight={false}
-        titleStyle={styles.title}
+        titleStyle={{...styles.title, ...titleStyle}}
         bodyStyle={styles.body}
-        actionsContainerStyle={this.mergeStyles(styles.actionsContainer, sidebar && styles.actionsContainerWhenSidebar)}
-        onRequestClose={onRequestClose}
-        zDepth={0}>
+        actionsContainerStyle={{...styles.actionsContainer, ...(sidebar && styles.actionsContainerWhenSidebar)}}
+        onRequestClose={onRequestClose}>
 
-        <IconButton
-          style={styles.closeButton}
-          iconStyle={styles.closeButtonIcon}
-          onTouchTap={onRequestClose}
-          iconClassName="synicon-close"/>
+        {showCloseButton && this.renderCloseButton()}
 
         <div className="row">
           {sidebar ? <DialogSidebar>{sidebar}</DialogSidebar> : null}

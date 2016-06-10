@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import {Navigation, State, Link} from 'react-router';
+import {withRouter, Link} from 'react-router';
 import Gravatar from 'gravatar';
 
 // Stores & Actions
@@ -11,26 +11,20 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 
 // Components
 import Sticky from 'react-stickydiv';
-import {Utils, FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'syncano-material-ui';
-import Logo from '../Logo';
+import {FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'material-ui';
+import {Logo} from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
 import './Header.sass';
 
-export default Radium(React.createClass({
+const Header = Radium(React.createClass({
   displayName: 'Header',
 
   contextTypes: {
-    router: React.PropTypes.func.isRequired,
     muiTheme: React.PropTypes.object
   },
 
-  mixins: [
-    Reflux.connect(InstancesStore),
-    Navigation,
-    State,
-    Utils.Styles
-  ],
+  mixins: [Reflux.connect(InstancesStore)],
 
   componentDidMount() {
     SessionStore.getInstance();
@@ -41,7 +35,8 @@ export default Radium(React.createClass({
       topToolbar: {
         background: this.context.muiTheme.rawTheme.palette.primary1Color,
         height: 50,
-        padding: 0
+        padding: 0,
+        justifyContent: 'flex-start'
       },
       logotypeContainer: {
         paddingLeft: 24,
@@ -69,6 +64,7 @@ export default Radium(React.createClass({
   },
 
   getDropdownItems() {
+    const {router} = this.props;
     let styles = this.getStyles();
     let user = SessionStore.getUser() || '';
     let billingIcon = <FontIcon className="synicon-credit-card"/>;
@@ -84,19 +80,19 @@ export default Radium(React.createClass({
     }
 
     return (
-      <List>
+      <List id="menu-account--dropdown">
         <ListItem
           leftAvatar={this.renderIconButton()}
-          onTouchTap={() => this.transitionTo('profile-settings')}
+          onTouchTap={() => router.push('profile-settings')}
           primaryText={`${user.first_name} ${user.last_name}`}
           secondaryText={user.email}/>
         <Divider/>
         <ListItem
-          onTouchTap={() => this.transitionTo('instances')}
+          onTouchTap={() => router.push('instances')}
           leftIcon={instancesListIcon}
           primaryText="Instances list"/>
         <ListItem
-          onTouchTap={() => this.transitionTo('profile-billing-plan')}
+          onTouchTap={() => router.push('profile-billing-plan')}
           leftIcon={billingIcon}
           primaryText="Billing"/>
         <ListItem
@@ -109,26 +105,27 @@ export default Radium(React.createClass({
   },
 
   getGravatarUrl() {
-    let userEmail = SessionStore.getUser() ? SessionStore.getUser().email : null;
+    const {gravatarUrl} = this.state;
+    const userEmail = SessionStore.getUser() ? SessionStore.getUser().email : null;
+    const fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
 
-    if (this.state.gravatarUrl) {
-      return this.state.gravatarUrl;
+    if (gravatarUrl) {
+      return gravatarUrl;
     }
 
-    return Gravatar.url(userEmail, {default: '404'}, true);
-  },
-
-  onAvatarError() {
-    let fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
-
-    this.setState({gravatarUrl: fallBackAvatar});
+    /* eslint-disable */
+    const gravatar = Gravatar.url(userEmail, {d: '404'}, true);
+    /* eslint-enable */
+    return gravatar ? gravatar : fallBackAvatar;
   },
 
   renderIconButton() {
     return (
       <Avatar
-        src={this.getGravatarUrl()}
-        onError={this.onAvatarError}/>
+        style={{
+          backgroundImage: `url(${this.getGravatarUrl()})`,
+          backgroundSize: '40px 40px'
+        }} />
     );
   },
 
@@ -145,37 +142,7 @@ export default Radium(React.createClass({
                 className="logo-white"/>
             </Link>
           </ToolbarGroup>
-          <ToolbarGroup
-            float="right"
-            style={{marginLeft: 100, height: '100%'}}>
-            <ul
-              className="toolbar-list"
-              style={styles.toolbarList}>
-              <li
-                id="menu-notifications"
-                style={styles.toolbarListItem}>
-                <HeaderNotificationsDropdown id="menu-notifications--dropdown"/>
-              </li>
-              <li id="menu-account">
-                <IconMenu
-                  id="menu-account--dropdown"
-                  iconButtonElement={this.renderIconButton()}
-                  anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'middle'
-                  }}
-                  targetOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}>
-                  {this.getDropdownItems()}
-                </IconMenu>
-              </li>
-            </ul>
-          </ToolbarGroup>
-          <ToolbarGroup
-            float="left"
-            style={{marginLeft: '-5', height: '100%'}}>
+          <ToolbarGroup style={{height: '100%'}}>
             <ul
               className="toolbar-list"
               style={styles.toolbarList}>
@@ -194,8 +161,35 @@ export default Radium(React.createClass({
               </li>
             </ul>
           </ToolbarGroup>
+          <ToolbarGroup style={{marginLeft: -5, height: '100%', flex: 1, justifyContent: 'flex-end'}}>
+            <ul
+              className="toolbar-list"
+              style={styles.toolbarList}>
+              <li
+                id="menu-notifications"
+                style={styles.toolbarListItem}>
+                <HeaderNotificationsDropdown id="menu-notifications--dropdown"/>
+              </li>
+              <li id="menu-account">
+                <IconMenu
+                  iconButtonElement={this.renderIconButton()}
+                  anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'middle'
+                  }}
+                  targetOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}>
+                  {this.getDropdownItems()}
+                </IconMenu>
+              </li>
+            </ul>
+          </ToolbarGroup>
         </Toolbar>
       </Sticky>
     );
   }
 }));
+
+export default withRouter(Header);

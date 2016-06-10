@@ -1,15 +1,13 @@
 import React from 'react';
-import _ from 'lodash';
 
 import Actions from './TemplatesActions';
 
-import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList, Truncate} from 'syncano-components';
-import {LinkWrapper} from '../../common/';
+import {MenuItem} from 'material-ui';
+import {Color, ColumnList, Truncate, LinkWrapper} from '../../common/';
 
 const Column = ColumnList.Column;
 
-const TemplateListItem = ({item, onIconClick, showDeleteDialog}, context) => {
+const TemplateListItem = ({item, onIconClick, showDeleteDialog}, {params}) => {
   return (
     <ColumnList.Item
       checked={item.checked}
@@ -25,8 +23,10 @@ const TemplateListItem = ({item, onIconClick, showDeleteDialog}, context) => {
         handleIconClick={onIconClick}
         primaryText={
           <LinkWrapper
-            to="template"
-            params={_.merge({}, context.router.getCurrentParams(), {templateName: item.name})}>
+            to={{
+              name: 'template',
+              params: {...params, templateName: item.name}
+            }}>
             <Truncate text={item.name}/>
           </LinkWrapper>
         }>
@@ -47,7 +47,7 @@ const TemplateListItem = ({item, onIconClick, showDeleteDialog}, context) => {
 };
 
 TemplateListItem.contextTypes = {
-  router: React.PropTypes.func
+  params: React.PropTypes.object
 };
 
 export default TemplateListItem;

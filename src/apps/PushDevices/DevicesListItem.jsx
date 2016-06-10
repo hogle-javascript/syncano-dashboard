@@ -2,8 +2,8 @@ import React from 'react';
 
 import {SnackbarNotificationMixin} from '../../mixins';
 
-import {MenuItem} from 'syncano-material-ui';
-import {Color, ColumnList, Clipboard, Truncate} from 'syncano-components';
+import {MenuItem} from 'material-ui';
+import {Color, ColumnList, Clipboard, Truncate} from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -45,11 +45,11 @@ export default React.createClass({
           primaryText={item.label}
           secondaryText={
             <Clipboard
-              copyText={item.device_id}
+              copyText={item.registration_id}
               onCopy={() => this.setSnackbarNotification({
-                message: 'Device ID copied to the clipboard!'
+                message: 'Registration ID copied to the clipboard!'
               })}
-              tooltip="Copy device ID"
+              tooltip="Copy registration ID"
               type="link" />
           }/>
         <Column.Desc className="col-sm-6">
@@ -82,4 +82,3 @@ export default React.createClass({
     );
   }
 });
-

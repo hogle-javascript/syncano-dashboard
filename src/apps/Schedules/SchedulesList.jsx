@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
 
 import Actions from './SchedulesActions';
 import Store from './SchedulesStore';
@@ -9,19 +8,14 @@ import {DialogsMixin} from '../../mixins';
 
 // Components
 import ListItem from './SchedulesListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'SchedulesList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   getDefaultProps() {
     return {

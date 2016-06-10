@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -12,9 +12,8 @@ import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
-import {Container} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {RaisedButton} from 'material-ui';
+import {Container, InnerToolbar} from '../../common/';
 
 // Local components
 import AdminsList from './AdminsList';
@@ -25,9 +24,6 @@ export default React.createClass({
   displayName: 'Admins',
 
   mixins: [
-    State,
-    Navigation,
-
     Reflux.connect(Store, 'admins'),
     Reflux.connect(AdminsInvitationsStore, 'invitations'),
     DialogsMixin
@@ -41,12 +37,14 @@ export default React.createClass({
 
   render() {
     const {admins, invitations} = this.state;
+    const title = 'Administrators';
 
     return (
       <div>
+        <Helmet title={title} />
         <AdminDialog />
 
-        <InnerToolbar title="Administrators">
+        <InnerToolbar title={title}>
           <RaisedButton
             label="Invite"
             primary={true}

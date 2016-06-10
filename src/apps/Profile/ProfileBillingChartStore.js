@@ -118,8 +118,8 @@ export default Reflux.createStore({
   },
 
   prepareChartData(joinProfiles, joinUsages) {
-    let profile = _.first(joinProfiles);
-    let usage = _.first(joinUsages);
+    let profile = _.head(joinProfiles);
+    let usage = _.head(joinUsages);
     let state = this.getInitialState();
 
     state.isLoading = false;
@@ -279,18 +279,5 @@ export default Reflux.createStore({
     let {year, month} = this.getDate();
 
     return new Date(year, month + 1, 0).getDate();
-  },
-
-  getStartDate() {
-    let {year, month} = this.getDate();
-
-    return moment(new Date(year, month, 1)).format(this.format);
-  },
-
-  getEndDate() {
-    let {year, month} = this.getDate();
-
-    return moment(new Date(year, month, this.getNumberOfDays())).format(this.format);
   }
-
 });

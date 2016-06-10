@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-
-import {Utils, Paper} from 'syncano-material-ui';
+import {Paper} from 'material-ui';
 import {Logo} from '../../common/';
 
 import './AccountContainer.sass';
@@ -13,25 +12,21 @@ export default React.createClass({
     style: React.PropTypes.object
   },
 
-  mixins: [Utils.Styles],
-
   getStyles() {
-    let styles = {
+    return {
       marginBottom: 50
     };
-
-    return this.mergeStyles(styles, this.props.style);
   },
 
   render() {
     const styles = this.getStyles();
-    const {id, bottomContent, children} = this.props;
+    const {id, bottomContent, style, children} = this.props;
 
     return (
       <div
         className="col-lg-15 account-container"
         id={id}
-        style={styles}>
+        style={{...styles, ...style}}>
         <div className="account-logo">
           <Link to="login"><Logo className="logo-blue"/></Link>
         </div>

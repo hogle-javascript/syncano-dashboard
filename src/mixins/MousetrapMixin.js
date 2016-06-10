@@ -1,5 +1,9 @@
 import Mousetrap from 'mousetrap';
 
+Mousetrap.prototype.stopCallback = () => {
+  return false;
+};
+
 export default {
   mousetrapBindings: [],
 

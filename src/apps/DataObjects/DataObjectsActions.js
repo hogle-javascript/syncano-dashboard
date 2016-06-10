@@ -25,6 +25,7 @@ export default CreateActions(
     },
     subFetchDataObjects: {
       asyncResult: true,
+      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.subList'
     },

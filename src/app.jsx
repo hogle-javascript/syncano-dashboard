@@ -1,3 +1,4 @@
+/* eslint-disable */
 import 'babel-polyfill';
 import 'normalize.css';
 import './lib/localStoragePolyfill';
@@ -7,65 +8,17 @@ import './segment';
 import './app.sass';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Router from 'react-router';
-import URI from 'urijs';
-import _ from 'lodash';
+import {render} from 'react-dom';
+import {Router, useRouterHistory} from 'react-router';
+import createHistory from 'history/lib/createHashHistory';
+
 import routes from './routes';
 import tapPlugin from 'react-tap-event-plugin';
-
-import SessionStore from './apps/Session/SessionStore';
-
-let container = document.getElementById('app');
+import useNamedRoutes from 'use-named-routes';
 
 tapPlugin();
 
-Router.run(routes, (Root, state) => {
-  let uri = new URI();
-  let originalUri = uri.normalize().toString();
-  let pathname = decodeURIComponent(state.pathname).replace('//', '/');
-  let query = _.extend({}, uri.search(true), state.query);
+const container = document.getElementById('app');
+const history = useNamedRoutes(useRouterHistory(createHistory))({ routes });
 
-  SessionStore.setUTMData(state.query);
-
-  if (state.query.token) {
-    SessionStore.setToken(state.query.token);
-    location.replace('/');
-  }
-
-  // Remove trailing slash
-  if (pathname.length > 1 && pathname.match('/$') !== null) {
-    pathname = pathname.slice(0, -1);
-  }
-
-  uri.search(query);
-  uri.hash(`${pathname}${uri.search()}`);
-  uri.search('');
-
-  let normalizedUri = uri.normalize().toString();
-
-  if (originalUri !== normalizedUri) {
-    location.href = normalizedUri;
-    return;
-  }
-
-  let name = 'app';
-  let names = state.routes.map((route) => route.name).filter((routeName) => typeof routeName !== 'undefined');
-
-  if (names.length > 0) {
-    name = names[names.length - 1];
-  }
-
-  if (name === 'login' || name === 'signup') {
-    window.analytics.page(`Dashboard ${_.capitalize(name)}`, {
-      path: state.pathname
-    });
-  } else {
-    window.analytics.page('Dashboard', {
-      Page: name,
-      path: state.pathname
-    });
-  }
-
-  ReactDOM.render(<Root/>, container);
-});
+render(<Router history={history} routes={routes} />, container);

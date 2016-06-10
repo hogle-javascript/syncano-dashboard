@@ -44,9 +44,9 @@ export default Reflux.createStore({
     return {
       currentScript: null,
       scriptConfig: [],
-      isPayloadValid: true,
 
       traces: [],
+      traceIsLoading: true,
       lastTraceResult: null,
       lastTraceStatus: null,
       lastTraceDuration: null,
@@ -66,7 +66,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('ScriptStore::refreshData');
-    const {scriptId} = SessionStore.getRouter().getCurrentParams();
+    const {scriptId} = SessionStore.getParams();
 
     if (scriptId) {
       Actions.fetchScript(scriptId);
@@ -86,11 +86,6 @@ export default Reflux.createStore({
     return _.sortBy(config, 'key');
   },
 
-  getCurrentScript() {
-    console.debug('ScriptStore::getCurrentScript');
-    return this.data.currentScript;
-  },
-
   clearCurrentScript() {
     this.data.currentScript = null;
   },
@@ -100,11 +95,6 @@ export default Reflux.createStore({
     this.data.scriptConfig = this.mapConfig(script.config);
     this.data.currentScript = script;
     this.trigger(this.data);
-  },
-
-  onRunScriptWithUpdateCompleted() {
-    console.debug('ScriptStore::onRunScriptWithUpdateCompleted');
-    this.refreshData();
   },
 
   getEditorMode() {
@@ -121,16 +111,36 @@ export default Reflux.createStore({
     Actions.fetchScriptTraces(this.data.currentScript.id);
   },
 
+  onFetchScriptTraces() {
+    console.debug('ScriptStore::onFetchScriptTraces');
+    if (this.data.lastTraceReady) {
+      this.data.traceIsLoading = true;
+    }
+    this.trigger(this.data);
+  },
+
   onFetchScriptTracesCompleted(traces) {
     console.debug('ScriptStore::onFetchScriptTracesCompleted');
-    this.data.traces = traces._items;
+    this.data.traces = traces;
     this.data.isLoading = false;
     this.getScriptLastTraceResult();
   },
 
+  onFetchScriptTracesFailure() {
+    console.debug('ScriptStore::onFetchScriptTracesFailure');
+    this.data.traceIsLoading = false;
+    this.trigger(this.data);
+  },
+
   onRunScriptCompleted() {
     console.debug('ScriptStore::onRunScriptCompleted');
+    this.dismissSnackbarNotification();
     this.refreshData();
+  },
+
+  onRunScriptFailure() {
+    console.debug('ScriptStore::onRunScriptFailure');
+    this.dismissSnackbarNotification();
   },
 
   getScriptLastTraceResult() {
@@ -141,7 +151,7 @@ export default Reflux.createStore({
     if (this.data.traces && this.data.traces.length > 0) {
       const lastTrace = this.data.traces[0];
 
-      if (lastTrace.status !== 'success' && lastTrace.status !== 'failure') {
+      if (lastTrace.status === 'pending' || lastTrace.status === 'processing') {
         this.data.lastTraceReady = false;
         setTimeout(() => {
           this.fetchTraces();
@@ -156,6 +166,7 @@ export default Reflux.createStore({
         this.data.lastTraceReady = true;
       }
     }
+    this.data.traceIsLoading = false;
     this.trigger(this.data);
   },
 

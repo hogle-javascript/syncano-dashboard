@@ -1,33 +1,32 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import Radium from 'radium';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import Store from './ChannelHistoryStore';
 import Actions from './ChannelHistoryActions';
 
 // Components
-import {Container} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {Container, InnerToolbar} from '../../common/';
 
 // Local components
 import ChannelHistoryList from './ChannelHistoryList';
 
 
-export default Radium(React.createClass({
+const ChannelHistory = Radium(React.createClass({
   displayName: 'ChannelHistory',
 
   propTypes: {
     channelName: React.PropTypes.string
   },
 
-  mixins: [
-    Router.Navigation,
-    Router.State,
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   getDefaultProps() {
     return {
@@ -44,35 +43,41 @@ export default Radium(React.createClass({
       list: {
         position: 'relative',
         top: '35px'
-      },
-      snippetsList: {
-        top: '-45px'
       }
     };
   },
 
   handleBackClick() {
-    this.transitionTo('channels', this.getParams());
+    const {params} = this.context;
+    const {router} = this.props;
+
+    router.push({name: 'channels', params});
   },
 
   render() {
+    const {channelName} = this.props;
+    const {items, isLoading} = this.state;
     const styles = this.getStyles();
+    const title = `Channel History for ${channelName}`;
 
     return (
       <div>
+        <Helmet title={title} />
         <InnerToolbar
-          title={'Channel History for ' + this.props.channelName}
+          title={title}
           backFallback={this.handleBackClick}
           backButtonTooltip='Go back to Channels list'/>
-        <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>
+        <div style={styles.list}>
           <Container>
             <ChannelHistoryList
               name="Channel History"
-              items={this.state.items}
-              isLoading={this.state.isLoading}/>
+              items={items}
+              isLoading={isLoading}/>
           </Container>
         </div>
       </div>
     );
   }
 }));
+
+export default withRouter(ChannelHistory);

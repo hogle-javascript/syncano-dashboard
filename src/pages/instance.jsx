@@ -1,31 +1,21 @@
 import React from 'react';
-import {State, Navigation, RouteHandler} from 'react-router';
+import {withRouter} from 'react-router';
 
 // Stores and Action
 import SessionStore from '../apps/Session/SessionStore';
 import SessionActions from '../apps/Session/SessionActions';
 import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 
-import {Sidebar} from '../common';
+import {Sidebar} from '../common/';
 import HeaderInstancesDropdown from '../common/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
 
-export default React.createClass({
-
+const Instance = React.createClass({
   displayName: 'Instance',
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-
-  mixins: [
-    State,
-    Navigation
-  ],
 
   componentDidMount() {
     console.debug('Instance::componentWillMount');
-    const params = this.getParams();
+    const {params} = this.props;
 
     if (params.instanceName) {
       SessionActions.fetchInstance(params.instanceName);
@@ -33,10 +23,11 @@ export default React.createClass({
   },
 
   redirectToNewInstance() {
+    const {router} = this.props;
     const instanceName = this.refs.addInstanceDialog.refs.name.getValue();
 
     SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName});
+    router.push({name: 'instance', params: {instanceName}});
   },
 
   render() {
@@ -91,7 +82,7 @@ export default React.createClass({
                 <Sidebar.LinkListItem
                   key="pushDevices"
                   routeName="all-push-notification-devices"
-                  primaryText="Push Devices"
+                  primaryText="Push Devices (BETA)"
                   iconClassName="synicon-cellphone-iphone"
                   initiallyOpen={true}
                   autoGenerateNestedIndicator={false}
@@ -116,22 +107,45 @@ export default React.createClass({
                   primaryText="Instance Settings"
                   onTouchTap={() => InstanceDialogActions.showDialog(SessionStore.getInstance())}/>
                 <Sidebar.LinkListItem
+                  key="backupAndRestore"
+                  routeName="full-backups"
+                  iconClassName="synicon-backup-restore"
+                  primaryText="Backup & Restore" />
+                <Sidebar.LinkListItem
                   key="Administrators"
                   routeName="admins"
                   iconClassName="synicon-account-star-variant"
                   primaryText="Administrators" />
                 <Sidebar.LinkListItem
-                  key="API keys"
+                  key="API Keys"
                   routeName="api-keys"
                   iconClassName="synicon-key-variant"
-                  primaryText="API keys" />
+                  primaryText="API Keys" />
               </Sidebar.List>
+              {/* eslint-disable no-inline-comments */}
+              {/* <Sidebar.LinkListItem
+                key="backupAndRestore"
+                routeName="all-backups"
+                iconClassName="synicon-backup-restore"
+                primaryText="Backup & Restore"
+                initiallyOpen={true}
+                autoGenerateNestedIndicator={false}
+                nestedItems={[
+                  <Sidebar.NestedLinkListItem
+                    key="fullBackups"
+                    routeName="full-backups"
+                    primaryText="Full Backups" />,
+                  <Sidebar.NestedLinkListItem
+                    key="partialBackups"
+                    routeName="partial-backups"
+                    primaryText="Partial Backups" />
+                ]}/> */}
             </div>
           </Sidebar>
           <div
             className="col-flex-1"
             style={{maxWidth: 'calc(100% - 256px)', display: 'flex', flexDirection: 'column'}}>
-            <RouteHandler />
+            {this.props.children}
           </div>
         </div>
         <InstanceDialog
@@ -141,3 +155,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(Instance);

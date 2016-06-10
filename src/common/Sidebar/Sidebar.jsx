@@ -1,7 +1,5 @@
 import React from 'react';
 import Radium from 'radium';
-
-import {Utils} from 'syncano-material-ui';
 import SidebarContent from './SidebarContent';
 
 export default Radium(React.createClass({
@@ -10,8 +8,6 @@ export default Radium(React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object
   },
-
-  mixins: [Utils.Styles],
 
   getStyles() {
     return {
@@ -40,7 +36,7 @@ export default Radium(React.createClass({
     return (
       <div
         className="col-flex-0 left-nav"
-        style={this.mergeStyles(style, styles.root)}
+        style={{...style, ...styles.root}}
         {...other}>
         <div style={styles.background}></div>
         <SidebarContent>

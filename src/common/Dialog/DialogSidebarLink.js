@@ -1,13 +1,12 @@
 import React from 'react';
-import {Link, State, Navigation} from 'react-router';
+import {Link} from 'react-router';
 
 export default React.createClass({
   displayName: 'DialogSidebarLink',
 
-  mixins: [
-    State,
-    Navigation
-  ],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
   getStyles() {
     return {
@@ -20,10 +19,11 @@ export default React.createClass({
   },
 
   render() {
+    const {params} = this.context;
     const styles = this.getStyles();
     const {to, children} = this.props;
 
-    if (to.indexOf('http') >= 0) {
+    if (to.indexOf('http') > -1) {
       return (
         <a
           href={to}
@@ -35,10 +35,12 @@ export default React.createClass({
 
     return (
       <Link
-        to={to}
-        params={this.getParams()}
+        to={{
+          name: to,
+          params
+        }}
         style={styles.root}>
-          {children}
+        {children}
       </Link>
     );
   }

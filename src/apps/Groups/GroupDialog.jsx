@@ -9,8 +9,8 @@ import Actions from './GroupsActions';
 import Store from './GroupDialogStore';
 
 // Components
-import {TextField} from 'syncano-material-ui';
-import {Dialog} from '../../common';
+import {TextField} from 'material-ui';
+import {Dialog} from '../../common/';
 
 export default React.createClass({
   displayName: 'GroupDialog',
@@ -34,7 +34,7 @@ export default React.createClass({
   handleEditSubmit() {
     const {id, label} = this.state;
 
-    Actions.updateGroup(id, {label});
+    Actions.updateGroup(id, label);
   },
 
   render() {
@@ -75,7 +75,8 @@ export default React.createClass({
           label="label"
           autoFocus={true}
           fullWidth={true}
-          valueLink={this.linkState('label')}
+          value={this.state.label}
+          onChange={(event, value) => this.setState({label: value})}
           errorText={this.getValidationMessages('label').join(' ')}
           hintText="Group's name"
           floatingLabelText="Name"/>

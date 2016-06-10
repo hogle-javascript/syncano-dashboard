@@ -5,8 +5,8 @@ import {DialogsMixin} from '../../mixins';
 import Actions from './GroupsActions';
 import UserActions from '../Users/UsersActions';
 
-import {MenuItem} from 'syncano-material-ui';
-import {ColumnList, Color} from 'syncano-components';
+import {MenuItem} from 'material-ui';
+import {ColumnList, Color} from '../../common/';
 
 let Column = ColumnList.Column;
 

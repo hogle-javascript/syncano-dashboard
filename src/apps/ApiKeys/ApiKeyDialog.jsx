@@ -10,8 +10,8 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeyDialogStore';
 
 // Components
-import {Toggle, TextField} from 'syncano-material-ui';
-import {Dialog} from '../../common';
+import {Toggle, TextField} from 'material-ui';
+import {Dialog} from '../../common/';
 
 export default React.createClass({
   displayName: 'ApiKeyDialog',
@@ -22,16 +22,24 @@ export default React.createClass({
     FormMixin
   ],
 
-  handleAddSubmit() {
-    const {description, allow_user_create, allow_anonymous_read, ignore_acl} = this.state;
+  getApiKeyParams() {
+    const {id, description, allow_user_create, allow_anonymous_read, ignore_acl} = this.state;
 
-    Actions.createApiKey({description, allow_user_create, allow_anonymous_read, ignore_acl});
+    return {
+      id,
+      description,
+      allow_user_create,
+      allow_anonymous_read,
+      ignore_acl
+    };
+  },
+
+  handleAddSubmit() {
+    Actions.createApiKey(this.getApiKeyParams());
   },
 
   handleEditSubmit() {
-    const {id, description, allow_user_create, allow_anonymous_read, ignore_acl} = this.state;
-
-    Actions.updateApiKey(id, {description, allow_user_create, allow_anonymous_read, ignore_acl});
+    Actions.updateApiKey(this.state.id, this.getApiKeyParams());
   },
 
   handleToogle(event, status) {
@@ -118,7 +126,8 @@ export default React.createClass({
           name="description"
           autoFocus={true}
           fullWidth={true}
-          valueLink={this.linkState('description')}
+          value={this.state.description}
+          onChange={(event, value) => this.setState({description: value})}
           errorText={this.getValidationMessages('description').join(' ')}
           hintText="API key's description"
           floatingLabelText="Description (optional)"

@@ -1,6 +1,5 @@
 import React from 'react';
 import Radium from 'radium';
-import {Utils} from 'syncano-material-ui';
 
 export default Radium(React.createClass({
   displayName: 'RoundIcon',
@@ -11,8 +10,6 @@ export default Radium(React.createClass({
     background: React.PropTypes.string.isRequired,
     handleClick: React.PropTypes.func
   },
-
-  mixins: [Utils.Styles],
 
   getStyles() {
     let styles = {
@@ -26,7 +23,7 @@ export default Radium(React.createClass({
       alignItems: 'center'
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return {...styles, ...this.props.style};
   },
 
   handleClick() {

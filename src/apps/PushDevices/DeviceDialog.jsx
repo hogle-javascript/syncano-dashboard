@@ -6,10 +6,10 @@ import Reflux from 'reflux';
 import {DialogMixin, FormMixin} from '../../mixins';
 
 // Components
-import {TextField, Toggle} from 'syncano-material-ui';
-import {Dialog, Editor} from '../../common';
+import {TextField, Toggle} from 'material-ui';
+import {Dialog, Editor} from '../../common/';
 
-export default (type, Store, Actions) => {
+export default (type, Store, Actions, sidebar) => {
   return React.createClass({
     displayName: `${type}Dialog`,
 
@@ -22,12 +22,12 @@ export default (type, Store, Actions) => {
     validatorConstraints() {
       return {
         label: {
-          presence: true
+          presence: true,
+          length: {
+            maximum: 64
+          }
         },
         registration_id: {
-          presence: true
-        },
-        device_id: {
           presence: true
         }
       };
@@ -41,8 +41,7 @@ export default (type, Store, Actions) => {
 
     getParams() {
       const {label, registration_id, user, device_id, is_active, metadata} = this.state;
-
-      return {
+      const params = {
         label,
         registration_id,
         user,
@@ -50,6 +49,8 @@ export default (type, Store, Actions) => {
         is_active,
         metadata
       };
+
+      return this.removeEmptyKeys(params);
     },
 
     handleAddSubmit() {
@@ -60,8 +61,14 @@ export default (type, Store, Actions) => {
 
     handleEditSubmit() {
       if (_.isFunction(Actions.updateDevice)) {
-        Actions.updateDevice(this.getParams());
+        const {registration_id} = this.state;
+
+        Actions.updateDevice(registration_id, this.getParams());
       }
+    },
+
+    removeEmptyKeys(params) {
+      return _.omit(params, _.isEmpty);
     },
 
     render() {
@@ -81,13 +88,13 @@ export default (type, Store, Actions) => {
               disabled={!this.state.canSubmit}
               handleCancel={this.handleCancel}
               handleConfirm={this.handleFormValidation}/>
-          }>
-          <div>
+          }
+          sidebar={sidebar}>
+          <div className="vp-2-t">
             {this.renderFormNotifications()}
             <Dialog.ContentSection>
               <div className="col-flex-1">
-                <div
-                  style={{width: 100}}>
+                <div style={{width: 100}}>
                   <Toggle
                     ref="is_active"
                     key="is_active"
@@ -101,7 +108,8 @@ export default (type, Store, Actions) => {
               ref="label"
               name="label"
               autoFocus={true}
-              valueLink={this.linkState('label')}
+              value={this.state.label}
+              onChange={(event, value) => this.setState({label: value})}
               fullWidth={true}
               errorText={this.getValidationMessages('label').join(' ')}
               floatingLabelText="Label of the Device" />
@@ -109,14 +117,16 @@ export default (type, Store, Actions) => {
               ref="registration_id"
               name="registration_id"
               disabled={this.hasEditMode()}
-              valueLink={this.linkState('registration_id')}
+              value={this.state.registration_id}
+              onChange={(event, value) => this.setState({registration_id: value})}
               fullWidth={true}
               errorText={this.getValidationMessages('registration_id').join(' ')}
               floatingLabelText="Device's registration ID" />
             <TextField
               ref="user"
               name="user"
-              valueLink={this.linkState('user')}
+              value={this.state.user}
+              onChange={(event, value) => this.setState({user: value})}
               fullWidth={true}
               errorText={this.getValidationMessages('user').join(' ')}
               floatingLabelText="User ID" />
@@ -124,7 +134,8 @@ export default (type, Store, Actions) => {
               className="vm-4-b"
               ref="device_id"
               name="device_id"
-              valueLink={this.linkState('device_id')}
+              value={this.state.device_id}
+              onChange={(event, value) => this.setState({device_id: value})}
               fullWidth={true}
               errorText={this.getValidationMessages('device_id').join(' ')}
               floatingLabelText="Device ID" />

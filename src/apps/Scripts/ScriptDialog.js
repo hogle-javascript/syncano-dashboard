@@ -9,9 +9,8 @@ import Actions from './ScriptsActions';
 import Store from './ScriptDialogStore';
 
 // Components
-import {TextField} from 'syncano-material-ui';
-import {SelectFieldWrapper} from 'syncano-components';
-import {Dialog} from '../../common';
+import {TextField} from 'material-ui';
+import {Dialog, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
   displayName: 'ScriptDialog',
@@ -37,9 +36,9 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    const {label, description, runtime_name} = this.state;
+    const {id, label, description, runtime_name} = this.state;
 
-    Actions.updateScript(this.state.id, {label, description, runtime_name});
+    Actions.updateScript(id, {label, description, runtime_name});
   },
 
   handleAddSubmit() {
@@ -90,7 +89,8 @@ export default React.createClass({
         <TextField
           ref="label"
           autoFocus={true}
-          valueLink={this.linkState('label')}
+          value={this.state.label}
+          onChange={(event, value) => this.setState({label: value})}
           errorText={this.getValidationMessages('label').join(' ')}
           name="label"
           style={{width: 500}}
@@ -99,7 +99,8 @@ export default React.createClass({
         <TextField
           ref="description"
           name="description"
-          valueLink={this.linkState('description')}
+          value={this.state.description}
+          onChange={(event, value) => this.setState({description: value})}
           errorText={this.getValidationMessages('description').join(' ')}
           style={{width: 500}}
           multiLine={true}

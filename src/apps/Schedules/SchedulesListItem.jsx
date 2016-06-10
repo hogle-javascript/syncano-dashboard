@@ -1,11 +1,12 @@
 import React from 'react';
-import {State, Link} from 'react-router';
+import {Link} from 'react-router';
 
 import Actions from './SchedulesActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
-import {MenuItem, Styles} from 'syncano-material-ui';
-import {ColumnList} from 'syncano-components';
+import {MenuItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
+import {ColumnList} from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -17,11 +18,14 @@ export default React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [State],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
   render() {
+    const {instanceName} = this.context.params;
     const {item, onIconClick, showDeleteDialog} = this.props;
-    const script = ScriptsStore.getScriptById(item.codebox);
+    const script = ScriptsStore.getScriptById(item.script);
     const scriptLabel = script ? script.label : '';
 
     return (
@@ -31,7 +35,7 @@ export default React.createClass({
         <Column.CheckIcon.Socket
           id={item.id.toString()}
           iconClassName="socket-schedule"
-          iconColor={Styles.Colors.lime400}
+          iconColor={Colors.lime400}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.label}
@@ -40,17 +44,23 @@ export default React.createClass({
           className="col-flex-1"
           date={item.scheduled_next} />
         <Column.Desc className="col-flex-1">
-          <Link to="script" params={{
-            instanceName: this.getParams().instanceName,
-            scriptId: item.codebox
+          <Link to={{
+            name: 'script',
+            params: {
+              instanceName,
+              scriptId: item.script
+            }
           }}>
             {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">
-          <Link to="schedule-traces" params={{
-            instanceName: this.getParams().instanceName,
-            scheduleId: item.id
+          <Link to={{
+            name: 'schedule-traces',
+            params: {
+              instanceName,
+              scheduleId: item.id
+            }
           }}>
             Traces
           </Link>
@@ -72,4 +82,3 @@ export default React.createClass({
     );
   }
 });
-

@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {State, Navigation} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Actions & Stores
 import Actions from './InstancesActions';
@@ -12,9 +12,8 @@ import SessionActions from '../Session/SessionActions';
 import {DialogsMixin} from '../../mixins';
 
 // Components
-import {Utils, IconButton, RaisedButton, TextField} from 'syncano-material-ui';
-import {Container, Loading} from 'syncano-components';
-import {InnerToolbar, Dialog} from '../../common';
+import {IconButton, RaisedButton, TextField} from 'material-ui';
+import {Container, Loading, InnerToolbar, Dialog} from '../../common/';
 
 export default React.createClass({
   displayName: 'InstanceEdit',
@@ -24,12 +23,9 @@ export default React.createClass({
   },
 
   mixins: [
-    State,
-    Navigation,
     Reflux.connect(SessionStore),
     Reflux.connect(Store),
-    DialogsMixin,
-    Utils.Styles
+    DialogsMixin
   ],
 
   validatorConstraints: {
@@ -41,10 +37,10 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    const params = this.getParams();
+    const {instanceName} = this.props.params;
 
-    if (params.instanceName) {
-      SessionActions.fetchInstance(params.instanceName);
+    if (instanceName) {
+      SessionActions.fetchInstance(instanceName);
       Actions.fetch();
     }
   },
@@ -63,7 +59,7 @@ export default React.createClass({
         left: 50
       },
       customizeSection: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         flexDirection: 'column',
         marginBottom: 48
       },
@@ -75,7 +71,7 @@ export default React.createClass({
         height: 48,
         fontSize: 18,
         lineHeight: '20px',
-        display: '-webkit-inline-flex; display: inline-flex',
+        display: 'inline-flex',
         borderRadius: '50%',
         color: '#FFF',
         marginBottom: 16
@@ -156,6 +152,7 @@ export default React.createClass({
     const styles = this.getStyles();
     const {instance} = this.state;
     const deleteButtonText = Store.amIOwner(instance) ? 'Delete' : 'Leave';
+    const title = 'General Settings';
 
     if (!instance) {
       return null;
@@ -163,9 +160,10 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title={title} />
         {this.getDialogs()}
 
-        <InnerToolbar title="General">
+        <InnerToolbar title={title}>
           <IconButton
             style={{fontSize: 25, marginTop: 5}}
             iconClassName="synicon-delete"

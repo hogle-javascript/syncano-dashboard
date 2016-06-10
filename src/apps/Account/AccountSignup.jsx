@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {withRouter, Link} from 'react-router';
 
 // Utils
 import {FormMixin} from '../../mixins';
@@ -14,30 +14,16 @@ import Constants from './AuthConstants';
 
 // Components
 import AccountContainer from './AccountContainer';
-import {TextField, RaisedButton} from 'syncano-material-ui';
-import {SocialAuthButtonsList} from 'syncano-components';
+import {TextField, RaisedButton} from 'material-ui';
+import {SocialAuthButtonsList} from '../../common/';
 
-export default React.createClass({
+const AccountSignup = React.createClass({
   displayName: 'AccountSignup',
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   mixins: [
     Reflux.connect(Store),
-    Router.State,
-    Router.Navigation,
     FormMixin
   ],
-
-  statics: {
-    willTransitionTo(transition) {
-      if (SessionStore.isAuthenticated()) {
-        transition.redirect(Constants.LOGIN_REDIRECT_PATH, {}, {});
-      }
-    }
-  },
 
   validatorConstraints: {
     email: {
@@ -52,37 +38,40 @@ export default React.createClass({
   },
 
   componentWillUpdate() {
+    const {router, location} = this.props;
+
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
-      let queryNext = this.getQuery().next || null;
+      let queryNext = location.query.next || null;
       let lastInstance = localStorage.getItem('lastInstance') || null;
 
       if (queryNext !== null) {
-        this.replaceWith(queryNext);
+        router.replace(queryNext);
       } else if (lastInstance !== null) {
-        this.replaceWith('instance', {instanceName: lastInstance});
+        router.replace('instance', {instanceName: lastInstance});
       } else {
         SessionStore
           .getConnection()
-          .Instances
+          .Instance
+          .please()
           .list()
           .then((instances) => {
             if (instances.length > 0) {
-              let instance = instances._items[0];
+              let instance = instances[0];
 
               localStorage.setItem('lastInstance', instance.name);
-              this.replaceWith('instance', {instanceName: instance.name});
+              router.replace('instance', {instanceName: instance.name});
             } else {
-              this.replaceWith('sockets');
+              router.replace('sockets');
             }
           })
           .catch(() => {
-            this.replaceWith('sockets');
+            router.replace('sockets');
           });
       }
     }
 
-    let invKey = this.getQuery().invitation_key || null;
+    let invKey = location.query.invitation_key || null;
 
     if (invKey !== null && SessionActions.getInvitationFromUrl() !== invKey) {
       SessionActions.setInvitationFromUrl(invKey);
@@ -109,16 +98,20 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation(data) {
+    const {email, password} = data;
+
     SessionStore.showWelcomeDialog();
     SessionStore.setSignUpMode();
 
     Actions.passwordSignUp({
-      email: data.email,
-      password: data.password
+      email,
+      password
     });
   },
 
   render() {
+    const {query} = this.props.location;
+
     return (
       <AccountContainer bottomContent={this.getBottomContent()}>
         <div className="account-container__content__header vm-3-b">
@@ -136,7 +129,8 @@ export default React.createClass({
           method="post">
           <TextField
             ref="email"
-            valueLink={this.linkState('email')}
+            value={this.state.email}
+            onChange={(event, value) => this.setState({email: value})}
             errorText={this.getValidationMessages('email').join(' ')}
             name="email"
             className="text-field"
@@ -146,7 +140,8 @@ export default React.createClass({
 
           <TextField
             ref="password"
-            valueLink={this.linkState('password')}
+            value={this.state.password}
+            onChange={(event, value) => this.setState({password: value})}
             errorText={this.getValidationMessages('password').join(' ')}
             type="password"
             name="password"
@@ -158,10 +153,9 @@ export default React.createClass({
           <RaisedButton
             type="submit"
             label="Create my account"
-            labelStyle={{fontSize: '16px'}}
-            fullWidth={true}
+            labelStyle={{fontSize: '16px', lineHeight: '48px'}}
             disabled={!this.state.canSubmit}
-            style={{boxShadow: 'none', height: '48px'}}
+            style={{boxShadow: 'none', height: '48px', width: '100%'}}
             primary={true}/>
         </form>
 
@@ -175,11 +169,13 @@ export default React.createClass({
             <li>
               <p>
                 <span>Already have an account? </span>
-                <Router.Link
-                  to="login"
-                  query={this.getQuery()}>
+                <Link
+                  to={{
+                    name: 'login',
+                    query
+                  }}>
                   Login
-                </Router.Link>
+                </Link>
               </p>
             </li>
           </ul>
@@ -188,3 +184,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(AccountSignup);

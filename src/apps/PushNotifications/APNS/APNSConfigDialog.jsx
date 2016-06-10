@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
+import Syncano from 'syncano';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../../mixins';
@@ -11,9 +12,9 @@ import Actions from './APNSPushNotificationsActions';
 import Store from './APNSConfigDialogStore';
 
 // Components
-import {IconButton, TextField, Styles} from 'syncano-material-ui';
-import {Show} from 'syncano-components';
-import {Dialog, DropZone, Notification} from '../../../common';
+import {IconButton, TextField} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
+import {Show, Dialog, DropZone, Notification} from '../../../common/';
 
 export default Radium(React.createClass({
   displayName: 'APNSConfigDialog',
@@ -65,13 +66,13 @@ export default Radium(React.createClass({
       GDClink: {
         margin: '80px 0',
         cursor: 'pointer',
-        color: Styles.Colors.blue400
+        color: Colors.blue400
       },
       actionsContainer: {
         padding: 20
       },
       dropzoneWithFileTitle: {
-        color: Styles.Colors.black,
+        color: Colors.black,
         fontSize: 16,
         fontWeight: 500
       },
@@ -84,7 +85,7 @@ export default Radium(React.createClass({
         paddingBottom: 10
       },
       closeIconColor: {
-        color: Styles.Colors.grey400
+        color: Colors.grey400
       },
       closeIcon: {
         position: 'absolute',
@@ -104,11 +105,11 @@ export default Radium(React.createClass({
     const state = {
       development: {
         development_certificate_name: certificate.name,
-        development_certificate: certificate
+        development_certificate: Syncano.file(certificate)
       },
       production: {
         production_certificate_name: certificate.name,
-        production_certificate: certificate
+        production_certificate: Syncano.file(certificate)
       }
     };
 
@@ -116,43 +117,21 @@ export default Radium(React.createClass({
   },
 
   handleAddSubmit() {
-    const state = this.state;
-    let params = {
-      production_certificate_name: state.production_certificate_name,
-      production_certificate: state.production_certificate,
-      production_bundle_identifier: state.production_bundle_identifier,
-      production_expiration_date: state.production_expiration_date,
-      development_certificate_name: state.development_certificate_name,
-      development_certificate: state.development_certificate,
-      development_expiration_date: state.development_expiration_date,
-      development_bundle_identifier: state.development_bundle_identifier
-    };
+    Actions.configAPNSPushNotification(this.removeEmptyParams(this.state));
+  },
 
-    _.forEach(params, (value, key) => {
-      if (_.isEmpty(value)) {
-        delete params[key];
-      }
-    });
-    Actions.configAPNSPushNotification(params);
+  removeEmptyParams(params) {
+    return _.omitBy(params, _.isEmpty);
   },
 
   clearCertificate(type) {
-    const keys = {
-      production: {
-        production_certificate_name: null,
-        production_certificate: null,
-        production_bundle_identifier: null,
-        production_expiration_date: null
-      },
-      development: {
-        development_certificate_name: null,
-        development_certificate: null,
-        development_expiration_date: null,
-        development_bundle_identifier: null
-      }
+    const params = {
+      [`${type}_certificate`]: false,
+      [`${type}_certificate_name`]: null,
+      [`${type}_bundle_identifier`]: null
     };
 
-    this.setState(keys[type]);
+    Actions.removeCertificate(params);
   },
 
   renderDropzoneDescription(type) {
@@ -176,7 +155,8 @@ export default Radium(React.createClass({
               <div className="col-xs-23">
                 <TextField
                   fullWidth={true}
-                  valueLink={this.linkState(`${type}_certificate_name`)}
+                  value={this.state[`${type}_certificate_name`]}
+                  onChange={(event, value) => this.setState({[`${type}_certificate_name`]: value})}
                   defaultValue={state[`${type}_certificate_name`]}
                   errorText={this.getValidationMessages(`${type}_certificate_name`).join(' ')}
                   floatingLabelText="Apple Push Notification Certificate Name"/>
@@ -195,7 +175,8 @@ export default Radium(React.createClass({
               <div className="col-xs-23">
                 <TextField
                   fullWidth={true}
-                  valueLink={this.linkState(`${type}_bundle_identifier`)}
+                  value={this.state[`${type}_bundle_identifier`]}
+                  onChange={(event, value) => this.setState({[`${type}_bundle_identifier`]: value})}
                   defaultValue={state[`${type}_bundle_identifier`]}
                   errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}
                   floatingLabelText="Bundle Identifier"/>
@@ -271,19 +252,38 @@ export default Radium(React.createClass({
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
+        }
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              <strong>APNS Push Notification Socket</strong> allows you to send messages to your iOS devices. You can
+              easily notify users about updates etc.
+              <br/><br/>
+              <i>
+                NOTE: At least one production or development certificate must be uploaded to send Push Notifications.
+              </i>
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Certificates">
+              Certificates are IDs that uniquely identify your application.
+              <br/><br/>
+              <i>
+                NOTE: If you don't have any certificates generated yet, click link below to learn how to generate them
+                 from our docs.
+              </i>
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/push-notification-sockets-ios">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
         }>
-        <div className="row align-center hp-2-l hp-2-r vm-2-b">
+        <div className="row align-center hp-2-l hp-2-r vm-2-b vm-2-t">
           <div
             className="hm-2-r"
             dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
           <div className="col-flex-1">
             {this.renderDropZones()}
-            <div className="vm-4-t">
-              If you don't have any certificates generated yet read
-              <a
-                style={styles.GDClink}
-                href="https://developer.apple.com/membercenter"> here</a> to get them.
-            </div>
             {this.renderCertificateErrors()}
           </div>
         </div>

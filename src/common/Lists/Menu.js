@@ -1,5 +1,5 @@
 import React from 'react';
-import {IconMenu, IconButton, MenuItem} from 'syncano-material-ui';
+import {IconMenu, IconButton, MenuItem} from 'material-ui';
 
 export default ({children, checkedItemsCount, handleSelectAll, handleUnselectAll}) => (
   <IconMenu

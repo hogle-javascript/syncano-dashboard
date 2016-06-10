@@ -1,52 +1,55 @@
 import _ from 'lodash';
 
 export default {
-  get(scriptId) {
-    this.Connection
-      .CodeBoxes
-      .get(scriptId)
+  get(id) {
+    this.NewLibConnection
+      .Script
+      .please()
+      .get({id})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  update(scriptId, params) {
-    this.Connection
-      .CodeBoxes.update(scriptId, params)
+  update(id, params) {
+    this.NewLibConnection
+      .Script
+      .please()
+      .update({id}, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  run(params) {
-    this.Connection
-      .CodeBoxes.run(params.id, {payload: params.payload})
-      .then(this.completed)
+  run(updateParams, runParams) {
+    const {id, payload} = runParams;
+
+    this.NewLibConnection
+      .Script
+      .please()
+      .update({id}, updateParams)
+      .then(() => {
+        return this.NewLibConnection
+          .Script
+          .please()
+          .run({id}, {payload})
+          .then(this.completed)
+          .catch(this.failure);
+      })
       .catch(this.failure);
   },
 
-  runWithUpdate(scriptId, updateParams, payload) {
-    this.Connection
-      .CodeBoxes.update(scriptId, updateParams)
-      .then(
-      this.Connection
-        .CodeBoxes
-        .run(scriptId, payload)
-        .then(this.completed)
-        .catch(this.failure)
-    )
-    .catch(this.failure);
-  },
-
-  list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .CodeBoxes
-      .list(params)
+  list() {
+    this.NewLibConnection
+      .Script
+      .please()
+      .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
 
   create(payload) {
     let source = '';
+    const {runtime_name, label, description} = payload;
     const comment = {
       python: '#',
       javascript: '//',
@@ -54,49 +57,52 @@ export default {
       golang: '//',
       swift: '//',
       php: '//'
-    }[payload.runtime_name];
+    }[runtime_name];
 
     if (comment) {
       source = `${comment} Start coding!`;
     }
 
-    this.Connection
-      .CodeBoxes.create({
-        runtime_name: payload.runtime_name,
-        label: payload.label,
-        description: payload.description,
-        source
-      })
+    this.NewLibConnection
+      .Script
+      .please()
+      .create({runtime_name, label, description, source})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  remove(ids) {
-    const promises = ids.map((id) => this.Connection.CodeBoxes.remove(id));
+  remove(scripts) {
+    const promises = _.map(scripts, (script) => this.NewLibConnection.Script.please().delete({id: script.id}));
 
     this.Promise.all(promises)
       .then(this.completed)
-      .error(this.failure);
+      .catch(this.failure);
   },
 
-  getTrace(scriptId, traceId) {
-    this.Connection
-      .CodeBoxes.trace(traceId, scriptId, {})
+  getTrace(scriptId, id) {
+    this.NewLibConnection
+      .ScriptTrace
+      .please()
+      .get({scriptId, id})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  listTraces(scriptId, params = {}) {
-    _.defaults(params, {ordering: 'desc'});
-    this.Connection
-      .CodeBoxes.traces(scriptId, params)
+  listTraces(scriptId) {
+    this.NewLibConnection
+      .ScriptTrace
+      .please()
+      .ordering('desc')
+      .list({scriptId})
       .then(this.completed)
       .catch(this.failure);
   },
 
   listRuntimes() {
-    this.Connection
-      .CodeBoxes.listRuntimes()
+    this.NewLibConnection
+      .Script
+      .please()
+      .getRuntimes()
       .then(this.completed)
       .catch(this.failure);
   }

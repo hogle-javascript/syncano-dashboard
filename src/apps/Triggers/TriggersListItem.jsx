@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, State} from 'react-router';
+import {Link} from 'react-router';
 
 import {DialogsMixin} from '../../mixins';
 
@@ -7,9 +7,9 @@ import Actions from './TriggersActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 import ClassesStore from '../Classes/ClassesStore';
 
-import {MenuItem, Styles} from 'syncano-material-ui';
-import {ColumnList} from 'syncano-components';
-import {DataObjectsAmount} from '../../common';
+import {MenuItem} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
+import {ColumnList, DataObjectsAmount} from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -21,16 +21,17 @@ export default React.createClass({
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
-  mixins: [
-    State,
-    DialogsMixin
-  ],
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
+  mixins: [DialogsMixin],
 
   render() {
+    const {instanceName} = this.context.params;
     const {item, onIconClick, showDeleteDialog} = this.props;
-    const script = ScriptsStore.getScriptById(item.codebox);
+    const script = ScriptsStore.getScriptById(item.script);
     const scriptLabel = script ? script.label : '';
-    const instanceName = this.getParams().instanceName;
     const itemClass = ClassesStore.getClassByName(item.class);
 
     return (
@@ -40,29 +41,34 @@ export default React.createClass({
         <Column.CheckIcon.Socket
           id={item.id.toString()}
           iconClassName="socket-trigger"
-          iconColor={Styles.Colors.amberA200}
+          iconColor={Colors.amberA200}
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.label}/>
         <Column.Desc className="col-flex-1">
           <DataObjectsAmount
             className={itemClass ? itemClass.name : null}
-            dataObjects={itemClass.objects_count} />
+            dataObjects={itemClass ? itemClass.objects_count : null} />
         </Column.Desc>
         <Column.Desc className="col-flex-1">
-          <Link to="script" params={{
-            instanceName,
-            scriptId: item.codebox
+          <Link to={{
+            name: 'script',
+            params: {
+              instanceName,
+              scriptId: item.script
+            }
           }}>
             {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">
           <Link
-            to="trigger-traces"
-            params={{
-              instanceName,
-              triggerId: item.id
+            to={{
+              name: 'trigger-traces',
+              params: {
+                instanceName,
+                triggerId: item.id
+              }
             }}>
             Traces
           </Link>

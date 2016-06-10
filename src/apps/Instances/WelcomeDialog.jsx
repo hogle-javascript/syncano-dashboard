@@ -1,10 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'syncano-material-ui';
+import {Paper, Avatar, FlatButton} from 'material-ui';
 
 export default Radium(React.createClass({
-
   displayName: 'WelcomeDialog',
 
   contextTypes: {
@@ -70,12 +69,12 @@ export default Radium(React.createClass({
     return (
       <div className='welcome-dialog' style={styles.main}>
         <div style={styles.overlay}></div>
-        <MUI.Paper
+        <Paper
           ref="dialog"
           style={styles.paper}>
           <div style={{color: 'white', height: '100%', width: '100%', display: 'flex', flexDirection: 'column'}}>
             <div style={styles.text}>
-              <MUI.Avatar size={80} src={'/img/fox.png'}/>
+              <Avatar size={80} src={'/img/fox.png'}/>
 
               <div style={{paddingTop: 16, paddingBottom: 24}}>
                 Welcome to your <strong>Syncano</strong> dashboard!
@@ -85,14 +84,13 @@ export default Radium(React.createClass({
               </div>
             </div>
 
-            <MUI.FlatButton
+            <FlatButton
               style={{margin: '24px auto', width: '80%'}}
               label='Go to your first instance!'
               primary={true}
               onClick={this.handleCloseDialog}/>
           </div>
-
-        </MUI.Paper>
+        </Paper>
       </div>
     );
   }

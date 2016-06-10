@@ -99,6 +99,6 @@ export default Reflux.createStore({
 
   onFetchChannelsCompleted(items) {
     console.debug('ChannelsStore::onFetchChannelsCompleted');
-    Actions.setChannels(items._items);
+    Actions.setChannels(items);
   }
 });

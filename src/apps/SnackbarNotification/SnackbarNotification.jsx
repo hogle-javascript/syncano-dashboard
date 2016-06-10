@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {Snackbar} from 'syncano-material-ui';
+import {Snackbar} from 'material-ui';
 
 import Actions from './SnackbarNotificationActions';
 import Store from './SnackbarNotificationStore';

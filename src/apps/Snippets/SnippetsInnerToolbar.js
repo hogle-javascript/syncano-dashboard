@@ -1,5 +1,5 @@
 import React from 'react';
-import {InnerToolbar} from '../../common';
+import {InnerToolbar} from '../../common/';
 import SnippetsDropdown from './SnippetsDropdown';
 
 export default ({children}) => (

@@ -50,7 +50,7 @@ export default Reflux.createStore({
 
   onFetchGroupsCompleted(items) {
     console.debug('GroupsStore::onFetchGroupsCompleted');
-    Actions.setGroups(items._items);
+    Actions.setGroups(items);
   },
 
   onRemoveGroupsCompleted() {

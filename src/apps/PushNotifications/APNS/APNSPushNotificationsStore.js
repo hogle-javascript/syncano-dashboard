@@ -56,5 +56,10 @@ export default Reflux.createStore({
       return item;
     });
     this.trigger(this.data);
+  },
+
+  onRemoveCertificateCompleted() {
+    console.debug('APNSPushNotificationsStore::onRemoveCertificateCompleted');
+    this.refreshData();
   }
 });

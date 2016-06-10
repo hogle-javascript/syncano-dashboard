@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'react-router';
 
 // Utils
 import {DialogsMixin} from '../../mixins';
@@ -10,19 +9,14 @@ import Store from './ChannelsStore';
 
 // Components
 import ListItem from './ChannelsListItem';
-import {ColumnList} from 'syncano-components';
-import {Dialog, Lists} from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common/';
 
 const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ChannelsList',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-    DialogsMixin
-  ],
+  mixins: [DialogsMixin],
 
   getDefaultProps() {
     return {

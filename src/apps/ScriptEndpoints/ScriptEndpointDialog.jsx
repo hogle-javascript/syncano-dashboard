@@ -1,5 +1,4 @@
 import React from 'react';
-import {State, Navigation} from 'react-router';
 import Reflux from 'reflux';
 
 // Utils
@@ -11,30 +10,44 @@ import DialogStore from './ScriptEndpointDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {TextField, Toggle, Styles} from 'syncano-material-ui';
-import {SelectFieldWrapper} from 'syncano-components';
-import {Dialog, LinkWrapper} from '../../common';
+import {TextField, Toggle} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
+import {Dialog, LinkWrapper, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
   displayName: 'ScriptEndpointDialog',
 
+  contextTypes: {
+    params: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(DialogStore),
     DialogMixin,
-    FormMixin,
-    State,
-    Navigation
+    FormMixin
   ],
 
   validatorConstraints: {
     name: {
       presence: true
     },
-    codebox: {
+    script: {
       presence: {
         message: `^Script can't be blank`
       }
     }
+  },
+
+  getScriptEndpointParams() {
+    const {name, script, description} = this.state;
+    const params = {
+      public: this.state.public,
+      name,
+      script,
+      description
+    };
+
+    return params;
   },
 
   handleDialogShow() {
@@ -43,20 +56,13 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.createScriptEndpoint({
-      name: this.state.name,
-      codebox: this.state.codebox,
-      description: this.state.description,
-      public: this.state.public
-    });
+    Actions.createScriptEndpoint(this.getScriptEndpointParams());
   },
 
   handleEditSubmit() {
-    Actions.updateScriptEndpoint(this.state.name, {
-      codebox: this.state.codebox,
-      description: this.state.description,
-      public: this.state.public
-    });
+    const {name} = this.state;
+
+    Actions.updateScriptEndpoint(name, this.getScriptEndpointParams());
   },
 
   handleToogle(event, status) {
@@ -67,6 +73,8 @@ export default React.createClass({
   },
 
   render() {
+    const {params} = this.context;
+    const {open, isLoading, canSubmit, scripts, script} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -75,11 +83,11 @@ export default React.createClass({
         ref="dialog"
         title={`${title} a Script Endpoint`}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -93,9 +101,11 @@ export default React.createClass({
               A Script is an object that contains a piece of code that can be run on Syncano servers.
               If you haven&#39;t created one you can do so&nbsp;
               <LinkWrapper
-                style={{color: Styles.Colors.blue400}}
-                to="scripts"
-                params={this.getParams()}>
+                style={{color: Colors.blue400}}
+                to={{
+                  name: 'scripts',
+                  params
+                }}>
                 here
               </LinkWrapper>
             </Dialog.SidebarSection>
@@ -118,7 +128,8 @@ export default React.createClass({
             autoFocus={true}
             fullWidth={true}
             disabled={this.hasEditMode()}
-            valueLink={this.linkState('name')}
+            value={this.state.name}
+            onChange={(event, value) => this.setState({name: value})}
             errorText={this.getValidationMessages('name').join(' ')}
             hintText="Script Endpoint's name"
             floatingLabelText="Name"/>
@@ -126,16 +137,17 @@ export default React.createClass({
             ref="description"
             name="description"
             fullWidth={true}
-            valueLink={this.linkState('description')}
+            value={this.state.description}
+            onChange={(event, value) => this.setState({description: value})}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Script Endpoint's description"
             floatingLabelText="Description (optional)"/>
           <SelectFieldWrapper
             name="script"
-            options={this.state.scripts}
-            value={this.state.codebox}
-            onChange={(event, index, value) => this.setSelectFieldValue('codebox', value)}
-            errorText={this.getValidationMessages('codebox').join(' ')}/>
+            options={scripts}
+            value={script}
+            onChange={(event, index, value) => this.setSelectFieldValue('script', value)}
+            errorText={this.getValidationMessages('script').join(' ')}/>
           <Toggle
             ref='public'
             name='public'

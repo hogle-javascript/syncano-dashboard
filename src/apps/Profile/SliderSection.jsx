@@ -1,14 +1,10 @@
 import React from 'react';
-import {Utils} from 'syncano-material-ui';
 
 export default React.createClass({
   displayName: 'SliderSection',
 
-  mixins: [Utils.Styles],
-
   getStyles() {
     return {
-      root: {},
       sectionTopic: {
         fontSize: '1.3em'
       }
@@ -16,13 +12,13 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let rootStyle = this.mergeStyles(styles.root, this.props.style);
+    const styles = this.getStyles();
+    const {style} = this.props;
 
     return (
       <div
         className="row"
-        style={rootStyle}>
+        style={style}>
         <div className="col-md-24">
           <div className="row">
             <div

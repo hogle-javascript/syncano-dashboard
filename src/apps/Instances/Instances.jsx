@@ -1,17 +1,17 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {withRouter} from 'react-router';
+import Helmet from 'react-helmet';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
-import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
+import Store from './InstancesStore';
 
 // Components
-import {RaisedButton} from 'syncano-material-ui';
-import {Container, Show} from 'syncano-components';
-import {InnerToolbar} from '../../common';
+import {RaisedButton} from 'material-ui';
+import {Container, Show, InnerToolbar} from '../../common/';
 
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';
@@ -20,22 +20,18 @@ import InstanceDialog from './InstanceDialog';
 
 import './Instances.sass';
 
-export default React.createClass({
+const Instances = React.createClass({
   displayName: 'Instances',
 
-  mixins: [
-    Router.State,
-    Router.Navigation,
-
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
     console.info('Instances::componentDidMount');
-    if (this.getParams().action === 'add') {
-      this.showDialog('addInstanceDialog');
-    }
     Actions.fetch();
+  },
+
+  componentWillUnmount() {
+    Store.clearStore();
   },
 
   showInstanceDialog() {
@@ -43,22 +39,25 @@ export default React.createClass({
   },
 
   transitionToFirstInstance() {
+    const {router} = this.props;
     const {myInstances} = this.state;
     const firstInstance = myInstances.length ? myInstances[0].name : null;
 
     if (firstInstance) {
-      this.transitionTo('instance', {instanceName: firstInstance});
+      router.push({name: 'instance', instanceName: firstInstance});
     }
+
     SessionStore.hideWelcomeDialog();
   },
 
   render() {
     const {blocked, isLoading, hideDialogs, myInstances, sharedInstances} = this.state;
-
+    const title = 'Instances';
 
     if (blocked) {
       return (
         <div className="row vp-5-t">
+          <Helmet title="Account blocked"/>
           <Container.Empty
             icon='synicon-block-helper'
             text={blocked}/>
@@ -68,9 +67,10 @@ export default React.createClass({
 
     return (
       <div>
+        <Helmet title={title}/>
         <InstanceDialog />
 
-        <InnerToolbar title="Instances">
+        <InnerToolbar title={title}>
           <RaisedButton
             label="Add"
             primary={true}
@@ -100,3 +100,5 @@ export default React.createClass({
     );
   }
 });
+
+export default withRouter(Instances);

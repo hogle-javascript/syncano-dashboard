@@ -11,9 +11,8 @@ import Store from './ScheduleDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {AutoComplete, TextField} from 'syncano-material-ui';
-import {SelectFieldWrapper} from 'syncano-components';
-import {Dialog} from '../../common';
+import {AutoComplete, TextField} from 'material-ui';
+import {Dialog, SelectFieldWrapper} from '../../common/';
 
 export default React.createClass({
   displayName: 'ScheduleDialog',
@@ -28,7 +27,7 @@ export default React.createClass({
     label: {
       presence: true
     },
-    codebox: {
+    script: {
       presence: true
     },
     crontab: {
@@ -42,23 +41,21 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {label, crontab, codebox} = this.state;
+    const {label, crontab, script} = this.state;
 
-    Actions.createSchedule({label, crontab, codebox});
+    Actions.createSchedule({label, crontab, script});
   },
 
   handleEditSubmit() {
-    const {id, label, crontab, codebox} = this.state;
+    const {id, label, crontab, script} = this.state;
 
-    Actions.updateSchedule(id, {label, crontab, codebox});
+    Actions.updateSchedule(id, {label, crontab, script});
   },
 
   handleCrontabChange(value) {
-    this.setState({crontab: value});
-  },
+    const crontab = value.text ? value.text : value;
 
-  handleCrontabOpen() {
-    this.refs.crontab._open();
+    this.setState({crontab});
   },
 
   renderCrontabDataSource() {
@@ -77,7 +74,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, isLoading, scripts, codebox, crontab, canSubmit} = this.state;
+    const {open, isLoading, scripts, script, crontab, canSubmit} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -121,16 +118,17 @@ export default React.createClass({
             name="label"
             autoFocus={true}
             fullWidth={true}
-            valueLink={this.linkState('label')}
+            value={this.state.label}
+            onChange={(event, value) => this.setState({label: value})}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Schedule's label"
             floatingLabelText="Label"/>
           <SelectFieldWrapper
             name="script"
             options={scripts}
-            value={codebox}
-            onChange={(event, index, value) => this.setSelectFieldValue('codebox', value)}
-            errorText={this.getValidationMessages('codebox').join(' ')}/>
+            value={script}
+            onChange={(event, index, value) => this.setSelectFieldValue('script', value)}
+            errorText={this.getValidationMessages('script').join(' ')}/>
           <AutoComplete
             ref="crontab"
             floatingLabelText="Crontab"
@@ -139,11 +137,11 @@ export default React.createClass({
             animated={false}
             fullWidth={true}
             searchText={crontab}
+            openOnFocus={true}
             onNewRequest={this.handleCrontabChange}
             onUpdateInput={this.handleCrontabChange}
             dataSource={this.renderCrontabDataSource()}
-            errorText={this.getValidationMessages('crontab').join(' ')}
-            onTouchTap={this.handleCrontabOpen}/>
+            errorText={this.getValidationMessages('crontab').join(' ')} />
         </Dialog.ContentSection>
       </Dialog.FullPage>
     );

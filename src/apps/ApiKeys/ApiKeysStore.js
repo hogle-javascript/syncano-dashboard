@@ -46,7 +46,7 @@ export default Reflux.createStore({
 
   onFetchApiKeysCompleted(items) {
     console.debug('ApiKeysStore::onFetchApiKeysCompleted');
-    Actions.setApiKeys(items._items);
+    Actions.setApiKeys(items);
   },
 
   onRemoveApiKeysCompleted() {

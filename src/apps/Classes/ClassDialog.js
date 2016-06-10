@@ -13,9 +13,9 @@ import ClassesStore from './ClassesStore';
 import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
-import {TextField, FlatButton, Checkbox} from 'syncano-material-ui';
-import {Color, Show, SelectFieldWrapper} from 'syncano-components';
-import {Dialog, Icon, Notification} from '../../common';
+import {TextField, FlatButton, Checkbox, Tabs, Tab} from 'material-ui';
+import {colors as Colors} from 'material-ui/styles/';
+import {Color, Show, SelectFieldWrapper, Tooltip, Dialog, Icon, Notification, ColorIconPicker} from '../../common/';
 
 export default React.createClass({
   displayName: 'ClassDialog',
@@ -40,6 +40,15 @@ export default React.createClass({
     if (!nextState.schemaInitialized && nextState.schema) {
       this.setFields(nextState.schema);
       nextState.schemaInitialized = true;
+    }
+
+    if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
+      this.setState({
+        metadata: {
+          color: Color.getRandomColorName(),
+          icon: Icon.Store.getRandomIconPickerIcon()
+        }
+      });
     }
   },
 
@@ -67,7 +76,7 @@ export default React.createClass({
         padding: '0 24px'
       },
       groupItemContainer: {
-        display: '-webkit-flex; display: flex',
+        display: 'flex',
         justifyContent: 'space-between',
         flexWrap: 'nowrap'
       },
@@ -77,12 +86,28 @@ export default React.createClass({
       },
       groupItemId: {
         flexShrink: 0
+      },
+      tab: {
+        color: Colors.blue400,
+        fontSize: 13,
+        lineHeight: '18px',
+        fontWeight: 800
+      },
+      inkBarStyle: {
+        background: Colors.blue400
+      },
+      contentContainerStyle: {
+        padding: '0 8px 0 8px'
+      },
+      tabItemContainerStyle: {
+        background: 'transparent',
+        borderBottom: '1px solid #b8c0c9'
       }
     };
   },
 
   getFieldTypes() {
-    return Constants.fieldTypes.map((item) => {
+    return _.map(Constants.fieldTypes, (item) => {
       return {
         payload: item,
         text: item
@@ -99,7 +124,7 @@ export default React.createClass({
   getSchema() {
     const {fields} = this.state;
 
-    return JSON.stringify(fields.map((item) => {
+    return _.map(fields, (item) => {
       const schema = {
         name: item.fieldName,
         type: item.fieldType,
@@ -114,7 +139,7 @@ export default React.createClass({
         schema.filter_index = item.fieldFilter;
       }
       return schema;
-    }));
+    });
   },
 
   getGroups() {
@@ -139,20 +164,20 @@ export default React.createClass({
   },
 
   hasFilter(fieldType) {
-    const noFilterFields = ['file', 'text', 'array', 'object'];
+    const noFilterFields = ['file', 'text', 'object'];
 
     return noFilterFields.indexOf(fieldType) < 0;
   },
 
   hasOrder(fieldType) {
-    const noOrderFields = ['file', 'text', 'array', 'object'];
+    const noOrderFields = ['file', 'text', 'array', 'object', 'geopoint'];
 
     return _.indexOf(noOrderFields, fieldType) < 0;
   },
 
   handleAddSubmit() {
     const schema = this.getSchema();
-    const {name, description, group, group_permissions, other_permissions} = this.state;
+    const {name, description, group, group_permissions, other_permissions, metadata} = this.state;
 
     if (schema.length < 1) {
       this.setState({feedback: 'You need to add at least one field!'});
@@ -166,15 +191,12 @@ export default React.createClass({
       group_permissions,
       other_permissions,
       schema,
-      metadata: {
-        color: Color.getRandomColorName(),
-        icon: Icon.Store.getRandomIconPickerIcon()
-      }
+      metadata
     });
   },
 
   handleEditSubmit() {
-    const {name, description, group, group_permissions, other_permissions} = this.state;
+    const {name, description, group, group_permissions, other_permissions, metadata} = this.state;
 
     Actions.updateClass(
       name, {
@@ -182,7 +204,8 @@ export default React.createClass({
         group: group !== 'none' ? group : null,
         group_permissions,
         other_permissions,
-        schema: this.getSchema()
+        schema: this.getSchema(),
+        metadata
       }
     );
   },
@@ -190,7 +213,7 @@ export default React.createClass({
   handleFieldAdd() {
     const {fields, fieldName, fieldType, fieldTarget} = this.state;
 
-    if (_.includes(_.pluck(fields, 'fieldName'), fieldName)) {
+    if (_.includes(_.map(fields, 'fieldName'), fieldName)) {
       this.refs.fieldName.setErrorText('Field with this name already exists.');
       return;
     }
@@ -207,7 +230,7 @@ export default React.createClass({
       fieldFilter: this.refs.fieldFilter ? this.refs.fieldFilter.isChecked() : null
     };
 
-    if (fieldType === 'reference') {
+    if (fieldType === 'reference' || fieldType === 'relation') {
       field.fieldTarget = fieldTarget;
     }
 
@@ -247,6 +270,18 @@ export default React.createClass({
     });
 
     this.setState({fields: newFields});
+  },
+
+  handleColorChange(color) {
+    const {metadata} = this.state;
+
+    this.setState({metadata: _.merge({}, metadata, {color})});
+  },
+
+  handleIconChange(icon) {
+    const {metadata} = this.state;
+
+    this.setState({metadata: _.merge({}, metadata, {icon})});
   },
 
   setFields(schema) {
@@ -290,20 +325,28 @@ export default React.createClass({
           <span className="col-xs-8">{item.fieldType}</span>
           <span className="col-xs-8">{item.fieldTarget}</span>
           <span className="col-xs-3">
-            <Show if={this.hasFilter(item.fieldType)}>
+            <Tooltip
+              label={!this.hasFilter(item.fieldType) && `${item.fieldType} doesn't support filtering`}
+              verticalPosition="bottom"
+              horizontalPosition="center">
               <Checkbox
                 name="filter"
                 defaultChecked={item.fieldFilter}
+                disabled={!this.hasFilter(item.fieldType)}
                 onCheck={this.handleOnCheck.bind(this, item)}/>
-            </Show>
+            </Tooltip>
           </span>
           <span className="col-xs-3">
-            <Show if={this.hasOrder(item.fieldType)}>
+            <Tooltip
+              label={!this.hasOrder(item.fieldType) && `${item.fieldType} doesn't support sorting`}
+              verticalPosition="bottom"
+              horizontalPosition="center">
               <Checkbox
                 name="order"
                 defaultChecked={item.fieldOrder}
-                onCheck={this.handleOnCheck.bind(this, item)}/>
-            </Show>
+                disabled={!this.hasOrder(item.fieldType)}
+                onCheck={this.handleOnCheck.bind(this, item)} />
+            </Tooltip>
           </span>
           <span className="col-xs-5">
             <FlatButton
@@ -323,6 +366,7 @@ export default React.createClass({
       group,
       group_permissions,
       other_permissions,
+      metadata,
       fieldType,
       fieldTarget,
       fieldName
@@ -380,141 +424,181 @@ export default React.createClass({
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
         }>
-        <Dialog.ContentSection>
-          {this.renderFormNotifications()}
-          <div className="col-xs-8">
-            <TextField
-              ref="name"
-              name="name"
-              autoFocus={true}
-              disabled={this.hasEditMode()}
-              fullWidth={true}
-              valueLink={this.linkState('name')}
-              errorText={this.getValidationMessages('name').join(' ')}
-              hintText="Class's name"
-              floatingLabelText="Name"/>
-          </div>
-          <div className="col-flex-1">
-            <TextField
-              ref="description"
-              name="description"
-              fullWidth={true}
-              valueLink={this.linkState('description')}
-              errorText={this.getValidationMessages('description').join(' ')}
-              hintText="Class's description"
-              floatingLabelText="Description (optional)"/>
-          </div>
-        </Dialog.ContentSection>
-        <Dialog.ContentSection title="Permissions">
-          <div className="col-flex-1">
-            <SelectFieldWrapper
-              name="group"
-              options={this.getGroups()}
-              value={group}
-              labelStyle={styles.groupDropdownLabel}
-              menuItemStyle={styles.groupMenuItem}
-              floatingLabelText="Group (ID)"
-              onChange={(event, index, value) => this.setSelectFieldValue('group', value)}
-              errorText={this.getValidationMessages('group').join(' ')}/>
-          </div>
-          <div className="col-flex-1">
-            <SelectFieldWrapper
-              name="class"
-              options={permissions}
-              floatingLabelText="Group Permissions"
-              value={group_permissions}
-              onChange={(event, index, value) => this.setSelectFieldValue('group_permissions', value)}
-              errorText={this.getValidationMessages('group_permissions').join(' ')}/>
-          </div>
-          <div className="col-flex-1">
-            <SelectFieldWrapper
-              name="class"
-              options={permissions}
-              floatingLabelText="Other Permissions"
-              value={other_permissions}
-              onChange={(event, index, value) => this.setSelectFieldValue('other_permissions', value)}
-              errorText={this.getValidationMessages('other_permissions').join(' ')}/>
-          </div>
-        </Dialog.ContentSection>
-        <div className="vm-2-b">
-          <Show if={this.getValidationMessages('schema').length > 0}>
-            <Notification
-              className="vm-1-t"
-              type="error">{this.getValidationMessages('schema').join(' ')}
-            </Notification>
-          </Show>
-        </div>
-        <div className="row">
-          <div className="col-xs-8"></div>
-          <div className="col-xs-8"></div>
-          <div className="col-xs-8"></div>
-          <div className="col-xs-3">Filter</div>
-          <div className="col-xs-3">Order</div>
-          <div className="col-xs-5"></div>
-        </div>
-        <Dialog.ContentSection
-          style={styles.schemaAddSection}
-          title="Schema">
-          <div className="col-xs-8">
-            <TextField
-              ref="fieldName"
-              name="fieldName"
-              fullWidth={true}
-              valueLink={this.linkState('fieldName')}
-              hintText="Field's name"
-              floatingLabelText="Name"/>
-          </div>
-          <div className="col-xs-8">
-            <SelectFieldWrapper
-              name="fieldType"
-              options={this.getFieldTypes()}
-              value={fieldType}
-              floatingLabelText="Type"
-              onChange={(event, index, value) => this.setSelectFieldValue('fieldType', value)}
-              errorText={this.getValidationMessages('fieldType').join(' ')}/>
-          </div>
-          <div className="col-xs-8">
-            <Show if={fieldType === 'reference'}>
-              <SelectFieldWrapper
-                name="fieldTarget"
-                options={this.getFieldTargetOptions()}
-                value={fieldTarget}
-                floatingLabelText="Target Class"
-                onChange={(event, index, value) => this.setSelectFieldValue('fieldTarget', value)}
-                errorText={this.getValidationMessages('fieldTarget').join(' ')}/>
-            </Show>
-          </div>
-          <div
-            className="col-xs-3"
-            style={styles.checkBox}>
-            <Show if={this.hasFilter(fieldType)}>
-              <Checkbox
-                ref="fieldFilter"
-                name="filter"/>
-            </Show>
-          </div>
-          <div
-            className="col-xs-3"
-            style={styles.checkBox}>
-            <Show if={this.hasOrder(fieldType)}>
-              <Checkbox
-                ref="fieldOrder"
-                name="order"/>
-            </Show>
-          </div>
-          <div className="col-xs-5"
-               style={styles.checkBox}>
-            <FlatButton
-              style={{marginBottom: 4}}
-              label="Add"
-              disabled={!fieldType || !fieldName}
-              secondary={true}
-              onClick={this.handleFieldAdd}/>
-          </div>
-        </Dialog.ContentSection>
-        <div className="vm-4-b">
-          {this.renderSchemaFields()}
-        </div>
+        {this.renderFormNotifications()}
+        <Tabs
+          inkBarStyle={styles.inkBarStyle}
+          contentContainerStyle={styles.contentContainerStyle}
+          tabItemContainerStyle={styles.tabItemContainerStyle}>
+          <Tab
+            style={styles.tab}
+            label="GENERAL">
+            <Dialog.ContentSection>
+              <div style={{padding: '20px 0 56px 0', width: '100%'}}>
+                <TextField
+                  ref="name"
+                  name="name"
+                  autoFocus={true}
+                  disabled={this.hasEditMode()}
+                  fullWidth={true}
+                  value={this.state.name}
+                  onChange={(event, value) => this.setState({name: value})}
+                  errorText={this.getValidationMessages('name').join(' ')}
+                  hintText="Class's name"
+                  floatingLabelText="Name"/>
+                <TextField
+                  ref="description"
+                  name="description"
+                  fullWidth={true}
+                  value={this.state.description}
+                  onChange={(event, value) => this.setState({description: value})}
+                  errorText={this.getValidationMessages('description').join(' ')}
+                  hintText="Class's description"
+                  floatingLabelText="Description (optional)"/>
+              </div>
+            </Dialog.ContentSection>
+            <Dialog.ContentSection title="Permissions">
+              <div className="col-flex-1">
+                <SelectFieldWrapper
+                  name="group"
+                  options={this.getGroups()}
+                  value={group}
+                  labelStyle={styles.groupDropdownLabel}
+                  menuItemStyle={styles.groupMenuItem}
+                  floatingLabelText="Group (ID)"
+                  onChange={(event, index, value) => this.setSelectFieldValue('group', value)}
+                  errorText={this.getValidationMessages('group').join(' ')}/>
+              </div>
+              <div className="col-flex-1">
+                <SelectFieldWrapper
+                  name="class"
+                  options={permissions}
+                  floatingLabelText="Group Permissions"
+                  value={group_permissions}
+                  onChange={(event, index, value) => this.setSelectFieldValue('group_permissions', value)}
+                  errorText={this.getValidationMessages('group_permissions').join(' ')}/>
+              </div>
+              <div className="col-flex-1">
+                <SelectFieldWrapper
+                  name="class"
+                  options={permissions}
+                  floatingLabelText="Other Permissions"
+                  value={other_permissions}
+                  onChange={(event, index, value) => this.setSelectFieldValue('other_permissions', value)}
+                  errorText={this.getValidationMessages('other_permissions').join(' ')}/>
+              </div>
+            </Dialog.ContentSection>
+            <div className="vm-2-b">
+              <Show if={this.getValidationMessages('schema').length > 0}>
+                <Notification
+                  className="vm-1-t"
+                  type="error">{this.getValidationMessages('schema').join(' ')}
+                </Notification>
+              </Show>
+            </div>
+            <div className="row">
+              <div className="col-xs-8"></div>
+              <div className="col-xs-8"></div>
+              <div className="col-xs-8"></div>
+              <div className="col-xs-3">Filter</div>
+              <div className="col-xs-3">Order</div>
+              <div className="col-xs-5"></div>
+            </div>
+            <Dialog.ContentSection
+              style={styles.schemaAddSection}
+              title="Schema">
+              <div className="col-xs-8">
+                <TextField
+                  ref="fieldName"
+                  name="fieldName"
+                  fullWidth={true}
+                  value={this.state.fieldName}
+                  onChange={(event, value) => this.setState({fieldName: value})}
+                  hintText="Field's name"
+                  floatingLabelText="Name"/>
+              </div>
+              <div className="col-xs-8">
+                <SelectFieldWrapper
+                  name="fieldType"
+                  options={this.getFieldTypes()}
+                  value={fieldType}
+                  floatingLabelText="Type"
+                  onChange={(event, index, value) => this.setSelectFieldValue('fieldType', value)}
+                  errorText={this.getValidationMessages('fieldType').join(' ')}/>
+              </div>
+              <div className="col-xs-8">
+                <Show if={fieldType === 'reference' || fieldType === 'relation'}>
+                  <SelectFieldWrapper
+                    name="fieldTarget"
+                    options={this.getFieldTargetOptions()}
+                    value={fieldTarget}
+                    floatingLabelText="Target Class"
+                    onChange={(event, index, value) => this.setSelectFieldValue('fieldTarget', value)}
+                    errorText={this.getValidationMessages('fieldTarget').join(' ')}/>
+                </Show>
+              </div>
+              <div
+                className="col-xs-3"
+                style={styles.checkBox}>
+                <Tooltip
+                  label={!this.hasFilter(fieldType) && `${fieldType} doesn't support filtering`}
+                  verticalPosition="bottom"
+                  horizontalPosition="center">
+                  <Checkbox
+                    ref="fieldFilter"
+                    disabled={!this.hasFilter(fieldType)}
+                    name="filter" />
+                </Tooltip>
+              </div>
+              <div
+                className="col-xs-3"
+                style={styles.checkBox}>
+                <Tooltip
+                  label={!this.hasOrder(fieldType) && `${fieldType} doesn't support sorting`}
+                  verticalPosition="bottom"
+                  horizontalPosition="center">
+                  <Checkbox
+                    ref="fieldOrder"
+                    disabled={!this.hasOrder(fieldType)}
+                    name="order" />
+                </Tooltip>
+              </div>
+              <div
+                className="col-xs-5"
+                style={styles.checkBox}>
+                <FlatButton
+                  style={{marginBottom: 4}}
+                  label="Add"
+                  disabled={!fieldType || !fieldName}
+                  secondary={true}
+                  onClick={this.handleFieldAdd}/>
+              </div>
+            </Dialog.ContentSection>
+            <div className="vm-4-b">
+              {this.renderSchemaFields()}
+            </div>
+          </Tab>
+          <Tab
+            style={styles.tab}
+            label="CUSTOMIZE">
+            <div className="row align-middle vp-4-t vp-4-b">
+              <div className="col-sm-11">
+                <ColorIconPicker.Preview
+                  color={metadata.color}
+                  icon={metadata.icon}/>
+              </div>
+              <div className="col-sm-12">
+                <ColorIconPicker.IconPicker
+                  selectedIcon={metadata.icon}
+                  onIconChange={this.handleIconChange} />
+              </div>
+              <div className="col-sm-12">
+                <ColorIconPicker.ColorPicker
+                  selectedColor={metadata.color}
+                  onColorChange={this.handleColorChange} />
+              </div>
+            </div>
+          </Tab>
+        </Tabs>
       </Dialog.FullPage>
     );
   }

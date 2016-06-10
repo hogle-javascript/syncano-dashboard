@@ -6,7 +6,7 @@ import DevicesStore from './APNSDevicesStore';
 
 import SendMessageDialog from '../SendMessageDialog';
 
-let getPhoneIcon = () => {
+const getPhoneIcon = () => {
   return <div dangerouslySetInnerHTML={{__html: require('./phone-apple-empty-screen.svg')}}></div>;
 };
 const props = {

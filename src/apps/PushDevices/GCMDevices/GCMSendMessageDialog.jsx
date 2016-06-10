@@ -6,7 +6,7 @@ import DevicesStore from './GCMDevicesStore';
 
 import SendMessageDialog from '../SendMessageDialog';
 
-let getPhoneIcon = () => {
+const getPhoneIcon = () => {
   return <div dangerouslySetInnerHTML={{__html: require('./phone-android-empty-screen.svg')}}></div>;
 };
 const props = {

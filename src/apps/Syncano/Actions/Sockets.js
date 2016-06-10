@@ -4,7 +4,8 @@ export default {
   list(params = {}) {
     _.defaults(params, {ordering: 'desc'});
 
-    const {instance} = this.Connection.getInfo();
+    const {baseUrl, accountKey} = this.NewLibConnection;
+    const instanceName = this.NewLibConnection.getInstanceName();
     const query = _.map(params, (value, key) => `${key}=${value}`).join('&');
     const keys = [
       'data',
@@ -15,36 +16,34 @@ export default {
       'gcmPushNotifications',
       'apnsPushNotifications',
       'gcmDevices',
-      'apnsDevices',
-      'scripts'
+      'apnsDevices'
     ];
     const requests = [
-      {method: 'GET', path: `/v1/instances/${instance.name}/api/objects/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/webhooks/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/triggers/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/schedules/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/channels/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/gcm/config/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/apns/config/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/gcm/devices/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/push_notifications/apns/devices/?${query}`},
-      {method: 'GET', path: `/v1/instances/${instance.name}/codeboxes/?${query}`}
+      {method: 'GET', path: `/v1.1/instances/${instanceName}/endpoints/data/?${query}`},
+      {method: 'GET', path: `/v1.1/instances/${instanceName}/endpoints/scripts/?${query}`},
+      {method: 'GET', path: `/v1.1/instances/${instanceName}/triggers/?${query}`},
+      {method: 'GET', path: `/v1.1/instances/${instanceName}/schedules/?${query}`},
+      {method: 'GET', path: `/v1.1/instances/${instanceName}/channels/?${query}`},
+      {method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/gcm/config/?${query}`},
+      {method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/apns/config/?${query}`},
+      {method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/gcm/devices/?${query}`},
+      {method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/apns/devices/?${query}`}
     ];
 
-    this.Connection
-      .request('POST', `v1/instances/${instance.name}/batch/`, {requests, serialize: false})
+    this.Promise
+      .post(`${baseUrl}/v1.1/instances/${instanceName}/batch/?api_key=${accountKey}`, {requests, serialize: false})
       .then((responses) => {
-        return _.reduce(responses, (result, response, index) => {
+        return _.reduce(responses.data, (result, response, index) => {
           const key = keys[index];
 
           if (response.code === 200) {
             if (key === 'gcmPushNotifications' || key === 'apnsPushNotifications') {
               result[key] = response.content;
             } else {
-              result[key] = this.Connection.createList(this.Connection, response.content);
+              result[key] = response.content.objects;
             }
           } else {
-            result[key] = this.Connection.createList(this.Connection, {objects: []});
+            result[key] = [];
           }
 
           return result;

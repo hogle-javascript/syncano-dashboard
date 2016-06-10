@@ -6,8 +6,8 @@ import _ from 'lodash';
 import FormMixin from '../../mixins/FormMixin';
 
 // Components
-import {Paper, TextField} from 'syncano-material-ui';
-import {Loading} from 'syncano-components';
+import {Paper, TextField} from 'material-ui';
+import {Loading} from '../../common/';
 
 import './Editor.css';
 

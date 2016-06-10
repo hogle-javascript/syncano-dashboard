@@ -1,6 +1,7 @@
 import Account from './Account';
 import Admins from './Admins';
 import ApiKeys from './ApiKeys';
+import BackupAndRestore from './BackupAndRestore';
 import Channels from './Channels';
 import Classes from './Classes';
 import DataEndpoints from './DataEndpoints';
@@ -27,6 +28,7 @@ export default {
   Account,
   Admins,
   ApiKeys,
+  BackupAndRestore,
   Channels,
   Classes,
   DataEndpoints,
