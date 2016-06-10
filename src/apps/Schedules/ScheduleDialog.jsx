@@ -150,9 +150,9 @@ export default React.createClass({
             name="interval_sec"
             fullWidth={true}
             value={interval_sec}
-            onChange={this.handleIntervalSecChange}
+            onChange={{(value) => this.handleChangeFields('interval_sec', value)}}
             errorText={this.getValidationMessages('interval_sec').join(' ')}
-            hintText="Type interval time in miliseconds"
+            hintText="Type interval time in seconds"
             floatingLabelText="Interval"/>
         </Dialog.ContentSection>
       </Dialog.FullPage>
