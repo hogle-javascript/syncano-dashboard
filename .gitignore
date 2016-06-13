@@ -32,5 +32,6 @@ bin/
 # OS files
 .DS_Store
 
-# Temp devel cert for APNS config
+# Temp files for tests
 *.p12
+tempAccounts.js

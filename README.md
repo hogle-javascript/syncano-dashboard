@@ -75,6 +75,14 @@ You'll also need to configure env variables for the tests to work locally:
     $ export NIGHTWATCH_PASSWORD="xx"
     $ export NIGHTWATCH_ACCOUNT_KEY="xx"
 
+Or for some tests (they are being rewrited):
+
+    $ npm run-script e2e-create-accounts
+
+This will create set of three accounts for tests (it can be run only once, but account may be deleted after some time).
+
+
+
 If you are ready just run dev server:
 
     $ npm start
