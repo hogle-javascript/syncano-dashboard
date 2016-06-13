@@ -97,7 +97,7 @@ const Header = Radium(React.createClass({
           leftIcon={accountKeyIcon}>
           <div>
             <Clipboard
-              text={`Copy Account Key: xxx${user.account_key.substr(user.account_key.length - 4)}`}
+              text="Copy Account Key"
               copyText={user.account_key}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Account Key copied to the clipboard'
