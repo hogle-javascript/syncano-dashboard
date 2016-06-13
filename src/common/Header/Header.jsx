@@ -4,6 +4,7 @@ import Radium from 'radium';
 import {withRouter, Link} from 'react-router';
 import Gravatar from 'gravatar';
 
+import {SnackbarNotificationMixin} from '../../mixins';
 // Stores & Actions
 import SessionActions from '../../apps/Session/SessionActions';
 import SessionStore from '../../apps/Session/SessionStore';
@@ -12,6 +13,7 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 // Components
 import Sticky from 'react-stickydiv';
 import {FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'material-ui';
+import {Clipboard} from '../../common/';
 import {Logo} from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
@@ -24,7 +26,10 @@ const Header = Radium(React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  mixins: [Reflux.connect(InstancesStore)],
+  mixins: [
+    Reflux.connect(InstancesStore),
+    SnackbarNotificationMixin
+  ],
 
   componentDidMount() {
     SessionStore.getInstance();
@@ -65,11 +70,12 @@ const Header = Radium(React.createClass({
 
   getDropdownItems() {
     const {router} = this.props;
-    let styles = this.getStyles();
-    let user = SessionStore.getUser() || '';
-    let billingIcon = <FontIcon className="synicon-credit-card"/>;
-    let instancesListIcon = <FontIcon className="synicon-view-list"/>;
-    let logoutIcon = (
+    const styles = this.getStyles();
+    const user = SessionStore.getUser() || '';
+    const billingIcon = <FontIcon className="synicon-credit-card"/>;
+    const instancesListIcon = <FontIcon className="synicon-view-list"/>;
+    const accountKeyIcon = <FontIcon className="synicon-key-variant"/>;
+    const logoutIcon = (
       <FontIcon
         style={styles.logoutDropdownItem}
         className="synicon-power"/>
@@ -87,6 +93,19 @@ const Header = Radium(React.createClass({
           primaryText={`${user.first_name} ${user.last_name}`}
           secondaryText={user.email}/>
         <Divider/>
+        <ListItem
+          leftIcon={accountKeyIcon}>
+          <div>
+            <Clipboard
+              text={`Copy Account Key: xxx${user.account_key.substr(user.account_key.length - 4)}`}
+              copyText={user.account_key}
+              onCopy={() => this.setSnackbarNotification({
+                message: 'Account Key copied to the clipboard'
+              })}
+              label="Copy Account Key"
+              type="list"/>
+          </div>
+        </ListItem>
         <ListItem
           onTouchTap={() => router.push('instances')}
           leftIcon={instancesListIcon}
