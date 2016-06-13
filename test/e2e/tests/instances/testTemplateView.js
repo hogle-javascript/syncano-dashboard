@@ -1,5 +1,5 @@
 import utils from '../../utils';
-import globals from '../../globals';
+import accounts from '../../tempAccounts';
 
 module.exports = {
   tags: ['templateView'],
@@ -9,7 +9,7 @@ module.exports = {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after(client) {
     client.end();
@@ -19,7 +19,9 @@ module.exports = {
     const templateViewPage = client.page.templateViewPage();
     const codeText = utils.addSuffix('template');
 
-    listsPage.goToUrl('', 'templates');
+    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/templates');
+
+    // listsPoTage.goUrl('', 'templates');
     templateViewPage
       .clickElement('@htmlTestTemplateRow')
       .waitForElementPresent('@codeEditor')
@@ -28,7 +30,7 @@ module.exports = {
       .verify.containsText('@codeEditorContent', codeText)
       .clickElement('@saveButton');
 
-    listsPage.goToUrl('', 'templates');
+    // listsPage.goToUrl('', 'templates');
     templateViewPage
       .clickElement('@htmlTestTemplateRow')
       .waitForElementPresent('@codeEditor');
@@ -38,10 +40,10 @@ module.exports = {
     const listsPage = client.page.listsPage();
     const templateViewPage = client.page.templateViewPage();
     const controlTimestamp = utils.addSuffix('template');
-    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${globals.instanceName}/classes/user_profile/objects/`;
+    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${accounts.instanceUser.instanceName}/classes/user_profile/objects/`;
     const expectedPreviewResult = `${controlTimestamp},channel_room,group,links`;
 
-    listsPage.goToUrl('', 'templates');
+    // listsPage.goToUrl('', 'templates');
     templateViewPage
       .clickElement('@htmlTestTemplateRow')
       .waitForElementPresent('@codeEditor')
@@ -57,11 +59,11 @@ module.exports = {
   'Test Admin Renders Template in Tab': (client) => {
     const listsPage = client.page.listsPage();
     const templateViewPage = client.page.templateViewPage();
-    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${globals.instanceName}/classes/user_profile/objects/`;
+    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${accounts.instanceUser.instanceName}/classes/user_profile/objects/`;
     const controlTimestamp = utils.addSuffix('template');
     const expectedTabResult = `${controlTimestamp},channel_room,group,links`;
 
-    listsPage.goToUrl('', 'templates');
+    // listsPage.goToUrl('', 'templates');
     templateViewPage
       .clickElement('@htmlTestTemplateRow')
       .waitForElementPresent('@codeEditor')

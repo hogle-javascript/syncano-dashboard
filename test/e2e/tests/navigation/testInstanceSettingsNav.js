@@ -1,4 +1,5 @@
 import path from 'path';
+import accounts from '../../tempAccounts';
 
 module.exports = {
   tags: ['instanceSettingsNav'],
@@ -8,7 +9,7 @@ module.exports = {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   after(client) {
     client.end();
@@ -35,7 +36,7 @@ module.exports = {
   'User goes to General settings view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const generalPage = client.page.generalPage();
-    const instanceName = client.globals.instanceName;
+    const instanceName = accounts.navigationUser.instanceName;
     const instanceNameField = generalPage.elements.instanceNameField.selector;
 
     leftMenuPage.clickElement('@general');

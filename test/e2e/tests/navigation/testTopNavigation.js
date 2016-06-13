@@ -1,3 +1,5 @@
+import accounts from '../../tempAccounts';
+
 module.exports = {
   tags: ['topNavigation'],
   before(client) {
@@ -6,7 +8,7 @@ module.exports = {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   after(client) {
     client.end();

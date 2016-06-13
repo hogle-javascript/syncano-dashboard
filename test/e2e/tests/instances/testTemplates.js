@@ -1,5 +1,4 @@
-import Async from 'async';
-import globals from '../../globals';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['templates'],
@@ -7,25 +6,21 @@ export default {
     client.end();
   },
   before(client) {
-    Async.waterfall([
-      client.createTempAccount,
-      client.createTempInstance
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(globals.tempEmail, globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   'Test Select/Deselect multiple Templates': (client) => {
     const listsPage = client.page.listsPage();
     const selectedItems = listsPage.elements.selectedItem.selector;
 
+    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/templates');
+
     listsPage
-      .goToUrl('temp', 'templates')
+      // .goToUrl('temp', 'templates')
       .clickListItemDropdown('@optionsMenu', 'Select')
       .assertSelectedCount('xpath', selectedItems, 2);
 
@@ -43,7 +38,7 @@ export default {
       .pause(2000);
 
     listsPage
-      .goToUrl('temp', 'templates')
+      // .goToUrl('temp', 'templates')
       .clickListItemDropdown('@optionsMenu', 'Select');
 
     client

@@ -1,22 +1,15 @@
-import Async from 'async';
-import globals from '../../globals';
 import utils from '../../utils';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['pushSockets'],
   before: (client) => {
-    Async.waterfall([
-      client.createTempAccount,
-      client.createTempInstance
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(globals.tempEmail, globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after: (client) => {
     client.end();
@@ -25,8 +18,11 @@ export default {
     const socketsPage = client.page.socketsPage();
     const gcmDevKey = utils.randomString(39);
 
+    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/sockets');
+
     socketsPage
-      .goToUrl('temp', 'sockets')
+      // Example rewrite tests, will need to change custom command, but right now it is not possible
+      // .goToUrl('temp', 'sockets')
       .waitForElementVisible('@addCodeBoxModalTitle')
       .clickElement('@addGcmSocket')
       .fillInput('@inputGcmDevKey', gcmDevKey)

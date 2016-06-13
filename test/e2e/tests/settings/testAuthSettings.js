@@ -1,5 +1,4 @@
-import Async from 'async';
-import globals from '../../globals';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['authSettings'],
@@ -7,21 +6,16 @@ export default {
     client.end();
   },
   'Test create Account': (client) => {
-    Async.waterfall([
-      client.createTempAccount
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(globals.tempEmail, globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   'Test Administrator copies an Account key': (client) => {
     const authenticationPage = client.page.authenticationPage();
-    const tempAccountKey = globals.tempAccountKey;
+    const tempAccountKey = accounts.navigationUser.accountKey;
     const stackUrl = `http://stackoverflow.com/search?q=${tempAccountKey}`;
 
     authenticationPage
@@ -38,7 +32,7 @@ export default {
       .waitForElementPresent('input.textbox')
       .element('css selector', 'input.textbox', (result) => {
         client.elementIdAttribute(result.value.ELEMENT, 'value', (attribute) => {
-          client.assert.equal(attribute.value, globals.tempAccountKey);
+          client.assert.equal(attribute.value, accounts.navigationUser.accountKey);
         });
       });
   },

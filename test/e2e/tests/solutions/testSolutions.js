@@ -1,3 +1,5 @@
+import accounts from '../../tempAccounts';
+
 export default {
   tags: ['solutions'],
   beforeEach(client) {
@@ -6,7 +8,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   afterEach(client, done) {
     client.end(done);

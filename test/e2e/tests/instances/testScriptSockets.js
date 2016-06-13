@@ -1,4 +1,5 @@
 import utils from '../../utils';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['scriptSockets'],
@@ -8,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after(client) {
     client.end();
@@ -17,11 +18,13 @@ export default {
     const socketsPage = client.page.socketsPage();
     const script = utils.addSuffix('script');
 
+    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/script-endpoints');
+
     socketsPage
-      .goToUrl('', 'script-endpoints')
+      // .goToUrl('', 'script-endpoints')
       .clickElement('@addScriptButton')
       .fillInput('@modalNameInput', script)
-      .selectDropdownValue('@addCodeBoxModalScriptDropdown', 'snippet')
+      .selectDropdownValue('@addCodeBoxModalScriptDropdown', accounts.instanceUser.tempScriptNames[0])
       .clickElement('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },
@@ -30,7 +33,7 @@ export default {
     const edited = utils.addSuffix('edited');
 
     socketsPage
-      .waitForElementVisible('@codeBoxSocketItem')
+      // .waitForElementVisible('@codeBoxSocketItem')
       .clickListItemDropdown(utils.addSuffix('script'), 'Edit')
       .waitForElementVisible('@editCodeBoxModalTitle')
       .fillInput('@modalDescriptionInput', edited)
@@ -45,7 +48,7 @@ export default {
     const script = utils.addSuffix('script');
 
     socketsPage
-      .waitForElementVisible('@codeBoxSocketItem')
+      // .waitForElementVisible('@codeBoxSocketItem')
       .clickListItemDropdown(script, 'Delete')
       .waitForElementVisible('@deleteCodeBoxModalTitle')
       .clickElement('@confirmButton')
