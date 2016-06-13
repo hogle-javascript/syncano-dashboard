@@ -13,8 +13,7 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 // Components
 import Sticky from 'react-stickydiv';
 import {FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'material-ui';
-import {Clipboard} from '../../common/';
-import {Logo} from '../';
+import {Logo, Clipboard} from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
 import './Header.sass';
@@ -95,16 +94,14 @@ const Header = Radium(React.createClass({
         <Divider/>
         <ListItem
           leftIcon={accountKeyIcon}>
-          <div>
-            <Clipboard
-              text="Copy Account Key"
-              copyText={user.account_key}
-              onCopy={() => this.setSnackbarNotification({
-                message: 'Account Key copied to the clipboard'
-              })}
-              label="Copy Account Key"
-              type="list"/>
-          </div>
+          <Clipboard
+            text="Copy Account Key"
+            copyText={user.account_key}
+            onCopy={() => this.setSnackbarNotification({
+              message: 'Account Key copied to the clipboard'
+            })}
+            label="Copy Account Key"
+            type="list"/>
         </ListItem>
         <ListItem
           onTouchTap={() => router.push('instances')}
