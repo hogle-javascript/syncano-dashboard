@@ -3,16 +3,16 @@ import Utils from '../../utils';
 
 export default {
   tags: ['dataObjects'],
-  beforeEach(client) {
+  before(client) {
     const loginPage = client.page.loginPage();
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
-  afterEach(client, done) {
-    client.end(done);
+  after(client) {
+    client.end();
   },
   'Administrator adds a Data Object'(client) {
     const dataObjectsPage = client.page.dataObjectsPage();

@@ -25,6 +25,7 @@ function createInstanceUser() {
 
 function createAltInstanceUser() {
   return createTestAccount()
+    .then((tempAccount) => createTestClasses(tempAccount, 1))
     .then((tempAccount) => createTestScripts(tempAccount, 1))
     .then((tempAccount) => {
       delete tempAccount.connection;

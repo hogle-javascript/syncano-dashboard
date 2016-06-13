@@ -2,7 +2,7 @@ import accounts from '../tempAccounts';
 import utils from '../utils';
 
 export default {
-  url: `https://localhost:8080/#/instances/${accounts.instanceUser.instanceName}/classes/class/objects`,
+  url: `https://localhost:8080/#/instances/${accounts.alternativeUser.instanceName}/classes/${accounts.alternativeUser.tempClassNames[0]}/objects`,
   elements: {
     instancesDropdown: {
       selector: '.instances-dropdown'
@@ -35,7 +35,7 @@ export default {
       locateStrategy: 'xpath'
     },
     stringField: {
-      selector: '//input[@name="string"]',
+      selector: `//input[@name="${accounts.alternativeUser.tempClassNames[0]}"]`,
       locateStrategy: 'xpath'
     },
     stringFieldEditedTableRow: {
