@@ -1,21 +1,15 @@
-import Async from 'async';
-import globals from '../../globals';
+import accounts from '../../tempAccounts';
 import utils from '../../utils';
 
 export default {
   tags: ['class'],
   before(client) {
-    Async.waterfall([
-      client.createTempAccount
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(globals.tempEmail, globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
   after(client) {
     client.end();
@@ -24,8 +18,11 @@ export default {
     const classesPage = client.page.classesPage();
     const className = utils.addSuffix('class');
 
+    client.url('https://localhost:8080/#/instances/' + accounts.alternativeUser.instanceName + '/classes');
+
     classesPage
-      .goToUrl('temp', 'classes')
+      // Example rewrite tests, will need to change custom command, but right now it is not possible
+      // .goToUrl('temp', 'classes')
       .clickElement('@addClassButton')
       .fillInput('@createModalNameInput', className)
       .fillInput('@createModalDescriptionInput', utils.addSuffix())
