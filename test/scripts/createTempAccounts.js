@@ -1,6 +1,7 @@
 'use strict';
 
 const createTestAccount = require('./create/testAccount.js');
+const createTestInstances = require('./create/testInstance.js');
 const createTestClasses = require('./create/testClasses.js');
 const createTestScripts = require('./create/testScripts.js');
 const createAPNSSocket = require('./create/apnsSocket.js');
@@ -13,6 +14,7 @@ let accounts = {};
 
 function createInstanceUser() {
   return createTestAccount()
+    .then((tempAccount) => createTestInstances(tempAccount, 3))
     .then((tempAccount) => createTestClasses(tempAccount, 3))
     .then((tempAccount) => createTestScripts(tempAccount, 3))
     .then((tempAccount) => createAPNSSocket(tempAccount))
@@ -25,6 +27,7 @@ function createInstanceUser() {
 
 function createAltInstanceUser() {
   return createTestAccount()
+    .then((tempAccount) => createTestInstances(tempAccount, 1))
     .then((tempAccount) => createTestClasses(tempAccount, 1))
     .then((tempAccount) => createTestScripts(tempAccount, 1))
     .then((tempAccount) => {
@@ -35,6 +38,7 @@ function createAltInstanceUser() {
 
 function createNavigationUser() {
   return createTestAccount()
+    .then((tempAccount) => createTestInstances(tempAccount, 1))
     .then((tempAccount) => {
       delete tempAccount.connection;
       accounts.navigationUser = tempAccount;
