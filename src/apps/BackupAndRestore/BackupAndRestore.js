@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import FullBackupActions from './Full/FullBackupsActions';
 import PartialBackupsActions from './Partial/PartialBackupsActions';
-import RestoreFromFileDialogActions from './RestoreFromFileDialogActions';
+// import RestoreFromFileDialogActions from './RestoreFromFileDialogActions';
 
 import BackupsInnerToolbar from './BackupsInnerToolbar';
 import FullBackupsDialog from './Full/FullBackupsDialog';
@@ -40,16 +40,22 @@ export default class BackupAndRestore extends Component {
         <PartialBackupsDialog />
         <RestoreFromFileDialog />
         <BackupsInnerToolbar>
-          <RaisedButton
+          {/* eslint-disable no-inline-comments */}
+          {/* <RaisedButton
             label="Restore from file"
             primary={true}
             style={{marginRight: 0}}
-            onTouchTap={RestoreFromFileDialogActions.showDialog} />
+            onTouchTap={RestoreFromFileDialogActions.showDialog} /> */}
           <RaisedButton
             label="Create Backup"
             primary={true}
             style={{marginRight: 0}}
-            onTouchTap={this.togglePopover.bind(this)}/>
+            onTouchTap={FullBackupActions.showDialog} />
+            {/* <RaisedButton
+                  label="Create Backup"
+                  primary={true}
+                  style={{marginRight: 0}}
+                  onTouchTap={this.togglePopover.bind(this)}/> */}
           <Popover
             ref="createBackupPopover"
             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}

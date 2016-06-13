@@ -37,8 +37,7 @@ export default {
       .navigate()
       .clickListItemDropdown(schedule, 'Edit')
       .waitForElementVisible('@editScheduleModalTitle')
-      .clearInput('@addScheduleModalCronTab')
-      .sendKeys('@addScheduleModalCronTab', '0 0 * * *')
+      .fillInput('@addScheduleModalCronTab', '0 0 * * *')
       // click into title as workaround for enter key closing modal view
       .clickElement('@editScheduleModalTitle')
       .clickElement('@confirm')
