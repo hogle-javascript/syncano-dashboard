@@ -322,6 +322,16 @@ export default Radium(React.createClass({
               <div style={{marginTop: 15, fontSize: '1rem'}}>Your Cost: $0</div>
             </div>
           </div>
+          <div style={{marginTop: 20, textAlign: 'center'}}>
+            <p style={{color: '#f44336', marginBottom: 10}}>
+              Your free Builder account will expire on <strong>June 6 2016</strong>.
+            </p>
+            <FlatButton
+              label="Upgrade Now"
+              labelStyle={{color: '#42a5f5'}}
+              onClick={this.handleShowPlanDialog}
+            />
+          </div>
         </div>
       );
     }
