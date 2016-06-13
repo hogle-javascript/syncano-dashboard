@@ -1,3 +1,4 @@
+import accounts from '../../tempAccounts';
 import Utils from '../../utils';
 
 export default {
@@ -8,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
 
   after(client) {

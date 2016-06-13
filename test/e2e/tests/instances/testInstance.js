@@ -1,32 +1,19 @@
+import accounts from '../../tempAccounts';
+import utils from '../../utils';
+
 export default {
   tags: ['instance'],
   before(client) {
-    const signupPage = client.page.signupPage();
-    const slug = Date.now();
-    const email = 'syncano.bot+' + slug + '@syncano.com';
+    const loginPage = client.page.loginPage();
 
-    signupPage
+    loginPage
       .navigate()
       .setResolution(client)
-      .setValue('@emailInput', email)
-      .setValue('@passInput', slug)
-      .clickElement('@submitButton');
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after(client) {
     client.end();
   },
-  // 'Add an Instance from empty list item': (client) => {
-  //   const instancesPage = client.page.instancesPage();
-  //
-  //   instancesPage
-  //     .navigate()
-  //     .waitForElementPresent('@emptyListItem')
-  //     .clickElement('@emptyListItem')
-  //     .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
-  //     .clickElement('@confirmButton')
-  //     .waitForElementNotPresent('@addInstanceModalTitle')
-  //     .waitForElementVisible('@instanceDescription');
-  // },
   'Check if Instance has been created': (client) => {
     const instancesPage = client.page.instancesPage();
 
@@ -38,16 +25,17 @@ export default {
   },
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
+    const newDescription = utils.addSuffix('description');
 
     instancesPage
       .navigate()
       .clickListItemDropdown('@instanceDropdown', 'Edit')
-      .fillInput('@createModalDescriptionInput', 'new_description')
+      .fillInput('@createModalDescriptionInput', newDescription)
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@editInstanceModalTitle')
       .waitForElementVisible('@instancesTableName');
 
-    instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
+    instancesPage.expect.element('@instancesTableRow').to.contain.text(newDescription);
   }
   // 'Test Delete Instance': (client) => {
   //   const instancesPage = client.page.instancesPage();

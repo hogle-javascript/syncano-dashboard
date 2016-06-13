@@ -1,5 +1,4 @@
-import Async from 'async';
-import globals from '../../globals';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['pushDevices'],

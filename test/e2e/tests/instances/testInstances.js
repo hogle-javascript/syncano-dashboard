@@ -1,24 +1,17 @@
-import globals from '../../globals';
-import async from 'async';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['instances'],
+  before(client) {
+    const loginPage = client.page.loginPage();
+
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+  },
   after(client) {
     client.end();
-  },
-  'Test create instances': (client) => {
-    async.waterfall([
-      client.createTempAccount,
-      client.createTempInstance
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
-
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(globals.tempEmail, globals.tempPass);
-    });
   },
   'Test Instances Dropdown': (client) => {
     const instancesPage = client.page.instancesPage();
@@ -52,18 +45,4 @@ export default {
       client.assert.equal(text.value, instanceNames[0]);
     });
   }
-  // We decided to not allow users to delete multiple instances so header dropdown is removed
-  // and there is no option to select multiple instances
-  //
-  // 'Test Select multiple Instances': (client) => {
-  //   const listsPage = client.page.listsPage();
-  //   const selectedItems = listsPage.elements.selectedItem.selector;
-  //   const optionsMenu = listsPage.elements.optionsMenu.selector;
-  //
-  //   client
-  //     .url('https://localhost:8080/#/instances/')
-  //     .pause(2000)
-  //     .multipleItems('Select', 2, optionsMenu, selectedItems)
-  //     .pause(2500);
-  // }
 };

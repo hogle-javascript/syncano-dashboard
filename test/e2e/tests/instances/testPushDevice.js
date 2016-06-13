@@ -1,24 +1,15 @@
-import Async from 'async';
-import globals from '../../globals';
+import accounts from '../../tempAccounts';
 import utils from '../../utils';
 
 export default {
   tags: ['pushDevice'],
   before: (client) => {
-    Async.waterfall([
-      client.createTempAccount,
-      client.createTempInstance,
-      client.configTempAPNSPushNotificationSocket,
-      client.configTempGCMPushNotificationSocket
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(globals.tempEmail, globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after: (client) => {
     client.end();
@@ -30,8 +21,9 @@ export default {
     const registrationId = utils.randomString(64);
     const deviceId = utils.randomInt(100, 1000);
 
+    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/push-notifications/devices/gcm');
     pushDevicesPage
-      .goToUrl('temp', 'push-notifications/devices/gcm')
+      // .goToUrl('temp', 'push-notifications/devices/gcm')
       .waitForElementVisible('@androidDevicesHeading');
 
     client.pause(500);
@@ -54,7 +46,7 @@ export default {
     const deviceId = utils.randomInt(100, 1000);
 
     pushDevicesPage
-      .goToUrl('temp', 'push-notifications/devices/gcm')
+      // .goToUrl('temp', 'push-notifications/devices/gcm')
       .waitForElementVisible('@androidDevicesHeading');
 
     listsPage
@@ -73,7 +65,7 @@ export default {
     const optionsMenu = listsPage.elements.firstItemOptionsMenu.selector;
 
     client
-      .goToUrl('temp', 'push-notifications/devices/gcm')
+      // .goToUrl('temp', 'push-notifications/devices/gcm')
       .singleItemSelectUnselect('synicon-android', optionsMenu, selectedItem);
   },
   'Test Admin Deletes Android Device': (client) => {
@@ -81,7 +73,7 @@ export default {
     const listsPage = client.page.listsPage();
 
     pushDevicesPage
-      .goToUrl('temp', 'push-notifications/devices/gcm')
+      // .goToUrl('temp', 'push-notifications/devices/gcm')
       .waitForElementVisible('@androidDevicesHeading');
 
     listsPage
@@ -98,8 +90,9 @@ export default {
     const labelName = utils.addSuffix('ioslabel');
     const registrationId = utils.randomString(64);
 
+    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/push-notifications/devices/apns');
     pushDevicesPage
-      .goToUrl('temp', 'push-notifications/devices/apns')
+      // .goToUrl('temp', 'push-notifications/devices/apns')
       .waitForElementVisible('@iosDevicesHeading');
 
     client.pause(500);
@@ -120,7 +113,7 @@ export default {
     const labelName = utils.addSuffix('ioslabel');
 
     pushDevicesPage
-      .goToUrl('temp', 'push-notifications/devices/apns')
+      // .goToUrl('temp', 'push-notifications/devices/apns')
       .waitForElementVisible('@iosDevicesHeading');
 
     listsPage
@@ -138,7 +131,7 @@ export default {
     const optionsMenu = listsPage.elements.firstItemOptionsMenu.selector;
 
     client
-      .goToUrl('temp', 'push-notifications/devices/apns')
+      // .goToUrl('temp', 'push-notifications/devices/apns')
       .singleItemSelectUnselect('synicon-apple', optionsMenu, selectedItem);
   },
   'Test Admin Deletes iOS Device': (client) => {
@@ -146,7 +139,7 @@ export default {
     const listsPage = client.page.listsPage();
 
     pushDevicesPage
-      .goToUrl('temp', 'push-notifications/devices/apns')
+      // .goToUrl('temp', 'push-notifications/devices/apns')
       .waitForElementVisible('@iosDevicesHeading');
 
     listsPage
