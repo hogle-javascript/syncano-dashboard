@@ -1,0 +1,108 @@
+import React, {Component} from 'react';
+import {Link, withRouter} from 'react-router';
+import {RaisedButton} from 'material-ui';
+
+class ExpiredAccountPage extends Component {
+  render() {
+    const styles = {
+      root: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: 'calc(100vh - 50px)'
+      },
+      textLink: {
+        color: '#4A90E2'
+      },
+      flexTop: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        textAlign: 'center',
+        maxWidth: 450,
+        margin: '0 auto 80px'
+      },
+      image: {
+        marginBottom: 70
+      },
+      title: {
+        marginBottom: 30,
+        color: '#1D2228',
+        fontSize: 28,
+        lineHeight: '38px',
+        fontWeight: 700
+      },
+      message: {
+        margin: 0,
+        fontSize: 14,
+        lineHeight: '19px',
+        color: 'rgba(0,0,0,0.54)'
+      },
+      button: {
+        height: 44,
+        width: 230,
+        margin: '70px auto 10px',
+        boxShadow: 'none'
+      },
+      buttonDescription: {
+        margin: '0 0 -16px',
+        fontSize: 12,
+        lineHeight: '16px',
+        color: 'rgba(0,0,0,0.54)'
+      },
+      flexBottom: {
+        padding: '20px 0',
+        textAlign: 'center'
+      },
+      flexBottomText: {
+        margin: 0,
+        fontSize: 12,
+        lineHeight: '16px',
+        color: 'rgba(0,0,0,0.54)'
+      }
+    };
+
+    return (
+      <div style={styles.root}>
+        <div style={styles.flexTop}>
+          <div
+            dangerouslySetInnerHTML={{__html: require('../assets/img/illustrations/no-active-plan.svg')}}
+            style={styles.image}
+          />
+          <div style={styles.title}>
+            No active plan
+          </div>
+          <p style={styles.message}>
+            Oh no! You have reached the end of your free trial. Simply upgrade your account for access to all of
+            Syncano’s features.
+          </p>
+          <Link to="profile-billing-plan">
+            <RaisedButton
+              label="Upgrade My Plan"
+              backgroundColor="#FFCC01"
+              style={styles.button}
+              labelStyle={{fontWeight: 700, color: '#1D2228'}}
+            />
+          </Link>
+          <p style={styles.buttonDescription}>
+            (Plans start as low as $25)
+          </p>
+        </div>
+        <div style={styles.flexBottom}>
+          <p style={styles.flexBottomText}>
+            If you think this is an error, please contact us at:
+            <br/>
+            <a
+              href="mailto:support@syncano.com"
+              style={styles.textLink}
+            >
+              support@syncano.com
+            </a>
+          </p>
+        </div>
+      </div>
+    );
+  };
+};
+
+export default withRouter(ExpiredAccountPage);
