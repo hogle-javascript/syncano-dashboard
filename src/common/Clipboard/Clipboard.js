@@ -47,6 +47,18 @@ export default React.createClass({
     );
   },
 
+  renderListItem() {
+    const {text, copyText} = this.props;
+
+    return (
+      <div>
+        <div style={{display: 'flex'}}>
+          <Truncate text={text ? text : copyText} />
+        </div>
+      </div>
+    );
+  },
+
   renderContent() {
     const {type, children} = this.props;
 
@@ -60,6 +72,10 @@ export default React.createClass({
 
     if (type === 'link') {
       return this.renderLink();
+    }
+
+    if (type === 'list') {
+      return this.renderListItem();
     }
 
     return <div>{children}</div>;

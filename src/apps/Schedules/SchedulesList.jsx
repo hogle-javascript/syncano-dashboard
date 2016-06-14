@@ -96,6 +96,11 @@ export default React.createClass({
             columnName="DESC">
             Crontab
           </Column.ColumnHeader>
+          <Column.ColumnHeader
+            className="col-flex-1"
+            columnName="DESC">
+            Timezone
+          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={getCheckedItems().length}

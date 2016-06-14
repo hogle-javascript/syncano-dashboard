@@ -104,7 +104,7 @@ export default {
 
   cancelSubscriptions(ids) {
     const promises = ids.map((id) => {
-      this.NewLibConnection.Subscription.please().cancelSubscription({id});
+      this.NewLibConnection.Subscription.please().cancel({}, {id}).request();
     });
 
     this.Promise

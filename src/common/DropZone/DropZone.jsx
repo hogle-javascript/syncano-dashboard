@@ -7,6 +7,7 @@ import {Loading} from '../';
 import UploadFileButton from './UploadFileButton';
 
 const DropZone = ({
+  className,
   isLoading,
   disableClick,
   onDrop,
@@ -80,6 +81,7 @@ const DropZone = ({
       <Loading show={isLoading}>
         {renderUploadButton()}
         <Dropzone
+          className={className}
           multiple={false}
           disableClick={disableClick}
           onDrop={onDrop}

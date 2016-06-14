@@ -136,9 +136,8 @@ export default Radium(React.createClass({
 
   renderDropzoneDescription(type) {
     const styles = this.getStyles();
-    const state = this.state;
 
-    if (state[`${type}_certificate`]) {
+    if (this.state[`${type}_certificate`]) {
       return (
         <div
           className="row"
@@ -157,7 +156,6 @@ export default Radium(React.createClass({
                   fullWidth={true}
                   value={this.state[`${type}_certificate_name`]}
                   onChange={(event, value) => this.setState({[`${type}_certificate_name`]: value})}
-                  defaultValue={state[`${type}_certificate_name`]}
                   errorText={this.getValidationMessages(`${type}_certificate_name`).join(' ')}
                   floatingLabelText="Apple Push Notification Certificate Name"/>
               </div>
@@ -177,13 +175,12 @@ export default Radium(React.createClass({
                   fullWidth={true}
                   value={this.state[`${type}_bundle_identifier`]}
                   onChange={(event, value) => this.setState({[`${type}_bundle_identifier`]: value})}
-                  defaultValue={state[`${type}_bundle_identifier`]}
                   errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}
                   floatingLabelText="Bundle Identifier"/>
               </div>
               <div className="col-xs-12">
                 <div style={styles.certificateType}>Expiration Date</div>
-                {state[`${type}_expiration_date`]}
+                {this.state[`${type}_expiration_date`]}
               </div>
             </div>
           </div>
