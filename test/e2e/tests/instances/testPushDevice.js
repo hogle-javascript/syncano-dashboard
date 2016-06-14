@@ -69,6 +69,8 @@ export default {
   'Test Admin Deletes Android Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
+    const tempGCMDevicesNames = accounts.instanceUser.tempGCMDevicesNames;
+    const lastDeviceName = tempGCMDevicesNames[tempGCMDevicesNames.length - 1];
 
     pushDevicesPage
       .waitForElementVisible('@androidDevicesHeading');
@@ -78,8 +80,10 @@ export default {
       .clickListItemDropdown('@firstItemOptionsMenu', 'Delete')
       .waitForElementVisible('@deleteTitleHeading')
       .clickElement('@confirmButton')
-      .waitForElementNotPresent('@deleteTitleHeading')
-      .waitForElementVisible('@emptyListItem');
+      .waitForElementNotPresent('@deleteTitleHeading');
+
+    pushDevicesPage
+      .verify.containsText('@firstDevice', lastDeviceName);
   },
   'Test Admin Adds iOS Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
@@ -132,6 +136,8 @@ export default {
   'Test Admin Deletes iOS Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
+    const tempAPNSDevicesNames = accounts.instanceUser.tempAPNSDevicesNames;
+    const lastDeviceName = tempAPNSDevicesNames[tempAPNSDevicesNames.length - 1];
 
     pushDevicesPage
       .waitForElementVisible('@iosDevicesHeading');
@@ -141,7 +147,9 @@ export default {
       .clickListItemDropdown('@firstItemOptionsMenu', 'Delete')
       .waitForElementVisible('@deleteTitleHeading')
       .clickElement('@confirmButton')
-      .waitForElementNotPresent('@deleteTitleHeading')
-      .waitForElementVisible('@emptyListItem');
+      .waitForElementNotPresent('@deleteTitleHeading');
+
+    pushDevicesPage
+      .verify.containsText('@firstDevice', lastDeviceName);
   }
 };
