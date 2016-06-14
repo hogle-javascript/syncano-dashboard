@@ -6,6 +6,8 @@ import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import Actions from './TemplateActions';
 
+import _ from 'lodash';
+
 export default Reflux.createStore({
   listenables: Actions,
 
@@ -70,7 +72,7 @@ export default Reflux.createStore({
   saveRenderedTemplate(renderedTemplate) {
     console.debug('TemplateStore::saveRenderedTemplate');
     this.data.isRendering = false;
-    this.data.renderedTemplate = renderedTemplate;
+    this.data.renderedTemplate = _.has(renderedTemplate, 'data') ? renderedTemplate.data : renderedTemplate;
     this.trigger(this.data);
   },
 
