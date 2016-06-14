@@ -21,14 +21,14 @@ export default {
       .clickElement('@favorite')
       .waitForElementVisible('@favoriteSolutionTitle');
   },
-  'Administrator can view his Solutions': (client) => {
-    const solutionsPage = client.page.solutionsPage();
+  // 'Administrator can view his Solutions': (client) => {
+  //   const solutionsPage = client.page.solutionsPage();
 
-    solutionsPage
-      .navigate()
-      .clickElement('@mySolutions')
-      .waitForElementVisible('@mySolutionTitle');
-  },
+  //   solutionsPage
+  //     .navigate()
+  //     .clickElement('@mySolutions')
+  //     .waitForElementVisible('@mySolutionTitle');
+  // },
   'Administrator can filter solutions by tags': (client) => {
     let tagsCount = null;
     const solutionsPage = client.page.solutionsPage();

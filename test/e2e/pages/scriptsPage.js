@@ -4,7 +4,7 @@ export default {
   url: `https://localhost:8080/#/instances/${accounts.navigationUser.instanceName}/scripts`,
   elements: {
     scriptListItem: {
-      selector: '//div[text()="snippet"]',
+      selector: `//div[text()="${accounts.navigationUser.tempScriptNames[0]}"]`,
       locateStrategy: 'xpath'
     },
     scriptMenuSelect: {

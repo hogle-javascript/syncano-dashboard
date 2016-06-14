@@ -43,6 +43,7 @@ function createAltInstanceUser() {
 function createNavigationUser() {
   return createTestAccount()
     .then((tempAccount) => createTestInstances(tempAccount, 1))
+    .then((tempAccount) => createTestScripts(tempAccount, 1))
     .then((tempAccount) => {
       delete tempAccount.connection;
       accounts.navigationUser = tempAccount;

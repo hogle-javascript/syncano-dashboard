@@ -51,12 +51,12 @@ module.exports = {
 
     leftMenuPage.clickElement('@administrators');
     adminsPage.waitForElementPresent('@adminsListItem');
-  },
-  'User goes to API Keys settings View': (client) => {
-    const leftMenuPage = client.page.leftMenuPage();
-    const apiKeysPage = client.page.apiKeysPage();
-
-    leftMenuPage.clickElement('@apiKeys');
-    apiKeysPage.waitForElementPresent('@apiKeysListItem');
   }
+  // 'User goes to API Keys settings View': (client) => {
+  //   const leftMenuPage = client.page.leftMenuPage();
+  //   const apiKeysPage = client.page.apiKeysPage();
+
+  //   leftMenuPage.clickElement('@apiKeys');
+  //   apiKeysPage.waitForElementPresent('@apiKeysListItem');
+  // }
 };
