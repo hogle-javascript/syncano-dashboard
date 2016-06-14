@@ -9,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
   after(client) {
     client.end();
@@ -17,7 +17,7 @@ export default {
   'Administrator adds a Trigger': (client) => {
     const triggersPage = client.page.triggersPage();
     const suffix = utils.addSuffix('trigger');
-    const instanceName = accounts.instanceUser.instanceName;
+    const instanceName = accounts.alternativeUser.instanceName;
 
     triggersPage
       .goToUrl(instanceName, 'triggers')
@@ -26,7 +26,7 @@ export default {
       .fillInput('@addTriggerModalLabel', suffix)
       .selectDropdownValue('@addTriggerModalSignal', 'create')
       .selectDropdownValue('@addTriggerModalClass', 'user_profile')
-      .selectDropdownValue('@addTriggerModalScript', accounts.instanceUser.tempScriptNames[1])
+      .selectDropdownValue('@addTriggerModalScript', accounts.alternativeUser.tempScriptNames[1])
       .clickElement('@confirm')
       .waitForElementPresent('@triggerTableRow');
   },
