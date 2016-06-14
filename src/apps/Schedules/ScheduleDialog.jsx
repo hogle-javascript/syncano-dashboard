@@ -67,29 +67,19 @@ export default React.createClass({
   renderCrontabDataSource() {
     const crontabs = Store.getCrontabDropdown();
 
-    return _.map(crontabs, (crontab) => {
-      return {
-        text: crontab.payload,
-        value: (
-          <AutoComplete.Item
-            primaryText={crontab.text}
-            secondaryText={crontab.payload} />
-        )
-      };
-    });
+    return _.map(crontabs, (crontab) => ({
+          text: crontab.payload,,
+          value: <AutoComplete.Item primaryText={crontab.text} secondaryText={crontab.payload} />
+    }));
   },
 
   renderTimezoneDataSource() {
     const timezones = moment.tz.names();
 
-    return _.map(timezones, (timezone) => {
-      return {
-        text: timezone,
-        value: (
-          <AutoComplete.Item primaryText={timezone} />
-        )
-      };
-    });
+    return _.map(timezones, (timezone) => ({
+          text: timezone,
+          value: <AutoComplete.Item primaryText={timezone} />
+    }));    
   },
 
   render() {
