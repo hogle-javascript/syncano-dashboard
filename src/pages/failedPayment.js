@@ -23,6 +23,7 @@ class FailedPaymentPage extends Component {
         margin: '0 auto 80px'
       },
       image: {
+        display: 'block',
         marginBottom: 70
       },
       title: {
@@ -59,8 +60,9 @@ class FailedPaymentPage extends Component {
     return (
       <div style={styles.root}>
         <div style={styles.flexTop}>
-          <div
-            dangerouslySetInnerHTML={{__html: require('../assets/img/illustrations/we-cant-process-your-payment.svg')}}
+          <img
+            src={require('!file-loader!../assets/img/illustrations/we-cant-process-your-payment.svg')}
+            alt="credit card with an error icon"
             style={styles.image}
           />
           <div style={styles.title}>
@@ -74,8 +76,9 @@ class FailedPaymentPage extends Component {
             <RaisedButton
               label="Update My Credit Card"
               backgroundColor="#FFCC01"
+              labelColor="#1D2228"
               style={styles.button}
-              labelStyle={{fontWeight: 700, color: '#1D2228'}}
+              labelStyle={{fontWeight: 700}}
             />
           </Link>
         </div>
