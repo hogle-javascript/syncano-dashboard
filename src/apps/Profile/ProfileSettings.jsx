@@ -20,10 +20,16 @@ export default React.createClass({
 
   validatorConstraints: {
     firstName: {
-      presence: true
+      presence: true,
+      length: {
+        maximum: 64
+      }
     },
     lastName: {
-      presence: true
+      presence: true,
+      length: {
+        maximum: 64
+      }
     }
   },
 
