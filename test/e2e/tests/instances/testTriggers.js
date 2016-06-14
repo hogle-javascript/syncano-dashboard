@@ -34,7 +34,6 @@ export default {
     const triggersPage = client.page.triggersPage();
 
     triggersPage
-      // .goToUrl(instanceName, 'triggers')
       .clickListItemDropdown('@triggerDropdown', 'Edit')
       .waitForElementVisible('@confirm')
       .selectDropdownValue('@addTriggerModalSignal', 'update')
@@ -45,7 +44,6 @@ export default {
     const triggersPage = client.page.triggersPage();
 
     triggersPage
-      // .goToUrl(instanceName, 'triggers')
       .clickListItemDropdown('@triggerDropdown', 'Delete')
       .waitForElementVisible('@confirm')
       .clickElement('@confirm')

@@ -6,8 +6,8 @@ const createTestClasses = require('./create/testClasses.js');
 const createTestScripts = require('./create/testScripts.js');
 const createAPNSSocket = require('./create/apnsSocket.js');
 const createGCMSocket = require('./create/gcmSocket.js');
-const createAPNSDevice = require('./create/apnsDevices.js');
-const createGCMDevice = require('./create/gcmDevices.js');
+const createAPNSDevices = require('./create/apnsDevices.js');
+const createGCMDevices = require('./create/gcmDevices.js');
 const getCertFile = require('./files/getCertificate.js');
 const removeCert = require('./files/removeCertificate.js');
 const saveAccountsToFile = require('./files/saveAccounts.js');
@@ -21,8 +21,8 @@ function createInstanceUser() {
     .then((tempAccount) => createTestScripts(tempAccount, 3))
     .then((tempAccount) => createAPNSSocket(tempAccount))
     .then((tempAccount) => createGCMSocket(tempAccount))
-    .then((tempAccount) => createAPNSDevice(tempAccount, 2))
-    .then((tempAccount) => createGCMDevice(tempAccount, 2))
+    .then((tempAccount) => createAPNSDevices(tempAccount, 2))
+    .then((tempAccount) => createGCMDevices(tempAccount, 2))
     .then((tempAccount) => {
       delete tempAccount.connection;
       accounts.instanceUser = tempAccount;
