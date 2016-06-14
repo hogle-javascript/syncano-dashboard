@@ -9,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
   after: (client) => {
     client.end();
@@ -18,7 +18,7 @@ export default {
     const socketsPage = client.page.socketsPage();
     const gcmDevKey = utils.randomString(39);
 
-    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/sockets');
+    client.url('https://localhost:8080/#/instances/' + accounts.alternativeUser.instanceName + '/sockets');
 
     socketsPage
       // Example rewrite tests, will need to change custom command, but right now it is not possible

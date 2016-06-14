@@ -9,7 +9,7 @@ module.exports = {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
   after(client) {
     client.end();
@@ -19,7 +19,7 @@ module.exports = {
     const templateViewPage = client.page.templateViewPage();
     const codeText = utils.addSuffix('template');
 
-    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/templates');
+    client.url('https://localhost:8080/#/instances/' + accounts.alternativeUser.instanceName + '/templates');
 
     // listsPoTage.goUrl('', 'templates');
     templateViewPage
@@ -40,7 +40,7 @@ module.exports = {
     const listsPage = client.page.listsPage();
     const templateViewPage = client.page.templateViewPage();
     const controlTimestamp = utils.addSuffix('template');
-    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${accounts.instanceUser.instanceName}/classes/user_profile/objects/`;
+    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${accounts.alternativeUser.instanceName}/classes/user_profile/objects/`;
     const expectedPreviewResult = `${controlTimestamp},channel_room,group,links`;
 
     // listsPage.goToUrl('', 'templates');
@@ -59,7 +59,7 @@ module.exports = {
   'Test Admin Renders Template in Tab': (client) => {
     const listsPage = client.page.listsPage();
     const templateViewPage = client.page.templateViewPage();
-    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${accounts.instanceUser.instanceName}/classes/user_profile/objects/`;
+    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${accounts.alternativeUser.instanceName}/classes/user_profile/objects/`;
     const controlTimestamp = utils.addSuffix('template');
     const expectedTabResult = `${controlTimestamp},channel_room,group,links`;
 

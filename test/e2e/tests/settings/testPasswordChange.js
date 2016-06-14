@@ -12,7 +12,6 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .waitForElementPresent('@emailInput', 60000)
       .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   'Administrator resets his password': (client) => {

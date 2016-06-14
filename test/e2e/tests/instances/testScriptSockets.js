@@ -9,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
   after(client) {
     client.end();
@@ -18,13 +18,13 @@ export default {
     const socketsPage = client.page.socketsPage();
     const script = utils.addSuffix('script');
 
-    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/script-endpoints');
+    client.url('https://localhost:8080/#/instances/' + accounts.alternativeUser.instanceName + '/script-endpoints');
 
     socketsPage
       // .goToUrl('', 'script-endpoints')
       .clickElement('@addScriptButton')
       .fillInput('@modalNameInput', script)
-      .selectDropdownValue('@addCodeBoxModalScriptDropdown', accounts.instanceUser.tempScriptNames[0])
+      .selectDropdownValue('@addCodeBoxModalScriptDropdown', accounts.alternativeUser.tempScriptNames[0])
       .clickElement('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },

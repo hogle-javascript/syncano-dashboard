@@ -5,7 +5,7 @@ export default {
   after: (client) => {
     client.end();
   },
-  'Test create Account': (client) => {
+  before: (client) => {
     const loginPage = client.page.loginPage();
 
     loginPage
