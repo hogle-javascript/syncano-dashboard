@@ -139,7 +139,7 @@ const Instance = React.createClass({
                   key="globalConfig"
                   iconClassName="synicon-earth"
                   primaryText="Global Config"
-                  onTouchTap={() => GlobalConfigDialogActions.showDialog()}/>
+                  onTouchTap={GlobalConfigDialogActions.showDialog}/>
 
               </Sidebar.List>
             </div>
