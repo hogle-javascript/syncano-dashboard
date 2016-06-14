@@ -79,12 +79,10 @@ export default Reflux.createStore({
   },
 
   subscribe() {
-    Actions.subscribePlan(this.data.plan.name, {
-      commitment: JSON.stringify({
-        api: this.data.apiTotal,
-        cbx: this.data.cbxTotal
-      })
-    });
+    Actions.subscribePlan(this.data.plan.name, JSON.stringify({
+      api: this.data.apiTotal,
+      cbx: this.data.cbxTotal
+    }));
   },
 
   onSubmitPlan(cardInfo) {
