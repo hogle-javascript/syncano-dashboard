@@ -23,6 +23,7 @@ class ExpiredAccountPage extends Component {
         margin: '0 auto 80px'
       },
       image: {
+        display: 'block',
         marginBottom: 70
       },
       title: {
@@ -65,8 +66,9 @@ class ExpiredAccountPage extends Component {
     return (
       <div style={styles.root}>
         <div style={styles.flexTop}>
-          <div
-            dangerouslySetInnerHTML={{__html: require('../assets/img/illustrations/no-active-plan.svg')}}
+          <img
+            src={require('!file-loader!../assets/img/illustrations/no-active-plan.svg')}
+            alt="browser window with an error icon"
             style={styles.image}
           />
           <div style={styles.title}>
@@ -80,8 +82,9 @@ class ExpiredAccountPage extends Component {
             <RaisedButton
               label="Upgrade My Plan"
               backgroundColor="#FFCC01"
+              labelColor="#1D2228"
               style={styles.button}
-              labelStyle={{fontWeight: 700, color: '#1D2228'}}
+              labelStyle={{fontWeight: 700}}
             />
           </Link>
           <p style={styles.buttonDescription}>
