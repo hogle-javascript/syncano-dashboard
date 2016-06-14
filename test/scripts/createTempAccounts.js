@@ -55,6 +55,5 @@ createInstanceUser()
   .then(createNavigationUser)
   .then(() => {
     console.log('Account details for debugging:\n', accounts);
-    removeCert();
     saveAccountsToFile(accounts);
   });

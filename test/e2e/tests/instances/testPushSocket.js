@@ -60,48 +60,4 @@ export default {
     pushDevicesPage
       .waitForElementVisible('@androidDevicesHeading');
   }
-  // 'Test Admin Adds APNS Socket': (client) => {
-  //   const socketsPage = client.page.socketsPage();
-  //   const filePath = '/Users/marcin/Downloads/ApplePushDevelopment.p12';
-
-  //   socketsPage
-  //     .goToUrl('temp', 'sockets')
-  //     .clickElement('@addCodeBoxButton')
-  //     .waitForElementVisible('@addCodeBoxModalTitle')
-  //     .clickElement('@addApnsSocket')
-  //     .setValue('@uploadApnsDevCert', require('path').resolve(filePath))
-  //     .fillInput('@apnsBundleInput', '1')
-  //     .clickElement('@confirmButton')
-  //     .assert.elementNotPresent('//div[@class="notification notification--error"]')
-  //     .goToUrl('temp', 'push-notifications/config')
-  //     .waitForElementVisible('@apnsSocket');
-  // },
-  // 'Test Admin Edits APNS Socket': (client) => {
-  //   const socketsPage = client.page.socketsPage();
-  //   const filePath = '/Users/marcin/Downloads/ApplePushDevelopment.p12';
-
-  //   socketsPage
-  //     .goToUrl('temp', 'push-notifications/config')
-  //     .clickListItemDropdown('Apple Push Notification service (APNs)', 'Edit')
-  //     .clickElement('@removeCert')
-  //     .verify.visible('@certDragAndDrop')
-  //     .setValue('@uploadApnsDevCert', filePath)
-  //     .fillInput('@apnsBundleInput', '2')
-  //     .clickElement('@confirmButton')
-  //     .waitForElementVisible('@apnsSocket')
-  //     .clickListItemDropdown('Apple Push Notification service (APNs)', 'Edit')
-  //     .verify.valueContains('@apnsCertNameInput', 'ApplePushDevelopment.p12')
-  //     .verify.valueContains('@apnsBundleInput', '2')
-  //     .clickElement('@confirmButton');
-  // },
-  // 'Test Admin Goes to APNS Device list': (client) => {
-  //   const socketsPage = client.page.socketsPage();
-  //   const pushDevicesPage = client.page.pushDevicesPage();
-
-  //   socketsPage
-  //     .goToUrl('temp', 'push-notifications/config')
-  //     .clickListItemDropdown('Apple Push Notification service (APNs)', 'Devices list');
-  //   pushDevicesPage
-  //     .waitForElementVisible('@iosDevicesHeading');
-  // }
 };
