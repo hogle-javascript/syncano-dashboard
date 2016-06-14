@@ -61,7 +61,7 @@ export default React.createClass({
       interval_sec: !_.isEmpty(value) ? value : null
     };
 
-    this.setState({[key] : keyMap[key]});
+    this.setState({[key]: keyMap[key]});
   },
 
   renderCrontabDataSource() {
