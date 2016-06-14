@@ -68,6 +68,9 @@ export default React.createClass({
         <Column.Desc className="col-flex-1">
           {item.crontab ? item.crontab : item.interval_sec}
         </Column.Desc>
+        <Column.Desc className="col-flex-1">
+          {item.timezone}
+        </Column.Desc>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
