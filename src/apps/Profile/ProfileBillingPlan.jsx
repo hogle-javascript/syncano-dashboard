@@ -51,6 +51,10 @@ export default Radium(React.createClass({
     };
   },
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   componentDidMount() {
     Actions.fetch();
   },
@@ -292,18 +296,21 @@ export default Radium(React.createClass({
   },
 
   renderSubscriptionExpiringInfo() {
+    const {muiTheme} = this.context;
+    console.log(muiTheme);
     const {profile} = this.state;
     const endDate = profile.subscription.end;
     const endDateString = Moment(endDate).format('MMMM D YYYY');
 
     return (
       <div style={{marginTop: 20, textAlign: 'center'}}>
-        <p style={{color: '#F0423A', marginBottom: 10}}>
+        <p style={{marginBottom: 20, lineHeight: 1.35}}>
           Your free Builder account will expire on <strong>{endDateString}</strong>.
         </p>
-        <FlatButton
+        <RaisedButton
           label="Upgrade Now"
-          labelStyle={{color: '#42a5f5'}}
+          backgroundColor={muiTheme.palette.accent2Color}
+          labelColor="#FFFFFF"
           onClick={this.handleShowPlanDialog}
         />
       </div>
