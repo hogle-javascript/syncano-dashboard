@@ -68,9 +68,9 @@ export default React.createClass({
             method="post">
             <TextField
               ref="firstName"
-              value={this.state.first_name}
+              value={first_name}
               onChange={(event, value) => this.setState({first_name: value})}
-              defaultValue={this.state.first_name}
+              defaultValue={first_name}
               errorText={this.getValidationMessages('first_name').join(' ')}
               name="firstName"
               floatingLabelText="First name"
@@ -78,9 +78,9 @@ export default React.createClass({
               fullWidth={true}/>
             <TextField
               ref="lastName"
-              value={this.state.last_name}
+              value={last_name}
               onChange={(event, value) => this.setState({last_name: value})}
-              defaultValue={this.state.last_name}
+              defaultValue={last_name}
               errorText={this.getValidationMessages('last_name').join(' ')}
               name="lastName"
               floatingLabelText="Last name"
@@ -89,7 +89,7 @@ export default React.createClass({
             <TextField
               ref="email"
               name="email"
-              value={this.state.email}
+              value={email}
               floatingLabelText="Email"
               className="vm-6-b"
               autoComplete="email"
@@ -102,7 +102,7 @@ export default React.createClass({
               style={styles.updateButton}
               labelStyle={styles.updateButtonLabel}
               className="raised-button"
-              disabled={!this.state.canSubmit}
+              disabled={!canSubmit}
               primary={true}/>
           </form>
         </Container>
