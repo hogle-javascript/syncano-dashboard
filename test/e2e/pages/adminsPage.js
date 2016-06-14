@@ -1,8 +1,8 @@
+import accounts from '../tempAccounts';
 import utils from '../utils';
-import globals from '../globals';
 
 export default {
-  url: `https://localhost:8080/#/instances/${globals.instanceName}/admins`,
+  url: `https://localhost:8080/#/instances/${accounts.instanceUser.instanceName}/admins`,
   elements: {
     confirmButton: {
       selector: '//span[text()="Confirm"]',

@@ -1,3 +1,4 @@
+import accounts from '../../tempAccounts';
 import utils from '../../utils';
 
 export default {
@@ -8,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after(client) {
     client.end();
@@ -22,7 +23,7 @@ export default {
       .clickElement('@addScheduleButton')
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInput('@addScheduleModalLabel', schedule)
-      .selectDropdownValue('@addScheduleModalScript', 'snippet')
+      .selectDropdownValue('@addScheduleModalScript', accounts.instanceUser.tempScriptNames[1])
       .sendKeys('@addScheduleModalCronTab', '0 0 1 1 *')
       // click into title as workaround for enter key closing modal view
       .clickElement('@addScheduleModalTitle')
@@ -46,6 +47,7 @@ export default {
   },
   'Administrator deletes a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
+    const listsPage = client.page.listsPage();
     const schedule = utils.addSuffix('schedule');
 
     schedulesPage
@@ -54,5 +56,7 @@ export default {
       .waitForElementPresent('@deleteScheduleModalTitle')
       .clickElement('@confirm')
       .waitForElementNotPresent('@selectScheduleTableRow');
+
+    listsPage.waitForElementVisible('@emptyListItem');
   }
 };

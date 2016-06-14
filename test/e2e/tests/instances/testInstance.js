@@ -1,32 +1,19 @@
+import accounts from '../../tempAccounts';
+import utils from '../../utils';
+
 export default {
   tags: ['instance'],
   before(client) {
-    const signupPage = client.page.signupPage();
-    const slug = Date.now();
-    const email = 'syncano.bot+' + slug + '@syncano.com';
+    const loginPage = client.page.loginPage();
 
-    signupPage
+    loginPage
       .navigate()
       .setResolution(client)
-      .setValue('@emailInput', email)
-      .setValue('@passInput', slug)
-      .clickElement('@submitButton');
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after(client) {
     client.end();
   },
-  // 'Add an Instance from empty list item': (client) => {
-  //   const instancesPage = client.page.instancesPage();
-  //
-  //   instancesPage
-  //     .navigate()
-  //     .waitForElementPresent('@emptyListItem')
-  //     .clickElement('@emptyListItem')
-  //     .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
-  //     .clickElement('@confirmButton')
-  //     .waitForElementNotPresent('@addInstanceModalTitle')
-  //     .waitForElementVisible('@instanceDescription');
-  // },
   'Check if Instance has been created': (client) => {
     const instancesPage = client.page.instancesPage();
 
@@ -38,28 +25,29 @@ export default {
   },
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
+    const newDescription = utils.addSuffix('description');
 
     instancesPage
       .navigate()
       .clickListItemDropdown('@instanceDropdown', 'Edit')
-      .fillInput('@createModalDescriptionInput', 'new_description')
+      .fillInput('@createModalDescriptionInput', newDescription)
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@editInstanceModalTitle')
       .waitForElementVisible('@instancesTableName');
 
-    instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
+    instancesPage.expect.element('@instancesTableRow').to.contain.text(newDescription);
+  },
+  'Test Delete Instance': (client) => {
+    const instancesPage = client.page.instancesPage();
+    const tempInstanceNames = accounts.instanceUser.tempInstanceNames;
+
+    instancesPage.navigate();
+    client.pause(1000);
+
+    instancesPage
+      .clickListItemDropdown('@instanceDropdown', 'Delete')
+      .fillInput('@confirmTextField', tempInstanceNames[tempInstanceNames.length - 1])
+      .clickElement('@confirmDeleteButton')
+      .waitForElementNotPresent('@deleteInstanceModalTitle');
   }
-  // 'Test Delete Instance': (client) => {
-  //   const instancesPage = client.page.instancesPage();
-  //
-  //   instancesPage.navigate();
-  //   client.pause(1000);
-  //
-  //   instancesPage
-  //     .clickListItemDropdown('@instanceDropdown', 'Delete')
-  //     .clickElement('@confirmDeleteButton')
-  //     .waitForElementNotPresent('@deleteInstanceModalTitle');
-  //
-  //   instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
-  // }
 };
