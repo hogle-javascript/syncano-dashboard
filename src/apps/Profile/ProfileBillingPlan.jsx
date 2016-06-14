@@ -4,6 +4,7 @@ import Radium from 'radium';
 import Moment from 'moment';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
+import DateFormat from 'dateformat';
 
 import {FormMixin, DialogsMixin} from '../../mixins';
 
@@ -291,9 +292,28 @@ export default Radium(React.createClass({
     );
   },
 
+  renderSubscriptionExpiringInfo() {
+    const {profile} = this.state;
+    const endDate = profile.subscription.end;
+    const endDateString = DateFormat(endDate, 'mmmm d yyyy');
+
+    return (
+      <div style={{marginTop: 20, textAlign: 'center'}}>
+        <p style={{color: '#F0423A', marginBottom: 10}}>
+          Your free Builder account will expire on <strong>{endDateString}</strong>.
+        </p>
+        <FlatButton
+          label="Upgrade Now"
+          labelStyle={{color: '#42a5f5'}}
+          onClick={this.handleShowPlanDialog}
+        />
+      </div>
+    );
+  },
+
   renderSummary() {
     const plan = Store.getPlan();
-    const profile = this.state.profile;
+    const {profile} = this.state;
 
     let coveredText = '';
 
@@ -322,16 +342,7 @@ export default Radium(React.createClass({
               <div style={{marginTop: 15, fontSize: '1rem'}}>Your Cost: $0</div>
             </div>
           </div>
-          <div style={{marginTop: 20, textAlign: 'center'}}>
-            <p style={{color: '#f44336', marginBottom: 10}}>
-              Your free Builder account will expire on <strong>June 6 2016</strong>.
-            </p>
-            <FlatButton
-              label="Upgrade Now"
-              labelStyle={{color: '#42a5f5'}}
-              onClick={this.handleShowPlanDialog}
-            />
-          </div>
+          {(plan === 'builder' || plan === 'free') && this.renderSubscriptionExpiringInfo()}
         </div>
       );
     }
