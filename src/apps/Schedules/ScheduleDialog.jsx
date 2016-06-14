@@ -68,8 +68,8 @@ export default React.createClass({
     const crontabs = Store.getCrontabDropdown();
 
     return _.map(crontabs, (crontab) => ({
-          text: crontab.payload,,
-          value: <AutoComplete.Item primaryText={crontab.text} secondaryText={crontab.payload} />
+      text: crontab.payload,
+      value: <AutoComplete.Item primaryText={crontab.text} secondaryText={crontab.payload} />
     }));
   },
 
@@ -77,9 +77,9 @@ export default React.createClass({
     const timezones = moment.tz.names();
 
     return _.map(timezones, (timezone) => ({
-          text: timezone,
-          value: <AutoComplete.Item primaryText={timezone} />
-    }));    
+      text: timezone,
+      value: <AutoComplete.Item primaryText={timezone} />
+    }));
   },
 
   render() {
@@ -156,7 +156,8 @@ export default React.createClass({
             hintText="Choose option from the dropdown or type timezone"
             animated={false}
             fullWidth={true}
-            filter= {(searchText, key) => _.toLower(key).includes(_.toLower(searchText))}           
+            filter={(searchText, key) => _.toLower(key).includes(_.toLower(searchText))}
+            maxSearchResults={5}
             searchText={timezone}
             openOnFocus={true}
             onNewRequest={(value) => this.handleChangeFields('timezone', value)}
