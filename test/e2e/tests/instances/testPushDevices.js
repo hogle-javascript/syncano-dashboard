@@ -2,36 +2,25 @@ import accounts from '../../tempAccounts';
 
 export default {
   tags: ['pushDevices'],
-  beforeEach: (client) => {
-    Async.waterfall([
-      client.createTempAccount,
-      client.createTempInstance,
-      client.configTempAPNSPushNotificationSocket,
-      client.configTempGCMPushNotificationSocket,
-      client.createTempGcmDevice,
-      client.createTempGcmDevice,
-      client.createTempApnsDevice,
-      client.createTempApnsDevice
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+  before: (client) => {
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(globals.tempEmail, globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
-  afterEach: (client, done) => {
-    client.end(done);
+  after: (client) => {
+    client.end();
   },
   'Test Select/Deselect multiple Android Devices': (client) => {
     const listsPage = client.page.listsPage();
     const selectedItems = listsPage.elements.selectedItem.selector;
     const optionsMenu = listsPage.elements.optionsMenu.selector;
+    const instanceName = accounts.instanceUser.instanceName;
 
     client
-      .goToUrl('temp', 'push-notifications/devices/gcm')
+      .goToUrl(instanceName, 'push-notifications/devices/gcm')
       .multipleItems('Select', 2, optionsMenu, selectedItems)
       .pause(2500)
       .multipleItems('Unselect', 0, optionsMenu, selectedItems);
@@ -42,7 +31,6 @@ export default {
     const optionsMenu = listsPage.elements.optionsMenu.selector;
 
     client
-      .goToUrl('temp', 'push-notifications/devices/gcm')
       .pause(2000)
       .multipleItems('Select', 2, optionsMenu, selectedItems)
       .pause(2500);
@@ -56,9 +44,10 @@ export default {
     const listsPage = client.page.listsPage();
     const selectedItems = listsPage.elements.selectedItem.selector;
     const optionsMenu = listsPage.elements.optionsMenu.selector;
+    const instanceName = accounts.instanceUser.instanceName;
 
     client
-      .goToUrl('temp', 'push-notifications/devices/apns')
+      .goToUrl(instanceName, 'push-notifications/devices/apns')
       .multipleItems('Select', 2, optionsMenu, selectedItems)
       .pause(2500)
       .multipleItems('Unselect', 0, optionsMenu, selectedItems);
@@ -69,7 +58,6 @@ export default {
     const optionsMenu = listsPage.elements.optionsMenu.selector;
 
     client
-      .goToUrl('temp', 'push-notifications/devices/apns')
       .pause(2000)
       .multipleItems('Select', 2, optionsMenu, selectedItems)
       .pause(2500);
