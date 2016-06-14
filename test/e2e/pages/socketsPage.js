@@ -137,7 +137,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addApnsSocket: {
-      selector: '//div[text()="APNS Push Notifications (BETA)"]/following::div[2]',
+      selector: '//div[text()="APNS Push Notifications (BETA)"]/following::div[2]//button/div/div/span',
       locateStrategy: 'xpath'
     },
     uploadApnsDevCert: {
@@ -145,7 +145,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addGcmSocket: {
-      selector: '//div[text()="GCM Push Notifications (BETA)"]/following::div[2]',
+      selector: '//div[text()="GCM Push Notifications (BETA)"]/following::div[2]//button',
       locateStrategy: 'xpath'
     },
     inputGcmDevKey: {
@@ -171,7 +171,7 @@ export default {
       locateStrategy: 'xpath'
     },
     apnsSocket: {
-      selector: '//div[text()="Apple Push Notification service (APNs)"]',
+      selector: '//div[text()="APNS Push Notifications (BETA)"]',
       locateStrategy: 'xpath'
     },
     removeCert: {
@@ -192,6 +192,10 @@ export default {
     },
     cancelButton: {
       selector: '//*[text()="Cancel"]',
+      locateStrategy: 'xpath'
+    },
+    configuration: {
+      selector: '//span[@class="synicon-socket-push"]/../../following-sibling::div//span[1]',
       locateStrategy: 'xpath'
     }
   }
