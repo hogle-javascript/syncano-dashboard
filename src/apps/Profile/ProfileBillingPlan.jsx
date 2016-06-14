@@ -297,7 +297,6 @@ export default Radium(React.createClass({
 
   renderSubscriptionExpiringInfo() {
     const {muiTheme} = this.context;
-    console.log(muiTheme);
     const {profile} = this.state;
     const endDate = profile.subscription.end;
     const endDateString = Moment(endDate).format('MMMM D YYYY');
