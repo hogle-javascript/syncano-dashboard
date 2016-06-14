@@ -341,7 +341,7 @@ export default Radium(React.createClass({
               <div style={{marginTop: 15, fontSize: '1rem'}}>Your Cost: $0</div>
             </div>
           </div>
-          {(plan === 'builder' || plan === 'free') && this.renderSubscriptionExpiringInfo()}
+          {plan === 'builder' && this.renderSubscriptionExpiringInfo()}
         </div>
       );
     }
