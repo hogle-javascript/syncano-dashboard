@@ -4,7 +4,6 @@ import Radium from 'radium';
 import Moment from 'moment';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
-import DateFormat from 'dateformat';
 
 import {FormMixin, DialogsMixin} from '../../mixins';
 
@@ -295,7 +294,7 @@ export default Radium(React.createClass({
   renderSubscriptionExpiringInfo() {
     const {profile} = this.state;
     const endDate = profile.subscription.end;
-    const endDateString = DateFormat(endDate, 'mmmm d yyyy');
+    const endDateString = Moment(endDate).format('MMMM D YYYY');
 
     return (
       <div style={{marginTop: 20, textAlign: 'center'}}>
