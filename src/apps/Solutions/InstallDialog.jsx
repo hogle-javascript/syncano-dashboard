@@ -95,7 +95,8 @@ export default React.createClass({
           name="instance"
           fullWidth={true}
           disabled={true}
-          valueLink={this.linkState('instance')}
+          value={instance}
+          onChange={(event, value) => this.setState({instance: value})}
           errorText={this.getValidationMessages('instance').join(' ')}
           floatingLabelText="Instance Name"/>
       );

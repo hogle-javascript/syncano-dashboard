@@ -27,7 +27,7 @@ export default {
     this.NewLibConnection
       .Solution
       .please()
-      .installVersion(payload.versionId, payload)
+      .installVersion({id: payload.solutionId, version_id: payload.versionId}, {instance: payload.instanceName})
       .then(this.completed)
       .catch(this.failure);
   },
