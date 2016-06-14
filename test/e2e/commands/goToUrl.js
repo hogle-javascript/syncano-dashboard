@@ -1,3 +1,7 @@
+import utils from '../utils';
+
 exports.command = function goToUrl(instanceName, endpoint) {
-  return this.url('https://localhost:8080/#/instances/' + instanceName + '/' + endpoint);
+  const baseUrl = utils.testBaseUrl();
+
+  return this.url(`${baseUrl}/#/instances/${instanceName}/${endpoint}`);
 };
