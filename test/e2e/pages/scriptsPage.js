@@ -1,7 +1,7 @@
-import globals from '../globals';
+import accounts from '../tempAccounts';
 
 export default {
-  url: `https://localhost:8080/#/instances/${globals.instanceName}/scripts`,
+  url: `https://localhost:8080/#/instances/${accounts.navigationUser.instanceName}/scripts`,
   elements: {
     scriptListItem: {
       selector: '//div[text()="snippet"]',

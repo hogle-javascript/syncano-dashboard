@@ -1,23 +1,14 @@
-import Globals from '../../globals';
-import Async from 'async';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['snippets'],
   before(client) {
-    Async.waterfall([
-      client.createTempAccount,
-      client.createTempScript,
-      client.createTempScript,
-      client.createTempScript
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(Globals.tempEmail, Globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after(client) {
     client.end();
@@ -27,8 +18,10 @@ export default {
     const selectedItems = listsPage.elements.selectedItem.selector;
     const optionsMenu = listsPage.elements.optionsMenu.selector;
 
+    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/scripts');
+
     client
-      .goToUrl('temp', 'scripts')
+      // .goToUrl('temp', 'scripts')
       .multipleItems('Select', 3, optionsMenu, selectedItems)
       .pause(2500)
       .multipleItems('Unselect', 0, optionsMenu, selectedItems);
@@ -39,7 +32,7 @@ export default {
     const optionsMenu = listsPage.elements.optionsMenu.selector;
 
     client
-      .goToUrl('temp', 'scripts')
+      // .goToUrl('temp', 'scripts')
       .pause(2000)
       .multipleItems('Select', 3, optionsMenu, selectedItems)
       .pause(2500);

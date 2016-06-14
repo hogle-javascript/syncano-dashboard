@@ -1,6 +1,5 @@
 import Utils from '../../utils';
-import Globals from '../../globals';
-import Async from 'async';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['passwordSettings'],
@@ -8,18 +7,12 @@ export default {
     client.end();
   },
   'Test create Account': (client) => {
-    Async.waterfall([
-      client.createTempAccount
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .waitForElementPresent('@emailInput', 60000)
-        .login(Globals.tempEmail, Globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   'Administrator resets his password': (client) => {
     const authenticationPage = client.page.authenticationPage();
@@ -27,7 +20,7 @@ export default {
 
     authenticationPage
       .navigate()
-      .fillInput('@currentPassword', Globals.tempPass)
+      .fillInput('@currentPassword', accounts.navigationUser.password)
       .fillInput('@newPassword', newPassword)
       .fillInput('@confirmNewPassword', newPassword)
       .clickElement('@updateButton')
@@ -44,7 +37,9 @@ export default {
 
     loginPage
       .navigate()
-      .login(Globals.tempEmail, newPassword);
+      .login(accounts.navigationUser.email, newPassword);
+      
+    accounts.navigationUser.password = newPassword;
   }
 };
 

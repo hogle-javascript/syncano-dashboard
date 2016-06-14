@@ -1,8 +1,8 @@
 import utils from '../utils';
-import globals from '../globals';
+import accounts from '../tempAccounts';
 
 export default {
-  url: `https://localhost:8080/#/instances/${globals.instanceName}/sockets`,
+  url: `https://localhost:8080/#/instances/${accounts.navigationUser.instanceName}/sockets`,
   elements: {
     instancesDropdown: {
       selector: '.instances-dropdown'
