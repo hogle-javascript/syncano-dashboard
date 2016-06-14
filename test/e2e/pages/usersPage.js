@@ -1,5 +1,5 @@
-import utils from '../utils';
 import accounts from '../tempAccounts';
+import utils from '../utils';
 
 export default {
   url: `https://localhost:8080/#/instances/${accounts.instanceUser.instanceName}/users`,

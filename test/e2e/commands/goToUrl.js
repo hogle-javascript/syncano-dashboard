@@ -1,7 +1,7 @@
-import globals from '../globals';
+import utils from '../utils';
 
-exports.command = function goToUrl(type, endpoint) {
-  const instance = type === 'temp' ? globals.tempInstanceName : globals.instanceName;
+exports.command = function goToUrl(instanceName, endpoint) {
+  const baseUrl = utils.testBaseUrl();
 
-  return this.url('https://localhost:8080/#/instances/' + instance + '/' + endpoint);
+  return this.url(`${baseUrl}/#/instances/${instanceName}/${endpoint}`);
 };
