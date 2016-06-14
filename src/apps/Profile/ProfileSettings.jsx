@@ -19,17 +19,11 @@ export default React.createClass({
   ],
 
   validatorConstraints: {
-    firstName: {
-      presence: true,
-      length: {
-        maximum: 64
-      }
+    first_name: {
+      presence: true
     },
-    lastName: {
-      presence: true,
-      length: {
-        maximum: 64
-      }
+    last_name: {
+      presence: true
     }
   },
 
@@ -57,6 +51,7 @@ export default React.createClass({
   },
 
   render() {
+    const {first_name, last_name, canSubmit, email} = this.state;
     const styles = this.getStyles();
     const title = 'Profile';
 
@@ -73,24 +68,22 @@ export default React.createClass({
             method="post">
             <TextField
               ref="firstName"
-              value={this.state.firstName}
-              onChange={(event, value) => this.setState({firstName: value})}
-              defaultValue={this.state.firstName}
-              errorText={this.getValidationMessages('firstName').join(' ')}
+              value={this.state.first_name}
+              onChange={(event, value) => this.setState({first_name: value})}
+              defaultValue={this.state.first_name}
+              errorText={this.getValidationMessages('first_name').join(' ')}
               name="firstName"
               floatingLabelText="First name"
-              autoComplete="firstName"
               hintText="First name"
               fullWidth={true}/>
             <TextField
               ref="lastName"
-              value={this.state.lastName}
-              onChange={(event, value) => this.setState({lastName: value})}
-              defaultValue={this.state.lastName}
-              errorText={this.getValidationMessages('lastName').join(' ')}
+              value={this.state.last_name}
+              onChange={(event, value) => this.setState({last_name: value})}
+              defaultValue={this.state.last_name}
+              errorText={this.getValidationMessages('last_name').join(' ')}
               name="lastName"
               floatingLabelText="Last name"
-              autoComplete="lastName"
               hintText="Last name"
               fullWidth={true}/>
             <TextField
