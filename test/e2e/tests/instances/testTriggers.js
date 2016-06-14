@@ -26,7 +26,7 @@ export default {
       .fillInput('@addTriggerModalLabel', suffix)
       .selectDropdownValue('@addTriggerModalSignal', 'create')
       .selectDropdownValue('@addTriggerModalClass', 'user_profile')
-      .selectDropdownValue('@addTriggerModalScript', accounts.alternativeUser.tempScriptNames[1])
+      .selectDropdownValue('@addTriggerModalScript', accounts.alternativeUser.tempScriptNames[0])
       .clickElement('@confirm')
       .waitForElementPresent('@triggerTableRow');
   },

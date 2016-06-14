@@ -1,12 +1,12 @@
-import Utils from '../../utils';
 import accounts from '../../tempAccounts';
+import utils from '../../utils';
 
 export default {
   tags: ['passwordSettings'],
   after(client) {
     client.end();
   },
-  'Test create Account': (client) => {
+  before(client) {
     const loginPage = client.page.loginPage();
 
     loginPage
@@ -16,7 +16,7 @@ export default {
   },
   'Administrator resets his password': (client) => {
     const authenticationPage = client.page.authenticationPage();
-    const newPassword = Utils.addSuffix('pass');
+    const newPassword = utils.addSuffix('pass');
 
     authenticationPage
       .navigate()
@@ -29,7 +29,7 @@ export default {
   'Administrator logs in with a new password': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const loginPage = client.page.loginPage();
-    const newPassword = Utils.addSuffix('pass');
+    const newPassword = utils.addSuffix('pass');
 
     topNavigationPage
       .clickElement('@account')
@@ -38,7 +38,7 @@ export default {
     loginPage
       .navigate()
       .login(accounts.navigationUser.email, newPassword);
-      
+
     accounts.navigationUser.password = newPassword;
   }
 };

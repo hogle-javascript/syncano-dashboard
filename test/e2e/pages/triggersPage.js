@@ -45,7 +45,7 @@ export default {
       locateStrategy: 'xpath'
     },
     triggerTableRow: {
-      selector: `//div[text()="${ utils.addSuffix('trigger')}"]`,
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]`,
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {
