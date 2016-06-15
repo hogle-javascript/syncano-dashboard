@@ -17,7 +17,8 @@ export default React.createClass({
     return {
       actions: [],
       contentSize: 'large',
-      showCloseButton: true
+      showCloseButton: true,
+      bindShortcuts: true
     };
   },
 
@@ -25,7 +26,7 @@ export default React.createClass({
     const {onRequestClose, onConfirm, actions} = this.props;
     const handleConfirm = onConfirm || actions.props && actions.props.handleConfirm;
 
-    if (!prevProps.open && this.props.open) {
+    if (!prevProps.open && this.props.open && this.props.bindShortcuts) {
       this.bindShortcut('esc', () => {
         onRequestClose();
         return false;
@@ -39,7 +40,7 @@ export default React.createClass({
       }
     }
 
-    if (prevProps.open && !this.props.open) {
+    if (prevProps.open && !this.props.open && this.props.bindShortcuts) {
       this.unbindShortcut('esc');
       this.unbindShortcut('enter');
     }
