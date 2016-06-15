@@ -2,8 +2,8 @@ import accounts from '../../tempAccounts';
 import Syncano from 'syncano';
 
 export default {
-  tags: ['apnsPushSockets'],
-  before: (client) => {
+  tags: ['pushSocketsApns'],
+  beforeEach: (client) => {
     const loginPage = client.page.loginPage();
 
     loginPage
@@ -11,8 +11,10 @@ export default {
       .setResolution(client)
       .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
-  after: (client) => {
-    client.end();
+  afterEach: (client, done) => {
+    client.end(function() {
+      done();
+    });
   },
   'Test Admin Adds APNS Socket': (client) => {
     const socketsPage = client.page.socketsPage();
@@ -63,9 +65,7 @@ export default {
       .catch((err) => console.log(err));
 
     client
-      .url(`https://localhost:8080/#/instances/${accounts.alternativeUser.instanceName}/sockets`)
-      .refresh()
-      .pause(1000);
+      .url(`https://localhost:8080/#/instances/${accounts.alternativeUser.instanceName}/sockets`);
 
     socketsPage
       .clickElement('@configuration')

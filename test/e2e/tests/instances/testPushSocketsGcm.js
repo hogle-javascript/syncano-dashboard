@@ -2,7 +2,7 @@ import utils from '../../utils';
 import accounts from '../../tempAccounts';
 
 export default {
-  tags: ['pushSockets'],
+  tags: ['pushSocketsGcm'],
   before: (client) => {
     const loginPage = client.page.loginPage();
 

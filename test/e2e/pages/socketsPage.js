@@ -145,7 +145,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addGcmSocket: {
-      selector: '//div[text()="GCM Push Notifications (BETA)"]/following::div[2]//button',
+      selector: '//div[text()="GCM Push Notifications (BETA)"]/following::div[2]//button/div/div/span',
       locateStrategy: 'xpath'
     },
     inputGcmDevKey: {
