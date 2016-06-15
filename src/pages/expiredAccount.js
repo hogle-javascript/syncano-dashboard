@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router';
+import {Link} from 'react-router';
 import {RaisedButton} from 'material-ui';
 import AlertPageContent from '../common/AlertPageContent';
 
@@ -17,4 +17,4 @@ const ExpiredAccountPage = () => {
   );
 };
 
-export default withRouter(ExpiredAccountPage);
+export default ExpiredAccountPage;
