@@ -38,8 +38,8 @@ module.exports = {
     const instanceName = accounts.alternativeUser.instanceName;
     const templateViewPage = client.page.templateViewPage();
     const controlTimestamp = utils.addSuffix('template');
-    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${accounts.alternativeUser.instanceName}/classes/user_profile/objects/`;
-    const expectedPreviewResult = `${controlTimestamp},channel_room,group,links`;
+    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${instanceName}/classes/user_profile/`;
+    const expectedPreviewResult = `${controlTimestamp},user_profile`;
 
     templateViewPage
       .goToUrl(instanceName, 'templates')
@@ -57,9 +57,9 @@ module.exports = {
   'Test Admin Renders Template in Tab': (client) => {
     const instanceName = accounts.alternativeUser.instanceName;
     const templateViewPage = client.page.templateViewPage();
-    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${accounts.alternativeUser.instanceName}/classes/user_profile/objects/`;
+    const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${instanceName}/classes/user_profile/`;
     const controlTimestamp = utils.addSuffix('template');
-    const expectedTabResult = `${controlTimestamp},channel_room,group,links`;
+    const expectedTabResult = `${controlTimestamp},user_profile`;
 
     templateViewPage
       .goToUrl(instanceName, 'templates')
