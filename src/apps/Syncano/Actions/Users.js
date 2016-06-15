@@ -35,7 +35,7 @@ export default {
             this.NewLibConnection
               .Group
               .please()
-              .addUser({id: group.id}, {user: user.id}));
+              .addUser({ id: group.id }, { user: user.id }));
 
           this.Promise.all(addUserToGroups)
             .then(this.completed)
@@ -56,7 +56,7 @@ export default {
     this.NewLibConnection
       .User
       .please()
-      .update({id}, payload)
+      .update({ id }, payload)
       .then(() => {
         const groupsId = groups.groups.map((group) => group.id);
         const newGroupsId = groups.newGroups.map((group) => group.id);
@@ -66,12 +66,12 @@ export default {
           this.NewLibConnection
             .Group
             .please()
-            .addUser({id: group}, {user: id}));
+            .addUser({ id: group }, { user: id }));
         const removeUserFromGroups = _.map(removedGroups, (group) =>
           this.NewLibConnection
             .Group
             .please()
-            .deleteUser({id: group}, {user: id}));
+            .deleteUser({ id: group }, { user: id }));
         const promises = removeUserFromGroups.concat(addUserToGroups);
 
         this.Promise.all(promises)
@@ -82,7 +82,7 @@ export default {
   },
 
   remove(users) {
-    const promises = _.map(users, (user) => this.NewLibConnection.User.please().delete({id: user.id}));
+    const promises = _.map(users, (user) => this.NewLibConnection.User.please().delete({ id: user.id }));
 
     this.Promise.all(promises)
       .then(this.completed)

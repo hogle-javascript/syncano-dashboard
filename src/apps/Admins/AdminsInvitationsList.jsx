@@ -4,11 +4,11 @@ import Store from './AdminsInvitationsStore';
 import AdminsActions from './AdminsActions';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Components
 import ListItem from './AdminsInvitationsListItem';
-import {ColumnList, Dialog, Lists} from '../../common/';
+import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -73,7 +73,8 @@ export default React.createClass({
         onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('removeInvitationDialog', item)}
-        showResendDialog={() => this.showDialog('resendInvitationDialog', item)} />
+        showResendDialog={() => this.showDialog('resendInvitationDialog', item)}
+      />
     );
   },
 
@@ -85,9 +86,10 @@ export default React.createClass({
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
-            primary={true}
+            primary
             columnName="CHECK_ICON"
-            className="col-xs-25 col-md-20">
+            className="col-xs-25 col-md-20"
+          >
             Invitations
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC" />
@@ -97,7 +99,8 @@ export default React.createClass({
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem onTouchTap={() => this.showDialog('removeInvitationDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
@@ -106,7 +109,8 @@ export default React.createClass({
           {...this.props}
           checkItem={this.checkItem}
           key="admins-invitations-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

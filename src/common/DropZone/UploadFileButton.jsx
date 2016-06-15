@@ -1,6 +1,6 @@
 import React from 'react';
-import {RaisedButton, FontIcon} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { RaisedButton, FontIcon } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'UploadFileButton',
@@ -14,7 +14,7 @@ export default React.createClass({
   },
 
   getStyles() {
-    const {labelColor} = this.props;
+    const { labelColor } = this.props;
 
     return {
       uploadButton: {
@@ -54,26 +54,29 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {backgroundColor, labelColor, style, iconStyle, iconClassName, ...other} = this.props;
+    const { backgroundColor, labelColor, style, iconStyle, iconClassName, ...other } = this.props;
 
     return (
       <div>
         <input
           name="hiddenInput"
           ref="hiddenInput"
-          style={{display: 'none', visibility: 'hidden'}}
+          style={{ display: 'none', visibility: 'hidden' }}
           type="file"
-          onChange={this.handleFile}/>
+          onChange={this.handleFile}
+        />
         <RaisedButton
-          style={{...styles.uploadButton, ...style}}
+          style={{ ...styles.uploadButton, ...style }}
           backgroundColor={backgroundColor}
           labelColor={labelColor}
           onTouchTap={this.handleClickIpnut}
-          {...other}>
+          {...other}
+        >
           <div className="row align-center align-middle hp-2-l hp-2-r">
             <FontIcon
-              style={{...styles.uploadButtonIcon, ...iconStyle}}
-              className={iconClassName}/>
+              style={{ ...styles.uploadButtonIcon, ...iconStyle }}
+              className={iconClassName}
+            />
             <div>
               {this.props.uploadButtonLabel}
             </div>

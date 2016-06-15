@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './DataEndpointsActions';
@@ -11,8 +11,8 @@ import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 // Components
-import {TextField, Toggle, Checkbox, AutoComplete} from 'material-ui';
-import {SelectFieldWrapper, Show, Dialog, Notification, Editor} from '../../common/';
+import { TextField, Toggle, Checkbox, AutoComplete } from 'material-ui';
+import { SelectFieldWrapper, Show, Dialog, Notification, Editor } from '../../common/';
 
 export default React.createClass({
   displayName: 'DataEndpointDialog',
@@ -46,7 +46,7 @@ export default React.createClass({
   },
 
   getDataEnpointParams() {
-    const {name, description, order_by, page_size, excluded_fields, expand, query} = this.state;
+    const { name, description, order_by, page_size, excluded_fields, expand, query } = this.state;
     const className = this.state.class;
     const params = {
       class: className,
@@ -86,6 +86,14 @@ export default React.createClass({
     return Actions.createDataEndpoint(this.getDataEnpointParams());
   },
 
+  handleClassAutocompleteFilter(searchText, key) {
+    if (!searchText) {
+      return true;
+    }
+
+    return searchText !== '' && key.includes(searchText);
+  },
+
   handleEditSubmit() {
     const params = this.getDataEnpointParams();
 
@@ -98,7 +106,7 @@ export default React.createClass({
 
   handleToggle(fieldsType, fieldName, event, value) {
     console.info('DataEndpointDialog::handleToggle', arguments);
-    const {expand, excluded_fields} = this.state;
+    const { expand, excluded_fields } = this.state;
 
     let genList = (list, name, val) => {
       let arr = list.replace(/ /g, '').split(',').filter((listItem) => listItem);
@@ -116,11 +124,11 @@ export default React.createClass({
 
     if (fieldsType === 'showFields') {
       fields = genList(excluded_fields, fieldName, !value);
-      this.setState({excluded_fields: fields});
+      this.setState({ excluded_fields: fields });
     }
     if (fieldsType === 'expandFields') {
       fields = genList(expand, fieldName, value);
-      this.setState({expand: fields});
+      this.setState({ expand: fields });
     }
   },
 
@@ -145,7 +153,8 @@ export default React.createClass({
                 value={field.name}
                 label={field.name}
                 defaultToggled={!this.isEnabled(this.state.excluded_fields, field.name)}
-                onToggle={this.handleToggle.bind(this, 'showFields', field.name)} />
+                onToggle={this.handleToggle.bind(this, 'showFields', field.name)}
+              />
             </div>
             <div className="col-xs-8">
               <Show if={field.type === 'reference'}>
@@ -153,7 +162,8 @@ export default React.createClass({
                   name="expand"
                   defaultChecked={this.isEnabled(this.state.expand, field.name)}
                   disabled={this.isEnabled(this.state.excluded_fields, field.name)}
-                  onCheck={this.handleToggle.bind(this, 'expandFields', field.name)} />
+                  onCheck={this.handleToggle.bind(this, 'expandFields', field.name)}
+                />
               </Show>
             </div>
           </div>
@@ -171,7 +181,8 @@ export default React.createClass({
         style={{
           paddingTop: 24,
           paddingBottom: 24
-        }}>
+        }}
+      >
         <Notification>Add schema fields with order index</Notification>
       </div>
     );
@@ -184,7 +195,8 @@ export default React.createClass({
           options={orderFields}
           value={this.state.order_by}
           onChange={(event, index, value) => this.setSelectFieldValue('order_by', value)}
-          errorText={this.getValidationMessages('order_by').join(' ')}/>
+          errorText={this.getValidationMessages('order_by').join(' ')}
+        />
       );
     }
 
@@ -198,7 +210,7 @@ export default React.createClass({
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    const {open, isLoading, canSubmit, classes} = this.state;
+    const { open, isLoading, canSubmit, classes } = this.state;
     const submitLabel = !ClassesStore.getClassByName(this.state.class) ? 'Confirm and create a class' : 'Confirm';
     const filteringUrl = 'http://docs.syncano.io/docs/data-objects-filtering-ordering#filtering-data-objects';
 
@@ -215,7 +227,8 @@ export default React.createClass({
             disabled={!canSubmit}
             submitLabel={submitLabel}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -229,7 +242,7 @@ export default React.createClass({
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Query">
-              {`In this field you can specify a filtering method just as you would when using `}
+              {'In this field you can specify a filtering method just as you would when using '}
               <Dialog.SidebarLink to={filteringUrl}>
                 Data Objects filtering.
               </Dialog.SidebarLink>
@@ -238,85 +251,93 @@ export default React.createClass({
               Choose which fields of Class schema will be included in the response. If a field is referencing
               Data Objects in a different Class, you can expand it to get those Data Objects proprerties.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
+            <Dialog.SidebarSection last>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/endpoints-data">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
-        <Dialog.ContentSection noMargin={true}>
+        }
+      >
+        <Dialog.ContentSection noMargin>
           <div className="col-flex-1">
             <TextField
               ref="name"
               name="name"
-              autoFocus={true}
-              fullWidth={true}
+              autoFocus
+              fullWidth
               disabled={this.hasEditMode()}
               value={this.state.name}
-              onChange={(event, value) => this.setState({name: value})}
+              onChange={(event, value) => this.setState({ name: value })}
               errorText={this.getValidationMessages('name').join(' ')}
               hintText="Data Endpoint's name"
-              floatingLabelText="Name"/>
+              floatingLabelText="Name"
+            />
           </div>
           <div
             className="col-flex-1"
-            style={{paddingLeft: 15}}>
+            style={{ paddingLeft: 15 }}
+          >
             <TextField
               ref="description"
               name="description"
-              fullWidth={true}
+              fullWidth
               value={this.state.description}
-              onChange={(event, value) => this.setState({description: value})}
+              onChange={(event, value) => this.setState({ description: value })}
               errorText={this.getValidationMessages('description').join(' ')}
               hintText="Data Endpoint's description"
-              floatingLabelText="Description (optional)"/>
+              floatingLabelText="Description (optional)"
+            />
           </div>
         </Dialog.ContentSection>
-        <Dialog.ContentSection noMargin={true}>
+        <Dialog.ContentSection noMargin>
           <div className="col-flex-1">
             <TextField
               ref="page_size"
               name="page_size"
-              fullWidth={true}
+              fullWidth
               value={this.state.page_size}
-              onChange={(event, value) => this.setState({page_size: value})}
+              onChange={(event, value) => this.setState({ page_size: value })}
               errorText={this.getValidationMessages('page_size').join(' ')}
               hintText="Number"
-              floatingLabelText="Number of records in data set"/>
+              floatingLabelText="Number of records in data set"
+            />
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection>
-          <div className="col-flex-1" style={{position: 'relative'}}>
+          <div className="col-flex-1" style={{ position: 'relative' }}>
             <AutoComplete
               ref="class"
               name="class"
               floatingLabelText="Class"
               hintText="Start typing to see matching classes list or type a new class name"
-              filter={(searchText, key) => !searchText ? true : searchText !== '' && key.includes(searchText)}
+              filter={this.handleClassAutocompleteFilter}
               dataSource={classes}
               searchText={this.state.class}
-              onNewRequest={(value) => this.setState({class: value})}
-              onUpdateInput={(value) => this.setState({class: value})}
-              fullWidth={true}
-              openOnFocus={true}
-              errorText={this.getValidationMessages('class').join(' ')}/>
+              onNewRequest={(value) => this.setState({ class: value })}
+              onUpdateInput={(value) => this.setState({ class: value })}
+              fullWidth
+              openOnFocus
+              errorText={this.getValidationMessages('class').join(' ')}
+            />
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection
-          style={{paddingTop: 16}}
-          title="query">
+          style={{ paddingTop: 16 }}
+          title="query"
+        >
           <Editor
             name="query-editor"
             ref="queryEditor"
             mode="json"
             height="300px"
-            onChange={(query) => this.setState({query})}
+            onChange={(query) => this.setState({ query })}
             value={[
               '{',
               '  ',
               '}'
-            ].join('\n')} />
+            ].join('\n')}
+          />
           <div className="vm-2-t">
             <Show if={this.getValidationMessages('query').length}>
               <Notification type="error">
@@ -326,12 +347,13 @@ export default React.createClass({
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection
-          style={{paddingTop: 16}}
-          title="class fields & ordering">
+          style={{ paddingTop: 16 }}
+          title="class fields & ordering"
+        >
           <div className="col-flex-1">
             {this.renderFields()}
           </div>
-          <div className="col-flex-1" style={{paddingLeft: 15}}>
+          <div className="col-flex-1" style={{ paddingLeft: 15 }}>
             {this.renderOptions()}
           </div>
         </Dialog.ContentSection>

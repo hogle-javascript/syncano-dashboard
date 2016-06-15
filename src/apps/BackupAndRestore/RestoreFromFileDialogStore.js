@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 
 // Utils & Mixins
 import SessionStore from '../Session/SessionStore';
-import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin, SnackbarNotificationMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, StoreLoadingMixin, SnackbarNotificationMixin } from '../../mixins';
 
 // Stores & Actions
 import Actions from './RestoreFromFileDialogActions';
@@ -37,14 +37,14 @@ export default Reflux.createStore({
 
   onRestoreFromFileCompleted(data) {
     console.debug('RestoreDialogStore::onRestoreFromBackupCompleted');
-    const {instanceName} = data;
+    const { instanceName } = data;
 
     setTimeout(() => {
       this.data.isRestoring = false;
       this.trigger(this.data);
       this.dismissDialog();
-      SessionStore.getRouter().push({name: 'sockets', params: {instanceName}});
-      this.setSnackbarNotification({message: 'Your instance was successfully restored'});
+      SessionStore.getRouter().push({ name: 'sockets', params: { instanceName } });
+      this.setSnackbarNotification({ message: 'Your instance was successfully restored' });
     }, 10000);
   },
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {withRouter, Link} from 'react-router';
+import { withRouter, Link } from 'react-router';
 
 // Utils
-import {FormMixin} from '../../mixins';
+import { FormMixin } from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -14,8 +14,8 @@ import Constants from './AuthConstants';
 
 // Components
 import AccountContainer from './AccountContainer';
-import {TextField, RaisedButton} from 'material-ui';
-import {SocialAuthButtonsList} from '../../common/';
+import { TextField, RaisedButton } from 'material-ui';
+import { SocialAuthButtonsList } from '../../common/';
 
 const AccountLogin = React.createClass({
   displayName: 'AccountLogin',
@@ -38,7 +38,7 @@ const AccountLogin = React.createClass({
   },
 
   componentWillUpdate() {
-    const {location, router} = this.props;
+    const { location, router } = this.props;
 
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
@@ -48,7 +48,7 @@ const AccountLogin = React.createClass({
       if (queryNext !== null) {
         router.replace(queryNext);
       } else if (lastInstance !== null) {
-        router.replace({name: 'instance', params: {instanceName: lastInstance}});
+        router.replace({ name: 'instance', params: { instanceName: lastInstance } });
       } else {
         SessionStore
           .getConnection()
@@ -60,7 +60,7 @@ const AccountLogin = React.createClass({
               let instance = instances[0];
 
               localStorage.setItem('lastInstance', instance.name);
-              router.replace({name: 'instance', params: {instanceName: instance.name}});
+              router.replace({ name: 'instance', params: { instanceName: instance.name } });
             } else {
               router.replace('sockets');
             }
@@ -90,7 +90,7 @@ const AccountLogin = React.createClass({
   },
 
   render() {
-    const {query} = this.props.location;
+    const { query } = this.props.location;
 
     return (
       <AccountContainer>
@@ -102,43 +102,48 @@ const AccountLogin = React.createClass({
           onSubmit={this.handleFormValidation}
           className="account-container__content__form"
           acceptCharset="UTF-8"
-          method="post">
+          method="post"
+        >
 
           <TextField
             ref="email"
             value={this.state.email}
-            onChange={(event, value) => this.setState({email: value})}
+            onChange={(event, value) => this.setState({ email: value })}
             errorText={this.getValidationMessages('email').join(' ')}
             name="email"
             className="text-field"
             autoComplete="email"
             hintText="Email"
-            fullWidth={true}/>
+            fullWidth
+          />
 
           <TextField
             ref="password"
             value={this.state.password}
-            onChange={(event, value) => this.setState({password: value})}
+            onChange={(event, value) => this.setState({ password: value })}
             errorText={this.getValidationMessages('password').join(' ')}
             type="password"
             name="password"
             className="text-field vm-4-b"
             autoComplete="password"
             hintText="My password"
-            fullWidth={true}/>
+            fullWidth
+          />
 
           <RaisedButton
             type="submit"
             label="Login"
-            labelStyle={{fontSize: '16px', lineHeight: '48px'}}
+            labelStyle={{ fontSize: '16px', lineHeight: '48px' }}
             disabled={!this.state.canSubmit}
-            style={{boxShadow: 'none', height: '48px', width: '100%'}}
-            primary={true}/>
+            style={{ boxShadow: 'none', height: '48px', width: '100%' }}
+            primary
+          />
         </form>
 
         <SocialAuthButtonsList
           networks={Constants.SOCIAL_NETWORKS}
-          onSocialLogin={this.handleSocialLogin} />
+          onSocialLogin={this.handleSocialLogin}
+        />
 
         <div className="account-container__content__footer">
           <ul className="list--flex list--horizontal">
@@ -154,7 +159,8 @@ const AccountLogin = React.createClass({
                   to={{
                     name: 'signup',
                     query
-                  }}>
+                  }}
+                >
                   Sign up here
                 </Link>
               </p>

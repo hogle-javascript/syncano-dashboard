@@ -1,10 +1,10 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import {withRouter, Link} from 'react-router';
+import { withRouter, Link } from 'react-router';
 import Gravatar from 'gravatar';
 
-import {SnackbarNotificationMixin} from '../../mixins';
+import { SnackbarNotificationMixin } from '../../mixins';
 // Stores & Actions
 import SessionActions from '../../apps/Session/SessionActions';
 import SessionStore from '../../apps/Session/SessionStore';
@@ -12,8 +12,8 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 
 // Components
 import Sticky from 'react-stickydiv';
-import {FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'material-ui';
-import {Logo, Clipboard} from '../';
+import { FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu } from 'material-ui';
+import { Logo, Clipboard } from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
 import './Header.sass';
@@ -65,13 +65,12 @@ const Header = Radium(React.createClass({
   },
 
   getDropdownItems() {
-    const {router} = this.props;
-    const styles = this.getStyles();
+    const { router } = this.props;
     const user = SessionStore.getUser() || '';
-    const billingIcon = <FontIcon className="synicon-credit-card"/>;
-    const instancesListIcon = <FontIcon className="synicon-view-list"/>;
-    const accountKeyIcon = <FontIcon className="synicon-key-variant"/>;
-    const logoutIcon = <FontIcon className="synicon-power"/>;
+    const billingIcon = <FontIcon className="synicon-credit-card" />;
+    const instancesListIcon = <FontIcon className="synicon-view-list" />;
+    const accountKeyIcon = <FontIcon className="synicon-key-variant" />;
+    const logoutIcon = <FontIcon className="synicon-power" />;
 
     if (!user) {
       return null;
@@ -83,10 +82,12 @@ const Header = Radium(React.createClass({
           leftAvatar={this.renderIconButton()}
           onTouchTap={() => router.push('profile-settings')}
           primaryText={`${user.first_name} ${user.last_name}`}
-          secondaryText={user.email}/>
-        <Divider/>
+          secondaryText={user.email}
+        />
+        <Divider />
         <ListItem
-          leftIcon={accountKeyIcon}>
+          leftIcon={accountKeyIcon}
+        >
           <Clipboard
             text="Copy Account Key"
             copyText={user.account_key}
@@ -94,26 +95,30 @@ const Header = Radium(React.createClass({
               message: 'Account Key copied to the clipboard'
             })}
             label="Copy Account Key"
-            type="list"/>
+            type="list"
+          />
         </ListItem>
         <ListItem
           onTouchTap={() => router.push('instances')}
           leftIcon={instancesListIcon}
-          primaryText="My Instances"/>
+          primaryText="My Instances"
+        />
         <ListItem
           onTouchTap={() => router.push('profile-billing-plan')}
           leftIcon={billingIcon}
-          primaryText="Plans & Billing"/>
+          primaryText="Plans & Billing"
+        />
         <ListItem
           onTouchTap={SessionActions.logout}
           leftIcon={logoutIcon}
-          primaryText="Logout"/>
+          primaryText="Logout"
+        />
       </List>
     );
   },
 
   getGravatarUrl() {
-    const {gravatarUrl} = this.state;
+    const { gravatarUrl } = this.state;
     const userEmail = SessionStore.getUser() ? SessionStore.getUser().email : null;
     const fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
 
@@ -124,7 +129,7 @@ const Header = Radium(React.createClass({
     /* eslint-disable */
     const gravatar = Gravatar.url(userEmail, {d: '404'}, true);
     /* eslint-enable */
-    return gravatar ? gravatar : fallBackAvatar;
+    return gravatar || fallBackAvatar;
   },
 
   renderIconButton() {
@@ -133,7 +138,8 @@ const Header = Radium(React.createClass({
         style={{
           backgroundImage: `url(${this.getGravatarUrl()})`,
           backgroundSize: '40px 40px'
-        }} />
+        }}
+      />
     );
   },
 
@@ -147,36 +153,42 @@ const Header = Radium(React.createClass({
             <Link to="app">
               <Logo
                 style={styles.logo}
-                className="logo-white"/>
+                className="logo-white"
+              />
             </Link>
           </ToolbarGroup>
-          <ToolbarGroup style={{height: '100%'}}>
+          <ToolbarGroup style={{ height: '100%' }}>
             <ul
               className="toolbar-list"
-              style={styles.toolbarList}>
+              style={styles.toolbarList}
+            >
               <li
                 id="menu-solutions"
-                style={styles.toolbarListItem}>
+                style={styles.toolbarListItem}
+              >
                 <Link to="solutions">Solutions Market</Link>
               </li>
 
               <li style={styles.toolbarListItem}>
                 <a
                   href="http://docs.syncano.com/"
-                  target="_blank">
+                  target="_blank"
+                >
                   Docs
                 </a>
               </li>
             </ul>
           </ToolbarGroup>
-          <ToolbarGroup style={{marginLeft: -5, height: '100%', flex: 1, justifyContent: 'flex-end'}}>
+          <ToolbarGroup style={{ marginLeft: -5, height: '100%', flex: 1, justifyContent: 'flex-end' }}>
             <ul
               className="toolbar-list"
-              style={styles.toolbarList}>
+              style={styles.toolbarList}
+            >
               <li
                 id="menu-notifications"
-                style={styles.toolbarListItem}>
-                <HeaderNotificationsDropdown id="menu-notifications--dropdown"/>
+                style={styles.toolbarListItem}
+              >
+                <HeaderNotificationsDropdown id="menu-notifications--dropdown" />
               </li>
               <li id="menu-account">
                 <IconMenu
@@ -188,7 +200,8 @@ const Header = Radium(React.createClass({
                   targetOrigin={{
                     vertical: 'top',
                     horizontal: 'right'
-                  }}>
+                  }}
+                >
                   {this.getDropdownItems()}
                 </IconMenu>
               </li>

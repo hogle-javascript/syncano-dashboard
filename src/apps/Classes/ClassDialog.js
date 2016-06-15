@@ -3,19 +3,19 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 import Constants from '../../constants/Constants';
 
 // Stores and Actions
 import Actions from './ClassesActions';
 import Store from './ClassDialogStore';
 import ClassesStore from './ClassesStore';
-import {GroupsStore, GroupsActions} from '../Groups';
+import { GroupsStore, GroupsActions } from '../Groups';
 
 // Components
-import {TextField, FlatButton, Checkbox, Tabs, Tab} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Color, Show, SelectFieldWrapper, Tooltip, Dialog, Icon, Notification, ColorIconPicker} from '../../common/';
+import { TextField, FlatButton, Checkbox, Tabs, Tab } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Color, Show, SelectFieldWrapper, Tooltip, Dialog, Icon, Notification, ColorIconPicker } from '../../common/';
 
 export default React.createClass({
   displayName: 'ClassDialog',
@@ -122,7 +122,7 @@ export default React.createClass({
   },
 
   getSchema() {
-    const {fields} = this.state;
+    const { fields } = this.state;
 
     return _.map(fields, (item) => {
       const schema = {
@@ -177,10 +177,10 @@ export default React.createClass({
 
   handleAddSubmit() {
     const schema = this.getSchema();
-    const {name, description, group, group_permissions, other_permissions, metadata} = this.state;
+    const { name, description, group, group_permissions, other_permissions, metadata } = this.state;
 
     if (schema.length < 1) {
-      this.setState({feedback: 'You need to add at least one field!'});
+      this.setState({ feedback: 'You need to add at least one field!' });
       return;
     }
 
@@ -196,7 +196,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    const {name, description, group, group_permissions, other_permissions, metadata} = this.state;
+    const { name, description, group, group_permissions, other_permissions, metadata } = this.state;
 
     Actions.updateClass(
       name, {
@@ -211,7 +211,7 @@ export default React.createClass({
   },
 
   handleFieldAdd() {
-    const {fields, fieldName, fieldType, fieldTarget} = this.state;
+    const { fields, fieldName, fieldType, fieldTarget } = this.state;
 
     if (_.includes(_.map(fields, 'fieldName'), fieldName)) {
       this.refs.fieldName.setErrorText('Field with this name already exists.');
@@ -253,11 +253,11 @@ export default React.createClass({
   handleRemoveField(item) {
     const fields = _.filter(this.state.fields, (field) => field.fieldName !== item.fieldName);
 
-    this.setState({fields});
+    this.setState({ fields });
   },
 
   handleOnCheck(item, event) {
-    const {fields} = this.state;
+    const { fields } = this.state;
     const newFields = _.map(fields, (field) => {
       if (field.fieldName === item.fieldName) {
         if (event.target.name === 'order') {
@@ -269,19 +269,19 @@ export default React.createClass({
       return field;
     });
 
-    this.setState({fields: newFields});
+    this.setState({ fields: newFields });
   },
 
   handleColorChange(color) {
-    const {metadata} = this.state;
+    const { metadata } = this.state;
 
-    this.setState({metadata: _.merge({}, metadata, {color})});
+    this.setState({ metadata: _.merge({}, metadata, { color }) });
   },
 
   handleIconChange(icon) {
-    const {metadata} = this.state;
+    const { metadata } = this.state;
 
-    this.setState({metadata: _.merge({}, metadata, {icon})});
+    this.setState({ metadata: _.merge({}, metadata, { icon }) });
   },
 
   setFields(schema) {
@@ -320,7 +320,8 @@ export default React.createClass({
       return (
         <div
           key={item.fieldName}
-          className="row align-middle vm-1-b">
+          className="row align-middle vm-1-b"
+        >
           <span className="col-xs-8">{item.fieldName}</span>
           <span className="col-xs-8">{item.fieldType}</span>
           <span className="col-xs-8">{item.fieldTarget}</span>
@@ -328,31 +329,36 @@ export default React.createClass({
             <Tooltip
               label={!this.hasFilter(item.fieldType) && `${item.fieldType} doesn't support filtering`}
               verticalPosition="bottom"
-              horizontalPosition="center">
+              horizontalPosition="center"
+            >
               <Checkbox
                 name="filter"
                 defaultChecked={item.fieldFilter}
                 disabled={!this.hasFilter(item.fieldType)}
-                onCheck={this.handleOnCheck.bind(this, item)}/>
+                onCheck={this.handleOnCheck.bind(this, item)}
+              />
             </Tooltip>
           </span>
           <span className="col-xs-3">
             <Tooltip
               label={!this.hasOrder(item.fieldType) && `${item.fieldType} doesn't support sorting`}
               verticalPosition="bottom"
-              horizontalPosition="center">
+              horizontalPosition="center"
+            >
               <Checkbox
                 name="order"
                 defaultChecked={item.fieldOrder}
                 disabled={!this.hasOrder(item.fieldType)}
-                onCheck={this.handleOnCheck.bind(this, item)} />
+                onCheck={this.handleOnCheck.bind(this, item)}
+              />
             </Tooltip>
           </span>
           <span className="col-xs-5">
             <FlatButton
               label="Remove"
-              secondary={true}
-              onClick={this.handleRemoveField.bind(this, item)}/>
+              secondary
+              onClick={this.handleRemoveField.bind(this, item)}
+            />
           </span>
         </div>
       );
@@ -400,7 +406,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -417,43 +424,48 @@ export default React.createClass({
             <Dialog.SidebarSection>
               <i>Note: Schema field name has to start with a letter!</i>
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
+            <Dialog.SidebarSection last>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/classes">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         {this.renderFormNotifications()}
         <Tabs
           inkBarStyle={styles.inkBarStyle}
           contentContainerStyle={styles.contentContainerStyle}
-          tabItemContainerStyle={styles.tabItemContainerStyle}>
+          tabItemContainerStyle={styles.tabItemContainerStyle}
+        >
           <Tab
             style={styles.tab}
-            label="GENERAL">
+            label="GENERAL"
+          >
             <Dialog.ContentSection>
-              <div style={{padding: '20px 0 56px 0', width: '100%'}}>
+              <div style={{ padding: '20px 0 56px 0', width: '100%' }}>
                 <TextField
                   ref="name"
                   name="name"
-                  autoFocus={true}
+                  autoFocus
                   disabled={this.hasEditMode()}
-                  fullWidth={true}
+                  fullWidth
                   value={this.state.name}
-                  onChange={(event, value) => this.setState({name: value})}
+                  onChange={(event, value) => this.setState({ name: value })}
                   errorText={this.getValidationMessages('name').join(' ')}
                   hintText="Class's name"
-                  floatingLabelText="Name"/>
+                  floatingLabelText="Name"
+                />
                 <TextField
                   ref="description"
                   name="description"
-                  fullWidth={true}
+                  fullWidth
                   value={this.state.description}
-                  onChange={(event, value) => this.setState({description: value})}
+                  onChange={(event, value) => this.setState({ description: value })}
                   errorText={this.getValidationMessages('description').join(' ')}
                   hintText="Class's description"
-                  floatingLabelText="Description (optional)"/>
+                  floatingLabelText="Description (optional)"
+                />
               </div>
             </Dialog.ContentSection>
             <Dialog.ContentSection title="Permissions">
@@ -466,7 +478,8 @@ export default React.createClass({
                   menuItemStyle={styles.groupMenuItem}
                   floatingLabelText="Group (ID)"
                   onChange={(event, index, value) => this.setSelectFieldValue('group', value)}
-                  errorText={this.getValidationMessages('group').join(' ')}/>
+                  errorText={this.getValidationMessages('group').join(' ')}
+                />
               </div>
               <div className="col-flex-1">
                 <SelectFieldWrapper
@@ -475,7 +488,8 @@ export default React.createClass({
                   floatingLabelText="Group Permissions"
                   value={group_permissions}
                   onChange={(event, index, value) => this.setSelectFieldValue('group_permissions', value)}
-                  errorText={this.getValidationMessages('group_permissions').join(' ')}/>
+                  errorText={this.getValidationMessages('group_permissions').join(' ')}
+                />
               </div>
               <div className="col-flex-1">
                 <SelectFieldWrapper
@@ -484,14 +498,16 @@ export default React.createClass({
                   floatingLabelText="Other Permissions"
                   value={other_permissions}
                   onChange={(event, index, value) => this.setSelectFieldValue('other_permissions', value)}
-                  errorText={this.getValidationMessages('other_permissions').join(' ')}/>
+                  errorText={this.getValidationMessages('other_permissions').join(' ')}
+                />
               </div>
             </Dialog.ContentSection>
             <div className="vm-2-b">
               <Show if={this.getValidationMessages('schema').length > 0}>
                 <Notification
                   className="vm-1-t"
-                  type="error">{this.getValidationMessages('schema').join(' ')}
+                  type="error"
+                >{this.getValidationMessages('schema').join(' ')}
                 </Notification>
               </Show>
             </div>
@@ -505,16 +521,18 @@ export default React.createClass({
             </div>
             <Dialog.ContentSection
               style={styles.schemaAddSection}
-              title="Schema">
+              title="Schema"
+            >
               <div className="col-xs-8">
                 <TextField
                   ref="fieldName"
                   name="fieldName"
-                  fullWidth={true}
+                  fullWidth
                   value={this.state.fieldName}
-                  onChange={(event, value) => this.setState({fieldName: value})}
+                  onChange={(event, value) => this.setState({ fieldName: value })}
                   hintText="Field's name"
-                  floatingLabelText="Name"/>
+                  floatingLabelText="Name"
+                />
               </div>
               <div className="col-xs-8">
                 <SelectFieldWrapper
@@ -523,7 +541,8 @@ export default React.createClass({
                   value={fieldType}
                   floatingLabelText="Type"
                   onChange={(event, index, value) => this.setSelectFieldValue('fieldType', value)}
-                  errorText={this.getValidationMessages('fieldType').join(' ')}/>
+                  errorText={this.getValidationMessages('fieldType').join(' ')}
+                />
               </div>
               <div className="col-xs-8">
                 <Show if={fieldType === 'reference' || fieldType === 'relation'}>
@@ -533,44 +552,53 @@ export default React.createClass({
                     value={fieldTarget}
                     floatingLabelText="Target Class"
                     onChange={(event, index, value) => this.setSelectFieldValue('fieldTarget', value)}
-                    errorText={this.getValidationMessages('fieldTarget').join(' ')}/>
+                    errorText={this.getValidationMessages('fieldTarget').join(' ')}
+                  />
                 </Show>
               </div>
               <div
                 className="col-xs-3"
-                style={styles.checkBox}>
+                style={styles.checkBox}
+              >
                 <Tooltip
                   label={!this.hasFilter(fieldType) && `${fieldType} doesn't support filtering`}
                   verticalPosition="bottom"
-                  horizontalPosition="center">
+                  horizontalPosition="center"
+                >
                   <Checkbox
                     ref="fieldFilter"
                     disabled={!this.hasFilter(fieldType)}
-                    name="filter" />
+                    name="filter"
+                  />
                 </Tooltip>
               </div>
               <div
                 className="col-xs-3"
-                style={styles.checkBox}>
+                style={styles.checkBox}
+              >
                 <Tooltip
                   label={!this.hasOrder(fieldType) && `${fieldType} doesn't support sorting`}
                   verticalPosition="bottom"
-                  horizontalPosition="center">
+                  horizontalPosition="center"
+                >
                   <Checkbox
                     ref="fieldOrder"
                     disabled={!this.hasOrder(fieldType)}
-                    name="order" />
+                    name="order"
+                  />
                 </Tooltip>
               </div>
               <div
                 className="col-xs-5"
-                style={styles.checkBox}>
+                style={styles.checkBox}
+              >
                 <FlatButton
-                  style={{marginBottom: 4}}
+                  style={{ marginBottom: 4 }}
                   label="Add"
                   disabled={!fieldType || !fieldName}
-                  secondary={true}
-                  onClick={this.handleFieldAdd}/>
+                  secondary
+                  onClick={this.handleFieldAdd}
+                />
               </div>
             </Dialog.ContentSection>
             <div className="vm-4-b">
@@ -579,22 +607,26 @@ export default React.createClass({
           </Tab>
           <Tab
             style={styles.tab}
-            label="CUSTOMIZE">
+            label="CUSTOMIZE"
+          >
             <div className="row align-middle vp-4-t vp-4-b">
               <div className="col-sm-11">
                 <ColorIconPicker.Preview
                   color={metadata.color}
-                  icon={metadata.icon}/>
+                  icon={metadata.icon}
+                />
               </div>
               <div className="col-sm-12">
                 <ColorIconPicker.IconPicker
                   selectedIcon={metadata.icon}
-                  onIconChange={this.handleIconChange} />
+                  onIconChange={this.handleIconChange}
+                />
               </div>
               <div className="col-sm-12">
                 <ColorIconPicker.ColorPicker
                   selectedColor={metadata.color}
-                  onColorChange={this.handleColorChange} />
+                  onColorChange={this.handleColorChange}
+                />
               </div>
             </div>
           </Tab>

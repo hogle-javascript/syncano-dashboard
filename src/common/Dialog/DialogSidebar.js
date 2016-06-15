@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({children}) => {
+export default ({ children }) => {
   const styles = {
     root: {
       width: 238 * React.Children.count(children),
@@ -19,7 +19,8 @@ export default ({children}) => {
       {React.Children.map(children, (child) => (
         <div
           className="col-flex-0"
-          style={styles.column}>
+          style={styles.column}
+        >
           {child}
         </div>
       ))}

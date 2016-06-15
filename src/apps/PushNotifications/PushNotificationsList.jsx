@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ColumnList, Loading, Container, Lists} from '../../common/';
+import { ColumnList, Loading, Container, Lists } from '../../common/';
 import APNSListItem from './APNS/APNSPushNotificationsListItem';
 import GCMListItem from './GCM/GCMPushNotificationsListItem';
 
@@ -11,10 +11,12 @@ export default (props) => {
     const listItem = {
       APNS: <APNSListItem
         key={`${item.name}pushNotificationListItem`}
-        item={item}/>,
+        item={item}
+      />,
       GCM: <GCMListItem
         key={`${item.name}pushNotificationListItem`}
-        item={item}/>
+        item={item}
+      />
     };
 
     return listItem[item.name];
@@ -25,25 +27,27 @@ export default (props) => {
       <ColumnList.Header>
         <Column.ColumnHeader
           handleClick={props.handleTitleClick}
-          primary={true}
+          primary
           columnName="DESC"
-          className="col-sm-12">
+          className="col-sm-12"
+        >
           {props.name}
         </Column.ColumnHeader>
-        <Column.ColumnHeader columnName="DESC"/>
+        <Column.ColumnHeader columnName="DESC" />
         <Column.ColumnHeader columnName="DESC">
           Configured
         </Column.ColumnHeader>
         <Column.ColumnHeader columnName="DESC">
           Devices
         </Column.ColumnHeader>
-        <Column.ColumnHeader columnName="DESC"/>
-        <Column.ColumnHeader columnName="MENU"/>
+        <Column.ColumnHeader columnName="DESC" />
+        <Column.ColumnHeader columnName="MENU" />
       </ColumnList.Header>
       <Loading show={props.isLoading}>
         <Lists.List
           {...props}
-          renderItem={renderItem}/>
+          renderItem={renderItem}
+        />
       </Loading>
     </Lists.Container>
   );

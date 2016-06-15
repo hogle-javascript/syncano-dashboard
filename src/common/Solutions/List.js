@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {FontIcon} from 'material-ui';
+import { FontIcon } from 'material-ui';
 import ListItem from './ListItem';
 
 export default React.createClass({
@@ -38,8 +38,9 @@ export default React.createClass({
       return [
         <div style={styles.noItemsContainer}>
           <FontIcon
-              style={styles.noItemsIcon}
-              className='synicon-filter-remove-outline'/>
+            style={styles.noItemsIcon}
+            className="synicon-filter-remove-outline"
+          />
           <p style={styles.noItemsText}>There are no Solutions matching this criteria</p>
         </div>
       ];
@@ -49,14 +50,16 @@ export default React.createClass({
       return (
         <div
           key={item.id}
-          style={this.getStyles().listItem}>
+          style={this.getStyles().listItem}
+        >
           <ListItem
             data={item}
             onInstall={this.props.onInstall}
             onSeeMore={this.props.onSeeMore}
             onTagClick={this.props.onTagClick}
             onUnstar={this.props.onUnstar}
-            onStar={this.props.onStar}/>
+            onStar={this.props.onStar}
+          />
         </div>
       );
     });

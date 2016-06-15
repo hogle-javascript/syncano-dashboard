@@ -4,7 +4,7 @@ import _ from 'lodash';
 import moment from 'moment-timezone';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './SchedulesActions';
@@ -12,8 +12,8 @@ import Store from './ScheduleDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {AutoComplete, TextField} from 'material-ui';
-import {Dialog, SelectFieldWrapper} from '../../common/';
+import { AutoComplete, TextField } from 'material-ui';
+import { Dialog, SelectFieldWrapper } from '../../common/';
 
 export default React.createClass({
   displayName: 'ScheduleDialog',
@@ -39,15 +39,15 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {label, crontab, script, interval_sec, timezone} = this.state;
+    const { label, crontab, script, interval_sec, timezone } = this.state;
 
-    Actions.createSchedule({label, crontab, script, interval_sec, timezone});
+    Actions.createSchedule({ label, crontab, script, interval_sec, timezone });
   },
 
   handleEditSubmit() {
-    const {id, label, crontab, script, interval_sec, timezone} = this.state;
+    const { id, label, crontab, script, interval_sec, timezone } = this.state;
 
-    Actions.updateSchedule(id, {label, crontab, script, interval_sec, timezone});
+    Actions.updateSchedule(id, { label, crontab, script, interval_sec, timezone });
   },
 
   handleChangeFields(key, value) {
@@ -58,7 +58,7 @@ export default React.createClass({
       interval_sec: !_.isEmpty(value) ? value : null
     };
 
-    this.setState({[key]: keyMap[key]});
+    this.setState({ [key]: keyMap[key] });
   },
 
   renderCrontabDataSource() {
@@ -80,7 +80,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, isLoading, scripts, script, crontab, canSubmit, interval_sec, label, timezone} = this.state;
+    const { open, isLoading, scripts, script, crontab, canSubmit, interval_sec, label, timezone } = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -95,7 +95,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -110,66 +111,72 @@ export default React.createClass({
             <Dialog.SidebarSection title="Crontab">
               We prepared some crontabs to choose from. You can also write your own.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
+            <Dialog.SidebarSection last>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/schedules">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         <Dialog.ContentSection>
           {this.renderFormNotifications()}
           <TextField
             ref="label"
             name="label"
-            autoFocus={true}
-            fullWidth={true}
+            autoFocus
+            fullWidth
             value={label}
-            onChange={(event, value) => this.setState({label: value})}
+            onChange={(event, value) => this.setState({ label: value })}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Schedule's label"
-            floatingLabelText="Label"/>
+            floatingLabelText="Label"
+          />
           <SelectFieldWrapper
             name="script"
             options={scripts}
             value={script}
             onChange={(event, index, value) => this.setSelectFieldValue('script', value)}
-            errorText={this.getValidationMessages('script').join(' ')}/>
+            errorText={this.getValidationMessages('script').join(' ')}
+          />
           <AutoComplete
             ref="crontab"
             floatingLabelText="Crontab"
             hintText="Choose option from the dropdown or type your own crontab"
             filter={AutoComplete.noFilter}
             animated={false}
-            fullWidth={true}
+            fullWidth
             searchText={crontab}
-            openOnFocus={true}
+            openOnFocus
             onNewRequest={(value) => this.handleChangeFields('crontab', value)}
             onUpdateInput={(value) => this.handleChangeFields('crontab', value)}
             dataSource={this.renderCrontabDataSource()}
-            errorText={this.getValidationMessages('crontab').join(' ')} />
+            errorText={this.getValidationMessages('crontab').join(' ')}
+          />
           <TextField
             ref="Interval"
             name="interval_sec"
-            fullWidth={true}
+            fullWidth
             value={interval_sec}
             onChange={(event, value) => this.handleChangeFields('interval_sec', value)}
             errorText={this.getValidationMessages('interval_sec').join(' ')}
             hintText="Type interval time in seconds"
-            floatingLabelText="Interval"/>
+            floatingLabelText="Interval"
+          />
           <AutoComplete
             floatingLabelText="Timezone"
             hintText="Choose option from the dropdown or type timezone"
             animated={false}
-            fullWidth={true}
+            fullWidth
             filter={(searchText, key) => _.toLower(key).includes(_.toLower(searchText))}
             maxSearchResults={5}
             searchText={timezone}
-            openOnFocus={true}
+            openOnFocus
             onNewRequest={(value) => this.handleChangeFields('timezone', value)}
             onUpdateInput={(value) => this.handleChangeFields('timezone', value)}
             dataSource={this.renderTimezoneDataSource()}
-            errorText={this.getValidationMessages('timezone').join(' ')} />
+            errorText={this.getValidationMessages('timezone').join(' ')}
+          />
         </Dialog.ContentSection>
       </Dialog.FullPage>
     );

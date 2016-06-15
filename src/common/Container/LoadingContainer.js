@@ -17,12 +17,15 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {withSidebar, children} = this.props;
+    const { withSidebar, children } = this.props;
 
     return (
-      <div style={[
-        styles.container,
-        withSidebar === true && styles.withSidebar]}>
+      <div
+        style={[
+          styles.container,
+          withSidebar === true && styles.withSidebar
+        ]}
+      >
         {children}
       </div>
     );

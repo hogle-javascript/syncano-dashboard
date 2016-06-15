@@ -1,14 +1,14 @@
 import React from 'react';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './ProfileInvitationsActions';
 import Store from './ProfileInvitationsStore';
 
 // Components
-import {ColumnList, Container, Dialog, Lists} from '../../common/';
+import { ColumnList, Container, Dialog, Lists } from '../../common/';
 import ListItem from './ProfileInvitationsListItem';
 
 const Column = ColumnList.Column;
@@ -63,7 +63,8 @@ export default React.createClass({
         onIconClick={Actions.checkItem}
         item={item}
         showAcceptDialog={() => this.showDialog('acceptInvitationsDialog', item)}
-        showDeclineDialog={() => this.showDialog('declineInvitationsDialog', item)} />
+        showDeclineDialog={() => this.showDialog('declineInvitationsDialog', item)}
+      />
     );
   },
 
@@ -75,8 +76,9 @@ export default React.createClass({
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
-            primary={true}
-            columnName="CHECK_ICON">
+            primary
+            columnName="CHECK_ICON"
+          >
             Instance
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">From</Column.ColumnHeader>
@@ -86,20 +88,24 @@ export default React.createClass({
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem
                 primaryText="Accept All"
-                onTouchTap={() => this.showDialog('acceptInvitationsDialog')} />
+                onTouchTap={() => this.showDialog('acceptInvitationsDialog')}
+              />
               <Lists.MenuItem
                 primaryText="Decline All"
-                onTouchTap={() => this.showDialog('declineInvitationsDialog')} />
+                onTouchTap={() => this.showDialog('declineInvitationsDialog')}
+              />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
           {...this.props}
           key="profile-invitations-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

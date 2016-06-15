@@ -4,16 +4,16 @@ import Select from 'react-select';
 import _ from 'lodash';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import Store from './UserDialogStore';
 import UsersActions from './UsersActions';
-import {GroupsStore} from './../Groups';
+import { GroupsStore } from './../Groups';
 
 // Components
-import {TextField} from 'material-ui';
-import {Dialog} from '../../common/';
+import { TextField } from 'material-ui';
+import { Dialog } from '../../common/';
 
 import 'react-select/dist/react-select.min.css';
 
@@ -45,7 +45,7 @@ export default React.createClass({
   },
 
   getSelectValueSource() {
-    const {newUserGroups, groups, secondInstance} = this.state;
+    const { newUserGroups, groups, secondInstance } = this.state;
 
     if (newUserGroups) {
       return this.linkState('newUserGroups');
@@ -59,7 +59,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {newUserGroups, secondInstance, username, password} = this.state;
+    const { newUserGroups, secondInstance, username, password } = this.state;
 
     const userGroups = newUserGroups || secondInstance;
 
@@ -75,10 +75,10 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    const {username, password, id, groups} = this.state;
+    const { username, password, id, groups } = this.state;
 
     const userGroups = this.getSelectValueSource().value;
-    const credentials = {username};
+    const credentials = { username };
 
     if (password) {
       credentials.password = password;
@@ -101,7 +101,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, isLoading, canSubmit} = this.state;
+    const { open, isLoading, canSubmit } = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
     const selectValueSource = this.getSelectValueSource();
     let selectValue = '';
@@ -129,7 +129,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -138,41 +139,45 @@ export default React.createClass({
               credentials of your user. Users can be assigned to Groups for additonal
               access control.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
+            <Dialog.SidebarSection last>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/user-management">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         <div>
           {this.renderFormNotifications()}
           <TextField
             ref="username"
-            autoFocus={true}
-            fullWidth={true}
+            autoFocus
+            fullWidth
             value={this.state.username}
-            onChange={(event, value) => this.setState({username: value})}
+            onChange={(event, value) => this.setState({ username: value })}
             errorText={this.getValidationMessages('username').join(' ')}
             hintText="User's name"
-            floatingLabelText="Username" />
+            floatingLabelText="Username"
+          />
           <TextField
             ref="password"
             type="password"
-            fullWidth={true}
+            fullWidth
             value={this.state.password}
-            onChange={(event, value) => this.setState({password: value})}
+            onChange={(event, value) => this.setState({ password: value })}
             errorText={this.getValidationMessages('password').join(' ')}
             hintText="User's password"
             floatingLabelText="Password"
-            className="vm-4-b" />
+            className="vm-4-b"
+          />
           <Select
             name="group"
-            multi={true}
+            multi
             value={selectValue}
             placeholder="User groups"
             options={allGroups}
-            onChange={this.handleSelectFieldChange} />
+            onChange={this.handleSelectFieldChange}
+          />
         </div>
       </Dialog.FullPage>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import pluralize from 'pluralize';
-import {colors as Colors} from 'material-ui/styles/';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'UserInfo',
@@ -52,7 +52,8 @@ export default Radium(React.createClass({
     return (
       <div style={[styles.base, styles.infoHidden, this.props.visible && styles.infoVisible]}>
         <div
-          style={styles.container}>
+          style={styles.container}
+        >
           <div style={styles.item}>
             User key:
             <div style={styles.itemValue}>{user.user_key}</div>

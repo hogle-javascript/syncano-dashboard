@@ -3,7 +3,7 @@ import Store from './APNSDeviceDialogStore';
 import React from 'react';
 
 import DeviceDialog from '../DeviceDialog';
-import {Dialog} from '../../../common/';
+import { Dialog } from '../../../common/';
 
 const sidebar = (
   <Dialog.SidebarBox>
@@ -23,7 +23,7 @@ const sidebar = (
     <Dialog.SidebarSection title="Device ID">
       It&#39;s a unique identificator of your device.
     </Dialog.SidebarSection>
-    <Dialog.SidebarSection last={true}>
+    <Dialog.SidebarSection last>
       <Dialog.SidebarLink to="http://docs.syncano.io/docs/sending-push-notifications">
         Learn more
       </Dialog.SidebarLink>

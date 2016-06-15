@@ -3,8 +3,8 @@ import Radium from 'radium';
 
 import _ from 'lodash';
 
-import {Paper} from 'material-ui';
-import {ColumnList, Color} from '../../common/';
+import { Paper } from 'material-ui';
+import { ColumnList, Color } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -28,7 +28,7 @@ export default Radium(React.createClass({
         padding: '25px',
         color: 'white',
         whiteSpace: 'pre',
-        font: `12px/normal 'Monaco', monospace`,
+        font: '12px/normal \'Monaco\', monospace',
         backgroundColor: '#4C4A43'
       }
     };
@@ -38,7 +38,7 @@ export default Radium(React.createClass({
     console.info('ChannelHistory::toggleMessage', messageId);
     const visibleMessageId = this.state.visibleMessageId !== messageId ? messageId : null;
 
-    this.setState({visibleMessageId});
+    this.setState({ visibleMessageId });
   },
 
   renderPayload() {
@@ -87,11 +87,13 @@ export default Radium(React.createClass({
       <Paper
         key={item.id}
         zDepth={1}
-        style={styles.history}>
+        style={styles.history}
+      >
         <ColumnList.Item
           id={item.id}
           zDepth={0}
-          handleClick={this.toggleChannelMessage.bind(null, item.id)}>
+          handleClick={() => this.toggleChannelMessage(item.id)}
+        >
           <Column.CheckIcon
             className="col-sm-6"
             id={item.name}
@@ -99,14 +101,16 @@ export default Radium(React.createClass({
             keyName="name"
             checkable={false}
             background={Color.getColorByName('blue', 'xlight')}
-            handleIconClick={this.toggleChannelMessage.bind(null, item.id)}/>
+            handleIconClick={() => this.toggleChannelMessage(item.id)}
+          />
           <Column.ID className="col-sm-6">{item.id}</Column.ID>
           <Column.Desc className="col-sm-6">{room}</Column.Desc>
           <Column.Desc className="col-sm-6">{item.action}</Column.Desc>
           <Column.Desc className="col-sm-6">{this.renderMeta(item)}</Column.Desc>
           <Column.Date
             className="col-flex-1"
-            date={item.created_at}/>
+            date={item.created_at}
+          />
         </ColumnList.Item>
         <div style={styles.historyResult}>
           {this.renderPayload(item)}

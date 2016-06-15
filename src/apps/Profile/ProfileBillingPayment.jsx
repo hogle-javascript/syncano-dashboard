@@ -4,13 +4,13 @@ import Radium from 'radium';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
-import {FormMixin} from '../../mixins';
+import { FormMixin } from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
 
-import {TextField, RaisedButton} from 'material-ui';
-import {Container, CreditCard, Show, Loading, InnerToolbar} from '../../common/';
+import { TextField, RaisedButton } from 'material-ui';
+import { Container, CreditCard, Show, Loading, InnerToolbar } from '../../common/';
 
 export default Radium(React.createClass({
   displayName: 'ProfileBillingPayment',
@@ -70,7 +70,7 @@ export default Radium(React.createClass({
   },
 
   render() {
-    const {card, showForm, show_form, isLoading, canSubmit} = this.state;
+    const { card, showForm, show_form, isLoading, canSubmit } = this.state;
     const title = 'Payment methods';
     const hasCard = !_.isEmpty(card);
     const labelPrefix = hasCard ? 'Update' : 'Add';
@@ -85,7 +85,8 @@ export default Radium(React.createClass({
             <form
               onSubmit={this.handleFormValidation}
               acceptCharset="UTF-8"
-              method="post">
+              method="post"
+            >
               {this.renderFormNotifications()}
 
               <div className="row">
@@ -93,13 +94,14 @@ export default Radium(React.createClass({
                   <TextField
                     name="number"
                     ref="number"
-                    fullWidth={true}
+                    fullWidth
                     value={this.state.number}
-                    onChange={(event, value) => this.setState({number: value})}
+                    onChange={(event, value) => this.setState({ number: value })}
                     errorText={this.getValidationMessages('number').join(' ')}
                     hintText="Card Number"
                     floatingLabelText="Card Number"
-                    dataStripe="number"/>
+                    dataStripe="number"
+                  />
                 </div>
               </div>
               <div className="row">
@@ -107,13 +109,14 @@ export default Radium(React.createClass({
                   <TextField
                     name="cvc"
                     ref="cvc"
-                    fullWidth={true}
+                    fullWidth
                     value={this.state.cvc}
-                    onChange={(event, value) => this.setState({cvc: value})}
+                    onChange={(event, value) => this.setState({ cvc: value })}
                     errorText={this.getValidationMessages('cvc').join(' ')}
                     hintText="CVC"
                     floatingLabelText="CVC"
-                    dataStripe="cvc"/>
+                    dataStripe="cvc"
+                  />
                 </div>
               </div>
               <div className="row vm-4-b">
@@ -124,45 +127,49 @@ export default Radium(React.createClass({
                         name="exp_month"
                         ref="exp_month"
                         size={2}
-                        fullWidth={true}
+                        fullWidth
                         value={this.state.exp_month}
-                        onChange={(event, value) => this.setState({exp_month: value})}
+                        onChange={(event, value) => this.setState({ exp_month: value })}
                         errorText={this.getValidationMessages('exp_month').join(' ')}
                         hintText="Expiration month (MM)"
                         floatingLabelText="Expiration month (MM)"
-                        dataStripe="exp-month"/>
+                        dataStripe="exp-month"
+                      />
                     </div>
                     <div className="col-flex-1">
                       <TextField
                         name="exp_year"
                         ref="exp_year"
                         size={4}
-                        fullWidth={true}
+                        fullWidth
                         value={this.state.exp_year}
-                        onChange={(event, value) => this.setState({exp_year: value})}
+                        onChange={(event, value) => this.setState({ exp_year: value })}
                         errorText={this.getValidationMessages('exp_year').join(' ')}
                         hintText="Expiration year (YYYY)"
                         floatingLabelText="Expiration year (YYYY)"
-                        dataStripe="exp-year"/>
+                        dataStripe="exp-year"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-20" style={{display: 'flex'}}>
+                <div className="col-lg-20" style={{ display: 'flex' }}>
                   <Show if={hasCard}>
                     <RaisedButton
                       onClick={this.toggleForm.bind(this, false)}
                       label="Cancel"
-                      className="raised-button"/>
+                      className="raised-button"
+                    />
                   </Show>
                   <RaisedButton
                     type="submit"
                     label={labelPrefix + ' payment'}
                     className="raised-button"
-                    primary={true}
+                    primary
                     disabled={!canSubmit}
-                    style={{margin: '0 0 0 auto'}}/>
+                    style={{ margin: '0 0 0 auto' }}
+                  />
                 </div>
               </div>
             </form>
@@ -170,13 +177,14 @@ export default Radium(React.createClass({
 
           <Show if={!showForm}>
             <div>
-              <CreditCard card={card}/>
+              <CreditCard card={card} />
               <RaisedButton
                 onClick={this.toggleForm.bind(null, true)}
                 type="submit"
                 label={labelPrefix + ' payment'}
                 className="raised-button"
-                primary={true}/>
+                primary
+              />
             </div>
           </Show>
         </Container>

@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './AdminsActions';
@@ -12,8 +12,8 @@ import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
 // Components
-import {RaisedButton} from 'material-ui';
-import {Container, InnerToolbar} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container, InnerToolbar } from '../../common/';
 
 // Local components
 import AdminsList from './AdminsList';
@@ -36,7 +36,7 @@ export default React.createClass({
   },
 
   render() {
-    const {admins, invitations} = this.state;
+    const { admins, invitations } = this.state;
     const title = 'Administrators';
 
     return (
@@ -47,21 +47,24 @@ export default React.createClass({
         <InnerToolbar title={title}>
           <RaisedButton
             label="Invite"
-            primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={Actions.showDialog} />
+            primary
+            style={{ marginRight: 0 }}
+            onTouchTap={Actions.showDialog}
+          />
         </InnerToolbar>
 
         <Container>
           <AdminsList
             isLoading={admins.isLoading}
             hideDialogs={admins.hideDialogs}
-            items={admins.items}/>
+            items={admins.items}
+          />
 
           <AdminsInvitationsList
             isLoading={invitations.isLoading}
             hideDialogs={invitations.hideDialogs}
-            items={AdminsInvitationsStore.getPendingInvitations()}/>
+            items={AdminsInvitationsStore.getPendingInvitations()}
+          />
         </Container>
       </div>
     );

@@ -7,8 +7,8 @@ import Actions from './TemplatesActions';
 import Store from './TemplatesStore';
 
 // Components
-import {RaisedButton} from 'material-ui';
-import {Container} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container } from '../../common/';
 import SnippetsInnerToolbar from '../Snippets/SnippetsInnerToolbar';
 
 // Local components
@@ -26,7 +26,7 @@ export default React.createClass({
   },
 
   render() {
-    const {items, isLoading, hideDialogs} = this.state;
+    const { items, isLoading, hideDialogs } = this.state;
 
     return (
       <div>
@@ -36,9 +36,10 @@ export default React.createClass({
         <SnippetsInnerToolbar>
           <RaisedButton
             label="Add"
-            primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={Actions.showDialog} />
+            primary
+            style={{ marginRight: 0 }}
+            onTouchTap={Actions.showDialog}
+          />
         </SnippetsInnerToolbar>
 
         <Container>
@@ -48,7 +49,8 @@ export default React.createClass({
             items={items}
             hideDialogs={hideDialogs}
             emptyItemHandleClick={Actions.showDialog}
-            emptyItemContent="Add a Template"/>
+            emptyItemContent="Add a Template"
+          />
         </Container>
       </div>
     );

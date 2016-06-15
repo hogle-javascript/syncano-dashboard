@@ -1,9 +1,9 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 
-import {FontIcon} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Loading} from '../';
+import { FontIcon } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Loading } from '../';
 import UploadFileButton from './UploadFileButton';
 
 const DropZone = ({
@@ -54,7 +54,8 @@ const DropZone = ({
       return (
         <UploadFileButton
           getFile={handleButtonClick}
-          uploadButtonLabel={uploadButtonLabel}/>
+          uploadButtonLabel={uploadButtonLabel}
+        />
       );
     }
   };
@@ -68,7 +69,8 @@ const DropZone = ({
       <div style={dropZoneStyles.dropZoneDescription}>
         <FontIcon
           style={dropZoneStyles.uploadIcon}
-          className="synicon-cloud-upload"/>
+          className="synicon-cloud-upload"
+        />
         <div>
           {`Drag & Drop to upload ${certificateType} certificate`}
         </div>
@@ -85,7 +87,8 @@ const DropZone = ({
           multiple={false}
           disableClick={disableClick}
           onDrop={onDrop}
-          style={{...dropZoneStyles.dropZone, ...styles}}>
+          style={{ ...dropZoneStyles.dropZone, ...styles }}
+        >
           {renderDescription()}
         </Dropzone>
       </Loading>
@@ -93,6 +96,6 @@ const DropZone = ({
   );
 };
 
-DropZone.defaultProps = {disableClick: false};
+DropZone.defaultProps = { disableClick: false };
 
 export default DropZone;

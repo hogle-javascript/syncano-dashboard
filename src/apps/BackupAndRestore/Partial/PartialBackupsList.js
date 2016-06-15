@@ -1,13 +1,13 @@
 import React from 'react';
 
-import {DialogsMixin} from '../../../mixins';
+import { DialogsMixin } from '../../../mixins';
 
 import Actions from './PartialBackupsActions';
 import RestoreDialogActions from '../RestoreDialogActions';
 import Store from './PartialBackupsStore';
 
 import ListItem from './PartialBackupsListItem';
-import {ColumnList, Lists, Dialog} from '../../../common';
+import { ColumnList, Lists, Dialog } from '../../../common';
 
 const Column = ColumnList.Column;
 
@@ -19,7 +19,7 @@ export default React.createClass({
   ],
 
   initDialogs() {
-    const {isLoading} = this.props;
+    const { isLoading } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -43,7 +43,8 @@ export default React.createClass({
         onIconClick={Actions.checkItem}
         item={item}
         showRestoreDialog={RestoreDialogActions.showDialog}
-        showDeleteDialog={() => this.showDialog('deletePartialBackupDialog', item)} />
+        showDeleteDialog={() => this.showDialog('deletePartialBackupDialog', item)}
+      />
     );
   },
 
@@ -55,9 +56,10 @@ export default React.createClass({
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
-            primary={true}
+            primary
             columnName="CHECK_ICON"
-            className="col-sm-10">
+            className="col-sm-10"
+          >
             Partial Backups
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
@@ -69,18 +71,20 @@ export default React.createClass({
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem onTouchTap={() => this.showDialog('deletePartialBackupDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          emptyItemContent='Create Partial Backup'
+          emptyItemContent="Create Partial Backup"
           emptyItemHandleClick={Actions.showDialog}
           checkItem={this.checkItem}
           key="partial-backups-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

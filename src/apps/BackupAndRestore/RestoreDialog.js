@@ -1,14 +1,14 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 import Actions from './RestoreDialogActions';
 import Store from './RestoreDialogStore';
 
-import {FontIcon, TextField} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles';
-import {Dialog, Loading} from '../../common';
+import { FontIcon, TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles';
+import { Dialog, Loading } from '../../common';
 
 export default React.createClass({
   displayName: 'RestoreDialog',
@@ -24,7 +24,7 @@ export default React.createClass({
   ],
 
   validatorConstraints() {
-    const {instanceName} = this.context.params;
+    const { instanceName } = this.context.params;
 
     return {
       instanceNameValidation: {
@@ -40,7 +40,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {clickedItem} = this.state;
+    const { clickedItem } = this.state;
 
     Actions.restoreFromBackup(clickedItem);
   },
@@ -50,26 +50,29 @@ export default React.createClass({
       <div>
         <div
           className="vm-3-b"
-          style={{textAlign: 'center'}}>
-          {`We're restoring your backup, please wait...`}
+          style={{ textAlign: 'center' }}
+        >
+          {'We\'re restoring your backup, please wait...'}
         </div>
-        <Loading show={true} />
+        <Loading show />
       </div>
     );
   },
 
   renderContent() {
-    const {clickedItem, instanceNameValidation} = this.state;
+    const { clickedItem, instanceNameValidation } = this.state;
     const instanceName = this.context.params.instanceName;
     const backupLabel = clickedItem ? clickedItem.label : '';
 
     return (
       <div
-        style={{lineHeight: '1.4'}}
-        className="row align-middle">
+        style={{ lineHeight: '1.4' }}
+        className="row align-middle"
+      >
         <FontIcon
-          style={{fontSize: 60, color: Colors.orange400}}
-          className="synicon-alert col-sm-7"/>
+          style={{ fontSize: 60, color: Colors.orange400 }}
+          className="synicon-alert col-sm-7"
+        />
         <div className="vm-1-t col-sm-28">
           <div className="vm-1-b">
             <strong>This action cannot be undone or stopped.</strong>
@@ -86,25 +89,26 @@ export default React.createClass({
           </div>
           <TextField
             value={instanceNameValidation}
-            onChange={(event, value) => this.setState({instanceNameValidation: value})}
+            onChange={(event, value) => this.setState({ instanceNameValidation: value })}
             errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
-            fullWidth={true}
+            fullWidth
             floatingLabelText="Instance name"
-            hintText="Instance name" />
+            hintText="Instance name"
+          />
         </div>
       </div>
     );
   },
 
   render() {
-    const {isLoading, isRestoring, open} = this.state;
+    const { isLoading, isRestoring, open } = this.state;
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
         contentSize="small"
-        title={!isRestoring && `Restore Instance from backup`}
+        title={!isRestoring && 'Restore Instance from backup'}
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
@@ -113,8 +117,10 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={isLoading}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
-        }>
+            handleConfirm={this.handleFormValidation}
+          />
+        }
+      >
         {!isRestoring ? this.renderContent() : this.renderLoading()}
       </Dialog.FullPage>
     );

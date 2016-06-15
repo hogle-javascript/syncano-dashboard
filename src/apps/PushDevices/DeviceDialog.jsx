@@ -3,11 +3,11 @@ import _ from 'lodash';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Components
-import {TextField, Toggle} from 'material-ui';
-import {Dialog, Editor} from '../../common/';
+import { TextField, Toggle } from 'material-ui';
+import { Dialog, Editor } from '../../common/';
 
 export default (type, Store, Actions, sidebar) => {
   return React.createClass({
@@ -40,7 +40,7 @@ export default (type, Store, Actions, sidebar) => {
     },
 
     getParams() {
-      const {label, registration_id, user, device_id, is_active, metadata} = this.state;
+      const { label, registration_id, user, device_id, is_active, metadata } = this.state;
       const params = {
         label,
         registration_id,
@@ -61,7 +61,7 @@ export default (type, Store, Actions, sidebar) => {
 
     handleEditSubmit() {
       if (_.isFunction(Actions.updateDevice)) {
-        const {registration_id} = this.state;
+        const { registration_id } = this.state;
 
         Actions.updateDevice(registration_id, this.getParams());
       }
@@ -72,7 +72,7 @@ export default (type, Store, Actions, sidebar) => {
     },
 
     render() {
-      const {open, isLoading, is_active, metadata} = this.state;
+      const { open, isLoading, is_active, metadata } = this.state;
       const title = this.hasEditMode() ? 'Edit' : 'Add';
 
       return (
@@ -87,68 +87,77 @@ export default (type, Store, Actions, sidebar) => {
             <Dialog.StandardButtons
               disabled={!this.state.canSubmit}
               handleCancel={this.handleCancel}
-              handleConfirm={this.handleFormValidation}/>
+              handleConfirm={this.handleFormValidation}
+            />
           }
-          sidebar={sidebar}>
+          sidebar={sidebar}
+        >
           <div className="vp-2-t">
             {this.renderFormNotifications()}
             <Dialog.ContentSection>
               <div className="col-flex-1">
-                <div style={{width: 100}}>
+                <div style={{ width: 100 }}>
                   <Toggle
                     ref="is_active"
                     key="is_active"
                     defaultToggled={is_active}
-                    onToggle={(event, value) => this.setState({is_active: value})}
-                    label="Active"/>
+                    onToggle={(event, value) => this.setState({ is_active: value })}
+                    label="Active"
+                  />
                 </div>
               </div>
             </Dialog.ContentSection>
             <TextField
               ref="label"
               name="label"
-              autoFocus={true}
+              autoFocus
               value={this.state.label}
-              onChange={(event, value) => this.setState({label: value})}
-              fullWidth={true}
+              onChange={(event, value) => this.setState({ label: value })}
+              fullWidth
               errorText={this.getValidationMessages('label').join(' ')}
-              floatingLabelText="Label of the Device" />
+              floatingLabelText="Label of the Device"
+            />
             <TextField
               ref="registration_id"
               name="registration_id"
               disabled={this.hasEditMode()}
               value={this.state.registration_id}
-              onChange={(event, value) => this.setState({registration_id: value})}
-              fullWidth={true}
+              onChange={(event, value) => this.setState({ registration_id: value })}
+              fullWidth
               errorText={this.getValidationMessages('registration_id').join(' ')}
-              floatingLabelText="Device's registration ID" />
+              floatingLabelText="Device's registration ID"
+            />
             <TextField
               ref="user"
               name="user"
               value={this.state.user}
-              onChange={(event, value) => this.setState({user: value})}
-              fullWidth={true}
+              onChange={(event, value) => this.setState({ user: value })}
+              fullWidth
               errorText={this.getValidationMessages('user').join(' ')}
-              floatingLabelText="User ID" />
+              floatingLabelText="User ID"
+            />
             <TextField
               className="vm-4-b"
               ref="device_id"
               name="device_id"
               value={this.state.device_id}
-              onChange={(event, value) => this.setState({device_id: value})}
-              fullWidth={true}
+              onChange={(event, value) => this.setState({ device_id: value })}
+              fullWidth
               errorText={this.getValidationMessages('device_id').join(' ')}
-              floatingLabelText="Device ID" />
+              floatingLabelText="Device ID"
+            />
             <Dialog.ContentSection
               title="metadata"
-              last={true}>
+              last
+            >
               <div className="col-flex-1 vm-2-t">
                 <Editor
                   ref="metadata"
                   mode="json"
                   height="200px"
-                  onChange={(value) => this.setState({metadata: value})}
-                  value={JSON.stringify(metadata, null, '\t')}/>
+                  onChange={(value) => this.setState({ metadata: value })}
+                  value={JSON.stringify(metadata, null, '\t')}
+                />
               </div>
             </Dialog.ContentSection>
           </div>

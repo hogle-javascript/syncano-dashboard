@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {Snackbar} from 'material-ui';
+import { Snackbar } from 'material-ui';
 
 import Actions from './SnackbarNotificationActions';
 import Store from './SnackbarNotificationStore';
@@ -25,7 +25,7 @@ export default React.createClass({
     }
 
     if (this.state.snackbar !== null) {
-      this.refs.snackbar.setState({open: false});
+      this.refs.snackbar.setState({ open: false });
     }
   },
 
@@ -63,7 +63,8 @@ export default React.createClass({
         onActionTouchTap={snackbar.onActionTouchTap}
         open={snackbar.open}
         onRequestClose={Actions.dismiss}
-        style={snackbar.style}/>
+        style={snackbar.style}
+      />
     );
   }
 });

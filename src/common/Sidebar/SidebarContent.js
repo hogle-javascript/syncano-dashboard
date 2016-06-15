@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollLockMixin} from '../../mixins';
+import { ScrollLockMixin } from '../../mixins';
 
 export default React.createClass({
   displayName: 'SidebarContent',
@@ -25,7 +25,7 @@ export default React.createClass({
   },
 
   render() {
-    const {children} = this.props;
+    const { children } = this.props;
     const styles = this.getStyles();
 
     return (

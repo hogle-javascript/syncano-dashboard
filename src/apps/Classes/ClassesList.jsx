@@ -2,14 +2,14 @@ import React from 'react';
 import _ from 'lodash';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 import ListItem from './ClassesListItem';
-import {ColumnList, Loading, Dialog, Lists} from '../../common/';
+import { ColumnList, Loading, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -62,7 +62,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading} = this.props;
+    const { isLoading } = this.props;
     const checkedClasses = Store.getCheckedItems();
     const classesAssociatedWithTriggers = this.getAssociatedClasses();
     const classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
@@ -92,7 +92,8 @@ export default React.createClass({
           <Loading
             type="linear"
             position="bottom"
-            show={isLoading}/>
+            show={isLoading}
+          />
         </div>
       );
     }
@@ -106,7 +107,8 @@ export default React.createClass({
         key={`classes-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteClassDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('deleteClassDialog', item)}
+      />
     );
   },
 
@@ -120,23 +122,27 @@ export default React.createClass({
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
-            primary={true}
-            columnName="CHECK_ICON">
+            primary
+            columnName="CHECK_ICON"
+          >
             Classes
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Data Objects
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="ID"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Group ID
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Permissions
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
@@ -144,10 +150,12 @@ export default React.createClass({
             <Lists.Menu
               checkedItemsCount={checkedItemsCount}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem
                 disabled={someClassIsProtectedFromDelete}
-                onTouchTap={() => this.showDialog('deleteClassDialog')} />
+                onTouchTap={() => this.showDialog('deleteClassDialog')}
+              />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
@@ -156,7 +164,8 @@ export default React.createClass({
           emptyItemContent="Add a Class"
           emptyItemHandleClick={Actions.showDialog}
           key="classes-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

@@ -2,15 +2,15 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './GroupsActions';
 import Store from './GroupDialogStore';
 
 // Components
-import {TextField} from 'material-ui';
-import {Dialog} from '../../common/';
+import { TextField } from 'material-ui';
+import { Dialog } from '../../common/';
 
 export default React.createClass({
   displayName: 'GroupDialog',
@@ -32,14 +32,14 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    const {id, label} = this.state;
+    const { id, label } = this.state;
 
     Actions.updateGroup(id, label);
   },
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    const {isLoading, open} = this.state;
+    const { isLoading, open } = this.state;
 
     return (
       <Dialog.FullPage
@@ -54,7 +54,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -62,24 +63,26 @@ export default React.createClass({
               Groups are a way of categorizing users. They can be used to construct
               different levels of access to resources stored on the platform.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
+            <Dialog.SidebarSection last>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/groups">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         {this.renderFormNotifications()}
         <TextField
           ref="label"
           label="label"
-          autoFocus={true}
-          fullWidth={true}
+          autoFocus
+          fullWidth
           value={this.state.label}
-          onChange={(event, value) => this.setState({label: value})}
+          onChange={(event, value) => this.setState({ label: value })}
           errorText={this.getValidationMessages('label').join(' ')}
           hintText="Group's name"
-          floatingLabelText="Name"/>
+          floatingLabelText="Name"
+        />
       </Dialog.FullPage>
     );
   }

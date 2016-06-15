@@ -1,9 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
-import {Color} from '../';
-import {Paper, FontIcon} from 'material-ui';
+import { Color } from '../';
+import { Paper, FontIcon } from 'material-ui';
 
-export default Radium(({selectedColor, onColorChange}) => {
+export default Radium(({ selectedColor, onColorChange }) => {
   const getStyles = () => ({
     container: {
       display: 'flex',
@@ -39,7 +39,8 @@ export default Radium(({selectedColor, onColorChange}) => {
       icon = (
         <FontIcon
           className="synicon-check"
-          style={styles.icon}/>
+          style={styles.icon}
+        />
       );
     }
 
@@ -48,9 +49,10 @@ export default Radium(({selectedColor, onColorChange}) => {
         id={color}
         zDepth={zDepth}
         key={color}
-        circle={true}
+        circle
         style={styles.item}
-        onClick={() => onColorChange(color)}>
+        onClick={() => onColorChange(color)}
+      >
         {icon}
       </Paper>
     );

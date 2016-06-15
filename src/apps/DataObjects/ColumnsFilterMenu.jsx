@@ -1,5 +1,5 @@
 import React from 'react';
-import {Checkbox, IconMenu, ListItem, IconButton} from 'material-ui';
+import { Checkbox, IconMenu, ListItem, IconButton } from 'material-ui';
 
 export default React.createClass({
   displayName: 'ColumnsFilterMenu',
@@ -17,17 +17,17 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    this.setState({columns: newProps.columns});
+    this.setState({ columns: newProps.columns });
   },
 
   render() {
-    const {columns} = this.state;
-    const {checkToggleColumn} = this.props;
+    const { columns } = this.state;
+    const { checkToggleColumn } = this.props;
 
     return (
       <IconMenu
         closeOnItemTouchTap={false}
-        iconButtonElement={<IconButton iconClassName="synicon-view-column"/>}
+        iconButtonElement={<IconButton iconClassName="synicon-view-column" />}
         anchorOrigin={{
           vertical: 'center',
           horizontal: 'middle'
@@ -35,7 +35,8 @@ export default React.createClass({
         targetOrigin={{
           vertical: 'top',
           horizontal: 'right'
-        }}>
+        }}
+      >
         {columns.map((column) => (
           <ListItem
             key={column.id}
@@ -45,8 +46,10 @@ export default React.createClass({
             leftCheckbox={
               <Checkbox
                 checked={column.checked}
-                onCheck={() => checkToggleColumn(column.id)}/>
-          }/>
+                onCheck={() => checkToggleColumn(column.id)}
+              />
+          }
+          />
         ))}
       </IconMenu>
     );

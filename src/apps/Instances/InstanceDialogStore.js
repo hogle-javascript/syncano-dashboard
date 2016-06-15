@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 
 // Utils & Mixins
 import SessionStore from '../Session/SessionStore';
-import {StoreFormMixin, DialogStoreMixin, SnackbarNotificationMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, SnackbarNotificationMixin } from '../../mixins';
 
 // Stores & Actions
 import Actions from './InstanceDialogActions';
@@ -66,7 +66,7 @@ export default Reflux.createStore({
   },
 
   onCreateInstance() {
-    this.trigger({isLoading: true});
+    this.trigger({ isLoading: true });
   },
 
   onCreateInstanceCompleted() {
@@ -76,11 +76,11 @@ export default Reflux.createStore({
   },
 
   onCreateInstanceFailure() {
-    this.trigger({isLoading: false});
+    this.trigger({ isLoading: false });
   },
 
   onUpdateInstance() {
-    this.trigger({isLoading: true});
+    this.trigger({ isLoading: true });
   },
 
   onUpdateInstanceCompleted() {
@@ -90,11 +90,11 @@ export default Reflux.createStore({
   },
 
   onUpdateInstanceFailure() {
-    this.trigger({isLoading: false});
+    this.trigger({ isLoading: false });
   },
 
   onRenameInstance() {
-    this.trigger({isLoading: true});
+    this.trigger({ isLoading: true });
   },
 
   onRenameInstanceCompleted() {
@@ -104,11 +104,11 @@ export default Reflux.createStore({
   },
 
   onRenameInstanceFailure() {
-    this.trigger({isLoading: false});
+    this.trigger({ isLoading: false });
   },
 
   onRenameAndUpdateInstance() {
-    this.trigger({isLoading: true});
+    this.trigger({ isLoading: true });
   },
 
   onRenameAndUpdateInstanceCompleted() {
@@ -118,7 +118,7 @@ export default Reflux.createStore({
   },
 
   onRenameAndUpdateInstanceFailure() {
-    this.trigger({isLoading: false});
+    this.trigger({ isLoading: false });
   },
 
   onRemoveInstancesCompleted() {
@@ -129,32 +129,32 @@ export default Reflux.createStore({
 
   onFetchAllFullBackupsCompleted(fullBackups) {
     this.fullBackups = fullBackups;
-    this.trigger({fullBackups});
+    this.trigger({ fullBackups });
   },
 
   onFetchAllPartialBackupsCompleted(partialBackups) {
     this.partialBackups = partialBackups;
-    this.trigger({partialBackups});
+    this.trigger({ partialBackups });
   },
 
   onCreateInstanceFromBackup() {
-    this.trigger({isRestoring: true});
+    this.trigger({ isRestoring: true });
   },
 
   onCreateInstanceFromBackupCompleted(data) {
-    const {instanceName} = data;
+    const { instanceName } = data;
 
     InstancesActions.fetchInstances();
 
     setTimeout(() => {
-      this.trigger({isRestoring: false});
+      this.trigger({ isRestoring: false });
       this.dismissDialog();
-      SessionStore.getRouter().push({name: 'sockets', params: {instanceName}});
-      this.setSnackbarNotification({message: 'Your instance was successfully restored'});
+      SessionStore.getRouter().push({ name: 'sockets', params: { instanceName } });
+      this.setSnackbarNotification({ message: 'Your instance was successfully restored' });
     }, 10000);
   },
 
   onCreateInstanceFromBackupFailure() {
-    this.trigger({isRestoring: false});
+    this.trigger({ isRestoring: false });
   }
 });

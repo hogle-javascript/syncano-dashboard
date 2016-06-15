@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import FullBackupActions from './Full/FullBackupsActions';
 import PartialBackupsActions from './Partial/PartialBackupsActions';
@@ -9,9 +9,9 @@ import FullBackupsDialog from './Full/FullBackupsDialog';
 import PartialBackupsDialog from './Partial/PartialBackupsDialog';
 import RestoreFromFileDialog from './RestoreFromFileDialog';
 import RestoreDialog from './RestoreDialog';
-import {ListItem, FontIcon, RaisedButton} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles';
-import {Popover} from '../../common';
+import { ListItem, FontIcon, RaisedButton } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles';
+import { Popover } from '../../common';
 
 export default class BackupAndRestore extends Component {
   handleCreateBackup(type) {
@@ -31,7 +31,7 @@ export default class BackupAndRestore extends Component {
   }
 
   render() {
-    const {children} = this.props;
+    const { children } = this.props;
 
     return (
       <div>
@@ -48,9 +48,10 @@ export default class BackupAndRestore extends Component {
             onTouchTap={RestoreFromFileDialogActions.showDialog} /> */}
           <RaisedButton
             label="Create Backup"
-            primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={FullBackupActions.showDialog} />
+            primary
+            style={{ marginRight: 0 }}
+            onTouchTap={FullBackupActions.showDialog}
+          />
             {/* <RaisedButton
                   label="Create Backup"
                   primary={true}
@@ -58,25 +59,30 @@ export default class BackupAndRestore extends Component {
                   onTouchTap={this.togglePopover.bind(this)}/> */}
           <Popover
             ref="createBackupPopover"
-            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-            style={{padding: '8px 0'}}>
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+            style={{ padding: '8px 0' }}
+          >
             <ListItem
               leftIcon={
                 <FontIcon
-                  style={{color: Colors.blue400}}
-                  className="synicon-backup-restore"/>
+                  style={{ color: Colors.blue400 }}
+                  className="synicon-backup-restore"
+                />
               }
               onTouchTap={() => this.handleCreateBackup('full')}
-              primaryText="Full Backup"/>
+              primaryText="Full Backup"
+            />
             <ListItem
               leftIcon={
                 <FontIcon
-                  style={{color: Colors.blue400}}
-                  className="synicon-file-restore"/>
+                  style={{ color: Colors.blue400 }}
+                  className="synicon-file-restore"
+                />
               }
               onTouchTap={() => this.handleCreateBackup('partial')}
-              primaryText="Partial Backup"/>
+              primaryText="Partial Backup"
+            />
           </Popover>
         </BackupsInnerToolbar>
         {children}

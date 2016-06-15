@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {FontIcon, FlatButton, List, ListItem} from 'material-ui';
-import {Loading} from '../../common/';
+import { FontIcon, FlatButton, List, ListItem } from 'material-ui';
+import { Loading } from '../../common/';
 
 export default React.createClass({
   displayName: 'DropdownNotifiItem',
@@ -35,7 +35,8 @@ export default React.createClass({
       let icon = (
         <FontIcon
           className={item.leftIcon.name || null}
-          color={item.leftIcon.color}/>
+          color={item.leftIcon.color}
+        />
       );
 
       let buttons = (
@@ -43,17 +44,20 @@ export default React.createClass({
           <FlatButton
             onClick={item.handleAccept}
             label={item.buttonsText[0]}
-            primary={true}/>
+            primary
+          />
           <FlatButton
             onClick={item.handleDecline}
-            label={item.buttonsText[1]}/>
+            label={item.buttonsText[1]}
+          />
         </div>
       );
 
       return (
         <ListItem
           leftIcon={icon}
-          disabled={true}>
+          disabled
+        >
           {item.content.text}
           {buttons}
         </ListItem>
@@ -75,29 +79,32 @@ export default React.createClass({
         color: '#0091EA'
       },
       content: {
-        text: `You don't have any notifications`,
+        text: 'You don\'t have any notifications',
         style: {}
       }
     };
     let icon = (
-    <FontIcon
-      className={emptyItem.leftIcon.name}
-      color={emptyItem.leftIcon.color}/>
+      <FontIcon
+        className={emptyItem.leftIcon.name}
+        color={emptyItem.leftIcon.color}
+      />
     );
 
     return (
-    <List
-      subheader={emptyItem.subheader}
-      subheaderStyle={emptyItem.subheaderStyle}>
-      <ListItem
-        key={emptyItem.name}
-        disableTouchTap={true}
-        leftIcon={icon}>
+      <List
+        subheader={emptyItem.subheader}
+        subheaderStyle={emptyItem.subheaderStyle}
+      >
+        <ListItem
+          key={emptyItem.name}
+          disableTouchTap
+          leftIcon={icon}
+        >
           <span>
             {emptyItem.content.text}
           </span>
-      </ListItem>
-    </List>
+        </ListItem>
+      </List>
     );
   },
 
@@ -107,18 +114,21 @@ export default React.createClass({
       let icon = (
         <FontIcon
           className={item.leftIcon.name || null}
-          color={item.leftIcon.color}/>
+          color={item.leftIcon.color}
+        />
       );
 
       return (
         <ListItem
-          disabled={true}
+          disabled
           key={item.name + index}
           leftIcon={icon}
           secondaryText={item.content.secondaryText}
-          secondaryTextLines={item.content.secondaryTextLines || 1}>
+          secondaryTextLines={item.content.secondaryTextLines || 1}
+        >
           <span
-            style={item.content.style}>
+            style={item.content.style}
+          >
             {item.content.text}
           </span>
         </ListItem>
@@ -145,7 +155,8 @@ export default React.createClass({
     return (
       <Loading
         show={this.props.isLoading}
-        size={1}>
+        size={1}
+      >
         {this.renderItems()}
       </Loading>
     );

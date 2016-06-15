@@ -1,6 +1,6 @@
 import List from './List';
 
-let Tags = {};
+const Tags = {};
 
 Tags.List = List;
 

@@ -2,15 +2,15 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './TemplatesActions';
 import DialogStore from './TemplateDialogStore';
 
 // Components
-import {TextField} from 'material-ui';
-import {Dialog} from '../../common/';
+import { TextField } from 'material-ui';
+import { Dialog } from '../../common/';
 
 export default React.createClass({
   displayName: 'TemplateDialog',
@@ -31,20 +31,20 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {name, content_type} = this.state;
+    const { name, content_type } = this.state;
 
-    Actions.createTemplate({name, content_type});
+    Actions.createTemplate({ name, content_type });
   },
 
   handleEditSubmit() {
-    const {name, content_type} = this.state;
+    const { name, content_type } = this.state;
 
-    Actions.updateTemplate(name, {content_type});
+    Actions.updateTemplate(name, { content_type });
   },
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    const {open, isLoading, canSubmit} = this.state;
+    const { open, isLoading, canSubmit } = this.state;
 
     return (
       <Dialog.FullPage
@@ -55,32 +55,36 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         onRequestClose={this.handleCancel}
         open={open}
-        isLoading={isLoading}>
+        isLoading={isLoading}
+      >
         {this.renderFormNotifications()}
         <TextField
           ref="name"
           name="name"
-          autoFocus={true}
-          fullWidth={true}
+          autoFocus
+          fullWidth
           disabled={this.hasEditMode()}
           value={this.state.name}
-          onChange={(event, value) => this.setState({name: value})}
+          onChange={(event, value) => this.setState({ name: value })}
           errorText={this.getValidationMessages('name').join(' ')}
           hintText="Name of the Template"
-          floatingLabelText="Name"/>
+          floatingLabelText="Name"
+        />
         <TextField
           ref="content_type"
           name="content_type"
-          fullWidth={true}
+          fullWidth
           value={this.state.content_type}
-          onChange={(event, value) => this.setState({content_type: value})}
+          onChange={(event, value) => this.setState({ content_type: value })}
           errorText={this.getValidationMessages('content_type').join(' ')}
           hintText="Content type of the Template"
-          floatingLabelText="Content type"/>
+          floatingLabelText="Content type"
+        />
       </Dialog.FullPage>
     );
   }

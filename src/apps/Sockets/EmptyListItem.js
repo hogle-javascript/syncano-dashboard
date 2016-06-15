@@ -1,6 +1,6 @@
 import React from 'react';
-import {RaisedButton} from 'material-ui';
-import {Socket} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Socket } from '../../common/';
 
 const styles = {
   container: {
@@ -37,10 +37,10 @@ const styles = {
   }
 };
 
-export default ({socketName, title, description, handleCreate, label = 'Add'}) => (
+export default ({ socketName, title, description, handleCreate, label = 'Add' }) => (
   <div style={styles.container}>
     <div className="row align-middle">
-      <div className="col-flex-0" style={{width: 'auto'}}>
+      <div className="col-flex-0" style={{ width: 'auto' }}>
         <div style={styles.iconColumn}>
           {React.createElement(Socket[socketName], {
             tooltip: null,
@@ -57,12 +57,13 @@ export default ({socketName, title, description, handleCreate, label = 'Add'}) =
           {description}
         </div>
       </div>
-      <div className="col-flex-0" style={{width: 'auto'}}>
+      <div className="col-flex-0" style={{ width: 'auto' }}>
         <RaisedButton
           label={label}
-          primary={true}
-          style={{marginRight: 0}}
-          onTouchTap={handleCreate} />
+          primary
+          style={{ marginRight: 0 }}
+          onTouchTap={handleCreate}
+        />
       </div>
     </div>
   </div>

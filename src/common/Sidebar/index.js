@@ -2,7 +2,7 @@ import Sidebar from './Sidebar';
 import List from './List';
 import ListItem from './ListItem';
 import LinkListItem from './LinkListItem';
-import ListSubheader from './ListSubheader';
+import ListSubheader from './ListSubHeader';
 import NestedLinkListItem from './NestedLinkListItem';
 
 Sidebar.List = List;

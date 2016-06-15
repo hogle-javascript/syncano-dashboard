@@ -12,9 +12,9 @@ export default () => {
 
   return (
     <div>
-      <GCMDevices visibleItems={3}/>
+      <GCMDevices visibleItems={3} />
       <div style={styles.APNSList}>
-        <APNSDevices visibleItems={3}/>
+        <APNSDevices visibleItems={3} />
       </div>
     </div>
   );

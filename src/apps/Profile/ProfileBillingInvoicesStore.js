@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 import Actions from './ProfileActions';
-import {StoreHelpersMixin, SnackbarNotificationMixin} from '../../mixins';
+import { StoreHelpersMixin, SnackbarNotificationMixin } from '../../mixins';
 
 
 export default Reflux.createStore({
@@ -52,7 +52,7 @@ export default Reflux.createStore({
       invoice.actionDisabled = false;
       return invoice;
     });
-    this.setSnackbarNotification({message: message.detail || message});
+    this.setSnackbarNotification({ message: message.detail || message });
     this.trigger(this.data);
   }
 });

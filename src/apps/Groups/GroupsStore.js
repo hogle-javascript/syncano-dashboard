@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../mixins';
+import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';

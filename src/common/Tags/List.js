@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import {List, ListItem, Subheader} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { List, ListItem, Subheader } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 import Show from '../Show';
 
 export default React.createClass({
@@ -46,7 +46,8 @@ export default React.createClass({
         key="all-tags"
         primaryText="All tags"
         innerDivStyle={_.isEmpty(this.props.selectedItems) ? styles.listItemChecked : {}}
-        onTouchTap={this.handleResetActiveTagsList}/>
+        onTouchTap={this.handleResetActiveTagsList}
+      />
     );
   },
 
@@ -60,7 +61,8 @@ export default React.createClass({
           primaryText={item.name}
           rightAvatar={<div style={styles.tagsCounter}>{item.count}</div>}
           innerDivStyle={this.props.selectedItems.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
-          onTouchTap={this.handleOnTouchTap.bind(this, item.name)}/>
+          onTouchTap={this.handleOnTouchTap.bind(this, item.name)}
+        />
       );
     });
   },
@@ -69,7 +71,8 @@ export default React.createClass({
     return (
       <Show if={!_.isEmpty(this.props.items)}>
         <List
-          className="tags-list">
+          className="tags-list"
+        >
           <Subheader>Tags</Subheader>
           {this.renderAllTagsListItem()}
           {this.renderTagsListItems()}

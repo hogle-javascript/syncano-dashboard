@@ -1,9 +1,9 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import InstancesActions from '../Instances/InstancesActions';
@@ -16,8 +16,8 @@ import CreateDialogActions from './CreateDialogActions';
 import InstallDialogActions from './InstallDialogActions';
 
 // Components
-import {FontIcon, IconButton, RaisedButton, Avatar} from 'material-ui';
-import {Container, Solutions, Show, Loading, Dialog, InnerToolbar} from '../../common/';
+import { FontIcon, IconButton, RaisedButton, Avatar } from 'material-ui';
+import { Container, Solutions, Show, Loading, Dialog, InnerToolbar } from '../../common/';
 import VersionsList from './VersionsList';
 
 import CreateDialog from './CreateDialog';
@@ -43,7 +43,7 @@ const SolutionEdit = React.createClass({
   },
 
   componentDidUpdate() {
-    const {action} = this.context.params;
+    const { action } = this.context.params;
 
     if (action === 'install') {
       this.handleInstallSolution();
@@ -94,16 +94,16 @@ const SolutionEdit = React.createClass({
   },
 
   handleInstallSolution() {
-    const {solutionId} = this.context.params;
+    const { solutionId } = this.context.params;
 
     InstallDialogActions.showDialogWithPreFetch(solutionId);
   },
 
   handleAddVersion() {
-    const {params} = this.context;
-    const {router} = this.props;
+    const { params } = this.context;
+    const { router } = this.props;
 
-    router.push({name: 'solutions-add-version', params});
+    router.push({ name: 'solutions-add-version', params });
   },
 
   initDialogs() {
@@ -131,7 +131,8 @@ const SolutionEdit = React.createClass({
       return (
         <div
           key={tag}
-          style={styles.tag}>
+          style={styles.tag}
+        >
           {tag}
         </div>
       );
@@ -139,48 +140,52 @@ const SolutionEdit = React.createClass({
   },
 
   render() {
-    const {router} = this.props;
-    const {item} = this.state;
+    const { router } = this.props;
+    const { item } = this.state;
     const styles = this.getStyles();
 
     return (
       <Loading show={this.state.isLoading}>
         {this.getDialogs()}
 
-        <CreateDialog/>
-        <InstallDialog/>
+        <CreateDialog />
+        <InstallDialog />
 
         <InnerToolbar
           title={`Solution: ${this.state.item.label} (ID: ${this.state.item.id})`}
-          backFallback={() => router.push('solutions')}>
+          backFallback={() => router.push('solutions')}
+        >
           <Show if={this.isMySolution()}>
             <IconButton
-              style={{fontSize: 25, marginTop: 5}}
+              style={{ fontSize: 25, marginTop: 5 }}
               iconClassName="synicon-pencil"
               tooltip="Edit Solution"
-              onTouchTap={() => CreateDialogActions.showDialog(this.state.item)}/>
+              onTouchTap={() => CreateDialogActions.showDialog(this.state.item)}
+            />
             <IconButton
-              style={{fontSize: 25, marginTop: 5}}
+              style={{ fontSize: 25, marginTop: 5 }}
               iconClassName="synicon-delete"
               tooltip="Delete Solution"
               tooltipPosition="bottom-left"
-              onTouchTap={() => this.showDialog('deleteCreateDialog')} />
+              onTouchTap={() => this.showDialog('deleteCreateDialog')}
+            />
           </Show>
         </InnerToolbar>
 
-        <Container id='solutions' style={styles.main}>
+        <Container id="solutions" style={styles.main}>
 
-          <div className="container" style={{paddingTop: 24, clear: 'both'}}>
+          <div className="container" style={{ paddingTop: 24, clear: 'both' }}>
 
             <div className="row" style={styles.main}>
               <div className="col-flex-1">
                 <div className="row">
-                  <div style={{textAlign: 'left', fontSize: '1.5rem', lineHeight: '1.5rem'}}>
+                  <div style={{ textAlign: 'left', fontSize: '1.5rem', lineHeight: '1.5rem' }}>
                     {this.state.item.label}
                   </div>
                 </div>
                 <div
-                  className="row vp-3-t" style={styles.description}>
+                  className="row vp-3-t" style={styles.description}
+                >
                   {this.state.item.description}
                 </div>
 
@@ -188,23 +193,26 @@ const SolutionEdit = React.createClass({
                   <FontIcon
                     style={styles.cardTextListIcon}
                     className="synicon-tag"
-                    color="rgba(222, 222, 222, 0.54)"/>
+                    color="rgba(222, 222, 222, 0.54)"
+                  />
                   {this.renderItemTags()}
                 </div>
 
-                <div className="row" style={{marginLeft: '-18px'}}>
+                <div className="row" style={{ marginLeft: '-18px' }}>
                   <Solutions.Star
                     solution={this.state.item}
                     onStar={Actions.starSolution}
-                    onUnstar={Actions.unstarSolution}/>
+                    onUnstar={Actions.unstarSolution}
+                  />
                 </div>
 
                 <div className="row vp-5-t align-left">
                   <RaisedButton
-                    primary={true}
+                    primary
                     disabled={this.state.versions && this.state.versions.length < 1}
-                    label='Install solution'
-                    onClick={this.handleInstallSolution}/>
+                    label="Install solution"
+                    onClick={this.handleInstallSolution}
+                  />
                 </div>
 
               </div>
@@ -212,7 +220,7 @@ const SolutionEdit = React.createClass({
                 <div className="row">
                   <div className="col-flex-1">
                     <div className="row align-right">
-                      <div style={{textAlign: 'right', marginTop: 15, fontSize: '1.5rem', lineHeight: '1.5rem'}}>
+                      <div style={{ textAlign: 'right', marginTop: 15, fontSize: '1.5rem', lineHeight: '1.5rem' }}>
                         <div>{item.author ? item.author.first_name : ''}</div>
                         <div>{item.author ? item.author.last_name : ''}</div>
                       </div>
@@ -222,7 +230,8 @@ const SolutionEdit = React.createClass({
                     <div className="row align-right">
                       <Avatar
                         size={70}
-                        src={item.author ? item.author.avatar_url : null}/>
+                        src={item.author ? item.author.avatar_url : null}
+                      />
                     </div>
                   </div>
                 </div>
@@ -241,7 +250,8 @@ const SolutionEdit = React.createClass({
                   isLoading={this.state.isLoading}
                   onInstall={this.handleInstallSolution}
                   emptyItemHandleClick={this.handleAddVersion}
-                  emptyItemContent="Add new Version"/>
+                  emptyItemContent="Add new Version"
+                />
               </Show>
             </div>
           </div>

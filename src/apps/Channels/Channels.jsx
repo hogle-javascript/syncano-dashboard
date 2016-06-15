@@ -3,15 +3,15 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './ChannelsActions';
 import Store from './ChannelsStore';
 
 // Components
-import {RaisedButton} from 'material-ui';
-import {Container} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container } from '../../common/';
 
 // Local components
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
@@ -32,7 +32,7 @@ export default React.createClass({
   },
 
   render() {
-    const {isLoading, items, hideDialogs} = this.state;
+    const { isLoading, items, hideDialogs } = this.state;
 
     return (
       <div>
@@ -42,16 +42,18 @@ export default React.createClass({
         <SocketsInnerToolbar>
           <RaisedButton
             label="Add"
-            primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={Actions.showDialog} />
+            primary
+            style={{ marginRight: 0 }}
+            onTouchTap={Actions.showDialog}
+          />
         </SocketsInnerToolbar>
 
         <Container>
           <ChannelsList
             isLoading={isLoading}
             items={items}
-            hideDialogs={hideDialogs} />
+            hideDialogs={hideDialogs}
+          />
         </Container>
       </div>
     );

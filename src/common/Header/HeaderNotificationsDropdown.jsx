@@ -7,10 +7,10 @@ import SessionStore from '../../apps/Session/SessionStore';
 import ProfileInvitationsStore from '../../apps/ProfileInvitations/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../../apps/ProfileInvitations/ProfileInvitationsActions';
 
-import {Popover, FontIcon, MenuItem, Divider, Badge, IconButton} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Loading} from '../';
-import {SnackbarNotificationMixin} from '../../mixins';
+import { Popover, FontIcon, MenuItem, Divider, Badge, IconButton } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Loading } from '../';
+import { SnackbarNotificationMixin } from '../../mixins';
 import InvitationItem from './InvitationItem';
 
 export default Radium(React.createClass({
@@ -86,12 +86,12 @@ export default Radium(React.createClass({
   handleResendEmail() {
     console.info('Header::handleResendEmail');
     AuthActions.resendActivationEmail(SessionStore.getUser().email);
-    this.setSnackbarNotification({message: 'Activation e-mail was sent'});
+    this.setSnackbarNotification({ message: 'Activation e-mail was sent' });
     this.shouldPopoverHide();
   },
 
   shouldPopoverHide() {
-    const {items} = this.state;
+    const { items } = this.state;
 
     if (!items.length) {
       this.togglePopover(null, false);
@@ -111,7 +111,7 @@ export default Radium(React.createClass({
 
   renderItems() {
     const styles = this.getStyles();
-    const {items} = this.state;
+    const { items } = this.state;
     const user = SessionStore.getUser();
 
     if (user && user.is_active && !items.length) {
@@ -119,13 +119,15 @@ export default Radium(React.createClass({
         <MenuItem
           key="empty"
           primaryText="You don't have any notifications"
-          disabled={true}
+          disabled
           style={styles.menuItem}
           leftIcon={
             <FontIcon
               className="synicon-information"
-              color={Colors.lightBlueA700} />
-          }/>
+              color={Colors.lightBlueA700}
+            />
+          }
+        />
       );
     }
 
@@ -134,7 +136,8 @@ export default Radium(React.createClass({
         key={`invitation${item.id}`}
         item={item}
         handleAccept={() => this.handleAcceptInvitations([item])}
-        handleDecline={() => this.handleDeclineInvitations([item])}/>
+        handleDecline={() => this.handleDeclineInvitations([item])}
+      />
     );
 
     if (SessionStore.getUser() && !SessionStore.getUser().is_active) {
@@ -146,8 +149,10 @@ export default Radium(React.createClass({
           leftIcon={
             <FontIcon
               className="synicon-alert"
-              color={Colors.orange500}/>
-          }>
+              color={Colors.orange500}
+            />
+          }
+        >
           <div style={styles.resendEmailText}>
             Your email address is not yet verified. Click here to resend activation email.
           </div>
@@ -164,25 +169,27 @@ export default Radium(React.createClass({
     const notificationCountIcon = isBadge ? notifications.length : '';
     const iconClassName = notifications.length ? 'synicon-bell' : 'synicon-bell-outline';
     const styles = this.getStyles();
-    const badgeContainerStyle = {...styles.badgeContainer, ...(isBadge && styles.badgeContainerFilled)};
-    const badgeStyle = {...styles.badge, ...(isBadge && styles.badgeFilled)};
+    const badgeContainerStyle = { ...styles.badgeContainer, ...(isBadge && styles.badgeContainerFilled) };
+    const badgeStyle = { ...styles.badge, ...(isBadge && styles.badgeFilled) };
 
     return (
       <Badge
         badgeContent={notificationCountIcon}
         style={badgeContainerStyle}
-        badgeStyle={badgeStyle}>
+        badgeStyle={badgeStyle}
+      >
         <IconButton
           iconStyle={styles.icon}
           iconClassName={iconClassName}
-          onTouchTap={(event) => this.togglePopover(event, true)}/>
+          onTouchTap={(event) => this.togglePopover(event, true)}
+        />
       </Badge>
     );
   },
 
   render() {
-    const {isLoading, open, anchorEl} = this.state;
-    const {id} = this.props;
+    const { isLoading, open, anchorEl } = this.state;
+    const { id } = this.props;
 
     return (
       <div>
@@ -190,20 +197,23 @@ export default Radium(React.createClass({
         <Popover
           open={open}
           anchorEl={anchorEl}
-          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'right', vertical: 'top'}}
-          onRequestClose={(event) => this.togglePopover(event, false)}>
+          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+          onRequestClose={(event) => this.togglePopover(event, false)}
+        >
           <MenuItem
             id={id}
             key="notificationDropdownHeader"
             primaryText="Notifications"
-            disabled={true}/>
-          <Divider/>
+            disabled
+          />
+          <Divider />
           {this.renderItems()}
           <Loading
             type="linear"
             position="bottom"
-            show={isLoading}/>
+            show={isLoading}
+          />
         </Popover>
       </div>
     );

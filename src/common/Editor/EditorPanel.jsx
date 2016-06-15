@@ -6,8 +6,8 @@ import _ from 'lodash';
 import FormMixin from '../../mixins/FormMixin';
 
 // Components
-import {Paper, TextField} from 'material-ui';
-import {Loading} from '../../common/';
+import { Paper, TextField } from 'material-ui';
+import { Loading } from '../../common/';
 
 import './Editor.css';
 
@@ -92,7 +92,7 @@ export default Radium(React.createClass({
   render() {
     let styles = this.getStyles();
     let trace = null;
-    let {floatingLabelText, hintText} = this.props;
+    let { floatingLabelText, hintText } = this.props;
 
     if (this.state.panelCollapsed) {
       trace = (
@@ -100,7 +100,8 @@ export default Radium(React.createClass({
           ref="trace"
           rounded={false}
           zDepth={1}
-          style={styles.trace}>
+          style={styles.trace}
+        >
           {this.props.trace}
         </Paper>
       );
@@ -110,21 +111,24 @@ export default Radium(React.createClass({
       <Paper zDepth={1}>
         <Paper
           zDepth={1}
-          style={styles.payloadStyle}>
+          style={styles.payloadStyle}
+        >
           <TextField
             onChange={this.handleChange}
             name="payloadField"
             ref="payloadField"
             value={this.state.payloadValue}
-            fullWidth={true}
+            fullWidth
             hintText={hintText}
             floatingLabelText={floatingLabelText}
             onBlur={this.handleFormValidation}
-            errorText={this.getValidationMessages('payloadValue').join(' ')}/>
+            errorText={this.getValidationMessages('payloadValue').join(' ')}
+          />
         </Paper>
         <Loading
           show={this.props.loading}
-          type="linear"/>
+          type="linear"
+        />
         {trace}
       </Paper>
     );

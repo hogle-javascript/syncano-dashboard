@@ -3,15 +3,15 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './ScriptsActions';
 import Store from './ScriptsStore';
 
 // Components
-import {RaisedButton} from 'material-ui';
-import {Container} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container } from '../../common/';
 import SnippetsInnerToolbar from '../Snippets/SnippetsInnerToolbar';
 
 // Local components
@@ -28,7 +28,7 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('Scripts::componentDidMount');
-    const {action} = this.props.params;
+    const { action } = this.props.params;
 
     if (action === 'add') {
       Actions.showDialog();
@@ -38,7 +38,7 @@ export default React.createClass({
   },
 
   render() {
-    const {items, hideDialogs, isLoading} = this.state;
+    const { items, hideDialogs, isLoading } = this.state;
 
     return (
       <div>
@@ -48,16 +48,18 @@ export default React.createClass({
         <SnippetsInnerToolbar>
           <RaisedButton
             label="Add"
-            primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={Actions.showDialog} />
+            primary
+            style={{ marginRight: 0 }}
+            onTouchTap={Actions.showDialog}
+          />
         </SnippetsInnerToolbar>
 
         <Container>
           <ScriptsList
             items={items}
             hideDialogs={hideDialogs}
-            isLoading={isLoading} />
+            isLoading={isLoading}
+          />
         </Container>
       </div>
     );

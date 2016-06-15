@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import {DialogMixin, MousetrapMixin} from '../../mixins/';
-import {Dialog, IconButton} from 'material-ui';
-import {Loading} from '../';
+import { DialogMixin, MousetrapMixin } from '../../mixins/';
+import { Dialog, IconButton } from 'material-ui';
+import { Loading } from '../';
 import DialogSidebar from './DialogSidebar';
 
 export default React.createClass({
@@ -23,7 +23,7 @@ export default React.createClass({
   },
 
   componentDidUpdate(prevProps) {
-    const {onRequestClose, onConfirm, actions} = this.props;
+    const { onRequestClose, onConfirm, actions } = this.props;
     const handleConfirm = onConfirm || actions.props && actions.props.handleConfirm;
 
     if (!prevProps.open && this.props.open && this.props.bindShortcuts) {
@@ -47,7 +47,7 @@ export default React.createClass({
   },
 
   getStyles() {
-    const {sidebar} = this.props;
+    const { sidebar } = this.props;
 
     return {
       style: {
@@ -112,14 +112,15 @@ export default React.createClass({
 
   renderCloseButton() {
     const styles = this.getStyles();
-    const {onRequestClose} = this.props;
+    const { onRequestClose } = this.props;
 
     return (
       <IconButton
         style={styles.closeButton}
         iconStyle={styles.closeButtonIcon}
         onTouchTap={onRequestClose}
-        iconClassName="synicon-close"/>
+        iconClassName="synicon-close"
+      />
     );
   },
 
@@ -144,17 +145,18 @@ export default React.createClass({
       <Dialog
         {...other}
         open={_.isBoolean(open) ? open : this.state.open}
-        style={{...styles.style, ...style}}
+        style={{ ...styles.style, ...style }}
         overlayStyle={styles.overlay}
         contentClassName="full-page-dialog__content"
-        contentStyle={{...styles.content, ...this.getContentConfig(contentSize), contentStyle}}
+        contentStyle={{ ...styles.content, ...this.getContentConfig(contentSize), contentStyle }}
         actions={actions}
-        modal={true}
+        modal
         autoDetectWindowHeight={false}
-        titleStyle={{...styles.title, ...titleStyle}}
+        titleStyle={{ ...styles.title, ...titleStyle }}
         bodyStyle={styles.body}
-        actionsContainerStyle={{...styles.actionsContainer, ...(sidebar && styles.actionsContainerWhenSidebar)}}
-        onRequestClose={onRequestClose}>
+        actionsContainerStyle={{ ...styles.actionsContainer, ...(sidebar && styles.actionsContainerWhenSidebar) }}
+        onRequestClose={onRequestClose}
+      >
 
         {showCloseButton && this.renderCloseButton()}
 
@@ -169,7 +171,8 @@ export default React.createClass({
           type="linear"
           position="top"
           style={styles.loading}
-          show={isLoading}/>
+          show={isLoading}
+        />
       </Dialog>
     );
   }

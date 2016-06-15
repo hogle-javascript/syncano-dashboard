@@ -4,11 +4,11 @@ import Actions from './UsersActions';
 import Store from './UsersStore';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Components
 import ListItem from './UsersListItem';
-import {ColumnList, Dialog, Lists} from '../../common/';
+import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -44,7 +44,8 @@ export default React.createClass({
         key={`users-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeUserDialog', item)} />
+        showDeleteDialog={() => this.showDialog('removeUserDialog', item)}
+      />
     );
   },
 
@@ -56,14 +57,16 @@ export default React.createClass({
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
-            primary={true}
-            columnName="CHECK_ICON">
+            primary
+            columnName="CHECK_ICON"
+          >
             Users
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Groups</Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-4">
+            className="col-xs-4"
+          >
             User info
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Updated</Column.ColumnHeader>
@@ -72,7 +75,8 @@ export default React.createClass({
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem onTouchTap={() => this.showDialog('removeUserDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
@@ -82,7 +86,8 @@ export default React.createClass({
           emptyItemContent="Add a User"
           emptyItemHandleClick={Actions.showDialog}
           key="users-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

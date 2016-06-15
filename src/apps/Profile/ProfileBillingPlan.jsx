@@ -5,16 +5,16 @@ import Moment from 'moment';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
-import {FormMixin, DialogsMixin} from '../../mixins';
+import { FormMixin, DialogsMixin } from '../../mixins';
 
 import Store from './ProfileBillingPlanStore';
 import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
-import {FlatButton, IconButton, RaisedButton, TextField} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Billing, Container, Loading, Color, Dialog, InnerToolbar} from '../../common/';
+import { FlatButton, IconButton, RaisedButton, TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Billing, Container, Loading, Color, Dialog, InnerToolbar } from '../../common/';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 import Chart from './ProfileBillingChart';
@@ -125,13 +125,15 @@ export default Radium(React.createClass({
         title: 'Cancel Production Plan',
         actions: [
           <RaisedButton
-            style={{marginRight: 10}}
-            primary={true}
+            style={{ marginRight: 10 }}
+            primary
             label="No, I want to keep my plan."
-            onTouchTap={this.handleCancelCancelProductionPlan}/>,
+            onTouchTap={this.handleCancelCancelProductionPlan}
+          />,
           <FlatButton
             label="Yes, I want to cancel."
-            onTouchTap={this.handleCancelProductionPlan}/>
+            onTouchTap={this.handleCancelProductionPlan}
+          />
         ],
         modal: true,
         children: ['Are you sure you want to cancel your Production plan?']
@@ -162,9 +164,9 @@ export default Radium(React.createClass({
     if (plan === 'builder') {
       return (
         <div>
-          <div style={{marginBottom: 16}}>It does not cost you anything but there are limits:</div>
+          <div style={{ marginBottom: 16 }}>It does not cost you anything but there are limits:</div>
           <div>
-            <Limits data={Store.getLimitsData('default', plan)}/>
+            <Limits data={Store.getLimitsData('default', plan)} />
           </div>
         </div>
       );
@@ -172,12 +174,12 @@ export default Radium(React.createClass({
       return (
         <div>
           <div style={styles.mainDesc}>
-            <div style={{lineHeight: '48px'}}>
+            <div style={{ lineHeight: '48px' }}>
               Current plan <strong>${Store.getTotalPlanValue('default')}</strong>:
             </div>
           </div>
           <div>
-            <Limits data={Store.getLimitsData('default', plan)}/>
+            <Limits data={Store.getLimitsData('default', plan)} />
           </div>
         </div>
       );
@@ -202,7 +204,7 @@ export default Radium(React.createClass({
         const limitsData = Store.getLimitsData(subscription, plan);
 
         let toolTip = (
-          <div style={{whiteSpace: 'normal', textAlign: 'left', width: 250}}>
+          <div style={{ whiteSpace: 'normal', textAlign: 'left', width: 250 }}>
             Your current plan will expire at the end of the month and your new plan
             will begin on {Moment(subscription.start).format('LL')}
           </div>
@@ -211,14 +213,15 @@ export default Radium(React.createClass({
         return (
           <div>
             <div style={styles.mainDesc}>
-              <div style={{lineHeight: '48px'}}>New plan <strong>${total}</strong>:</div>
+              <div style={{ lineHeight: '48px' }}>New plan <strong>${total}</strong>:</div>
               <IconButton
                 iconClassName="synicon-information-outline"
-                iconStyle={{color: Color.getColorByName('blue', 'light')}}
-                tooltip={toolTip}/>
+                iconStyle={{ color: Color.getColorByName('blue', 'light') }}
+                tooltip={toolTip}
+              />
             </div>
             <div>
-              <Limits data={limitsData}/>
+              <Limits data={limitsData} />
             </div>
           </div>
         );
@@ -241,7 +244,7 @@ export default Radium(React.createClass({
     }
 
     let toolTip = (
-      <div style={{whiteSpace: 'normal', textAlign: 'left', width: 200}}>
+      <div style={{ whiteSpace: 'normal', textAlign: 'left', width: 200 }}>
         Here you can set limits for your plan. You will be notified after reaching soft limit.
         After reaching hard limit your account will be frozen to avoid additional costs.
       </div>
@@ -251,7 +254,8 @@ export default Radium(React.createClass({
       <form
         onSubmit={this.handleFormValidation}
         method="post"
-        acceptCharset="UTF-8">
+        acceptCharset="UTF-8"
+      >
         <div>
           {this.renderFormNotifications()}
           <div style={styles.heading}>Limits</div>
@@ -260,33 +264,37 @@ export default Radium(React.createClass({
               <TextField
                 ref="soft_limit"
                 value={this.state.soft_limit}
-                onChange={(event, value) => this.setState({soft_limit: value})}
+                onChange={(event, value) => this.setState({ soft_limit: value })}
                 errorText={this.getValidationMessages('soft_limit').join(' ')}
                 name="soft_limit"
                 floatingLabelText="Soft Limit"
-                fullWidth={true}/>
+                fullWidth
+              />
             </div>
             <div className="col-md-8 col-lg-5">
               <TextField
                 ref="hard_limit"
                 value={this.state.hard_limit}
-                onChange={(event, value) => this.setState({hard_limit: value})}
+                onChange={(event, value) => this.setState({ hard_limit: value })}
                 errorText={this.getValidationMessages('hard_limit').join(' ')}
                 name="hard_limit"
                 floatingLabelText="Hard Limit"
-                fullWidth={true}/>
+                fullWidth
+              />
             </div>
             <div className="col-flex-1">
-              <div className="vp-3-t" style={{display: 'flex', alignItems: 'center'}}>
+              <div className="vp-3-t" style={{ display: 'flex', alignItems: 'center' }}>
                 <FlatButton
                   type="submit"
-                  primary={true}
-                  label='Set Limits'
-                  disabled={(!this.state.hard_limit && !this.state.soft_limit)}/>
+                  primary
+                  label="Set Limits"
+                  disabled={(!this.state.hard_limit && !this.state.soft_limit)}
+                />
                 <IconButton
                   iconClassName="synicon-information-outline"
-                  iconStyle={{color: Colors.blue500}}
-                  tooltip={toolTip}/>
+                  iconStyle={{ color: Colors.blue500 }}
+                  tooltip={toolTip}
+                />
               </div>
             </div>
           </div>
@@ -296,14 +304,14 @@ export default Radium(React.createClass({
   },
 
   renderSubscriptionExpiringInfo() {
-    const {muiTheme} = this.context;
-    const {profile} = this.state;
+    const { muiTheme } = this.context;
+    const { profile } = this.state;
     const endDate = profile.subscription.end;
     const endDateString = Moment(endDate).format('MMMM D YYYY');
 
     return (
-      <div style={{marginTop: 20, textAlign: 'center'}}>
-        <p style={{marginBottom: 20, lineHeight: 1.35}}>
+      <div style={{ marginTop: 20, textAlign: 'center' }}>
+        <p style={{ marginBottom: 20, lineHeight: 1.35 }}>
           Your free Builder account will expire on <strong>{endDateString}</strong>.
         </p>
         <RaisedButton
@@ -318,33 +326,35 @@ export default Radium(React.createClass({
 
   renderSummary() {
     const plan = Store.getPlan();
-    const {profile} = this.state;
+    const { profile } = this.state;
 
     let coveredText = '';
 
     if (plan === 'builder' || plan === 'free') {
       coveredText = 'Covered by Syncano';
     } else if (plan === 'paid-commitment') {
-      coveredText = `So far this month`;
+      coveredText = 'So far this month';
     }
 
     if (plan === 'builder' || plan === 'free') {
-      const totalIndex = _.findIndex(profile.balance, {source: 'Plan Fee'});
+      const totalIndex = _.findIndex(profile.balance, { source: 'Plan Fee' });
       const amountTotal = profile.balance[totalIndex].quantity;
 
       return (
         <div>
-          <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
+          <div style={{ textAlign: 'center', fontSize: '1.2rem' }}>
             {coveredText}
           </div>
           <div
             className="row align-middle"
-            style={{marginTop: 25}}>
+            style={{ marginTop: 25 }}
+          >
             <div
               className="col-flex-1"
-              style={{textAlign: 'center'}}>
-              <div style={{textDecoration: 'line-through', fontSize: '2rem'}}>${amountTotal}</div>
-              <div style={{marginTop: 15, fontSize: '1rem'}}>Your Cost: $0</div>
+              style={{ textAlign: 'center' }}
+            >
+              <div style={{ textDecoration: 'line-through', fontSize: '2rem' }}>${amountTotal}</div>
+              <div style={{ marginTop: 15, fontSize: '1rem' }}>Your Cost: $0</div>
             </div>
           </div>
           {plan === 'builder' && this.renderSubscriptionExpiringInfo()}
@@ -358,17 +368,19 @@ export default Radium(React.createClass({
 
     return (
       <div>
-        <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
+        <div style={{ textAlign: 'center', fontSize: '1.2rem' }}>
           {coveredText}
         </div>
         <div
           className="row align-middle"
-          style={{marginTop: 20}}>
+          style={{ marginTop: 20 }}
+        >
           <div
             className="col-flex-1"
-            style={{textAlign: 'center'}}>
-            <div style={{fontSize: '2rem'}}>${amountTotal}</div>
-            <div style={{marginTop: 15, fontSize: '1rem'}}>
+            style={{ textAlign: 'center' }}
+          >
+            <div style={{ fontSize: '2rem' }}>${amountTotal}</div>
+            <div style={{ marginTop: 15, fontSize: '1rem' }}>
               ${covered} plan + ${overage} overage
             </div>
           </div>
@@ -379,27 +391,29 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {subscriptions} = this.state;
+    const { subscriptions } = this.state;
 
     if (this.state.isLoading) {
-      return <Loading show={true} />;
+      return <Loading show />;
     }
 
     if (subscriptions && subscriptions.length === 0) {
       return (
         <div className="vp-5-t">
-          <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+          <PlanDialog onDismiss={this.handlePlanDialogDismiss} />
           <Container.Empty
             icon="synicon-block-helper"
-            text="You don't have any active subscription."/>
+            text="You don't have any active subscription."
+          />
 
-          <div style={{margin: '64px auto', textAlign: 'center'}}>
+          <div style={{ margin: '64px auto', textAlign: 'center' }}>
             <RaisedButton
               label="Subscribe"
               labelStyle={styles.updateButtonLabel}
               className="raised-button"
-              primary={true}
-              onClick={this.handleShowPlanDialog}/>
+              primary
+              onClick={this.handleShowPlanDialog}
+            />
           </div>
         </div>
       );
@@ -409,16 +423,16 @@ export default Radium(React.createClass({
       <div>
         <Helmet title="Billing Plan" />
         {this.getDialogs()}
-        <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+        <PlanDialog onDismiss={this.handlePlanDialogDismiss} />
 
-        <InnerToolbar title={<div>Your plan:
-          <span style={styles.planTitleText}><strong> {Store.getPlanName()}</strong></span></div>}>
+        <InnerToolbar title={<div>Your plan: <span><strong> {Store.getPlanName()}</strong></span></div>}>
           <Billing.SwitchSection
             ref="toggle"
             plan={this.state.profile.subscription.plan}
             planCanceled={Store.isPlanCanceled()}
             onPlanDialog={this.handleShowPlanDialog}
-            onCancelPlanDialog={() => this.showDialog('cancelProductionPlan')}/>
+            onCancelPlanDialog={() => this.showDialog('cancelProductionPlan')}
+          />
         </InnerToolbar>
 
         <Container>
@@ -435,15 +449,18 @@ export default Radium(React.createClass({
                   plan={this.state.profile.subscription.plan}
                   isNewSubscription={Store.isNewSubscription()}
                   onPlanDialog={this.handleShowPlanDialog}
-                  onDeleteSubscription={() => Actions.cancelNewPlan(this.state.subscriptions)}/>
+                  onDeleteSubscription={() => Actions.cancelNewPlan(this.state.subscriptions)}
+                />
               </div>
             </div>
             <div
               className="col-md-14"
-              style={styles.summary}>
+              style={styles.summary}
+            >
               <div
                 className="vp-4"
-                style={{alignSelf: 'center'}}>
+                style={{ alignSelf: 'center' }}
+              >
                 {this.renderSummary()}
               </div>
             </div>
@@ -452,7 +469,8 @@ export default Radium(React.createClass({
           <div className="row vp-2-b">
             <div
               className="col-flex-1 vp-1-b"
-              style={styles.heading}>
+              style={styles.heading}
+            >
               See how it works with your <strong>current plan</strong>:
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import {FontIcon, Card, CardTitle, Avatar, CardText, FlatButton, IconButton} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { FontIcon, Card, CardTitle, Avatar, CardText, FlatButton, IconButton } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 import SolutionStar from './Star';
 
 export default Radium(React.createClass({
@@ -109,7 +109,8 @@ export default Radium(React.createClass({
         <FontIcon
           style={styles.cardTextListIcon}
           className="synicon-information-outline"
-          color={color}/>
+          color={color}
+        />
         {name}
       </div>
     );
@@ -127,7 +128,8 @@ export default Radium(React.createClass({
         <a
           key={tag}
           style={styles.tag}
-          onClick={this.handleTagClick.bind(null, tag)}>
+          onClick={this.handleTagClick.bind(null, tag)}
+        >
           {tag}
         </a>
       );
@@ -144,12 +146,14 @@ export default Radium(React.createClass({
           <CardTitle
             style={styles.cardTitleRoot}
             title={item.label}
-            titleStyle={styles.cardTitle}/>
+            titleStyle={styles.cardTitle}
+          />
 
           <div style={styles.cardAvatarContainer}>
             <Avatar
               size={55}
-              src={item.author ? item.author.avatar_url : null}/>
+              src={item.author ? item.author.avatar_url : null}
+            />
           </div>
         </div>
 
@@ -162,7 +166,8 @@ export default Radium(React.createClass({
             <FontIcon
               style={styles.cardTextListIcon}
               className="synicon-tag"
-              color="rgba(222, 222, 222, 0.54)"/>
+              color="rgba(222, 222, 222, 0.54)"
+            />
             {this.renderItemTags()}
           </div>
           {this.renderVersion()}
@@ -173,17 +178,19 @@ export default Radium(React.createClass({
             solution={item}
             onUnstar={this.props.onUnstar}
             onStar={this.props.onStar}
-            />
+          />
           <FlatButton
             label="SEE DETAILS"
             labelStyle={styles.seeDetailsButton}
-            onClick={this.handleSeeMoreClick.bind(null, item.id)}/>
+            onClick={this.handleSeeMoreClick.bind(null, item.id)}
+          />
           <IconButton
             iconClassName="synicon-download"
             disabled={this.isNoVersions()}
             iconStyle={this.isNoVersions() ? {} : styles.installIcon}
             onClick={this.handleInstallClick.bind(null, item.id)}
-            touch={true}/>
+            touch
+          />
         </div>
       </Card>
     );

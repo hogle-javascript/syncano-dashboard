@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import AdminsActions from './AdminsActions';
@@ -10,8 +10,8 @@ import AdminsInvitationsActions from './AdminsInvitationsActions';
 import Store from './AdminDialogStore';
 
 // Components
-import {TextField} from 'material-ui';
-import {Dialog, SelectFieldWrapper, Show, Notification} from '../../common/';
+import { TextField } from 'material-ui';
+import { Dialog, SelectFieldWrapper, Show, Notification } from '../../common/';
 
 export default React.createClass({
   displayName: 'AdminDialog',
@@ -35,15 +35,15 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {email, role} = this.state;
+    const { email, role } = this.state;
 
-    AdminsInvitationsActions.createInvitation({email, role});
+    AdminsInvitationsActions.createInvitation({ email, role });
   },
 
   handleEditSubmit() {
-    const {id, role} = this.state;
+    const { id, role } = this.state;
 
-    AdminsActions.updateAdmin(id, {role});
+    AdminsActions.updateAdmin(id, { role });
   },
 
   render() {
@@ -62,7 +62,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -70,33 +71,36 @@ export default React.createClass({
               Inviting Syncano Adminstrators to your Instance will allow for
               team collaboration on a project.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
+            <Dialog.SidebarSection last>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/administrators">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         {this.renderFormNotifications()}
         <TextField
           ref="email"
           name="email"
-          autoFocus={true}
-          fullWidth={true}
+          autoFocus
+          fullWidth
           disabled={this.hasEditMode()}
           value={this.state.email}
-          onChange={(event, value) => this.setState({email: value})}
+          onChange={(event, value) => this.setState({ email: value })}
           errorText={this.getValidationMessages('email').join(' ')}
           hintText="Administrator's email"
-          floatingLabelText="Email"/>
+          floatingLabelText="Email"
+        />
         <SelectFieldWrapper
-          fullWidth={true}
+          fullWidth
           name="role"
           floatingLabelText="Administrator's role"
           options={Store.getRoles()}
           value={this.state.role}
           onChange={(event, index, value) => this.setSelectFieldValue('role', value)}
-          errorText={this.getValidationMessages('role').join(' ')}/>
+          errorText={this.getValidationMessages('role').join(' ')}
+        />
         <Show if={this.getValidationMessages('detail').length}>
           <Notification type="error">
             {this.getValidationMessages('detail').join(' ')}

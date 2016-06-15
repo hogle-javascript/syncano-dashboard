@@ -5,11 +5,11 @@ import _ from 'lodash';
 
 import Actions from './UsersActions';
 import Store from './UsersStore';
-import {GroupsActions, GroupsStore, GroupsList, GroupDialog} from './../Groups';
+import { GroupsActions, GroupsStore, GroupsList, GroupDialog } from './../Groups';
 
 // Components
-import {RaisedButton} from 'material-ui';
-import {Container, InnerToolbar, Lists, Loading, Show} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container, InnerToolbar, Lists, Loading, Show } from '../../common/';
 
 // Local components
 import UsersList from './UsersList';
@@ -30,7 +30,7 @@ export default React.createClass({
   },
 
   handleMoreRows() {
-    const {nextParams} = this.state.users;
+    const { nextParams } = this.state.users;
 
     Actions.subFetchUsers(nextParams);
   },
@@ -46,7 +46,7 @@ export default React.createClass({
   },
 
   render() {
-    const {groups, users} = this.state;
+    const { groups, users } = this.state;
 
     return (
       <div>
@@ -57,14 +57,16 @@ export default React.createClass({
         <InnerToolbar title="Users & Groups">
           <RaisedButton
             label="Add a Group"
-            primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={GroupsActions.showDialog}/>
+            primary
+            style={{ marginRight: 0 }}
+            onTouchTap={GroupsActions.showDialog}
+          />
           <RaisedButton
             label="Add a User"
-            primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={this.showUserDialog.bind(null, null)}/>
+            primary
+            style={{ marginRight: 0 }}
+            onTouchTap={this.showUserDialog.bind(null, null)}
+          />
         </InnerToolbar>
 
         <Container>
@@ -73,28 +75,33 @@ export default React.createClass({
               <GroupsList
                 isLoading={groups.isLoading}
                 items={groups.items}
-                hideDialogs={groups.hideDialogs} />
+                hideDialogs={groups.hideDialogs}
+              />
             </div>
             <div className="col-lg-27">
               <Show if={users.items}>
                 <UsersList
                   items={users.items}
-                  hideDialogs={users.hideDialogs} />
+                  hideDialogs={users.hideDialogs}
+                />
               </Show>
-              <Loading show={_.isNull(users.items) || users.isLoading}/>
+              <Loading show={_.isNull(users.items) || users.isLoading} />
               <Show if={!users.isLoading}>
                 <div
                   className="row align-center"
-                  style={{margin: 50}}>
+                  style={{ margin: 50 }}
+                >
                   <div>Loaded {users.items && users.items.length} Users</div>
                 </div>
                 <Show if={users.hasNextPage}>
                   <div
                     className="row align-center"
-                    style={{margin: 50}}>
+                    style={{ margin: 50 }}
+                  >
                     <RaisedButton
                       label="Load more"
-                      onClick={this.handleMoreRows}/>
+                      onClick={this.handleMoreRows}
+                    />
                   </div>
                 </Show>
               </Show>

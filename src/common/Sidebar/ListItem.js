@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListItem, FontIcon} from 'material-ui';
+import { ListItem, FontIcon } from 'material-ui';
 
 export default React.createClass({
   displayName: 'ListItem',
@@ -38,14 +38,15 @@ export default React.createClass({
 
   renderIcon() {
     const styles = this.getStyles();
-    const {iconClassName, iconColor, iconStyle} = this.props;
+    const { iconClassName, iconColor, iconStyle } = this.props;
 
     if (iconClassName) {
       return (
         <FontIcon
           color={iconColor}
-          style={{...styles.iconStyle, ...iconStyle}}
-          className={iconClassName} />
+          style={{ ...styles.iconStyle, ...iconStyle }}
+          className={iconClassName}
+        />
       );
     }
 
@@ -54,15 +55,16 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {style, iconClassName, ...other} = this.props;
+    const { style, iconClassName, ...other } = this.props;
 
     return (
       <ListItem
-        style={{...styles.base, ...style}}
-        innerDivStyle={{...styles.innerDivStyle, ...(iconClassName && styles.withIcon)}}
+        style={{ ...styles.base, ...style }}
+        innerDivStyle={{ ...styles.innerDivStyle, ...(iconClassName && styles.withIcon) }}
         leftIcon={this.renderIcon()}
         nestedListStyle={styles.nestedListStyle}
-        {...other} />
+        {...other}
+      />
     );
   }
 });

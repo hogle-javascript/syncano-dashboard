@@ -5,7 +5,7 @@ export default {
     this.NewLibConnection
       .Group
       .please()
-      .create({label})
+      .create({ label })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -23,13 +23,13 @@ export default {
     this.NewLibConnection
       .Group
       .please()
-      .update({id}, {label})
+      .update({ id }, { label })
       .then(this.completed)
       .catch(this.failure);
   },
 
   remove(groups) {
-    const promises = _.map(groups, (group) => this.NewLibConnection.Group.please().delete({id: group.id}));
+    const promises = _.map(groups, (group) => this.NewLibConnection.Group.please().delete({ id: group.id }));
 
     this.Promise.all(promises)
       .then(this.completed)

@@ -5,16 +5,16 @@ import _ from 'lodash';
 import Syncano from 'syncano';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../../mixins';
+import { DialogMixin, FormMixin } from '../../../mixins';
 
 // Stores and Actions
 import Actions from './APNSPushNotificationsActions';
 import Store from './APNSConfigDialogStore';
 
 // Components
-import {IconButton, TextField} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Show, Dialog, DropZone, Notification} from '../../../common/';
+import { IconButton, TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Show, Dialog, DropZone, Notification } from '../../../common/';
 
 export default Radium(React.createClass({
   displayName: 'APNSConfigDialog',
@@ -26,7 +26,7 @@ export default Radium(React.createClass({
   ],
 
   validatorConstraints() {
-    const {certificateTypes} = this.state;
+    const { certificateTypes } = this.state;
     let validator = {};
 
     _.forEach(certificateTypes, (certificateType) => {
@@ -141,42 +141,47 @@ export default Radium(React.createClass({
       return (
         <div
           className="row"
-          style={styles.dropzoneWithFileContainer}>
+          style={styles.dropzoneWithFileContainer}
+        >
           <IconButton
             onTouchTap={() => this.clearCertificate(type)}
             style={styles.closeIcon}
             iconStyle={styles.closeIconColor}
             tooltip="Remove cerificate"
-            iconClassName="synicon-close"/>
+            iconClassName="synicon-close"
+          />
           <div className="col-flex-1">
             <div style={styles.dropzoneWithFileTitle}>{_.capitalize(type)} certificate</div>
             <div className="row align-middle">
               <div className="col-xs-23">
                 <TextField
-                  fullWidth={true}
+                  fullWidth
                   value={this.state[`${type}_certificate_name`]}
-                  onChange={(event, value) => this.setState({[`${type}_certificate_name`]: value})}
+                  onChange={(event, value) => this.setState({ [`${type}_certificate_name`]: value })}
                   errorText={this.getValidationMessages(`${type}_certificate_name`).join(' ')}
-                  floatingLabelText="Apple Push Notification Certificate Name"/>
+                  floatingLabelText="Apple Push Notification Certificate Name"
+                />
               </div>
               <div className="col-xs-12">
                 <TextField
                   underlineShow={false}
-                  disabled={true}
-                  autoWidth={true}
-                  fullWidth={true}
+                  disabled
+                  autoWidth
+                  fullWidth
                   value={_.capitalize(type)}
-                  floatingLabelText="Type"/>
+                  floatingLabelText="Type"
+                />
               </div>
             </div>
             <div className="row align-middle">
               <div className="col-xs-23">
                 <TextField
-                  fullWidth={true}
+                  fullWidth
                   value={this.state[`${type}_bundle_identifier`]}
-                  onChange={(event, value) => this.setState({[`${type}_bundle_identifier`]: value})}
+                  onChange={(event, value) => this.setState({ [`${type}_bundle_identifier`]: value })}
                   errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}
-                  floatingLabelText="Bundle Identifier"/>
+                  floatingLabelText="Bundle Identifier"
+                />
               </div>
               <div className="col-xs-12">
                 <div style={styles.certificateType}>Expiration Date</div>
@@ -190,21 +195,23 @@ export default Radium(React.createClass({
   },
 
   renderDropZones() {
-    const {certificateTypes} = this.state;
+    const { certificateTypes } = this.state;
 
     return _.map(certificateTypes, (type) => {
       return (
         <div
           key={`dropzone${type}`}
-          style={[type === 'production' && {marginTop: 16}]}>
+          style={[type === 'production' && { marginTop: 16 }]}
+        >
           <DropZone
             certificateType={type}
             isLoading={this.state.isCertLoading}
             handleButtonClick={(file) => this.onDrop(file, type)}
             onDrop={(file) => this.onDrop(file, type)}
-            disableClick={true}
-            withButton={true}
-            uploadButtonLabel="UPLOAD .p12 CERTIFICATE">
+            disableClick
+            withButton
+            uploadButtonLabel="UPLOAD .p12 CERTIFICATE"
+          >
             {this.renderDropzoneDescription(type)}
           </DropZone>
         </div>
@@ -213,13 +220,14 @@ export default Radium(React.createClass({
   },
 
   renderCertificateErrors() {
-    const {certificateTypes} = this.state;
+    const { certificateTypes } = this.state;
 
     return _.map(certificateTypes, (type) => {
       return (
         <Show
           key={`certificateError${type}`}
-          if={this.getValidationMessages(`${type}_certificate`).length > 0}>
+          if={this.getValidationMessages(`${type}_certificate`).length > 0}
+        >
           <div className="vm-2-t">
             <Notification type="error">
               {this.getValidationMessages(`${type}_certificate`).join(' ')}
@@ -239,7 +247,7 @@ export default Radium(React.createClass({
         ref="dialog"
         contentSize="large"
         title="Configure Push Notification Socket - APNS"
-        autoDetectWindowHeight={true}
+        autoDetectWindowHeight
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}
@@ -248,37 +256,40 @@ export default Radium(React.createClass({
           <Dialog.StandardButtons
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
             <Dialog.SidebarSection>
               <strong>APNS Push Notification Socket</strong> allows you to send messages to your iOS devices. You can
               easily notify users about updates etc.
-              <br/><br/>
+              <br /><br />
               <i>
                 NOTE: At least one production or development certificate must be uploaded to send Push Notifications.
               </i>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Certificates">
               Certificates are IDs that uniquely identify your application.
-              <br/><br/>
+              <br /><br />
               <i>
                 NOTE: If you don't have any certificates generated yet, click link below to learn how to generate them
                  from our docs.
               </i>
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last={true}>
+            <Dialog.SidebarSection last>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/push-notification-sockets-ios">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         <div className="row align-center hp-2-l hp-2-r vm-2-b vm-2-t">
           <div
             className="hm-2-r"
-            dangerouslySetInnerHTML={{__html: require('./phone-apple.svg')}}></div>
+            dangerouslySetInnerHTML={{ __html: require('./phone-apple.svg') }}
+          ></div>
           <div className="col-flex-1">
             {this.renderDropZones()}
             {this.renderCertificateErrors()}

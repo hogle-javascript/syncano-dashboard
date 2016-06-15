@@ -1,9 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Sticky from 'react-stickydiv';
 
-import {Toolbar, ToolbarGroup, ToolbarTitle, IconButton} from 'material-ui';
+import { Toolbar, ToolbarGroup, ToolbarTitle, IconButton } from 'material-ui';
 
 const InnerToolbar = Radium(React.createClass({
   displayName: 'InnerToolbar',
@@ -45,7 +45,7 @@ const InnerToolbar = Radium(React.createClass({
   },
 
   handleBackButtonTouchTap() {
-    const {backFallback, forceBackFallback, router} = this.props;
+    const { backFallback, forceBackFallback, router } = this.props;
 
     if (this.isHistory() && !forceBackFallback) {
       return router.goBack();
@@ -55,18 +55,19 @@ const InnerToolbar = Radium(React.createClass({
   },
 
   renderBackButton() {
-    const {backButtonTooltip, backButtonTooltipPosition} = this.props;
+    const { backButtonTooltip, backButtonTooltipPosition } = this.props;
 
     return (
-      <ToolbarGroup style={{paddingRight: 24}}>
+      <ToolbarGroup style={{ paddingRight: 24 }}>
         <IconButton
           iconClassName="synicon-arrow-left"
           tooltip={backButtonTooltip}
           tooltipPosition={backButtonTooltipPosition}
           onClick={this.handleBackButtonTouchTap}
-          touch={true}
-          style={{marginTop: 4}}
-          iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
+          touch
+          style={{ marginTop: 4 }}
+          iconStyle={{ color: 'rgba(0,0,0,.4)' }}
+        />
       </ToolbarGroup>
     );
   },
@@ -94,14 +95,15 @@ const InnerToolbar = Radium(React.createClass({
       <ToolbarGroup>
         <ToolbarTitle
           text={title}
-          style={{paddingRight: 0}} />
+          style={{ paddingRight: 0 }}
+        />
       </ToolbarGroup>
     );
   },
 
   render() {
     const styles = this.getStyles();
-    const {children, menu, title, backButton, backFallback} = this.props;
+    const { children, menu, title, backButton, backFallback } = this.props;
 
     return (
       <Sticky offsetTop={50} zIndex={12}>

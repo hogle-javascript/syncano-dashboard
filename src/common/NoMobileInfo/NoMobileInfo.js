@@ -45,20 +45,23 @@ export default () => {
     <div style={styles.root}>
       <div
         style={styles.illustration}
-        dangerouslySetInnerHTML={{__html: require('./illustration-mobile.svg')}}>
+        dangerouslySetInnerHTML={{ __html: require('./illustration-mobile.svg') }}
+      >
       </div>
-        <ReactFitText
-          compressor={1.5}
-          minFontSize={22}
-          maxFontSize={28}>
+      <ReactFitText
+        compressor={1.5}
+        minFontSize={22}
+        maxFontSize={28}
+      >
         <p style={styles.headline}>
-          Please use a Desktop<br/>or Tablet browser.
+          Please use a Desktop<br />or Tablet browser.
         </p>
       </ReactFitText>
       <ReactFitText
         compressor={3}
         minFontSize={12}
-        maxFontSize={14}>
+        maxFontSize={14}
+      >
         <div>
           <div style={styles.text}>
             <div>The Syncano admin interface is not optimized</div>

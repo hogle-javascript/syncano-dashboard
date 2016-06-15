@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './ScriptsActions';
@@ -11,7 +11,7 @@ import Store from './ScriptsStore';
 
 // Components
 import ListItem from './ScriptsListItem';
-import {ColumnList, Loading, Dialog, Lists} from '../../common/';
+import { ColumnList, Loading, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -103,7 +103,8 @@ export default React.createClass({
         <Loading
           type="linear"
           position="bottom"
-          show={this.state.isLoading}/>
+          show={this.state.isLoading}
+        />
       ];
     }
 
@@ -116,7 +117,8 @@ export default React.createClass({
         key={`scripts-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteScriptDialog', item)} />
+        showDeleteDialog={() => this.showDialog('deleteScriptDialog', item)}
+      />
     );
   },
 
@@ -128,8 +130,9 @@ export default React.createClass({
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
-            primary={true}
-            columnName="CHECK_ICON">
+            primary
+            columnName="CHECK_ICON"
+          >
             Scripts
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
@@ -138,7 +141,8 @@ export default React.createClass({
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem onTouchTap={() => this.showDialog('deleteScriptDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
@@ -148,7 +152,8 @@ export default React.createClass({
           emptyItemContent="Add a Script"
           emptyItemHandleClick={Actions.showDialog}
           key="scripts-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }
