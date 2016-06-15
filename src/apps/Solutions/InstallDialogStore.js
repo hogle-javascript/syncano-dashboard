@@ -64,7 +64,7 @@ export default Reflux.createStore({
 
   setInstances(instances) {
     console.debug('SolutionInstallDialogStore::setInstances');
-    this.data.instances = Object.keys(instances).map((key) => instances[key]);
+    this.data.instances = instances;
 
     if (instances && instances.length === 1) {
       this.data.instance = instances[0].name;
@@ -75,7 +75,7 @@ export default Reflux.createStore({
 
   setSolutionVersions(versions) {
     console.debug('SolutionInstallDialogStore::setInstances');
-    this.data.versions = Object.keys(versions).map((key) => versions[key]);
+    this.data.versions = versions.objects;
     this.data.versions.reverse();
     this.data.version = this.data.versions[0].id;
     this.trigger(this.data);
@@ -135,7 +135,7 @@ export default Reflux.createStore({
   onInstallSolutionCompleted(payload) {
     console.debug('SolutionInstallDialogStore::onFetchSolutionVersionsCompleted');
     this.data.isLoading = false;
-    SessionStore.getRouter().transitionTo('instance', {instanceName: payload.instance});
+    SessionStore.getRouter().push({name: 'instance', params: {instanceName: payload.instance}});
     this.setSnackbarNotification({
       delay: true,
       message: 'Solution successfully installed',

@@ -59,6 +59,18 @@ export default React.createClass({
   },
 
   render() {
+    const {
+      group,
+      name,
+      description,
+      type,
+      canSubmit,
+      isLoading,
+      open,
+      group_permissions,
+      other_permissions,
+      custom_publish
+    } = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -67,11 +79,11 @@ export default React.createClass({
         ref="dialog"
         title={`${title} a Channel Socket`}
         onRequestClose={this.handleCancel}
-        open={this.state.open}
-        isLoading={this.state.isLoading}
+        open={open}
+        isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }
@@ -103,7 +115,7 @@ export default React.createClass({
             <TextField
               ref="name"
               autoFocus={true}
-              value={this.state.name}
+              value={name}
               onChange={(event, value) => this.setState({name: value})}
               errorText={this.getValidationMessages('name').join(' ')}
               name="name"
@@ -118,7 +130,7 @@ export default React.createClass({
               floatingLabelText="Channel type"
               options={ChannelsStore.getChannelTypesDropdown()}
               disabled={this.hasEditMode()}
-              value={this.state.type}
+              value={type}
               onChange={(event, index, value) => this.setSelectFieldValue('type', value)}
               errorText={this.getValidationMessages('type').join(' ')}/>
           </div>
@@ -126,7 +138,7 @@ export default React.createClass({
             <TextField
               ref="description"
               name="description"
-              value={this.state.description}
+              value={description}
               onChange={(event, value) => this.setState({description: value})}
               errorText={this.getValidationMessages('description').join(' ')}
               fullWidth={true}
@@ -142,6 +154,8 @@ export default React.createClass({
               ref="group"
               name="group"
               fullWidth={true}
+              value={group}
+              onChange={(event, value) => this.setState({group: value})}
               errorText={this.getValidationMessages('group').join(' ')}
               hintText="Group's ID"
               floatingLabelText="Group ID" />
@@ -151,7 +165,7 @@ export default React.createClass({
               name="group_permissions"
               floatingLabelText="Group permissions"
               options={ChannelsStore.getChannelPermissionsDropdown()}
-              value={this.state.group_permissions}
+              value={group_permissions}
               onChange={(event, index, value) => this.setSelectFieldValue('group_permissions', value)}
               errorText={this.getValidationMessages('group_permissions').join(' ')}/>
           </div>
@@ -160,7 +174,7 @@ export default React.createClass({
               name="other_permissions"
               floatingLabelText="Other permissions"
               options={ChannelsStore.getChannelPermissionsDropdown()}
-              value={this.state.other_permissions}
+              value={other_permissions}
               onChange={(event, index, value) => this.setSelectFieldValue('other_permissions', value)}
               errorText={this.getValidationMessages('other_permissions').join(' ')}/>
           </div>
@@ -172,7 +186,7 @@ export default React.createClass({
             <Toggle
               ref="custom_publish"
               name="custom_publish"
-              defaultToggled={this.state.custom_publish}
+              defaultToggled={custom_publish}
               onToggle={this.handleToogle}
               label="Custom publishing in this channel?"
               labelStyle={{fontSize: 15}}/>

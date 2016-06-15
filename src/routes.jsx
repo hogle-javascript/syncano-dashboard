@@ -17,7 +17,11 @@ import ScriptsPage from './pages/scripts';
 import SetupPage from './pages/setup';
 import NotFoundPage from './pages/notfound';
 import PushDevicesPage from './pages/pushDevices';
+<<<<<<< HEAD
 import FailedPaymentPage from './pages/failedPayment';
+=======
+import ExpiredAccountPage from './pages/expiredAccount';
+>>>>>>> devel
 
 // Apps
 import Account from './apps/Account';
@@ -159,6 +163,11 @@ export default (
         name="setup"
         component={SetupPage}
         path="setup"/>
+
+      <Route
+        name="expired-account"
+        component={ExpiredAccountPage}
+        path="expired"/>
 
       <Route
         name="failed-payment"

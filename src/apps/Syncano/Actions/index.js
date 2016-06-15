@@ -23,6 +23,7 @@ import Triggers from './Triggers';
 import Groups from './Groups';
 import Users from './Users';
 import Usage from './Usage';
+import GlobalConfig from './GlobalConfig';
 
 export default {
   Account,
@@ -49,5 +50,6 @@ export default {
   Groups,
   Users,
   Usage,
-  Templates
+  Templates,
+  GlobalConfig
 };

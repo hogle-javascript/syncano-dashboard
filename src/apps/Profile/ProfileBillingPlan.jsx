@@ -22,6 +22,10 @@ import Chart from './ProfileBillingChart';
 export default Radium(React.createClass({
   displayName: 'ProfileBillingPlan',
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     FormMixin,
     DialogsMixin,
@@ -291,9 +295,30 @@ export default Radium(React.createClass({
     );
   },
 
+  renderSubscriptionExpiringInfo() {
+    const {muiTheme} = this.context;
+    const {profile} = this.state;
+    const endDate = profile.subscription.end;
+    const endDateString = Moment(endDate).format('MMMM D YYYY');
+
+    return (
+      <div style={{marginTop: 20, textAlign: 'center'}}>
+        <p style={{marginBottom: 20, lineHeight: 1.35}}>
+          Your free Builder account will expire on <strong>{endDateString}</strong>.
+        </p>
+        <RaisedButton
+          label="Upgrade Now"
+          backgroundColor={muiTheme.palette.accent2Color}
+          labelColor="#FFFFFF"
+          onClick={this.handleShowPlanDialog}
+        />
+      </div>
+    );
+  },
+
   renderSummary() {
     const plan = Store.getPlan();
-    const profile = this.state.profile;
+    const {profile} = this.state;
 
     let coveredText = '';
 
@@ -322,6 +347,7 @@ export default Radium(React.createClass({
               <div style={{marginTop: 15, fontSize: '1rem'}}>Your Cost: $0</div>
             </div>
           </div>
+          {plan === 'builder' && this.renderSubscriptionExpiringInfo()}
         </div>
       );
     }
