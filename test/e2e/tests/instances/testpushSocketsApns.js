@@ -19,10 +19,10 @@ export default {
   'Test Admin Adds APNS Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const filePath = './cert12';
-
-    client.url(`https://localhost:8080/#/instances/${accounts.alternativeUser.instanceName}/sockets`);
+    const instanceName = accounts.alternativeUser.instanceName;
 
     socketsPage
+      .goToUrl(instanceName, 'sockets')
       .clickElement('@addApnsSocket')
       .waitForElementPresent('@certDragAndDrop');
 
@@ -64,10 +64,8 @@ export default {
       .then((resp) => console.log('Development certifacte uploaded?: ', resp.development_certificate))
       .catch((err) => console.log(err));
 
-    client
-      .url(`https://localhost:8080/#/instances/${accounts.alternativeUser.instanceName}/sockets`);
-
     socketsPage
+      .goToUrl(instanceName, 'sockets')
       .clickElement('@configuration')
       .waitForElementVisible('@apnsCertInput')
       .clickElement('@removeCert')
@@ -79,9 +77,10 @@ export default {
   'Test Admin Goes to APNS Device list': (client) => {
     const socketsPage = client.page.socketsPage();
     const pushDevicesPage = client.page.pushDevicesPage();
+    const instanceName = accounts.alternativeUser.instanceName;
 
     socketsPage
-      .goToUrl('temp', 'push-notifications/config')
+      .goToUrl(instanceName, 'push-notifications/config')
       .clickListItemDropdown('Apple Push Notification service (APNs)', 'Devices list');
 
     pushDevicesPage

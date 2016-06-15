@@ -1,5 +1,5 @@
-import utils from '../../utils';
 import accounts from '../../tempAccounts';
+import utils from '../../utils';
 
 export default {
   tags: ['pushSocketsGcm'],
@@ -17,12 +17,10 @@ export default {
   'Test Admin Adds GCM Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const gcmDevKey = utils.randomString(39);
-
-    client.url('https://localhost:8080/#/instances/' + accounts.alternativeUser.instanceName + '/sockets');
+    const instanceName = accounts.alternativeUser.instanceName;
 
     socketsPage
-      // Example rewrite tests, will need to change custom command, but right now it is not possible
-      // .goToUrl('temp', 'sockets')
+      .goToUrl(instanceName, 'sockets')
       .waitForElementVisible('@addCodeBoxModalTitle')
       .clickElement('@addGcmSocket')
       .fillInput('@inputGcmDevKey', gcmDevKey)
