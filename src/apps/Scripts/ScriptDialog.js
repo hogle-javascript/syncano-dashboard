@@ -79,7 +79,7 @@ export default React.createClass({
                several libraries for each language. For example: The Python runtime has a <strong>requests </strong>
                library.`}
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/snippets-scripts">
                 Learn more
               </Dialog.SidebarLink>
@@ -90,7 +90,7 @@ export default React.createClass({
         {this.renderFormNotifications()}
         <TextField
           ref="label"
-          autoFocus
+          autoFocus={true}
           value={this.state.label}
           onChange={(event, value) => this.setState({ label: value })}
           errorText={this.getValidationMessages('label').join(' ')}
@@ -106,7 +106,7 @@ export default React.createClass({
           onChange={(event, value) => this.setState({ description: value })}
           errorText={this.getValidationMessages('description').join(' ')}
           style={{ width: 500 }}
-          multiLine
+          multiLine={true}
           hintText="Script's description"
           floatingLabelText="Description (optional)"
         />

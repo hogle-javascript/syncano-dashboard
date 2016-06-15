@@ -58,7 +58,7 @@ export default React.createClass({
         <ColumnList.Header>
           <Column.ColumnHeader
             className="col-xs-12"
-            primary
+            primary={true}
             columnName="CHECK_ICON"
             handleClick={handleTitleClick}
           >

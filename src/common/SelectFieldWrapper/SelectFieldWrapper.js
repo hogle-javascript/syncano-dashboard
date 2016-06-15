@@ -25,7 +25,7 @@ export default React.createClass({
         ref={name}
         name={name}
         className={`${name}-dropdown`}
-        fullWidth
+        fullWidth={true}
         floatingLabelText={_.capitalize(name)}
         onChange={this.handleChange}
         {...other}

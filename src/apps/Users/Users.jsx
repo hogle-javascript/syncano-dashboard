@@ -57,13 +57,13 @@ export default React.createClass({
         <InnerToolbar title="Users & Groups">
           <RaisedButton
             label="Add a Group"
-            primary
+            primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={GroupsActions.showDialog}
           />
           <RaisedButton
             label="Add a User"
-            primary
+            primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={this.showUserDialog.bind(null, null)}
           />

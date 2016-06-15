@@ -126,7 +126,7 @@ export default Radium(React.createClass({
         actions: [
           <RaisedButton
             style={{ marginRight: 10 }}
-            primary
+            primary={true}
             label="No, I want to keep my plan."
             onTouchTap={this.handleCancelCancelProductionPlan}
           />,
@@ -268,7 +268,7 @@ export default Radium(React.createClass({
                 errorText={this.getValidationMessages('soft_limit').join(' ')}
                 name="soft_limit"
                 floatingLabelText="Soft Limit"
-                fullWidth
+                fullWidth={true}
               />
             </div>
             <div className="col-md-8 col-lg-5">
@@ -279,14 +279,14 @@ export default Radium(React.createClass({
                 errorText={this.getValidationMessages('hard_limit').join(' ')}
                 name="hard_limit"
                 floatingLabelText="Hard Limit"
-                fullWidth
+                fullWidth={true}
               />
             </div>
             <div className="col-flex-1">
               <div className="vp-3-t" style={{ display: 'flex', alignItems: 'center' }}>
                 <FlatButton
                   type="submit"
-                  primary
+                  primary={true}
                   label="Set Limits"
                   disabled={(!this.state.hard_limit && !this.state.soft_limit)}
                 />
@@ -394,7 +394,7 @@ export default Radium(React.createClass({
     const { subscriptions } = this.state;
 
     if (this.state.isLoading) {
-      return <Loading show />;
+      return <Loading show={true} />;
     }
 
     if (subscriptions && subscriptions.length === 0) {
@@ -411,7 +411,7 @@ export default Radium(React.createClass({
               label="Subscribe"
               labelStyle={styles.updateButtonLabel}
               className="raised-button"
-              primary
+              primary={true}
               onClick={this.handleShowPlanDialog}
             />
           </div>

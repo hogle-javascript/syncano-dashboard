@@ -41,13 +41,13 @@ export default React.createClass({
         <SnippetsInnerToolbar>
           <RaisedButton
             label="Add a Script"
-            primary
+            primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={ScriptsActions.showDialog}
           />
           <RaisedButton
             label="Add a Template"
-            primary
+            primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={TemplatesActions.showDialog}
           />

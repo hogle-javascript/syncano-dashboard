@@ -145,7 +145,7 @@ const ProfileBillingPlanDialog = React.createClass({
     const { card } = this.state;
 
     if (typeof card === 'undefined') {
-      return <Loading show />;
+      return <Loading show={true} />;
     }
 
     if (card) {
@@ -172,8 +172,8 @@ const ProfileBillingPlanDialog = React.createClass({
             <TextField
               name="number"
               ref="number"
-              autoFocus
-              fullWidth
+              autoFocus={true}
+              fullWidth={true}
               value={this.state.number}
               onChange={(event, value) => this.setState({ number: value })}
               errorText={this.getValidationMessages('number').join(' ')}
@@ -189,7 +189,7 @@ const ProfileBillingPlanDialog = React.createClass({
             <TextField
               name="cvc"
               ref="cvc"
-              fullWidth
+              fullWidth={true}
               value={this.state.cvc}
               onChange={(event, value) => this.setState({ cvc: value })}
               errorText={this.getValidationMessages('cvc').join(' ')}
@@ -203,7 +203,7 @@ const ProfileBillingPlanDialog = React.createClass({
             <TextField
               name="exp_month"
               ref="exp_month"
-              fullWidth
+              fullWidth={true}
               value={this.state.exp_month}
               onChange={(event, value) => this.setState({ exp_month: value })}
               errorText={this.getValidationMessages('exp_month').join(' ')}
@@ -217,7 +217,7 @@ const ProfileBillingPlanDialog = React.createClass({
             <TextField
               name="exp_year"
               ref="exp_year"
-              fullWidth
+              fullWidth={true}
               value={this.state.exp_year}
               onChange={(event, value) => this.setState({ exp_year: value })}
               errorText={this.getValidationMessages('exp_year').join(' ')}
@@ -288,7 +288,7 @@ const ProfileBillingPlanDialog = React.createClass({
       <FlatButton
         key="confirm"
         label="Confirm"
-        primary
+        primary={true}
         onTouchTap={this.handleFormValidation}
         ref="submit"
       />

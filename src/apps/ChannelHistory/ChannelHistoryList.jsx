@@ -45,7 +45,7 @@ export default Radium(React.createClass({
         <ColumnList.Header>
           <Column.ColumnHeader
             className="col-sm-6"
-            primary
+            primary={true}
             columnName="ICON_NAME"
           >{this.props.name}</Column.ColumnHeader>
           <Column.ColumnHeader

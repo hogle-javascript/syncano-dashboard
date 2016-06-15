@@ -116,7 +116,7 @@ export default React.createClass({
               and Data Objects provided that "other_permissions"
               for those resources are set appropriately.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/permissions#using-api-keys-and-user-keys">
                 Learn more
               </Dialog.SidebarLink>
@@ -128,8 +128,8 @@ export default React.createClass({
         <TextField
           ref="description"
           name="description"
-          autoFocus
-          fullWidth
+          autoFocus={true}
+          fullWidth={true}
           value={this.state.description}
           onChange={(event, value) => this.setState({ description: value })}
           errorText={this.getValidationMessages('description').join(' ')}

@@ -103,7 +103,7 @@ export default React.createClass({
               It allows your Users to be able to send custom messages on a Channel. This functionality might come in
               handy when you’d like.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/realtime-communication">
                 Learn more
               </Dialog.SidebarLink>
@@ -116,13 +116,13 @@ export default React.createClass({
           <div className="col-md-20">
             <TextField
               ref="name"
-              autoFocus
+              autoFocus={true}
               value={name}
               onChange={(event, value) => this.setState({ name: value })}
               errorText={this.getValidationMessages('name').join(' ')}
               name="name"
               disabled={this.hasEditMode()}
-              fullWidth
+              fullWidth={true}
               hintText="Channel's name"
               floatingLabelText="Name"
             />
@@ -145,8 +145,8 @@ export default React.createClass({
               value={description}
               onChange={(event, value) => this.setState({ description: value })}
               errorText={this.getValidationMessages('description').join(' ')}
-              fullWidth
-              multiLine
+              fullWidth={true}
+              multiLine={true}
               maxRows={2}
               floatingLabelText="Description (optional)"
               hintText="Channel Socket's description"
@@ -158,7 +158,7 @@ export default React.createClass({
             <TextField
               ref="group"
               name="group"
-              fullWidth
+              fullWidth={true}
               value={group}
               onChange={(event, value) => this.setState({ group: value })}
               errorText={this.getValidationMessages('group').join(' ')}

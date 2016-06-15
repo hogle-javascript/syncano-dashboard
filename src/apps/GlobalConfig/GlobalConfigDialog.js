@@ -81,7 +81,7 @@ export default React.createClass({
               {`Global Config is a JSON object and will not overwrite you Snippet Config but will be merged
                 with it. If both Configs contains the same key the Snippets Config value will be used.`}
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/">
                 Learn more
               </Dialog.SidebarLink>

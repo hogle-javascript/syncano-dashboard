@@ -189,7 +189,7 @@ export default Radium(React.createClass({
             disabled={this.isNoVersions()}
             iconStyle={this.isNoVersions() ? {} : styles.installIcon}
             onClick={this.handleInstallClick.bind(null, item.id)}
-            touch
+            touch={true}
           />
         </div>
       </Card>

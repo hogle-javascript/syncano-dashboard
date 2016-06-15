@@ -150,7 +150,7 @@ export default React.createClass({
         contentClassName="full-page-dialog__content"
         contentStyle={{ ...styles.content, ...this.getContentConfig(contentSize), contentStyle }}
         actions={actions}
-        modal
+        modal={true}
         autoDetectWindowHeight={false}
         titleStyle={{ ...styles.title, ...titleStyle }}
         bodyStyle={styles.body}

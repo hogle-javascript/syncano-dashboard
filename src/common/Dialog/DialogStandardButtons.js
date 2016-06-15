@@ -33,7 +33,7 @@ export default (props) => {
       <RaisedButton
         key="confirm"
         label={submitLabel}
-        primary
+        primary={true}
         onTouchTap={handleConfirm}
         disabled={disabled || submitDisabled}
       />

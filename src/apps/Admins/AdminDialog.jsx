@@ -71,7 +71,7 @@ export default React.createClass({
               Inviting Syncano Adminstrators to your Instance will allow for
               team collaboration on a project.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/administrators">
                 Learn more
               </Dialog.SidebarLink>
@@ -83,8 +83,8 @@ export default React.createClass({
         <TextField
           ref="email"
           name="email"
-          autoFocus
-          fullWidth
+          autoFocus={true}
+          fullWidth={true}
           disabled={this.hasEditMode()}
           value={this.state.email}
           onChange={(event, value) => this.setState({ email: value })}
@@ -93,7 +93,7 @@ export default React.createClass({
           floatingLabelText="Email"
         />
         <SelectFieldWrapper
-          fullWidth
+          fullWidth={true}
           name="role"
           floatingLabelText="Administrator's role"
           options={Store.getRoles()}

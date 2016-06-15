@@ -251,7 +251,7 @@ export default React.createClass({
               Choose which fields of Class schema will be included in the response. If a field is referencing
               Data Objects in a different Class, you can expand it to get those Data Objects proprerties.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/endpoints-data">
                 Learn more
               </Dialog.SidebarLink>
@@ -259,13 +259,13 @@ export default React.createClass({
           </Dialog.SidebarBox>
         }
       >
-        <Dialog.ContentSection noMargin>
+        <Dialog.ContentSection noMargin={true}>
           <div className="col-flex-1">
             <TextField
               ref="name"
               name="name"
-              autoFocus
-              fullWidth
+              autoFocus={true}
+              fullWidth={true}
               disabled={this.hasEditMode()}
               value={this.state.name}
               onChange={(event, value) => this.setState({ name: value })}
@@ -281,7 +281,7 @@ export default React.createClass({
             <TextField
               ref="description"
               name="description"
-              fullWidth
+              fullWidth={true}
               value={this.state.description}
               onChange={(event, value) => this.setState({ description: value })}
               errorText={this.getValidationMessages('description').join(' ')}
@@ -290,12 +290,12 @@ export default React.createClass({
             />
           </div>
         </Dialog.ContentSection>
-        <Dialog.ContentSection noMargin>
+        <Dialog.ContentSection noMargin={true}>
           <div className="col-flex-1">
             <TextField
               ref="page_size"
               name="page_size"
-              fullWidth
+              fullWidth={true}
               value={this.state.page_size}
               onChange={(event, value) => this.setState({ page_size: value })}
               errorText={this.getValidationMessages('page_size').join(' ')}
@@ -316,8 +316,8 @@ export default React.createClass({
               searchText={this.state.class}
               onNewRequest={(value) => this.setState({ class: value })}
               onUpdateInput={(value) => this.setState({ class: value })}
-              fullWidth
-              openOnFocus
+              fullWidth={true}
+              openOnFocus={true}
               errorText={this.getValidationMessages('class').join(' ')}
             />
           </div>

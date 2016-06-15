@@ -50,7 +50,7 @@ export default Radium(React.createClass({
   renderItemIconMenuButton() {
     return (
       <IconButton
-        touch
+        touch={true}
         tooltipPosition="bottom-left"
         iconClassName="synicon-dots-vertical"
       />

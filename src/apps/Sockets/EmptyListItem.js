@@ -60,7 +60,7 @@ export default ({ socketName, title, description, handleCreate, label = 'Add' })
       <div className="col-flex-0" style={{ width: 'auto' }}>
         <RaisedButton
           label={label}
-          primary
+          primary={true}
           style={{ marginRight: 0 }}
           onTouchTap={handleCreate}
         />

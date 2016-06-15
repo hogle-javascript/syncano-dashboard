@@ -73,7 +73,7 @@ const Instance = React.createClass({
                   routeName="snippets"
                   primaryText="Snippets"
                   iconClassName="synicon-code-tags"
-                  initiallyOpen
+                  initiallyOpen={true}
                   autoGenerateNestedIndicator={false}
                   nestedItems={[
                     <Sidebar.NestedLinkListItem
@@ -94,7 +94,7 @@ const Instance = React.createClass({
                   routeName="all-push-notification-devices"
                   primaryText="Push Devices (BETA)"
                   iconClassName="synicon-cellphone-iphone"
-                  initiallyOpen
+                  initiallyOpen={true}
                   autoGenerateNestedIndicator={false}
                   nestedItems={[
                     <Sidebar.NestedLinkListItem

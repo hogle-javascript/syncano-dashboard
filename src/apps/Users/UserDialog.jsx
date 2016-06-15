@@ -139,7 +139,7 @@ export default React.createClass({
               credentials of your user. Users can be assigned to Groups for additonal
               access control.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/user-management">
                 Learn more
               </Dialog.SidebarLink>
@@ -151,8 +151,8 @@ export default React.createClass({
           {this.renderFormNotifications()}
           <TextField
             ref="username"
-            autoFocus
-            fullWidth
+            autoFocus={true}
+            fullWidth={true}
             value={this.state.username}
             onChange={(event, value) => this.setState({ username: value })}
             errorText={this.getValidationMessages('username').join(' ')}
@@ -162,7 +162,7 @@ export default React.createClass({
           <TextField
             ref="password"
             type="password"
-            fullWidth
+            fullWidth={true}
             value={this.state.password}
             onChange={(event, value) => this.setState({ password: value })}
             errorText={this.getValidationMessages('password').join(' ')}
@@ -172,7 +172,7 @@ export default React.createClass({
           />
           <Select
             name="group"
-            multi
+            multi={true}
             value={selectValue}
             placeholder="User groups"
             options={allGroups}

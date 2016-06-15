@@ -48,7 +48,7 @@ export default class BackupAndRestore extends Component {
             onTouchTap={RestoreFromFileDialogActions.showDialog} /> */}
           <RaisedButton
             label="Create Backup"
-            primary
+            primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={FullBackupActions.showDialog}
           />

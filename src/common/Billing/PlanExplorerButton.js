@@ -33,12 +33,12 @@ export default Radium(React.createClass({
         <div className="row" style={{ flexDirection: 'column' }}>
           <div style={style.explorerButton}>
             <FlatButton
-              primary
+              primary={true}
               label={'Cancel Change'}
               onTouchTap={onDeleteSubscription}
             />
             <FlatButton
-              primary
+              primary={true}
               style={{ marginLeft: 8 }}
               label={'Upgrade'}
               onTouchTap={onPlanDialog}
@@ -50,7 +50,7 @@ export default Radium(React.createClass({
 
     return (
       <FlatButton
-        primary
+        primary={true}
         label={this.renderExplorerButtonLabel() || ''}
         onTouchTap={this.handleShowPlanDialog}
       />

@@ -66,8 +66,8 @@ export default React.createClass({
         <TextField
           ref="name"
           name="name"
-          autoFocus
-          fullWidth
+          autoFocus={true}
+          fullWidth={true}
           disabled={this.hasEditMode()}
           value={this.state.name}
           onChange={(event, value) => this.setState({ name: value })}
@@ -78,7 +78,7 @@ export default React.createClass({
         <TextField
           ref="content_type"
           name="content_type"
-          fullWidth
+          fullWidth={true}
           value={this.state.content_type}
           onChange={(event, value) => this.setState({ content_type: value })}
           errorText={this.getValidationMessages('content_type').join(' ')}

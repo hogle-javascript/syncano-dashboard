@@ -78,7 +78,7 @@ export default React.createClass({
           <FlatButton
             key="cancel"
             onTouchTap={() => this.handleCancel('prolongDialog')}
-            primary
+            primary={true}
             label="Close"
             ref="cancel"
           />
@@ -133,7 +133,7 @@ export default React.createClass({
         <SocketsInnerToolbar empty={!sockets.hasAnyItem || sockets.isLoading}>
           <RaisedButton
             label="Add"
-            primary
+            primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={Actions.showDialog}
           />

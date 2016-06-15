@@ -82,8 +82,8 @@ export default React.createClass({
           <TextField
             ref="label"
             name="label"
-            autoFocus
-            fullWidth
+            autoFocus={true}
+            fullWidth={true}
             value={this.state.label}
             onChange={(event, value) => this.setState({ label: value })}
             errorText={this.getValidationMessages('label').join(' ')}
@@ -93,7 +93,7 @@ export default React.createClass({
           <TextField
             ref="description"
             name="description"
-            fullWidth
+            fullWidth={true}
             value={this.state.description}
             onChange={(event, value) => this.setState({ description: value })}
             errorText={this.getValidationMessages('description').join(' ')}
@@ -104,8 +104,8 @@ export default React.createClass({
           <Select
             value={this.state.tags}
             delimiter=","
-            multi
-            allowCreate
+            multi={true}
+            allowCreate={true}
             placeholder="Select tags"
             options={Store.getTagsOptions()}
             onChange={this.handleTagsListChange}

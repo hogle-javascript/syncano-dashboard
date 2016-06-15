@@ -133,8 +133,8 @@ const DataObjects = React.createClass({
       <div>
         <Table
           ref="table"
-          multiSelectable
-          showRowHover
+          multiSelectable={true}
+          showRowHover={true}
           onRowSelection={this.handleRowSelection}
           wrapperStyle={{ minHeight: '120px' }}
           bodyStyle={{ overflowX: 'visible', overflowY: 'initial' }}
@@ -143,7 +143,7 @@ const DataObjects = React.createClass({
           <TableBody
             className="mui-table-body"
             deselectOnClickaway={false}
-            showRowHover
+            showRowHover={true}
             stripedRows={false}
           >
             {tableData}

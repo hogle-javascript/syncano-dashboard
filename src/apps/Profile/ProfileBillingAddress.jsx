@@ -109,7 +109,7 @@ export default React.createClass({
               <div className="col-flex-1">
                 <TextField
                   name="company_name"
-                  fullWidth
+                  fullWidth={true}
                   value={this.state.company_name}
                   onChange={(event, value) => this.setState({ company_name: value })}
                   defaultValue={company_name}
@@ -125,7 +125,7 @@ export default React.createClass({
                   name="first_name"
                   floatingLabelText="First name"
                   hintText="First name"
-                  fullWidth
+                  fullWidth={true}
                 />
                 <TextField
                   value={this.state.last_name}
@@ -135,7 +135,7 @@ export default React.createClass({
                   name="last_name"
                   floatingLabelText="Last name"
                   hintText="Last name"
-                  fullWidth
+                  fullWidth={true}
                 />
                 <TextField
                   value={this.state.tax_number}
@@ -145,7 +145,7 @@ export default React.createClass({
                   name="tax_number"
                   floatingLabelText="Tax number"
                   hintText="Tax number"
-                  fullWidth
+                  fullWidth={true}
                 />
               </div>
               <div className="col-flex-1">
@@ -157,7 +157,7 @@ export default React.createClass({
                   name="address_line1"
                   floatingLabelText="Address"
                   hintText="Address"
-                  fullWidth
+                  fullWidth={true}
                 />
                 <TextField
                   value={this.state.address_line2}
@@ -167,7 +167,7 @@ export default React.createClass({
                   name="address_line2"
                   floatingLabelText="Address"
                   hintText="Address"
-                  fullWidth
+                  fullWidth={true}
                 />
                 <TextField
                   value={this.state.address_country}
@@ -177,7 +177,7 @@ export default React.createClass({
                   name="address_country"
                   floatingLabelText="Country"
                   hintText="Country"
-                  fullWidth
+                  fullWidth={true}
                 />
                 <TextField
                   value={this.state.address_state}
@@ -188,7 +188,7 @@ export default React.createClass({
                   floatingLabelText="State"
                   autoComplete="State"
                   hintText="State"
-                  fullWidth
+                  fullWidth={true}
                 />
 
                 <div className="row">
@@ -201,7 +201,7 @@ export default React.createClass({
                       name="address_zip"
                       floatingLabelText="Zip code"
                       hintText="Zip code"
-                      fullWidth
+                      fullWidth={true}
                     />
                   </div>
                   <div className="col-flex-1">
@@ -213,7 +213,7 @@ export default React.createClass({
                       name="address_city"
                       floatingLabelText="City"
                       hintText="City"
-                      fullWidth
+                      fullWidth={true}
                     />
                   </div>
                 </div>
@@ -224,7 +224,7 @@ export default React.createClass({
               label="Update"
               className="raised-button"
               disabled={!canSubmit}
-              primary
+              primary={true}
             />
           </form>
         </Container>

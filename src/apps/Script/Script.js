@@ -305,13 +305,13 @@ const Script = React.createClass({
           actions: [
             <FlatButton
               label="Just leave"
-              secondary
+              secondary={true}
               onTouchTap={this._handleContinueTransition}
             />,
             <FlatButton
               label="Continue editing"
-              primary
-              keyboardFocused
+              primary={true}
+              keyboardFocused={true}
               onTouchTap={() => this.handleCancel('unsavedDataWarn')}
             />
           ],
@@ -344,7 +344,7 @@ const Script = React.createClass({
               floatingLabelText="Key"
               value={scriptConfig[index].key}
               style={styles.field}
-              fullWidth
+              fullWidth={true}
               errorText={this.getValidationMessages(`fieldKey${index}`).join(' ')}
               onChange={() => this.handleUpdateKey(field.key, index)}
             />
@@ -361,7 +361,7 @@ const Script = React.createClass({
               onTouchTap={this.handleSelectFieldClick}
               onChange={(event, selectedIndex, value) => this.handleTypeFieldChange(index, value)}
               errorText={this.getValidationMessages('configValueType').join(' ')}
-              fullWidth
+              fullWidth={true}
               style={styles.field}
             />
           </div>
@@ -373,7 +373,7 @@ const Script = React.createClass({
               floatingLabelText="Value"
               value={scriptConfig[index].value}
               style={styles.field}
-              fullWidth
+              fullWidth={true}
               errorText={this.getValidationMessages(`fieldValue${index}`).join(' ')}
               onChange={() => this.handleUpdateKey(field.key, index)}
             />
@@ -412,7 +412,7 @@ const Script = React.createClass({
             value={newFieldKey}
             onChange={(event, value) => this.handleUpdateNewField('newFieldKey', value)}
             errorText={this.getValidationMessages('newFieldKey').join(' ')}
-            fullWidth
+            fullWidth={true}
             style={styles.field}
           />
         </div>
@@ -427,7 +427,7 @@ const Script = React.createClass({
             value={configValueType}
             onChange={(event, index, value) => this.setSelectFieldValue('configValueType', value)}
             errorText={this.getValidationMessages('configValueType').join(' ')}
-            fullWidth
+            fullWidth={true}
             style={styles.field}
           />
         </div>
@@ -440,7 +440,7 @@ const Script = React.createClass({
             floatingLabelText="Value"
             value={newFieldValue}
             onChange={(event, value) => this.handleUpdateNewField('newFieldValue', value)}
-            fullWidth
+            fullWidth={true}
             style={styles.field}
           />
         </div>
@@ -479,7 +479,7 @@ const Script = React.createClass({
         <InnerToolbar
           title={this.getToolbarTitle()}
           backFallback={() => router.push({ name: 'scripts', params })}
-          forceBackFallback
+          forceBackFallback={true}
           backButtonTooltip="Go back to Scripts list"
         >
           <Show if={!isLoading}>
@@ -505,7 +505,7 @@ const Script = React.createClass({
             />
             <RaisedButton
               label="RUN"
-              primary
+              primary={true}
               style={{ marginLeft: 5, marginRight: 0 }}
               icon={<FontIcon className="synicon-play" />}
               onTouchTap={() => this.setFlag(true)}
@@ -520,7 +520,7 @@ const Script = React.createClass({
             <div className="col-flex-1" style={{ borderRight: '1px solid rgba(224,224,224,.5)', display: 'flex' }}>
               <TogglePanel
                 title="Code"
-                initialOpen
+                initialOpen={true}
                 style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
               >
                 <Show if={this.getValidationMessages('source').length}>
@@ -548,7 +548,7 @@ const Script = React.createClass({
               <div style={{ borderBottom: '1px solid rgba(224,224,224,.5)' }}>
                 <TogglePanel
                   title="Config"
-                  initialOpen
+                  initialOpen={true}
                 >
                   <div>
                     {this.renderFields()}
@@ -567,7 +567,7 @@ const Script = React.createClass({
               <div style={{ borderBottom: '1px solid rgba(224,224,224,.5)' }}>
                 <TogglePanel
                   title="Payload"
-                  initialOpen
+                  initialOpen={true}
                 >
                   <Editor
                     name="payload-editor"
@@ -595,7 +595,7 @@ const Script = React.createClass({
               <div style={{ paddingBottom: 50 }}>
                 <TogglePanel
                   title="Result"
-                  initialOpen
+                  initialOpen={true}
                 >
                   <div
                     style={{

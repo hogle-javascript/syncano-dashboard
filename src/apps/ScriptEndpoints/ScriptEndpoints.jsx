@@ -45,7 +45,7 @@ export default React.createClass({
           <RaisedButton
             label="Add"
             style={{ marginRight: 0 }}
-            primary
+            primary={true}
             onTouchTap={Actions.showDialog}
           />
         </SocketsInnerToolbar>

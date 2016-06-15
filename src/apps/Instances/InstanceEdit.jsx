@@ -183,8 +183,8 @@ export default React.createClass({
                     className="instance-name-field"
                     ref="name"
                     floatingLabelText="Instance name"
-                    disabled
-                    fullWidth
+                    disabled={true}
+                    fullWidth={true}
                     defaultValue={instance.name}
                     style={styles.textField}
                   />
@@ -192,8 +192,8 @@ export default React.createClass({
                     ref="description"
                     floatingLabelText="Instance description"
                     defaultValue={instance.description}
-                    multiLine
-                    fullWidth
+                    multiLine={true}
+                    fullWidth={true}
                     style={styles.textField}
                   />
                 </div>
@@ -202,7 +202,7 @@ export default React.createClass({
                     onTouchTap={this.handleUpdate}
                     type="submit"
                     label="Update"
-                    secondary
+                    secondary={true}
                   />
                 </div>
               </div>

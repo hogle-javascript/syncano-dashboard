@@ -184,7 +184,7 @@ export default React.createClass({
     return (
       <RaisedButton
         label={label}
-        primary
+        primary={true}
         style={{ marginLeft: 5, marginRight: 0 }}
         icon={<FontIcon
           className={iconName}
@@ -233,7 +233,7 @@ export default React.createClass({
             <div className="col-flex-1" style={{ borderRight: '1px solid rgba(224,224,224,.5)', display: 'flex' }}>
               <TogglePanel
                 title="Code"
-                initialOpen
+                initialOpen={true}
                 style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
               >
                 <div style={{ position: 'relative', flex: 1 }}>
@@ -259,12 +259,12 @@ export default React.createClass({
               <div style={{ borderBottom: '1px solid rgba(224,224,224,.5)' }}>
                 <TogglePanel
                   title="Data source URL"
-                  initialOpen
+                  initialOpen={true}
                 >
                   <TextField
                     ref="dataSourceUrl"
                     name="dataSourceUrl"
-                    fullWidth
+                    fullWidth={true}
                     value={this.state.dataSourceUrl}
                     onChange={(event, value) => this.setState({ dataSourceUrl: value })}
                     errorText={this.getValidationMessages('dataSourceUrl').join(' ')}
@@ -277,7 +277,7 @@ export default React.createClass({
               <div style={{ borderBottom: '1px solid rgba(224,224,224,.5)' }}>
                 <TogglePanel
                   title="Context"
-                  initialOpen
+                  initialOpen={true}
                   style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <Editor
@@ -300,7 +300,7 @@ export default React.createClass({
               <div style={{ flex: 1, display: 'flex' }}>
                 <TogglePanel
                   title="Preview"
-                  initialOpen
+                  initialOpen={true}
                   style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <div style={{ position: 'relative', flex: 1, minHeight: 200 }}>
@@ -308,7 +308,7 @@ export default React.createClass({
                       name="previewEditor"
                       ref="previewEditor"
                       mode="html"
-                      readOnly
+                      readOnly={true}
                       width="100%"
                       height="100%"
                       style={{ position: 'absolute' }}

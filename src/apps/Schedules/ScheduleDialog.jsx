@@ -111,7 +111,7 @@ export default React.createClass({
             <Dialog.SidebarSection title="Crontab">
               We prepared some crontabs to choose from. You can also write your own.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/schedules">
                 Learn more
               </Dialog.SidebarLink>
@@ -124,8 +124,8 @@ export default React.createClass({
           <TextField
             ref="label"
             name="label"
-            autoFocus
-            fullWidth
+            autoFocus={true}
+            fullWidth={true}
             value={label}
             onChange={(event, value) => this.setState({ label: value })}
             errorText={this.getValidationMessages('label').join(' ')}
@@ -145,9 +145,9 @@ export default React.createClass({
             hintText="Choose option from the dropdown or type your own crontab"
             filter={AutoComplete.noFilter}
             animated={false}
-            fullWidth
+            fullWidth={true}
             searchText={crontab}
-            openOnFocus
+            openOnFocus={true}
             onNewRequest={(value) => this.handleChangeFields('crontab', value)}
             onUpdateInput={(value) => this.handleChangeFields('crontab', value)}
             dataSource={this.renderCrontabDataSource()}
@@ -156,7 +156,7 @@ export default React.createClass({
           <TextField
             ref="Interval"
             name="interval_sec"
-            fullWidth
+            fullWidth={true}
             value={interval_sec}
             onChange={(event, value) => this.handleChangeFields('interval_sec', value)}
             errorText={this.getValidationMessages('interval_sec').join(' ')}
@@ -167,11 +167,11 @@ export default React.createClass({
             floatingLabelText="Timezone"
             hintText="Choose option from the dropdown or type timezone"
             animated={false}
-            fullWidth
+            fullWidth={true}
             filter={(searchText, key) => _.toLower(key).includes(_.toLower(searchText))}
             maxSearchResults={5}
             searchText={timezone}
-            openOnFocus
+            openOnFocus={true}
             onNewRequest={(value) => this.handleChangeFields('timezone', value)}
             onUpdateInput={(value) => this.handleChangeFields('timezone', value)}
             dataSource={this.renderTimezoneDataSource()}

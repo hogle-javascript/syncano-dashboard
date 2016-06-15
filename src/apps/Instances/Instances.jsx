@@ -74,7 +74,7 @@ const Instances = React.createClass({
         <InnerToolbar title={title}>
           <RaisedButton
             label="Add"
-            primary
+            primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={InstanceDialogActions.showDialog}
           />

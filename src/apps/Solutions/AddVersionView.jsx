@@ -215,7 +215,7 @@ const AddVersionView = Radium(React.createClass({
       return true;
     } else if (this.state.dataReady === 'loading') {
       return (
-        <Loading key="loading" style={{ marginTop: 30 }} show />
+        <Loading key="loading" style={{ marginTop: 30 }} show={true} />
       );
     }
     return (
@@ -307,7 +307,7 @@ const AddVersionView = Radium(React.createClass({
                 label="Confirm"
                 type="submit"
                 disable={this.state.instance === null}
-                primary
+                primary={true}
               />
             </div>
           </div>

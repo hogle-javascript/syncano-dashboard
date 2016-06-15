@@ -106,7 +106,7 @@ export default Radium(React.createClass({
                 />
                 <FlatButton
                   label="RESET"
-                  primary
+                  primary={true}
                   onClick={Actions.resetKey}
                 />
               </div>
@@ -133,7 +133,7 @@ export default Radium(React.createClass({
                       floatingLabelText="Current password"
                       autoComplete="currentPassword"
                       hintText="Current password"
-                      fullWidth
+                      fullWidth={true}
                     />
                     : null}
                   <TextField
@@ -146,7 +146,7 @@ export default Radium(React.createClass({
                     floatingLabelText="New password"
                     autoComplete="newPassword"
                     hintText="New password"
-                    fullWidth
+                    fullWidth={true}
                   />
                   <TextField
                     ref="confirmNewPassword"
@@ -159,7 +159,7 @@ export default Radium(React.createClass({
                     className="vm-6-b"
                     autoComplete="confirmNewPassword"
                     hintText="Confirm new password"
-                    fullWidth
+                    fullWidth={true}
                   />
                   <RaisedButton
                     type="submit"
@@ -168,7 +168,7 @@ export default Radium(React.createClass({
                     labelStyle={styles.updateButtonLabel}
                     className="raised-button"
                     disabled={!this.state.canSubmit}
-                    primary
+                    primary={true}
                   />
                 </form>
               </div>

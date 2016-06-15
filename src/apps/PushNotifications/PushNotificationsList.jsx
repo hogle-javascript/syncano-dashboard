@@ -27,7 +27,7 @@ export default (props) => {
       <ColumnList.Header>
         <Column.ColumnHeader
           handleClick={props.handleTitleClick}
-          primary
+          primary={true}
           columnName="DESC"
           className="col-sm-12"
         >

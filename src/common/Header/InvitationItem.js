@@ -17,7 +17,7 @@ export default ({ item, handleAccept, handleDecline }) => {
   return (
     <div>
       <MenuItem
-        disabled
+        disabled={true}
         leftIcon={
           <FontIcon
             className="synicon-share-variant"

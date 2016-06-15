@@ -108,7 +108,7 @@ export default React.createClass({
               your backup. Values are arrays of IDs or names of objects that you want to include
               in backup file. If you don't pass a key in the query args, all objects will be saved.`}
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/partial-backups">
                 Learn more
               </Dialog.SidebarLink>
@@ -118,8 +118,8 @@ export default React.createClass({
       >
         <div>
           <TextField
-            autoFocus
-            fullWidth
+            autoFocus={true}
+            fullWidth={true}
             value={label}
             onChange={(event, value) => this.handleChange(value, 'label')}
             errorText={this.getValidationMessages('label').join(' ')}
@@ -127,7 +127,7 @@ export default React.createClass({
             floatingLabelText="Label"
           />
           <TextField
-            fullWidth
+            fullWidth={true}
             value={description}
             onChange={(event, value) => this.handleChange(value, 'description')}
             errorText={this.getValidationMessages('description').join(' ')}

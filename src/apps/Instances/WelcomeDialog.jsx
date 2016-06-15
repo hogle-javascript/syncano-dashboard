@@ -88,7 +88,7 @@ export default Radium(React.createClass({
             <FlatButton
               style={{ margin: '24px auto', width: '80%' }}
               label="Go to your first instance!"
-              primary
+              primary={true}
               onClick={this.handleCloseDialog}
             />
           </div>

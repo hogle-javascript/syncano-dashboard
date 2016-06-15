@@ -356,7 +356,7 @@ export default React.createClass({
           <span className="col-xs-5">
             <FlatButton
               label="Remove"
-              secondary
+              secondary={true}
               onClick={this.handleRemoveField.bind(this, item)}
             />
           </span>
@@ -424,7 +424,7 @@ export default React.createClass({
             <Dialog.SidebarSection>
               <i>Note: Schema field name has to start with a letter!</i>
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/classes">
                 Learn more
               </Dialog.SidebarLink>
@@ -447,9 +447,9 @@ export default React.createClass({
                 <TextField
                   ref="name"
                   name="name"
-                  autoFocus
+                  autoFocus={true}
                   disabled={this.hasEditMode()}
-                  fullWidth
+                  fullWidth={true}
                   value={this.state.name}
                   onChange={(event, value) => this.setState({ name: value })}
                   errorText={this.getValidationMessages('name').join(' ')}
@@ -459,7 +459,7 @@ export default React.createClass({
                 <TextField
                   ref="description"
                   name="description"
-                  fullWidth
+                  fullWidth={true}
                   value={this.state.description}
                   onChange={(event, value) => this.setState({ description: value })}
                   errorText={this.getValidationMessages('description').join(' ')}
@@ -527,7 +527,7 @@ export default React.createClass({
                 <TextField
                   ref="fieldName"
                   name="fieldName"
-                  fullWidth
+                  fullWidth={true}
                   value={this.state.fieldName}
                   onChange={(event, value) => this.setState({ fieldName: value })}
                   hintText="Field's name"
@@ -596,7 +596,7 @@ export default React.createClass({
                   style={{ marginBottom: 4 }}
                   label="Add"
                   disabled={!fieldType || !fieldName}
-                  secondary
+                  secondary={true}
                   onClick={this.handleFieldAdd}
                 />
               </div>

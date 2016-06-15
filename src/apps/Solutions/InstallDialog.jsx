@@ -93,8 +93,8 @@ export default React.createClass({
         <TextField
           ref="instance"
           name="instance"
-          fullWidth
-          disabled
+          fullWidth={true}
+          disabled={true}
           value={instance}
           onChange={(event, value) => this.setState({ instance: value })}
           errorText={this.getValidationMessages('instance').join(' ')}

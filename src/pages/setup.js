@@ -22,7 +22,7 @@ class SetupPage extends Component {
   render() {
     return (
       <Dialog.FullPage
-        open
+        open={true}
         contentSize="small"
         showCloseButton={false}
       >
@@ -32,7 +32,7 @@ class SetupPage extends Component {
         >
           {'We\'re preparing your account, please wait...'}
         </div>
-        <Loading show />
+        <Loading show={true} />
       </Dialog.FullPage>
     );
   }

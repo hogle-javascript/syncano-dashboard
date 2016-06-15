@@ -102,7 +102,7 @@ export default React.createClass({
             <Dialog.SidebarSection title="Script">
               Snippet Script name that'll be executed by this Trigger.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/triggers">
                 Learn more
               </Dialog.SidebarLink>
@@ -115,8 +115,8 @@ export default React.createClass({
           <TextField
             ref="label"
             name="label"
-            autoFocus
-            fullWidth
+            autoFocus={true}
+            fullWidth={true}
             value={this.state.label}
             onChange={(event, value) => this.setState({ label: value })}
             errorText={this.getValidationMessages('label').join(' ')}

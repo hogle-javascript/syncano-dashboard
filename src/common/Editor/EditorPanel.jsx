@@ -118,7 +118,7 @@ export default Radium(React.createClass({
             name="payloadField"
             ref="payloadField"
             value={this.state.payloadValue}
-            fullWidth
+            fullWidth={true}
             hintText={hintText}
             floatingLabelText={floatingLabelText}
             onBlur={this.handleFormValidation}

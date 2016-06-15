@@ -48,7 +48,7 @@ export default React.createClass({
         <SnippetsInnerToolbar>
           <RaisedButton
             label="Add"
-            primary
+            primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={Actions.showDialog}
           />

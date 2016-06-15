@@ -59,7 +59,7 @@ const AccountPasswordUpdate = React.createClass({
             labelStyle={styles.buttonLabel}
             label="Go to dashboard"
             onClick={this.handleButtonClick}
-            primary
+            primary={true}
           />
         </div>
       </AccountContainer>

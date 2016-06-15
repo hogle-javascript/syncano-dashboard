@@ -155,7 +155,7 @@ export default Radium(React.createClass({
             <div className="row align-middle">
               <div className="col-xs-23">
                 <TextField
-                  fullWidth
+                  fullWidth={true}
                   value={this.state[`${type}_certificate_name`]}
                   onChange={(event, value) => this.setState({ [`${type}_certificate_name`]: value })}
                   errorText={this.getValidationMessages(`${type}_certificate_name`).join(' ')}
@@ -165,9 +165,9 @@ export default Radium(React.createClass({
               <div className="col-xs-12">
                 <TextField
                   underlineShow={false}
-                  disabled
-                  autoWidth
-                  fullWidth
+                  disabled={true}
+                  autoWidth={true}
+                  fullWidth={true}
                   value={_.capitalize(type)}
                   floatingLabelText="Type"
                 />
@@ -176,7 +176,7 @@ export default Radium(React.createClass({
             <div className="row align-middle">
               <div className="col-xs-23">
                 <TextField
-                  fullWidth
+                  fullWidth={true}
                   value={this.state[`${type}_bundle_identifier`]}
                   onChange={(event, value) => this.setState({ [`${type}_bundle_identifier`]: value })}
                   errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}
@@ -208,8 +208,8 @@ export default Radium(React.createClass({
             isLoading={this.state.isCertLoading}
             handleButtonClick={(file) => this.onDrop(file, type)}
             onDrop={(file) => this.onDrop(file, type)}
-            disableClick
-            withButton
+            disableClick={true}
+            withButton={true}
             uploadButtonLabel="UPLOAD .p12 CERTIFICATE"
           >
             {this.renderDropzoneDescription(type)}
@@ -247,7 +247,7 @@ export default Radium(React.createClass({
         ref="dialog"
         contentSize="large"
         title="Configure Push Notification Socket - APNS"
-        autoDetectWindowHeight
+        autoDetectWindowHeight={true}
         actionsContainerStyle={styles.actionsContainer}
         onRequestClose={this.handleCancel}
         open={this.state.open}
@@ -277,7 +277,7 @@ export default Radium(React.createClass({
                  from our docs.
               </i>
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/push-notification-sockets-ios">
                 Learn more
               </Dialog.SidebarLink>

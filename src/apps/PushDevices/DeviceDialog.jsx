@@ -110,10 +110,10 @@ export default (type, Store, Actions, sidebar) => {
             <TextField
               ref="label"
               name="label"
-              autoFocus
+              autoFocus={true}
               value={this.state.label}
               onChange={(event, value) => this.setState({ label: value })}
-              fullWidth
+              fullWidth={true}
               errorText={this.getValidationMessages('label').join(' ')}
               floatingLabelText="Label of the Device"
             />
@@ -123,7 +123,7 @@ export default (type, Store, Actions, sidebar) => {
               disabled={this.hasEditMode()}
               value={this.state.registration_id}
               onChange={(event, value) => this.setState({ registration_id: value })}
-              fullWidth
+              fullWidth={true}
               errorText={this.getValidationMessages('registration_id').join(' ')}
               floatingLabelText="Device's registration ID"
             />
@@ -132,7 +132,7 @@ export default (type, Store, Actions, sidebar) => {
               name="user"
               value={this.state.user}
               onChange={(event, value) => this.setState({ user: value })}
-              fullWidth
+              fullWidth={true}
               errorText={this.getValidationMessages('user').join(' ')}
               floatingLabelText="User ID"
             />
@@ -142,13 +142,13 @@ export default (type, Store, Actions, sidebar) => {
               name="device_id"
               value={this.state.device_id}
               onChange={(event, value) => this.setState({ device_id: value })}
-              fullWidth
+              fullWidth={true}
               errorText={this.getValidationMessages('device_id').join(' ')}
               floatingLabelText="Device ID"
             />
             <Dialog.ContentSection
               title="metadata"
-              last
+              last={true}
             >
               <div className="col-flex-1 vm-2-t">
                 <Editor

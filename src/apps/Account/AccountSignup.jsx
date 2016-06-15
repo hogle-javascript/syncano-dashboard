@@ -138,7 +138,7 @@ const AccountSignup = React.createClass({
             className="text-field"
             autoComplete="email"
             hintText="Email"
-            fullWidth
+            fullWidth={true}
           />
 
           <TextField
@@ -151,7 +151,7 @@ const AccountSignup = React.createClass({
             className="text-field vm-4-b"
             autoComplete="password"
             hintText="My password"
-            fullWidth
+            fullWidth={true}
           />
 
           <RaisedButton
@@ -160,7 +160,7 @@ const AccountSignup = React.createClass({
             labelStyle={{ fontSize: '16px', lineHeight: '48px' }}
             disabled={!this.state.canSubmit}
             style={{ boxShadow: 'none', height: '48px', width: '100%' }}
-            primary
+            primary={true}
           />
         </form>
 

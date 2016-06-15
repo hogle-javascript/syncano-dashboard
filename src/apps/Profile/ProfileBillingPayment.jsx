@@ -94,7 +94,7 @@ export default Radium(React.createClass({
                   <TextField
                     name="number"
                     ref="number"
-                    fullWidth
+                    fullWidth={true}
                     value={this.state.number}
                     onChange={(event, value) => this.setState({ number: value })}
                     errorText={this.getValidationMessages('number').join(' ')}
@@ -109,7 +109,7 @@ export default Radium(React.createClass({
                   <TextField
                     name="cvc"
                     ref="cvc"
-                    fullWidth
+                    fullWidth={true}
                     value={this.state.cvc}
                     onChange={(event, value) => this.setState({ cvc: value })}
                     errorText={this.getValidationMessages('cvc').join(' ')}
@@ -127,7 +127,7 @@ export default Radium(React.createClass({
                         name="exp_month"
                         ref="exp_month"
                         size={2}
-                        fullWidth
+                        fullWidth={true}
                         value={this.state.exp_month}
                         onChange={(event, value) => this.setState({ exp_month: value })}
                         errorText={this.getValidationMessages('exp_month').join(' ')}
@@ -141,7 +141,7 @@ export default Radium(React.createClass({
                         name="exp_year"
                         ref="exp_year"
                         size={4}
-                        fullWidth
+                        fullWidth={true}
                         value={this.state.exp_year}
                         onChange={(event, value) => this.setState({ exp_year: value })}
                         errorText={this.getValidationMessages('exp_year').join(' ')}
@@ -166,7 +166,7 @@ export default Radium(React.createClass({
                     type="submit"
                     label={labelPrefix + ' payment'}
                     className="raised-button"
-                    primary
+                    primary={true}
                     disabled={!canSubmit}
                     style={{ margin: '0 0 0 auto' }}
                   />
@@ -183,7 +183,7 @@ export default Radium(React.createClass({
                 type="submit"
                 label={labelPrefix + ' payment'}
                 className="raised-button"
-                primary
+                primary={true}
               />
             </div>
           </Show>

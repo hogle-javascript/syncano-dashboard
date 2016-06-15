@@ -63,7 +63,7 @@ export default React.createClass({
               Groups are a way of categorizing users. They can be used to construct
               different levels of access to resources stored on the platform.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/groups">
                 Learn more
               </Dialog.SidebarLink>
@@ -75,8 +75,8 @@ export default React.createClass({
         <TextField
           ref="label"
           label="label"
-          autoFocus
-          fullWidth
+          autoFocus={true}
+          fullWidth={true}
           value={this.state.label}
           onChange={(event, value) => this.setState({ label: value })}
           errorText={this.getValidationMessages('label').join(' ')}

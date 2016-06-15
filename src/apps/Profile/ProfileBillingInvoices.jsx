@@ -38,7 +38,7 @@ export default React.createClass({
       return (
         <RaisedButton
           label="RETRY PAYMENT"
-          secondary
+          secondary={true}
           disabled={invoice.actionDisabled}
           onClick={() => this.handleRetryPaymentClick(invoice)}
         />
@@ -48,7 +48,7 @@ export default React.createClass({
     return (
       <RaisedButton
         label="VIEW"
-        primary
+        primary={true}
         onClick={() => this.handlePDFClick(invoice)}
       />
     );

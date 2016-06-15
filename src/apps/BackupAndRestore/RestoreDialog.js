@@ -54,7 +54,7 @@ export default React.createClass({
         >
           {'We\'re restoring your backup, please wait...'}
         </div>
-        <Loading show />
+        <Loading show={true} />
       </div>
     );
   },
@@ -91,7 +91,7 @@ export default React.createClass({
             value={instanceNameValidation}
             onChange={(event, value) => this.setState({ instanceNameValidation: value })}
             errorText={this.getValidationMessages('instanceNameValidation').join(' ')}
-            fullWidth
+            fullWidth={true}
             floatingLabelText="Instance name"
             hintText="Instance name"
           />

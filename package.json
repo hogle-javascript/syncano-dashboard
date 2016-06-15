@@ -136,7 +136,7 @@
     "publish": "gulp publish",
     "clean": "gulp clean",
     "oauth-server": "node oauth-server.js",
-    "lint": "eslint src --quiet --ext .js --ext .jsx",
+    "lint": "eslint src --quiet --ext .js --ext .jsx --fix",
     "e2e": "nightwatch -e chrome --suiteRetries 1",
     "e2e-0": "nightwatch -e chrome -g instances --suiteRetries 1",
     "e2e-1": "nightwatch -e chrome -s instances --suiteRetries 1",

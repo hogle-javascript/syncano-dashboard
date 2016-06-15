@@ -140,7 +140,7 @@ export default React.createClass({
             value={validationText}
             onChange={(event, value) => this.setState({ validationText: value })}
             errorText={this.getValidationMessages('validationText').join(' ')}
-            fullWidth
+            fullWidth={true}
             floatingLabelText="Instance name"
             hintText="Instance name"
           />
@@ -175,7 +175,7 @@ export default React.createClass({
         onRequestClose={this.dismiss}
         contentSize="small"
         open={open}
-        modal
+        modal={true}
         actions={
           <StandardButtons
             handleCancel={this.dismiss}

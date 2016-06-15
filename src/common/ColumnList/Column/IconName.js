@@ -85,7 +85,7 @@ export default Radium(React.createClass({
         style={styles.container}
       >
         <Paper
-          circle
+          circle={true}
           style={styles.icon}
         />
         <div

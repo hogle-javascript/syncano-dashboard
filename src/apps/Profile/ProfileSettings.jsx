@@ -76,7 +76,7 @@ export default React.createClass({
               name="firstName"
               floatingLabelText="First name"
               hintText="First name"
-              fullWidth
+              fullWidth={true}
             />
             <TextField
               ref="lastName"
@@ -87,7 +87,7 @@ export default React.createClass({
               name="lastName"
               floatingLabelText="Last name"
               hintText="Last name"
-              fullWidth
+              fullWidth={true}
             />
             <TextField
               ref="email"
@@ -97,8 +97,8 @@ export default React.createClass({
               className="vm-6-b"
               autoComplete="email"
               hintText="Your email"
-              disabled
-              fullWidth
+              disabled={true}
+              fullWidth={true}
             />
             <RaisedButton
               type="submit"
@@ -107,7 +107,7 @@ export default React.createClass({
               labelStyle={styles.updateButtonLabel}
               className="raised-button"
               disabled={!canSubmit}
-              primary
+              primary={true}
             />
           </form>
         </Container>

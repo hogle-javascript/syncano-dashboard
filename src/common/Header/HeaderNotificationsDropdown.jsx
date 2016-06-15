@@ -119,7 +119,7 @@ export default Radium(React.createClass({
         <MenuItem
           key="empty"
           primaryText="You don't have any notifications"
-          disabled
+          disabled={true}
           style={styles.menuItem}
           leftIcon={
             <FontIcon
@@ -205,7 +205,7 @@ export default Radium(React.createClass({
             id={id}
             key="notificationDropdownHeader"
             primaryText="Notifications"
-            disabled
+            disabled={true}
           />
           <Divider />
           {this.renderItems()}

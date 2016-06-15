@@ -115,7 +115,7 @@ export default React.createClass({
               Determines whether the Script Endpoint public link is active. They are accessible to anyone who knows the
                Script Endpoint URL.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/endpoints-scripts">
                 Learn more
               </Dialog.SidebarLink>
@@ -128,8 +128,8 @@ export default React.createClass({
           <TextField
             ref="name"
             name="name"
-            autoFocus
-            fullWidth
+            autoFocus={true}
+            fullWidth={true}
             disabled={this.hasEditMode()}
             value={this.state.name}
             onChange={(event, value) => this.setState({ name: value })}
@@ -140,7 +140,7 @@ export default React.createClass({
           <TextField
             ref="description"
             name="description"
-            fullWidth
+            fullWidth={true}
             value={this.state.description}
             onChange={(event, value) => this.setState({ description: value })}
             errorText={this.getValidationMessages('description').join(' ')}

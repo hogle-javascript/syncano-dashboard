@@ -230,7 +230,7 @@ export default (store, props) => {
             name="content"
             value={this.state.appName}
             onChange={(event, value) => this.setState({ appName: value })}
-            fullWidth
+            fullWidth={true}
             floatingLabelText="App name"
           />
           <TextField
@@ -238,7 +238,7 @@ export default (store, props) => {
             name="content"
             value={this.state.content}
             onChange={(event, value) => this.setState({ content: value })}
-            fullWidth
+            fullWidth={true}
             floatingLabelText="Push notification Text"
           />
         </div>
@@ -305,8 +305,8 @@ export default (store, props) => {
         GCM: (
           <SelectField
             floatingLabelText="Certificate type"
-            autoWidth
-            fullWidth
+            autoWidth={true}
+            fullWidth={true}
             value={environment}
             onChange={(event, index, value) => this.setState({ environment: value })}
           >

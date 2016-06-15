@@ -60,7 +60,7 @@ const PushDevicesPage = React.createClass({
       <RaisedButton
         disabled={disableMap[routes[routes.length - 1].name]}
         label="Add"
-        primary
+        primary={true}
         style={{ marginRight: 0 }}
         onTouchTap={this.handleTouchTapAddIcon}
       />

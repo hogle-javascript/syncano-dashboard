@@ -49,7 +49,7 @@ export default Radium(({ selectedColor, onColorChange }) => {
         id={color}
         zDepth={zDepth}
         key={color}
-        circle
+        circle={true}
         style={styles.item}
         onClick={() => onColorChange(color)}
       >

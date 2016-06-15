@@ -143,7 +143,7 @@ export default Radium(React.createClass({
       <Lists.List key="traces-list">
         <ColumnList.Header>
           <Column.ColumnHeader
-            primary
+            primary={true}
             columnName="ICON_NAME"
             className="col-flex-1"
           >

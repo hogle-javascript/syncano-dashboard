@@ -5,7 +5,7 @@ export default ({ children, checkedItemsCount, handleSelectAll, handleUnselectAl
   <IconMenu
     iconButtonElement={
       <IconButton
-        touch
+        touch={true}
         tooltipPosition="bottom-left"
         iconClassName="synicon-dots-vertical"
       />

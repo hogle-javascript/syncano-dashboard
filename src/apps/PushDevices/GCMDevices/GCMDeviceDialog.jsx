@@ -27,7 +27,7 @@ const sidebar = (
     <Dialog.SidebarSection title="Device ID">
       It&#39;s a unique ID assigned to your device.
     </Dialog.SidebarSection>
-    <Dialog.SidebarSection last>
+    <Dialog.SidebarSection last={true}>
       <Dialog.SidebarLink to="http://docs.syncano.io/docs/sending-push-notifications">
         Learn more
       </Dialog.SidebarLink>

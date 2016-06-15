@@ -176,7 +176,7 @@ export default Radium(React.createClass({
               label={currentStep === config.length - 1 ? 'End tour' : 'Next'}
               labelStyle={{ fontSize: '16px' }}
               style={{ boxShadow: 'none', height: '48px' }}
-              primary
+              primary={true}
             />
           </div>
         </div>

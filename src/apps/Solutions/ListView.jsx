@@ -76,7 +76,7 @@ const SolutionsListView = React.createClass({
               <Show if={SessionStore.isFriendlyUser()}>
                 <RaisedButton
                   label="Add"
-                  primary
+                  primary={true}
                   style={{ marginRight: 0 }}
                   onTouchTap={CreateDialogActions.showDialog}
                 />

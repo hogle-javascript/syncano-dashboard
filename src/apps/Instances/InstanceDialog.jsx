@@ -180,7 +180,7 @@ export default React.createClass({
       <MenuItem
         key="dropdownFullBackupHeader"
         style={styles.dropdownHeaderItem}
-        disabled
+        disabled={true}
         primaryText="FULL BACKUPS"
       />
     );
@@ -188,7 +188,7 @@ export default React.createClass({
       <MenuItem
         key="dropdownPartialBackupHeader"
         style={styles.dropdownHeaderItem}
-        disabled
+        disabled={true}
         primaryText="PARTIAL BACKUPS"
       />
     );
@@ -264,8 +264,8 @@ export default React.createClass({
           <TextField
             ref="name"
             name="name"
-            autoFocus
-            fullWidth
+            autoFocus={true}
+            fullWidth={true}
             value={name}
             onChange={(event, value) => this.setState({ name: value })}
             errorText={this.getValidationMessages('name').join(' ')}
@@ -279,8 +279,8 @@ export default React.createClass({
           <TextField
             ref="description"
             name="description"
-            fullWidth
-            multiLine
+            fullWidth={true}
+            multiLine={true}
             value={description}
             onChange={(event, value) => this.setState({ description: value })}
             errorText={this.getValidationMessages('description').join(' ')}
@@ -327,7 +327,7 @@ export default React.createClass({
         >
           {'We\'re restoring your backup, please wait...'}
         </div>
-        <Loading show />
+        <Loading show={true} />
       </div>
     );
   },
@@ -387,7 +387,7 @@ export default React.createClass({
                 to do a restore from a full or partial backup that is available within your account.
                 You can also do a partial backup restore from a zip archive.
               </Dialog.SidebarSection>
-              <Dialog.SidebarSection last>
+              <Dialog.SidebarSection last={true}>
                 <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/overview-9">
                   Learn more
                 </Dialog.SidebarLink>

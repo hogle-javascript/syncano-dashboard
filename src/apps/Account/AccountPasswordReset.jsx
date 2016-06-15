@@ -57,7 +57,7 @@ export default React.createClass({
             className="text-field vm-4-b"
             autoComplete="email"
             hintText="Your email"
-            fullWidth
+            fullWidth={true}
           />
 
           <RaisedButton
@@ -66,7 +66,7 @@ export default React.createClass({
             labelStyle={{ fontSize: '16px', lineHeight: '48px' }}
             style={{ boxShadow: 'none', height: '48px', width: '100%' }}
             disabled={!this.state.canSubmit}
-            primary
+            primary={true}
           />
         </form>
         <div className="account-container__content__footer">

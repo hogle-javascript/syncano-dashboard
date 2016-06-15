@@ -69,7 +69,7 @@ export default React.createClass({
             className="text-field"
             autoComplete="password"
             hintText="New password"
-            fullWidth
+            fullWidth={true}
           />
 
           <TextField
@@ -82,7 +82,7 @@ export default React.createClass({
             className="text-field vm-4-b"
             autoComplete="confirmPassword"
             hintText="Confirm password"
-            fullWidth
+            fullWidth={true}
           />
 
           <RaisedButton
@@ -91,7 +91,7 @@ export default React.createClass({
             labelStyle={{ fontSize: '16px', lineHeight: '48px' }}
             style={{ boxShadow: 'none', height: '48px', width: '100%' }}
             disabled={!this.state.canSubmit}
-            primary
+            primary={true}
           />
         </form>
       </AccountContainer>

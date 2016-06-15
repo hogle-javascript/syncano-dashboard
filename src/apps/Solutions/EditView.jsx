@@ -208,7 +208,7 @@ const SolutionEdit = React.createClass({
 
                 <div className="row vp-5-t align-left">
                   <RaisedButton
-                    primary
+                    primary={true}
                     disabled={this.state.versions && this.state.versions.length < 1}
                     label="Install solution"
                     onClick={this.handleInstallSolution}

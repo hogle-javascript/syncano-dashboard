@@ -44,7 +44,7 @@ export default React.createClass({
           <FlatButton
             onClick={item.handleAccept}
             label={item.buttonsText[0]}
-            primary
+            primary={true}
           />
           <FlatButton
             onClick={item.handleDecline}
@@ -56,7 +56,7 @@ export default React.createClass({
       return (
         <ListItem
           leftIcon={icon}
-          disabled
+          disabled={true}
         >
           {item.content.text}
           {buttons}
@@ -97,7 +97,7 @@ export default React.createClass({
       >
         <ListItem
           key={emptyItem.name}
-          disableTouchTap
+          disableTouchTap={true}
           leftIcon={icon}
         >
           <span>
@@ -120,7 +120,7 @@ export default React.createClass({
 
       return (
         <ListItem
-          disabled
+          disabled={true}
           key={item.name + index}
           leftIcon={icon}
           secondaryText={item.content.secondaryText}

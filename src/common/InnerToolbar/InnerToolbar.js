@@ -64,7 +64,7 @@ const InnerToolbar = Radium(React.createClass({
           tooltip={backButtonTooltip}
           tooltipPosition={backButtonTooltipPosition}
           onClick={this.handleBackButtonTouchTap}
-          touch
+          touch={true}
           style={{ marginTop: 4 }}
           iconStyle={{ color: 'rgba(0,0,0,.4)' }}
         />

@@ -72,6 +72,7 @@
     "no-param-reassign": ["error", { "props": false }],
     "no-unused-expressions": [2, { "allowShortCircuit": true }],
     "react/jsx-first-prop-new-line": [2, "multiline"],
+    "react/jsx-boolean-value": [2, "always"],
 
     // to be fixed
     "array-callback-return": [0],

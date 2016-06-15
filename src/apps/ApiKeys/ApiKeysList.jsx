@@ -77,7 +77,7 @@ export default React.createClass({
         <ColumnList.Header>
           <Column.ColumnHeader
             columnName="CHECK_ICON"
-            primary
+            primary={true}
           >
             API Keys
           </Column.ColumnHeader>

@@ -31,7 +31,7 @@ const PartialBackupsListItem = ({ item, onIconClick, showDeleteDialog, showResto
     <ColumnList.Column.Text>{Filesize(item.size)}</ColumnList.Column.Text>
     <ColumnList.Column.Text>
       <Truncate
-        withTooltip
+        withTooltip={true}
         text={item.author.email}
       />
     </ColumnList.Column.Text>

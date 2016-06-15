@@ -86,7 +86,7 @@ export default React.createClass({
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
-            primary
+            primary={true}
             columnName="CHECK_ICON"
             className="col-xs-25 col-md-20"
           >

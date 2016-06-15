@@ -104,7 +104,7 @@ export default React.createClass({
               Those are your API keys from Google Developer Console. At least one of them is required to send Push
                Notification messages to devices.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/push-notification-sockets-android">
                 Learn more
               </Dialog.SidebarLink>
@@ -120,10 +120,10 @@ export default React.createClass({
               <TextField
                 ref="development_api_key"
                 name="development_api_key"
-                autoFocus
+                autoFocus={true}
                 value={development_api_key}
                 onChange={(event, value) => this.setState({ development_api_key: value })}
-                fullWidth
+                fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Development API key"
                 errorText={this.getValidationMessages('development_api_key').join(' ')}
               />
@@ -132,7 +132,7 @@ export default React.createClass({
                 name="production_api_key"
                 value={production_api_key}
                 onChange={(event, value) => this.setState({ production_api_key: value })}
-                fullWidth
+                fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Production API key"
                 errorText={this.getValidationMessages('production_api_key').join(' ')}
               />

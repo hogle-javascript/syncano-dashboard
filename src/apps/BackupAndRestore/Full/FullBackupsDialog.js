@@ -70,7 +70,7 @@ export default React.createClass({
               Full backups work like snapshots. They allow you to save the current
               state of your Instance and files into a backup object.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection last>
+            <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/full-backups">
                 Learn more
               </Dialog.SidebarLink>
@@ -80,8 +80,8 @@ export default React.createClass({
       >
         <div>
           <TextField
-            autoFocus
-            fullWidth
+            autoFocus={true}
+            fullWidth={true}
             value={label}
             onChange={(event, value) => this.handleChange(value, 'label')}
             errorText={this.getValidationMessages('label').join(' ')}
@@ -89,7 +89,7 @@ export default React.createClass({
             floatingLabelText="Label"
           />
           <TextField
-            fullWidth
+            fullWidth={true}
             value={description}
             onChange={(event, value) => this.handleChange(value, 'description')}
             errorText={this.getValidationMessages('description').join(' ')}

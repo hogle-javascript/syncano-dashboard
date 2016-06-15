@@ -26,7 +26,7 @@ export default React.createClass({
     return (
       <FlatButton
         label={label}
-        primary
+        primary={true}
       />
     );
   },
