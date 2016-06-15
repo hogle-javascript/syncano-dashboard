@@ -1,3 +1,4 @@
+import AlertPageContent from './AlertPageContent';
 import Billing from './Billing';
 import CheckIcon from './CheckIcon';
 import Clipboard from './Clipboard';
@@ -41,6 +42,7 @@ import Request from './Request';
 import Sidebar from './Sidebar';
 import ShowMore from './ShowMore';
 
+export {AlertPageContent};
 export {Billing};
 export {CheckIcon};
 export {Clipboard};
@@ -85,6 +87,7 @@ export {Sidebar};
 export {ShowMore};
 
 export default {
+  AlertPageContent,
   Billing,
   CheckIcon,
   Clipboard,
