@@ -22,6 +22,10 @@ import Chart from './ProfileBillingChart';
 export default Radium(React.createClass({
   displayName: 'ProfileBillingPlan',
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     FormMixin,
     DialogsMixin,
@@ -49,10 +53,6 @@ export default Radium(React.createClass({
         }
       }
     };
-  },
-
-  contextTypes: {
-    muiTheme: React.PropTypes.object
   },
 
   componentDidMount() {

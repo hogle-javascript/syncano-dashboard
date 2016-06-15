@@ -134,7 +134,7 @@ export default Reflux.createStore({
 
   onInstallSolutionCompleted(payload) {
     console.debug('SolutionInstallDialogStore::onFetchSolutionVersionsCompleted');
-    this.data.isLoading = false; 
+    this.data.isLoading = false;
     SessionStore.getRouter().push({name: 'instance', params: {instanceName: payload.instance}});
     this.setSnackbarNotification({
       delay: true,
