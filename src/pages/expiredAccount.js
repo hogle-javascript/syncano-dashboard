@@ -1,6 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {RaisedButton} from 'material-ui';
 import AlertPageContent from '../common/AlertPageContent';
 
 export default () => {

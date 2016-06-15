@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router';
+import {Link} from 'react-router';
 import {RaisedButton} from 'material-ui';
 
 export default ({imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonDescription}) => {
