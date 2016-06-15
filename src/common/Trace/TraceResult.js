@@ -10,7 +10,8 @@ export default React.createClass({
         color: 'white',
         whiteSpace: 'pre',
         font: `12px/normal 'Monaco', monospace`,
-        backgroundColor: '#4C4A43'
+        backgroundColor: '#4C4A43',
+        display: 'inline-block'
       }
     };
   },
