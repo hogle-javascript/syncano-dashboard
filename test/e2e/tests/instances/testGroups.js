@@ -17,9 +17,10 @@ export default {
   'Administrator adds a Group': (client) => {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('group');
+    const instanceName = accounts.instanceUser.instanceName;
 
     usersPage
-      .navigate()
+      .goToUrl(instanceName, 'users')
       .waitForElementVisible('@groupEditButton')
       .waitForElementVisible('@userList')
       .clickElement('@addGroupButton')
@@ -30,9 +31,10 @@ export default {
   },
   'Administrator deletes a Group': (client) => {
     const usersPage = client.page.usersPage();
+    const instanceName = accounts.instanceUser.instanceName;
 
     usersPage
-      .navigate()
+      .goToUrl(instanceName, 'users')
       .waitForElementVisible('@groupEditButton')
       .waitForElementVisible('@userList')
       .clickListItemDropdown('@groupTableRowDropdown', 'Delete')

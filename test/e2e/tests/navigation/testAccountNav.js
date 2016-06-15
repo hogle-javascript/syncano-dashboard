@@ -16,7 +16,6 @@ module.exports = {
   },
   beforeEach(client) {
     const instancesPage = client.page.instancesPage();
-    const socketsPage = client.page.socketsPage();
 
     instancesPage
       .navigate()

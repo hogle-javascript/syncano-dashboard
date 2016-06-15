@@ -67,9 +67,9 @@ export default {
     socketsPage
       .goToUrl(instanceName, 'sockets')
       .clickElement('@configuration')
-      // .waitForElementVisible('@apnsCertInput')
+      .waitForElementVisible('@apnsCertInput')
       .clickElement('@removeCert')
-      // .waitForElementVisible('@certDragAndDrop')
+      .waitForElementVisible('@certDragAndDrop')
       .clickElement('@confirmButton')
       .clickElement('@addApnsSocket')
       .waitForElementVisible('@certDragAndDrop');

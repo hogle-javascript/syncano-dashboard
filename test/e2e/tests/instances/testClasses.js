@@ -15,9 +15,10 @@ export default {
   },
   'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
+    const instanceName = accounts.instanceUser.instanceName;
 
     classesPage
-      .navigate()
+      .goToUrl(instanceName, 'classes')
       .clickListItemDropdown('@classesListMenu', 'Select')
       .clickElement('@selectUserClass')
       .clickListItemDropdown('@classesListMenu', 'Delete')

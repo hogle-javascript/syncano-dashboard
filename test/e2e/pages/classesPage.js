@@ -1,8 +1,6 @@
-import accounts from '../tempAccounts';
 import utils from '../utils';
 
 export default {
-  url: `https://localhost:8080/#/instances/${accounts.instanceUser.instanceName}/classes`,
   elements: {
     classesListMenu: {
       selector: '//div[@class="classes-list"]/div[1]/div[@class="col-menu"]//button',

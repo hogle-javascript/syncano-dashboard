@@ -82,9 +82,11 @@ module.exports = {
   // },
   // 'User goes to Script Endpoint Traces View': (client) => {
   //   const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
-
+  //   const instanceName = accounts.navigationUser.instanceName;
+  //   const tempScriptNames = accounts.navigationUser.tempScriptNames[0];
+  //
   //   scriptEndpointTracesPage
-  //     .navigate()
+  //     .goToUrl(instanceName, 'script-endpoints/${tempScriptNames}/traces')
   //     .waitForElementPresent('@scriptEndpointTracesEmptyView');
   // }
 };

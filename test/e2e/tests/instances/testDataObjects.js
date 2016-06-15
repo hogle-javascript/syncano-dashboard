@@ -17,9 +17,11 @@ export default {
   'Administrator adds a Data Object'(client) {
     const dataObjectsPage = client.page.dataObjectsPage();
     const string = Utils.addSuffix('string');
+    const instanceName = accounts.alternativeUser.instanceName;
+    const tempClassName = accounts.alternativeUser.tempClassNames[0];
 
     dataObjectsPage
-      .navigate()
+      .goToUrl(instanceName, `/classes/${tempClassName}/objects`)
       .clickElement('@addDataObjectButton')
       .fillInput('@stringField', string)
       .clickElement('@confirm')
@@ -28,9 +30,11 @@ export default {
   // 'Administrator edits a Data Object'(client) {
   //   const dataObjectsPage = client.page.dataObjectsPage();
   //   const edited = Utils.addSuffix('edited');
+  //   const instanceName = accounts.alternativeUser.instanceName;
+  //   const tempClassName = accounts.alternativeUser.tempClassNames[0];
   //
   //   dataObjectsPage
-  //     .navigate()
+  //     .goToUrl(instanceName, `/classes/${tempClassName}/objects`)
   //     .clickElement('@stringFieldTableRow')
   //     .fillInput('@stringField', edited)
   //     .clickElement('@confirm')
@@ -38,9 +42,11 @@ export default {
   // },
   // 'Administrator deletes a Data Object'(client) {
   //   const dataObjectsPage = client.page.dataObjectsPage();
+  //   const instanceName = accounts.alternativeUser.instanceName;
+  //   const tempClassName = accounts.alternativeUser.tempClassNames[0];
   //
   //   dataObjectsPage
-  //     .navigate()
+  //     .goToUrl(instanceName, `/classes/${tempClassName}/objects`)
   //     .waitForElementPresent('@stringFieldEditedTableRow')
   //     .clickElement('@selectDataObjectTableRow')
   //     .waitForElementNotPresent('@deleteDataObjectButtonDisabled')

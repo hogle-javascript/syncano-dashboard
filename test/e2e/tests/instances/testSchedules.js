@@ -17,9 +17,10 @@ export default {
   'Administrator adds a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const schedule = utils.addSuffix('schedule');
+    const instanceName = accounts.instanceUser.instanceName;
 
     schedulesPage
-      .navigate()
+      .goToUrl(instanceName, 'schedules')
       .clickElement('@addScheduleButton')
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInput('@addScheduleModalLabel', schedule)
@@ -33,9 +34,10 @@ export default {
   'Administrator edits a Schedule Socket Crontab': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const schedule = utils.addSuffix('schedule');
+    const instanceName = accounts.instanceUser.instanceName;
 
     schedulesPage
-      .navigate()
+      .goToUrl(instanceName, 'schedules')
       .clickListItemDropdown(schedule, 'Edit')
       .waitForElementVisible('@editScheduleModalTitle')
       .fillInput('@addScheduleModalCronTab', '0 0 * * *')
@@ -48,9 +50,10 @@ export default {
     const schedulesPage = client.page.schedulesPage();
     const listsPage = client.page.listsPage();
     const schedule = utils.addSuffix('schedule');
+    const instanceName = accounts.instanceUser.instanceName;
 
     schedulesPage
-      .navigate()
+      .goToUrl(instanceName, 'schedules')
       .clickListItemDropdown(schedule, 'Delete')
       .waitForElementPresent('@deleteScheduleModalTitle')
       .clickElement('@confirm')
