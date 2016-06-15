@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 // Utils
 import {DialogMixin, FormMixin} from '../../mixins';
@@ -41,40 +42,48 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {label, crontab, script} = this.state;
+    const {label, crontab, script, timezone} = this.state;
 
-    Actions.createSchedule({label, crontab, script});
+    Actions.createSchedule({label, crontab, script, timezone});
   },
 
   handleEditSubmit() {
-    const {id, label, crontab, script} = this.state;
+    const {id, label, crontab, script, timezone} = this.state;
 
-    Actions.updateSchedule(id, {label, crontab, script});
+    Actions.updateSchedule(id, {label, crontab, script, timezone});
   },
 
-  handleCrontabChange(value) {
-    const crontab = value.text ? value.text : value;
+  handleChangeFields(key, value) {
+    const keyMap = {
+      timezone: value.text ? value.text : value,
+      crontab: value.text ? value.text : value,
+      label: value,
+      interval_sec: !_.isEmpty(value) ? value : null
+    };
 
-    this.setState({crontab});
+    this.setState({[key] : keyMap[key]});
   },
 
   renderCrontabDataSource() {
     const crontabs = Store.getCrontabDropdown();
 
-    return _.map(crontabs, (crontab) => {
-      return {
-        text: crontab.payload,
-        value: (
-          <AutoComplete.Item
-            primaryText={crontab.text}
-            secondaryText={crontab.payload} />
-        )
-      };
-    });
+    return _.map(crontabs, (crontab) => ({
+      text: crontab.payload,
+      value: <AutoComplete.Item primaryText={crontab.text} secondaryText={crontab.payload} />
+    }));
+  },
+
+  renderTimezoneDataSource() {
+    const timezones = moment.tz.names();
+
+    return _.map(timezones, (timezone) => ({
+      text: timezone,
+      value: <AutoComplete.Item primaryText={timezone} />
+    }));
   },
 
   render() {
-    const {open, isLoading, scripts, script, crontab, canSubmit} = this.state;
+    const {open, isLoading, scripts, script, crontab, canSubmit, timezone} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -119,7 +128,7 @@ export default React.createClass({
             autoFocus={true}
             fullWidth={true}
             value={this.state.label}
-            onChange={(event, value) => this.setState({label: value})}
+            onChange={(event, value) => this.handleChangeFields('label', value)}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Schedule's label"
             floatingLabelText="Label"/>
@@ -138,10 +147,23 @@ export default React.createClass({
             fullWidth={true}
             searchText={crontab}
             openOnFocus={true}
-            onNewRequest={this.handleCrontabChange}
-            onUpdateInput={this.handleCrontabChange}
+            onNewRequest={(value) => this.handleChangeFields('crontab', value)}
+            onUpdateInput={(value) => this.handleChangeFields('crontab', value)}
             dataSource={this.renderCrontabDataSource()}
             errorText={this.getValidationMessages('crontab').join(' ')} />
+          <AutoComplete
+            floatingLabelText="Timezone"
+            hintText="Choose option from the dropdown or type timezone"
+            animated={false}
+            fullWidth={true}
+            filter={(searchText, key) => _.toLower(key).includes(_.toLower(searchText))}
+            maxSearchResults={5}
+            searchText={timezone}
+            openOnFocus={true}
+            onNewRequest={(value) => this.handleChangeFields('timezone', value)}
+            onUpdateInput={(value) => this.handleChangeFields('timezone', value)}
+            dataSource={this.renderTimezoneDataSource()}
+            errorText={this.getValidationMessages('timezone').join(' ')} />
         </Dialog.ContentSection>
       </Dialog.FullPage>
     );

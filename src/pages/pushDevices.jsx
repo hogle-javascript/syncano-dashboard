@@ -53,7 +53,7 @@ const PushDevicesPage = React.createClass({
     const disableMap = {
       'all-push-notification-devices': !hasAPNSConfig && !hasGCMConfig,
       'apns-devices': !hasAPNSConfig,
-      'gmc-devices': !hasGCMConfig
+      'gcm-devices': !hasGCMConfig
     };
 
     return (

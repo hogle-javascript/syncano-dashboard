@@ -12,7 +12,7 @@ import ClassesStore from '../Classes/ClassesStore';
 
 // Components
 import {TextField, Toggle, Checkbox, AutoComplete} from 'material-ui';
-import {SelectFieldWrapper, Show, Dialog, Notification} from '../../common/';
+import {SelectFieldWrapper, Show, Dialog, Notification, Editor} from '../../common/';
 
 export default React.createClass({
   displayName: 'DataEndpointDialog',
@@ -29,7 +29,41 @@ export default React.createClass({
     },
     class: {
       presence: true
+    },
+    query: (value) => {
+      try {
+        JSON.parse(value);
+      } catch (e) {
+        return {
+          inclusion: {
+            within: [],
+            message: 'is not a valid JSON'
+          }
+        };
+      }
+      return null;
     }
+  },
+
+  getDataEnpointParams() {
+    const {name, description, order_by, page_size, excluded_fields, expand, query} = this.state;
+    const className = this.state.class;
+    const params = {
+      class: className,
+      query: JSON.parse(query) || {},
+      name,
+      description,
+      order_by,
+      page_size,
+      excluded_fields,
+      expand
+    };
+
+    return params;
+  },
+
+  isActualClass() {
+    return ClassesStore.getClassByName(this.state.class);
   },
 
   isEnabled(list, field) {
@@ -45,45 +79,21 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
-    const className = this.state.class;
-    const isActualClass = ClassesStore.getClassByName(className);
-    const payload = {
-      name,
-      class: className,
-      description,
-      order_by,
-      page_size,
-      excluded_fields,
-      expand
-    };
-
-    if (!isActualClass) {
-      return Actions.createDataEndpointWithClass(payload);
+    if (!this.isActualClass()) {
+      return Actions.createDataEndpointWithClass(this.getDataEnpointParams());
     }
 
-    return Actions.createDataEndpoint(payload);
+    return Actions.createDataEndpoint(this.getDataEnpointParams());
   },
 
   handleEditSubmit() {
-    const {name, description, order_by, page_size, excluded_fields, expand} = this.state;
-    const className = this.state.class;
-    const isActualClass = ClassesStore.getClassByName(className);
-    const payload = {
-      class: className,
-      description,
-      order_by,
-      page_size,
-      excluded_fields,
-      expand
-    };
+    const params = this.getDataEnpointParams();
 
-
-    if (!isActualClass) {
-      return Actions.updateDataEndpointWithClass(name, payload);
+    if (!this.isActualClass()) {
+      return Actions.updateDataEndpointWithClass(params.name, params);
     }
 
-    return Actions.updateDataEndpoint(name, payload);
+    return Actions.updateDataEndpoint(params.name, params);
   },
 
   handleToggle(fieldsType, fieldName, event, value) {
@@ -190,6 +200,7 @@ export default React.createClass({
     const title = this.hasEditMode() ? 'Edit' : 'Add';
     const {open, isLoading, canSubmit, classes} = this.state;
     const submitLabel = !ClassesStore.getClassByName(this.state.class) ? 'Confirm and create a class' : 'Confirm';
+    const filteringUrl = "http://docs.syncano.io/docs/data-objects-filtering-ordering#filtering-data-objects";
 
     return (
       <Dialog.FullPage
@@ -215,6 +226,12 @@ export default React.createClass({
               Classes define properties of Data Objects. If you have no Classes yet you can create one&nbsp;
               <Dialog.SidebarLink to="classes">
                 here.
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Query">
+              {`In this field you can specify a filtering method just as you would when using `}
+              <Dialog.SidebarLink to={filteringUrl}>
+                Data Objects filtering.
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Class Fields">
@@ -286,7 +303,31 @@ export default React.createClass({
               errorText={this.getValidationMessages('class').join(' ')}/>
           </div>
         </Dialog.ContentSection>
-        <Dialog.ContentSection>
+        <Dialog.ContentSection
+          style={{paddingTop: 16}}
+          title="query">
+          <Editor
+            name="query-editor"
+            ref="queryEditor"
+            mode="json"
+            height="300px"
+            onChange={(query) => this.setState({query})}
+            value={[
+              '{',
+              '  ',
+              '}'
+            ].join('\n')} />
+          <div className="vm-2-t">
+            <Show if={this.getValidationMessages('query').length}>
+              <Notification type="error">
+                {this.getValidationMessages('query').join(' ')}
+              </Notification>
+            </Show>
+          </div>
+        </Dialog.ContentSection>
+        <Dialog.ContentSection
+          style={{paddingTop: 16}}
+          title="class fields & ordering">
           <div className="col-flex-1">
             {this.renderFields()}
           </div>

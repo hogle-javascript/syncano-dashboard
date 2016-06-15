@@ -760,7 +760,9 @@ export default React.createClass({
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }>
-        {this.renderFormNotifications()}
+        <div className="vm-2-b">
+          {this.renderFormNotifications()}
+        </div>
         <div className="row">
           <div className="col-xs-20">
             {this.renderBuiltinFields()}

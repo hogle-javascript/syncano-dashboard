@@ -11,7 +11,7 @@ import Store from './AdminDialogStore';
 
 // Components
 import {TextField} from 'material-ui';
-import {Dialog, SelectFieldWrapper} from '../../common/';
+import {Dialog, SelectFieldWrapper, Show, Notification} from '../../common/';
 
 export default React.createClass({
   displayName: 'AdminDialog',
@@ -97,6 +97,11 @@ export default React.createClass({
           value={this.state.role}
           onChange={(event, index, value) => this.setSelectFieldValue('role', value)}
           errorText={this.getValidationMessages('role').join(' ')}/>
+        <Show if={this.getValidationMessages('detail').length}>
+          <Notification type="error">
+            {this.getValidationMessages('detail').join(' ')}
+          </Notification>
+        </Show>
       </Dialog.FullPage>
     );
   }
