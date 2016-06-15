@@ -21,9 +21,8 @@ const DropZone = ({
 }) => {
   const dropZoneStyles = {
     dropZone: {
-      display: 'webkit-flex; display: flex',
+      display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center',
       height: 210,
       width: '100%',
       borderStyle: 'dashed',
@@ -38,10 +37,12 @@ const DropZone = ({
       }
     },
     dropZoneDescription: {
-      lineHeight: '36px',
-      maxWidth: 350,
-      textAlign: 'center',
-      fontSize: '24px'
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      lineHeight: '56px',
+      fontSize: '20px'
     },
     uploadIcon: {
       color: Colors.grey300,
