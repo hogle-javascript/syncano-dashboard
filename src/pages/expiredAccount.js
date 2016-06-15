@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {RaisedButton} from 'material-ui';
 import AlertPageContent from '../common/AlertPageContent';
 
-const ExpiredAccountPage = () => {
+export default () => {
   return (
     <AlertPageContent
       imgSrc={require('!file-loader!../assets/img/illustrations/no-active-plan.svg')}
@@ -16,5 +16,3 @@ const ExpiredAccountPage = () => {
     />
   );
 };
-
-export default ExpiredAccountPage;
