@@ -2,10 +2,7 @@ export default {
   updateSettings(payload) {
     this.NewLibConnection
       .Account
-      .update({
-        first_name: payload.firstName,
-        last_name: payload.lastName
-      })
+      .update(payload)
       .then(this.completed)
       .catch(this.failure);
   },
