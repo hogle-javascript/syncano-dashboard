@@ -706,7 +706,7 @@ export default React.createClass({
           );
         }
 
-        if (item.type === 'relation') {
+        if (item.type === 'relation' || item.type === 'reference') {
           const defaultValue = this.state[item.name] && this.state[item.name].value;
 
           return (
