@@ -200,7 +200,7 @@ export default React.createClass({
     const title = this.hasEditMode() ? 'Edit' : 'Add';
     const {open, isLoading, canSubmit, classes} = this.state;
     const submitLabel = !ClassesStore.getClassByName(this.state.class) ? 'Confirm and create a class' : 'Confirm';
-    const filteringUrl = "http://docs.syncano.io/docs/data-objects-filtering-ordering#filtering-data-objects";
+    const filteringUrl = 'http://docs.syncano.io/docs/data-objects-filtering-ordering#filtering-data-objects';
 
     return (
       <Dialog.FullPage
