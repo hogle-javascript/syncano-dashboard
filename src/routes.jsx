@@ -17,11 +17,8 @@ import ScriptsPage from './pages/scripts';
 import SetupPage from './pages/setup';
 import NotFoundPage from './pages/notfound';
 import PushDevicesPage from './pages/pushDevices';
-<<<<<<< HEAD
-import FailedPaymentPage from './pages/failedPayment';
-=======
 import ExpiredAccountPage from './pages/expiredAccount';
->>>>>>> devel
+import FailedPaymentPage from './pages/failedPayment';
 
 // Apps
 import Account from './apps/Account';
