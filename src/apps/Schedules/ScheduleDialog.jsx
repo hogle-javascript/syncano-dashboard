@@ -30,9 +30,6 @@ export default React.createClass({
     },
     script: {
       presence: true
-    },
-    crontab: {
-      presence: true
     }
   },
 
@@ -42,15 +39,15 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {label, crontab, script, timezone} = this.state;
+    const {label, crontab, script, interval_sec, timezone} = this.state;
 
-    Actions.createSchedule({label, crontab, script, timezone});
+    Actions.createSchedule({label, crontab, script, interval_sec, timezone});
   },
 
   handleEditSubmit() {
-    const {id, label, crontab, script, timezone} = this.state;
+    const {id, label, crontab, script, interval_sec, timezone} = this.state;
 
-    Actions.updateSchedule(id, {label, crontab, script, timezone});
+    Actions.updateSchedule(id, {label, crontab, script, interval_sec, timezone});
   },
 
   handleChangeFields(key, value) {
@@ -61,7 +58,7 @@ export default React.createClass({
       interval_sec: !_.isEmpty(value) ? value : null
     };
 
-    this.setState({[key] : keyMap[key]});
+    this.setState({[key]: keyMap[key]});
   },
 
   renderCrontabDataSource() {
@@ -83,7 +80,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, isLoading, scripts, script, crontab, canSubmit, timezone} = this.state;
+    const {open, isLoading, scripts, script, crontab, canSubmit, interval_sec, label, timezone} = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -127,8 +124,8 @@ export default React.createClass({
             name="label"
             autoFocus={true}
             fullWidth={true}
-            value={this.state.label}
-            onChange={(event, value) => this.handleChangeFields('label', value)}
+            value={label}
+            onChange={(event, value) => this.setState({label: value})}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Schedule's label"
             floatingLabelText="Label"/>
@@ -151,6 +148,15 @@ export default React.createClass({
             onUpdateInput={(value) => this.handleChangeFields('crontab', value)}
             dataSource={this.renderCrontabDataSource()}
             errorText={this.getValidationMessages('crontab').join(' ')} />
+          <TextField
+            ref="Interval"
+            name="interval_sec"
+            fullWidth={true}
+            value={interval_sec}
+            onChange={(event, value) => this.handleChangeFields('interval_sec', value)}
+            errorText={this.getValidationMessages('interval_sec').join(' ')}
+            hintText="Type interval time in seconds"
+            floatingLabelText="Interval"/>
           <AutoComplete
             floatingLabelText="Timezone"
             hintText="Choose option from the dropdown or type timezone"
