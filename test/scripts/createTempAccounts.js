@@ -9,7 +9,6 @@ const createGCMSocket = require('./create/gcmSocket.js');
 const createAPNSDevices = require('./create/apnsDevices.js');
 const createGCMDevices = require('./create/gcmDevices.js');
 const getCertFile = require('./files/getCertificate.js');
-const removeCert = require('./files/removeCertificate.js');
 const saveAccountsToFile = require('./files/saveAccounts.js');
 
 let accounts = {};

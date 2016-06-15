@@ -17,9 +17,10 @@ export default {
   'User invites an Administrator': (client) => {
     const email = utils.addSuffix('admin') + '@syncano.com';
     const adminsPage = client.page.adminsPage();
+    const instanceName = accounts.instanceUser.instanceName;
 
     adminsPage
-      .navigate()
+      .goToUrl(instanceName, 'admins')
       .waitForElementVisible('@adminsListItem')
       .clickElement('@addAdminButton')
       .waitForElementVisible('@addAdminModalTitle')
@@ -31,9 +32,10 @@ export default {
   'User deletes an Administrator invitation': (client) => {
     const adminsPage = client.page.adminsPage();
     const listsPage = client.page.listsPage();
+    const instanceName = accounts.instanceUser.instanceName;
 
     adminsPage
-      .navigate()
+      .goToUrl(instanceName, 'admins')
       .clickElement('@selectAdminTableRow')
       .clickElement('@deleteButton')
       .waitForElementVisible('@deleteAdminModalTitle')

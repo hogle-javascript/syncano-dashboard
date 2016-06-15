@@ -17,11 +17,10 @@ export default {
     const listsPage = client.page.listsPage();
     const selectedItems = listsPage.elements.selectedItem.selector;
     const optionsMenu = listsPage.elements.optionsMenu.selector;
-
-    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/scripts');
+    const instanceName = accounts.instanceUser.instanceName;
 
     client
-      // .goToUrl('temp', 'scripts')
+      .goToUrl(instanceName, 'scripts')
       .multipleItems('Select', 3, optionsMenu, selectedItems)
       .pause(2500)
       .multipleItems('Unselect', 0, optionsMenu, selectedItems);
@@ -32,7 +31,6 @@ export default {
     const optionsMenu = listsPage.elements.optionsMenu.selector;
 
     client
-      // .goToUrl('temp', 'scripts')
       .pause(2000)
       .multipleItems('Select', 3, optionsMenu, selectedItems)
       .pause(2500);

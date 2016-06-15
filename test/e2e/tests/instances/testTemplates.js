@@ -16,11 +16,10 @@ export default {
   'Test Select/Deselect multiple Templates': (client) => {
     const listsPage = client.page.listsPage();
     const selectedItems = listsPage.elements.selectedItem.selector;
-
-    client.url('https://localhost:8080/#/instances/' + accounts.instanceUser.instanceName + '/templates');
+    const instanceName = accounts.instanceUser.instanceName;
 
     listsPage
-      // .goToUrl('temp', 'templates')
+      .goToUrl(instanceName, 'templates')
       .clickListItemDropdown('@optionsMenu', 'Select')
       .assertSelectedCount('xpath', selectedItems, 2);
 
@@ -38,7 +37,6 @@ export default {
       .pause(2000);
 
     listsPage
-      // .goToUrl('temp', 'templates')
       .clickListItemDropdown('@optionsMenu', 'Select');
 
     client

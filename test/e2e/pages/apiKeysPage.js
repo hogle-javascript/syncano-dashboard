@@ -1,4 +1,3 @@
-import accounts from '../tempAccounts';
 import utils from '../utils';
 
 const apiKeysCommands = {
@@ -9,7 +8,6 @@ const apiKeysCommands = {
 };
 
 export default {
-  url: `https://localhost:8080/#/instances/${accounts.instanceUser.instanceName}/api-keys`,
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {

@@ -17,11 +17,11 @@ export default {
   'User adds a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const script = utils.addSuffix('script');
+    const instanceName = accounts.alternativeUser.instanceName;
 
-    client.url('https://localhost:8080/#/instances/' + accounts.alternativeUser.instanceName + '/script-endpoints');
 
     socketsPage
-      // .goToUrl('', 'script-endpoints')
+      .goToUrl(instanceName, 'script-endpoints')
       .clickElement('@addScriptButton')
       .fillInput('@modalNameInput', script)
       .selectDropdownValue('@addCodeBoxModalScriptDropdown', accounts.alternativeUser.tempScriptNames[0])
@@ -33,7 +33,6 @@ export default {
     const edited = utils.addSuffix('edited');
 
     socketsPage
-      // .waitForElementVisible('@codeBoxSocketItem')
       .clickListItemDropdown(utils.addSuffix('script'), 'Edit')
       .waitForElementVisible('@editCodeBoxModalTitle')
       .fillInput('@modalDescriptionInput', edited)
@@ -48,7 +47,6 @@ export default {
     const script = utils.addSuffix('script');
 
     socketsPage
-      // .waitForElementVisible('@codeBoxSocketItem')
       .clickListItemDropdown(script, 'Delete')
       .waitForElementVisible('@deleteCodeBoxModalTitle')
       .clickElement('@confirmButton')

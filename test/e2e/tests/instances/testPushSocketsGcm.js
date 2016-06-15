@@ -48,14 +48,14 @@ export default {
       .verify.valueContains('@inputGcmDevKey', gcmDevKey)
       .verify.valueContains('@inputGcmProdKey', gcmProdKey)
       .clickElement('@confirmButton');
-  }
-  // 'Test Admin Goes to GCM Device list': (client) => {
-  //   const socketsPage = client.page.socketsPage();
-  //   const pushDevicesPage = client.page.pushDevicesPage();
+  },
+  'Test Admin Goes to GCM Device list': (client) => {
+    const socketsPage = client.page.socketsPage();
+    const pushDevicesPage = client.page.pushDevicesPage();
 
-  //   socketsPage
-  //     .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Devices list');
-  //   pushDevicesPage
-  //     .waitForElementVisible('@androidDevicesHeading');
-  // }
+    socketsPage
+      .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Devices list');
+    pushDevicesPage
+      .waitForElementVisible('@androidDevicesHeading');
+  }
 };
