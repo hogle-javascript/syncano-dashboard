@@ -102,7 +102,6 @@ export default Reflux.createStore({
     return planDict[this.getPlan()];
   },
 
-
   getLimitsData(subscription, plan) {
     if (plan === 'builder') {
       return this.getBuilderLimits();

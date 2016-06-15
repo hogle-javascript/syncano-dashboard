@@ -24,7 +24,7 @@ class Dashboard extends Component {
             style={{display: 'flex', flexDirection: 'column', flex: 1}}>
             <Header/>
             {this.props.children}
-            <UpgradeNowToolbar />
+            <UpgradeNowToolbar subscriptionEndDate="2016-07-30"/>
           </Breakpoint>
           <Breakpoint maxWidth={767} widthMethod="componentWidth">
             <NoMobileInfo/>
