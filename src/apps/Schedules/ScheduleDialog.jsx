@@ -61,12 +61,6 @@ export default React.createClass({
     this.setState({[key]: keyMap[key]});
   },
 
-  handleIntervalSecChange(event, value) {
-    const newValue = !_.isEmpty(value) ? value : null;
-
-    this.setState({interval_sec: newValue});
-  },
-
   renderCrontabDataSource() {
     const crontabs = Store.getCrontabDropdown();
 
