@@ -21,7 +21,7 @@ export default {
     const tempClassName = accounts.alternativeUser.tempClassNames[0];
 
     dataObjectsPage
-      .goToUrl(instanceName, `/classes/${tempClassName}/objects`)
+      .goToUrl(instanceName, `classes/${tempClassName}/objects`)
       .clickElement('@addDataObjectButton')
       .fillInput('@stringField', string)
       .clickElement('@confirm')
