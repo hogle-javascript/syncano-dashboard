@@ -13,7 +13,7 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 // Components
 import Sticky from 'react-stickydiv';
 import { FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu } from 'material-ui';
-import { Logo, Clipboard } from '../';
+import { Logo, Clipboard, UpgradeButton } from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
 import './Header.sass';
@@ -145,6 +145,7 @@ const Header = Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
+    const { router } = this.props;
 
     return (
       <Sticky zIndex={12}>
@@ -184,6 +185,12 @@ const Header = Radium(React.createClass({
               className="toolbar-list"
               style={styles.toolbarList}
             >
+              <li
+                id="upgrade-button"
+                style={{ ...styles.toolbarListItem, ...{ paddingRight: 0 } }}
+              >
+                <UpgradeButton onTouchTap={() => router.push('profile-billing-plan')} />
+              </li>
               <li
                 id="menu-notifications"
                 style={styles.toolbarListItem}
