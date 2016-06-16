@@ -1,8 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-import {Paper} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { Paper } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'ColumnIconName',
@@ -30,7 +30,7 @@ export default Radium(React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked});
+    this.setState({ checked: newProps.checked });
   },
 
   getStyles() {
@@ -82,13 +82,16 @@ export default Radium(React.createClass({
     return (
       <div
         className={this.props.className}
-        style={styles.container}>
+        style={styles.container}
+      >
         <Paper
           circle={true}
-          style={styles.icon} />
+          style={styles.icon}
+        />
         <div
           style={styles.name}
-          onClick={this.handleNameClick}>
+          onClick={this.handleNameClick}
+        >
           {this.props.children}
         </div>
       </div>

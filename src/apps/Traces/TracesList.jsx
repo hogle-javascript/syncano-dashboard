@@ -1,8 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
-import {Paper, FontIcon} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {ColumnList, Loading, Trace, Lists} from '../../common/';
+import { Paper, FontIcon } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { ColumnList, Loading, Trace, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -50,7 +50,7 @@ export default Radium(React.createClass({
     console.info('ScriptsTraces::toggleTrace', traceId);
     const visibleTraceId = this.state.visibleTraceId !== traceId ? traceId : null;
 
-    this.setState({visibleTraceId});
+    this.setState({ visibleTraceId });
   },
 
   renderItem(item) {
@@ -108,12 +108,14 @@ export default Radium(React.createClass({
       <Paper
         key={item.id}
         zDepth={1}
-        style={styles.trace}>
+        style={styles.trace}
+      >
         <ColumnList.Item
           checked={item.checked}
           id={item.id}
           zDepth={0}
-          handleClick={() => this.toggleTrace(item.id)}>
+          handleClick={() => this.toggleTrace(item.id)}
+        >
           <Column.CheckIcon
             id={item.id.toString()}
             className="col-flex-1"
@@ -121,14 +123,16 @@ export default Radium(React.createClass({
             background={status.background}
             checkable={false}
             primaryText={item.status}
-            secondaryText={`ID: ${item.id}`}/>
+            secondaryText={`ID: ${item.id}`}
+          />
           <Column.Desc className="col-flex-1">{status.duration}</Column.Desc>
           <Column.Date
             date={item.executed_at}
-            ifInvalid={item.status}/>
+            ifInvalid={item.status}
+          />
         </ColumnList.Item>
         <div style={styles.traceResult}>
-          <Trace.Result result={item.result}/>
+          <Trace.Result result={item.result} />
         </div>
       </Paper>
     );
@@ -141,12 +145,14 @@ export default Radium(React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="ICON_NAME"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             {this.props.name}
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Duration
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
@@ -157,7 +163,7 @@ export default Radium(React.createClass({
   },
 
   renderEmptyContent() {
-    const {tracesFor} = this.props;
+    const { tracesFor } = this.props;
     const styles = this.getStyles();
     const tracesForConfig = {
       script: {
@@ -182,14 +188,15 @@ export default Radium(React.createClass({
       <div style={styles.noTracesContainer}>
         <FontIcon
           style={styles.noTracesIcon}
-          className={tracesForConfig[tracesFor].icon}/>
+          className={tracesForConfig[tracesFor].icon}
+        />
         <p style={styles.noTracesText}>There are no traces for this {tracesForConfig[tracesFor].name} yet</p>
       </div>
     );
   },
 
   render() {
-    const {items, isLoading} = this.props;
+    const { items, isLoading } = this.props;
 
     return (
       <Lists.Container>

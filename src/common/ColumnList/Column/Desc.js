@@ -29,13 +29,14 @@ export default Radium(React.createClass({
   },
 
   render() {
-    const {className, children} = this.props;
+    const { className, children } = this.props;
     const styles = this.getStyles();
 
     return (
       <div
         className={`description-field ${className}`}
-        style={styles}>
+        style={styles}
+      >
         {children}
       </div>
     );

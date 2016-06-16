@@ -2,16 +2,16 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../../mixins';
+import { DialogMixin, FormMixin } from '../../../mixins';
 
 // Stores and Actions
 import Actions from './GCMPushNotificationsActions';
 import Store from './GCMConfigDialogStore';
 
 // Components
-import {TextField} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Loading, Dialog} from '../../../common/';
+import { TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Loading, Dialog } from '../../../common/';
 
 export default React.createClass({
   displayName: 'GCMConfigDialog',
@@ -60,9 +60,9 @@ export default React.createClass({
   },
 
   handleSaveGCMConfig() {
-    const {production_api_key, development_api_key} = this.state;
+    const { production_api_key, development_api_key } = this.state;
 
-    Actions.configGCMPushNotification({production_api_key, development_api_key});
+    Actions.configGCMPushNotification({ production_api_key, development_api_key });
   },
 
   handleAddSubmit() {
@@ -75,7 +75,7 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {open, isLoading, canSubmit, isCertLoading, development_api_key, production_api_key} = this.state;
+    const { open, isLoading, canSubmit, isCertLoading, development_api_key, production_api_key } = this.state;
 
     return (
       <Dialog.FullPage
@@ -90,7 +90,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -109,9 +110,10 @@ export default React.createClass({
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         <div className="row align-center hp-2-l hp-2-r vp-2-t">
-          <div dangerouslySetInnerHTML={{__html: require('./phone-android.svg')}}>
+          <div dangerouslySetInnerHTML={{ __html: require('./phone-android.svg') }}>
           </div>
           <div className="col-flex-1 hm-3-l">
             <Loading show={isCertLoading}>
@@ -120,24 +122,27 @@ export default React.createClass({
                 name="development_api_key"
                 autoFocus={true}
                 value={development_api_key}
-                onChange={(event, value) => this.setState({development_api_key: value})}
+                onChange={(event, value) => this.setState({ development_api_key: value })}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Development API key"
-                errorText={this.getValidationMessages('development_api_key').join(' ')}/>
+                errorText={this.getValidationMessages('development_api_key').join(' ')}
+              />
               <TextField
                 ref="production_api_key"
                 name="production_api_key"
                 value={production_api_key}
-                onChange={(event, value) => this.setState({production_api_key: value})}
+                onChange={(event, value) => this.setState({ production_api_key: value })}
                 fullWidth={true}
                 floatingLabelText="Google Cloud Messaging Production API key"
-                errorText={this.getValidationMessages('production_api_key').join(' ')}/>
+                errorText={this.getValidationMessages('production_api_key').join(' ')}
+              />
             </Loading>
             <div className="vm-4-t">
               You can find this key in
               <a
                 style={styles.GDClink}
-                href="https://console.developers.google.com"> Google Developer Console</a>
+                href="https://console.developers.google.com"
+              > Google Developer Console</a>
             </div>
           </div>
         </div>

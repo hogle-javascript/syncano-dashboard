@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-import {colors as Colors} from 'material-ui/styles/';
+import { colors as Colors } from 'material-ui/styles/';
 import Truncate from '../../Truncate';
 
 export default Radium(React.createClass({
@@ -54,19 +54,20 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {iconElement, primaryText, secondaryText, handleIconClick, className, ...other} = this.props;
+    const { iconElement, primaryText, secondaryText, handleIconClick, className, ...other } = this.props;
 
     return (
       <div
         className={className}
-        style={styles.container}>
-        {React.createElement(iconElement, {...other, handleClick: handleIconClick})}
-        <div style={{flex: 1, maxWidth: 'calc(100% - 66px)'}}>
+        style={styles.container}
+      >
+        {React.createElement(iconElement, { ...other, handleClick: handleIconClick })}
+        <div style={{ flex: 1, maxWidth: 'calc(100% - 66px)' }}>
           <div style={styles.primaryText}>
-            {typeof primaryText === 'string' ? <Truncate text={primaryText}/> : primaryText}
+            {typeof primaryText === 'string' ? <Truncate text={primaryText} /> : primaryText}
           </div>
           <div style={styles.secondaryText}>
-            {typeof secondaryText === 'string' ? <Truncate text={secondaryText}/> : secondaryText}
+            {typeof secondaryText === 'string' ? <Truncate text={secondaryText} /> : secondaryText}
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ColumnList, Loading} from '../';
+import { ColumnList, Loading } from '../';
 
 export default React.createClass({
   displayName: 'List',

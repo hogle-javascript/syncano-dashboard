@@ -18,6 +18,7 @@ export default (props) => {
     <LinkListItem
       style={styles.root}
       innerDivStyle={styles.innerDivStyle}
-      {...props} />
+      {...props}
+    />
   );
 };

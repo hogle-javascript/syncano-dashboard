@@ -2,13 +2,13 @@ import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
-import {FormMixin} from '../../mixins';
+import { FormMixin } from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileSettingsStore';
 
-import {TextField, RaisedButton} from 'material-ui';
-import {Container, InnerToolbar} from '../../common/';
+import { TextField, RaisedButton } from 'material-ui';
+import { Container, InnerToolbar } from '../../common/';
 
 export default React.createClass({
   displayName: 'ProfileSettings',
@@ -51,41 +51,44 @@ export default React.createClass({
   },
 
   render() {
-    const {first_name, last_name, canSubmit, email} = this.state;
+    const { first_name, last_name, canSubmit, email } = this.state;
     const styles = this.getStyles();
     const title = 'Profile';
 
     return (
       <div>
         <Helmet title={title} />
-        <InnerToolbar title={title}/>
+        <InnerToolbar title={title} />
         <Container>
           {this.renderFormNotifications()}
           <form
             style={styles.form}
             onSubmit={this.handleFormValidation}
             acceptCharset="UTF-8"
-            method="post">
+            method="post"
+          >
             <TextField
               ref="firstName"
               value={first_name}
-              onChange={(event, value) => this.setState({first_name: value})}
+              onChange={(event, value) => this.setState({ first_name: value })}
               defaultValue={first_name}
               errorText={this.getValidationMessages('first_name').join(' ')}
               name="firstName"
               floatingLabelText="First name"
               hintText="First name"
-              fullWidth={true}/>
+              fullWidth={true}
+            />
             <TextField
               ref="lastName"
               value={last_name}
-              onChange={(event, value) => this.setState({last_name: value})}
+              onChange={(event, value) => this.setState({ last_name: value })}
               defaultValue={last_name}
               errorText={this.getValidationMessages('last_name').join(' ')}
               name="lastName"
               floatingLabelText="Last name"
               hintText="Last name"
-              fullWidth={true}/>
+              fullWidth={true}
+            />
             <TextField
               ref="email"
               name="email"
@@ -95,7 +98,8 @@ export default React.createClass({
               autoComplete="email"
               hintText="Your email"
               disabled={true}
-              fullWidth={true}/>
+              fullWidth={true}
+            />
             <RaisedButton
               type="submit"
               label="Update"
@@ -103,7 +107,8 @@ export default React.createClass({
               labelStyle={styles.updateButtonLabel}
               className="raised-button"
               disabled={!canSubmit}
-              primary={true}/>
+              primary={true}
+            />
           </form>
         </Container>
       </div>

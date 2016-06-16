@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 
 // Stores & Actions
 import DataObjectsActions from './DataObjectsActions';
@@ -19,7 +19,7 @@ export default Reflux.createStore({
     return {
       isLoading: false,
       channels: [
-        {payload: '', text: 'Loading...'}
+        { payload: '', text: 'Loading...' }
       ]
     };
   },
@@ -34,14 +34,14 @@ export default Reflux.createStore({
     let channels = ChannelsStore.getChannelsDropdown();
 
     if (channels.length === 0) {
-      channels = [{payload: '', text: 'No channels, add one first'}];
+      channels = [{ payload: '', text: 'No channels, add one first' }];
     }
 
-    this.trigger({channels});
+    this.trigger({ channels });
   },
 
   onCreateDataObject() {
-    this.trigger({isLoading: true});
+    this.trigger({ isLoading: true });
   },
 
   onCreateDataObjectCompleted() {
@@ -50,11 +50,11 @@ export default Reflux.createStore({
   },
 
   onCreateDataObjectFailure() {
-    this.trigger({isLoading: false});
+    this.trigger({ isLoading: false });
   },
 
   onUpdateDataObject() {
-    this.trigger({isLoading: true});
+    this.trigger({ isLoading: true });
   },
 
   onUpdateDataObjectCompleted() {
@@ -63,6 +63,6 @@ export default Reflux.createStore({
   },
 
   onUpdateDataObjectFailure() {
-    this.trigger({isLoading: false});
+    this.trigger({ isLoading: false });
   }
 });

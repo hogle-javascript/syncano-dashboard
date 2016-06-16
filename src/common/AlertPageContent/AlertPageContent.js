@@ -1,8 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {RaisedButton} from 'material-ui';
+import { Link } from 'react-router';
+import { RaisedButton } from 'material-ui';
 
-export default ({imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonDescription}) => {
+export default ({ imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonDescription }) => {
   const styles = {
     root: {
       display: 'flex',
@@ -82,7 +82,7 @@ export default ({imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonDes
             backgroundColor="#FFCC01"
             labelColor="#1D2228"
             style={styles.button}
-            labelStyle={{fontWeight: 700}}
+            labelStyle={{ fontWeight: 700 }}
           />
         </Link>
         {buttonDescription && <p style={styles.buttonDescription}>{buttonDescription}</p>}
@@ -90,7 +90,7 @@ export default ({imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonDes
       <div style={styles.flexBottom}>
         <p style={styles.flexBottomText}>
           If you think this is an error, please contact us at:
-          <br/>
+          <br />
           <a
             href="mailto:support@syncano.com"
             style={styles.textLink}

@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -20,7 +20,7 @@ export default Reflux.createStore({
       label: null,
       runtime_name: '',
       runtimes: [
-        {payload: '', text: 'Loading...'}
+        { payload: '', text: 'Loading...' }
       ]
     };
   },
@@ -43,10 +43,10 @@ export default Reflux.createStore({
       swift: 'Swift'
     };
     const runtimes = _.sortBy(_.map(payload, (value, runtime) => {
-      return {payload: runtime, text: runtimesLabelMap[runtime]};
+      return { payload: runtime, text: runtimesLabelMap[runtime] };
     }), 'text');
 
-    this.trigger({runtimes});
+    this.trigger({ runtimes });
   },
 
   onCreateScriptCompleted(resp) {
@@ -58,7 +58,7 @@ export default Reflux.createStore({
       scriptId: resp.id
     };
 
-    SessionStore.getRouter().push({name: 'script', params});
+    SessionStore.getRouter().push({ name: 'script', params });
   },
 
   onUpdateScriptCompleted() {

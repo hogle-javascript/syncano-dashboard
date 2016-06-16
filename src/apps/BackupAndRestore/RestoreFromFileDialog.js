@@ -1,15 +1,15 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 import Actions from './RestoreFromFileDialogActions';
 import Store from './RestoreFromFileDialogStore';
 
-import {FontIcon, TextField} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles';
+import { FontIcon, TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles';
 import DropZone from 'react-dropzone';
-import {Dialog, Loading, Show, Notification} from '../../common';
+import { Dialog, Loading, Show, Notification } from '../../common';
 
 export default React.createClass({
   displayName: 'RestoreFromFileDialog',
@@ -25,7 +25,7 @@ export default React.createClass({
   ],
 
   validatorConstraints() {
-    const {instanceName} = this.context.params;
+    const { instanceName } = this.context.params;
 
     return {
       backupFile: {
@@ -86,7 +86,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {backupFile} = this.state;
+    const { backupFile } = this.state;
 
     Actions.restoreFromFile(backupFile);
   },
@@ -103,8 +103,9 @@ export default React.createClass({
       <div>
         <div
           className="vm-3-b"
-          style={{textAlign: 'center'}}>
-          {`We're restoring your backup, please wait...`}
+          style={{ textAlign: 'center' }}
+        >
+          {'We\'re restoring your backup, please wait...'}
         </div>
         <Loading show={true} />
       </div>
@@ -113,7 +114,7 @@ export default React.createClass({
 
   renderContent() {
     const styles = this.getStyles();
-    const {backupFile, instanceNameValidation} = this.state;
+    const { backupFile, instanceNameValidation } = this.state;
     const instanceName = this.context.params.instanceName;
     const backupLabel = backupFile ? backupFile.name : null;
     const hasBackupFileError = this.getValidationMessages('backupFile').length;
@@ -125,8 +126,9 @@ export default React.createClass({
         <div className="row align-top vm-4-b">
           <div className="hp-2-r vm-1-t col-sm-4">
             <FontIcon
-              style={{fontSize: 60, color: Colors.orange400}}
-              className="synicon-alert"/>
+              style={{ fontSize: 60, color: Colors.orange400 }}
+              className="synicon-alert"
+            />
           </div>
           <div className="col-sm-31">
             <div className="vm-1-b">
@@ -142,11 +144,13 @@ export default React.createClass({
             <div className="vm-3-t">
               <DropZone
                 onDrop={this.handleDropBackupFile}
-                style={{...styles.dropZone, ...dropZoneErrorStyle}}>
+                style={{ ...styles.dropZone, ...dropZoneErrorStyle }}
+              >
                 <div style={styles.dropZoneDescription}>
                   <FontIcon
-                    style={{...styles.uploadIcon, ...iconErrorStyle}}
-                    className={backupFile ? 'synicon-file' : 'synicon-cloud-upload'} />
+                    style={{ ...styles.uploadIcon, ...iconErrorStyle }}
+                    className={backupFile ? 'synicon-file' : 'synicon-cloud-upload'}
+                  />
                   <div>
                     {backupLabel || 'Click or Drag & Drop to upload partial backup file'}
                   </div>
@@ -164,11 +168,12 @@ export default React.createClass({
               </div>
               <TextField
                 value={instanceNameValidation}
-                onChange={(event, value) => this.setState({instanceNameValidation: value})}
+                onChange={(event, value) => this.setState({ instanceNameValidation: value })}
                 errorText={this.getValidationMessages('instanceNameValidation').join('. ')}
                 fullWidth={true}
                 floatingLabelText="Instance name"
-                hintText="Instance name" />
+                hintText="Instance name"
+              />
             </div>
           </div>
         </div>
@@ -180,14 +185,14 @@ export default React.createClass({
   },
 
   render() {
-    const {isLoading, isRestoring, open} = this.state;
+    const { isLoading, isRestoring, open } = this.state;
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
         contentSize="medium"
-        title={!isRestoring && `Restore Instance from file`}
+        title={!isRestoring && 'Restore Instance from file'}
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
@@ -196,8 +201,10 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={isLoading}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
-        }>
+            handleConfirm={this.handleFormValidation}
+          />
+        }
+      >
         {!isRestoring ? this.renderContent() : this.renderLoading()}
       </Dialog.FullPage>
     );

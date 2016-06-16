@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import Promise from 'axios';
 import _ from 'lodash';
 
-import {StoreHelpersMixin, CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin}from '../../mixins';
+import { StoreHelpersMixin, CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './ScriptsActions';
@@ -31,17 +31,17 @@ export default Reflux.createStore({
   },
 
   runtimeColors: {
-    nodejs: {color: '#80BD01', icon: 'language-nodejs'},
-    'nodejs_library_v0.4': {color: '#80BD01', icon: 'language-nodejs'},
-    'nodejs_library_v1.0': {color: '#80BD01', icon: 'language-nodejs'},
-    python: {color: '#FFC107', icon: 'language-python'},
-    'python_library_v4.2': {color: '#FFC107', icon: 'language-python'},
-    'python_library_v5.0': {color: '#FFC107', icon: 'language-python'},
-    golang: {color: '#95DCF4', icon: 'language-golang'},
-    ruby: {color: '#ED4545', icon: 'language-ruby'},
-    swift: {color: '#FC8737', icon: 'language-swift'},
-    php: {color: '#6C7EB7', icon: 'language-php'},
-    default: {color: '#244273', icon: 'xml'}
+    nodejs: { color: '#80BD01', icon: 'language-nodejs' },
+    'nodejs_library_v0.4': { color: '#80BD01', icon: 'language-nodejs' },
+    'nodejs_library_v1.0': { color: '#80BD01', icon: 'language-nodejs' },
+    python: { color: '#FFC107', icon: 'language-python' },
+    'python_library_v4.2': { color: '#FFC107', icon: 'language-python' },
+    'python_library_v5.0': { color: '#FFC107', icon: 'language-python' },
+    golang: { color: '#95DCF4', icon: 'language-golang' },
+    ruby: { color: '#ED4545', icon: 'language-ruby' },
+    swift: { color: '#FC8737', icon: 'language-swift' },
+    php: { color: '#6C7EB7', icon: 'language-php' },
+    default: { color: '#244273', icon: 'xml' }
   },
 
   getInitialState() {
@@ -97,7 +97,7 @@ export default Reflux.createStore({
   },
 
   getScriptsDropdown() {
-    const {items} = this.data;
+    const { items } = this.data;
 
     return _.map(items, (item) => {
       return {
@@ -108,7 +108,7 @@ export default Reflux.createStore({
   },
 
   getScriptById(id) {
-    const {items} = this.data;
+    const { items } = this.data;
 
     return _.find(items, ['id', id]);
   },
@@ -197,7 +197,7 @@ export default Reflux.createStore({
   onFetchScriptTraceCompleted(trace) {
     console.debug('ScriptsStore::onFetchScriptTrace');
     if (trace.status === 'pending') {
-      const {currentScriptId} = this.data;
+      const { currentScriptId } = this.data;
 
       setTimeout(() => {
         Actions.fetchScriptTrace(currentScriptId, trace.id);

@@ -1,7 +1,7 @@
 import React from 'react';
-import {MenuItem} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {ColumnList} from '../../common/';
+import { MenuItem } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { ColumnList } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -20,26 +20,30 @@ export default React.createClass({
     return (
       <ColumnList.Item
         checked={item.checked}
-        key={item.id}>
+        key={item.id}
+      >
         <Column.CheckIcon
           id={item.id.toString()}
-          iconClassName='account'
+          iconClassName="account"
           background={Colors.blue500}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}
-          primaryText={item.instance}/>
+          primaryText={item.instance}
+        />
         <Column.Desc>{item.inviter}</Column.Desc>
         <Column.Desc>{item.role}</Column.Desc>
-        <Column.Date date={item.created_at}/>
+        <Column.Date date={item.created_at} />
         <Column.Menu>
           <MenuItem
             className="dropdown-item-invitation-accept"
             onTouchTap={this.props.showAcceptDialog}
-            primaryText="Accept"/>
+            primaryText="Accept"
+          />
           <MenuItem
             className="dropdown-item-invitation-decline"
             onTouchTap={this.props.showDeclineDialog}
-            primaryText="Decline"/>
+            primaryText="Decline"
+          />
         </Column.Menu>
       </ColumnList.Item>
     );

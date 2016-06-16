@@ -1,14 +1,14 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import {DialogsMixin} from '../../../mixins';
+import { DialogsMixin } from '../../../mixins';
 
 import Actions from './FullBackupsActions';
 import RestoreDialogActions from '../RestoreDialogActions';
 import Store from './FullBackupsStore';
 
 import ListItem from './FullBackupsListItem';
-import {ColumnList, Lists, Dialog} from '../../../common';
+import { ColumnList, Lists, Dialog } from '../../../common';
 
 const Column = ColumnList.Column;
 
@@ -21,7 +21,7 @@ export default React.createClass({
   ],
 
   initDialogs() {
-    const {isLoading} = this.props;
+    const { isLoading } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -45,7 +45,8 @@ export default React.createClass({
         onIconClick={Actions.checkItem}
         item={item}
         showRestoreDialog={RestoreDialogActions.showDialog}
-        showDeleteDialog={() => this.showDialog('deleteFullBackupDialog', item)} />
+        showDeleteDialog={() => this.showDialog('deleteFullBackupDialog', item)}
+      />
     );
   },
 
@@ -59,7 +60,8 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
-            className="col-sm-10">
+            className="col-sm-10"
+          >
             Full Backups
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
@@ -71,7 +73,8 @@ export default React.createClass({
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem onTouchTap={() => this.showDialog('deleteFullBackupDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
@@ -82,7 +85,8 @@ export default React.createClass({
           emptyItemHandleClick={Actions.showDialog}
           checkItem={this.checkItem}
           key="full-backups-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

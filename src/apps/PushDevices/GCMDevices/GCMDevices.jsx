@@ -6,7 +6,7 @@ import Store from './GCMDevicesStore';
 import Actions from './GCMDevicesActions';
 import SendMessagesActions from './GCMSendMessagesActions';
 
-import {Container} from '../../../common/';
+import { Container } from '../../../common/';
 import DevicesList from '../DevicesList';
 import GCMDialog from './GCMDeviceDialog';
 
@@ -23,8 +23,8 @@ export default React.createClass({
   },
 
   render() {
-    const {hasConfig, hideDialogs, isLoading, items} = this.state;
-    const {visibleItems} = this.props;
+    const { hasConfig, hideDialogs, isLoading, items } = this.state;
+    const { visibleItems } = this.props;
 
     return (
       <Container>
@@ -41,7 +41,8 @@ export default React.createClass({
           emptyItemContent="Add GCM Device"
           hideDialogs={hideDialogs}
           isLoading={isLoading}
-          items={items}/>
+          items={items}
+        />
       </Container>
     );
   }

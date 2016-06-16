@@ -38,53 +38,51 @@ import Logo from './Logo';
 import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
 import Popover from './Popover';
-import Request from './Request';
 import Sidebar from './Sidebar';
 import ShowMore from './ShowMore';
 
-export {AlertPageContent};
-export {Billing};
-export {CheckIcon};
-export {Clipboard};
-export {Color};
-export {ColumnList};
-export {Container};
-export {CreditCard};
-export {Loading};
-export {PaymentIcon};
-export {SelectFieldWrapper};
-export {Show};
-export {Slider};
-export {SocialAuthButtonsList};
-export {Socket};
-export {Solutions};
-export {Spacing};
-export {SyncanoTheme};
-export {Tags};
-export {TogglePanel};
-export {Tooltip};
-export {Tour};
-export {Trace};
-export {Truncate};
-export {CodePreview};
-export {ColorIconPicker};
-export {DataObjectsAmount};
-export {Dialog};
-export {Dropdown};
-export {DropZone};
-export {Editor};
-export {Header};
-export {Icon};
-export {InnerToolbar};
-export {LinkWrapper};
-export {Lists};
-export {Logo};
-export {NoMobileInfo};
-export {Notification};
-export {Popover};
-export {Request};
-export {Sidebar};
-export {ShowMore};
+export { AlertPageContent };
+export { Billing };
+export { CheckIcon };
+export { Clipboard };
+export { Color };
+export { ColumnList };
+export { Container };
+export { CreditCard };
+export { Loading };
+export { PaymentIcon };
+export { SelectFieldWrapper };
+export { Show };
+export { Slider };
+export { SocialAuthButtonsList };
+export { Socket };
+export { Solutions };
+export { Spacing };
+export { SyncanoTheme };
+export { Tags };
+export { TogglePanel };
+export { Tooltip };
+export { Tour };
+export { Trace };
+export { Truncate };
+export { CodePreview };
+export { ColorIconPicker };
+export { DataObjectsAmount };
+export { Dialog };
+export { Dropdown };
+export { DropZone };
+export { Editor };
+export { Header };
+export { Icon };
+export { InnerToolbar };
+export { LinkWrapper };
+export { Lists };
+export { Logo };
+export { NoMobileInfo };
+export { Notification };
+export { Popover };
+export { Sidebar };
+export { ShowMore };
 
 export default {
   AlertPageContent,
@@ -127,7 +125,6 @@ export default {
   NoMobileInfo,
   Notification,
   Popover,
-  Request,
   Sidebar,
   ShowMore
 };

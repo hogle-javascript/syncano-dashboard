@@ -1,4 +1,3 @@
-/* eslint-disable */
 import 'babel-polyfill';
 import 'normalize.css';
 import './lib/localStoragePolyfill';
@@ -8,8 +7,8 @@ import './segment';
 import './app.sass';
 
 import React from 'react';
-import {render} from 'react-dom';
-import {Router, useRouterHistory} from 'react-router';
+import { render } from 'react-dom';
+import { Router, useRouterHistory } from 'react-router';
 import createHistory from 'history/lib/createHashHistory';
 
 import routes from './routes';

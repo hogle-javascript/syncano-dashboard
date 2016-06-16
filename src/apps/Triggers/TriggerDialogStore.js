@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 
 // Stores & Actions
 import TriggersActions from './TriggersActions';
@@ -38,10 +38,10 @@ export default Reflux.createStore({
       signal: '',
       class: '',
       classes: [
-        {payload: '', text: 'Loading...'}
+        { payload: '', text: 'Loading...' }
       ],
       scripts: [
-        {payload: '', text: 'Loading...'}
+        { payload: '', text: 'Loading...' }
       ]
     };
   },
@@ -67,11 +67,11 @@ export default Reflux.createStore({
     };
 
     if (dropdowns.scripts.length === 0) {
-      dropdowns.scripts = [{payload: '', text: 'No Scripts, add one first'}];
+      dropdowns.scripts = [{ payload: '', text: 'No Scripts, add one first' }];
     }
 
     if (dropdowns.classes.length === 0) {
-      dropdowns.classes = [{payload: '', text: 'No classes, add one first'}];
+      dropdowns.classes = [{ payload: '', text: 'No classes, add one first' }];
     }
 
     this.trigger(dropdowns);

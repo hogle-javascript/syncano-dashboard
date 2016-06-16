@@ -4,11 +4,11 @@ import Store from './AdminsStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Components
 import ListItem from './AdminsListItem';
-import {ColumnList, Dialog, Lists} from '../../common/';
+import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -49,7 +49,8 @@ export default React.createClass({
         key={`admins-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteAdminDialog', item)} />
+        showDeleteDialog={() => this.showDialog('deleteAdminDialog', item)}
+      />
     );
   },
 
@@ -63,7 +64,8 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
-            className="col-xs-25 col-md-20">
+            className="col-xs-25 col-md-20"
+          >
             Administrators
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC" />
@@ -73,7 +75,8 @@ export default React.createClass({
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem onTouchTap={() => this.showDialog('deleteAdminDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
@@ -82,7 +85,8 @@ export default React.createClass({
           {...this.props}
           checkItem={this.checkItem}
           key="admins-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

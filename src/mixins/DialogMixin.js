@@ -65,10 +65,10 @@ export default {
   },
 
   show() {
-    this.setState({open: true});
+    this.setState({ open: true });
   },
 
   dismiss() {
-    this.setState({open: false});
+    this.setState({ open: false });
   }
 };

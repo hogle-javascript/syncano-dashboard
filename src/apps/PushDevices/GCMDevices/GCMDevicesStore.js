@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils & Mixins
-import {CheckListStoreMixin, WaitForStoreMixin, StoreHelpersMixin, StoreLoadingMixin} from '../../../mixins';
+import { CheckListStoreMixin, WaitForStoreMixin, StoreHelpersMixin, StoreLoadingMixin } from '../../../mixins';
 
 // Stores & Actions
 import Actions from './GCMDevicesActions';
@@ -68,6 +68,6 @@ export default Reflux.createStore({
   onFetchGCMConfigCompleted(config) {
     console.debug('GCMDevicesStore::onFetchGCMConfigCompleted');
     this.data.hasConfig = !_.isEmpty(config.development_api_key) || !_.isEmpty(config.production_api_key);
-    this.trigger({hasConfig: this.data.hasConfig});
+    this.trigger({ hasConfig: this.data.hasConfig });
   }
 });

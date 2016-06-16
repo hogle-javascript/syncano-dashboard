@@ -1,5 +1,5 @@
 import React from 'react';
-import {colors as Colors} from 'material-ui/styles/';
+import { colors as Colors } from 'material-ui/styles/';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
@@ -32,7 +32,8 @@ export default React.createClass({
         {...other}
         iconClassName="synicon-socket-user"
         style={style}
-        iconStyle={{...styles.iconStyle, ...iconStyle}}/>
+        iconStyle={{ ...styles.iconStyle, ...iconStyle }}
+      />
     );
   }
 });

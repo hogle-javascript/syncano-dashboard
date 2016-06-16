@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import _ from 'lodash';
 
 import Actions from './SocketsActions';
@@ -10,9 +10,9 @@ import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
 import TriggersList from '../Triggers/TriggersList';
 import SchedulesList from '../Schedules/SchedulesList';
 import ChannelsList from '../Channels/ChannelsList';
-import {Show, ShowMore} from '../../common/';
+import { Show, ShowMore } from '../../common/';
 
-const SocketsList = ({router, sockets, handleTitleClick, visibleItems = 3}, {params}) => {
+const SocketsList = ({ router, sockets, handleTitleClick, visibleItems = 3 }, { params }) => {
   const lists = {
     data: DataList,
     scriptEndpoints: ScriptEndpointsList,
@@ -26,7 +26,7 @@ const SocketsList = ({router, sockets, handleTitleClick, visibleItems = 3}, {par
       return handleTitleClick();
     }
 
-    router.push({name: pathName, params});
+    router.push({ name: pathName, params });
   };
 
   return (
@@ -34,7 +34,8 @@ const SocketsList = ({router, sockets, handleTitleClick, visibleItems = 3}, {par
       {_.map(lists, (list, socketName) =>
         <Show
           key={`${socketName}SocketsList`}
-          if={sockets[socketName].length}>
+          if={sockets[socketName].length}
+        >
           {React.createElement(list, {
             getCheckedItems: () => Store.getCheckedItems(socketName),
             checkItem: (checkId, value, itemKeyName) => Actions.checkItem(checkId, value, itemKeyName, socketName),
@@ -44,10 +45,11 @@ const SocketsList = ({router, sockets, handleTitleClick, visibleItems = 3}, {par
             handleTitleClick: () => onClickTitle(_.kebabCase(socketName))
           })}
           <ShowMore
-            style={{margin: '-30px 0 40px 0'}}
+            style={{ margin: '-30px 0 40px 0' }}
             visible={sockets[socketName].length > visibleItems}
             routeName={_.kebabCase(socketName)}
-            params={params}/>
+            params={params}
+          />
         </Show>
       )}
     </div>

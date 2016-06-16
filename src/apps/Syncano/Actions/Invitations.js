@@ -23,7 +23,7 @@ export default {
       this.NewLibConnection
         .InstanceInvitation
         .please()
-        .delete({id: invitation.id}));
+        .delete({ id: invitation.id }));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -35,7 +35,7 @@ export default {
       this.NewLibConnection
         .InstanceInvitation
         .please()
-        .resend({id: invitation.id}));
+        .resend({ id: invitation.id }));
 
     this.Promise.all(promises)
       .then(this.completed)
