@@ -39,11 +39,11 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-  list() {
+  list(payload) {
     this.NewLibConnection
       .Solution
       .please()
-      .list()
+      .list({}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
