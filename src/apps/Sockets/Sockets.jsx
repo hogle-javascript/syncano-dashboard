@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
+import {colors as Colors} from 'material-ui/styles/';
 
 // Stores & Actions
 import ScriptsActions from '../Scripts/ScriptsActions';
@@ -12,8 +13,8 @@ import Store from './SocketsStore';
 import { DialogsMixin } from '../../mixins';
 
 // Components
-import { FlatButton, RaisedButton } from 'material-ui';
-import { Container, Loading, Show, Dialog } from '../../common/';
+import {RaisedButton} from 'material-ui';
+import {Container, Loading, Show, Dialog} from '../../common/';
 
 // Apps
 import DataEndpoints from '../DataEndpoints';
@@ -44,7 +45,7 @@ export default React.createClass({
     const { prolongDialog } = this.refs;
     const { showProlongDialog } = this.props.location.query;
 
-    if (prolongDialog && showProlongDialog) {
+    if (prolongDialog && _.isBoolean(showProlongDialog) && showProlongDialog) {
       prolongDialog.show();
     }
   },
@@ -68,14 +69,19 @@ export default React.createClass({
     return [{
       dialog: Dialog.Delete,
       params: {
-        icon: 'synicon-information-outline',
+        icon: 'synicon-thumb-up-outline',
+        iconColor: Colors.green400,
         key: 'prolongDialog',
         ref: 'prolongDialog',
-        title: 'Prolong instance lifetime',
-        children: `You've canceled the deletion of your instance ${instanceName}.
-        Close this dialog to continue working with your instance.`,
+        title: 'Your instance has been reactivated.',
+        children: (
+          <div>
+            You have successfully reactivated your instance <strong>{instanceName}</strong>. This means, we won't
+            deactivate or delete it anytime soon while you will be active.
+          </div>
+        ),
         actions: (
-          <FlatButton
+          <RaisedButton
             key="cancel"
             onTouchTap={() => this.handleCancel('prolongDialog')}
             primary={true}
