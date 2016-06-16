@@ -76,14 +76,14 @@ module.exports = {
     leftMenuPage.clickElement('@classes');
     classesPage.clickElement('@userClassListItem');
     dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
-  }
-  // 'User goes to Users & Groups View': (client) => {
-  //   const leftMenuPage = client.page.leftMenuPage();
-  //   const usersPage = client.page.usersPage();
+  },
+  'User goes to Users & Groups View': (client) => {
+    const leftMenuPage = client.page.leftMenuPage();
+    const usersPage = client.page.usersPage();
 
-  //   leftMenuPage.clickElement('@users');
-  //   usersPage.waitForElementPresent('@user');
-  // },
+    leftMenuPage.clickElement('@users');
+    usersPage.waitForElementPresent('@user');
+  }
   // 'User goes to Script Endpoint Traces View': (client) => {
   //   const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
   //   const instanceName = accounts.navigationUser.instanceName;

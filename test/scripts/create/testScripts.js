@@ -19,7 +19,7 @@ function createTestScripts(tempAccount, classAmount) {
     .bulkCreate(scripts)
     .then((response) => {
       tempAccount.tempScriptNames = scriptsNames;
-      return tempAccount
+      return tempAccount;
     })
     .catch((error) => console.log(error));
 }
