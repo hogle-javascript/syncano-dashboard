@@ -21,7 +21,7 @@ export default {
       locateStrategy: 'xpath'
     },
     favoriteSolutionTitle: {
-      selector: '//span[text()="SlackNotifications"]',
+      selector: '//span[@class="synicon-filter-remove-outline"]/../p[text()="There are no Solutions matching this criteria"]',
       locateStrategy: 'xpath'
     },
     mySolutionTitle: {
@@ -34,10 +34,6 @@ export default {
     },
     tagsListItem: {
       selector: '//div[@class="tags-list"]//div[text()="js"]',
-      locateStrategy: 'xpath'
-    },
-    tagListItemCount: {
-      selector: '//div[@class="tags-list"]//div[text()="js"]/preceding-sibling::div',
       locateStrategy: 'xpath'
     },
     tagsListJs: {
