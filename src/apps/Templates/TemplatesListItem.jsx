@@ -2,17 +2,18 @@ import React from 'react';
 
 import Actions from './TemplatesActions';
 
-import {MenuItem} from 'material-ui';
-import {Color, ColumnList, Truncate, LinkWrapper} from '../../common/';
+import { MenuItem } from 'material-ui';
+import { Color, ColumnList, Truncate, LinkWrapper } from '../../common/';
 
 const Column = ColumnList.Column;
 
-const TemplateListItem = ({item, onIconClick, showDeleteDialog}, {params}) => {
+const TemplateListItem = ({ item, onIconClick, showDeleteDialog }, { params }) => {
   return (
     <ColumnList.Item
       checked={item.checked}
       id={item.name}
-      key={item.name}>
+      key={item.name}
+    >
       <Column.CheckIcon
         className="col-xs-12"
         id={item.name}
@@ -25,22 +26,26 @@ const TemplateListItem = ({item, onIconClick, showDeleteDialog}, {params}) => {
           <LinkWrapper
             to={{
               name: 'template',
-              params: {...params, templateName: item.name}
-            }}>
-            <Truncate text={item.name}/>
+              params: { ...params, templateName: item.name }
+            }}
+          >
+            <Truncate text={item.name} />
           </LinkWrapper>
-        }>
+        }
+      >
       </Column.CheckIcon>
       <Column.Desc className="col-flex-1">{item.content_type}</Column.Desc>
       <Column.Menu>
         <MenuItem
           className="dropdown-item-edit"
           onTouchTap={() => Actions.showDialog(item)}
-          primaryText="Edit" />
+          primaryText="Edit"
+        />
         <MenuItem
           className="dropdown-item-delete"
           onTouchTap={showDeleteDialog}
-          primaryText="Delete" />
+          primaryText="Delete"
+        />
       </Column.Menu>
     </ColumnList.Item>
   );

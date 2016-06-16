@@ -6,7 +6,7 @@ export default Reflux.createStore({
   listenables: SnackbarNotificationActions,
 
   getInitialState() {
-    return {snackbar: null};
+    return { snackbar: null };
   },
 
   init() {
@@ -29,7 +29,7 @@ export default Reflux.createStore({
     }
 
     this.snackbar = snackbar;
-    this.trigger({snackbar: this.snackbar});
+    this.trigger({ snackbar: this.snackbar });
   },
 
   dismiss() {
@@ -41,6 +41,6 @@ export default Reflux.createStore({
 
     this.snackbar = null;
     // Small debounce
-    setTimeout(() => this.trigger({snackbar: this.snackbar}), 150);
+    setTimeout(() => this.trigger({ snackbar: this.snackbar }), 150);
   }
 });

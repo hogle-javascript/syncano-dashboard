@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 
 // Stores & Actions
 import DataEndpointsActions from './DataEndpointsActions';
@@ -40,7 +40,7 @@ export default Reflux.createStore({
     console.debug('DataEndpointDialogStore::getClassesDropdown');
     const classes = ClassesStore.getItems().map((item) => item.name);
 
-    this.trigger({classes});
+    this.trigger({ classes });
   },
 
   getCrontabDropdown() {

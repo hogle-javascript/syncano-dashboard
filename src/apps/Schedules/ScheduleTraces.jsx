@@ -13,12 +13,13 @@ export default React.createClass({
   mixins: [Reflux.connect(Store)],
 
   render() {
-    const {scheduleId} = this.props.params;
+    const { scheduleId } = this.props.params;
 
     return (
       <Traces
         objectId={scheduleId}
-        tracesFor='schedule'/>
+        tracesFor="schedule"
+      />
     );
   }
 });

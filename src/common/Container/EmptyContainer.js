@@ -1,5 +1,5 @@
 import React from 'react';
-import {FontIcon} from 'material-ui';
+import { FontIcon } from 'material-ui';
 
 export default React.createClass({
   displayName: 'EmptyContainer',
@@ -32,13 +32,14 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {icon, text} = this.props;
+    const { icon, text } = this.props;
 
     return (
       <div style={styles.container}>
         <FontIcon
           style={styles.icon}
-          className={icon}/>
+          className={icon}
+        />
         <p style={styles.text}>{text}</p>
       </div>
     );

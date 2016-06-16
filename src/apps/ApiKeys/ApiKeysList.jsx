@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './ApiKeysActions';
@@ -9,7 +9,7 @@ import Store from './ApiKeysStore';
 
 // Components
 import ListItem from './ApiKeysListItem';
-import {ColumnList, Dialog, Lists} from '../../common/';
+import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -63,7 +63,8 @@ export default React.createClass({
         onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('deleteApiKeyDialog', item)}
-        showResetDialog={() => this.showDialog('resetApiKeyDialog', item)} />
+        showResetDialog={() => this.showDialog('resetApiKeyDialog', item)}
+      />
     );
   },
 
@@ -76,17 +77,20 @@ export default React.createClass({
         <ColumnList.Header>
           <Column.ColumnHeader
             columnName="CHECK_ICON"
-            primary={true}>
+            primary={true}
+          >
             API Keys
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="ID"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             ID
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="TEXT"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Permissions
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
@@ -94,10 +98,12 @@ export default React.createClass({
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem
                 primaryText="Reset All"
-                onTouchTap={() => this.showDialog('resetApiKeyDialog')} />
+                onTouchTap={() => this.showDialog('resetApiKeyDialog')}
+              />
               <Lists.MenuItem onTouchTap={() => this.showDialog('deleteApiKeyDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
@@ -107,7 +113,8 @@ export default React.createClass({
           emptyItemContent="Add an API Key"
           emptyItemHandleClick={Actions.showDialog}
           key="apikeys-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

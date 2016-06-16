@@ -3,7 +3,7 @@ import _ from 'lodash';
 import URI from 'urijs';
 
 // Utils & Mixins
-import {CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin} from '../../mixins';
+import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
@@ -46,7 +46,7 @@ export default Reflux.createStore({
   },
 
   getUserById(userId) {
-    return _.filter(this.data.items, {id: userId}).length > 0 ? _.filter(this.data.items, {id: userId})[0] : null;
+    return _.filter(this.data.items, { id: userId }).length > 0 ? _.filter(this.data.items, { id: userId })[0] : null;
   },
 
   setUsers(items, rawData) {

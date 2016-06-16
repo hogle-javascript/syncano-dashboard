@@ -127,7 +127,7 @@ export default {
       validate(attributes, constraints)
     );
 
-    this.setState({errors}, this._invokeCallback.bind(this, key, callback));
+    this.setState({ errors }, this._invokeCallback.bind(this, key, callback));
   },
 
   handleFormValidation(event) {

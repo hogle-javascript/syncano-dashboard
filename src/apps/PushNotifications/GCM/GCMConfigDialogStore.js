@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../../mixins';
+import { DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../../mixins';
 
 // Stores & Actions
 import SessionActions from '../../Session/SessionActions';
@@ -53,7 +53,7 @@ export default Reflux.createStore({
 
   onConfigGCMPushNotification() {
     this.data.isCertLoading = true;
-    this.trigger({isCertLoading: true});
+    this.trigger({ isCertLoading: true });
   },
 
   onConfigGCMPushNotificationCompleted() {

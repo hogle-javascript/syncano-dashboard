@@ -1,6 +1,6 @@
 import React from 'react';
 import CheckIcon from './CheckIcon';
-import {colors as Colors} from 'material-ui/styles/';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default (props) => {
   const icon = {
@@ -29,9 +29,10 @@ export default (props) => {
   return (
     <CheckIcon
       {...props}
-      iconStyle={{...styles, ...props.iconStyle}}
+      iconStyle={{ ...styles, ...props.iconStyle }}
       icon={icon}
       checkedIcon={checkedIcon}
-      hoveredIcon={hoveredIcon}/>
+      hoveredIcon={hoveredIcon}
+    />
   );
 };

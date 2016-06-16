@@ -260,7 +260,7 @@ export default Reflux.createStore({
     this.token = payload.account_key;
     localStorage.setItem('token', payload.account_key);
     this.connection.setAccountKey(payload.account_key);
-    this.router.push({name: 'dashboard'});
+    this.router.push({ name: 'dashboard' });
   },
 
   onLogout() {

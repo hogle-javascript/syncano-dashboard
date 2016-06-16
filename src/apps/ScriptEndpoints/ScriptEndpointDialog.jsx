@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './ScriptEndpointsActions';
@@ -10,9 +10,9 @@ import DialogStore from './ScriptEndpointDialogStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
-import {TextField, Toggle} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Dialog, LinkWrapper, SelectFieldWrapper} from '../../common/';
+import { TextField, Toggle } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Dialog, LinkWrapper, SelectFieldWrapper } from '../../common/';
 
 export default React.createClass({
   displayName: 'ScriptEndpointDialog',
@@ -33,13 +33,13 @@ export default React.createClass({
     },
     script: {
       presence: {
-        message: `^Script can't be blank`
+        message: '^Script can\'t be blank'
       }
     }
   },
 
   getScriptEndpointParams() {
-    const {name, script, description} = this.state;
+    const { name, script, description } = this.state;
     const params = {
       public: this.state.public,
       name,
@@ -60,7 +60,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    const {name} = this.state;
+    const { name } = this.state;
 
     Actions.updateScriptEndpoint(name, this.getScriptEndpointParams());
   },
@@ -73,8 +73,8 @@ export default React.createClass({
   },
 
   render() {
-    const {params} = this.context;
-    const {open, isLoading, canSubmit, scripts, script} = this.state;
+    const { params } = this.context;
+    const { open, isLoading, canSubmit, scripts, script } = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
     return (
@@ -89,7 +89,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -101,11 +102,12 @@ export default React.createClass({
               A Script is an object that contains a piece of code that can be run on Syncano servers.
               If you haven&#39;t created one you can do so&nbsp;
               <LinkWrapper
-                style={{color: Colors.blue400}}
+                style={{ color: Colors.blue400 }}
                 to={{
                   name: 'scripts',
                   params
-                }}>
+                }}
+              >
                 here
               </LinkWrapper>
             </Dialog.SidebarSection>
@@ -119,7 +121,8 @@ export default React.createClass({
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         {this.renderFormNotifications()}
         <Dialog.ContentSection>
           <TextField
@@ -129,32 +132,36 @@ export default React.createClass({
             fullWidth={true}
             disabled={this.hasEditMode()}
             value={this.state.name}
-            onChange={(event, value) => this.setState({name: value})}
+            onChange={(event, value) => this.setState({ name: value })}
             errorText={this.getValidationMessages('name').join(' ')}
             hintText="Script Endpoint's name"
-            floatingLabelText="Name"/>
+            floatingLabelText="Name"
+          />
           <TextField
             ref="description"
             name="description"
             fullWidth={true}
             value={this.state.description}
-            onChange={(event, value) => this.setState({description: value})}
+            onChange={(event, value) => this.setState({ description: value })}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Script Endpoint's description"
-            floatingLabelText="Description (optional)"/>
+            floatingLabelText="Description (optional)"
+          />
           <SelectFieldWrapper
             name="script"
             options={scripts}
             value={script}
             onChange={(event, index, value) => this.setSelectFieldValue('script', value)}
-            errorText={this.getValidationMessages('script').join(' ')}/>
+            errorText={this.getValidationMessages('script').join(' ')}
+          />
           <Toggle
-            ref='public'
-            name='public'
+            ref="public"
+            name="public"
             onToggle={this.handleToogle}
-            style={{marginTop: 20}}
+            style={{ marginTop: 20 }}
             defaultToggled={this.state.public}
-            label='Make this Script Endpoint public?'/>
+            label="Make this Script Endpoint public?"
+          />
         </Dialog.ContentSection>
       </Dialog.FullPage>
     );

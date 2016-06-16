@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import {StoreFormMixin, DialogStoreMixin, WaitForStoreMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, WaitForStoreMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import BillingPlanActions from './ProfileBillingPlanActions';

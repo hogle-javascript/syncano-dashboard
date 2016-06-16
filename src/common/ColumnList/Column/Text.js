@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-import {colors as Colors} from 'material-ui/styles/';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'ColumnText',
@@ -49,7 +49,8 @@ export default Radium(React.createClass({
     return (
       <div
         className={this.props.className}
-        style={styles}>
+        style={styles}
+      >
         {this.props.children}
       </div>
     );

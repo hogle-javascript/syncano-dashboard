@@ -2,15 +2,15 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './GroupsActions';
 import Store from './GroupDialogStore';
 
 // Components
-import {TextField} from 'material-ui';
-import {Dialog} from '../../common/';
+import { TextField } from 'material-ui';
+import { Dialog } from '../../common/';
 
 export default React.createClass({
   displayName: 'GroupDialog',
@@ -32,14 +32,14 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    const {id, label} = this.state;
+    const { id, label } = this.state;
 
     Actions.updateGroup(id, label);
   },
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    const {isLoading, open} = this.state;
+    const { isLoading, open } = this.state;
 
     return (
       <Dialog.FullPage
@@ -54,7 +54,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -68,7 +69,8 @@ export default React.createClass({
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         {this.renderFormNotifications()}
         <TextField
           ref="label"
@@ -76,10 +78,11 @@ export default React.createClass({
           autoFocus={true}
           fullWidth={true}
           value={this.state.label}
-          onChange={(event, value) => this.setState({label: value})}
+          onChange={(event, value) => this.setState({ label: value })}
           errorText={this.getValidationMessages('label').join(' ')}
           hintText="Group's name"
-          floatingLabelText="Name"/>
+          floatingLabelText="Name"
+        />
       </Dialog.FullPage>
     );
   }

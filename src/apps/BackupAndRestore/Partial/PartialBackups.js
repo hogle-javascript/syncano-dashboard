@@ -5,7 +5,7 @@ import Actions from './PartialBackupsActions';
 import Store from './PartialBackupsStore';
 
 import PartialBackupsList from './PartialBackupsList';
-import {Container} from '../../../common';
+import { Container } from '../../../common';
 
 export default React.createClass({
   displayName: 'PartialBackups',
@@ -19,13 +19,14 @@ export default React.createClass({
   },
 
   render() {
-    const {isLoading, items} = this.state;
+    const { isLoading, items } = this.state;
 
     return (
       <Container>
         <PartialBackupsList
           isLoading={isLoading}
-          items={items} />
+          items={items}
+        />
       </Container>
     );
   }

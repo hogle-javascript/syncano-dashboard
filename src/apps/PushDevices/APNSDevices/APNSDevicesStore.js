@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {CheckListStoreMixin, WaitForStoreMixin, StoreHelpersMixin, StoreLoadingMixin} from '../../../mixins';
+import { CheckListStoreMixin, WaitForStoreMixin, StoreHelpersMixin, StoreLoadingMixin } from '../../../mixins';
 
 // Stores & Actions
 import Actions from './APNSDevicesActions';
@@ -67,6 +67,6 @@ export default Reflux.createStore({
   onFetchAPNSConfigCompleted(config) {
     console.debug('APNSDevicesStore::onFetchAPNSConfigCompleted');
     this.data.hasConfig = config.development_certificate || config.production_certificate;
-    this.trigger({hasConfig: this.data.hasConfig});
+    this.trigger({ hasConfig: this.data.hasConfig });
   }
 });

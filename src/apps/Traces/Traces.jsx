@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
@@ -10,7 +10,7 @@ import Store from './TracesStore';
 import Actions from './TracesActions';
 
 // Components
-import {Container, InnerToolbar} from '../../common/';
+import { Container, InnerToolbar } from '../../common/';
 
 // Local components
 import TracesList from './TracesList';
@@ -39,7 +39,7 @@ const Traces = Radium(React.createClass({
   },
 
   componentDidMount() {
-    const {objectId, tracesFor} = this.props;
+    const { objectId, tracesFor } = this.props;
 
     Actions.setCurrentObjectId(objectId, tracesFor);
   },
@@ -74,7 +74,7 @@ const Traces = Radium(React.createClass({
   },
 
   getToolbarTitleText() {
-    const {currentObjectName} = this.state;
+    const { currentObjectName } = this.state;
     const tracesFor = this.getTracesFor();
     const toolbarIdText = this.props.hasHeaderId ? `(id: ${this.props.objectId})` : '';
 
@@ -86,16 +86,16 @@ const Traces = Radium(React.createClass({
   },
 
   handleBackClick() {
-    const {params} = this.context;
-    const {router} = this.props;
+    const { params } = this.context;
+    const { router } = this.props;
     const config = this.getConfig();
 
-    router.push({name: config.route, params});
+    router.push({ name: config.route, params });
   },
 
   render() {
-    const {items, isLoading} = this.state;
-    const {tracesFor} = this.props;
+    const { items, isLoading } = this.state;
+    const { tracesFor } = this.props;
     const config = this.getConfig();
     const toolbarTitleText = this.getToolbarTitleText();
 
@@ -105,14 +105,16 @@ const Traces = Radium(React.createClass({
         <InnerToolbar
           title={toolbarTitleText}
           backFallback={this.handleBackClick}
-          backButtonTooltip={config.backLabel}/>
-        <div style={{position: 'relative', top: '35px'}}>
+          backButtonTooltip={config.backLabel}
+        />
+        <div style={{ position: 'relative', top: '35px' }}>
           <Container>
             <TracesList
               isLoading={isLoading}
               tracesFor={tracesFor}
               name="Traces"
-              items={items}/>
+              items={items}
+            />
           </Container>
         </div>
       </div>

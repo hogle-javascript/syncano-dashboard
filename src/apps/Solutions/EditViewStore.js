@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import Promise from 'axios';
 
 // Utils & Mixins
-import {StoreFormMixin, WaitForStoreMixin} from '../../mixins';
+import { StoreFormMixin, WaitForStoreMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -42,7 +42,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('SolutionsEditStore::refreshData');
-    const {solutionId} = SessionStore.getParams();
+    const { solutionId } = SessionStore.getParams();
 
     if (solutionId) {
       Promise.all([

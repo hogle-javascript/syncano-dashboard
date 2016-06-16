@@ -2,8 +2,8 @@ import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
-import {RaisedButton} from 'material-ui';
-import {Container, Loading} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container, Loading } from '../../common/';
 
 import SnippetsInnerToolbar from './SnippetsInnerToolbar';
 import ScriptsActions from '../Scripts/ScriptsActions';
@@ -30,38 +30,42 @@ export default React.createClass({
   },
 
   render() {
-    const {scripts, templates} = this.state;
+    const { scripts, templates } = this.state;
 
     return (
       <div>
         <Helmet title="Snippets" />
-        <ScriptDialog/>
-        <TemplateDialog/>
+        <ScriptDialog />
+        <TemplateDialog />
 
         <SnippetsInnerToolbar>
           <RaisedButton
             label="Add a Script"
             primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={ScriptsActions.showDialog} />
+            style={{ marginRight: 0 }}
+            onTouchTap={ScriptsActions.showDialog}
+          />
           <RaisedButton
             label="Add a Template"
             primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={TemplatesActions.showDialog} />
+            style={{ marginRight: 0 }}
+            onTouchTap={TemplatesActions.showDialog}
+          />
         </SnippetsInnerToolbar>
 
         <Container>
-          <div style={{clear: 'both', height: '100%'}}>
+          <div style={{ clear: 'both', height: '100%' }}>
             <Loading show={scripts.isLoading || templates.isLoading}>
               <ScriptsList
                 isLoading={scripts.isLoading}
                 items={scripts.items}
-                hideDialogs={scripts.hideDialogs} />
+                hideDialogs={scripts.hideDialogs}
+              />
               <TemplatesList
                 isLoading={templates.isLoading}
                 items={templates.items}
-                hideDialogs={templates.hideDialogs} />
+                hideDialogs={templates.hideDialogs}
+              />
             </Loading>
           </div>
         </Container>

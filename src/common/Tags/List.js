@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import {List, ListItem, Subheader} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { List, ListItem, Subheader } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 import Show from '../Show';
 
 export default React.createClass({
@@ -20,7 +20,7 @@ export default React.createClass({
   },
 
   handleOnTouchTap(name) {
-    const {toggleTagSelection} = this.props;
+    const { toggleTagSelection } = this.props;
 
     if (toggleTagSelection) {
       toggleTagSelection(name);
@@ -28,7 +28,7 @@ export default React.createClass({
   },
 
   handleResetActiveTagsList() {
-    const {resetTagsSelection} = this.props;
+    const { resetTagsSelection } = this.props;
 
     if (resetTagsSelection) {
       resetTagsSelection();
@@ -37,31 +37,32 @@ export default React.createClass({
 
   renderAllTagsListItem() {
     const styles = this.getStyles();
-    const {selectedItems} = this.props;
+    const { selectedItems } = this.props;
 
     return (
       <ListItem
         key="all-tags"
         primaryText="All tags"
         innerDivStyle={_.isEmpty(selectedItems) ? styles.listItemChecked : {}}
-        onTouchTap={this.handleResetActiveTagsList}/>
+        onTouchTap={this.handleResetActiveTagsList}
+      />
     );
   },
 
   renderTagsListItems() {
-    const {items, selectedItems} = this.props;
+    const { items, selectedItems } = this.props;
     const styles = this.getStyles();
 
     return _.map(items, (item) => {
       /* eslint-disable */
       {/*
-        temporary disabled tags count because of counter bug in backend
-        const itemsCount = (
-          <div style={styles.tagsCounter}>
-            {item.count}
-          </div>
-      );
-      */}
+       temporary disabled tags count because of counter bug in backend
+       const itemsCount = (
+       <div style={styles.tagsCounter}>
+       {item.count}
+       </div>
+       );
+       */}
 
       return (
         <ListItem

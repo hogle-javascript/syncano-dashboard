@@ -12,6 +12,7 @@ export default (props) => {
       label="Google Cloud Messaging (GCM)"
       devicesRoute="gcm-devices"
       icon="android"
-      showConfigDialog={GCMPushNotificationsActions.showDialog}/>
+      showConfigDialog={GCMPushNotificationsActions.showDialog}
+    />
   );
 };

@@ -1,14 +1,14 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
 
-import {TextField, FlatButton} from 'material-ui';
-import {CreditCard, Loading, Slider, Dialog} from '../../common/';
+import { TextField, FlatButton } from 'material-ui';
+import { CreditCard, Loading, Slider, Dialog } from '../../common/';
 import SliderSection from './SliderSection';
 
 const ProfileBillingPlanDialog = React.createClass({
@@ -29,7 +29,7 @@ const ProfileBillingPlanDialog = React.createClass({
     return {
       number: {
         presence: true,
-        length: {maximum: 19},
+        length: { maximum: 19 },
         numericality: {
           onlyInteger: true
         }
@@ -141,89 +141,93 @@ const ProfileBillingPlanDialog = React.createClass({
   },
 
   renderCard() {
-    const {router} = this.props;
-    const {card} = this.state;
+    const { router } = this.props;
+    const { card } = this.state;
 
     if (typeof card === 'undefined') {
-      return <Loading show={true}/>;
+      return <Loading show={true} />;
     }
 
     if (card) {
       return (
-      <div>
-        <div style={this.getStyles().sectionTopic}>Credit card info:</div>
-        <div className="row" style={{marginTop: 20, height: 110}}>
-          <div className="col-md-18">
-            <CreditCard card={card}/>
-          </div>
-          <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
-            Want to use a different method of payment?
-            Update your card <a onClick={() => router.push('profile-billing-payment')}>here</a>.
+        <div>
+          <div style={this.getStyles().sectionTopic}>Credit card info:</div>
+          <div className="row" style={{ marginTop: 20, height: 110 }}>
+            <div className="col-md-18">
+              <CreditCard card={card} />
+            </div>
+            <div className="col-md-14" style={{ color: '#9B9B9B', fontSize: '0.8em' }}>
+              Want to use a different method of payment?
+              Update your card <a onClick={() => router.push('profile-billing-payment')}>here</a>.
+            </div>
           </div>
         </div>
-      </div>
       );
     }
     return (
-    <div>
-      <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
-      <div className="row">
-        <div className="col-flex-1">
-          <TextField
-            name="number"
-            ref="number"
-            autoFocus={true}
-            fullWidth={true}
-            value={this.state.number}
-            onChange={(event, value) => this.setState({number: value})}
-            errorText={this.getValidationMessages('number').join(' ')}
-            hintText="Card Number"
-            floatingLabelText="Card Number"
-            dataStripe="number"/>
+      <div>
+        <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
+        <div className="row">
+          <div className="col-flex-1">
+            <TextField
+              name="number"
+              ref="number"
+              autoFocus={true}
+              fullWidth={true}
+              value={this.state.number}
+              onChange={(event, value) => this.setState({ number: value })}
+              errorText={this.getValidationMessages('number').join(' ')}
+              hintText="Card Number"
+              floatingLabelText="Card Number"
+              dataStripe="number"
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-5">
+            <TextField
+              name="cvc"
+              ref="cvc"
+              fullWidth={true}
+              value={this.state.cvc}
+              onChange={(event, value) => this.setState({ cvc: value })}
+              errorText={this.getValidationMessages('cvc').join(' ')}
+              hintText="CVC"
+              floatingLabelText="CVC"
+              dataStripe="cvc"
+            />
+          </div>
+
+          <div className="col-flex-1">
+            <TextField
+              name="exp_month"
+              ref="exp_month"
+              fullWidth={true}
+              value={this.state.exp_month}
+              onChange={(event, value) => this.setState({ exp_month: value })}
+              errorText={this.getValidationMessages('exp_month').join(' ')}
+              hintText="MM"
+              floatingLabelText="Expiration month (MM)"
+              dataStripe="exp-month"
+            />
+          </div>
+
+          <div className="col-flex-1">
+            <TextField
+              name="exp_year"
+              ref="exp_year"
+              fullWidth={true}
+              value={this.state.exp_year}
+              onChange={(event, value) => this.setState({ exp_year: value })}
+              errorText={this.getValidationMessages('exp_year').join(' ')}
+              hintText="YYYY"
+              floatingLabelText="Expiration year (YYYY)"
+              dataStripe="exp-year"
+            />
+          </div>
         </div>
       </div>
-
-      <div className="row">
-        <div className="col-md-5">
-          <TextField
-            name="cvc"
-            ref="cvc"
-            fullWidth={true}
-            value={this.state.cvc}
-            onChange={(event, value) => this.setState({cvc: value})}
-            errorText={this.getValidationMessages('cvc').join(' ')}
-            hintText="CVC"
-            floatingLabelText="CVC"
-            dataStripe="cvc"/>
-        </div>
-
-        <div className="col-flex-1">
-          <TextField
-            name="exp_month"
-            ref="exp_month"
-            fullWidth={true}
-            value={this.state.exp_month}
-            onChange={(event, value) => this.setState({exp_month: value})}
-            errorText={this.getValidationMessages('exp_month').join(' ')}
-            hintText="MM"
-            floatingLabelText="Expiration month (MM)"
-            dataStripe="exp-month"/>
-        </div>
-
-        <div className="col-flex-1">
-          <TextField
-            name="exp_year"
-            ref="exp_year"
-            fullWidth={true}
-            value={this.state.exp_year}
-            onChange={(event, value) => this.setState({exp_year: value})}
-            errorText={this.getValidationMessages('exp_year').join(' ')}
-            hintText="YYYY"
-            floatingLabelText="Expiration year (YYYY)"
-            dataStripe="exp-year"/>
-        </div>
-      </div>
-    </div>
     );
   },
 
@@ -240,31 +244,31 @@ const ProfileBillingPlanDialog = React.createClass({
     });
 
     return (
-    <Slider
-      key={type + 'Slider'}
-      ref={type + 'Slider'}
-      name={type + 'Slider'}
-      value={typeof selected !== 'undefined' ? selected : defaultValue}
-      type={type}
-      legendItems={options}
-      optionClick={Actions.sliderLabelsClick}
-      onChange={Actions.sliderChange}
-    />
+      <Slider
+        key={type + 'Slider'}
+        ref={type + 'Slider'}
+        name={type + 'Slider'}
+        value={typeof selected !== 'undefined' ? selected : defaultValue}
+        type={type}
+        legendItems={options}
+        optionClick={Actions.sliderLabelsClick}
+        onChange={Actions.sliderChange}
+      />
     );
   },
 
   renderSliderSummary(info) {
     return (
-    <div>
-      <div style={{paddingBottom: 8}}>
-        <div style={{paddingBottom: 8}}>{info.included.label}</div>
-        <div><strong>{info.included.value}</strong></div>
-      </div>
       <div>
-        <div style={{paddingBottom: 8}}>{info.overage.label}</div>
-        <div><strong>${info.overage.value}</strong></div>
+        <div style={{ paddingBottom: 8 }}>
+          <div style={{ paddingBottom: 8 }}>{info.included.label}</div>
+          <div><strong>{info.included.value}</strong></div>
+        </div>
+        <div>
+          <div style={{ paddingBottom: 8 }}>{info.overage.label}</div>
+          <div><strong>${info.overage.value}</strong></div>
+        </div>
       </div>
-    </div>
     );
   },
 
@@ -278,13 +282,15 @@ const ProfileBillingPlanDialog = React.createClass({
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleDismiss}
-        ref="cancel"/>,
+        ref="cancel"
+      />,
       <FlatButton
         key="confirm"
         label="Confirm"
         primary={true}
         onTouchTap={this.handleFormValidation}
-        ref="submit"/>
+        ref="submit"
+      />
     ];
     const apiSliderSummary = this.renderSliderSummary(
       {
@@ -318,25 +324,28 @@ const ProfileBillingPlanDialog = React.createClass({
         actions={dialogCustomActions}
         open={this.state.open}
         isLoading={this.state.isLoading}
-        onRequestClose={this.handleDismiss}>
+        onRequestClose={this.handleDismiss}
+      >
         <div>
-          <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
-          <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
+          <div style={{ fontSize: '1.5em', lineHeight: '1.5em' }}>Choose your plan</div>
+          <div style={{ color: '#9B9B9B' }}>move the sliders to choose your plan</div>
         </div>
-        <div style={{paddingTop: 34}}>
+        <div style={{ paddingTop: 34 }}>
           {this.renderFormNotifications()}
 
           <SliderSection
             title="API calls"
             slider={this.renderSlider('api')}
-            sliderSummary={apiSliderSummary} />
+            sliderSummary={apiSliderSummary}
+          />
           <SliderSection
-            style={{paddingTop: 50}}
+            style={{ paddingTop: 50 }}
             title="Script seconds"
             slider={this.renderSlider('cbx')}
-            sliderSummary={cbxSliderSummary} />
+            sliderSummary={cbxSliderSummary}
+          />
 
-          <div className="row" style={{marginTop: 40}}>
+          <div className="row" style={{ marginTop: 40 }}>
             <div className="col-md-24">
               <div style={styles.sectionTopic}>Summary</div>
               <div style={styles.table}>
@@ -355,14 +364,14 @@ const ProfileBillingPlanDialog = React.createClass({
                   <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
                 </div>
               </div>
-              <div style={{marginTop: 30}}>
+              <div style={{ marginTop: 30 }}>
                 {this.renderCard()}
               </div>
             </div>
-            <div className="col-md-11" style={{paddingLeft: 35}}>
+            <div className="col-md-11" style={{ paddingLeft: 35 }}>
 
               <div style={styles.sectionTopic}>New plan:</div>
-              <div style={{marginTop: 20, background: '#CBEDA5'}}>
+              <div style={{ marginTop: 20, background: '#CBEDA5' }}>
 
                 <div style={styles.sectionTotalSummary}>
                   <div><strong>${sum}</strong>/month</div>

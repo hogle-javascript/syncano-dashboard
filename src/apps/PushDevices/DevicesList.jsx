@@ -1,14 +1,14 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Radium from 'radium';
 
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 import UsersActions from '../Users/UsersActions';
 import UsersStore from '../Users/UsersStore';
 
-import {colors as Colors} from 'material-ui/styles/';
-import {ColumnList, Loading, Container, Lists, Dialog, ShowMore} from '../../common/';
+import { colors as Colors } from 'material-ui/styles/';
+import { ColumnList, Loading, Container, Lists, Dialog, ShowMore } from '../../common/';
 import ListItem from './DevicesListItem';
 import NoConfigView from './NoConfigView';
 import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
@@ -63,7 +63,7 @@ const DevicesList = Radium(React.createClass({
   },
 
   initDialogs() {
-    const {actions, isLoading, getCheckedItems} = this.props;
+    const { actions, isLoading, getCheckedItems } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -81,7 +81,7 @@ const DevicesList = Radium(React.createClass({
   },
 
   sliceItems(devices) {
-    const {visibleItems, items} = this.props;
+    const { visibleItems, items } = this.props;
 
     if (visibleItems) {
       return items.slice(0, visibleItems);
@@ -91,7 +91,7 @@ const DevicesList = Radium(React.createClass({
   },
 
   renderItem(item) {
-    const {getCheckedItems, actions, type, showSendMessagesDialog} = this.props;
+    const { getCheckedItems, actions, type, showSendMessagesDialog } = this.props;
     const icon = {
       apns: 'apple',
       gcm: 'android'
@@ -110,12 +110,13 @@ const DevicesList = Radium(React.createClass({
         showSendMessageDialog={() => showSendMessagesDialog(item)}
         showEditDialog={() => actions.showDialog(item)}
         showDeleteDialog={() => this.showDialog('deleteDeviceDialog', item)}
-        item={item}/>
+        item={item}
+      />
     );
   },
 
   render() {
-    const {params} = this.context;
+    const { params } = this.context;
     const styles = this.getStyles();
     const {
       hasConfig,
@@ -138,14 +139,15 @@ const DevicesList = Radium(React.createClass({
         label="MORE DEVICES"
         visible={items.length > 3}
         routeName={`${type}-devices`}
-        params={params}/>
+        params={params}
+      />
     );
 
     if (!hasConfig && !isLoading) {
       return (
         <div style={styles.listTitleContainer}>
           <span style={styles.listTitle}>{titleText[type]}</span>
-          <NoConfigView type={type}/>
+          <NoConfigView type={type} />
         </div>
       );
     }
@@ -163,12 +165,14 @@ const DevicesList = Radium(React.createClass({
             <ColumnList.Header>
               <Column.ColumnHeader
                 columnName="CHECK_ICON"
-                className="col-sm-14">
+                className="col-sm-14"
+              >
                 Device
               </Column.ColumnHeader>
               <Column.ColumnHeader
                 columnName="DESC"
-                className="col-sm-6">
+                className="col-sm-6"
+              >
                 Metadata
               </Column.ColumnHeader>
               <Column.ColumnHeader columnName="DESC">
@@ -183,18 +187,21 @@ const DevicesList = Radium(React.createClass({
               <Lists.Menu
                 checkedItemsCount={checkedItemsCount}
                 handleSelectAll={actions.selectAll}
-                handleUnselectAll={actions.uncheckAll}>
+                handleUnselectAll={actions.uncheckAll}
+              >
                 <Lists.MenuItem
                   primaryText="Send message"
-                  onTouchTap={showSendMessagesDialog}/>
+                  onTouchTap={showSendMessagesDialog}
+                />
                 <Lists.MenuItem onTouchTap={() => this.showDialog('deleteDeviceDialog')} />
               </Lists.Menu>
             </ColumnList.Header>
             <Lists.List
               {...other}
               items={this.sliceItems(items)}
-              renderItem={this.renderItem}/>
-            {router.isActive({name: 'all-push-notification-devices', params}, true) && !isLoading ? moreLink : null}
+              renderItem={this.renderItem}
+            />
+            {router.isActive({ name: 'all-push-notification-devices', params }, true) && !isLoading ? moreLink : null}
           </Lists.Container>
         </Loading>
       </div>

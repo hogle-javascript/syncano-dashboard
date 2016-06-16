@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import Dropzone from 'react-dropzone';
 
-import {FontIcon, RaisedButton} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Loading} from '../';
+import { FontIcon, RaisedButton } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Loading } from '../';
 
 export default class DropZone extends Component {
   static propTypes = {
@@ -75,29 +75,31 @@ export default class DropZone extends Component {
   }
 
   renderUploadButton() {
-    const {uploadButtonLabel, withButton, buttonIconStyle, buttonIconClassName, uploadButtonStyle} = this.props;
+    const { uploadButtonLabel, withButton, buttonIconStyle, buttonIconClassName, uploadButtonStyle } = this.props;
     const dropZoneStyles = this.getStyles();
     const icon = (
       <FontIcon
-        style={{...dropZoneStyles.uploadButtonIcon, ...buttonIconStyle}}
-        className={buttonIconClassName} />
+        style={{ ...dropZoneStyles.uploadButtonIcon, ...buttonIconStyle }}
+        className={buttonIconClassName}
+      />
     );
 
     if (withButton) {
       return (
         <RaisedButton
-          style={{...dropZoneStyles.uploadButton, ...uploadButtonStyle}}
+          style={{ ...dropZoneStyles.uploadButton, ...uploadButtonStyle }}
           backgroundColor={Colors.grey200}
           labelColor={Colors.grey500}
           onTouchTap={this.refs.dropzone ? () => this.refs.dropzone.open() : null}
           label={uploadButtonLabel}
-          icon={icon}/>
+          icon={icon}
+        />
       );
     }
   }
 
   renderDescription() {
-    const {certificateType, children} = this.props;
+    const { certificateType, children } = this.props;
     const dropZoneStyles = this.getStyles();
 
 
@@ -109,7 +111,8 @@ export default class DropZone extends Component {
       <div style={dropZoneStyles.dropZoneDescription}>
         <FontIcon
           style={dropZoneStyles.uploadIcon}
-          className="synicon-cloud-upload"/>
+          className="synicon-cloud-upload"
+        />
         <div>
           {`Drag & Drop to upload ${certificateType} certificate`}
         </div>
@@ -118,7 +121,7 @@ export default class DropZone extends Component {
   }
 
   render() {
-    const {className, isLoading, disableClick, onDrop, containerStyle, styles} = this.props;
+    const { className, isLoading, disableClick, onDrop, containerStyle, styles } = this.props;
     const dropZoneStyles = this.getStyles();
 
     return (
@@ -131,7 +134,8 @@ export default class DropZone extends Component {
             multiple={false}
             disableClick={disableClick}
             onDrop={onDrop}
-            style={{...dropZoneStyles.dropZone, ...styles}}>
+            style={{ ...dropZoneStyles.dropZone, ...styles }}
+          >
             {this.renderDescription()}
           </Dropzone>
         </Loading>

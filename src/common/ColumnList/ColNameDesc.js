@@ -1,5 +1,5 @@
 import React from 'react';
-import {colors as Colors} from 'material-ui/styles/';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'ColNameDesc',
@@ -28,11 +28,11 @@ export default React.createClass({
   },
 
   handleMouseOver() {
-    this.setState({color: this.props.hoverColor});
+    this.setState({ color: this.props.hoverColor });
   },
 
   handleMouseLeave() {
-    this.setState({color: this.props.color});
+    this.setState({ color: this.props.color });
   },
 
   handleClick() {
@@ -42,12 +42,13 @@ export default React.createClass({
   render() {
     return (
       <div
-        style={{color: this.state.color}}
+        style={{ color: this.state.color }}
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseLeave}
-        onClick={this.handleClick}>
-        <div style={{fontSize: '16px'}}>{this.props.name}</div>
-        <div style={{fontSize: '13px', opacity: '0.7'}}>{this.props.description}</div>
+        onClick={this.handleClick}
+      >
+        <div style={{ fontSize: '16px' }}>{this.props.name}</div>
+        <div style={{ fontSize: '13px', opacity: '0.7' }}>{this.props.description}</div>
       </div>
     );
   }

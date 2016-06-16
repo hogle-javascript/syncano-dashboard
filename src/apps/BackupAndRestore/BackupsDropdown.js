@@ -1,6 +1,6 @@
 import React from 'react';
 import InnerToolbarDropdown from '../../common/InnerToolbar/InnerToolbarDropdown';
-import {MenuItem} from 'material-ui';
+import { MenuItem } from 'material-ui';
 
 export default () => (
   <InnerToolbarDropdown>

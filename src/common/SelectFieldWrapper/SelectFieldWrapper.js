@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import {SelectField, TextField, MenuItem} from 'material-ui';
+import { SelectField, TextField, MenuItem } from 'material-ui';
 
 export default React.createClass({
   displayName: 'SelectFieldWrapper',
@@ -11,13 +11,14 @@ export default React.createClass({
         <MenuItem
           key={item.payload}
           value={item.payload}
-          primaryText={item.text}/>
+          primaryText={item.text}
+        />
       );
     });
   },
 
   renderSelectField() {
-    let {name, options, ...other} = this.props;
+    let { name, options, ...other } = this.props;
 
     return (
       <SelectField
@@ -27,13 +28,14 @@ export default React.createClass({
         fullWidth={true}
         floatingLabelText={_.capitalize(name)}
         onChange={this.handleChange}
-        {...other}>
+        {...other}
+      >
         {this.renderSelectFieldItems(options)}
       </SelectField>
     );
   },
 
   render() {
-    return this.props.disabled ? <TextField {...this.props}/> : this.renderSelectField();
+    return this.props.disabled ? <TextField {...this.props} /> : this.renderSelectField();
   }
 });

@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import {StoreFormMixin, WaitForStoreMixin, SnackbarNotificationMixin} from '../../mixins';
+import { StoreFormMixin, WaitForStoreMixin, SnackbarNotificationMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -66,7 +66,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('ScriptStore::refreshData');
-    const {scriptId} = SessionStore.getParams();
+    const { scriptId } = SessionStore.getParams();
 
     if (scriptId) {
       Actions.fetchScript(scriptId);
@@ -98,7 +98,7 @@ export default Reflux.createStore({
   },
 
   getEditorMode() {
-    const {currentScript} = this.data;
+    const { currentScript } = this.data;
 
     return currentScript ? this.langMap[currentScript.runtime_name] : 'python';
   },
