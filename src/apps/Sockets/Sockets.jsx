@@ -13,7 +13,7 @@ import Store from './SocketsStore';
 import {DialogsMixin} from '../../mixins';
 
 // Components
-import {FlatButton, RaisedButton} from 'material-ui';
+import {RaisedButton} from 'material-ui';
 import {Container, Loading, Show, Dialog} from '../../common/';
 
 // Apps
@@ -45,7 +45,7 @@ export default React.createClass({
     const {prolongDialog} = this.refs;
     const {showProlongDialog} = this.props.location.query;
 
-    if (prolongDialog && showProlongDialog.toString() === 'true') {
+    if (prolongDialog && _.isBoolean(showProlongDialog) && showProlongDialog) {
       prolongDialog.show();
     }
   },
