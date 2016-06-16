@@ -1,6 +1,6 @@
 import React from 'react';
 import { List } from 'material-ui';
-import ListSubheader from './ListSubHeader';
+import ListSubheader from './ListSubheader';
 
 export default ({ subheader, children }) => {
   const styles = {
