@@ -8,13 +8,11 @@ function createTestAccount() {
 
   function setup() {
     tempAccount = {
-      instanceName: 'in' + Date.now(),
       password: Date.now(),
       email: `syncano.bot+${Date.now()}@syncano.com`
     };
 
     return createAccount()
-      .then(createInstance)
       .then(() => { 
         tempAccount.connection = connection;
 
@@ -36,18 +34,6 @@ function createTestAccount() {
         return;
       })
       .catch((error) => console.error('createAccount', error));
-  }
-
-  function createInstance() {
-    return connection
-      .Instance
-      .please()
-      .create({name: tempAccount.instanceName})
-      .then(() => {
-        connection.setInstanceName(tempAccount.instanceName);
-        return;
-      })
-      .catch((error) => console.error('createInstance', error));
   }
 
   return setup();

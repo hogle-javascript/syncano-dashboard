@@ -79,7 +79,7 @@ Or for some tests (they are being rewrited):
 
     $ npm run-script e2e-create-accounts
 
-This will create set of three accounts for tests (it can be run only once, but account may be deleted after some time).
+This will create set of three accounts for tests (Accounts will be deleted after 1h of no activity).
 
 
 

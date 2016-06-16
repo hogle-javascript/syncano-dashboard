@@ -1,4 +1,5 @@
 import Utils from '../../utils';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['profile'],
@@ -11,7 +12,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   'Administrator changes his name and surname': (client) => {
     const profilePage = client.page.profilePage();

@@ -1,4 +1,5 @@
 import path from 'path';
+import accounts from '../../tempAccounts';
 
 module.exports = {
   tags: ['nav'],
@@ -8,20 +9,18 @@ module.exports = {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   after(client) {
     client.end();
   },
   beforeEach(client) {
     const instancesPage = client.page.instancesPage();
-    const socketsPage = client.page.socketsPage();
 
     instancesPage
       .navigate()
       .setResolution(client)
       .clickElement('@instancesTableName');
-    socketsPage.waitForElementPresent('@dataEndpointListItemTitle');
   },
   afterEach(client, done) {
     if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
