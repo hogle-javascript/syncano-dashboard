@@ -73,15 +73,19 @@ export default React.createClass({
         iconColor: Colors.green400,
         key: 'prolongDialog',
         ref: 'prolongDialog',
-        title: 'Your instance has been reactivated',
-        children: `You have successfully reactivated your instance ${instanceName}.
-        This means, we won't deactivate or delete it anytime soon while you will be active.`,
+        title: 'Your instance has been reactivated.',
+        children: (
+          <div>
+            You have successfully reactivated your instance <strong>{instanceName}</strong>. This means, we won't
+            deactivate or delete it anytime soon while you will be active.
+          </div>
+        ),
         actions: (
           <RaisedButton
             key="cancel"
             onTouchTap={() => this.handleCancel('prolongDialog')}
             primary={true}
-            label="Awesome"
+            label="Close"
             ref="cancel"/>
         )
       }
