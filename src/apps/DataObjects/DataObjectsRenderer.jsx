@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'moment';
 import _ from 'lodash';
 
-import {FontIcon, TableHeaderColumn, TableRowColumn, TableHeader, TableRow} from 'material-ui';
+import { FontIcon, TableHeaderColumn, TableRowColumn, TableHeader, TableRow } from 'material-ui';
 
 export default {
   columnsRenderers() {
@@ -44,7 +44,7 @@ export default {
   renderFile(obj) {
     return (
       <div onClick={(event) => this.handleFileOnClick(event, obj.value)}>
-        <FontIcon className="synicon-download"/>
+        <FontIcon className="synicon-download" />
       </div>
     );
   },
@@ -129,7 +129,7 @@ export default {
 
       return (
         <TableRow
-          style={{cursor: 'pointer'}}
+          style={{ cursor: 'pointer' }}
           key={`row-${index}`}
           selected={selected}
         >
