@@ -167,8 +167,8 @@ export default React.createClass({
   },
 
   render() {
-    const {children, withConfirm, icon, iconColor, ...other} = this.props;
-    const {open} = this.state;
+    const { children, withConfirm, icon, iconColor, ...other } = this.props;
+    const { open } = this.state;
     const customizeColor = iconColor || Colors.grey500;
 
     return (
@@ -187,9 +187,10 @@ export default React.createClass({
       >
         <div className="row">
           <FontIcon
-            style={{fontSize: 60, color: withConfirm ? Colors.orange400 : customizeColor}}
-            className={`${withConfirm ? 'synicon-alert' : icon} col-sm-7 vm-2-t`}/>
-          <div className="vm-1-t col-sm-28" style={{lineHeight: 1.6}}>
+            style={{ fontSize: 60, color: withConfirm ? Colors.orange400 : customizeColor }}
+            className={`${withConfirm ? 'synicon-alert' : icon} col-sm-7 vm-2-t`}
+          />
+          <div className="vm-1-t col-sm-28" style={{ lineHeight: 1.6 }}>
             {children || this.renderContent()}
           </div>
         </div>
