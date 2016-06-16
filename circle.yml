@@ -9,6 +9,7 @@ general:
 
 test:
   override:
+    - npm run-script lint
     - ./test.sh:
         parallel: true
         timeout: 120
