@@ -1,8 +1,6 @@
 import utils from '../utils';
-import globals from '../globals';
 
 export default {
-  url: `https://localhost:8080/#/instances/${globals.instanceName}/schedules`,
   elements: {
     schedulesListMenu: {
       selector: '//div[@class="schedules-list"]/div[1]/div[@class="col-menu"]//button',

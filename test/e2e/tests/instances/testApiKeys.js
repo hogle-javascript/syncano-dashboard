@@ -1,3 +1,4 @@
+import accounts from '../../tempAccounts';
 import Utils from '../../utils';
 
 export default {
@@ -8,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
 
   after(client) {
@@ -18,9 +19,10 @@ export default {
   'Test Add Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
     const description = Utils.addSuffix();
+    const instanceName = accounts.instanceUser.instanceName;
 
     apiKeysPage
-      .navigate()
+      .goToUrl(instanceName, 'api-keys')
       .clickElement('@addApiKeyButton')
       .fillInput('@createModalDescriptionInput', description)
       .clickElement('@confirmButton')
@@ -30,10 +32,11 @@ export default {
   'Test Reset Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
     const description = Utils.addSuffix();
+    const instanceName = accounts.instanceUser.instanceName;
     let apiKeyValue = null;
 
     apiKeysPage
-      .navigate()
+      .goToUrl(instanceName, 'api-keys')
       .waitForElementPresent('@apiKeyValue');
 
     const apiKeyValueElement = apiKeysPage.elements.apiKeyValue.selector;
@@ -57,9 +60,10 @@ export default {
   'Test Delete Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
     const description = Utils.addSuffix();
+    const instanceName = accounts.instanceUser.instanceName;
 
     apiKeysPage
-      .navigate()
+      .goToUrl(instanceName, 'api-keys')
       .clickListItemDropdown(description, 'Delete')
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@selectApiKey');

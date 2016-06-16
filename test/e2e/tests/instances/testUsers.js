@@ -1,4 +1,5 @@
 import utils from '../../utils';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['users'],
@@ -8,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after(client) {
     client.end();
@@ -16,9 +17,10 @@ export default {
   'Administrator adds a User': (client) => {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('user');
+    const instanceName = accounts.instanceUser.instanceName;
 
     usersPage
-      .navigate()
+      .goToUrl(instanceName, 'users')
       .waitForElementVisible('@groupEditButton')
       .waitForElementVisible('@userList')
       .clickElement('@addUserButton')
@@ -30,9 +32,10 @@ export default {
   },
   'Administrator deletes a User': (client) => {
     const usersPage = client.page.usersPage();
+    const instanceName = accounts.instanceUser.instanceName;
 
     usersPage
-      .navigate()
+      .goToUrl(instanceName, 'users')
       .waitForElementVisible('@groupEditButton')
       .waitForElementVisible('@userList')
       .clickListItemDropdown('@selectUserTableRow', 'Delete')
