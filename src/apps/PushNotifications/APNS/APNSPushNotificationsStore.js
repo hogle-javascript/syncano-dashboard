@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {WaitForStoreMixin, StoreLoadingMixin, StoreHelpersMixin} from '../../../mixins';
+import { WaitForStoreMixin, StoreLoadingMixin, StoreHelpersMixin } from '../../../mixins';
 
 // Stores & Actions
 import Actions from './APNSPushNotificationsActions';

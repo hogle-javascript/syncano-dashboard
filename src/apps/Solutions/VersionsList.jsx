@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ListItem from './VersionsListItem';
-import {ColumnList, Lists} from '../../common/';
+import { ColumnList, Lists } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -9,7 +9,7 @@ export default React.createClass({
   displayName: 'SolutionVersionsList',
 
   renderItem(item) {
-    return <ListItem onInstallClick={this.props.onInstall} item={item}/>;
+    return <ListItem onInstallClick={this.props.onInstall} item={item} />;
   },
 
   render() {
@@ -18,8 +18,9 @@ export default React.createClass({
         <ColumnList.Header>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-5">
-            <span style={{fontSize: '1.2rem'}}>{this.props.name}</span>
+            className="col-xs-5"
+          >
+            <span style={{ fontSize: '1.2rem' }}>{this.props.name}</span>
           </Column.ColumnHeader>
 
           <Column.ColumnHeader columnName="DATE">
@@ -32,19 +33,22 @@ export default React.createClass({
 
           <Column.ColumnHeader
             columnName="ID"
-            className="col-xs-5">
+            className="col-xs-5"
+          >
             Installations
           </Column.ColumnHeader>
 
           <Column.ColumnHeader
             columnName="ID"
-            className="col-xs-4">
+            className="col-xs-4"
+          >
             Download
           </Column.ColumnHeader>
 
           <Column.ColumnHeader
             columnName="ID"
-            className="col-xs-4">
+            className="col-xs-4"
+          >
             Install
           </Column.ColumnHeader>
 
@@ -52,7 +56,8 @@ export default React.createClass({
         <Lists.List
           {...this.props}
           key="versions-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

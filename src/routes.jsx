@@ -1,6 +1,6 @@
 /* eslint-disable no-inline-comments */
 import React from 'react';
-import {Route, Redirect, IndexRedirect, IndexRoute} from 'react-router';
+import { Route, Redirect, IndexRedirect, IndexRoute } from 'react-router';
 import auth from './apps/Account/auth';
 import URI from 'urijs';
 import _ from 'lodash';
@@ -18,6 +18,7 @@ import SetupPage from './pages/setup';
 import NotFoundPage from './pages/notfound';
 import PushDevicesPage from './pages/pushDevices';
 import ExpiredAccountPage from './pages/expiredAccount';
+import FailedPaymentPage from './pages/failedPayment';
 
 // Apps
 import Account from './apps/Account';
@@ -54,7 +55,7 @@ function redirectToLogin(nextState, replace) {
   if (!auth.loggedIn()) {
     replace({
       pathname: '/login',
-      state: {nextPathname: nextState.location.pathname}
+      state: { nextPathname: nextState.location.pathname }
     });
   }
 }
@@ -66,10 +67,10 @@ function redirectToDashboard(nextState, replace) {
 }
 
 function onRootEnter(nextState) {
-  let uri = new URI();
-  let originalUri = uri.normalize().toString();
+  const uri = new URI();
+  const originalUri = uri.normalize().toString();
   let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
-  let query = _.extend({}, uri.search(true), nextState.location.query);
+  const query = _.extend({}, uri.search(true), nextState.location.query);
 
   SessionStore.setUTMData(nextState.location.query);
 
@@ -82,7 +83,7 @@ function onRootEnter(nextState) {
   uri.hash(`${pathname}${uri.search()}`);
   uri.search('');
 
-  let normalizedUri = uri.normalize().toString();
+  const normalizedUri = uri.normalize().toString();
 
   if (originalUri !== normalizedUri) {
     location.href = normalizedUri;
@@ -90,7 +91,7 @@ function onRootEnter(nextState) {
   }
 
   let name = 'app';
-  let names = nextState.routes.map((route) => route.name).filter((routeName) => typeof routeName !== 'undefined');
+  const names = nextState.routes.map((route) => route.name).filter((routeName) => typeof routeName !== 'undefined');
 
   if (names.length > 0) {
     name = names[names.length - 1];
@@ -115,34 +116,41 @@ export default (
     name="app"
     component={AppPage}
     onEnter={onRootEnter}
-    path="/">
+    path="/"
+  >
 
     <Route
       name="login"
       path="login"
       component={Account.Login}
-      onEnter={redirectToDashboard}/>
+      onEnter={redirectToDashboard}
+    />
     <Route
       name="signup"
       path="signup"
       component={Account.Signup}
-      onEnter={redirectToDashboard}/>
+      onEnter={redirectToDashboard}
+    />
     <Route
       name="activate"
       component={Account.Activate}
-      path="/activate/:uid/:token"/>
+      path="/activate/:uid/:token"
+    />
     <Route
       name="password-update"
       component={Account.PasswordUpdate}
-      path="/password/update"/>
+      path="/password/update"
+    />
     <Route
       name="password-reset"
       component={Account.PasswordReset}
-      path="/password/reset"/>
+      path="/password/reset"
+    />
     <Route
       name="password-reset-confirm"
       component={Account.PasswordResetConfirm}
-      path="/password/reset/:uid/:token"/>
+      path="/password/reset/:uid/:token"
+    />
 
     {/* Dashboard */}
     <Route
@@ -153,119 +161,147 @@ export default (
       <Route
         name="instances"
         component={Instances}
-        path="instances"/>
+        path="instances"
+      />
 
       <Route
         name="setup"
         component={SetupPage}
-        path="setup"/>
+        path="setup"
+      />
 
       <Route
         name="expired-account"
         component={ExpiredAccountPage}
-        path="expired"/>
+        path="expired"
+      />
+
+      <Route
+        name="failed-payment"
+        component={FailedPaymentPage}
+        path="failed-payment"
+      />
 
       <Route
         name="instance"
         component={InstancePage}
-        path="instances/:instanceName">
+        path="instances/:instanceName"
+      >
 
         <Redirect
           from="prolong"
           to="sockets"
-          query={{showProlongDialog: true}} />
+          query={{ showProlongDialog: true }}
+        />
 
         {/* Sockets */}
         <Route
           name="sockets"
           path="sockets"
-          component={Sockets}/>
+          component={Sockets}
+        />
 
         {/* Data */}
         <Route
           name="data"
           path="data-endpoints"
-          component={DataEndpoints}/>
+          component={DataEndpoints}
+        />
 
         {/* Admins */}
         <Route
           name="admins"
           component={Admins}
-          path="admins"/>
+          path="admins"
+        />
 
         {/* API keys */}
         <Route
           name="api-keys"
           component={ApiKeys}
-          path="api-keys"/>
+          path="api-keys"
+        />
 
         {/* General */}
         <Route
           name="instance-edit"
           component={InstanceEdit}
-          path="edit"/>
+          path="edit"
+        />
 
         {/* Classes */}
         <Route
           name="classes"
           component={ClassesPage}
-          path="classes">
+          path="classes"
+        >
 
           <Route
             name="classes-data-objects"
             component={DataObjects}
-            path=":className/objects"/>
+            path=":className/objects"
+          />
 
           <Route
             name="classEdit"
             component={Classes}
-            path=":className/:action"/>
+            path=":className/:action"
+          />
 
-          <IndexRoute component={Classes}/>
+          <IndexRoute component={Classes} />
         </Route>
 
         {/* Push Notifications */}
         <Route
           name="push-notifications"
-          path="push-notifications">
+          path="push-notifications"
+        >
 
           {/* Push Notification Devices */}
           <Route
             name="push-notification-config"
             path="config"
-            component={PushNotifications}/>
+            component={PushNotifications}
+          />
 
           <Route
             name="push-notification-devices"
             path="devices"
-            component={PushDevicesPage}>
+            component={PushDevicesPage}
+          >
             <Route
               name="all-push-notification-devices"
               path="all"
-              component={PushDevices.AllDevices}/>
+              component={PushDevices.AllDevices}
+            />
             <Route
               name="apns-devices"
               path="apns"
-              component={PushDevices.APNS}/>
+              component={PushDevices.APNS}
+            />
             <Route
               name="gcm-devices"
               path="gcm"
-              component={PushDevices.GCM}/>
+              component={PushDevices.GCM}
+            />
             <Redirect
               from="/instances/:instanceName/push-notifications/devices"
-              to="all-push-notification-devices"/>
+              to="all-push-notification-devices"
+            />
           </Route>
 
           <Redirect
             from="/instances/:instanceName/push-notifications"
-            to="push-notification-config"/>
+            to="push-notification-config"
+          />
         </Route>
 
         {/* Backup & Restore */}
         <Route
           name="backup-and-restore"
           path="backup-and-restore"
-          component={BackupAndRestore}>
+          component={BackupAndRestore}
+        >
           {/* <Route
             name="all-backups"
             path="all"
@@ -277,7 +313,8 @@ export default (
           <Route
             name="full-backups"
             path="full"
-            component={BackupAndRestore.Full}/>
+            component={BackupAndRestore.Full}
+          />
 
           <IndexRoute component={BackupAndRestore.Full} />
         </Route>
@@ -286,170 +323,200 @@ export default (
         {/* ScriptEndpoints */}
         <Route
           name="script-endpoints"
-          path="script-endpoints">
+          path="script-endpoints"
+        >
 
 
           {/* ScriptEndpoints Traces */}
           <Route
             name="scriptEndpoint-traces"
             component={ScriptEndpoints.Traces}
-            path=":scriptEndpointName/traces"/>
+            path=":scriptEndpointName/traces"
+          />
 
-          <IndexRoute component={ScriptEndpoints}/>
+          <IndexRoute component={ScriptEndpoints} />
 
         </Route>
 
         <Route
           name="snippets"
           path="snippets"
-          component={Snippets} />
+          component={Snippets}
+        />
 
         {/* Templates */}
         <Route
           name="templates"
-          path="templates">
+          path="templates"
+        >
           <Route
             name="template"
             component={Template}
-            path=":templateName"/>
-          <IndexRoute component={Templates}/>
+            path=":templateName"
+          />
+          <IndexRoute component={Templates} />
         </Route>
 
         {/* Scripts */}
         <Route
           name="scripts"
           component={ScriptsPage}
-          path="scripts">
+          path="scripts"
+        >
           <Route
             name="script"
             component={Script}
-            path=":scriptId"/>
-          <IndexRoute component={Scripts}/>
+            path=":scriptId"
+          />
+          <IndexRoute component={Scripts} />
         </Route>
         <Route
           name="scripts-add"
           component={Scripts}
-          path="scripts/:action"/>
+          path="scripts/:action"
+        />
 
         {/* Data Objects */}
         <Route
           name="data-objects"
           component={DataObjects}
-          path="objects"/>
+          path="objects"
+        />
 
         {/* Triggers */}
         <Route
           name="triggers"
-          path="triggers">
+          path="triggers"
+        >
 
           <Route
-            name='trigger-traces'
+            name="trigger-traces"
             component={Triggers.Traces}
-            path=':triggerId/traces'/>
+            path=":triggerId/traces"
+          />
 
-          <IndexRoute component={Triggers}/>
+          <IndexRoute component={Triggers} />
         </Route>
 
         {/* Schedules */}
         <Route
           name="schedules"
-          path="schedules">
+          path="schedules"
+        >
 
           <Route
-            name='schedule-traces'
+            name="schedule-traces"
             component={Schedules.Traces}
-            path=':scheduleId/traces'/>
+            path=":scheduleId/traces"
+          />
 
-          <IndexRoute component={Schedules}/>
+          <IndexRoute component={Schedules} />
         </Route>
 
         {/* Channels */}
         <Route
           name="channels"
-          path="channels">
+          path="channels"
+        >
           <Route
-            name='channel-history'
+            name="channel-history"
             component={ChannelHistory.Messages}
-            path=':channelName/history'/>
+            path=":channelName/history"
+          />
 
-          <IndexRoute component={Channels}/>
+          <IndexRoute component={Channels} />
         </Route>
 
         {/* Users */}
         <Route
           name="users"
           component={Users}
-          path="users"/>
+          path="users"
+        />
 
-        <IndexRedirect to="sockets"/>
+        <IndexRedirect to="sockets" />
       </Route>
 
       {/* Profile Billing */}
       <Route
         name="profile"
         component={ProfilePage}
-        path="/account">
+        path="/account"
+      >
 
         <Route
           name="profile-billing-plan"
           component={Profile.BillingPlan}
-          path="plan"/>
+          path="plan"
+        />
         <Route
           name="profile-billing-address"
           component={Profile.BillingAddress}
-          path="address"/>
+          path="address"
+        />
         <Route
           name="profile-billing-payment"
           component={Profile.BillingPayment}
-          path="payment-methods"/>
+          path="payment-methods"
+        />
         <Route
           name="profile-billing-invoices"
           component={Profile.BillingInvoices}
-          path="invoices"/>
+          path="invoices"
+        />
         <Route
           name="profile-settings"
           component={Profile.Settings}
-          path="/account"/>
+          path="/account"
+        />
         <Route
           name="profile-authentication"
           component={Profile.Authentication}
-          path="/account/authentication"/>
+          path="/account/authentication"
+        />
         <Route
           name="profile-invitations"
           component={Profile.Invitations}
-          path="/account/invitations"/>
+          path="/account/invitations"
+        />
 
-        <IndexRoute component={Profile.Settings}/>
+        <IndexRoute component={Profile.Settings} />
       </Route>
 
       {/* Solutions */}
       <Route
         name="solutions"
-        path="/solutions">
+        path="/solutions"
+      >
         <Route
           name="solutions-list"
           component={Solutions.ListView}
-          path="list"/>
+          path="list"
+        />
         <Route
           name="solutions-install"
           component={Solutions.EditView}
-          path="/solutions/:solutionId/:action"/>
+          path="/solutions/:solutionId/:action"
+        />
         <Route
           name="solutions-edit"
           component={Solutions.EditView}
-          path="/solutions/:solutionId/edit"/>
+          path="/solutions/:solutionId/edit"
+        />
         <Route
           name="solutions-add-version"
           component={Solutions.AddVersionView}
-          path="/solutions/:solutionId/versions/add"/>
+          path="/solutions/:solutionId/versions/add"
+        />
         <Redirect
           from="/solutions"
-          to="solutions-list"/>
-        <IndexRoute component={Solutions.ListView}/>
+          to="solutions-list"
+        />
+        <IndexRoute component={Solutions.ListView} />
       </Route>
 
-      <IndexRoute component={Instances}/>
+      <IndexRoute component={Instances} />
     </Route>
-    <Route path="*" component={NotFoundPage}/>
+    <Route path="*" component={NotFoundPage} />
   </Route>
 );

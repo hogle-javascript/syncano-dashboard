@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import Radium from 'radium';
 
-import {RaisedButton} from 'material-ui';
+import { RaisedButton } from 'material-ui';
 
 // import './Tour.css';
 
@@ -108,7 +108,7 @@ export default Radium(React.createClass({
   },
 
   handleRun() {
-    let {currentStep, config} = this.props;
+    let { currentStep, config } = this.props;
 
     if (config[currentStep] && config[currentStep].run) {
       config[currentStep].run();
@@ -122,7 +122,7 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    let {currentStep, config, visible, showDots} = this.props;
+    let { currentStep, config, visible, showDots } = this.props;
     let additionalLeft = 0;
     let additionalTop = 0;
     let classes = 'react-tour';
@@ -160,7 +160,8 @@ export default Radium(React.createClass({
             left,
             height,
             width
-          }, styles.tourFocus]}>
+          }, styles.tourFocus]}
+        >
           <div style={styles.focusText}>
             {config[currentStep] ? config[currentStep].text : config[0].text}
 
@@ -173,9 +174,10 @@ export default Radium(React.createClass({
             )}
             <RaisedButton
               label={currentStep === config.length - 1 ? 'End tour' : 'Next'}
-              labelStyle={{fontSize: '16px'}}
-              style={{boxShadow: 'none', height: '48px'}}
-              primary={true}/>
+              labelStyle={{ fontSize: '16px' }}
+              style={{ boxShadow: 'none', height: '48px' }}
+              primary={true}
+            />
           </div>
         </div>
       </div>

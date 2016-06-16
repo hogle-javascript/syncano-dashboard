@@ -8,8 +8,8 @@ export default React.createClass({
       result: {
         padding: '25px',
         color: 'white',
-        whiteSpace: 'pre',
-        font: `12px/normal 'Monaco', monospace`,
+        whiteSpace: 'pre-wrap',
+        font: '12px/normal \'Monaco\', monospace',
         backgroundColor: '#4C4A43'
       }
     };

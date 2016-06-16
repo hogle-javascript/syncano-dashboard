@@ -9,11 +9,11 @@ import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Components
-import {IconButton, RaisedButton, TextField} from 'material-ui';
-import {Container, Loading, InnerToolbar, Dialog} from '../../common/';
+import { IconButton, RaisedButton, TextField } from 'material-ui';
+import { Container, Loading, InnerToolbar, Dialog } from '../../common/';
 
 export default React.createClass({
   displayName: 'InstanceEdit',
@@ -37,7 +37,7 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    const {instanceName} = this.props.params;
+    const { instanceName } = this.props.params;
 
     if (instanceName) {
       SessionActions.fetchInstance(instanceName);
@@ -140,7 +140,8 @@ export default React.createClass({
               <Loading
                 type="linear"
                 position="bottom"
-                show={this.state.isLoading}/>
+                show={this.state.isLoading}
+              />
             </div>
           )
         }
@@ -150,7 +151,7 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {instance} = this.state;
+    const { instance } = this.state;
     const deleteButtonText = Store.amIOwner(instance) ? 'Delete' : 'Leave';
     const title = 'General Settings';
 
@@ -165,15 +166,16 @@ export default React.createClass({
 
         <InnerToolbar title={title}>
           <IconButton
-            style={{fontSize: 25, marginTop: 5}}
+            style={{ fontSize: 25, marginTop: 5 }}
             iconClassName="synicon-delete"
             tooltip={`${deleteButtonText} an Instance`}
             tooltipPosition="bottom-left"
-            onTouchTap={() => this.showDialog('deleteInstanceDialog')} />
+            onTouchTap={() => this.showDialog('deleteInstanceDialog')}
+          />
         </InnerToolbar>
 
         <Container>
-          <div style={{width: '50%'}}>
+          <div style={{ width: '50%' }}>
             <div className="col-flex-1">
               <div>
                 <div style={styles.customizeSection}>
@@ -184,21 +186,24 @@ export default React.createClass({
                     disabled={true}
                     fullWidth={true}
                     defaultValue={instance.name}
-                    style={styles.textField}/>
+                    style={styles.textField}
+                  />
                   <TextField
                     ref="description"
                     floatingLabelText="Instance description"
                     defaultValue={instance.description}
                     multiLine={true}
                     fullWidth={true}
-                    style={styles.textField}/>
+                    style={styles.textField}
+                  />
                 </div>
                 <div style={styles.buttonsSection}>
                   <RaisedButton
                     onTouchTap={this.handleUpdate}
                     type="submit"
                     label="Update"
-                    secondary={true}/>
+                    secondary={true}
+                  />
                 </div>
               </div>
             </div>

@@ -36,7 +36,8 @@ export default Radium(React.createClass({
     return (
       <div
         className={this.props.className}
-        style={styles}>
+        style={styles}
+      >
         <span>{format}</span>
         <span>{lts}</span>
       </div>

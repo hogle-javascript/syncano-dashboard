@@ -8,7 +8,7 @@ export default {
       locateStrategy: 'xpath'
     },
     accountKey: {
-      selector: '//div[@style="font-family: monospace;"]',
+      selector: '//div[text()="Account key"]/../div[@class="row"]/div[1]',
       locateStrategy: 'xpath'
     },
     copyButton: {

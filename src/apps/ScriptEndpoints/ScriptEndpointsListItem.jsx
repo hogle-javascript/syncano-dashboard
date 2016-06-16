@@ -1,13 +1,13 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
-import {SnackbarNotificationMixin} from '../../mixins';
+import { SnackbarNotificationMixin } from '../../mixins';
 
 import Actions from './ScriptEndpointsActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
-import {MenuItem} from 'material-ui';
-import {Color, ColumnList, Clipboard} from '../../common/';
+import { MenuItem } from 'material-ui';
+import { Color, ColumnList, Clipboard } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -26,8 +26,8 @@ export default React.createClass({
   mixins: [SnackbarNotificationMixin],
 
   render() {
-    const {instanceName} = this.context.params;
-    const {item, onIconClick, showDeleteDialog} = this.props;
+    const { instanceName } = this.context.params;
+    const { item, onIconClick, showDeleteDialog } = this.props;
     const publicString = item.public.toString();
     const link = item.public ? item.links['public-link'] : item.links.self;
     const script = ScriptsStore.getScriptById(item.script);
@@ -37,7 +37,8 @@ export default React.createClass({
       <ColumnList.Item
         checked={item.checked}
         id={item.name}
-        key={item.name}>
+        key={item.name}
+      >
         <Column.CheckIcon.Socket
           className="col-xs-12"
           id={item.name}
@@ -55,8 +56,10 @@ export default React.createClass({
                 message: 'Script Endpoint url copied!'
               })}
               tooltip="Copy Script Endpoint url"
-              type="link" />
-          }/>
+              type="link"
+            />
+          }
+        />
         <Column.Desc className="col-flex-1">
           {item.description}
         </Column.Desc>
@@ -68,7 +71,8 @@ export default React.createClass({
                 instanceName,
                 scriptId: item.script
               }
-            }}>
+            }}
+          >
             {scriptLabel}
           </Link>
         </Column.Desc>
@@ -80,7 +84,8 @@ export default React.createClass({
                 instanceName,
                 scriptEndpointName: item.name
               }
-            }}>
+            }}
+          >
             Traces
           </Link>
         </Column.Desc>
@@ -89,11 +94,13 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit" />
+            primaryText="Edit"
+          />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete" />
+            primaryText="Delete"
+          />
         </Column.Menu>
       </ColumnList.Item>
     );

@@ -3,10 +3,10 @@ import Reflux from 'reflux';
 import pluralize from 'pluralize';
 import _ from 'lodash';
 
-import {FormMixin} from '../../mixins';
+import { FormMixin } from '../../mixins';
 
-import {FontIcon, TextField} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { FontIcon, TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 import Dialog from './FullPageDialog';
 import StandardButtons from './DialogStandardButtons';
 
@@ -19,7 +19,7 @@ export default React.createClass({
   ],
 
   validatorConstraints() {
-    const {itemLabelName, groupName, withConfirm} = this.props;
+    const { itemLabelName, groupName, withConfirm } = this.props;
     const items = this.getItems();
     const confirmText = items.length ? items[0][itemLabelName] : '';
 
@@ -92,7 +92,7 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    const {handleConfirm, handleConfirmParam} = this.props;
+    const { handleConfirm, handleConfirmParam } = this.props;
 
     handleConfirm(this.getItems(), handleConfirmParam);
     if (_.isFunction(handleConfirm.completed)) {
@@ -104,23 +104,23 @@ export default React.createClass({
   },
 
   dismiss() {
-    this.setState({open: false});
+    this.setState({ open: false });
   },
 
   show(items) {
-    this.setState({open: true, items});
+    this.setState({ open: true, items });
   },
 
   renderConfirmContent() {
-    const {validationText} = this.state;
-    const {itemLabelName, groupName, actionName} = this.props;
+    const { validationText } = this.state;
+    const { itemLabelName, groupName, actionName } = this.props;
     const listItems = this.getItems();
     const itemsCount = listItems.length;
     const pluralizedGroup = pluralize(groupName, itemsCount);
     let confirmDescription = `To confirm ${actionName} type ${pluralizedGroup} name.`;
 
     return (
-      <div style={{lineHeight: '1.4'}}>
+      <div style={{ lineHeight: '1.4' }}>
         <div className="vm-1-t">
           <div className="vm-1-b">
             <strong>This action cannot be undone or stopped.</strong>
@@ -138,18 +138,19 @@ export default React.createClass({
           <TextField
             className="confirmation-text-field"
             value={validationText}
-            onChange={(event, value) => this.setState({validationText: value})}
+            onChange={(event, value) => this.setState({ validationText: value })}
             errorText={this.getValidationMessages('validationText').join(' ')}
             fullWidth={true}
             floatingLabelText="Instance name"
-            hintText="Instance name" />
+            hintText="Instance name"
+          />
         </div>
       </div>
     );
   },
 
   renderContent() {
-    const {actionName, groupName, itemLabelName, withConfirm} = this.props;
+    const { actionName, groupName, itemLabelName, withConfirm } = this.props;
     const listItems = this.getItems();
     const itemsCount = listItems.length;
 
@@ -179,9 +180,11 @@ export default React.createClass({
         actions={
           <StandardButtons
             handleCancel={this.dismiss}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
-        {...other}>
+        {...other}
+      >
         <div className="row">
           <FontIcon
             style={{fontSize: 60, color: withConfirm ? Colors.orange400 : customizeColor}}

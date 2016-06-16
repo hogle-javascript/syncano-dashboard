@@ -13,7 +13,7 @@ import APNSDevicesStore from './APNSDevices/APNSDevicesStore';
 import GCMDeviceDialogStore from './GCMDevices/GCMDeviceDialogStore';
 import APNSDeviceDialogStore from './APNSDevices/APNSDeviceDialogStore';
 
-let Devices = {};
+const Devices = {};
 
 Devices.APNS = APNSDevices;
 Devices.GCM = GCMDevices;

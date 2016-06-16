@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import ChannelsStore from './ChannelsStore';
@@ -10,8 +10,8 @@ import Actions from './ChannelsActions';
 import Store from './ChannelDialogStore';
 
 // Components
-import {TextField, Toggle} from 'material-ui';
-import {Dialog, SelectFieldWrapper} from '../../common/';
+import { TextField, Toggle } from 'material-ui';
+import { Dialog, SelectFieldWrapper } from '../../common/';
 
 export default React.createClass({
   displayName: 'ChannelDialog',
@@ -85,7 +85,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -108,7 +109,8 @@ export default React.createClass({
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         {this.renderFormNotifications()}
         <Dialog.ContentSection>
           <div className="col-md-20">
@@ -116,13 +118,14 @@ export default React.createClass({
               ref="name"
               autoFocus={true}
               value={name}
-              onChange={(event, value) => this.setState({name: value})}
+              onChange={(event, value) => this.setState({ name: value })}
               errorText={this.getValidationMessages('name').join(' ')}
               name="name"
               disabled={this.hasEditMode()}
               fullWidth={true}
               hintText="Channel's name"
-              floatingLabelText="Name" />
+              floatingLabelText="Name"
+            />
           </div>
           <div className="col-flex-1">
             <SelectFieldWrapper
@@ -132,20 +135,22 @@ export default React.createClass({
               disabled={this.hasEditMode()}
               value={type}
               onChange={(event, index, value) => this.setSelectFieldValue('type', value)}
-              errorText={this.getValidationMessages('type').join(' ')}/>
+              errorText={this.getValidationMessages('type').join(' ')}
+            />
           </div>
           <div className="col-flex-0">
             <TextField
               ref="description"
               name="description"
               value={description}
-              onChange={(event, value) => this.setState({description: value})}
+              onChange={(event, value) => this.setState({ description: value })}
               errorText={this.getValidationMessages('description').join(' ')}
               fullWidth={true}
               multiLine={true}
               maxRows={2}
               floatingLabelText="Description (optional)"
-              hintText="Channel Socket's description" />
+              hintText="Channel Socket's description"
+            />
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection title="Permissions">
@@ -155,10 +160,11 @@ export default React.createClass({
               name="group"
               fullWidth={true}
               value={group}
-              onChange={(event, value) => this.setState({group: value})}
+              onChange={(event, value) => this.setState({ group: value })}
               errorText={this.getValidationMessages('group').join(' ')}
               hintText="Group's ID"
-              floatingLabelText="Group ID" />
+              floatingLabelText="Group ID"
+            />
           </div>
           <div className="col-flex-1">
             <SelectFieldWrapper
@@ -167,7 +173,8 @@ export default React.createClass({
               options={ChannelsStore.getChannelPermissionsDropdown()}
               value={group_permissions}
               onChange={(event, index, value) => this.setSelectFieldValue('group_permissions', value)}
-              errorText={this.getValidationMessages('group_permissions').join(' ')}/>
+              errorText={this.getValidationMessages('group_permissions').join(' ')}
+            />
           </div>
           <div className="col-flex-1">
             <SelectFieldWrapper
@@ -176,20 +183,23 @@ export default React.createClass({
               options={ChannelsStore.getChannelPermissionsDropdown()}
               value={other_permissions}
               onChange={(event, index, value) => this.setSelectFieldValue('other_permissions', value)}
-              errorText={this.getValidationMessages('other_permissions').join(' ')}/>
+              errorText={this.getValidationMessages('other_permissions').join(' ')}
+            />
           </div>
         </Dialog.ContentSection>
         <Dialog.ContentSection last="true">
           <div
             className="col-flex-1"
-            style={{maxWidth: 320}}>
+            style={{ maxWidth: 320 }}
+          >
             <Toggle
               ref="custom_publish"
               name="custom_publish"
               defaultToggled={custom_publish}
               onToggle={this.handleToogle}
               label="Custom publishing in this channel?"
-              labelStyle={{fontSize: 15}}/>
+              labelStyle={{ fontSize: 15 }}
+            />
           </div>
         </Dialog.ContentSection>
       </Dialog.FullPage>

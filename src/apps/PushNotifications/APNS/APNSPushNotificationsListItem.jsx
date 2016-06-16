@@ -11,6 +11,7 @@ export default (props) => {
       label="Apple Push Notification service (APNs)"
       devicesRoute="apns-devices"
       icon="apple"
-      showConfigDialog={APNSPushNotificationsActions.showDialog}/>
+      showConfigDialog={APNSPushNotificationsActions.showDialog}
+    />
   );
 };

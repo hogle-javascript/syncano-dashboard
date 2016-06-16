@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {Paper, Avatar, FlatButton} from 'material-ui';
+import { Paper, Avatar, FlatButton } from 'material-ui';
 
 export default Radium(React.createClass({
   displayName: 'WelcomeDialog',
@@ -59,7 +59,7 @@ export default Radium(React.createClass({
   },
 
   handleCloseDialog() {
-    this.setState({visible: false});
+    this.setState({ visible: false });
     this.props.getStarted();
   },
 
@@ -67,28 +67,30 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
 
     return (
-      <div className='welcome-dialog' style={styles.main}>
+      <div className="welcome-dialog" style={styles.main}>
         <div style={styles.overlay}></div>
         <Paper
           ref="dialog"
-          style={styles.paper}>
-          <div style={{color: 'white', height: '100%', width: '100%', display: 'flex', flexDirection: 'column'}}>
+          style={styles.paper}
+        >
+          <div style={{ color: 'white', height: '100%', width: '100%', display: 'flex', flexDirection: 'column' }}>
             <div style={styles.text}>
-              <Avatar size={80} src={'/img/fox.png'}/>
+              <Avatar size={80} src={'/img/fox.png'} />
 
-              <div style={{paddingTop: 16, paddingBottom: 24}}>
+              <div style={{ paddingTop: 16, paddingBottom: 24 }}>
                 Welcome to your <strong>Syncano</strong> dashboard!
               </div>
-              <div style={{fontSize: '1.8rem'}}>
+              <div style={{ fontSize: '1.8rem' }}>
                 This is where the <strong>magic</strong> happens. Now get to work, you <strong>superstar</strong> you.
               </div>
             </div>
 
             <FlatButton
-              style={{margin: '24px auto', width: '80%'}}
-              label='Go to your first instance!'
+              style={{ margin: '24px auto', width: '80%' }}
+              label="Go to your first instance!"
               primary={true}
-              onClick={this.handleCloseDialog}/>
+              onClick={this.handleCloseDialog}
+            />
           </div>
         </Paper>
       </div>

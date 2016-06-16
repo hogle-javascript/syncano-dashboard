@@ -6,7 +6,7 @@ import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import Actions from './TracesActions';
 
-import {StoreLoadingMixin} from '../../mixins';
+import { StoreLoadingMixin } from '../../mixins';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -83,7 +83,7 @@ export default Reflux.createStore({
   saveCurrentObj(currentObjName) {
     console.debug('TracesStore::saveCurrentObj', currentObjName);
     this.data.currentObjectName = currentObjName;
-    this.trigger({currentObjectName: currentObjName});
+    this.trigger({ currentObjectName: currentObjName });
   },
 
   onFetchScriptTracesCompleted(tracesObj) {

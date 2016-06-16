@@ -4,11 +4,11 @@ import Actions from './SchedulesActions';
 import Store from './SchedulesStore';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Components
 import ListItem from './SchedulesListItem';
-import {ColumnList, Dialog, Lists} from '../../common/';
+import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -34,7 +34,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading, getCheckedItems} = this.props;
+    const { isLoading, getCheckedItems } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -52,19 +52,20 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    const {checkItem} = this.props;
+    const { checkItem } = this.props;
 
     return (
       <ListItem
         key={`schedules-list-item-${item.id}`}
         onIconClick={checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeScheduleDialog', item)} />
+        showDeleteDialog={() => this.showDialog('removeScheduleDialog', item)}
+      />
     );
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other} = this.props;
+    const { handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other } = this.props;
 
     return (
       <Lists.Container className="schedules-list">
@@ -73,39 +74,46 @@ export default React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={handleTitleClick}>
+            handleClick={handleTitleClick}
+          >
             Schedules
           </Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-flex-1"
-            columnName="DATE">
+            columnName="DATE"
+          >
             Next run
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Script
           </Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-flex-1"
-            columnName="DESC">
+            columnName="DESC"
+          >
             Traces
           </Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-flex-1"
-            columnName="DESC">
+            columnName="DESC"
+          >
             Crontab/Interval
           </Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-flex-1"
-            columnName="DESC">
+            columnName="DESC"
+          >
             Timezone
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
-              handleUnselectAll={handleUnselectAll}>
+              handleUnselectAll={handleUnselectAll}
+            >
               <Lists.MenuItem onTouchTap={() => this.showDialog('removeScheduleDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
@@ -113,7 +121,8 @@ export default React.createClass({
         <Lists.List
           {...other}
           key="schedules-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

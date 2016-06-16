@@ -37,7 +37,7 @@ export default {
             .update({
               className: payload.className,
               id: createdObject.id
-            }, {[file.name]: this.NewLibConnection.file(file.file)}));
+            }, { [file.name]: this.NewLibConnection.file(file.file) }));
 
         this.Promise.all(promises)
           .then(this.completed)
@@ -50,7 +50,7 @@ export default {
     this.NewLibConnection
       .DataObject
       .please()
-      .update({className: payload.className, id: payload.id}, payload)
+      .update({ className: payload.className, id: payload.id }, payload)
       .then((updatedObject) => {
         const promises = _.map(payload.fileFields, (file) =>
           this.NewLibConnection
@@ -59,7 +59,7 @@ export default {
             .update({
               className: payload.className,
               id: updatedObject.id
-            }, {[file.name]: this.NewLibConnection.file(file.file)}));
+            }, { [file.name]: this.NewLibConnection.file(file.file) }));
 
         this.Promise.all(promises)
           .then(this.completed)
@@ -73,7 +73,7 @@ export default {
       this.NewLibConnection
         .DataObject
         .please()
-        .delete({className, id}));
+        .delete({ className, id }));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -85,7 +85,7 @@ export default {
     this.NewLibConnection
       .Class
       .please()
-      .get({name})
+      .get({ name })
       .then(this.completed)
       .catch(this.failure);
   }

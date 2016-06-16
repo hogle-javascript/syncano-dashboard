@@ -1,6 +1,6 @@
 import React from 'react';
-import {Divider} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { Divider } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'SocialAuthButtonsListItemDivider',
@@ -15,7 +15,7 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <Divider style={styles}/>
+      <Divider style={styles} />
     );
   }
 });

@@ -23,7 +23,7 @@ export default Radium(React.createClass({
       alignItems: 'center'
     };
 
-    return {...styles, ...this.props.style};
+    return { ...styles, ...this.props.style };
   },
 
   handleClick() {
@@ -38,7 +38,8 @@ export default Radium(React.createClass({
     return (
       <div
         style={styles}
-        onClick={this.handleClick}>
+        onClick={this.handleClick}
+      >
         {this.props.children}
       </div>
     );

@@ -1,13 +1,13 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import {DialogMixin, FormMixin} from '../../../mixins';
+import { DialogMixin, FormMixin } from '../../../mixins';
 
 import Actions from './FullBackupsActions';
 import Store from './FullBackupsDialogStore';
 
-import {TextField} from 'material-ui';
-import {Dialog} from '../../../common';
+import { TextField } from 'material-ui';
+import { Dialog } from '../../../common';
 
 export default React.createClass({
   displayName: 'CreateFullBackupDialog',
@@ -34,9 +34,9 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {label, description} = this.state;
+    const { label, description } = this.state;
 
-    Actions.createFullBackup({label, description});
+    Actions.createFullBackup({ label, description });
   },
 
   handleChange(value, key) {
@@ -46,7 +46,7 @@ export default React.createClass({
   },
 
   render() {
-    const {isLoading, open, label, description} = this.state;
+    const { isLoading, open, label, description } = this.state;
 
     return (
       <Dialog.FullPage
@@ -61,7 +61,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={isLoading}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -75,7 +76,8 @@ export default React.createClass({
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         <div>
           <TextField
             autoFocus={true}
@@ -84,14 +86,16 @@ export default React.createClass({
             onChange={(event, value) => this.handleChange(value, 'label')}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Backup's label"
-            floatingLabelText="Label" />
+            floatingLabelText="Label"
+          />
           <TextField
             fullWidth={true}
             value={description}
             onChange={(event, value) => this.handleChange(value, 'description')}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Backup's description"
-            floatingLabelText="Description" />
+            floatingLabelText="Description"
+          />
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}

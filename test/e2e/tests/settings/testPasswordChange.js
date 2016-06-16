@@ -1,33 +1,26 @@
-import Utils from '../../utils';
-import Globals from '../../globals';
-import Async from 'async';
+import accounts from '../../tempAccounts';
+import utils from '../../utils';
 
 export default {
   tags: ['passwordSettings'],
   after(client) {
     client.end();
   },
-  'Test create Account': (client) => {
-    Async.waterfall([
-      client.createTempAccount
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+  before(client) {
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .waitForElementPresent('@emailInput', 60000)
-        .login(Globals.tempEmail, Globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   'Administrator resets his password': (client) => {
     const authenticationPage = client.page.authenticationPage();
-    const newPassword = Utils.addSuffix('pass');
+    const newPassword = utils.addSuffix('pass');
 
     authenticationPage
       .navigate()
-      .fillInput('@currentPassword', Globals.tempPass)
+      .fillInput('@currentPassword', accounts.navigationUser.password)
       .fillInput('@newPassword', newPassword)
       .fillInput('@confirmNewPassword', newPassword)
       .clickElement('@updateButton')
@@ -36,7 +29,7 @@ export default {
   'Administrator logs in with a new password': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const loginPage = client.page.loginPage();
-    const newPassword = Utils.addSuffix('pass');
+    const newPassword = utils.addSuffix('pass');
 
     topNavigationPage
       .clickElement('@account')
@@ -44,7 +37,9 @@ export default {
 
     loginPage
       .navigate()
-      .login(Globals.tempEmail, newPassword);
+      .login(accounts.navigationUser.email, newPassword);
+
+    accounts.navigationUser.password = newPassword;
   }
 };
 

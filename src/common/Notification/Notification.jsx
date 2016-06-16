@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import {FontIcon} from 'material-ui';
+import { FontIcon } from 'material-ui';
 
 import './Notification.sass';
 
@@ -33,7 +33,7 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {type, className, style, children} = this.props;
+    const { type, className, style, children } = this.props;
 
     const cssClasses = classNames({
       notification: true,
@@ -54,7 +54,8 @@ export default React.createClass({
           <div className="notification__content__icon">
             <FontIcon
               style={styles.icon}
-              className={`synicon-${iconClass}`} />
+              className={`synicon-${iconClass}`}
+            />
           </div>
           <div>{children}</div>
         </div>

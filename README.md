@@ -1,12 +1,12 @@
 # Installation
 
-Project requires node 4.4.3 and npm 3.8.6. The best way to manage node versions
+Project requires node 6.2.1 and npm 3.9.3. The best way to manage node versions
 I found is [n](https://github.com/tj/n).
 
 Installation.
 
     $ sudo npm install -g n
-    $ n 4.4.3
+    $ n 6.2.1
 
 Type `n` to prompt selection of an installed node.
 Use the up / down arrow to navigate, and press enter or the right arrow to select, or ^C to cancel:
@@ -14,7 +14,8 @@ Use the up / down arrow to navigate, and press enter or the right arrow to selec
     $ n
 
       0.8.14
-    ο 4.4.3
+    ο 6.2.1
+      4.4.3
       0.9.6
 
 
@@ -23,7 +24,7 @@ Without proper node version everything tends to blow up :fire: !
 With proper node:
 
     $ node --version
-    v4.4.3
+    v6.2.1
 
 Install dependencies:
 
@@ -79,7 +80,7 @@ Or for some tests (they are being rewrited):
 
     $ npm run-script e2e-create-accounts
 
-This will create set of three accounts for tests (it can be run only once, but account may be deleted after some time).
+This will create set of three accounts for tests (Accounts will be deleted after 1h of no activity).
 
 
 

@@ -10,7 +10,7 @@ import Actions from './SocketsActions';
 import Store from './SocketsStore';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Components
 import {RaisedButton} from 'material-ui';
@@ -42,8 +42,8 @@ export default React.createClass({
     Actions.addSocketsListeners();
     _.debounce(Actions.fetch, 1000)();
 
-    const {prolongDialog} = this.refs;
-    const {showProlongDialog} = this.props.location.query;
+    const { prolongDialog } = this.refs;
+    const { showProlongDialog } = this.props.location.query;
 
     if (prolongDialog && _.isBoolean(showProlongDialog) && showProlongDialog) {
       prolongDialog.show();
@@ -56,7 +56,7 @@ export default React.createClass({
   },
 
   getPushNotificationItems() {
-    const {sockets} = this.state;
+    const { sockets } = this.state;
     const APNSItems = _.filter(sockets.gcmPushNotifications, 'hasConfig');
     const GCMItems = _.filter(sockets.apnsPushNotifications, 'hasConfig');
 
@@ -64,7 +64,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {instanceName} = this.props.params;
+    const { instanceName } = this.props.params;
 
     return [{
       dialog: Dialog.Delete,
@@ -86,15 +86,16 @@ export default React.createClass({
             onTouchTap={() => this.handleCancel('prolongDialog')}
             primary={true}
             label="Close"
-            ref="cancel"/>
+            ref="cancel"
+          />
         )
       }
     }];
   },
 
   renderLists() {
-    const {sockets} = this.state;
-    const {params} = this.props;
+    const { sockets } = this.state;
+    const { params } = this.props;
 
     if (!sockets.hasAnyItem && !sockets.isLoading) {
       return (
@@ -103,14 +104,15 @@ export default React.createClass({
     }
 
     return (
-      <div style={{clear: 'both', height: '100%'}}>
+      <div style={{ clear: 'both', height: '100%' }}>
         <Loading show={sockets.isLoading}>
-          <SocketsList sockets={sockets}/>
+          <SocketsList sockets={sockets} />
           <Show if={this.getPushNotificationItems().length}>
             <PushNotifications.List
               name="Push Notification Sockets (BETA)"
-              handleTitleClick={() => this.props.history.push({name: 'push-notification-config', params})}
-              items={this.getPushNotificationItems()}/>
+              handleTitleClick={() => this.props.history.push({ name: 'push-notification-config', params })}
+              items={this.getPushNotificationItems()}
+            />
           </Show>
         </Loading>
       </div>
@@ -118,11 +120,11 @@ export default React.createClass({
   },
 
   render() {
-    const {sockets} = this.state;
+    const { sockets } = this.state;
 
     return (
       <div>
-        <Helmet title="Sockets"/>
+        <Helmet title="Sockets" />
         <SocketsDialog />
         <ScriptEndpoints.Dialog />
         <DataEndpoints.Dialog />
@@ -138,8 +140,9 @@ export default React.createClass({
           <RaisedButton
             label="Add"
             primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={Actions.showDialog} />
+            style={{ marginRight: 0 }}
+            onTouchTap={Actions.showDialog}
+          />
         </SocketsInnerToolbar>
         <Container>
           {this.renderLists()}

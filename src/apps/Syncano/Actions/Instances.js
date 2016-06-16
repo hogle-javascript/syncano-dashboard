@@ -25,7 +25,7 @@ export default {
   },
 
   createFromBackup(instanceData, backup) {
-    const query = _.isNumber(backup) ? {backup} : {archive: this.NewLibConnection.file(backup)};
+    const query = _.isNumber(backup) ? { backup } : { archive: this.NewLibConnection.file(backup) };
 
     this.NewLibConnection
       .Instance
@@ -44,12 +44,12 @@ export default {
   },
 
   update(name, payload) {
-    const {description, metadata} = payload;
+    const { description, metadata } = payload;
 
     this.NewLibConnection
       .Instance
       .please()
-      .update({name}, {description, metadata})
+      .update({ name }, { description, metadata })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -58,23 +58,23 @@ export default {
     this.NewLibConnection
       .Instance
       .please()
-      .rename({name}, {new_name: newName})
+      .rename({ name }, { new_name: newName })
       .then(this.completed)
       .catch(this.failure);
   },
 
   renameAndUpdate(name, newName, payload) {
-    const {description, metadata} = payload;
+    const { description, metadata } = payload;
 
     this.NewLibConnection
       .Instance
       .please()
-      .rename({name}, {new_name: newName})
+      .rename({ name }, { new_name: newName })
       .then(() => {
         return this.NewLibConnection
           .Instance
           .please()
-          .update({name: newName}, {description, metadata});
+          .update({ name: newName }, { description, metadata });
       })
       .then(this.completed)
       .catch(this.failure);
@@ -85,7 +85,7 @@ export default {
       this.NewLibConnection
         .Instance
         .please()
-        .delete({name: instance.name}));
+        .delete({ name: instance.name }));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -94,7 +94,7 @@ export default {
 
   removeShared(names, adminId) {
     const promises = _.map(names, (name) => {
-      this.NewLibConnection.Instance.please().delete({instanceName: name, id: adminId});
+      this.NewLibConnection.Instance.please().delete({ instanceName: name, id: adminId });
     });
 
     this.Promise.all(promises)
@@ -106,7 +106,7 @@ export default {
     this.NewLibConnection
       .Instance
       .please()
-      .get({name})
+      .get({ name })
       .then(this.completed)
       .catch(this.failure);
     this.NewLibConnection.setInstanceName(name);

@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import {FlatButton} from 'material-ui';
+import { FlatButton } from 'material-ui';
 
 export default Radium(React.createClass({
   displayName: 'PlanExplorerButton',
@@ -13,7 +13,7 @@ export default Radium(React.createClass({
   },
 
   renderExplorerButtonLabel() {
-    const {plan, isNewSubscription} = this.props;
+    const { plan, isNewSubscription } = this.props;
 
     if (plan === 'builder') {
       return 'Open Plans Explorer';
@@ -26,21 +26,23 @@ export default Radium(React.createClass({
   },
 
   render() {
-    const {style, isNewSubscription, onDeleteSubscription, onPlanDialog} = this.props;
+    const { style, isNewSubscription, onDeleteSubscription, onPlanDialog } = this.props;
 
     if (isNewSubscription) {
       return (
-        <div className="row" style={{flexDirection: 'column'}}>
+        <div className="row" style={{ flexDirection: 'column' }}>
           <div style={style.explorerButton}>
             <FlatButton
               primary={true}
               label={'Cancel Change'}
-              onTouchTap={onDeleteSubscription} />
+              onTouchTap={onDeleteSubscription}
+            />
             <FlatButton
               primary={true}
-              style={{marginLeft: 8}}
+              style={{ marginLeft: 8 }}
               label={'Upgrade'}
-              onTouchTap={onPlanDialog} />
+              onTouchTap={onPlanDialog}
+            />
           </div>
         </div>
       );
@@ -50,7 +52,8 @@ export default Radium(React.createClass({
       <FlatButton
         primary={true}
         label={this.renderExplorerButtonLabel() || ''}
-        onTouchTap={this.handleShowPlanDialog} />
+        onTouchTap={this.handleShowPlanDialog}
+      />
     );
   }
 }));

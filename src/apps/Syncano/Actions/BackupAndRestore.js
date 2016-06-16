@@ -33,7 +33,7 @@ export default {
       this.NewLibConnection
         .FullBackup
         .please()
-        .delete({id: backup.id})
+        .delete({ id: backup.id })
     );
 
     this.Promise.all(promises)
@@ -75,7 +75,7 @@ export default {
       this.NewLibConnection
         .PartialBackup
         .please()
-        .delete({id: backup.id})
+        .delete({ id: backup.id })
     );
 
     this.Promise.all(promises)
@@ -87,7 +87,7 @@ export default {
     this.NewLibConnection
       .Restore
       .please()
-      .restore({}, {backup: backup.id})
+      .restore({}, { backup: backup.id })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -96,7 +96,7 @@ export default {
     this.NewLibConnection
       .Restore
       .please()
-      .restore({}, {archive: this.NewLibConnection.file(backupFile)})
+      .restore({}, { archive: this.NewLibConnection.file(backupFile) })
       .then(this.completed)
       .catch(this.failure);
   }

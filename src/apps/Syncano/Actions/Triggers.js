@@ -12,7 +12,7 @@ export default {
     this.NewLibConnection
       .Trigger
       .please()
-      .get({id})
+      .get({ id })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -31,13 +31,13 @@ export default {
     this.NewLibConnection
       .Trigger
       .please()
-      .update({id}, payload)
+      .update({ id }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   remove(triggers) {
-    const promises = triggers.map((trigger) => this.NewLibConnection.Trigger.please().delete({id: trigger.id}));
+    const promises = triggers.map((trigger) => this.NewLibConnection.Trigger.please().delete({ id: trigger.id }));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -48,7 +48,7 @@ export default {
     this.NewLibConnection
       .TriggerTrace
       .please()
-      .list({triggerId})
+      .list({ triggerId })
       .ordering('desc')
       .then(this.completed)
       .catch(this.failure);

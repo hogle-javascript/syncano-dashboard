@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 export default React.createClass({
   displayName: 'DialogSidebarLink',
@@ -19,19 +19,20 @@ export default React.createClass({
   },
 
   render() {
-    const {params} = this.context;
+    const { params } = this.context;
     const styles = this.getStyles();
-    const {to, children} = this.props;
+    const { to, children } = this.props;
 
     if (to.indexOf('http') > -1) {
       return (
         <a
           href={to}
           style={styles.root}
-          target="_blank">
+          target="_blank"
+        >
           {children}
         </a>
-    );}
+    ); }
 
     return (
       <Link
@@ -39,7 +40,8 @@ export default React.createClass({
           name: to,
           params
         }}
-        style={styles.root}>
+        style={styles.root}
+      >
         {children}
       </Link>
     );

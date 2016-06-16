@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import {IconButton} from 'material-ui';
+import { IconButton } from 'material-ui';
 import * as Colors from 'material-ui/styles/colors';
 
 export default Radium(React.createClass({
@@ -65,7 +65,8 @@ export default Radium(React.createClass({
         <IconButton
           onClick={this.handleIconClick.bind(null, this.props.solution.id)}
           iconClassName={iconClassName}
-          iconStyle={iconStyle}/>
+          iconStyle={iconStyle}
+        />
         <div style={styles.starsCount}>
           {this.state.stars_count.toString()}
         </div>

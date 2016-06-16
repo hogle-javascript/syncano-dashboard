@@ -12,7 +12,7 @@ export default {
     this.NewLibConnection
       .Schedule
       .please()
-      .get({id: scheduleId})
+      .get({ id: scheduleId })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -31,14 +31,14 @@ export default {
     this.NewLibConnection
       .Schedule
       .please()
-      .update({id}, payload)
+      .update({ id }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   remove(schedules) {
     const promises = schedules.map((schedule) => {
-      return this.NewLibConnection.Schedule.please().delete({id: schedule.id});
+      return this.NewLibConnection.Schedule.please().delete({ id: schedule.id });
     });
 
     this.Promise.all(promises)
@@ -50,7 +50,7 @@ export default {
     this.NewLibConnection
       .ScheduleTrace
       .please()
-      .list({scheduleId})
+      .list({ scheduleId })
       .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
