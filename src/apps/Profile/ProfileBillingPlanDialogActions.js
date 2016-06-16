@@ -39,6 +39,13 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Billing.listSubscriptions'
     },
+    addCard: {
+      asyncResult: true,
+      asyncForm: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Billing.addCard'
+    },
     updateCard: {
       asyncResult: true,
       asyncForm: true,
