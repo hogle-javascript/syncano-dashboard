@@ -50,6 +50,8 @@ module.exports = {
     const scriptEditPage = client.page.scriptEditPage();
 
     leftMenuPage.clickElement('@scripts');
+    // Workaround for endless loadings
+    client.pause(1500);
     scriptsPage.clickElement('@scriptListItem');
     scriptEditPage.waitForElementPresent('@scriptEditView');
   },
@@ -59,6 +61,8 @@ module.exports = {
     const scriptEditPage = client.page.scriptEditPage();
 
     leftMenuPage.clickElement('@scripts');
+    // Workaround for endless loadings
+    client.pause(1500);
     scriptsPage.clickElement('@scriptListItem');
     scriptEditPage
       .clickElement('@traces')
