@@ -38,7 +38,7 @@ const AccountLogin = React.createClass({
   },
 
   componentWillUpdate() {
-    const {location , router} = this.props;
+    const {location, router} = this.props;
 
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {

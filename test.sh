@@ -24,18 +24,10 @@ e2e_setup
 npm run-script e2e-create-accounts
 
 case "$CIRCLE_NODE_INDEX" in
-    0)
-        npm run-script e2e
-        ;;
-    1)
-        npm run-script e2e-1
-        ;;
-    2)
-        npm run-script e2e-2
-        ;;
-    *)
-        npm run-script e2e
-        ;;
+    0) npm run-script e2e ;;
+    1) npm run-script e2e-1 ;;
+    2) npm run-script e2e-2 ;;
+    *) npm run-script e2e ;;
 esac
 
 e2e_cleanup
