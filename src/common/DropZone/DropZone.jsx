@@ -1,21 +1,37 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import Dropzone from 'react-dropzone';
 
 import {FontIcon, RaisedButton} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles/';
 import {Loading} from '../';
 
-export default React.createClass({
-  displayName: 'DropZone',
+export default class DropZone extends Component {
+  static propTypes = {
+    uploadButtonLabel: PropTypes.string,
+    buttonLabelColor: PropTypes.string,
+    buttonIconClassName: PropTypes.string,
+    className: PropTypes.string,
+    uploadButtonStyle: PropTypes.object,
+    buttonIconStyle: PropTypes.object,
+    containerStyle: PropTypes.object,
+    styles: PropTypes.object,
+    disableClick: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    withButton: PropTypes.bool,
+    onDrop: PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+    certificateType: PropTypes.oneOf(['development', 'production'])
+  }
 
-  getDefaultProps() {
+  static get defaultProps() {
     return {
+      withButton: false,
       disableClick: false,
       buttonLabelColor: Colors.grey500,
       buttonBackgroundColor: Colors.grey200,
       buttonIconClassName: 'synicon-cloud-upload'
     };
-  },
+  }
 
   getStyles() {
     return {
@@ -56,7 +72,7 @@ export default React.createClass({
         color: this.props.buttonLabelColor
       }
     };
-  },
+  }
 
   renderUploadButton() {
     const {uploadButtonLabel, withButton, buttonIconStyle, buttonIconClassName, uploadButtonStyle} = this.props;
@@ -78,7 +94,7 @@ export default React.createClass({
           icon={icon}/>
       );
     }
-  },
+  }
 
   renderDescription() {
     const {certificateType, children} = this.props;
@@ -99,7 +115,7 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
   render() {
     const {className, isLoading, disableClick, onDrop, containerStyle, styles} = this.props;
@@ -122,4 +138,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
