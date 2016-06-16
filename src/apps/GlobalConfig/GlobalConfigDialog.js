@@ -1,12 +1,12 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 import Actions from './GlobalConfigDialogActions';
 import Store from './GlobalConfigDialogStore';
 
-import {Dialog, Editor, Loading, Show, Notification} from '../../common';
+import { Dialog, Editor, Loading, Show, Notification } from '../../common';
 
 export default React.createClass({
   displayName: 'GlobalConfig',
@@ -40,7 +40,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {globalConfig} = this.state;
+    const { globalConfig } = this.state;
 
     Actions.updateGlobalConfig(JSON.parse(globalConfig));
   },
@@ -52,7 +52,7 @@ export default React.createClass({
   },
 
   render() {
-    const {open, isLoading, isConfigLoading, globalConfig} = this.state;
+    const { open, isLoading, isConfigLoading, globalConfig } = this.state;
 
     return (
       <Dialog.FullPage
@@ -68,25 +68,28 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={isLoading}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox key="sidebarbox">
             <Dialog.SidebarSection>
-              {`Global Config allows you to save some data like tokens or api keys. This data can be
-                 accessed in all your Snippets.`}
+              {`Global Config allows you to store data. It could be tokens, api keys, passwords, etc.
+                This data can be accessed in all of your Scripts.`}
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection title="Globacl Config">
-              {`Global Config is a JSON object and will not overwrite you Snippet Config but will be merged
-                with it. If both Configs contains the same key the Snippets Config value will be used.`}
+            <Dialog.SidebarSection title="Global Config">
+              {`Global Config is a JSON object and will not overwrite your Script Config. It will be
+                merged with it instead. If both Configs contain the same key, the Script Config
+                value will be used.`}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
-              <Dialog.SidebarLink to="http://docs.syncano.io/">
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/snippets-scripts#section-global-config-dictionary">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         <div className="vm-2-t">
           <Loading show={isConfigLoading}>
             <Editor
@@ -100,7 +103,8 @@ export default React.createClass({
                 '    "name": "John",',
                 '    "lastName": "Doe"',
                 '}'
-              ].join('\n')} />
+              ].join('\n')}
+            />
           </Loading>
         </div>
         <div className="vm-2-t">

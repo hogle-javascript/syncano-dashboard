@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {SnackbarNotificationMixin} from '../../mixins';
+import { SnackbarNotificationMixin } from '../../mixins';
 
-import {MenuItem} from 'material-ui';
-import {Color, ColumnList, Clipboard, Truncate} from '../../common/';
+import { MenuItem } from 'material-ui';
+import { Color, ColumnList, Clipboard, Truncate } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -33,7 +33,8 @@ export default React.createClass({
     return (
       <ColumnList.Item
         key={item.registration_id}
-        checked={item.checked}>
+        checked={item.checked}
+      >
         <Column.CheckIcon
           id={item.registration_id}
           iconClassName={icon}
@@ -50,8 +51,10 @@ export default React.createClass({
                 message: 'Registration ID copied to the clipboard!'
               })}
               tooltip="Copy registration ID"
-              type="link" />
-          }/>
+              type="link"
+            />
+          }
+        />
         <Column.Desc className="col-sm-6">
           <Truncate text={JSON.stringify(item.metadata)} />
         </Column.Desc>
@@ -62,21 +65,25 @@ export default React.createClass({
           {item.is_active.toString()}
         </Column.Desc>
         <Column.Date
-          date={item.created_at}/>
+          date={item.created_at}
+        />
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => showEditDialog(item)}
-            primaryText="Edit"/>
+            primaryText="Edit"
+          />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete"/>
+            primaryText="Delete"
+          />
           <MenuItem
             disabled={checkedItemsCount > 1}
             className="dropdown-item-delete"
             onTouchTap={showSendMessageDialog}
-            primaryText="Send Message"/>
+            primaryText="Send Message"
+          />
         </Column.Menu>
       </ColumnList.Item>
     );

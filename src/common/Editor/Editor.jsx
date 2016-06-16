@@ -93,12 +93,12 @@ export default React.createClass({
   },
 
   render() {
-    const {name, width, height, style} = this.props;
+    const { name, width, height, style } = this.props;
     const divStyle = {
       width,
       height
     };
 
-    return <div id={name} onChange={this.onChange} style={{...style, ...divStyle}}></div>;
+    return <div id={name} onChange={this.onChange} style={{ ...style, ...divStyle }}></div>;
   }
 });

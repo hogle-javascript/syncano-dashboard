@@ -48,7 +48,7 @@ export default {
   },
 
   areEditorsLoaded() {
-    const {editorRefs} = this.mixinsConfig;
+    const { editorRefs } = this.mixinsConfig;
 
     return !_.some(editorRefs, (ref) => _.isUndefined(this.refs[ref]));
   }

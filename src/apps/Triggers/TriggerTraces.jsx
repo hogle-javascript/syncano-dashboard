@@ -17,12 +17,13 @@ export default React.createClass({
   mixins: [Reflux.connect(Store)],
 
   render() {
-    const {triggerId} = this.context.params;
+    const { triggerId } = this.context.params;
 
     return (
       <Traces
         objectId={triggerId}
-        tracesFor='trigger'/>
+        tracesFor="trigger"
+      />
     );
   }
 });

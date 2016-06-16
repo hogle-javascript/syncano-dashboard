@@ -1,23 +1,27 @@
 import React from 'react';
-import {IconMenu, IconButton, MenuItem} from 'material-ui';
+import { IconMenu, IconButton, MenuItem } from 'material-ui';
 
-export default ({children, checkedItemsCount, handleSelectAll, handleUnselectAll}) => (
+export default ({ children, checkedItemsCount, handleSelectAll, handleUnselectAll }) => (
   <IconMenu
     iconButtonElement={
       <IconButton
         touch={true}
         tooltipPosition="bottom-left"
-        iconClassName="synicon-dots-vertical" />
+        iconClassName="synicon-dots-vertical"
+      />
     }
-    anchorOrigin={{horizontal: 'middle', vertical: 'center'}}
-    targetOrigin={{horizontal: 'right', vertical: 'top'}}>
+    anchorOrigin={{ horizontal: 'middle', vertical: 'center' }}
+    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+  >
     <MenuItem
       primaryText="Select All"
-      onTouchTap={handleSelectAll}/>
+      onTouchTap={handleSelectAll}
+    />
     <MenuItem
       primaryText="Unselect All"
       disabled={!checkedItemsCount}
-      onTouchTap={handleUnselectAll}/>
-    {React.Children.map(children, (child) => React.cloneElement(child, {checkedItemsCount}))}
+      onTouchTap={handleUnselectAll}
+    />
+    {React.Children.map(children, (child) => React.cloneElement(child, { checkedItemsCount }))}
   </IconMenu>
 );

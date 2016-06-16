@@ -2,8 +2,8 @@ import React from 'react';
 import Radium from 'radium';
 
 import ListItem from './ChannelHistoryListItem';
-import {FontIcon} from 'material-ui';
-import {ColumnList, Loading, Lists} from '../../common/';
+import { FontIcon } from 'material-ui';
+import { ColumnList, Loading, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -34,7 +34,8 @@ export default Radium(React.createClass({
     return (
       <ListItem
         key={`channels--history-list-item-${item.id}`}
-        item={item}/>
+        item={item}
+      />
     );
   },
 
@@ -45,27 +46,34 @@ export default Radium(React.createClass({
           <Column.ColumnHeader
             className="col-sm-6"
             primary={true}
-            columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
+            columnName="ICON_NAME"
+          >{this.props.name}</Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-sm-6"
-            columnName="ID">ID</Column.ColumnHeader>
+            columnName="ID"
+          >ID</Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-sm-6"
-            columnName="Desc">Room</Column.ColumnHeader>
+            columnName="Desc"
+          >Room</Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-sm-6"
-            columnName="Desc">Action</Column.ColumnHeader>
+            columnName="Desc"
+          >Action</Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-sm-6"
-            columnName="Desc">Metadata</Column.ColumnHeader>
+            columnName="Desc"
+          >Metadata</Column.ColumnHeader>
           <Column.ColumnHeader
             className="col-flex-1"
-            columnName="Date">Created</Column.ColumnHeader>
+            columnName="Date"
+          >Created</Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
           {...this.props}
           key="channels-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </div>
     );
   },
@@ -77,7 +85,8 @@ export default Radium(React.createClass({
       <div style={styles.noHistoryContainer}>
         <FontIcon
           style={styles.noHistoryIcon}
-          className='synicon-bullhorn'/>
+          className="synicon-bullhorn"
+        />
         <p style={styles.noHistoryText}>There is no message history for this Channel yet</p>
       </div>
     );

@@ -1,9 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
-import {Paper, FontIcon} from 'material-ui';
-import {Color} from '../../common/';
+import { Paper, FontIcon } from 'material-ui';
+import { Color } from '../../common/';
 
-export default Radium(({color, icon}) => {
+export default Radium(({ color, icon }) => {
   const getStyles = () => ({
     container: {
       background: Color.getColorByName(color),
@@ -28,10 +28,12 @@ export default Radium(({color, icon}) => {
   return (
     <Paper
       zDepth={1}
-      style={getStyles().container}>
+      style={getStyles().container}
+    >
       <FontIcon
         className={`synicon-${icon}`}
-        style={getStyles().icon} />
+        style={getStyles().icon}
+      />
     </Paper>
   );
 });

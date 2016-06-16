@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin, WaitForStoreMixin, StoreHelpersMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, WaitForStoreMixin, StoreHelpersMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -92,7 +92,7 @@ export default Reflux.createStore({
     let instances = this.data.instances;
 
     if (!instances) {
-      return [{payload: '', text: 'Loading...'}];
+      return [{ payload: '', text: 'Loading...' }];
     }
 
     return _.map(instances, (instance) => {
@@ -188,7 +188,7 @@ export default Reflux.createStore({
 
   onCreateVersionCompleted() {
     console.debug('AddVersionViewStore::onCreateSolutionCompleted');
-    SessionStore.getRouter().push({name: 'solutions-edit', params: SessionStore.getParams()});
+    SessionStore.getRouter().push({ name: 'solutions-edit', params: SessionStore.getParams() });
   },
 
   onFetchInstancesCompleted(instances) {

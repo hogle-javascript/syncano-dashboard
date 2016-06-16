@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {Avatar, IconButton} from 'material-ui';
-import {ColumnList} from '../../common/';
+import { Avatar, IconButton } from 'material-ui';
+import { ColumnList } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -19,16 +19,17 @@ export default React.createClass({
       <ColumnList.Item
         key={item.id}
         id={item.id}
-        handleClick={this.handleItemClick}>
+        handleClick={this.handleItemClick}
+      >
         <Column.Desc className="col-xs-5 col-md-5">
-          <div style={{marginLeft: 10}}>
-            <Avatar style={{fontSize: '1rem'}}>
+          <div style={{ marginLeft: 10 }}>
+            <Avatar style={{ fontSize: '1rem' }}>
               {item.number}
             </Avatar>
           </div>
         </Column.Desc>
 
-        <Column.Date date={item.created_at}/>
+        <Column.Date date={item.created_at} />
 
         <Column.Desc>
           {item.type}
@@ -43,7 +44,7 @@ export default React.createClass({
             iconClassName="synicon-cloud-download"
             tooltip="Download this Solution version file"
             onClick={this.handleDownloadVersion.bind(this, item.data.url)}
-            />
+          />
         </Column.ID>
 
         <Column.ID className="col-xs-4 col-md-4">
@@ -51,7 +52,7 @@ export default React.createClass({
             iconClassName="synicon-download"
             tooltip="Install this Solution version"
             onClick={this.props.onInstallClick.bind(null, item.id)}
-            />
+          />
         </Column.ID>
 
       </ColumnList.Item>

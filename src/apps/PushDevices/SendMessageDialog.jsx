@@ -3,11 +3,11 @@ import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
 
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
-import {TextField, Toggle, SelectField, MenuItem} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Show, Truncate, Dialog, Editor, Notification} from '../../common/';
+import { TextField, Toggle, SelectField, MenuItem } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Show, Truncate, Dialog, Editor, Notification } from '../../common/';
 
 export default (store, props) => {
   return Radium(React.createClass({
@@ -133,7 +133,7 @@ export default (store, props) => {
     },
 
     getDefaultJSONMessage() {
-      const {appName, content} = this.state;
+      const { appName, content } = this.state;
       const type = store.getConfig().type;
 
       if (type === 'APNS') {
@@ -156,8 +156,8 @@ export default (store, props) => {
     },
 
     handleSendMessage() {
-      const {onSendMessage} = props;
-      const {registration_id, appName, content, environment, isJSONMessage, JSONMessage} = this.state;
+      const { onSendMessage } = props;
+      const { registration_id, appName, content, environment, isJSONMessage, JSONMessage } = this.state;
       const type = store.getConfig().type;
       const checkedItems = props.getCheckedItems().map((item) => item.registration_id);
       const registrationIds = checkedItems.length ? checkedItems : [registration_id];
@@ -182,18 +182,18 @@ export default (store, props) => {
       }
 
       if (isJSONMessage && type === 'APNS') {
-        payload = _.merge(payload, {aps: JSON.parse(JSONMessage)});
+        payload = _.merge(payload, { aps: JSON.parse(JSONMessage) });
       }
 
       if (isJSONMessage && type === 'GCM') {
-        payload = _.merge(payload, {notification: JSON.parse(JSONMessage)});
+        payload = _.merge(payload, { notification: JSON.parse(JSONMessage) });
       }
 
       onSendMessage(registrationIds, payload);
     },
 
     handleToggleEnvironment(environment) {
-      this.setState({environment: environment === 'development' ? 'production' : 'development'});
+      this.setState({ environment: environment === 'development' ? 'production' : 'development' });
     },
 
     handleEditSubmit() {
@@ -205,7 +205,7 @@ export default (store, props) => {
     },
 
     renderMessageFields() {
-      const {isJSONMessage, JSONMessage} = this.state;
+      const { isJSONMessage, JSONMessage } = this.state;
 
       if (isJSONMessage) {
         return (
@@ -214,10 +214,11 @@ export default (store, props) => {
               ref="JSONMessage"
               minLines={16}
               maxLines={16}
-              onChange={(value) => this.setState({JSONMessage: value})}
+              onChange={(value) => this.setState({ JSONMessage: value })}
               mode="javascript"
               theme="tomorow"
-              value={JSONMessage || JSON.stringify(this.getDefaultJSONMessage(), null, '\t')} />
+              value={JSONMessage || JSON.stringify(this.getDefaultJSONMessage(), null, '\t')}
+            />
           </div>
         );
       }
@@ -228,29 +229,32 @@ export default (store, props) => {
             ref="appName"
             name="content"
             value={this.state.appName}
-            onChange={(event, value) => this.setState({appName: value})}
+            onChange={(event, value) => this.setState({ appName: value })}
             fullWidth={true}
-            floatingLabelText="App name"/>
+            floatingLabelText="App name"
+          />
           <TextField
             ref="content"
             name="content"
             value={this.state.content}
-            onChange={(event, value) => this.setState({content: value})}
+            onChange={(event, value) => this.setState({ content: value })}
             fullWidth={true}
-            floatingLabelText="Push notification Text"/>
+            floatingLabelText="Push notification Text"
+          />
         </div>
       );
     },
 
     renderCheckedItemsData() {
       const styles = this.getStyles();
-      const {userName, label, registration_id, isHeaderExpanded} = this.state;
+      const { userName, label, registration_id, isHeaderExpanded } = this.state;
       const checkedItems = props.getCheckedItems();
       let itemNodes = [
         <div
           key="clickedItem"
           style={styles.sendDialogHeaderItem}
-          className="row">
+          className="row"
+        >
           <div className="col-sm-3">
             1.
           </div>
@@ -272,7 +276,8 @@ export default (store, props) => {
             <div
               key={`item${item.registration_id}`}
               style={[styles.sendDialogHeaderItem, (index + 1) % 2 === 0 && styles.sendDialogHeaderEvenItem]}
-              className="row">
+              className="row"
+            >
               <div className="col-sm-3">
                 {`${index + 1}.`}
               </div>
@@ -294,7 +299,7 @@ export default (store, props) => {
     },
 
     renderCertificateTypeFields(type) {
-      const {environment} = this.state;
+      const { environment } = this.state;
 
       const field = {
         GCM: (
@@ -303,13 +308,16 @@ export default (store, props) => {
             autoWidth={true}
             fullWidth={true}
             value={environment}
-            onChange={(event, index, value) => this.setState({environment: value})}>
+            onChange={(event, index, value) => this.setState({ environment: value })}
+          >
             <MenuItem
               value="development"
-              primaryText="Development"/>
+              primaryText="Development"
+            />
             <MenuItem
               value="production"
-              primaryText="Production"/>
+              primaryText="Production"
+            />
           </SelectField>
         ),
         APNS: (
@@ -317,7 +325,8 @@ export default (store, props) => {
             <Toggle
               label="Use Sandbox"
               onToggle={() => this.handleToggleEnvironment(environment)}
-              toggled={environment === 'development'}/>
+              toggled={environment === 'development'}
+            />
           </div>
         )
       };
@@ -326,7 +335,7 @@ export default (store, props) => {
     },
 
     render() {
-      const {open, isLoading, appName, content, isJSONMessage, isHeaderExpanded} = this.state;
+      const { open, isLoading, appName, content, isJSONMessage, isHeaderExpanded } = this.state;
       const config = store.getConfig();
       const isAPNS = config.type === 'APNS';
       const styles = this.getStyles();
@@ -348,12 +357,15 @@ export default (store, props) => {
             <Dialog.StandardButtons
               disabled={!this.state.canSubmit}
               handleCancel={this.handleCancel}
-              handleConfirm={this.handleFormValidation}/>
-          }>
+              handleConfirm={this.handleFormValidation}
+            />
+          }
+        >
           <div style={styles.sendDialogHeaderContainer}>
             <div
               style={styles.sendDialogHeader}
-              className="row">
+              className="row"
+            >
               <div className="col-sm-3">
                 No.
               </div>
@@ -371,9 +383,10 @@ export default (store, props) => {
           </div>
           <div
             style={[styles.seeMoreHidden, props.getCheckedItems().length > 3 && styles.seeMoreVisible]}
-            onClick={() => this.setState({isHeaderExpanded: !isHeaderExpanded})}
-            className="row align-center vp-2-t">
-            {isHeaderExpanded ? `SHOW LESS` : `SHOW MORE (${props.getCheckedItems().length - 3})`}
+            onClick={() => this.setState({ isHeaderExpanded: !isHeaderExpanded })}
+            className="row align-center vp-2-t"
+          >
+            {isHeaderExpanded ? 'SHOW LESS' : `SHOW MORE (${props.getCheckedItems().length - 3})`}
           </div>
           <div className="row hp-1-l hp-1-r vm-4-t vm-3-b">
             <div style={styles.phoneContainer}>
@@ -382,7 +395,8 @@ export default (store, props) => {
                 <div style={[styles.messageGCMCircle, isAPNS && styles.messageAPNSCircle]}></div>
                 <div
                   style={styles.messageTextContainer}
-                  className="col-sm-30">
+                  className="col-sm-30"
+                >
                   <div style={styles.appNameContainer}>
                     <div style={[styles.messageText, styles.gcmAppName, isAPNS && styles.apnsAppName]}>
                       {appName}
@@ -405,8 +419,9 @@ export default (store, props) => {
                 <div className="col-sm-18 vm-3-t">
                   <Toggle
                     label="JSON message"
-                    onToggle={() => this.setState({isJSONMessage: !isJSONMessage})}
-                    toggled={isJSONMessage}/>
+                    onToggle={() => this.setState({ isJSONMessage: !isJSONMessage })}
+                    toggled={isJSONMessage}
+                  />
                 </div>
               </div>
               {this.renderMessageFields()}

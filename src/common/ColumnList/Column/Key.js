@@ -33,16 +33,18 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {className, children, onCopy} = this.props;
+    const { className, children, onCopy } = this.props;
 
     return (
       <div
         className={className}
-        style={styles.key}>
+        style={styles.key}
+      >
 
         <div
           ref="key"
-          className="col-xs-25">
+          className="col-xs-25"
+        >
           {children}
         </div>
 
@@ -50,7 +52,8 @@ export default Radium(React.createClass({
           type="button"
           text="COPY"
           copyText={children}
-          onCopy={onCopy}/>
+          onCopy={onCopy}
+        />
       </div>
     );
   }

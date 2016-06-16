@@ -52,7 +52,8 @@ export default Radium(React.createClass({
     return (
       <PaymentIcon
         type={cardType}
-        style={styles.cardIcon}/>
+        style={styles.cardIcon}
+      />
     );
   },
 

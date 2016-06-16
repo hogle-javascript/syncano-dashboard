@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {SnackbarNotificationMixin} from '../../mixins/';
+import { SnackbarNotificationMixin } from '../../mixins/';
 
 import Actions from './ApiKeysActions';
 
-import {MenuItem} from 'material-ui';
-import {Clipboard, ColumnList, Color} from '../../common/';
+import { MenuItem } from 'material-ui';
+import { Clipboard, ColumnList, Color } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -21,15 +21,16 @@ export default React.createClass({
   mixins: [SnackbarNotificationMixin],
 
   render() {
-    const {item, showResetDialog, showDeleteDialog, onIconClick} = this.props;
+    const { item, showResetDialog, showDeleteDialog, onIconClick } = this.props;
 
     return (
       <ColumnList.Item
         checked={item.checked}
-        key={item.id}>
+        key={item.id}
+      >
         <Column.CheckIcon
           id={item.id.toString()}
-          iconClassName='key'
+          iconClassName="key"
           background={Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={onIconClick}
@@ -41,28 +42,33 @@ export default React.createClass({
                 message: 'API key copied to the clipboard'
               })}
               tooltip="Copy API key"
-              type="link" />
-          }/>
+              type="link"
+            />
+          }
+        />
         <Column.ID className="col-flex-1">{item.id}</Column.ID>
         <Column.Text className="col-flex-1">
           {item.ignore_acl ? <div>Ignore ACL</div> : null}
           {item.allow_user_create ? <div>Allow user creation</div> : null}
           {item.allow_anonymous_read ? <div>Allow anonymous read</div> : null}
         </Column.Text>
-        <Column.Date date={item.created_at}/>
+        <Column.Date date={item.created_at} />
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit" />
+            primaryText="Edit"
+          />
           <MenuItem
             onTouchTap={showResetDialog}
             className="dropdown-item-reset-apikey"
-            primaryText="Reset" />
+            primaryText="Reset"
+          />
           <MenuItem
             onTouchTap={showDeleteDialog}
             className="dropdown-item-delete-apikey"
-            primaryText="Delete" />
+            primaryText="Delete"
+          />
         </Column.Menu>
       </ColumnList.Item>
     );

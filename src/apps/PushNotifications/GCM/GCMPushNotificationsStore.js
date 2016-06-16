@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils & Mixins
-import {WaitForStoreMixin, StoreLoadingMixin, StoreHelpersMixin} from '../../../mixins';
+import { WaitForStoreMixin, StoreLoadingMixin, StoreHelpersMixin } from '../../../mixins';
 
 // Stores & Actions
 import Actions from './GCMPushNotificationsActions';

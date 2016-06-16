@@ -1,5 +1,5 @@
 import React from 'react';
-import {Show} from '../../common/';
+import { Show } from '../../common/';
 
 export default React.createClass({
   displayName: 'Limits',
@@ -7,25 +7,25 @@ export default React.createClass({
   render() {
     return (
       <div className="row">
-        <div className="col-md-9" style={{whiteSpace: 'nowrap'}}>
+        <div className="col-md-9" style={{ whiteSpace: 'nowrap' }}>
           <div>API calls</div>
           <div>Script seconds</div>
         </div>
-        <div className="col-md-9" style={{textAlign: 'right'}}>
+        <div className="col-md-9" style={{ textAlign: 'right' }}>
           <div><strong>{parseInt(this.props.data.api.included, 10).toLocaleString()}/month</strong></div>
           <div><strong>{parseInt(this.props.data.cbx.included, 10).toLocaleString()}/month</strong></div>
         </div>
 
         <Show if={this.props.data.api.overage && this.props.data.cbx.overage}>
-          <div className="col-md-8" style={{textAlign: 'right', whiteSpace: 'nowrap'}}>
+          <div className="col-md-8" style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
             <div>+{this.props.data.api.overage}</div>
             <div>+{this.props.data.cbx.overage}</div>
           </div>
         </Show>
         <Show if={this.props.data.api.overage && this.props.data.cbx.overage}>
-          <div className="col-md-9" style={{paddingLeft: 3}}>
-            <div style={{whiteSpace: 'nowrap'}}>per extra call</div>
-            <div style={{whiteSpace: 'nowrap'}}>per extra second</div>
+          <div className="col-md-9" style={{ paddingLeft: 3 }}>
+            <div style={{ whiteSpace: 'nowrap' }}>per extra call</div>
+            <div style={{ whiteSpace: 'nowrap' }}>per extra second</div>
           </div>
         </Show>
       </div>

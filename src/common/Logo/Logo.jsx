@@ -14,7 +14,7 @@ export default React.createClass({
         wrapperStyle={this.props.style}
         src="/img/syncano-logo.svg"
         className={this.props.className}
-        />
+      />
     );
   }
 });

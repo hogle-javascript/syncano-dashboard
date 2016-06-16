@@ -1,7 +1,7 @@
 import React from 'react';
-import {IconButton} from 'material-ui';
+import { IconButton } from 'material-ui';
 
-export default ({style, iconStyle, ...other}) => {
+export default ({ style, iconStyle, ...other }) => {
   const styles = {
     style: {
       padding: 6
@@ -14,7 +14,8 @@ export default ({style, iconStyle, ...other}) => {
   return (
     <IconButton
       {...other}
-      style={{...styles.style, ...style}}
-      iconStyle={{...styles.iconStyle, ...iconStyle}} />
+      style={{ ...styles.style, ...style }}
+      iconStyle={{ ...styles.iconStyle, ...iconStyle }}
+    />
   );
 };

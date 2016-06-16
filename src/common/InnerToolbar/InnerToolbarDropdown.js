@@ -1,6 +1,6 @@
 import React from 'react';
-import {withRouter} from 'react-router';
-import {DropDownMenu} from 'material-ui';
+import { withRouter } from 'react-router';
+import { DropDownMenu } from 'material-ui';
 
 const InnerToolbarDropdown = React.createClass({
   displayName: 'InnerToolbarDropdown',
@@ -11,25 +11,26 @@ const InnerToolbarDropdown = React.createClass({
   },
 
   getActiveItem() {
-    const {routes} = this.context;
+    const { routes } = this.context;
 
     const lastItem = routes[routes.length - 1].name;
     const notLastItem = routes[routes.length - 2].name;
 
-    return lastItem ? lastItem : notLastItem;
+    return lastItem || notLastItem;
   },
 
   render() {
-    const {children, router} = this.props;
-    const {params} = this.context;
+    const { children, router } = this.props;
+    const { params } = this.context;
 
     return (
       <DropDownMenu
         value={this.getActiveItem()}
-        labelStyle={{fontSize: 20, color: 'rgba(0, 0, 0, 0.4)'}}
-        iconStyle={{fill: 'rgba(0, 0, 0, 0.4)'}}
-        onChange={(event, index, value) => router.push({name: value, params})}
-        underlineStyle={{display: 'none'}}>
+        labelStyle={{ fontSize: 20, color: 'rgba(0, 0, 0, 0.4)' }}
+        iconStyle={{ fill: 'rgba(0, 0, 0, 0.4)' }}
+        onChange={(event, index, value) => router.push({ name: value, params })}
+        underlineStyle={{ display: 'none' }}
+      >
         {children}
       </DropDownMenu>
     );

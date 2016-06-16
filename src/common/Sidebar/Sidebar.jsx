@@ -31,13 +31,14 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {children, style, ...other} = this.props;
+    const { children, style, ...other } = this.props;
 
     return (
       <div
         className="col-flex-0 left-nav"
-        style={{...style, ...styles.root}}
-        {...other}>
+        style={{ ...style, ...styles.root }}
+        {...other}
+      >
         <div style={styles.background}></div>
         <SidebarContent>
           {children}

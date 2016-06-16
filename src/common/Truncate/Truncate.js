@@ -15,26 +15,28 @@ export default React.createClass({
 
   renderContent() {
     const styles = this.getStyles();
-    const {text, style, ...other} = this.props;
+    const { text, style, ...other } = this.props;
 
     return (
       <div
-        style={{...style, ...styles}}
-        {...other}>
+        style={{ ...style, ...styles }}
+        {...other}
+      >
         {text}
       </div>
     );
   },
 
   render() {
-    const {text, withTooltip} = this.props;
+    const { text, withTooltip } = this.props;
 
     if (withTooltip) {
       return (
         <Tooltip
           label={withTooltip ? text : null}
           verticalPosition="bottom"
-          horizontalPosition="center">
+          horizontalPosition="center"
+        >
           {this.renderContent()}
         </Tooltip>
       );

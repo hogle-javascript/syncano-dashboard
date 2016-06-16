@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin, SnackbarNotificationMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, SnackbarNotificationMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -20,7 +20,7 @@ export default Reflux.createStore({
     return {
       instances: null,
       versions: [
-        {payload: '', text: 'Loading...'}
+        { payload: '', text: 'Loading...' }
       ]
     };
   },
@@ -48,7 +48,7 @@ export default Reflux.createStore({
 
   getInstancesDropdown() {
     if (this.data.instances === null) {
-      return [{payload: '', text: 'Loading...'}];
+      return [{ payload: '', text: 'Loading...' }];
     }
     return this.data.instances.map((item) => {
       return {
@@ -135,7 +135,7 @@ export default Reflux.createStore({
   onInstallSolutionCompleted(payload) {
     console.debug('SolutionInstallDialogStore::onFetchSolutionVersionsCompleted');
     this.data.isLoading = false;
-    SessionStore.getRouter().push({name: 'instance', params: {instanceName: payload.instance}});
+    SessionStore.getRouter().push({ name: 'instance', params: { instanceName: payload.instance } });
     this.setSnackbarNotification({
       delay: true,
       message: 'Solution successfully installed',

@@ -17,10 +17,10 @@ export default React.createClass({
   mixins: [Reflux.connect(Store)],
 
   render() {
-    const {channelName} = this.context.params;
+    const { channelName } = this.context.params;
 
     return (
-      <ChannelHistory channelName={channelName}/>
+      <ChannelHistory channelName={channelName} />
     );
   }
 });

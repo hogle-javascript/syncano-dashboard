@@ -37,7 +37,22 @@ export default {
       this.NewLibConnection
         .Card
         .please()
-        .update({id: response.id})
+        .update({}, { id: response.id })
+        .then(this.completed)
+        .catch(this.failure);
+    });
+  },
+
+  addCard(payload) {
+    Stripe.card.createToken(payload, (status, response) => {
+      if (response.error) {
+        return this.failure(response.error);
+      }
+
+      this.NewLibConnection
+        .Card
+        .please()
+        .create({ token: response.id })
         .then(this.completed)
         .catch(this.failure);
     });
@@ -56,7 +71,7 @@ export default {
     this.NewLibConnection
       .Plan
       .please()
-      .subscribe({name: plan}, payload)
+      .subscribe({ name: plan }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -104,7 +119,7 @@ export default {
 
   cancelSubscriptions(ids) {
     const promises = ids.map((id) => {
-      this.NewLibConnection.Subscription.please().cancel({}, {id}).request();
+      this.NewLibConnection.Subscription.please().cancel({ id }).request();
     });
 
     this.Promise
@@ -117,7 +132,7 @@ export default {
     this.NewLibConnection
       .Invoice
       .please()
-      .retryPayment({id: invoice.id})
+      .retryPayment({ id: invoice.id })
       .then(this.completed)
       .catch(this.failure);
   }

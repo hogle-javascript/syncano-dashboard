@@ -5,11 +5,11 @@ import Actions from './GroupsActions';
 import Store from './GroupsStore';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Components
 import ListItem from './GroupsListItem';
-import {ColumnList, Dialog, Lists} from '../../common/';
+import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -24,7 +24,7 @@ export default Radium(React.createClass({
   },
 
   initDialogs() {
-    const {isLoading} = this.props;
+    const { isLoading } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -47,7 +47,8 @@ export default Radium(React.createClass({
         key={`groups-list-item-${item.id}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeGroupDialog', item)} />
+        showDeleteDialog={() => this.showDialog('removeGroupDialog', item)}
+      />
     );
   },
 
@@ -61,14 +62,16 @@ export default Radium(React.createClass({
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Groups
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
+              handleUnselectAll={Actions.uncheckAll}
+            >
               <Lists.MenuItem onTouchTap={() => this.showDialog('removeGroupDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
@@ -78,7 +81,8 @@ export default Radium(React.createClass({
           emptyItemContent="Add a Group"
           emptyItemHandleClick={Actions.showDialog}
           key="groups-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

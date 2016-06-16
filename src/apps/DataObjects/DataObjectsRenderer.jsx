@@ -64,7 +64,8 @@ export default {
               whiteSpace: 'normal',
               wordWrap: 'normal'
             }}
-            tooltip={item.tooltip}>
+            tooltip={item.tooltip}
+          >
             {item.id}
           </TableHeaderColumn>
         );
@@ -72,8 +73,8 @@ export default {
     });
 
     return (
-      <TableHeader key='header'>
-        <TableRow key='header-row'>
+      <TableHeader key="header">
+        <TableRow key="header-row">
           {columnsComponents}
         </TableRow>
       </TableHeader>
@@ -119,7 +120,8 @@ export default {
         return (
           <TableRowColumn
             key={`${column.id}-${i}`}
-            style={{width: column.width ? column.width : 100}}>
+            style={{ width: column.width ? column.width : 100 }}
+          >
             {value}
           </TableRowColumn>
         );
@@ -129,7 +131,8 @@ export default {
         <TableRow
           style={{cursor: 'pointer'}}
           key={`row-${index}`}
-          selected={selected}>
+          selected={selected}
+        >
           {columnsComponents}
         </TableRow>
       );
