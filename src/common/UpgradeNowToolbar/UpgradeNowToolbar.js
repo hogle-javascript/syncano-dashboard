@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {FlatButton, RaisedButton} from 'material-ui';
+import { Link } from 'react-router';
+import { FlatButton, RaisedButton } from 'material-ui';
 import Moment from 'moment';
 
 export default React.createClass({
@@ -39,25 +39,32 @@ export default React.createClass({
       case (days <= 30 && days > 14):
         dayVariant = 30;
         break;
+
       case (days <= 14 && days > 7):
         dayVariant = 14;
         break;
+
       case (days <= 7 && days > 3):
         dayVariant = 7;
         break;
+
       case (days <= 3 && days > 1):
         dayVariant = 3;
         break;
+
       case (days <= 1):
         dayVariant = 1;
         break;
+
+      default:
+        // do nothing
     }
 
     return dayVariant;
   },
 
   getLocalStorageName() {
-    const {subscriptionEndDate} = this.props;
+    const { subscriptionEndDate } = this.props;
     const dayVariant = this.getDayVariant(subscriptionEndDate);
     const localStorageName = `upgradeNowToolbar-${subscriptionEndDate}-${dayVariant}-isHidden`;
 
@@ -72,7 +79,7 @@ export default React.createClass({
   },
 
   shouldDisplay() {
-    const {subscriptionEndDate} = this.props;
+    const { subscriptionEndDate } = this.props;
     const dayVariant = this.getDayVariant(subscriptionEndDate);
 
     if (dayVariant) {
@@ -86,12 +93,12 @@ export default React.createClass({
     const localStorageName = this.getLocalStorageName();
 
     localStorage.setItem(localStorageName, true);
-    this.setState({isHidden: true});
+    this.setState({ isHidden: true });
   },
 
   render() {
-    const {shouldDisplay, isHidden} = this.state;
-    const {subscriptionEndDate} = this.props;
+    const { shouldDisplay, isHidden } = this.state;
+    const { subscriptionEndDate } = this.props;
     const styles = this.getStyles();
     const days = Moment(subscriptionEndDate).diff(new Date(), 'days');
     const daysText = days > 1 ? 'days' : 'day';
@@ -102,24 +109,24 @@ export default React.createClass({
 
     return (
       <div style={styles.upgradeNowToolbar}>
-        <div style={{padding: '9px 20px'}}>
-          <p style={{margin: 0, fontSize: 16}}>
+        <div style={{ padding: '9px 20px' }}>
+          <p style={{ margin: 0, fontSize: 16 }}>
             Your free builder account expires in {days} {daysText}. Please upgrade to keep using Syncano.
           </p>
         </div>
-        <div style={{padding: '9px 20px', whiteSpace: 'nowrap'}}>
+        <div style={{ padding: '9px 20px', whiteSpace: 'nowrap' }}>
           <FlatButton
             label="Remind Me Later"
-            style={{marginRight: 10}}
-            labelStyle={{fontWeight: 500, color: '#fff'}}
+            style={{ marginRight: 10 }}
+            labelStyle={{ fontWeight: 500, color: '#fff' }}
             onClick={this.hide}
           />
           <Link to="profile-billing-plan">
             <RaisedButton
               label="Upgrade Now"
               backgroundColor="#FFCC01"
-              labelStyle={{fontWeight: 500, color: '#1D2228'}}
-              style={{fontWeight: 500}}
+              labelStyle={{ fontWeight: 500, color: '#1D2228' }}
+              style={{ fontWeight: 500 }}
             />
           </Link>
         </div>

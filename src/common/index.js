@@ -86,7 +86,7 @@ export { Popover };
 export { Sidebar };
 export { ShowMore };
 export { UpgradeButton };
-export { UpgradeNowToolbar }
+export { UpgradeNowToolbar };
 
 export default {
   AlertPageContent,

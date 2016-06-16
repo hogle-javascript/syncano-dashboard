@@ -25,7 +25,7 @@ class Dashboard extends Component {
           >
             <Header />
             {this.props.children}
-            <UpgradeNowToolbar subscriptionEndDate="2016-07-30"/>
+            <UpgradeNowToolbar subscriptionEndDate="2016-07-30" />
           </Breakpoint>
           <Breakpoint maxWidth={767} widthMethod="componentWidth">
             <NoMobileInfo />
