@@ -1,3 +1,4 @@
+import accounts from '../../tempAccounts';
 import Utils from '../../utils';
 
 export default {
@@ -8,16 +9,17 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after(client) {
     client.end();
   },
   'User adds a Channel Socket': (client) => {
     const channelsPage = client.page.channelsPage();
+    const instanceName = accounts.instanceUser.instanceName;
 
     channelsPage
-      .navigate()
+      .goToUrl(instanceName, 'channels')
       .waitForElementVisible('@channelSocketsListTitle')
       .clickElement('@addChannelButton')
       .waitForElementVisible('@addChannelModalTitle')
@@ -27,9 +29,10 @@ export default {
   },
   'User edits a Channel Socket': (client) => {
     const channelsPage = client.page.channelsPage();
+    const instanceName = accounts.instanceUser.instanceName;
 
     channelsPage
-      .navigate()
+      .goToUrl(instanceName, 'channels')
       .waitForElementVisible('@channelSocketsListTitle')
       .clickListItemDropdown(Utils.addSuffix('channel'), 'Edit')
       .waitForElementVisible('@editChannelModalTitle')
@@ -42,9 +45,10 @@ export default {
   },
   'User deletes a Channel Socket': (client) => {
     const channelsPage = client.page.channelsPage();
+    const instanceName = accounts.instanceUser.instanceName;
 
     channelsPage
-      .navigate()
+      .goToUrl(instanceName, 'channels')
       .waitForElementVisible('@channelSocketsListTitle')
       .clickListItemDropdown(Utils.addSuffix('channel'), 'Delete')
       .waitForElementVisible('@deleteChannelModalTitle')

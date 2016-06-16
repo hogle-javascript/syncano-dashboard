@@ -1,3 +1,4 @@
+import accounts from '../../tempAccounts';
 import utils from '../../utils';
 
 export default {
@@ -8,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
   after(client) {
     client.end();
@@ -16,15 +17,16 @@ export default {
   'Administrator adds a Trigger': (client) => {
     const triggersPage = client.page.triggersPage();
     const suffix = utils.addSuffix('trigger');
+    const instanceName = accounts.alternativeUser.instanceName;
 
     triggersPage
-      .goToUrl('', 'triggers')
+      .goToUrl(instanceName, 'triggers')
       .clickElement('@addTriggerButton')
       .waitForElementPresent('@addTriggerModalTitle')
       .fillInput('@addTriggerModalLabel', suffix)
       .selectDropdownValue('@addTriggerModalSignal', 'create')
       .selectDropdownValue('@addTriggerModalClass', 'user_profile')
-      .selectDropdownValue('@addTriggerModalScript', 'snippet')
+      .selectDropdownValue('@addTriggerModalScript', accounts.alternativeUser.tempScriptNames[0])
       .clickElement('@confirm')
       .waitForElementPresent('@triggerTableRow');
   },
@@ -32,7 +34,6 @@ export default {
     const triggersPage = client.page.triggersPage();
 
     triggersPage
-      .goToUrl('', 'triggers')
       .clickListItemDropdown('@triggerDropdown', 'Edit')
       .waitForElementVisible('@confirm')
       .selectDropdownValue('@addTriggerModalSignal', 'update')
@@ -43,7 +44,6 @@ export default {
     const triggersPage = client.page.triggersPage();
 
     triggersPage
-      .goToUrl('', 'triggers')
       .clickListItemDropdown('@triggerDropdown', 'Delete')
       .waitForElementVisible('@confirm')
       .clickElement('@confirm')

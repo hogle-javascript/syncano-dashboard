@@ -1,4 +1,4 @@
-import globals from '../../globals';
+import accounts from '../../tempAccounts';
 import utils from '../../utils';
 
 export default {
@@ -9,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after: (client) => {
     client.end();
@@ -17,8 +17,8 @@ export default {
   'Test Admin Sends Android Push Notification': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const baseUrl = 'https://api.syncano.rocks';
-    const apiKey = process.env.NIGHTWATCH_ACCOUNT_KEY;
-    const url = `${baseUrl}/v1.1/instances/${globals.instanceName}/push_notifications/gcm/messages/?api_key=${apiKey}`;
+    const apiKey = accounts.instanceUser.accountKey;
+    const url = `${baseUrl}/v1.1/instances/${accounts.instanceUser.instanceName}/push_notifications/gcm/messages/?api_key=${apiKey}`;
     const regId = utils.randomString(64);
     const postData = `
       {
@@ -53,8 +53,8 @@ export default {
   'Test Admin Sends iOS Push Notification': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const baseUrl = 'https://api.syncano.rocks';
-    const apiKey = process.env.NIGHTWATCH_ACCOUNT_KEY;
-    const url = `${baseUrl}/v1.1/instances/${globals.instanceName}/push_notifications/apns/messages/?api_key=${apiKey}`;
+    const apiKey = accounts.instanceUser.accountKey;
+    const url = `${baseUrl}/v1.1/instances/${accounts.instanceUser.instanceName}/push_notifications/apns/messages/?api_key=${apiKey}`;
     const regId = utils.randomString(64);
     const postData = `
       {

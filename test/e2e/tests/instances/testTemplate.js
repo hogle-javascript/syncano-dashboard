@@ -1,5 +1,4 @@
-import Async from 'async';
-import globals from '../../globals';
+import accounts from '../../tempAccounts';
 import utils from '../../utils';
 
 export default {
@@ -8,25 +7,20 @@ export default {
     client.end();
   },
   before(client) {
-    Async.waterfall([
-      client.createTempAccount,
-      client.createTempInstance
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(globals.tempEmail, globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   'Test Add Template': (client) => {
     const listsPage = client.page.listsPage();
     const templateName = utils.addSuffix('template');
+    const instanceName = accounts.instanceUser.instanceName;
 
     listsPage
-      .goToUrl('temp', 'templates')
+      .goToUrl(instanceName, 'templates')
       .clickElement('@addButton')
       .fillInput('@inputName', templateName)
       .fillInput('@inputContentType', 'text/csv')

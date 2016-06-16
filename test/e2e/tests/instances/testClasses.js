@@ -1,5 +1,4 @@
-import Globals from '../../globals';
-import Async from 'async';
+import accounts from '../../tempAccounts';
 
 export default {
   tags: ['classes'],
@@ -7,29 +6,19 @@ export default {
     client.end();
   },
   'Test create classes': (client) => {
-    Async.waterfall([
-      client.createTempAccount,
-      client.createTempClass,
-      client.createTempClass,
-      client.createTempClass
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .waitForElementPresent('@emailInput', 60000)
-        .login(Globals.tempEmail, Globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
+    const instanceName = accounts.instanceUser.instanceName;
 
-    client
-      .url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/classes`)
-      .refresh();
     classesPage
+      .goToUrl(instanceName, 'classes')
       .clickListItemDropdown('@classesListMenu', 'Select')
       .clickElement('@selectUserClass')
       .clickListItemDropdown('@classesListMenu', 'Delete')
