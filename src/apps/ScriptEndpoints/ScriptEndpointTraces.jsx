@@ -13,13 +13,14 @@ export default React.createClass({
   mixins: [Reflux.connect(Store)],
 
   render() {
-    const {scriptEndpointName} = this.props.params;
+    const { scriptEndpointName } = this.props.params;
 
     return (
       <Traces
         objectId={scriptEndpointName}
         hasHeaderId={false}
-        tracesFor='scriptEndpoint'/>
+        tracesFor="scriptEndpoint"
+      />
     );
   }
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import {IconButton} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { IconButton } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'CheckIcon',
@@ -105,7 +105,7 @@ export default Radium(React.createClass({
   },
 
   render() {
-    const {iconStyle, style, checkable} = this.props;
+    const { iconStyle, style, checkable } = this.props;
     const styles = this.getStyles();
     const icon = this.getIconState();
 
@@ -115,11 +115,12 @@ export default Radium(React.createClass({
     return (
       <IconButton
         iconClassName={`synicon-${icon.className}`}
-        iconStyle={{...styles.icon, ...iconStyle}}
-        style={{...styles.iconButton, ...style}}
+        iconStyle={{ ...styles.icon, ...iconStyle }}
+        style={{ ...styles.iconButton, ...style }}
         onMouseEnter={checkable ? this.toggleHover : null}
         onMouseLeave={checkable ? this.toggleHover : null}
-        onTouchTap={this.handleClick}/>
+        onTouchTap={this.handleClick}
+      />
     );
   }
 }));

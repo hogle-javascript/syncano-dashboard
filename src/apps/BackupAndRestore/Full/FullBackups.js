@@ -5,7 +5,7 @@ import Actions from './FullBackupsActions';
 import Store from './FullBackupsStore';
 
 import FullBackupsList from './FullBackupsList';
-import {Container} from '../../../common';
+import { Container } from '../../../common';
 
 export default React.createClass({
   displayName: 'FullBackups',
@@ -19,13 +19,14 @@ export default React.createClass({
   },
 
   render() {
-    const {isLoading, items} = this.state;
+    const { isLoading, items } = this.state;
 
     return (
       <Container>
         <FullBackupsList
           isLoading={isLoading}
-          items={items} />
+          items={items}
+        />
       </Container>
     );
   }

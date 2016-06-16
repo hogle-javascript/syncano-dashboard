@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin, StoreLoadingMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, StoreLoadingMixin } from '../../mixins';
 
 // Stores & Actions
 import GroupsActions from './GroupsActions';

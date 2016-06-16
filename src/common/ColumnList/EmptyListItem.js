@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import {FontIcon, Avatar, ListItem} from 'material-ui';
+import { FontIcon, Avatar, ListItem } from 'material-ui';
 
 export default Radium(React.createClass({
   displayName: 'Item',
@@ -33,7 +33,7 @@ export default Radium(React.createClass({
       }
     };
 
-    return {...styles, ...this.props.style};
+    return { ...styles, ...this.props.style };
   },
 
   getIcon() {
@@ -42,7 +42,8 @@ export default Radium(React.createClass({
     return (
       <FontIcon
         className="synicon-plus"
-        style={styles.icon} />
+        style={styles.icon}
+      />
     );
   },
 
@@ -52,7 +53,8 @@ export default Radium(React.createClass({
     return (
       <Avatar
         icon={this.getIcon()}
-        style={styles.avatar} />
+        style={styles.avatar}
+      />
     );
   },
 
@@ -64,7 +66,8 @@ export default Radium(React.createClass({
         className="empty-list-item"
         onTouchTap={this.props.handleClick}
         style={styles.listItem}
-        leftAvatar={this.getAvatar()}>
+        leftAvatar={this.getAvatar()}
+      >
         {this.props.children}
       </ListItem>
     );

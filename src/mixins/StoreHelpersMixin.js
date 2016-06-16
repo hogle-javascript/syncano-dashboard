@@ -1,35 +1,29 @@
 export default {
   getDropdown(list, payloadArg, textArg) {
     if (!list) {
-      return [{payload: '', text: 'Loading...'}];
+      return [{ payload: '', text: 'Loading...' }];
     }
-    return list.map((item) => {
-      return {
-        payload: item[payloadArg],
-        text: item[textArg]
-      };
-    });
+    return list.map((item) => ({
+      payload: item[payloadArg],
+      text: item[textArg]
+    }));
   },
   getSelectOptions(list, labelArg, valueArg) {
     if (!list) {
       return [];
     }
-    return list.map((item) => {
-      return {
-        label: item[labelArg],
-        value: item[valueArg]
-      };
-    });
+    return list.map((item) => ({
+      label: item[labelArg],
+      value: item[valueArg]
+    }));
   },
   getSelectValuesFromList(list) {
     if (!list) {
       return [];
     }
-    return list.map((item) => {
-      return {
-        label: item,
-        value: item
-      };
-    });
+    return list.map((item) => ({
+      label: item,
+      value: item
+    }));
   }
 };

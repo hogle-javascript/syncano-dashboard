@@ -1,8 +1,8 @@
 import React from 'react';
-import {List} from 'material-ui';
-import ListSubheader from './ListSubheader';
+import { List } from 'material-ui';
+import ListSubheader from './ListSubHeader';
 
-export default ({subheader, children}) => {
+export default ({ subheader, children }) => {
   const styles = {
     list: {
       paddingTop: 0,
@@ -13,7 +13,7 @@ export default ({subheader, children}) => {
 
   return (
     <div>
-      <ListSubheader text={subheader}/>
+      <ListSubheader text={subheader} />
       <List style={styles.list}>
         {children}
       </List>

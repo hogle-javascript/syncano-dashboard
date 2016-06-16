@@ -1,12 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 import Actions from './SchedulesActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
-import {MenuItem} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {ColumnList} from '../../common/';
+import { MenuItem } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { ColumnList } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -23,15 +23,16 @@ export default React.createClass({
   },
 
   render() {
-    const {instanceName} = this.context.params;
-    const {item, onIconClick, showDeleteDialog} = this.props;
+    const { instanceName } = this.context.params;
+    const { item, onIconClick, showDeleteDialog } = this.props;
     const script = ScriptsStore.getScriptById(item.script);
     const scriptLabel = script ? script.label : '';
 
     return (
       <ColumnList.Item
         checked={item.checked}
-        key={item.id}>
+        key={item.id}
+      >
         <Column.CheckIcon.Socket
           id={item.id.toString()}
           iconClassName="socket-schedule"
@@ -39,29 +40,35 @@ export default React.createClass({
           checked={item.checked}
           handleIconClick={onIconClick}
           primaryText={item.label}
-          secondaryText={`ID: ${item.id}`}/>
+          secondaryText={`ID: ${item.id}`}
+        />
         <Column.Date
           className="col-flex-1"
-          date={item.scheduled_next} />
+          date={item.scheduled_next}
+        />
         <Column.Desc className="col-flex-1">
-          <Link to={{
-            name: 'script',
-            params: {
-              instanceName,
-              scriptId: item.script
-            }
-          }}>
+          <Link
+            to={{
+              name: 'script',
+              params: {
+                instanceName,
+                scriptId: item.script
+              }
+            }}
+          >
             {scriptLabel}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-flex-1">
-          <Link to={{
-            name: 'schedule-traces',
-            params: {
-              instanceName,
-              scheduleId: item.id
-            }
-          }}>
+          <Link
+            to={{
+              name: 'schedule-traces',
+              params: {
+                instanceName,
+                scheduleId: item.id
+              }
+            }}
+          >
             Traces
           </Link>
         </Column.Desc>
@@ -75,11 +82,13 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit" />
+            primaryText="Edit"
+          />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete" />
+            primaryText="Delete"
+          />
         </Column.Menu>
       </ColumnList.Item>
     );

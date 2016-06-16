@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-import {StoreFormMixin} from '../../mixins';
+import { StoreFormMixin } from '../../mixins';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import ProfileInvitationsActions from '../ProfileInvitations/ProfileInvitationsActions';
@@ -35,7 +35,7 @@ export default Reflux.createStore({
       status: 'Account activated successfully. You\'ll now be redirected to Syncano Dashboard.'
     });
     this.onPasswordSignInCompleted(payload);
-    setTimeout(function() {
+    setTimeout(() => {
       SessionStore.getRouter().push(AuthConstans.LOGIN_REDIRECT_PATH);
     }, 3000);
   },

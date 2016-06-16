@@ -22,7 +22,7 @@ export default {
     this.NewLibConnection
       .APNSDevice
       .please()
-      .update({registration_id: registrationId}, payload)
+      .update({ registration_id: registrationId }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -32,7 +32,7 @@ export default {
       return this.NewLibConnection
         .APNSDevice
         .please()
-        .delete({registration_id: device.registration_id});
+        .delete({ registration_id: device.registration_id });
     });
 
     this.Promise.all(promises)
@@ -45,7 +45,7 @@ export default {
       this.NewLibConnection
         .APNSDevice
         .please()
-        .sendMessage({registration_id: registrationId}, payload));
+        .sendMessage({ registration_id: registrationId }, payload));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -75,7 +75,7 @@ export default {
     this.NewLibConnection
       .GCMDevice
       .please()
-      .update({registration_id: registrationId}, payload)
+      .update({ registration_id: registrationId }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -85,7 +85,7 @@ export default {
       return this.NewLibConnection
         .GCMDevice
         .please()
-        .delete({registration_id: device.registration_id});
+        .delete({ registration_id: device.registration_id });
     });
 
     this.Promise.all(promises)
@@ -98,7 +98,7 @@ export default {
       this.NewLibConnection
         .GCMDevice
         .please()
-        .sendMessage({registration_id: registrationId}, payload)
+        .sendMessage({ registration_id: registrationId }, payload)
     );
 
     this.Promise.all(promises)

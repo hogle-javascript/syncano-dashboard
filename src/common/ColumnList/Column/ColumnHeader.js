@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-import {colors as Colors} from 'material-ui/styles/';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'ColumnHeader',
@@ -53,15 +53,17 @@ export default Radium(React.createClass({
 
   render() {
     const headerStyles = this.getStyles();
-    const {children, handleClick, primary, columnName, styles} = this.props;
+    const { children, handleClick, primary, columnName, styles } = this.props;
 
     return (
       <div
         className={this.getClassName()}
-        style={[primary && headerStyles.primary, columnName === 'ICON_NAME' && headerStyles.iconName, styles]}>
+        style={[primary && headerStyles.primary, columnName === 'ICON_NAME' && headerStyles.iconName, styles]}
+      >
         <div
           style={handleClick && headerStyles.link}
-          onClick={this.handleClick}>
+          onClick={this.handleClick}
+        >
           {children}
         </div>
       </div>

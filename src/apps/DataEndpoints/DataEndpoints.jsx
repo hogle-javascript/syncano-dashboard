@@ -3,15 +3,15 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './DataEndpointsActions';
 import Store from './DataEndpointsStore';
 
 // Components
-import {RaisedButton} from 'material-ui';
-import {Container} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container } from '../../common/';
 
 // Local components
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
@@ -33,27 +33,29 @@ export default React.createClass({
   },
 
   render() {
-    const {items, hideDialogs, isLoading} = this.state;
+    const { items, hideDialogs, isLoading } = this.state;
 
     return (
       <div>
         <Helmet title="Data Endpoints" />
-        <DataEndpointDialog/>
-        <DataEndpointSummaryDialog/>
+        <DataEndpointDialog />
+        <DataEndpointSummaryDialog />
 
         <SocketsInnerToolbar>
           <RaisedButton
-            style={{marginRight: 0}}
+            style={{ marginRight: 0 }}
             label="Add"
             primary={true}
-            onTouchTap={Actions.showDialog}/>
+            onTouchTap={Actions.showDialog}
+          />
         </SocketsInnerToolbar>
 
         <Container>
           <DataEndpointsList
             isLoading={isLoading}
             items={items}
-            hideDialogs={hideDialogs} />
+            hideDialogs={hideDialogs}
+          />
         </Container>
       </div>
     );

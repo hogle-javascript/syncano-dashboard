@@ -41,7 +41,7 @@ export default Radium(React.createClass({
       }
     };
 
-    return {...styles, ...this.props.style};
+    return { ...styles, ...this.props.style };
   },
 
   renderPercent(row) {
@@ -63,7 +63,7 @@ export default Radium(React.createClass({
     return (
       <div className="row vp-1-b" style={styles.legend}>
         <div className="col-xs-1">
-          <div style={_.extend({}, styles.legendSquere, row.styles)}/>
+          <div style={_.extend({}, styles.legendSquere, row.styles)} />
         </div>
         <div className="col-flex-1">
           <div className="row">

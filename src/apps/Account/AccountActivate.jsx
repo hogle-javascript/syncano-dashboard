@@ -16,13 +16,13 @@ export default React.createClass({
   mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
-    const {uid, token} = this.context.params;
+    const { uid, token } = this.context.params;
 
-    Actions.activate({uid, token});
+    Actions.activate({ uid, token });
   },
 
   render() {
-    const {status} = this.state;
+    const { status } = this.state;
 
     return (
       <AccountContainer ref="loginPage">

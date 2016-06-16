@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import {Slider} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { Slider } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'Slider',
@@ -61,7 +61,7 @@ export default Radium(React.createClass({
   renderLegendItems() {
     let styles = this.getStyles();
 
-    return this.props.legendItems.map(function(item, i) {
+    return this.props.legendItems.map((item, i) => {
       let position = i / (this.props.legendItems.length - 1) * 100 + '%';
       let isLastItem = false;
       let isSelected = i === this.state.value;
@@ -71,16 +71,16 @@ export default Radium(React.createClass({
           key={i}
           style={[
             styles.legendItems,
-            {left: position},
+            { left: position },
             isLastItem && styles.lastLegendItem,
             isSelected && styles.selectedItem
           ]}
           onClick={this.handleOptionsClick.bind(this, i, this.props.type)}
-          >
+        >
           {item}
         </div>
       );
-    }.bind(this));
+    });
   },
 
   renderLegend() {
@@ -97,15 +97,16 @@ export default Radium(React.createClass({
     return (
       <div>
         <Slider
-          style={{margin: '0 auto'}}
-          name='slider'
-          ref='slider'
+          style={{ margin: '0 auto' }}
+          name="slider"
+          ref="slider"
           step={1}
           min={0}
           max={this.props.legendItems.length - 1}
           defaultValue={this.props.defaultSliderValue}
           onChange={this.handleChange}
-          value={this.state.value}/>
+          value={this.state.value}
+        />
         {this.renderLegend()}
       </div>
     );

@@ -2,14 +2,14 @@ import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 import Actions from './TriggersActions';
 import Store from './TriggersStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
-import {RaisedButton} from 'material-ui';
-import {Container} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container } from '../../common/';
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
@@ -28,7 +28,7 @@ export default React.createClass({
   },
 
   render() {
-    const {isLoading, items, hideDialogs} = this.state;
+    const { isLoading, items, hideDialogs } = this.state;
 
     return (
       <div>
@@ -39,15 +39,17 @@ export default React.createClass({
           <RaisedButton
             label="Add"
             primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={Actions.showDialog}/>
+            style={{ marginRight: 0 }}
+            onTouchTap={Actions.showDialog}
+          />
         </SocketsInnerToolbar>
 
         <Container>
           <TriggersList
             isLoading={isLoading}
             items={items}
-            hideDialogs={hideDialogs} />
+            hideDialogs={hideDialogs}
+          />
         </Container>
       </div>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './InstancesActions';
@@ -9,7 +9,7 @@ import Store from './InstancesStore';
 import SessionStore from '../Session/SessionStore';
 
 import ListItem from './InstancesListItem';
-import {Loading, ColumnList, Dialog, Lists} from '../../common/';
+import { Loading, ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -24,7 +24,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading} = this.props;
+    const { isLoading } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -48,22 +48,24 @@ export default React.createClass({
         key={`shared-instances-list-item-${item.name}`}
         onIconClick={this.handleCheckInstance}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteSharedInstanceDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('deleteSharedInstanceDialog', item)}
+      />
     );
   },
 
   render() {
-    const {isLoading, ...other} = this.props;
+    const { isLoading, ...other } = this.props;
     const checkedItems = Store.getNumberOfChecked('sharedInstances');
 
     return (
       <Loading show={isLoading}>
-        <Lists.Container className='instances-list'>
+        <Lists.Container className="instances-list">
           {this.getDialogs()}
           <ColumnList.Header>
             <Column.ColumnHeader
               primary={true}
-              columnName="CHECK_ICON">
+              columnName="CHECK_ICON"
+            >
               Shared with me
             </Column.ColumnHeader>
             <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
@@ -72,17 +74,20 @@ export default React.createClass({
               <Lists.Menu
                 checkedItemsCount={checkedItems}
                 handleSelectAll={() => Actions.selectAll('sharedInstances')}
-                handleUnselectAll={() => Actions.uncheckAll('sharedInstances')}>
+                handleUnselectAll={() => Actions.uncheckAll('sharedInstances')}
+              >
                 <Lists.MenuItem
                   primaryText="Leave Selected"
-                  onTouchTap={() => this.showDialog('deleteSharedInstanceDialog')} />
+                  onTouchTap={() => this.showDialog('deleteSharedInstanceDialog')}
+                />
               </Lists.Menu>
             </Column.ColumnHeader>
           </ColumnList.Header>
           <Lists.List
             {...other}
             key="shared-instances-list"
-            renderItem={this.renderItem}/>
+            renderItem={this.renderItem}
+          />
         </Lists.Container>
       </Loading>
     );

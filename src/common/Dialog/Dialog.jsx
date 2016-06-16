@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import DialogMixin from '../../mixins/DialogMixin';
-import {Dialog} from 'material-ui';
+import { Dialog } from 'material-ui';
 
 export default React.createClass({
   displayName: 'Dialog',
@@ -19,15 +19,16 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {children, style, open, ...other} = this.props;
-    const dialogStyle = {...style, ...styles.style};
+    const { children, style, open, ...other } = this.props;
+    const dialogStyle = { ...style, ...styles.style };
 
     return (
       <Dialog
         {...other}
         open={_.isBoolean(open) ? open : this.state.open}
         style={dialogStyle}
-        autoDetectWindowHeight={false}>
+        autoDetectWindowHeight={false}
+      >
         {children}
       </Dialog>
     );

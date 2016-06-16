@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import {StoreFormMixin, WaitForStoreMixin, SnackbarNotificationMixin} from '../../mixins';
+import { StoreFormMixin, WaitForStoreMixin, SnackbarNotificationMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -115,7 +115,7 @@ export default Reflux.createStore({
     this.data.template = template;
     this.dismissSnackbarNotification();
     if (this.data.successValidationAction === 'tabRender') {
-      let {dataSource} = this.data;
+      let { dataSource } = this.data;
       const apiKey = SessionStore.getToken();
 
       dataSource = dataSource.endsWith('/') ? dataSource : dataSource + '/';

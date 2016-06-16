@@ -3,7 +3,7 @@ import EditView from './EditView';
 import ListView from './ListView';
 import AddVersionView from './AddVersionView';
 
-let Solutions = {};
+const Solutions = {};
 
 Solutions.CreateDialog = CreateDialog;
 Solutions.EditView = EditView;

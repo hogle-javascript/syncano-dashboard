@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import Helmet from 'react-helmet';
@@ -9,7 +9,7 @@ import Store from './ChannelHistoryStore';
 import Actions from './ChannelHistoryActions';
 
 // Components
-import {Container, InnerToolbar} from '../../common/';
+import { Container, InnerToolbar } from '../../common/';
 
 // Local components
 import ChannelHistoryList from './ChannelHistoryList';
@@ -48,15 +48,15 @@ const ChannelHistory = Radium(React.createClass({
   },
 
   handleBackClick() {
-    const {params} = this.context;
-    const {router} = this.props;
+    const { params } = this.context;
+    const { router } = this.props;
 
-    router.push({name: 'channels', params});
+    router.push({ name: 'channels', params });
   },
 
   render() {
-    const {channelName} = this.props;
-    const {items, isLoading} = this.state;
+    const { channelName } = this.props;
+    const { items, isLoading } = this.state;
     const styles = this.getStyles();
     const title = `Channel History for ${channelName}`;
 
@@ -66,13 +66,15 @@ const ChannelHistory = Radium(React.createClass({
         <InnerToolbar
           title={title}
           backFallback={this.handleBackClick}
-          backButtonTooltip='Go back to Channels list'/>
+          backButtonTooltip="Go back to Channels list"
+        />
         <div style={styles.list}>
           <Container>
             <ChannelHistoryList
               name="Channel History"
               items={items}
-              isLoading={isLoading}/>
+              isLoading={isLoading}
+            />
           </Container>
         </div>
       </div>

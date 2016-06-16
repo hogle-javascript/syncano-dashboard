@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 
 // Stores & Actions
 import SchedulesActions from './SchedulesActions';
@@ -48,7 +48,7 @@ export default Reflux.createStore({
       crontab: null,
       script: null,
       scripts: [
-        {payload: '', text: 'Loading...'}
+        { payload: '', text: 'Loading...' }
       ]
     };
   },
@@ -63,10 +63,10 @@ export default Reflux.createStore({
     let scripts = ScriptsStore.getScriptsDropdown();
 
     if (scripts.length === 0) {
-      scripts = [{payload: '', text: 'No Scripts, add one first'}];
+      scripts = [{ payload: '', text: 'No Scripts, add one first' }];
     }
 
-    this.trigger({scripts});
+    this.trigger({ scripts });
   },
 
   getCrontabDropdown() {

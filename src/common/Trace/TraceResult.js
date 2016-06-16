@@ -9,7 +9,7 @@ export default React.createClass({
         padding: '25px',
         color: 'white',
         whiteSpace: 'pre-wrap',
-        font: `12px/normal 'Monaco', monospace`,
+        font: '12px/normal \'Monaco\', monospace',
         backgroundColor: '#4C4A43'
       }
     };

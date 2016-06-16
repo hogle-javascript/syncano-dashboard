@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {Avatar, FontIcon} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { Avatar, FontIcon } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'ColumnAvatarCheck',
@@ -27,7 +27,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked});
+    this.setState({ checked: newProps.checked });
   },
 
   getStyles() {
@@ -43,16 +43,16 @@ export default React.createClass({
 
     // If icon is checked - background is grey and icon is 'check'
     if (this.state.checked) {
-      return {icon: 'checkbox-marked-outline', color: GREY};
+      return { icon: 'checkbox-marked-outline', color: GREY };
     }
 
     // If icon is hovered background is grey and icon is 'check_box_outline_blank'
     if (this.state.hovered) {
-      return {icon: 'checkbox-blank-outline', color: GREY};
+      return { icon: 'checkbox-blank-outline', color: GREY };
     }
 
     // Otherwise we have original colorful icon
-    return {icon: this.props.icon, color: this.props.background};
+    return { icon: this.props.icon, color: this.props.background };
   },
 
   handleIconClick() {
@@ -78,7 +78,8 @@ export default React.createClass({
     return (
       <FontIcon
         className={`synicon-${iconState.icon}`}
-        style={styles.icon} />
+        style={styles.icon}
+      />
     );
   },
 
@@ -92,7 +93,8 @@ export default React.createClass({
         backgroundColor={iconState.color}
         onClick={this.handleIconClick}
         onMouseOver={this.handleMouseOver}
-        onMouseOut={this.handleMouseLeave} />
+        onMouseOut={this.handleMouseLeave}
+      />
     );
   }
 });

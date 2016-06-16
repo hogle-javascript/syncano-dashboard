@@ -30,7 +30,7 @@ export default {
 
   handleForm() {
     console.log('StoreFormMixin::handleForm');
-    this.trigger({canSubmit: false});
+    this.trigger({ canSubmit: false });
   },
 
   handleFormCompleted() {

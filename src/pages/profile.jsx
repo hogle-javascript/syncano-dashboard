@@ -1,5 +1,5 @@
 import React from 'react';
-import {Sidebar} from '../common/';
+import { Sidebar } from '../common/';
 
 export default React.createClass({
   displayName: 'ProfileBilling',
@@ -10,42 +10,51 @@ export default React.createClass({
         <Sidebar>
           <Sidebar.List
             key="Main Settings"
-            subheader="Main Settings">
+            subheader="Main Settings"
+          >
             <Sidebar.LinkListItem
               key="Profile"
               routeName="profile-settings"
-              primaryText="Profile"/>
+              primaryText="Profile"
+            />
             <Sidebar.LinkListItem
               key="Authentication"
               routeName="profile-authentication"
-              primaryText="Authentication"/>
+              primaryText="Authentication"
+            />
             <Sidebar.LinkListItem
               key="Invitations"
               routeName="profile-invitations"
-              primaryText="Invitations"/>
+              primaryText="Invitations"
+            />
           </Sidebar.List>
           <Sidebar.List
             key="Billing"
-            subheader="Billing">
+            subheader="Billing"
+          >
             <Sidebar.LinkListItem
               key="Billing plan"
               routeName="profile-billing-plan"
-              primaryText="Billing Plan"/>
+              primaryText="Billing Plan"
+            />
             <Sidebar.LinkListItem
               key="Payment methods"
               routeName="profile-billing-payment"
-              primaryText="Payment Methods"/>
+              primaryText="Payment Methods"
+            />
             <Sidebar.LinkListItem
               key="Invoices"
               routeName="profile-billing-invoices"
-              primaryText="Invoices"/>
+              primaryText="Invoices"
+            />
             <Sidebar.LinkListItem
               key="Billing address"
               routeName="profile-billing-address"
-              primaryText="Billing Address"/>
+              primaryText="Billing Address"
+            />
           </Sidebar.List>
         </Sidebar>
-        <div className="col-flex-1" style={{maxWidth: 'calc(100% - 256px)'}}>
+        <div className="col-flex-1" style={{ maxWidth: 'calc(100% - 256px)' }}>
           {this.props.children}
         </div>
       </div>

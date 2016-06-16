@@ -7,6 +7,7 @@ export default (props) => {
   return (
     <CheckIcon
       {...props}
-      iconElement={CircleCheckIcon}/>
+      iconElement={CircleCheckIcon}
+    />
   );
 };

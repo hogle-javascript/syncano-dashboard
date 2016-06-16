@@ -121,7 +121,7 @@ export default Reflux.createStore({
   fillInstanceDefaultMeta(instances) {
     return _.map(instances, (instance) => {
       if (_.isEmpty(instance.metadata)) {
-        instance.metadata = {color: 'indigo', icon: 'cloud'};
+        instance.metadata = { color: 'indigo', icon: 'cloud' };
       }
       return instance;
     });
@@ -151,7 +151,7 @@ export default Reflux.createStore({
   },
 
   onNextStep() {
-    let {currentStep, tourConfig, isTourVisible} = this.data;
+    let { currentStep, tourConfig, isTourVisible } = this.data;
 
     if (currentStep + 1 < tourConfig.length) {
       currentStep = (currentStep + 1) % tourConfig.length;

@@ -1,14 +1,14 @@
 import React from 'react';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
 import ListItem from './InstancesListItem';
-import {Loading, ColumnList, Dialog, Lists} from '../../common/';
+import { Loading, ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -23,7 +23,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading} = this.props;
+    const { isLoading } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -46,21 +46,23 @@ export default React.createClass({
         key={`instances-list-item-${item.name}`}
         checkable={false}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteInstanceDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('deleteInstanceDialog', item)}
+      />
     );
   },
 
   render() {
-    const {name, isLoading} = this.props;
+    const { name, isLoading } = this.props;
 
     return (
       <Loading show={isLoading}>
-        <Lists.Container className='instances-list'>
+        <Lists.Container className="instances-list">
           {this.getDialogs()}
           <ColumnList.Header>
             <Column.ColumnHeader
               primary={true}
-              columnName="CHECK_ICON">
+              columnName="CHECK_ICON"
+            >
               {name}
             </Column.ColumnHeader>
             <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
@@ -70,7 +72,8 @@ export default React.createClass({
           <Lists.List
             {...this.props}
             key="instances-list"
-            renderItem={this.renderItem}/>
+            renderItem={this.renderItem}
+          />
         </Lists.Container>
       </Loading>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
-import {FontIcon} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { FontIcon } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'DialogtitleWithIcon',
@@ -32,7 +32,7 @@ export default React.createClass({
       <div className="vp-3-t hp-3-l">
         <span style={styles.title}>
           <span style={styles.titleIconContainer}>
-            <FontIcon className={this.props.iconClassName}/>
+            <FontIcon className={this.props.iconClassName} />
           </span>
           {this.props.children}
         </span>

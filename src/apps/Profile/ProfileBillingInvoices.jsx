@@ -6,8 +6,8 @@ import SessionStore from '../Session/SessionStore';
 import Actions from './ProfileActions';
 import Store from './ProfileBillingInvoicesStore';
 
-import {RaisedButton} from 'material-ui';
-import {ColumnList, Container, Loading, Show, InnerToolbar, Lists} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { ColumnList, Container, Loading, Show, InnerToolbar, Lists } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -40,7 +40,8 @@ export default React.createClass({
           label="RETRY PAYMENT"
           secondary={true}
           disabled={invoice.actionDisabled}
-          onClick={() => this.handleRetryPaymentClick(invoice)}/>
+          onClick={() => this.handleRetryPaymentClick(invoice)}
+        />
       );
     }
 
@@ -48,12 +49,13 @@ export default React.createClass({
       <RaisedButton
         label="VIEW"
         primary={true}
-        onClick={() => this.handlePDFClick(invoice)}/>
+        onClick={() => this.handlePDFClick(invoice)}
+      />
     );
   },
 
   render() {
-    const {isLoading, invoices} = this.state;
+    const { isLoading, invoices } = this.state;
     const title = 'Invoices';
 
     return (
@@ -64,12 +66,13 @@ export default React.createClass({
         <Show if={!invoices.length}>
           <Container.Empty
             icon="synicon-file-outline"
-            text="You have no invoices"/>
+            text="You have no invoices"
+          />
         </Show>
 
         <Show if={invoices.length}>
           <Container>
-            <Lists.Container className='invoices-list'>
+            <Lists.Container className="invoices-list">
               <ColumnList.Header>
                 <Column.ColumnHeader columnName="DESC">Period</Column.ColumnHeader>
                 <Column.ColumnHeader columnName="DESC">Invoice ID</Column.ColumnHeader>

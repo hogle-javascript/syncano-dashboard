@@ -3,7 +3,7 @@ import Moment from 'moment';
 import _ from 'lodash';
 import Actions from './DataObjectsActions';
 
-import {IconButton, TableHeaderColumn, TableRowColumn, TableHeader, TableRow} from 'material-ui';
+import { IconButton, TableHeaderColumn, TableRowColumn, TableHeader, TableRow } from 'material-ui';
 
 export default {
   columnsRenderers() {
@@ -46,7 +46,8 @@ export default {
     return (
       <IconButton
         iconClassName="synicon-download"
-        onTouchTap={(event) => this.handleFileOnClick(event, obj.value)} />
+        onTouchTap={(event) => this.handleFileOnClick(event, obj.value)}
+      />
     );
   },
 
@@ -65,7 +66,8 @@ export default {
               whiteSpace: 'normal',
               wordWrap: 'normal'
             }}
-            tooltip={item.tooltip}>
+            tooltip={item.tooltip}
+          >
             {item.id}
           </TableHeaderColumn>
         );
@@ -73,8 +75,8 @@ export default {
     });
 
     return (
-      <TableHeader key='header'>
-        <TableRow key='header-row'>
+      <TableHeader key="header">
+        <TableRow key="header-row">
           {columnsComponents}
         </TableRow>
       </TableHeader>
@@ -120,7 +122,8 @@ export default {
         return (
           <TableRowColumn
             key={`${column.id}-${i}`}
-            style={{width: column.width ? column.width : 100}}>
+            style={{ width: column.width ? column.width : 100 }}
+          >
             {value}
           </TableRowColumn>
         );
@@ -129,9 +132,10 @@ export default {
       return (
         <TableRow
           onTouchTap={() => Actions.showDialog(item)}
-          style={{cursor: 'pointer'}}
+          style={{ cursor: 'pointer' }}
           key={`row-${index}`}
-          selected={selected}>
+          selected={selected}
+        >
           {columnsComponents}
         </TableRow>
       );

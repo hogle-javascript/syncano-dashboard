@@ -1,65 +1,108 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Dropzone from 'react-dropzone';
 
-import {FontIcon} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Loading} from '../';
-import UploadFileButton from './UploadFileButton';
+import { FontIcon, RaisedButton } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Loading } from '../';
 
-const DropZone = ({
-  className,
-  isLoading,
-  disableClick,
-  onDrop,
-  containerStyle,
-  styles,
-  withButton,
-  handleButtonClick,
-  uploadButtonLabel,
-  certificateType,
-  children
-}) => {
-  const dropZoneStyles = {
-    dropZone: {
-      display: 'webkit-flex; display: flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: 210,
-      width: '100%',
-      borderStyle: 'dashed',
-      borderWidth: 1,
-      borderColor: Colors.grey300,
-      backgroundColor: Colors.grey100,
-      color: Colors.grey400,
-      ':hover': {
-        borderColor: Colors.blue500,
-        backgroundColor: Colors.blue200,
-        color: Colors.blue500
+export default class DropZone extends Component {
+  static propTypes = {
+    uploadButtonLabel: PropTypes.string,
+    buttonLabelColor: PropTypes.string,
+    buttonIconClassName: PropTypes.string,
+    className: PropTypes.string,
+    uploadButtonStyle: PropTypes.object,
+    buttonIconStyle: PropTypes.object,
+    containerStyle: PropTypes.object,
+    styles: PropTypes.object,
+    disableClick: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    withButton: PropTypes.bool,
+    onDrop: PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+    certificateType: PropTypes.oneOf(['development', 'production'])
+  }
+
+  static get defaultProps() {
+    return {
+      withButton: false,
+      disableClick: false,
+      buttonLabelColor: Colors.grey500,
+      buttonBackgroundColor: Colors.grey200,
+      buttonIconClassName: 'synicon-cloud-upload'
+    };
+  }
+
+  getStyles() {
+    return {
+      dropZone: {
+        display: 'flex',
+        justifyContent: 'center',
+        height: 210,
+        width: '100%',
+        borderStyle: 'dashed',
+        borderWidth: 1,
+        borderColor: Colors.grey300,
+        backgroundColor: Colors.grey100,
+        color: Colors.grey400,
+        ':hover': {
+          borderColor: Colors.blue500,
+          backgroundColor: Colors.blue200,
+          color: Colors.blue500
+        }
+      },
+      dropZoneDescription: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        lineHeight: '56px',
+        fontSize: '20px'
+      },
+      uploadIcon: {
+        color: Colors.grey300,
+        fontSize: '70px'
+      },
+      uploadButton: {
+        marginBottom: 20,
+        fontWeight: 600,
+        color: this.props.buttonLabelColor
+      },
+      uploadButtonIcon: {
+        color: this.props.buttonLabelColor
       }
-    },
-    dropZoneDescription: {
-      lineHeight: '36px',
-      maxWidth: 350,
-      textAlign: 'center',
-      fontSize: '24px'
-    },
-    uploadIcon: {
-      color: Colors.grey300,
-      fontSize: '70px'
-    }
-  };
+    };
+  }
 
-  const renderUploadButton = () => {
+  renderUploadButton() {
+    const { uploadButtonLabel, withButton, buttonIconStyle, buttonIconClassName, uploadButtonStyle } = this.props;
+    const dropZoneStyles = this.getStyles();
+    const icon = (
+      <FontIcon
+        style={{ ...dropZoneStyles.uploadButtonIcon, ...buttonIconStyle }}
+        className={buttonIconClassName}
+      />
+    );
+
     if (withButton) {
       return (
-        <UploadFileButton
-          getFile={handleButtonClick}
-          uploadButtonLabel={uploadButtonLabel}/>
+        <RaisedButton
+          style={{ ...dropZoneStyles.uploadButton, ...uploadButtonStyle }}
+          backgroundColor={Colors.grey200}
+          labelColor={Colors.grey500}
+          onTouchTap={this.refs.dropzone ? () => this.refs.dropzone.open() : null}
+          label={uploadButtonLabel}
+          icon={icon}
+        />
       );
     }
-  };
+  }
 
-  const renderDescription = () => {
+  renderDescription() {
+    const { certificateType, children } = this.props;
+    const dropZoneStyles = this.getStyles();
+
+
     if (children) {
       return children;
     }
@@ -68,31 +111,35 @@ const DropZone = ({
       <div style={dropZoneStyles.dropZoneDescription}>
         <FontIcon
           style={dropZoneStyles.uploadIcon}
-          className="synicon-cloud-upload"/>
+          className="synicon-cloud-upload"
+        />
         <div>
           {`Drag & Drop to upload ${certificateType} certificate`}
         </div>
       </div>
     );
-  };
+  }
 
-  return (
-    <div style={containerStyle}>
-      <Loading show={isLoading}>
-        {renderUploadButton()}
-        <Dropzone
-          className={className}
-          multiple={false}
-          disableClick={disableClick}
-          onDrop={onDrop}
-          style={{...dropZoneStyles.dropZone, ...styles}}>
-          {renderDescription()}
-        </Dropzone>
-      </Loading>
-    </div>
-  );
-};
+  render() {
+    const { className, isLoading, disableClick, onDrop, containerStyle, styles } = this.props;
+    const dropZoneStyles = this.getStyles();
 
-DropZone.defaultProps = {disableClick: false};
-
-export default DropZone;
+    return (
+      <div style={containerStyle}>
+        <Loading show={isLoading}>
+          {this.renderUploadButton()}
+          <Dropzone
+            ref="dropzone"
+            className={className}
+            multiple={false}
+            disableClick={disableClick}
+            onDrop={onDrop}
+            style={{ ...dropZoneStyles.dropZone, ...styles }}
+          >
+            {this.renderDescription()}
+          </Dropzone>
+        </Loading>
+      </div>
+    );
+  }
+}

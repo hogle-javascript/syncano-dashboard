@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './ProfileInvitationsActions';
@@ -11,7 +11,7 @@ import Store from './ProfileInvitationsStore';
 
 // Components
 import ProfileInvitationsList from './ProfileInvitationsList';
-import {Container, Show, Loading, InnerToolbar} from '../../common/';
+import { Container, Show, Loading, InnerToolbar } from '../../common/';
 
 export default React.createClass({
   displayName: 'ProfileInvitations',
@@ -27,7 +27,7 @@ export default React.createClass({
   },
 
   render() {
-    const {items, isLoading, hideDialogs} = this.state;
+    const { items, isLoading, hideDialogs } = this.state;
     const title = 'Invitations';
 
     return (
@@ -38,8 +38,9 @@ export default React.createClass({
           <Loading show={isLoading}>
             <Show if={items.length < 1}>
               <Container.Empty
-                icon='synicon-email-outline'
-                text='You have no invitations'/>
+                icon="synicon-email-outline"
+                text="You have no invitations"
+              />
             </Show>
 
             <Show if={items.length > 0}>
@@ -47,7 +48,8 @@ export default React.createClass({
                 name="Profile Invitations"
                 isLoading={isLoading}
                 items={items}
-                hideDialogs={hideDialogs}/>
+                hideDialogs={hideDialogs}
+              />
             </Show>
           </Loading>
         </Container>
