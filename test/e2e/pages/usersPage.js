@@ -1,3 +1,4 @@
+import accounts from '../tempAccounts';
 import utils from '../utils';
 
 export default {
@@ -7,7 +8,7 @@ export default {
       locateStrategy: 'xpath'
     },
     user: {
-      selector: '//div[text()="username"]',
+      selector: `//div[text()="${accounts.navigationUser.tempUserNames}"]`,
       locateStrategy: 'xpath'
     },
     addUserButton: {

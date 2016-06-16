@@ -8,6 +8,7 @@ const createAPNSSocket = require('./create/apnsSocket.js');
 const createGCMSocket = require('./create/gcmSocket.js');
 const createAPNSDevices = require('./create/apnsDevices.js');
 const createGCMDevices = require('./create/gcmDevices.js');
+const createTestUsers = require('./create/testUser');
 const getCertFile = require('./files/getCertificate.js');
 const saveAccountsToFile = require('./files/saveAccounts.js');
 
@@ -43,6 +44,7 @@ function createNavigationUser() {
   return createTestAccount()
     .then((tempAccount) => createTestInstances(tempAccount, 1))
     .then((tempAccount) => createTestScripts(tempAccount, 1))
+    .then((tempAccount) => createTestUsers(tempAccount, 1))
     .then((tempAccount) => {
       delete tempAccount.connection;
       accounts.navigationUser = tempAccount;
