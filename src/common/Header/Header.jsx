@@ -66,7 +66,6 @@ const Header = Radium(React.createClass({
 
   getDropdownItems() {
     const {router} = this.props;
-    const styles = this.getStyles();
     const user = SessionStore.getUser() || '';
     const billingIcon = <FontIcon className="synicon-credit-card"/>;
     const instancesListIcon = <FontIcon className="synicon-view-list"/>;
