@@ -40,10 +40,6 @@ export default {
       .clickElement('@tagsListJs')
       .waitForElementVisible('@tagsJs');
 
-    // solutionsPage.getText('@tagListItemCount', (result) => {
-    //   tagsCount = parseInt(result.value, 10);
-    // });
-
     client.elements(elementsWithTag.locateStrategy, elementsWithTag.selector, (result) => {
       if (result.value.length >= 2) {
         client.assert.ok(true, 'Count is equal or greater than two solutions on the list');
