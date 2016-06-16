@@ -1,8 +1,6 @@
 import utils from '../utils';
-import globals from '../globals';
 
 export default {
-  url: `https://localhost:8080/#/instances/${globals.instanceName}/sockets`,
   elements: {
     instancesDropdown: {
       selector: '.instances-dropdown'
@@ -137,14 +135,15 @@ export default {
       locateStrategy: 'xpath'
     },
     addApnsSocket: {
-      selector: '//div[text()="APNS Push Notifications (BETA)"]/following::div[2]',
+      selector: '//div[text()="APNS Push Notifications (BETA)"]/following::div[2]//button/div/div/span',
       locateStrategy: 'xpath'
     },
     uploadApnsDevCert: {
-      selector: 'input[name="hiddenInput"]'
+      selector: '//input[@type="file"][@style="display: block; visibility: visible;"]',
+      locateStrategy: 'xpath'
     },
     addGcmSocket: {
-      selector: '//div[text()="GCM Push Notifications (BETA)"]/following::div[2]',
+      selector: '//div[text()="GCM Push Notifications (BETA)"]/following::div[2]//button/div/div/span',
       locateStrategy: 'xpath'
     },
     inputGcmDevKey: {
@@ -165,8 +164,12 @@ export default {
       selector: '//label[text()="Apple Push Notification Certificate Name"]/../input',
       locateStrategy: 'xpath'
     },
+    apnsCertInput: {
+      selector: '//input[contains(@id, "ApplePushNotificationCertificateName")]',
+      locateStrategy: 'xpath'
+    },
     apnsSocket: {
-      selector: '//div[text()="Apple Push Notification service (APNs)"]',
+      selector: '//div[text()="APNS Push Notifications (BETA)"]',
       locateStrategy: 'xpath'
     },
     removeCert: {
@@ -183,6 +186,14 @@ export default {
     },
     socketsDropDownAll: {
       selector: '//span[text()="Sockets:"]/../..//div[text()="All"]',
+      locateStrategy: 'xpath'
+    },
+    cancelButton: {
+      selector: '//*[text()="Cancel"]',
+      locateStrategy: 'xpath'
+    },
+    configuration: {
+      selector: '//span[@class="synicon-socket-push"]/../../following-sibling::div//span[1]',
       locateStrategy: 'xpath'
     }
   }

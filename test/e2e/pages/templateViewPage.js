@@ -32,7 +32,7 @@ export default {
       locateStrategy: 'xpath'
     },
     htmlTestTemplateRow: {
-      selector: '//div[text()="templates_123"]',
+      selector: '//div[text()="objects_html_table"]',
       locateStrategy: 'xpath'
     },
     renderInTabButton: {

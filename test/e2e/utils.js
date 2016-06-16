@@ -21,8 +21,7 @@ export default {
     return 'https://localhost:8080';
   },
   jinjaTemplate() {
-    return `{% set objects = response.objects %}{% if objects %}{{- timestamp -}}{{',' -}}{% for object in objects %}
-      {% for key, value in object.iteritems() %}{{- key -}}{{',' -}}{% endfor %}{% endfor %}{% endif %}`;
+    return `{% set name = response.name %} {% if name %} {{- timestamp -}}{{',' -}}{{- name -}} {% endif %}`;
   },
   randomString(length) {
     const possible = 'ABCDEFabcdef0123456789';

@@ -1,3 +1,5 @@
+import accounts from '../../tempAccounts';
+
 export default {
   tags: ['solutions'],
   beforeEach(client) {
@@ -6,7 +8,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   afterEach(client, done) {
     client.end(done);
@@ -19,14 +21,14 @@ export default {
       .clickElement('@favorite')
       .waitForElementVisible('@favoriteSolutionTitle');
   },
-  'Administrator can view his Solutions': (client) => {
-    const solutionsPage = client.page.solutionsPage();
+  // 'Administrator can view his Solutions': (client) => {
+  //   const solutionsPage = client.page.solutionsPage();
 
-    solutionsPage
-      .navigate()
-      .clickElement('@mySolutions')
-      .waitForElementVisible('@mySolutionTitle');
-  },
+  //   solutionsPage
+  //     .navigate()
+  //     .clickElement('@mySolutions')
+  //     .waitForElementVisible('@mySolutionTitle');
+  // },
   'Administrator can filter solutions by tags': (client) => {
     let tagsCount = null;
     const solutionsPage = client.page.solutionsPage();

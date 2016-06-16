@@ -17,12 +17,10 @@ export default {
   'Test Add Class': (client) => {
     const classesPage = client.page.classesPage();
     const className = utils.addSuffix('class');
-
-    client.url('https://localhost:8080/#/instances/' + accounts.alternativeUser.instanceName + '/classes');
+    const instanceName = accounts.alternativeUser.instanceName;
 
     classesPage
-      // Example rewrite tests, will need to change custom command, but right now it is not possible
-      // .goToUrl('temp', 'classes')
+      .goToUrl(instanceName, 'classes')
       .clickElement('@addClassButton')
       .fillInput('@createModalNameInput', className)
       .fillInput('@createModalDescriptionInput', utils.addSuffix())

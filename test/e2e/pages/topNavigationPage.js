@@ -16,16 +16,20 @@ export default {
       selector: '//div[@id="menu-account--dropdown"]/div[1]',
       locateStrategy: 'xpath'
     },
-    instancesListDropdown: {
+    copyAccountKeyDropdown: {
       selector: '//div[@id="menu-account--dropdown"]/div[2]',
       locateStrategy: 'xpath'
     },
-    billingDropdown: {
+    instancesListDropdown: {
       selector: '//div[@id="menu-account--dropdown"]/div[3]',
       locateStrategy: 'xpath'
     },
-    logoutDropdown: {
+    billingDropdown: {
       selector: '//div[@id="menu-account--dropdown"]/div[4]',
+      locateStrategy: 'xpath'
+    },
+    logoutDropdown: {
+      selector: '//div[@id="menu-account--dropdown"]/div[5]',
       locateStrategy: 'xpath'
     },
     support: {
