@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 5.11.1
+    version: 6.2.1
 
 general:
   artifacts:
@@ -9,9 +9,7 @@ general:
 
 test:
   override:
-    - npm run-script lint
     - ./test.sh:
-        parallel: true
         timeout: 120
 
 deployment:
