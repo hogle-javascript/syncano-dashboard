@@ -6,7 +6,7 @@ export default (props) => (
     backgroundColor="#ffcc01"
     labelColor="#1d2228"
     labelStyle={{ fontWeight: 700 }}
-    label="Upgrade your plan"
+    label="Upgrade"
     {...props}
   />
 );
