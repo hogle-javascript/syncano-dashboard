@@ -69,8 +69,8 @@ export default React.createClass({
               <Dialog.ContentSection>
                 <div className="col-flex-1">
                   <Notification>
-                    You have chosen the "{item.class}" Class but it doesn't contain any custom fields in the Class
-                    schema. To use the full power of Data Endpoints, we suggest
+                    {`You have chosen the "${item.class}" Class but it doesn't contain any custom fields in the Class
+                    schema. To use the full power of Data Endpoints, we suggest`}
                     <Link
                       to={{
                         name: 'classEdit',
