@@ -13,7 +13,7 @@ test:
     - npm run build && mv ./dist ./dist_e2e
     - npm run e2e-setup
     - npm run e2e-http-server && npm run oauth-server:
-      background: true
+        background: true
     - npm run e2e-create-accounts
     - npm run e2e:
         timeout: 120
