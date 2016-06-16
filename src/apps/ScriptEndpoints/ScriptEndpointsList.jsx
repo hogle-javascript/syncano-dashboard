@@ -1,14 +1,14 @@
 import React from 'react';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 import Actions from './ScriptEndpointsActions';
 import Store from './ScriptEndpointsStore';
 
 // Components
 import ListItem from './ScriptEndpointsListItem';
-import {ColumnList, Dialog, Lists} from '../../common/';
+import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -34,7 +34,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading, getCheckedItems} = this.props;
+    const { isLoading, getCheckedItems } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -51,19 +51,20 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    const {checkItem} = this.props;
+    const { checkItem } = this.props;
 
     return (
       <ListItem
         key={`script-endpoints-list-item-${item.name}`}
         onIconClick={checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeScriptEndpointDialog', item)} />
+        showDeleteDialog={() => this.showDialog('removeScriptEndpointDialog', item)}
+      />
     );
   },
 
   render() {
-    const {handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other} = this.props;
+    const { handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other } = this.props;
 
     return (
       <Lists.Container>
@@ -73,34 +74,40 @@ export default React.createClass({
             className="col-xs-12"
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={handleTitleClick}>
+            handleClick={handleTitleClick}
+          >
             Script Endpoints
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Description
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Script
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Traces
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="KEY"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Public
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
-              handleUnselectAll={handleUnselectAll}>
+              handleUnselectAll={handleUnselectAll}
+            >
               <Lists.MenuItem onTouchTap={() => this.showDialog('removeScriptEndpointDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
@@ -108,7 +115,8 @@ export default React.createClass({
         <Lists.List
           {...other}
           key="script-endpoints-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

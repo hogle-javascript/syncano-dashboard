@@ -1,5 +1,5 @@
 import React from 'react';
-import {Popover} from 'material-ui';
+import { Popover } from 'material-ui';
 
 export default React.createClass({
   displayName: 'Popover',
@@ -37,15 +37,16 @@ export default React.createClass({
   },
 
   render() {
-    const {open, anchorElement} = this.state;
-    const {children, ...other} = this.props;
+    const { open, anchorElement } = this.state;
+    const { children, ...other } = this.props;
 
     return (
       <Popover
         {...other}
         onRequestClose={this.hide}
         open={open}
-        anchorEl={anchorElement}>
+        anchorEl={anchorElement}
+      >
         {children}
       </Popover>
     );

@@ -3,7 +3,7 @@ export default {
     this.NewLibConnection
       .Template
       .please()
-      .get({name})
+      .get({ name })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -12,7 +12,7 @@ export default {
     this.NewLibConnection
       .Template
       .please()
-      .update({name}, params)
+      .update({ name }, params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -21,7 +21,7 @@ export default {
     this.NewLibConnection
       .Template
       .please()
-      .render({name}, context)
+      .render({ name }, context)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -37,7 +37,7 @@ export default {
   },
 
   create(payload) {
-    const {name, content_type} = payload;
+    const { name, content_type } = payload;
 
     this.NewLibConnection
       .Template
@@ -56,7 +56,7 @@ export default {
       this.NewLibConnection
         .Template
         .please()
-        .delete({name: template.name}));
+        .delete({ name: template.name }));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -64,7 +64,7 @@ export default {
   },
 
   renderFromEndpoint(templateName, endpointUrl) {
-    const {accountKey} = this.NewLibConnection;
+    const { accountKey } = this.NewLibConnection;
     const params = {
       api_key: accountKey,
       template_response: templateName,
@@ -76,7 +76,7 @@ export default {
       url += '/';
     }
 
-    this.Promise.get(url, {params})
+    this.Promise.get(url, { params })
       .then(this.completed)
       .catch(this.failure);
   }

@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import InstanceDialogStore from '../Instances/InstanceDialogStore';
@@ -11,8 +11,8 @@ import Store from './InstallDialogStore';
 import Actions from './InstallDialogActions';
 
 // Components
-import {TextField} from 'material-ui' ;
-import {Loading, SelectFieldWrapper, Show, Notification, Dialog} from '../../common/';
+import { TextField } from 'material-ui' ;
+import { Loading, SelectFieldWrapper, Show, Notification, Dialog } from '../../common/';
 
 export default React.createClass({
   displayName: 'SolutionInstallDialog',
@@ -37,7 +37,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {instance, instances, solutionId, version} = this.state;
+    const { instance, instances, solutionId, version } = this.state;
     let instanceName = null;
 
     if (instance) {
@@ -48,7 +48,7 @@ export default React.createClass({
     if (!instanceName) {
       instanceName = InstanceDialogStore.genUniqueName();
 
-      Actions.createInstance({name: instanceName}).then(() => {
+      Actions.createInstance({ name: instanceName }).then(() => {
         Actions.installSolution({
           versionId: version,
           solutionId,
@@ -65,7 +65,7 @@ export default React.createClass({
   },
 
   renderCustomFormNotifications() {
-    const {errors} = this.state;
+    const { errors } = this.state;
     const nonFormFields = ['classes'];
     let messages = [];
 
@@ -82,7 +82,7 @@ export default React.createClass({
   },
 
   renderInstanceField() {
-    const {instances, instance} = this.state;
+    const { instances, instance } = this.state;
 
     if (!instances) {
       return <Loading />;
@@ -95,9 +95,11 @@ export default React.createClass({
           name="instance"
           fullWidth={true}
           disabled={true}
-          valueLink={this.linkState('instance')}
+          value={instance}
+          onChange={(event, value) => this.setState({ instance: value })}
           errorText={this.getValidationMessages('instance').join(' ')}
-          floatingLabelText="Instance Name"/>
+          floatingLabelText="Instance Name"
+        />
       );
     }
 
@@ -108,13 +110,14 @@ export default React.createClass({
         value={instance}
         floatingLabelText="Instances"
         onChange={(event, index, value) => this.setSelectFieldValue('instance', value)}
-        errorText={this.getValidationMessages('instance').join(' ')}/>
+        errorText={this.getValidationMessages('instance').join(' ')}
+      />
     );
   },
 
   render() {
     const title = 'Install a Solution';
-    const {open, hideVersionPicker, version} = this.state;
+    const { open, hideVersionPicker, version } = this.state;
 
     return (
       <Dialog.FullPage
@@ -128,8 +131,10 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
-        }>
+            handleConfirm={this.handleFormValidation}
+          />
+        }
+      >
         <div>
           {this.renderFormNotifications()}
           {this.renderCustomFormNotifications()}
@@ -146,7 +151,8 @@ export default React.createClass({
               options={Store.getVersionsDropdown()}
               value={version}
               onChange={(event, index, value) => this.setSelectFieldValue('version', value)}
-              errorText={this.getValidationMessages('version').join(' ')}/>
+              errorText={this.getValidationMessages('version').join(' ')}
+            />
           </Show>
         </div>
       </Dialog.FullPage>

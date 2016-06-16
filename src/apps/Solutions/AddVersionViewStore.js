@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin, WaitForStoreMixin, StoreHelpersMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, WaitForStoreMixin, StoreHelpersMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -37,9 +37,9 @@ export default Reflux.createStore({
       instance: null,
       instances: null,
       instanceData: {
-        views: [],
+        dataEndpoints: [],
         classes: [],
-        codeboxes: [],
+        scriptEndpoints: [],
         scripts: [],
         triggers: [],
         schedules: [],
@@ -47,9 +47,9 @@ export default Reflux.createStore({
 
       },
       exportSpec: {
-        views: [],
+        dataEndpoints: [],
         classes: {},
-        codeboxes: [],
+        scriptEndpoints: [],
         scripts: {},
         triggers: {},
         schedules: {},
@@ -84,7 +84,7 @@ export default Reflux.createStore({
 
   setInstances(instances) {
     console.debug('AddVersionViewStore::setInstances');
-    this.data.instances = _.map(_.keys(instances), (key) => instances[key]);
+    this.data.instances = instances;
     this.trigger(this.data);
   },
 
@@ -92,7 +92,7 @@ export default Reflux.createStore({
     let instances = this.data.instances;
 
     if (!instances) {
-      return [{payload: '', text: 'Loading...'}];
+      return [{ payload: '', text: 'Loading...' }];
     }
 
     return _.map(instances, (instance) => {
@@ -137,8 +137,8 @@ export default Reflux.createStore({
 
     const join = this.joinTrailing(
       Actions.fetchClasses.completed,
-      Actions.fetchDataViews.completed,
-      Actions.fetchCodeBoxes.completed,
+      Actions.fetchDataEndpoints.completed,
+      Actions.fetchScriptEndpoints.completed,
       Actions.fetchTriggers.completed,
       Actions.fetchScripts.completed,
       Actions.fetchSchedules.completed,
@@ -150,8 +150,8 @@ export default Reflux.createStore({
     );
 
     Actions.fetchClasses();
-    Actions.fetchDataViews();
-    Actions.fetchCodeBoxes();
+    Actions.fetchDataEndpoints();
+    Actions.fetchScriptEndpoints();
     Actions.fetchTriggers();
     Actions.fetchScripts();
     Actions.fetchSchedules();
@@ -162,8 +162,8 @@ export default Reflux.createStore({
     this.data.instanceData.classes = obj;
   },
 
-  onFetchCodeBoxesCompleted(obj) {
-    this.data.instanceData.CodeBoxes = obj;
+  onFetchScriptEndpointsCompleted(obj) {
+    this.data.instanceData.scriptEndpoints = obj;
   },
 
   onFetchTriggersCompleted(obj) {
@@ -174,8 +174,8 @@ export default Reflux.createStore({
     this.data.instanceData.schedules = obj;
   },
 
-  onFetchDataViewsCompleted(obj) {
-    this.data.instanceData.views = obj;
+  onFetchDataEndpointsCompleted(obj) {
+    this.data.instanceData.dataEndpoints = obj;
   },
 
   onFetchChannelsCompleted(obj) {
@@ -188,10 +188,7 @@ export default Reflux.createStore({
 
   onCreateVersionCompleted() {
     console.debug('AddVersionViewStore::onCreateSolutionCompleted');
-    SessionStore.getRouter().transitionTo(
-      'solutions-edit',
-      SessionStore.getParams()
-    );
+    SessionStore.getRouter().push({ name: 'solutions-edit', params: SessionStore.getParams() });
   },
 
   onFetchInstancesCompleted(instances) {
@@ -199,4 +196,3 @@ export default Reflux.createStore({
     Actions.setInstances(instances);
   }
 });
-

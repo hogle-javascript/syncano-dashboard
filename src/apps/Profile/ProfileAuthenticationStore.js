@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import {StoreFormMixin, SnackbarNotificationMixin} from '../../mixins';
+import { StoreFormMixin, SnackbarNotificationMixin } from '../../mixins';
 
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';

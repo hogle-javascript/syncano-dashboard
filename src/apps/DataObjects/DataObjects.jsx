@@ -1,11 +1,11 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 import Constants from '../../constants/Constants';
 
 // Stores and Actions
@@ -13,8 +13,8 @@ import Actions from './DataObjectsActions';
 import Store from './DataObjectsStore';
 
 // Components
-import {IconButton, RaisedButton, Table, TableBody} from 'material-ui';
-import {Container, Show, Loading, Dialog, InnerToolbar} from '../../common/';
+import { IconButton, RaisedButton, Table, TableBody } from 'material-ui';
+import { Container, Show, Loading, Dialog, InnerToolbar } from '../../common/';
 
 // Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu';
@@ -39,7 +39,7 @@ const DataObjects = React.createClass({
     this.hideDialogs(nextState.hideDialogs);
 
     if (!nextState.selectedRows && this.refs.table) {
-      this.refs.table.setState({selectedRows: [], allRowsSelected: false});
+      this.refs.table.setState({ selectedRows: [], allRowsSelected: false });
     }
   },
 
@@ -48,14 +48,22 @@ const DataObjects = React.createClass({
   },
 
   isClassProtected() {
-    const {className} = this.props.params;
+    const { className } = this.props.params;
 
     return _.includes(Constants.PROTECTED_FROM_DELETE_CLASS_NAMES, className);
   },
 
+  handleCellClick(rowNumber, columnNumber) {
+    console.info('DataObjects::handleCellClick', arguments);
+
+    if (columnNumber > -1) {
+      this.showDataObjectEditDialog(rowNumber);
+    }
+  },
+
   handleDelete() {
     console.info('DataObjects::handleDelete');
-    const {classObj} = this.state;
+    const { classObj } = this.state;
 
     Actions.removeDataObjects(classObj.name, Store.getIDsFromTable());
   },
@@ -75,19 +83,19 @@ const DataObjects = React.createClass({
   },
 
   handleMoreRows() {
-    const {nextParams} = this.state;
+    const { nextParams } = this.state;
 
     Actions.subFetchDataObjects(nextParams);
   },
 
   handleBackClick() {
-    const {router, params} = this.props;
+    const { router, params } = this.props;
 
-    router.push({name: 'classes', params});
+    router.push({ name: 'classes', params });
   },
 
   initDialogs() {
-    const {isLoading} = this.props;
+    const { isLoading } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -120,12 +128,13 @@ const DataObjects = React.createClass({
       result[key] = value;
       return result;
     }, {});
+
     Actions.showDialog(dataObject);
   },
 
   renderTable() {
     console.info('DataObjects::renderTable');
-    const {hasNextPage, isLoading} = this.state;
+    const { hasNextPage, isLoading } = this.state;
     const tableData = Store.renderTableData();
     const tableHeader = Store.renderTableHeader(this.handleSelectAll);
 
@@ -135,32 +144,38 @@ const DataObjects = React.createClass({
           ref="table"
           multiSelectable={true}
           showRowHover={true}
+          onCellClick={this.handleCellClick}
           onRowSelection={this.handleRowSelection}
-          wrapperStyle={{minHeight: '120px'}}
-          bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>
+          wrapperStyle={{ minHeight: '120px' }}
+          bodyStyle={{ overflowX: 'visible', overflowY: 'initial' }}
+        >
           {tableHeader}
           <TableBody
             className="mui-table-body"
             deselectOnClickaway={false}
             showRowHover={true}
-            stripedRows={false}>
+            stripedRows={false}
+          >
             {tableData}
           </TableBody>
         </Table>
 
         <div
           className="row align-center"
-          style={{margin: 50}}>
+          style={{ margin: 50 }}
+        >
           <div>Loaded {tableData.length} Data Objects</div>
         </div>
-        <Loading show={isLoading}/>
+        <Loading show={isLoading} />
         <Show if={hasNextPage && !isLoading}>
           <div
             className="row align-center"
-            style={{margin: 50}}>
+            style={{ margin: 50 }}
+          >
             <RaisedButton
               label="Load more"
-              onClick={this.handleMoreRows}/>
+              onClick={this.handleMoreRows}
+            />
           </div>
         </Show>
       </div>
@@ -168,8 +183,8 @@ const DataObjects = React.createClass({
   },
 
   render() {
-    const {className} = this.props.params;
-    const {items, selectedRows, isLoading} = this.state;
+    const { className } = this.props.params;
+    const { items, selectedRows, isLoading } = this.state;
     const title = `Class: ${className}`;
     let selectedMessageText = '';
 
@@ -186,31 +201,36 @@ const DataObjects = React.createClass({
         <InnerToolbar
           title={`${title} ${selectedMessageText}`}
           backFallback={this.handleBackClick}
-          backButtonTooltip="Go back to Classes list">
+          backButtonTooltip="Go back to Classes list"
+        >
 
           <IconButton
-            style={{fontSize: 25, marginTop: 5}}
+            style={{ fontSize: 25, marginTop: 5 }}
             iconClassName="synicon-plus"
             tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Objects'}
             disabled={this.isClassProtected()}
-            onClick={Actions.showDialog}/>
+            onClick={Actions.showDialog}
+          />
 
           <IconButton
-            style={{fontSize: 25, marginTop: 5}}
+            style={{ fontSize: 25, marginTop: 5 }}
             iconClassName="synicon-delete"
             tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Delete Data Objects'}
             disabled={(selectedRows && !selectedRows.length) || this.isClassProtected()}
-            onTouchTap={() => this.showDialog('deleteDataObjectDialog')}/>
+            onTouchTap={() => this.showDialog('deleteDataObjectDialog')}
+          />
 
           <IconButton
-            style={{fontSize: 25, marginTop: 5}}
+            style={{ fontSize: 25, marginTop: 5 }}
             iconClassName="synicon-refresh"
             tooltip="Reload Data Objects"
-            onTouchTap={Actions.fetch}/>
+            onTouchTap={Actions.fetch}
+          />
 
           <ColumnsFilterMenu
             columns={Store.getTableColumns()}
-            checkToggleColumn={Actions.checkToggleColumn}/>
+            checkToggleColumn={Actions.checkToggleColumn}
+          />
 
         </InnerToolbar>
         <Container>

@@ -5,9 +5,9 @@ import GCMStore from './GCM/GCMPushNotificationsStore';
 import APNSActions from './APNS/APNSPushNotificationsActions';
 import APNSStore from './APNS/APNSPushNotificationsStore';
 
-import {FontIcon, ListItem} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Popover} from '../../common/';
+import { FontIcon, ListItem } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Popover } from '../../common/';
 
 export default React.createClass({
   displayName: 'ConfigPushNotificationsPopover',
@@ -32,37 +32,43 @@ export default React.createClass({
     const androidIcon = (
       <FontIcon
         color={Colors.green400}
-        className="synicon-android"/>
+        className="synicon-android"
+      />
     );
     const appleIcon = (
       <FontIcon
         color={Colors.black}
-        className="synicon-apple"/>
+        className="synicon-apple"
+      />
     );
     const doneIcon = (
       <FontIcon
         color={Colors.green400}
-        className="synicon-checkbox-marked-circle"/>
+        className="synicon-checkbox-marked-circle"
+      />
     );
 
     return (
       <Popover
         ref="pushSocketPopover"
-        style={{padding: '8px 0'}}
-        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-        targetOrigin={{horizontal: 'right', vertical: 'top'}}>
+        style={{ padding: '8px 0' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+      >
         <ListItem
           primaryText="GCM Socket"
           rightIcon={hasGCMConfig ? doneIcon : null}
           disabled={GCMStore.hasConfig()}
           leftIcon={androidIcon}
-          onTouchTap={() => this.configurePushNotification('gcm')}/>
+          onTouchTap={() => this.configurePushNotification('gcm')}
+        />
         <ListItem
           primaryText="APNS Socket"
           rightIcon={hasAPNSConfig ? doneIcon : null}
           disabled={APNSStore.hasConfig()}
           leftIcon={appleIcon}
-          onTouchTap={() => this.configurePushNotification('apns')}/>
+          onTouchTap={() => this.configurePushNotification('apns')}
+        />
       </Popover>
     );
   }

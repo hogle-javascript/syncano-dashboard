@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {Toggle} from 'material-ui';
+import { Toggle } from 'material-ui';
 
 export default Radium(React.createClass({
   displayName: 'SwitchSection',
@@ -76,8 +76,8 @@ export default Radium(React.createClass({
 
     if (this.props.plan === 'builder') {
       return (
-        <div style={{textAlign: 'right'}}>
-          <div style={{fontSize: '1.1rem', lineHeight: '1.1rem'}}><strong>Builder</strong></div>
+        <div style={{ textAlign: 'right' }}>
+          <div style={{ fontSize: '1.1rem', lineHeight: '1.1rem' }}><strong>Builder</strong></div>
           <div>We pick your bill</div>
         </div>
       );
@@ -85,9 +85,9 @@ export default Radium(React.createClass({
 
     if (this.props.planCanceled) {
       return (
-        <div style={{textAlign: 'right'}}>
+        <div style={{ textAlign: 'right' }}>
           <div>
-            Your plan will expire on <span style={{color: 'red'}}>{this.props.planCanceled}</span>
+            Your plan will expire on <span style={{ color: 'red' }}>{this.props.planCanceled}</span>
           </div>
 
           <div>Click <a onClick={this.handlePlanDialog}> here </a> to extend.</div>
@@ -107,10 +107,10 @@ export default Radium(React.createClass({
     if (this.props.plan === 'builder') {
       return (
         <div>
-          <div style={{marginTop: 0, fontSize: '1.1rem', lineHeight: '1.1rem', padding: 0}}>
+          <div style={{ marginTop: 0, fontSize: '1.1rem', lineHeight: '1.1rem', padding: 0 }}>
             From <strong>$25</strong>/month
           </div>
-          <div style={{marginTop: 0}}>
+          <div style={{ marginTop: 0 }}>
             <a onClick={this.handlePlanDialog}>Switch to Production</a>
           </div>
         </div>
@@ -141,7 +141,8 @@ export default Radium(React.createClass({
       <Toggle
         ref="toggle"
         defaultToggled={defaultToggled}
-        onToggle={toggleHandler} />
+        onToggle={toggleHandler}
+      />
     );
   },
 
@@ -151,7 +152,8 @@ export default Radium(React.createClass({
     return (
       <div
         className="row align-center"
-        style={styles.root}>
+        style={styles.root}
+      >
         <div style={styles.leftSide}>
           <div>
             {this.renderLeftSide()}

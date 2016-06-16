@@ -1,11 +1,11 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 
 import Store from './AuthStore';
 import Constants from './AuthConstants';
 
-import {RaisedButton} from 'material-ui';
+import { RaisedButton } from 'material-ui';
 import AccountContainer from './AccountContainer';
 
 const AccountPasswordUpdate = React.createClass({
@@ -34,7 +34,7 @@ const AccountPasswordUpdate = React.createClass({
   },
 
   handleButtonClick() {
-    const {router} = this.props;
+    const { router } = this.props;
 
     router.push(Constants.LOGIN_REDIRECT_PATH);
   },
@@ -50,7 +50,8 @@ const AccountPasswordUpdate = React.createClass({
         <div>
           <p
             className="vm-4-b"
-            style={styles.text}>
+            style={styles.text}
+          >
             Sweet! Your new password has now been set and you can login.
           </p>
           <RaisedButton
@@ -58,7 +59,8 @@ const AccountPasswordUpdate = React.createClass({
             labelStyle={styles.buttonLabel}
             label="Go to dashboard"
             onClick={this.handleButtonClick}
-            primary={true}/>
+            primary={true}
+          />
         </div>
       </AccountContainer>
     );

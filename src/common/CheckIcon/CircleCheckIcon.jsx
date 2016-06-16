@@ -12,6 +12,7 @@ export default (props) => {
   return (
     <CheckIcon
       {...props}
-      icon={icon}/>
+      icon={icon}
+    />
   );
 };

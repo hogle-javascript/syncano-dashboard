@@ -33,7 +33,7 @@ export default Radium(React.createClass({
 
     _.map(this.state.charts, (config, name) => {
       config.bindto = this.refs[`chart-${name}`];
-      config.size = {height: 300};
+      config.size = { height: 300 };
       this.chart = c3.generate(config);
     });
   },
@@ -64,7 +64,8 @@ export default Radium(React.createClass({
 
           <div
             ref={`chart-${name}`}
-            className="col chart">
+            className="col chart"
+          >
           </div>
         </div>
       );

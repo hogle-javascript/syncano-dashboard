@@ -1,8 +1,6 @@
 import utils from '../utils';
-import globals from '../globals';
 
 export default {
-  url: `https://localhost:8080/#/instances/${globals.instanceName}/triggers`,
   elements: {
     triggersListMenu: {
       selector: '//div[@class="triggers-list"]/div[1]/div[@class="col-menu"]//button',
@@ -45,7 +43,7 @@ export default {
       locateStrategy: 'xpath'
     },
     triggerTableRow: {
-      selector: `//div[text()="${ utils.addSuffix('trigger')}"]`,
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]`,
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {

@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import {StoreFormMixin, DialogStoreMixin, WaitForStoreMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, WaitForStoreMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import BillingPlanActions from './ProfileBillingPlanActions';
@@ -79,12 +79,10 @@ export default Reflux.createStore({
   },
 
   subscribe() {
-    Actions.subscribePlan(this.data.plan.name, {
-      commitment: JSON.stringify({
-        api: this.data.apiTotal,
-        cbx: this.data.cbxTotal
-      })
-    });
+    Actions.subscribePlan(this.data.plan.name, JSON.stringify({
+      api: this.data.apiTotal,
+      cbx: this.data.cbxTotal
+    }));
   },
 
   onSubmitPlan(cardInfo) {
@@ -96,7 +94,7 @@ export default Reflux.createStore({
     if (this.data.card) {
       this.subscribe();
     } else {
-      Actions.updateCard(cardInfo);
+      Actions.addCard(cardInfo);
     }
   },
 
@@ -143,6 +141,20 @@ export default Reflux.createStore({
   },
 
   onUpdateCardFailure() {
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
+  onAddCard() {
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onAddCardCompleted() {
+    this.subscribe();
+  },
+
+  onAddCardFailure() {
     this.data.isLoading = false;
     this.trigger(this.data);
   },

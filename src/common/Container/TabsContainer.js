@@ -13,7 +13,7 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    const {tabs, children} = this.props;
+    const { tabs, children } = this.props;
 
     return (
       <Container style={styles}>

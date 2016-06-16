@@ -1,12 +1,12 @@
 import React from 'react';
 import Radium from 'radium';
 import _ from 'lodash';
-import {FontIcon} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { FontIcon } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 const RadiumIcon = Radium(FontIcon);
 
-export default Radium(({className}) => {
+export default Radium(({ className }) => {
   const styles = {
     color: '#fff',
     fontSize: 12,
@@ -22,10 +22,12 @@ export default Radium(({className}) => {
       {_.startCase(className)} is read-only
       <a
         href="http://docs.syncano.io/docs/user-management#user-profiles"
-        target="_blank">
+        target="_blank"
+      >
         <RadiumIcon
           className="synicon-book-open-page-variant"
-          style={styles}/>
+          style={styles}
+        />
       </a>
     </div>
   );

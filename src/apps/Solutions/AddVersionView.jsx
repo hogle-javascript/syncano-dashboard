@@ -1,21 +1,25 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import Radium from 'radium';
 
 // Utils
-import {FormMixin} from '../../mixins';
+import { FormMixin } from '../../mixins';
 
 // Stores and Actions
 import Store from './AddVersionViewStore';
 import Actions from './AddVersionViewActions';
 
 // Components
-import {Checkbox, FlatButton, RaisedButton} from 'material-ui';
-import {Container, Loading, SelectFieldWrapper, InnerToolbar} from '../../common/';
+import { Checkbox, FlatButton, RaisedButton } from 'material-ui';
+import { Container, Loading, SelectFieldWrapper, InnerToolbar } from '../../common/';
 
 const AddVersionView = Radium(React.createClass({
   displayName: 'AddVersionView',
+
+  contextTypes: {
+    params: React.PropTypes.object
+  },
 
   mixins: [
     FormMixin,
@@ -70,10 +74,10 @@ const AddVersionView = Radium(React.createClass({
   },
 
   handleBackClick() {
-    const {params} = this.context;
-    const {router} = this.props;
+    const { params } = this.context;
+    const { router } = this.props;
 
-    router.push({name: 'solutions-edit', params});
+    router.push({ name: 'solutions-edit', params });
   },
 
   handleEditSubmit() {
@@ -82,31 +86,31 @@ const AddVersionView = Radium(React.createClass({
     });
   },
 
-  handleInstanceChange(event, index, obj) {
-    Actions.setInstance(obj.payload);
+  handleInstanceChange(event, index, instanceName) {
+    Actions.setInstance(instanceName);
     Actions.clearExportSpec();
   },
 
   handleTypeChange(event, index, type) {
-    Actions.setType(type.payload);
+    Actions.setType(type);
   },
 
   handleSubmit(type) {
-    this.setState({type});
+    this.setState({ type });
     this.handleFormValidation();
   },
 
-  handleAddSubmit() {
-    const {solutionId} = this.context.params;
+  handleSuccessfullValidation() {
+    const { solutionId } = this.context.params;
 
     Actions.createVersion(solutionId, this.prepareVersionData());
   },
 
-  handleOnCheck(name, type, event, status) {
+  handleOnCheck(name, type, status) {
     let exportSpec = this.state.exportSpec;
 
     exportSpec[type][name] = status;
-    this.setState({exportSpec});
+    this.setState({ exportSpec });
   },
 
   headerMenuItems() {
@@ -124,9 +128,9 @@ const AddVersionView = Radium(React.createClass({
 
   pkMap(section) {
     let map = {
-      views: 'name',
+      dataEndpoints: 'name',
       classes: 'name',
-      codeboxes: 'name',
+      scriptEndpoints: 'name',
       channels: 'name',
       scripts: 'id',
       triggers: 'id',
@@ -160,7 +164,7 @@ const AddVersionView = Radium(React.createClass({
   prepareVersionData() {
     return {
       type: this.state.type,
-      export_spec: JSON.stringify(this.prepareExportSpec()),
+      data: JSON.stringify(this.prepareExportSpec()),
       instance: this.state.instance
     };
   },
@@ -177,16 +181,17 @@ const AddVersionView = Radium(React.createClass({
         <div
           key={`checkbox-${type}-${item[pk]}`}
           className="col-xs-35 col-md-17"
-          style={{paddingRight: 10}}>
+          style={{ paddingRight: 10 }}
+        >
           <Checkbox
             ref={`checkbox-${type}-${item[pk]}`}
-            iconStyle={{fill: '#4D4D4D'}}
-            labelStyle={{color: '#4D4D4D'}}
+            iconStyle={{ fill: '#4D4D4D' }}
+            labelStyle={{ color: '#4D4D4D' }}
             name={item[pk]}
-            value={item[pk]}
+            checked={this.state.exportSpec[type][item[pk]]}
             label={item[labelPk].substring(0, 25)}
-            onCheck={this.handleOnCheck.bind(this, item[pk], type)}
-            />
+            onCheck={(event, status) => this.handleOnCheck(item[pk], type, status)}
+          />
         </div>
       );
     });
@@ -210,11 +215,11 @@ const AddVersionView = Radium(React.createClass({
       return true;
     } else if (this.state.dataReady === 'loading') {
       return (
-        <Loading key="loading" style={{marginTop: 30}} show={true}/>
+        <Loading key="loading" style={{ marginTop: 30 }} show={true} />
       );
     }
     return (
-      <div key="info" style={{padding: 100, margin: '0 auto'}}>
+      <div key="info" style={{ padding: 100, margin: '0 auto' }}>
         <div style={styles.info}>
           Choose the Instance which you want to use to export new solution version.
         </div>
@@ -223,72 +228,87 @@ const AddVersionView = Radium(React.createClass({
   },
 
   render() {
-    const {solutionId} = this.context.params;
+    const { solutionId } = this.context.params;
     const styles = this.getStyles();
+    const {
+      classes,
+      dataEndpoints,
+      scripts,
+      scriptEndpoints,
+      triggers,
+      schedules,
+      channels
+    } = this.state.instanceData;
 
     return (
       <form
         onSubmit={this.handleFormValidation}
         acceptCharset="UTF-8"
-        method="post">
+        method="post"
+      >
 
         <InnerToolbar
           title={`Solution: ${solutionId}`}
-          backFallback={this.handleBackClick}/>
+          backFallback={this.handleBackClick}
+        />
 
-        <Container style={{width: '80%', margin: '65px auto', maxWidth: 800}}>
-          <div style={{fontSize: '2rem', lineHeight: '2rem'}}>Add Version</div>
-          <div style={{marginTop: 40}}>
+        <Container style={{ width: '80%', margin: '65px auto', maxWidth: 800 }}>
+          <div style={{ fontSize: '2rem', lineHeight: '2rem' }}>Add Version</div>
+          <div style={{ marginTop: 40 }}>
             {this.renderFormNotifications()}
-            <div className='row'>
-              <div className='col-lg-8'>
+            <div className="row">
+              <div className="col-lg-8">
                 <SelectFieldWrapper
                   name="type"
                   options={Store.getTypes()}
                   value={this.state.type}
                   onChange={this.handleTypeChange}
-                  errorText={this.getValidationMessages('type').join(' ')}/>
+                  errorText={this.getValidationMessages('type').join(' ')}
+                />
               </div>
-              <div className='col-flex-1'>
+              <div className="col-flex-1">
                 <SelectFieldWrapper
                   name="instance"
                   options={Store.getInstancesDropdown()}
                   value={this.state.instance}
-                  floatingLabelText='Instances'
+                  floatingLabelText="Instances"
                   labelStyle={styles.instanceDropdowInputLabel}
                   menuItemStyle={styles.instancesDropdownItem}
                   onChange={this.handleInstanceChange}
-                  errorText={this.getValidationMessages('instance').join(' ')}/>
+                  errorText={this.getValidationMessages('instance').join(' ')}
+                />
               </div>
             </div>
           </div>
           <div className="row">
             {this.renderInfo()}
           </div>
-          <div className="row" style={{marginTop: 30}}>
-            {this.renderCheckboxes('Classes', this.state.instanceData.classes, 'name', 'name', 'classes')}
-            {this.renderCheckboxes('Data', this.state.instanceData.views, 'name', 'name', 'views')}
-            {this.renderCheckboxes('Scripts', this.state.instanceData.scripts, 'id', 'label', 'scripts')}
-            {this.renderCheckboxes('CodeBoxes', this.state.instanceData.codeboxes, 'name', 'name', 'codeboxes')}
-            {this.renderCheckboxes('Triggers', this.state.instanceData.triggers, 'id', 'label', 'triggers')}
-            {this.renderCheckboxes('Schedules', this.state.instanceData.schedules, 'id', 'label', 'schedules')}
-            {this.renderCheckboxes('Channels', this.state.instanceData.channels, 'name', 'name', 'channels')}
+          <div className="row" style={{ marginTop: 30 }}>
+            {this.renderCheckboxes('Classes', classes, 'name', 'name', 'classes')}
+            {this.renderCheckboxes('Data Endpoints', dataEndpoints, 'name', 'name', 'dataEndpoints')}
+            {this.renderCheckboxes('Scripts', scripts, 'id', 'label', 'scripts')}
+            {this.renderCheckboxes('Script Endpoints', scriptEndpoints, 'name', 'name', 'scriptEndpoints')}
+            {this.renderCheckboxes('Triggers', triggers, 'id', 'label', 'triggers')}
+            {this.renderCheckboxes('Schedules', schedules, 'id', 'label', 'schedules')}
+            {this.renderCheckboxes('Channels', channels, 'name', 'name', 'channels')}
           </div>
-          <div className="row" style={{paddingTop: 30}}>
-            <div className="col-flex-1" style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <div className="row" style={{ paddingTop: 30 }}>
+            <div className="col-flex-1" style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <FlatButton
-                style={{marginRight: 10}}
-                ref='cancel'
-                key='cancel'
-                label='Cancel'
-                onTouchTap={this.handleBackClick} />
+                style={{ marginRight: 10 }}
+                ref="cancel"
+                key="cancel"
+                label="Cancel"
+                onTouchTap={this.handleBackClick}
+              />
               <RaisedButton
-                ref='submit'
-                key='confirm'
-                label='Confirm'
-                type='submit'
+                ref="submit"
+                key="confirm"
+                label="Confirm"
+                type="submit"
                 disable={this.state.instance === null}
-                primary={true} />
+                primary={true}
+              />
             </div>
           </div>
         </Container>

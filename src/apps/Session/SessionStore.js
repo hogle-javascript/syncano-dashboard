@@ -256,18 +256,18 @@ export default Reflux.createStore({
       return;
     }
 
-    this.token = payload.account_key;
-    this.connection.setAccountKey(this.token);
-    localStorage.setItem('token', this.token);
     SessionActions.setUser(payload);
-    this.router.push({name: 'dashboard'});
+    this.token = payload.account_key;
+    localStorage.setItem('token', payload.account_key);
+    this.connection.setAccountKey(payload.account_key);
+    this.router.push({ name: 'dashboard' });
   },
 
   onLogout() {
     this.token = null;
     this.user = null;
     this.removeInstance();
-    this.connection = NewLibConnection.reset();
+    this.connection.setAccountKey(null);
 
     localStorage.removeItem('lastInstance');
     localStorage.removeItem('token');
@@ -275,8 +275,8 @@ export default Reflux.createStore({
 
     Raven.setUserContext();
     window.analytics.identify();
-    this.router.push('/login');
     this.trigger(this);
+    this.router.push('/login');
   },
 
   isAuthenticated() {

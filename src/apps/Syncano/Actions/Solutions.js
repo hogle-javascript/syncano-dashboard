@@ -3,7 +3,7 @@ export default {
     this.NewLibConnection
       .Solution
       .please()
-      .get({id})
+      .get({ id })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -11,15 +11,15 @@ export default {
     this.NewLibConnection
       .Solution
       .please()
-      .getVersions({id})
+      .getVersions({ id })
       .then(this.completed)
       .catch(this.failure);
   },
-  createVersion({id}, payload) {
+  createVersion(id, payload) {
     this.NewLibConnection
       .Solution
       .please()
-      .createVersion({id}, payload)
+      .createVersion({ id }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -27,7 +27,7 @@ export default {
     this.NewLibConnection
       .Solution
       .please()
-      .installVersion(payload.versionId, payload)
+      .installVersion({ id: payload.solutionId, version_id: payload.versionId }, { instance: payload.instanceName })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -35,15 +35,15 @@ export default {
     this.NewLibConnection
       .Solution
       .please()
-      .remove({id})
+      .remove({ id })
       .then(this.completed)
       .catch(this.failure);
   },
-  list() {
+  list(payload) {
     this.NewLibConnection
       .Solution
       .please()
-      .list()
+      .list({}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -59,7 +59,7 @@ export default {
     this.NewLibConnection
       .Solution
       .please()
-      .update({id}, payload)
+      .update({ id }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -67,7 +67,7 @@ export default {
     this.NewLibConnection
       .Solution
       .please()
-      .unstar({id})
+      .unstar({ id })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -75,12 +75,12 @@ export default {
     this.NewLibConnection
       .Solution
       .please()
-      .unstar({id})
+      .unstar({ id })
       .then(this.completed)
       .catch(this.failure);
   },
   listTags() {
-    const {baseUrl} = this.NewLibConnection;
+    const { baseUrl } = this.NewLibConnection;
 
     this.Promise.get(`${baseUrl}/v1.1/marketplace/tags/`)
       .then(this.completed)

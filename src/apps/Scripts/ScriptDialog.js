@@ -2,15 +2,15 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import {DialogMixin, FormMixin} from '../../mixins';
+import { DialogMixin, FormMixin } from '../../mixins';
 
 // Stores and Actions
 import Actions from './ScriptsActions';
 import Store from './ScriptDialogStore';
 
 // Components
-import {TextField} from 'material-ui';
-import {Dialog, SelectFieldWrapper} from '../../common/';
+import { TextField } from 'material-ui';
+import { Dialog, SelectFieldWrapper } from '../../common/';
 
 export default React.createClass({
   displayName: 'ScriptDialog',
@@ -36,20 +36,20 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    const {id, label, description, runtime_name} = this.state;
+    const { id, label, description, runtime_name } = this.state;
 
-    Actions.updateScript(id, {label, description, runtime_name});
+    Actions.updateScript(id, { label, description, runtime_name });
   },
 
   handleAddSubmit() {
-    const {label, description, runtime_name} = this.state;
+    const { label, description, runtime_name } = this.state;
 
-    Actions.createScript({label, description, runtime_name});
+    Actions.createScript({ label, description, runtime_name });
   },
 
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    const {isLoading, runtimes, runtime_name, open} = this.state;
+    const { isLoading, runtimes, runtime_name, open } = this.state;
 
     return (
       <Dialog.FullPage
@@ -63,7 +63,8 @@ export default React.createClass({
           <Dialog.StandardButtons
             disabled={!this.state.canSubmit}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -73,10 +74,10 @@ export default React.createClass({
                ways to run Scripts.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Runtime environment">
-              The runtime environment that the Script will run in (i.e. <strong>Ruby, Python, NodeJS, Golang,
+              {`The runtime environment that the Script will run in (i.e. <strong>Ruby, Python, NodeJS, Golang,
                Swift</strong> and <strong>PHP</strong>). Every runtime environment supports different language and
                several libraries for each language. For example: The Python runtime has a <strong>requests </strong>
-               library.
+               library.`}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/snippets-scripts">
@@ -84,35 +85,39 @@ export default React.createClass({
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         {this.renderFormNotifications()}
         <TextField
           ref="label"
           autoFocus={true}
           value={this.state.label}
-          onChange={(event, value) => this.setState({label: value})}
+          onChange={(event, value) => this.setState({ label: value })}
           errorText={this.getValidationMessages('label').join(' ')}
           name="label"
-          style={{width: 500}}
+          style={{ width: 500 }}
           hintText="Script's label"
-          floatingLabelText="Label"/>
+          floatingLabelText="Label"
+        />
         <TextField
           ref="description"
           name="description"
           value={this.state.description}
-          onChange={(event, value) => this.setState({description: value})}
+          onChange={(event, value) => this.setState({ description: value })}
           errorText={this.getValidationMessages('description').join(' ')}
-          style={{width: 500}}
+          style={{ width: 500 }}
           multiLine={true}
           hintText="Script's description"
-          floatingLabelText="Description (optional)"/>
+          floatingLabelText="Description (optional)"
+        />
         <SelectFieldWrapper
           name="runtime_name"
           options={runtimes}
           value={runtime_name}
           floatingLabelText="Runtime environment"
           onChange={(event, index, value) => this.setSelectFieldValue('runtime_name', value)}
-          errorText={this.getValidationMessages('runtime_name').join(' ')}/>
+          errorText={this.getValidationMessages('runtime_name').join(' ')}
+        />
       </Dialog.FullPage>
     );
   }

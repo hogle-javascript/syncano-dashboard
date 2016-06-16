@@ -1,17 +1,26 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
-import {DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin} from '../../mixins';
+import { DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin } from '../../mixins';
 import AutosaveMixin from './ScriptAutosaveMixin';
 
 import Store from './ScriptStore';
 import Actions from './ScriptActions';
 
-import {RaisedButton, FontIcon, Checkbox, FlatButton, TextField, IconButton} from 'material-ui';
-import {Loading, Show, TogglePanel, SelectFieldWrapper, Dialog, InnerToolbar, Editor, Notification} from '../../common';
+import { RaisedButton, FontIcon, Checkbox, FlatButton, TextField, IconButton } from 'material-ui';
+import {
+  Loading,
+  Show,
+  TogglePanel,
+  SelectFieldWrapper,
+  Dialog,
+  InnerToolbar,
+  Editor,
+  Notification
+} from '../../common';
 import Traces from '../Traces';
 
 const Script = React.createClass({
@@ -36,7 +45,7 @@ const Script = React.createClass({
   },
 
   validatorConstraints() {
-    const {scriptConfig} = this.state;
+    const { scriptConfig } = this.state;
     let validateObj = {};
 
     _.forEach(scriptConfig, (item, index) => {
@@ -82,7 +91,7 @@ const Script = React.createClass({
       return false;
     });
 
-    this.runScript = _.debounce(Actions.runScript, 500, {leading: true});
+    this.runScript = _.debounce(Actions.runScript, 500, { leading: true });
   },
 
   componentWillUnmount() {
@@ -90,7 +99,7 @@ const Script = React.createClass({
   },
 
   getValidatorAttributes() {
-    const {scriptConfig} = this.state;
+    const { scriptConfig } = this.state;
 
     if (!scriptConfig.length) {
       return {};
@@ -131,13 +140,13 @@ const Script = React.createClass({
   },
 
   getToolbarTitle() {
-    const {currentScript} = this.state;
+    const { currentScript } = this.state;
 
     return currentScript ? `Script: ${currentScript.label} (id: ${currentScript.id})` : '';
   },
 
   getConfigObject() {
-    const {scriptConfig} = this.state;
+    const { scriptConfig } = this.state;
     const scriptConfigObject = _.reduce(scriptConfig, (result, item) => {
       result[item.key] = item.type === 'integer' ? Number(item.value) : item.value.toString();
       return result;
@@ -147,7 +156,7 @@ const Script = React.createClass({
   },
 
   isSaved() {
-    const {currentScript} = this.state;
+    const { currentScript } = this.state;
 
     if (!currentScript || !this.refs.editorSource) {
       return true;
@@ -165,7 +174,7 @@ const Script = React.createClass({
   },
 
   handleRunScript() {
-    const {currentScript, payload} = this.state;
+    const { currentScript, payload } = this.state;
     const config = this.getConfigObject();
     const source = this.refs.editorSource.editor.getValue();
     const updateParams = {
@@ -178,24 +187,26 @@ const Script = React.createClass({
     };
 
     this.clearAutosaveTimer();
-    this.setSnackbarNotification({message: 'Saving...'});
+    this.setSnackbarNotification({ message: 'Saving...' });
     this.runScript(updateParams, runParams);
   },
 
   handleAddField(event) {
     event.preventDefault();
-    const {scriptConfig} = this.state;
+    const { scriptConfig, newFieldKey, newFieldValue, configValueType } = this.state;
 
     const newField = {
-      key: this.refs.newFieldKey.getValue(),
-      value: this.refs.newFieldValue.getValue(),
-      type: this.refs.newFieldType.refs.configValueType.props.value
+      key: newFieldKey,
+      value: newFieldValue,
+      type: configValueType
     };
 
     scriptConfig.push(newField);
-    this.setState({scriptConfig});
-    this.refs.newFieldKey.clearValue();
-    this.refs.newFieldValue.clearValue();
+    this.setState({
+      newFieldKey: '',
+      newFieldValue: '',
+      scriptConfig
+    });
     this.refs.newFieldKey.focus();
   },
 
@@ -205,22 +216,22 @@ const Script = React.createClass({
       const source = this.refs.editorSource.editor.getValue();
 
       this.clearAutosaveTimer();
-      Actions.updateScript(this.state.currentScript.id, {config, source});
-      this.setSnackbarNotification({message: 'Saving...'});
+      Actions.updateScript(this.state.currentScript.id, { config, source });
+      this.setSnackbarNotification({ message: 'Saving...' });
     }
   },
 
   handleDeleteKey(index) {
-    const {scriptConfig} = this.state;
+    const { scriptConfig } = this.state;
 
     scriptConfig.splice(index, 1);
     this.runAutoSave(0);
     this.clearValidations();
-    this.setState({scriptConfig});
+    this.setState({ scriptConfig });
   },
 
   handleUpdateKey(key, index) {
-    const {scriptConfig} = this.state;
+    const { scriptConfig } = this.state;
     const newValue = this.refs[`fieldValue${index}`].getValue();
     const newType = this.refs[`fieldType${index}`].props.value;
 
@@ -231,11 +242,17 @@ const Script = React.createClass({
     };
 
     scriptConfig[index] = newField;
-    this.setState({scriptConfig});
+    this.setState({ scriptConfig });
+  },
+
+  handleUpdateNewField(fieldKey, value) {
+    this.setState({
+      [fieldKey]: value
+    });
   },
 
   handleSuccessfullValidation() {
-    const {shouldRun} = this.state;
+    const { shouldRun } = this.state;
 
     if (shouldRun) {
       return this.handleRunScript();
@@ -245,22 +262,22 @@ const Script = React.createClass({
   },
 
   handleTypeFieldChange(fieldIndex, type) {
-    const {scriptConfig} = this.state;
+    const { scriptConfig } = this.state;
     const value = scriptConfig[fieldIndex].value;
 
     scriptConfig[fieldIndex].type = type;
     if (value === 0 || value === '') {
       scriptConfig[fieldIndex].value = type === 'integer' ? 0 : '';
     }
-    this.setState({scriptConfig});
+    this.setState({ scriptConfig });
   },
 
   setFlag(flag) {
-    this.setState({shouldRun: flag}, this.handleFormValidation);
+    this.setState({ shouldRun: flag }, this.handleFormValidation);
   },
 
   initDialogs() {
-    const {traceIsLoading, traces} = this.state;
+    const { traceIsLoading, traces } = this.state;
 
     return [
       {
@@ -272,10 +289,11 @@ const Script = React.createClass({
           actions: [],
           onRequestClose: () => this.handleCancel('scriptTraces'),
           children: <Traces.List
-                      isLoading={traceIsLoading}
-                      tracesFor="script"
-                      name="Traces"
-                      items={traces}/>
+            isLoading={traceIsLoading}
+            tracesFor="script"
+            name="Traces"
+            items={traces}
+          />
         }
       },
       {
@@ -288,12 +306,14 @@ const Script = React.createClass({
             <FlatButton
               label="Just leave"
               secondary={true}
-              onTouchTap={this._handleContinueTransition}/>,
+              onTouchTap={this._handleContinueTransition}
+            />,
             <FlatButton
               label="Continue editing"
               primary={true}
               keyboardFocused={true}
-              onTouchTap={() => this.handleCancel('unsavedDataWarn')}/>
+              onTouchTap={() => this.handleCancel('unsavedDataWarn')}
+            />
           ],
           modal: true,
           children: "You're leaving Script Config with unsaved changes. Are you sure you want to continue?"
@@ -303,7 +323,7 @@ const Script = React.createClass({
   },
 
   renderFields() {
-    const {scriptConfig} = this.state;
+    const { scriptConfig } = this.state;
 
     if (!scriptConfig.length) {
       return null;
@@ -314,19 +334,20 @@ const Script = React.createClass({
       return (
         <div
           className="row align-center"
-          key={index}>
+          key={index}
+        >
           <div className="col-flex-1">
             <TextField
               key={`fieldKey${index}`}
               ref={`fieldKey${index}`}
               hintText="Key"
               floatingLabelText="Key"
-              defaultValue={field.key}
               value={scriptConfig[index].key}
               style={styles.field}
               fullWidth={true}
               errorText={this.getValidationMessages(`fieldKey${index}`).join(' ')}
-              onChange={() => this.handleUpdateKey(field.key, index)}/>
+              onChange={() => this.handleUpdateKey(field.key, index)}
+            />
           </div>
           <div className="col-flex-1">
             <SelectFieldWrapper
@@ -341,7 +362,8 @@ const Script = React.createClass({
               onChange={(event, selectedIndex, value) => this.handleTypeFieldChange(index, value)}
               errorText={this.getValidationMessages('configValueType').join(' ')}
               fullWidth={true}
-              style={styles.field}/>
+              style={styles.field}
+            />
           </div>
           <div className="col-flex-1">
             <TextField
@@ -349,18 +371,19 @@ const Script = React.createClass({
               ref={`fieldValue${index}`}
               hintText="Value"
               floatingLabelText="Value"
-              defaultValue={field.value}
               value={scriptConfig[index].value}
               style={styles.field}
               fullWidth={true}
               errorText={this.getValidationMessages(`fieldValue${index}`).join(' ')}
-              onChange={() => this.handleUpdateKey(field.key, index)}/>
+              onChange={() => this.handleUpdateKey(field.key, index)}
+            />
           </div>
           <div className="col-flex-0" style={styles.deleteIcon}>
             <IconButton
               iconClassName="synicon-close"
               tooltip="Delete key"
-              onClick={() => this.handleDeleteKey(index)}/>
+              onClick={() => this.handleDeleteKey(index)}
+            />
           </div>
         </div>
       );
@@ -371,13 +394,14 @@ const Script = React.createClass({
 
   renderNewFieldSection() {
     const styles = this.getStyles();
-    const {configValueType} = this.state;
+    const { configValueType, newFieldKey, newFieldValue } = this.state;
 
     return (
       <form
         key="form"
         className="row align-center"
-        onSubmit={this.handleAddField}>
+        onSubmit={this.handleAddField}
+      >
         <div className="col-flex-1">
           <TextField
             className="config-input-key"
@@ -385,10 +409,12 @@ const Script = React.createClass({
             key="newFieldKey"
             hintText="Key"
             floatingLabelText="Key"
-            defaultValue=""
+            value={newFieldKey}
+            onChange={(event, value) => this.handleUpdateNewField('newFieldKey', value)}
             errorText={this.getValidationMessages('newFieldKey').join(' ')}
             fullWidth={true}
-            style={styles.field}/>
+            style={styles.field}
+          />
         </div>
         <div className="col-flex-1">
           <SelectFieldWrapper
@@ -402,7 +428,8 @@ const Script = React.createClass({
             onChange={(event, index, value) => this.setSelectFieldValue('configValueType', value)}
             errorText={this.getValidationMessages('configValueType').join(' ')}
             fullWidth={true}
-            style={styles.field}/>
+            style={styles.field}
+          />
         </div>
         <div className="col-flex-1">
           <TextField
@@ -411,28 +438,32 @@ const Script = React.createClass({
             key="newFieldValue"
             hintText="Value"
             floatingLabelText="Value"
-            defaultValue=""
+            value={newFieldValue}
+            onChange={(event, value) => this.handleUpdateNewField('newFieldValue', value)}
             fullWidth={true}
-            style={styles.field}/>
+            style={styles.field}
+          />
         </div>
         <div
           className="col-flex-0"
-          style={styles.deleteIcon}>
+          style={styles.deleteIcon}
+        >
           <IconButton
             className="add-field-button"
-            iconStyle={{color: '#d2d2d2'}}
+            iconStyle={{ color: '#d2d2d2' }}
             iconClassName="synicon-plus"
             tooltip="Add field"
-            type="submit"/>
+            type="submit"
+          />
         </div>
       </form>
     );
   },
 
   render() {
-    const {router, params} = this.props;
+    const { router, params } = this.props;
     const styles = this.getStyles();
-    const {currentScript, lastTraceStatus, isLoading, lastTraceDuration, lastTraceResult} = this.state;
+    const { currentScript, lastTraceStatus, isLoading, lastTraceDuration, lastTraceResult } = this.state;
     let source = null;
     let editorMode = 'python';
 
@@ -442,49 +473,56 @@ const Script = React.createClass({
     }
 
     return (
-      <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'column'}}>
+      <div className="col-flex-1" style={{ padding: 0, display: 'flex', flexDirection: 'column' }}>
         <Helmet title={this.getToolbarTitle()} />
         {this.getDialogs()}
         <InnerToolbar
           title={this.getToolbarTitle()}
-          backFallback={() => router.push({name: 'scripts', params})}
+          backFallback={() => router.push({ name: 'scripts', params })}
           forceBackFallback={true}
-          backButtonTooltip="Go back to Scripts list">
+          backButtonTooltip="Go back to Scripts list"
+        >
           <Show if={!isLoading}>
-            <div style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
               <Checkbox
                 ref="autosaveCheckbox"
                 name="autosaveCheckbox"
                 label="Autosave"
-                labelStyle={{whiteSpace: 'nowrap', width: 'auto'}}
+                labelStyle={{ whiteSpace: 'nowrap', width: 'auto' }}
                 defaultChecked={this.isAutosaveEnabled()}
-                onCheck={this.saveCheckboxState}/>
+                onCheck={this.saveCheckboxState}
+              />
             </div>
             <RaisedButton
               label="TRACES"
-              style={{marginRight: 5, marginLeft: 20}}
-              onTouchTap={() => this.showDialog('scriptTraces')}/>
+              style={{ marginRight: 5, marginLeft: 20 }}
+              onTouchTap={() => this.showDialog('scriptTraces')}
+            />
             <RaisedButton
               label="SAVE"
-              style={{marginLeft: 5, marginRight: 5}}
-              onTouchTap={() => this.setFlag(false)} />
+              style={{ marginLeft: 5, marginRight: 5 }}
+              onTouchTap={() => this.setFlag(false)}
+            />
             <RaisedButton
               label="RUN"
               primary={true}
-              style={{marginLeft: 5, marginRight: 0}}
-              icon={<FontIcon className="synicon-play"/>}
-              onTouchTap={() => this.setFlag(true)}/>
+              style={{ marginLeft: 5, marginRight: 0 }}
+              icon={<FontIcon className="synicon-play" />}
+              onTouchTap={() => this.setFlag(true)}
+            />
           </Show>
         </InnerToolbar>
         <Loading
           show={isLoading || !currentScript}
-          style={{display: 'flex', flex: 1}}>
-          <div className="row" style={{flex: 1}}>
-            <div className="col-flex-1" style={{borderRight: '1px solid rgba(224,224,224,.5)', display: 'flex'}}>
+          style={{ display: 'flex', flex: 1 }}
+        >
+          <div className="row" style={{ flex: 1 }}>
+            <div className="col-flex-1" style={{ borderRight: '1px solid rgba(224,224,224,.5)', display: 'flex' }}>
               <TogglePanel
                 title="Code"
                 initialOpen={true}
-                style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
+              >
                 <Show if={this.getValidationMessages('source').length}>
                   <div style={styles.notification}>
                     <Notification type="error">
@@ -492,7 +530,7 @@ const Script = React.createClass({
                     </Notification>
                   </div>
                 </Show>
-                <div style={{position: 'relative', flex: 1}}>
+                <div style={{ position: 'relative', flex: 1 }}>
                   <Editor
                     ref="editorSource"
                     mode={editorMode}
@@ -501,15 +539,17 @@ const Script = React.createClass({
                     value={source}
                     width="100%"
                     height="100%"
-                    style={{position: 'absolute'}} />
+                    style={{ position: 'absolute' }}
+                  />
                 </div>
               </TogglePanel>
             </div>
-            <div className="col-flex-1" style={{padding: 0, maxWidth: 600}}>
-              <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
+            <div className="col-flex-1" style={{ padding: 0, maxWidth: 600 }}>
+              <div style={{ borderBottom: '1px solid rgba(224,224,224,.5)' }}>
                 <TogglePanel
                   title="Config"
-                  initialOpen={true}>
+                  initialOpen={true}
+                >
                   <div>
                     {this.renderFields()}
                     {this.renderNewFieldSection()}
@@ -524,22 +564,24 @@ const Script = React.createClass({
                 </TogglePanel>
               </div>
 
-              <div style={{borderBottom: '1px solid rgba(224,224,224,.5)'}}>
+              <div style={{ borderBottom: '1px solid rgba(224,224,224,.5)' }}>
                 <TogglePanel
                   title="Payload"
-                  initialOpen={true}>
+                  initialOpen={true}
+                >
                   <Editor
                     name="payload-editor"
                     ref="payloadSource"
                     mode="json"
                     height="200px"
-                    onChange={(payload) => this.setState({payload})}
+                    onChange={(payload) => this.setState({ payload })}
                     value={[
                       '{',
                       '    "foo": "bar",',
                       '    "bar": "foo"',
                       '}'
-                    ].join('\n')} />
+                    ].join('\n')}
+                  />
                 </TogglePanel>
                 <Show if={this.getValidationMessages('payload').length}>
                   <div style={styles.notification}>
@@ -550,17 +592,20 @@ const Script = React.createClass({
                 </Show>
               </div>
 
-              <div style={{paddingBottom: 50}}>
+              <div style={{ paddingBottom: 50 }}>
                 <TogglePanel
                   title="Result"
-                  initialOpen={true}>
-                  <div style={{
-                    color: '#444',
-                    fontFamily: "Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace",
-                    fontSize: 12,
-                    maxHeight: 300,
-                    overflowY: 'scroll'
-                  }}>
+                  initialOpen={true}
+                >
+                  <div
+                    style={{
+                      color: '#444',
+                      fontFamily: "Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace",
+                      fontSize: 12,
+                      maxHeight: 300,
+                      overflowY: 'scroll'
+                    }}
+                  >
                     {lastTraceResult}
                   </div>
                 </TogglePanel>

@@ -3,45 +3,50 @@ import Filesize from 'filesize';
 
 import RestoreDialogActions from '../RestoreDialogActions';
 
-import {MenuItem} from 'material-ui';
-import {ColumnList, Color, Truncate} from '../../../common';
+import { MenuItem } from 'material-ui';
+import { ColumnList, Color, Truncate } from '../../../common';
 
 const Column = ColumnList.Column;
 
-const FullBackupsListItem = ({item, onIconClick, showDeleteDialog, showRestoreDialog}) =>
+const FullBackupsListItem = ({ item, onIconClick, showDeleteDialog, showRestoreDialog }) =>
   <ColumnList.Item
     checked={item.checked}
     key={item.id}
-    id={item.id}>
+    id={item.id}
+  >
     <ColumnList.Column.CheckIcon
       className="col-sm-10"
       id={item.id.toString()}
-      iconClassName='backup-restore'
+      iconClassName="backup-restore"
       background={Color.getColorByName('blue', 'xlight')}
       checked={item.checked}
       handleIconClick={onIconClick}
       primaryText={
-        <Truncate text={item.label}/>
+        <Truncate text={item.label} />
       }
-      secondaryText={`ID: ${item.id}`}/>
+      secondaryText={`ID: ${item.id}`}
+    />
     <Column.Desc>{item.description}</Column.Desc>
     <ColumnList.Column.Text>{item.status}</ColumnList.Column.Text>
     <ColumnList.Column.Text>{Filesize(item.size)}</ColumnList.Column.Text>
     <ColumnList.Column.Text>
       <Truncate
         withTooltip={true}
-        text={item.author.email}/>
+        text={item.author.email}
+      />
     </ColumnList.Column.Text>
-    <Column.Date date={item.created_at}/>
+    <Column.Date date={item.created_at} />
     <Column.Menu handleClick={() => RestoreDialogActions.setClickedBackup(item)} >
       <MenuItem
         className="dropdown-full-backup-download"
         onTouchTap={showRestoreDialog}
-        primaryText="Restore" />
+        primaryText="Restore"
+      />
       <MenuItem
         className="dropdown-full-backup-delete"
         onTouchTap={showDeleteDialog}
-        primaryText="Delete" />
+        primaryText="Delete"
+      />
     </Column.Menu>
   </ColumnList.Item>;
 

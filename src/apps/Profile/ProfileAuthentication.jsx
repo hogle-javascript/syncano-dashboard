@@ -3,14 +3,14 @@ import Reflux from 'reflux';
 import Radium from 'radium';
 import Helmet from 'react-helmet';
 
-import {FormMixin, SnackbarNotificationMixin} from '../../mixins';
+import { FormMixin, SnackbarNotificationMixin } from '../../mixins';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
 import SessionStore from '../Session/SessionStore';
 
-import {TextField, FlatButton, RaisedButton} from 'material-ui';
-import {Clipboard, Container, InnerToolbar} from '../../common/';
+import { TextField, FlatButton, RaisedButton } from 'material-ui';
+import { Clipboard, Container, InnerToolbar } from '../../common/';
 
 export default Radium(React.createClass({
   displayName: 'ProfileAuthentication',
@@ -52,7 +52,8 @@ export default Radium(React.createClass({
         alignItems: 'center'
       },
       accountKey: {
-        fontFamily: 'monospace'
+        fontFamily: 'monospace',
+        paddingRight: 8
       },
       updateButton: {
         height: 36,
@@ -93,19 +94,21 @@ export default Radium(React.createClass({
           <div style={styles.content}>
             <div>Account key</div>
             <div className="row" style={styles.contentRow}>
-              <div className="col-xs-15" style={styles.accountKey}>{this.state.account_key}</div>
-              <div className="col-xs-10">
+              <div style={styles.accountKey}>{this.state.account_key}</div>
+              <div className="flex-1">
                 <Clipboard
                   copyText={this.state.account_key}
                   onCopy={() => this.setSnackbarNotification({
                     message: 'Account key copied to the clipboard'
                   })}
                   label="COPY"
-                  type="button" />
+                  type="button"
+                />
                 <FlatButton
                   label="RESET"
                   primary={true}
-                  onClick={Actions.resetKey} />
+                  onClick={Actions.resetKey}
+                />
               </div>
             </div>
           </div>
@@ -116,44 +119,48 @@ export default Radium(React.createClass({
                 <form
                   onSubmit={this.handleFormValidation}
                   acceptCharset="UTF-8"
-                  method="post">
+                  method="post"
+                >
                   {this.renderFormNotifications()}
                   {hasPassword
                     ? <TextField
-                        ref="currentPassword"
-                        type="password"
-                        value={this.state.current_password}
-                        onChange={(event, value) => this.setState({current_password: value})}
-                        errorText={this.getValidationMessages('current_password').join(' ')}
-                        name="currentPassword"
-                        floatingLabelText="Current password"
-                        autoComplete="currentPassword"
-                        hintText="Current password"
-                        fullWidth={true} />
+                      ref="currentPassword"
+                      type="password"
+                      value={this.state.current_password}
+                      onChange={(event, value) => this.setState({ current_password: value })}
+                      errorText={this.getValidationMessages('current_password').join(' ')}
+                      name="currentPassword"
+                      floatingLabelText="Current password"
+                      autoComplete="currentPassword"
+                      hintText="Current password"
+                      fullWidth={true}
+                    />
                     : null}
                   <TextField
                     ref="newPassword"
                     type="password"
                     value={this.state.newPassword}
-                    onChange={(event, value) => this.setState({newPassword: value})}
+                    onChange={(event, value) => this.setState({ newPassword: value })}
                     errorText={this.getValidationMessages('newPassword').join(' ')}
                     name="newPassword"
                     floatingLabelText="New password"
                     autoComplete="newPassword"
                     hintText="New password"
-                    fullWidth={true} />
+                    fullWidth={true}
+                  />
                   <TextField
                     ref="confirmNewPassword"
                     type="password"
                     value={this.state.confirmNewPassword}
-                    onChange={(event, value) => this.setState({confirmNewPassword: value})}
+                    onChange={(event, value) => this.setState({ confirmNewPassword: value })}
                     errorText={this.getValidationMessages('confirmNewPassword').join(' ')}
                     name="confirmNewPassword"
                     floatingLabelText="Confirm new password"
                     className="vm-6-b"
                     autoComplete="confirmNewPassword"
                     hintText="Confirm new password"
-                    fullWidth={true} />
+                    fullWidth={true}
+                  />
                   <RaisedButton
                     type="submit"
                     label="Update"
@@ -161,7 +168,8 @@ export default Radium(React.createClass({
                     labelStyle={styles.updateButtonLabel}
                     className="raised-button"
                     disabled={!this.state.canSubmit}
-                    primary={true} />
+                    primary={true}
+                  />
                 </form>
               </div>
             </div>

@@ -7,8 +7,8 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import {RaisedButton} from 'material-ui';
-import {Container, InnerToolbar} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container, InnerToolbar } from '../../common/';
 
 // Local components
 import ApiKeysList from './ApiKeysList';
@@ -25,7 +25,7 @@ export default React.createClass({
   },
 
   render() {
-    const {items, isLoading, hideDialogs} = this.state;
+    const { items, isLoading, hideDialogs } = this.state;
     const title = 'API Keys';
 
     return (
@@ -37,15 +37,17 @@ export default React.createClass({
           <RaisedButton
             label="Add"
             primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={Actions.showDialog} />
+            style={{ marginRight: 0 }}
+            onTouchTap={Actions.showDialog}
+          />
         </InnerToolbar>
 
         <Container>
           <ApiKeysList
             items={items}
             isLoading={isLoading}
-            hideDialogs={hideDialogs} />
+            hideDialogs={hideDialogs}
+          />
         </Container>
       </div>
     );

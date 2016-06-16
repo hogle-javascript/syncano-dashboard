@@ -1,6 +1,6 @@
 import DropdownNotifiItem from './DropdownNotifiItem';
 
-let Dropdown = {};
+const Dropdown = {};
 
 Dropdown.NotifiItem = DropdownNotifiItem;
 

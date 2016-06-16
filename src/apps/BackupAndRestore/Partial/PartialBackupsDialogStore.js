@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import {StoreLoadingMixin, StoreFormMixin, DialogStoreMixin} from '../../../mixins';
+import { StoreLoadingMixin, StoreFormMixin, DialogStoreMixin } from '../../../mixins';
 
 import Actions from './PartialBackupsActions';
 
@@ -15,8 +15,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      isLoading: false,
-      queryArgs: ['{', '  ', '}'].join('\n')
+      isLoading: false
     };
   },
 

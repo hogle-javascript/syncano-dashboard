@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import {FontIcon} from 'material-ui';
+import { FontIcon } from 'material-ui';
 import Tooltip from 'material-ui/internal/Tooltip';
 
 export default Radium(React.createClass({
@@ -54,27 +54,28 @@ export default Radium(React.createClass({
   },
 
   showTooltip() {
-    this.setState({tooltipShowed: true});
+    this.setState({ tooltipShowed: true });
   },
 
   hideTooltip() {
-    this.setState({tooltipShowed: false});
+    this.setState({ tooltipShowed: false });
   },
 
   renderDefaultIcon() {
     return (
       <FontIcon
         color="#b8c0c9"
-        style={{fontSize: 16}}
+        style={{ fontSize: 16 }}
         className="synicon-information"
         onMouseEnter={this.showTooltip}
-        onMouseLeave={this.hideTooltip} />
+        onMouseLeave={this.hideTooltip}
+      />
     );
   },
 
   renderTooltip() {
     const styles = this.getStyles();
-    const {tooltipShowed} = this.state;
+    const { tooltipShowed } = this.state;
 
     return (
       <Tooltip
@@ -82,17 +83,19 @@ export default Radium(React.createClass({
         show={tooltipShowed}
         verticalPosition="bottom"
         horizontalPosition="right"
-        {...this.props} />
+        {...this.props}
+      />
     );
   },
 
   renderChildren() {
-    const {children} = this.props;
+    const { children } = this.props;
 
     return (
       <div
         onMouseEnter={this.showTooltip}
-        onMouseLeave={this.hideTooltip}>
+        onMouseLeave={this.hideTooltip}
+      >
         {children}
       </div>
     );
@@ -100,7 +103,7 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const {children, label} = this.props;
+    const { children, label } = this.props;
 
     return (
       <div style={styles.root}>

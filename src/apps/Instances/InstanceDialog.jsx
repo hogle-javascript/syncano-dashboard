@@ -3,14 +3,14 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 import moment from 'moment';
 
-import {DialogMixin, DialogsMixin, FormMixin} from '../../mixins';
+import { DialogMixin, DialogsMixin, FormMixin } from '../../mixins';
 
 import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
 
-import {TextField, FlatButton, DropDownMenu, MenuItem} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {DropZone, Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show, Loading} from '../../common/';
+import { TextField, FlatButton, DropDownMenu, MenuItem } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Color, Dialog, Icon, Notification, ColorIconPicker, Truncate, Show, Loading } from '../../common/';
 
 export default React.createClass({
   displayName: 'InstanceDialog',
@@ -39,7 +39,7 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
       Actions.fetchAllFullBackups();
-      Actions.fetchAllPartialBackups();
+      // Actions.fetchAllPartialBackups();
       this.setState({
         name: Store.genUniqueName(),
         metadata: {
@@ -72,45 +72,45 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {name, description, metadata, selectedBackup, backupFile} = this.state;
+    const { name, description, metadata, selectedBackup, backupFile } = this.state;
 
     if (this.props.handleSubmit) {
       this.listenTo(Actions.createInstance.completed, this.extendSubmit);
     }
 
     if (selectedBackup !== 'None' || backupFile) {
-      const backup = backupFile ? backupFile : selectedBackup;
+      const backup = backupFile || selectedBackup;
 
-      return Actions.createInstanceFromBackup({name, description, metadata}, backup);
+      return Actions.createInstanceFromBackup({ name, description, metadata }, backup);
     }
 
-    Actions.createInstance({name, description, metadata});
+    Actions.createInstance({ name, description, metadata });
   },
 
   handleEditSubmit() {
-    const {name, initialName, description, metadata} = this.state;
+    const { name, initialName, description, metadata } = this.state;
 
     if (initialName && initialName !== name) {
-      Actions.renameAndUpdateInstance(initialName, name, {description, metadata});
+      Actions.renameAndUpdateInstance(initialName, name, { description, metadata });
     } else {
-      Actions.updateInstance(name, {description, metadata});
+      Actions.updateInstance(name, { description, metadata });
     }
   },
 
   handleColorChange(color) {
-    const {metadata} = this.state;
+    const { metadata } = this.state;
 
-    this.setState({metadata: _.merge({}, metadata, {color})});
+    this.setState({ metadata: _.merge({}, metadata, { color }) });
   },
 
   handleIconChange(icon) {
-    const {metadata} = this.state;
+    const { metadata } = this.state;
 
-    this.setState({metadata: _.merge({}, metadata, {icon})});
+    this.setState({ metadata: _.merge({}, metadata, { icon }) });
   },
 
   handleInstanceNameFieldFocus() {
-    const {name} = this.state;
+    const { name } = this.state;
 
     this.setState({
       notificationShowed: true,
@@ -133,7 +133,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    const {isLoading} = this.props;
+    const { isLoading } = this.props;
 
     return [{
       dialog: Dialog.Delete,
@@ -173,21 +173,24 @@ export default React.createClass({
         key="dropdownBackupEmpty"
         style={styles.restoreFromFileListItem}
         value="None"
-        primaryText="None" />
+        primaryText="None"
+      />
     );
     const fullBackupsHeader = (
       <MenuItem
         key="dropdownFullBackupHeader"
         style={styles.dropdownHeaderItem}
         disabled={true}
-        primaryText="FULL BACKUPS" />
+        primaryText="FULL BACKUPS"
+      />
     );
     const partialBackupsHeader = (
       <MenuItem
         key="dropdownPartialBackupHeader"
         style={styles.dropdownHeaderItem}
         disabled={true}
-        primaryText="PARTIAL BACKUPS" />
+        primaryText="PARTIAL BACKUPS"
+      />
     );
 
     if (!fullBackups.length && !partialBackups.length) {
@@ -195,7 +198,7 @@ export default React.createClass({
     }
 
     if (partialBackups.length) {
-      partialBackupsItems = _.filter(_.sortBy(partialBackups, 'instance'), {status: 'success'})
+      partialBackupsItems = _.filter(_.sortBy(partialBackups, 'instance'), { status: 'success' })
         .map((backup) => {
           const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
           const text = <Truncate text={`${backup.label} ${createdAt}`} />;
@@ -204,7 +207,8 @@ export default React.createClass({
             <MenuItem
               key={`dropdownPartialBackup${backup.id}`}
               value={backup.id}
-              primaryText={text}>
+              primaryText={text}
+            >
               <div style={styles.backupListItem}>
                 {backup.instance}
               </div>
@@ -215,7 +219,7 @@ export default React.createClass({
     }
 
     if (fullBackups.length) {
-      fullBackupsItems = _.filter(_.sortBy(fullBackups, 'instance'), {status: 'success'})
+      fullBackupsItems = _.filter(_.sortBy(fullBackups, 'instance'), { status: 'success' })
         .map((backup) => {
           const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
           const text = <Truncate text={`${backup.label} ${createdAt}`} />;
@@ -224,7 +228,8 @@ export default React.createClass({
             <MenuItem
               key={`dropdownFullBackup${backup.id}`}
               value={backup.id}
-              primaryText={text}>
+              primaryText={text}
+            >
               <div style={styles.backupListItem}>
                 {backup.instance}
               </div>
@@ -246,7 +251,7 @@ export default React.createClass({
       notificationShowed,
       fullBackups,
       partialBackups,
-      backupFile,
+      // backupFile,
       description,
       selectedBackup
     } = this.state;
@@ -262,11 +267,12 @@ export default React.createClass({
             autoFocus={true}
             fullWidth={true}
             value={name}
-            onChange={(event, value) => this.setState({name: value})}
+            onChange={(event, value) => this.setState({ name: value })}
             errorText={this.getValidationMessages('name').join(' ')}
             hintText="Instance's name"
             onFocus={this.handleInstanceNameFieldFocus}
-            floatingLabelText="Name"/>
+            floatingLabelText="Name"
+          />
           {this.hasEditMode() && notificationShowed ? this.renderNotification() : null}
         </Dialog.ContentSection>
         <Dialog.ContentSection>
@@ -276,24 +282,28 @@ export default React.createClass({
             fullWidth={true}
             multiLine={true}
             value={description}
-            onChange={(event, value) => this.setState({description: value})}
+            onChange={(event, value) => this.setState({ description: value })}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Instance's description"
-            floatingLabelText="Description (optional)"/>
+            floatingLabelText="Description (optional)"
+          />
         </Dialog.ContentSection>
         <Show if={!this.hasEditMode()}>
           <Dialog.ContentSection
             className="vp-3-t"
-            style={{paddingTop: 16, marginLeft: -16}}
-            title="Restore Instance from backup">
+            style={{ paddingTop: 16, marginLeft: -16 }}
+            title="Restore Instance from backup"
+          >
             <DropDownMenu
               className="col-sm-20"
-              style={{marginLeft: -24, maxWidth: 280}}
+              style={{ marginLeft: -24, maxWidth: 280 }}
               onChange={this.handleChangeBackup}
-              value={selectedBackup}>
+              value={selectedBackup}
+            >
               {this.renderDropDownItems(fullBackups, partialBackups)}
             </DropDownMenu>
-            <DropZone.UploadFileButton
+            {/* eslint-disable no-inline-comments*/}
+            {/* <DropZone.UploadFileButton
               key="uploadBackupFile"
               primary={true}
               style={{marginTop: 12}}
@@ -301,7 +311,7 @@ export default React.createClass({
               iconStyle={{color: '#FFF'}}
               iconClassName={backupFile ? 'synicon-file' : 'synicon-cloud-upload'}
               uploadButtonLabel={backupFile ? backupFile.name : 'Upload partial backup file'}
-              getFile={this.handleUploadBackupFile} />
+              getFile={this.handleUploadBackupFile} /> */}
           </Dialog.ContentSection>
         </Show>
       </div>
@@ -313,8 +323,9 @@ export default React.createClass({
       <div>
         <div
           className="vm-3-b"
-          style={{textAlign: 'center'}}>
-          {`We're restoring your backup, please wait...`}
+          style={{ textAlign: 'center' }}
+        >
+          {'We\'re restoring your backup, please wait...'}
         </div>
         <Loading show={true} />
       </div>
@@ -345,16 +356,18 @@ export default React.createClass({
           <div>
             {this.hasEditMode()
               ? <FlatButton
-                  style={{float: 'left'}}
-                  labelStyle={{color: Colors.red400}}
-                  label="DELETE AN INSTANCE"
-                  onTouchTap={() => this.refs.deleteInstanceDialog.show()} />
+                style={{ float: 'left' }}
+                labelStyle={{ color: Colors.red400 }}
+                label="DELETE AN INSTANCE"
+                onTouchTap={() => this.refs.deleteInstanceDialog.show()}
+              />
               : null
             }
             <Dialog.StandardButtons
               disabled={!canSubmit}
               handleCancel={this.handleCancel}
-              handleConfirm={this.handleFormValidation}/>
+              handleConfirm={this.handleFormValidation}
+            />
           </div>
         }
         sidebar={!isRestoring && [
@@ -386,8 +399,10 @@ export default React.createClass({
             icon={metadata.icon}
             color={metadata.color}
             onIconChange={this.handleIconChange}
-            onColorChange={this.handleColorChange} />
-        ]}>
+            onColorChange={this.handleColorChange}
+          />
+        ]}
+      >
         {!isRestoring ? this.renderContent() : this.renderLoading()}
       </Dialog.FullPage>
     );

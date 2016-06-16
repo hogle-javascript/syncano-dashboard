@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {StoreFormMixin, DialogStoreMixin, StoreHelpersMixin} from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, StoreHelpersMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -39,12 +39,11 @@ export default Reflux.createStore({
 
   onCreateSolutionCompleted(solution) {
     console.debug('SolutionDialogStore::onCreateSolutionCompleted');
-    SessionStore.getRouter().transitionTo(
-      'solutions-edit',
-      {
-        solutionId: solution.id
-      }
-    );
+    const params = {
+      solutionId: solution.id
+    };
+
+    SessionStore.getRouter().push({ name: 'solutions-edit', params });
   },
 
   onUpdateSolutionCompleted() {

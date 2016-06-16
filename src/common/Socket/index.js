@@ -9,7 +9,7 @@ import User from './User';
 import Users from './Users';
 import EmptyListItem from './EmptyListItem';
 
-let Socket = Default;
+const Socket = Default;
 
 Socket.Channel = Channel;
 Socket.ScriptEndpoint = ScriptEndpoint;

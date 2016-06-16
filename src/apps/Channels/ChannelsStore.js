@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import {CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../mixins';
+import { CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './ChannelsActions';

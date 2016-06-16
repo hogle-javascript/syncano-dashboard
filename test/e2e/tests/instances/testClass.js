@@ -1,21 +1,15 @@
-import Async from 'async';
-import globals from '../../globals';
+import accounts from '../../tempAccounts';
 import utils from '../../utils';
 
 export default {
   tags: ['class'],
   before(client) {
-    Async.waterfall([
-      client.createTempAccount
-    ], (err) => {
-      if (err) throw err;
-      const loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
 
-      loginPage
-        .navigate()
-        .setResolution(client)
-        .login(globals.tempEmail, globals.tempPass);
-    });
+    loginPage
+      .navigate()
+      .setResolution(client)
+      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
   after(client) {
     client.end();
@@ -23,9 +17,10 @@ export default {
   'Test Add Class': (client) => {
     const classesPage = client.page.classesPage();
     const className = utils.addSuffix('class');
+    const instanceName = accounts.alternativeUser.instanceName;
 
     classesPage
-      .goToUrl('temp', 'classes')
+      .goToUrl(instanceName, 'classes')
       .clickElement('@addClassButton')
       .fillInput('@createModalNameInput', className)
       .fillInput('@createModalDescriptionInput', utils.addSuffix())

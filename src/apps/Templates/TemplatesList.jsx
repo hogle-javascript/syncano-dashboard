@@ -1,14 +1,14 @@
 import React from 'react';
 
 // Utils
-import {DialogsMixin} from '../../mixins';
+import { DialogsMixin } from '../../mixins';
 
 import Actions from './TemplatesActions';
 import Store from './TemplatesStore';
 
 // Components
 import ListItem from './TemplatesListItem';
-import {ColumnList, Dialog, Lists} from '../../common/';
+import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -43,12 +43,13 @@ export default React.createClass({
         key={`template-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeTemplateDialog', item)}/>
+        showDeleteDialog={() => this.showDialog('removeTemplateDialog', item)}
+      />
     );
   },
 
   render() {
-    const {name, handleTitleClick, ...other} = this.props;
+    const { name, handleTitleClick, ...other } = this.props;
     const checkedItems = Store.getNumberOfChecked();
 
     return (
@@ -59,27 +60,31 @@ export default React.createClass({
             className="col-xs-12"
             primary={true}
             columnName="CHECK_ICON"
-            handleClick={handleTitleClick}>
+            handleClick={handleTitleClick}
+          >
             {name}
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-flex-1">
+            className="col-flex-1"
+          >
             Content type
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Lists.Menu
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}>
-              <Lists.MenuItem onTouchTap={() => this.showDialog('removeTemplateDialog')}/>
+              handleUnselectAll={Actions.uncheckAll}
+            >
+              <Lists.MenuItem onTouchTap={() => this.showDialog('removeTemplateDialog')} />
             </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
           {...other}
           key="templates-list"
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+        />
       </Lists.Container>
     );
   }

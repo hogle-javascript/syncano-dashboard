@@ -1,9 +1,8 @@
 import Reflux from 'reflux';
-import URL from 'url';
 import Promise from 'axios';
 
 // Utils & Mixins
-import {StoreFormMixin, WaitForStoreMixin} from '../../mixins';
+import { StoreFormMixin, WaitForStoreMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -43,7 +42,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('SolutionsEditStore::refreshData');
-    const {solutionId} = SessionStore.getParams();
+    const { solutionId } = SessionStore.getParams();
 
     if (solutionId) {
       Promise.all([
@@ -70,17 +69,7 @@ export default Reflux.createStore({
   setSolutionVersions(versions) {
     console.debug('SolutionsEditStore::setSolutions');
 
-    this.data.versions = [];
-
-    this.data.hasNextPage = versions.hasNextPage();
-    this.data.nextParams = URL.parse(versions.next() || '', true).query;
-    this.data.prevParams = URL.parse(versions.prev() || '', true).query;
-
-    let newItems = [];
-
-    Object.keys(versions).map((key) => newItems.splice(0, 0, versions[key]));
-
-    this.data.versions = this.data.versions.concat(newItems);
+    this.data.versions = versions.objects;
 
     this.data.isLoading = false;
     this.trigger(this.data);

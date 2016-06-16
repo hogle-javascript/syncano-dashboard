@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import {StoreFormMixin} from '../../mixins';
+import { StoreFormMixin } from '../../mixins';
 
 import Actions from './ProfileActions';
 
@@ -33,14 +33,22 @@ export default Reflux.createStore({
   },
 
   onFetchBillingCardFailure() {
-    this.trigger({isLoading: false});
+    this.trigger({ isLoading: false });
+  },
+
+  setCard(card) {
+    let state = this.getInitialState();
+
+    state.card = card;
+    state.isLoading = false;
+    this.trigger(state);
   },
 
   onUpdateBillingCardCompleted(payload) {
-    let state = this.getInitialState();
+    this.setCard(payload);
+  },
 
-    state.card = payload;
-    state.isLoading = false;
-    this.trigger(state);
+  onAddBillingCardCompleted(payload) {
+    this.setCard(payload);
   }
 });

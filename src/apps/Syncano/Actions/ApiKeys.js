@@ -22,7 +22,7 @@ export default {
     this.NewLibConnection
       .ApiKey
       .please()
-      .update({id}, payload)
+      .update({ id }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -32,7 +32,7 @@ export default {
       this.NewLibConnection
         .ApiKey
         .please()
-        .delete({id: apiKey.id})
+        .delete({ id: apiKey.id })
         .then(this.completed)
         .catch(this.failure);
     });
@@ -43,7 +43,7 @@ export default {
       this.NewLibConnection
         .ApiKey
         .please()
-        .reset({id: apiKey.id}));
+        .reset({ id: apiKey.id }));
 
     this.Promise.all(promises)
       .then(this.completed)

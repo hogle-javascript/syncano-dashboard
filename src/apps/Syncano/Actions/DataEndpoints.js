@@ -38,7 +38,7 @@ export default {
       })
       .catch((error) => {
         if (error.name) {
-          return this.failure({class: error.name});
+          return this.failure({ class: error.name });
         }
         this.failure(error);
       });
@@ -48,7 +48,7 @@ export default {
     this.NewLibConnection
       .DataEndpoint
       .please()
-      .update({name}, payload)
+      .update({ name }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -58,7 +58,7 @@ export default {
       this.NewLibConnection
         .DataEndpoint
         .please()
-        .delete({name: dataEndpoint.name}));
+        .delete({ name: dataEndpoint.name }));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -83,7 +83,7 @@ export default {
       })
       .catch((error) => {
         if (error.name) {
-          return this.failure({class: error.name});
+          return this.failure({ class: error.name });
         }
         this.failure(error);
       });

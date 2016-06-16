@@ -1,6 +1,6 @@
 import Syncano from 'syncano';
 
-let connection = new Syncano({baseUrl: SYNCANO_BASE_URL});
+let connection = new Syncano({ baseUrl: SYNCANO_BASE_URL });
 
 export default {
   Syncano,
@@ -14,8 +14,6 @@ export default {
   },
 
   reset() {
-    connection = new Syncano({baseUrl: SYNCANO_BASE_URL});
     connection.setAccountKey(null);
-    return connection;
   }
 };

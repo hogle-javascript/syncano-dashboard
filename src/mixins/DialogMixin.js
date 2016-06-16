@@ -28,6 +28,7 @@ export default {
   },
 
   resetDialogState() {
+    console.debug('DialogMixin::resetDialogState');
     if (_.isFunction(this.getInitialState)) {
       this.replaceState(this.getInitialState());
     }
@@ -64,10 +65,10 @@ export default {
   },
 
   show() {
-    this.setState({open: true});
+    this.setState({ open: true });
   },
 
   dismiss() {
-    this.setState({open: false});
+    this.setState({ open: false });
   }
 };
