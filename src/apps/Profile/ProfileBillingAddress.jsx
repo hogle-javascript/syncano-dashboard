@@ -106,7 +106,7 @@ export default React.createClass({
             method="post"
           >
             <div className="row vm-6-b">
-              <div className="col-flex-1">
+              <div className="col-lg-16">
                 <TextField
                   name="company_name"
                   fullWidth={true}
@@ -147,8 +147,6 @@ export default React.createClass({
                   hintText="Tax number"
                   fullWidth={true}
                 />
-              </div>
-              <div className="col-flex-1">
                 <TextField
                   value={this.state.address_line1}
                   onChange={(event, value) => this.setState({ address_line1: value })}
@@ -191,7 +189,7 @@ export default React.createClass({
                   fullWidth={true}
                 />
 
-                <div className="row">
+                <div className="row vm-3-b">
                   <div className="col-md-15">
                     <TextField
                       value={this.state.address_zip}
@@ -217,15 +215,19 @@ export default React.createClass({
                     />
                   </div>
                 </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                  <div>
+                    <RaisedButton
+                      type="submit"
+                      label="Update"
+                      className="raised-button"
+                      disabled={!canSubmit}
+                      primary={true}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-            <RaisedButton
-              type="submit"
-              label="Update"
-              className="raised-button"
-              disabled={!canSubmit}
-              primary={true}
-            />
           </form>
         </Container>
       </div>

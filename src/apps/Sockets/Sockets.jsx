@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
-import {colors as Colors} from 'material-ui/styles/';
+import { colors as Colors } from 'material-ui/styles/';
 
 // Stores & Actions
 import ScriptsActions from '../Scripts/ScriptsActions';
@@ -13,8 +13,8 @@ import Store from './SocketsStore';
 import { DialogsMixin } from '../../mixins';
 
 // Components
-import {RaisedButton} from 'material-ui';
-import {Container, Loading, Show, Dialog} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container, Loading, Show, Dialog } from '../../common/';
 
 // Apps
 import DataEndpoints from '../DataEndpoints';
