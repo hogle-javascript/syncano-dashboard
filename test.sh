@@ -2,7 +2,6 @@
 set -e
 
 function run_unit_tests {
-    npm run-script lint
     npm run-script test
 }
 
@@ -22,6 +21,7 @@ function sync_with_master_branch {
 
 function e2e_cleanup {
     rm -rf ./dist_e2e
+    npm run-script e2e-remove-certificate
 }
 case "$CIRCLE_NODE_INDEX" in
     0)

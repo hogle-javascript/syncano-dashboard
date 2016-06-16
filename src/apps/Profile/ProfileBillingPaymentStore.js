@@ -36,11 +36,19 @@ export default Reflux.createStore({
     this.trigger({ isLoading: false });
   },
 
-  onUpdateBillingCardCompleted(payload) {
+  setCard(card) {
     let state = this.getInitialState();
 
-    state.card = payload;
+    state.card = card;
     state.isLoading = false;
     this.trigger(state);
+  },
+
+  onUpdateBillingCardCompleted(payload) {
+    this.setCard(payload);
+  },
+
+  onAddBillingCardCompleted(payload) {
+    this.setCard(payload);
   }
 });

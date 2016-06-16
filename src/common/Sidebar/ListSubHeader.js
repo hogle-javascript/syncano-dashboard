@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-export default Radium(({text}) => {
+export default Radium(({ text }) => {
   const styles = {
     root: {
       padding: '20px 20px 10px',

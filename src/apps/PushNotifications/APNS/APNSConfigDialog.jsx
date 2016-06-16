@@ -74,7 +74,8 @@ export default Radium(React.createClass({
       dropzoneWithFileTitle: {
         color: Colors.black,
         fontSize: 16,
-        fontWeight: 500
+        fontWeight: 500,
+        paddingTop: 16
       },
       dropzoneWithFileContainer: {
         position: 'relative',
@@ -89,8 +90,7 @@ export default Radium(React.createClass({
       },
       closeIcon: {
         position: 'absolute',
-        right: 0,
-        top: -25
+        right: 0
       }
     };
   },
@@ -153,7 +153,7 @@ export default Radium(React.createClass({
           <div className="col-flex-1">
             <div style={styles.dropzoneWithFileTitle}>{_.capitalize(type)} certificate</div>
             <div className="row align-middle">
-              <div className="col-xs-23">
+              <div className="col-xs-24">
                 <TextField
                   fullWidth={true}
                   value={this.state[`${type}_certificate_name`]}
@@ -162,7 +162,7 @@ export default Radium(React.createClass({
                   floatingLabelText="Apple Push Notification Certificate Name"
                 />
               </div>
-              <div className="col-xs-12">
+              <div className="col-xs-11">
                 <TextField
                   underlineShow={false}
                   disabled={true}

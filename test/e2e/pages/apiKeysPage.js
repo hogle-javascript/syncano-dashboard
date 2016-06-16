@@ -1,5 +1,4 @@
 import utils from '../utils';
-import globals from '../globals';
 
 const apiKeysCommands = {
   waitForModalToClose() {
@@ -9,7 +8,6 @@ const apiKeysCommands = {
 };
 
 export default {
-  url: `https://localhost:8080/#/instances/${globals.instanceName}/api-keys`,
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
