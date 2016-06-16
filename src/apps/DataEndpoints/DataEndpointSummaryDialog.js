@@ -64,7 +64,7 @@ export default React.createClass({
                 </div>
               </div>
             </Dialog.ContentSection>
-            <Show if={!itemClass.schema || !itemClass.schema.length || itemClass.schema === "[]"}>
+            <Show if={!itemClass.schema || !itemClass.schema.length}>
               <Dialog.ContentSection>
                 <div className="col-flex-1">
                   <Notification>
