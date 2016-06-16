@@ -94,7 +94,7 @@ export default Reflux.createStore({
     if (this.data.card) {
       this.subscribe();
     } else {
-      Actions.updateCard(cardInfo);
+      Actions.addCard(cardInfo);
     }
   },
 
@@ -141,6 +141,20 @@ export default Reflux.createStore({
   },
 
   onUpdateCardFailure() {
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
+  onAddCard() {
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onAddCardCompleted() {
+    this.subscribe();
+  },
+
+  onAddCardFailure() {
     this.data.isLoading = false;
     this.trigger(this.data);
   },

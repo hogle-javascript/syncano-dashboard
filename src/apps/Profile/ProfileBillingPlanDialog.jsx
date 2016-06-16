@@ -65,7 +65,7 @@ const ProfileBillingPlanDialog = React.createClass({
       return {};
     }
 
-    let data = this.getFormAttributes();
+    const data = this.getFormAttributes();
 
     return {
       number: data.number,
@@ -232,8 +232,8 @@ const ProfileBillingPlanDialog = React.createClass({
       return true;
     }
     const defaultValue = 0;
+    const selected = this.state[type + 'Selected'];
     let options = this.state.plan.options[type];
-    let selected = this.state[type + 'Selected'];
 
     options = options.map((item) => {
       return '$' + item;
@@ -269,12 +269,11 @@ const ProfileBillingPlanDialog = React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let apiInfo = Store.getInfo('api');
-    let cbxInfo = Store.getInfo('cbx');
-    let sum = parseInt(apiInfo.total, 10) + parseInt(cbxInfo.total, 10);
-
-    let dialogCustomActions = [
+    const styles = this.getStyles();
+    const apiInfo = Store.getInfo('api');
+    const cbxInfo = Store.getInfo('cbx');
+    const sum = parseInt(apiInfo.total, 10) + parseInt(cbxInfo.total, 10);
+    const dialogCustomActions = [
       <FlatButton
         key="cancel"
         label="Cancel"
@@ -287,8 +286,7 @@ const ProfileBillingPlanDialog = React.createClass({
         onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
-
-    let apiSliderSummary = this.renderSliderSummary(
+    const apiSliderSummary = this.renderSliderSummary(
       {
         included: {
           value: parseInt(apiInfo.included, 10).toLocaleString(),
@@ -300,8 +298,7 @@ const ProfileBillingPlanDialog = React.createClass({
         }
       }
     );
-
-    let cbxSliderSummary = this.renderSliderSummary(
+    const cbxSliderSummary = this.renderSliderSummary(
       {
         included: {
           value: parseInt(cbxInfo.included, 10).toLocaleString(),

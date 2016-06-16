@@ -54,12 +54,19 @@ export default Radium(React.createClass({
   },
 
   handleSuccessfullValidation(data) {
-    Actions.updateBillingCard({
+    const {card} = this.state;
+    const params = {
       number: data.number,
       cvc: data.cvc,
       exp_month: data.exp_month,
       exp_year: data.exp_year
-    });
+    };
+
+    if (_.isEmpty(card)) {
+      return Actions.addBillingCard(params);
+    }
+
+    Actions.updateBillingCard(params);
   },
 
   toggleForm(state) {

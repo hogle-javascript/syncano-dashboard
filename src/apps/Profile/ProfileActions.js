@@ -40,6 +40,12 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Billing.getCard'
   },
+  addBillingCard: {
+    asyncResult: true,
+    asyncForm: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Billing.addCard'
+  },
   updateBillingCard: {
     asyncResult: true,
     asyncForm: true,
