@@ -30,7 +30,6 @@ export default {
   //     .waitForElementVisible('@mySolutionTitle');
   // },
   'Administrator can filter solutions by tags': (client) => {
-    let tagsCount = null;
     const solutionsPage = client.page.solutionsPage();
     const elementsWithTag = solutionsPage.elements.tagsJs;
 
@@ -41,13 +40,9 @@ export default {
       .clickElement('@tagsListJs')
       .waitForElementVisible('@tagsJs');
 
-    solutionsPage.getText('@tagListItemCount', (result) => {
-      tagsCount = parseInt(result.value, 10);
-    });
-
     client.elements(elementsWithTag.locateStrategy, elementsWithTag.selector, (result) => {
-      if (tagsCount >= result.value.length) {
-        client.assert.ok(true, 'Tags count is equal or greater than number of solutions on the list');
+      if (result.value.length >= 2) {
+        client.assert.ok(true, 'Count is equal or greater than two solutions on the list');
       }
     });
   }
