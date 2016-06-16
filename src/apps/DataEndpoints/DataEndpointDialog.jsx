@@ -148,7 +148,7 @@ export default React.createClass({
                 onToggle={this.handleToggle.bind(this, 'showFields', field.name)} />
             </div>
             <div className="col-xs-8">
-              <Show if={field.type === 'reference' || field.type === 'relation'}>
+              <Show if={field.type === 'reference'}>
                 <Checkbox
                   name="expand"
                   defaultChecked={this.isEnabled(this.state.expand, field.name)}
@@ -200,7 +200,7 @@ export default React.createClass({
     const title = this.hasEditMode() ? 'Edit' : 'Add';
     const {open, isLoading, canSubmit, classes} = this.state;
     const submitLabel = !ClassesStore.getClassByName(this.state.class) ? 'Confirm and create a class' : 'Confirm';
-    const filteringUrl = "http://docs.syncano.io/docs/data-objects-filtering-ordering#filtering-data-objects";
+    const filteringUrl = 'http://docs.syncano.io/docs/data-objects-filtering-ordering#filtering-data-objects';
 
     return (
       <Dialog.FullPage

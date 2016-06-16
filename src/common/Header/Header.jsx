@@ -60,9 +60,6 @@ const Header = Radium(React.createClass({
         display: 'inline-flex',
         alignItems: 'center',
         cursor: 'pointer'
-      },
-      logoutDropdownItem: {
-        color: this.context.muiTheme.rawTheme.palette.accent2Color
       }
     };
   },
@@ -74,11 +71,7 @@ const Header = Radium(React.createClass({
     const billingIcon = <FontIcon className="synicon-credit-card"/>;
     const instancesListIcon = <FontIcon className="synicon-view-list"/>;
     const accountKeyIcon = <FontIcon className="synicon-key-variant"/>;
-    const logoutIcon = (
-      <FontIcon
-        style={styles.logoutDropdownItem}
-        className="synicon-power"/>
-    );
+    const logoutIcon = <FontIcon className="synicon-power"/>;
 
     if (!user) {
       return null;
@@ -106,14 +99,13 @@ const Header = Radium(React.createClass({
         <ListItem
           onTouchTap={() => router.push('instances')}
           leftIcon={instancesListIcon}
-          primaryText="Instances list"/>
+          primaryText="My Instances"/>
         <ListItem
           onTouchTap={() => router.push('profile-billing-plan')}
           leftIcon={billingIcon}
-          primaryText="Billing"/>
+          primaryText="Plans & Billing"/>
         <ListItem
           onTouchTap={SessionActions.logout}
-          style={styles.logoutDropdownItem}
           leftIcon={logoutIcon}
           primaryText="Logout"/>
       </List>

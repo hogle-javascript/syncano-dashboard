@@ -52,7 +52,8 @@ export default Radium(React.createClass({
         alignItems: 'center'
       },
       accountKey: {
-        fontFamily: 'monospace'
+        fontFamily: 'monospace',
+        paddingRight: 8
       },
       updateButton: {
         height: 36,
@@ -93,8 +94,8 @@ export default Radium(React.createClass({
           <div style={styles.content}>
             <div>Account key</div>
             <div className="row" style={styles.contentRow}>
-              <div className="col-xs-15" style={styles.accountKey}>{this.state.account_key}</div>
-              <div className="col-xs-10">
+              <div style={styles.accountKey}>{this.state.account_key}</div>
+              <div className="flex-1">
                 <Clipboard
                   copyText={this.state.account_key}
                   onCopy={() => this.setSnackbarNotification({

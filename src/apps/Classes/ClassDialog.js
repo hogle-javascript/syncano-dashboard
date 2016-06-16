@@ -170,7 +170,7 @@ export default React.createClass({
   },
 
   hasOrder(fieldType) {
-    const noOrderFields = ['file', 'text', 'array', 'object', 'geopoint'];
+    const noOrderFields = ['file', 'text', 'array', 'object', 'geopoint', 'relation'];
 
     return _.indexOf(noOrderFields, fieldType) < 0;
   },

@@ -74,7 +74,7 @@ export default React.createClass({
                 handleSelectAll={() => Actions.selectAll('sharedInstances')}
                 handleUnselectAll={() => Actions.uncheckAll('sharedInstances')}>
                 <Lists.MenuItem
-                  primaryText="Leave All"
+                  primaryText="Leave Selected"
                   onTouchTap={() => this.showDialog('deleteSharedInstanceDialog')} />
               </Lists.Menu>
             </Column.ColumnHeader>
