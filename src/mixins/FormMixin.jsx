@@ -206,7 +206,7 @@ export default {
   setSelectFieldValue(stateParamName, value) {
     let state = {};
 
-    state[stateParamName] = value;
+    state[stateParamName] = value || null;
     this.setState(state);
   }
 };
