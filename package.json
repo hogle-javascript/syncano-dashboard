@@ -134,7 +134,7 @@
     "clean": "gulp clean",
     "oauth-server": "node oauth-server.js",
     "lint": "eslint src --quiet --ext .js --ext .jsx",
-    "e2e": "nightwatch -e chrome --suiteRetries 1",
+    "e2e": "nightwatch -e chrome --suiteRetries 1 --skiptags pushSocketsApns,socialLogins",
     "e2e-0": "nightwatch -e chrome -g instances --suiteRetries 1 --skiptags pushSocketsApns",
     "e2e-1": "nightwatch -e chrome -s instances --suiteRetries 1 --skiptags socialLogins",
     "e2e-2": "nightwatch -e firefox --suiteRetries 1 --skiptags socialLogins,instanceSettingsNav,authSettings,templates,templateView",

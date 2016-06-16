@@ -9,15 +9,15 @@ general:
 
 test:
   override:
-    - npm run-script lint
-    - npm run-script build && mv ./dist ./dist_e2e
-    - nohup npm run-script e2e-http-server &
-    - nohup npm run-script oauth-server &
-    - npm run-script e2e-setup && npm run-script e2e-create-accounts
-    - case $CIRCLE_NODE_INDEX in 0) npm run e2e ;; 1) npm run e2e-1 ;; 2) npm run e2e-2 ;; *) npm run e2e ;; esac:
-        parallel: true
+    - npm run lint
+    - npm run build && mv ./dist ./dist_e2e
+    - npm run e2e-setup
+    - npm run e2e-http-server && npm run oauth-server:
+      background: true
+    - npm run e2e-create-accounts
+    - npm run e2e:
         timeout: 120
-    - rm -rf ./dist_e2e && npm run-script e2e-remove-certificate
+    - rm -rf ./dist_e2e && npm run e2e-remove-certificate
 
 deployment:
   production:
