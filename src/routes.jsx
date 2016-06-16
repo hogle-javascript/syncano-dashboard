@@ -50,6 +50,7 @@ import Triggers from './apps/Triggers';
 import Schedules from './apps/Schedules';
 import PushNotifications from './apps/PushNotifications';
 import PushDevices from './apps/PushDevices';
+import Usage from './apps/Usage';
 
 function redirectToLogin(nextState, replace) {
   if (!auth.loggedIn()) {
@@ -448,6 +449,11 @@ export default (
           name="profile-billing-plan"
           component={Profile.BillingPlan}
           path="plan"
+        />
+        <Route
+          name="profile-billing-usage"
+          component={Usage}
+          path="usage"
         />
         <Route
           name="profile-billing-address"

@@ -14,17 +14,12 @@ import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
 import { FlatButton, IconButton, RaisedButton, TextField } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
-import { Billing, Container, Loading, Color, Dialog, InnerToolbar } from '../../common/';
+import { Billing, Container, Loading, Color, Dialog, InnerToolbar, UpgradeButton } from '../../common/';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
-import Chart from './ProfileBillingChart';
 
 export default Radium(React.createClass({
   displayName: 'ProfileBillingPlan',
-
-  contextTypes: {
-    muiTheme: React.PropTypes.object
-  },
 
   mixins: [
     FormMixin,
@@ -304,7 +299,6 @@ export default Radium(React.createClass({
   },
 
   renderSubscriptionExpiringInfo() {
-    const { muiTheme } = this.context;
     const { profile } = this.state;
     const endDate = profile.subscription.end;
     const endDateString = Moment(endDate).format('MMMM D YYYY');
@@ -314,12 +308,6 @@ export default Radium(React.createClass({
         <p style={{ marginBottom: 20, lineHeight: 1.35 }}>
           Your free Builder account will expire on <strong>{endDateString}</strong>.
         </p>
-        <RaisedButton
-          label="Upgrade Now"
-          backgroundColor={muiTheme.palette.accent2Color}
-          labelColor="#FFFFFF"
-          onClick={this.handleShowPlanDialog}
-        />
       </div>
     );
   },
@@ -380,8 +368,14 @@ export default Radium(React.createClass({
             style={{ textAlign: 'center' }}
           >
             <div style={{ fontSize: '2rem' }}>${amountTotal}</div>
-            <div style={{ marginTop: 15, fontSize: '1rem' }}>
+            <div className="vm-2" style={{ fontSize: '1rem' }}>
               ${covered} plan + ${overage} overage
+            </div>
+            <div>
+              <UpgradeButton
+                label="Upgrade my plan"
+                onTouchTap={this.handleShowPlanDialog}
+              />
             </div>
           </div>
         </div>
@@ -425,15 +419,7 @@ export default Radium(React.createClass({
         {this.getDialogs()}
         <PlanDialog onDismiss={this.handlePlanDialogDismiss} />
 
-        <InnerToolbar title={<div>Your plan: <span><strong> {Store.getPlanName()}</strong></span></div>}>
-          <Billing.SwitchSection
-            ref="toggle"
-            plan={this.state.profile.subscription.plan}
-            planCanceled={Store.isPlanCanceled()}
-            onPlanDialog={this.handleShowPlanDialog}
-            onCancelPlanDialog={() => this.showDialog('cancelProductionPlan')}
-          />
-        </InnerToolbar>
+        <InnerToolbar title={<div>Your plan: <span><strong> {Store.getPlanName()}</strong></span></div>} />
 
         <Container>
           <div className="row vp-6-b">
@@ -443,14 +429,6 @@ export default Radium(React.createClass({
               </div>
               <div className="vm-3-t">
                 {this.renderCommment()}
-              </div>
-              <div>
-                <Billing.PlanExplorerButton
-                  plan={this.state.profile.subscription.plan}
-                  isNewSubscription={Store.isNewSubscription()}
-                  onPlanDialog={this.handleShowPlanDialog}
-                  onDeleteSubscription={() => Actions.cancelNewPlan(this.state.subscriptions)}
-                />
               </div>
             </div>
             <div
@@ -480,12 +458,6 @@ export default Radium(React.createClass({
               <Billing.ChartLegend {...this.state.chartLegend} />
             </div>
             <div className="col-flex-1"></div>
-          </div>
-
-          <div className="row vp-5-b">
-            <div className="col-flex-1">
-              <Chart />
-            </div>
           </div>
 
           {this.renderLimitsForm()}
