@@ -53,6 +53,14 @@ const DataObjects = React.createClass({
     return _.includes(Constants.PROTECTED_FROM_DELETE_CLASS_NAMES, className);
   },
 
+  handleCellClick(rowNumber, columnNumber) {
+    console.info('DataObjects::handleCellClick', arguments);
+
+    if (columnNumber > -1) {
+      this.showDataObjectEditDialog(rowNumber);
+    }
+  },
+
   handleDelete() {
     console.info('DataObjects::handleDelete');
     const { classObj } = this.state;
@@ -120,6 +128,7 @@ const DataObjects = React.createClass({
       result[key] = value;
       return result;
     }, {});
+
     Actions.showDialog(dataObject);
   },
 
@@ -135,6 +144,7 @@ const DataObjects = React.createClass({
           ref="table"
           multiSelectable={true}
           showRowHover={true}
+          onCellClick={this.handleCellClick}
           onRowSelection={this.handleRowSelection}
           wrapperStyle={{ minHeight: '120px' }}
           bodyStyle={{ overflowX: 'visible', overflowY: 'initial' }}

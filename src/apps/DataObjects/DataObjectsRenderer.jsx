@@ -1,9 +1,8 @@
 import React from 'react';
 import Moment from 'moment';
 import _ from 'lodash';
-import Actions from './DataObjectsActions';
 
-import { IconButton, TableHeaderColumn, TableRowColumn, TableHeader, TableRow } from 'material-ui';
+import {FontIcon, TableHeaderColumn, TableRowColumn, TableHeader, TableRow} from 'material-ui';
 
 export default {
   columnsRenderers() {
@@ -44,10 +43,9 @@ export default {
 
   renderFile(obj) {
     return (
-      <IconButton
-        iconClassName="synicon-download"
-        onTouchTap={(event) => this.handleFileOnClick(event, obj.value)}
-      />
+      <div onClick={(event) => this.handleFileOnClick(event, obj.value)}>
+        <FontIcon className="synicon-download"/>
+      </div>
     );
   },
 
@@ -131,8 +129,7 @@ export default {
 
       return (
         <TableRow
-          onTouchTap={() => Actions.showDialog(item)}
-          style={{ cursor: 'pointer' }}
+          style={{cursor: 'pointer'}}
           key={`row-${index}`}
           selected={selected}
         >
