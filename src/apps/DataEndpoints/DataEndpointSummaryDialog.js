@@ -4,11 +4,12 @@ import {Link} from 'react-router';
 import Reflux from 'reflux';
 
 import Store from './DataEndpointSummaryDialogStore';
+import ClassesStore from './../Classes/ClassesStore';
 import DataEndpointsStore from './DataEndpointsStore';
 import SessionStore from '../Session/SessionStore';
 
 import {DialogMixin} from '../../mixins';
-import {CodePreview, Dialog, Notification} from '../../common/';
+import {CodePreview, Dialog, Notification, Show} from '../../common/';
 import {Card, CardTitle, CardText, RaisedButton} from 'material-ui';
 import {colors as Colors} from 'material-ui/styles/'
 
@@ -31,6 +32,7 @@ export default React.createClass({
     const item = DataEndpointsStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
+    const itemClass = item ? ClassesStore.getClassByName(item.class) : null;
 
     return (
       <Dialog.FullPage
@@ -62,22 +64,24 @@ export default React.createClass({
                 </div>
               </div>
             </Dialog.ContentSection>
-            <Dialog.ContentSection>
-              <div className="col-flex-1">
-                <Notification>
-                  You have chosen to use class "{item.class}", but it does not contain any custom fields in the class
-                  schema. To use the full power of Data Endpoints, we suggest
-                  <Link
-                    to={{
-                      name: 'classEdit',
-                      params: {...params, className: item.class, action: 'edit'}
-                    }}
-                    style={{fontWeight: 700}}>
-                    {` clicking here to add custom fields for your data objects.`}
-                  </Link>
-                </Notification>
-              </div>
-            </Dialog.ContentSection>
+            <Show if={!itemClass.schema || !itemClass.schema.length}>
+              <Dialog.ContentSection>
+                <div className="col-flex-1">
+                  <Notification>
+                    You have chosen to use class "{item.class}", but it does not contain any custom fields in the class
+                    schema. To use the full power of Data Endpoints, we suggest
+                    <Link
+                      to={{
+                        name: 'classEdit',
+                        params: {...params, className: item.class, action: 'edit'}
+                      }}
+                      style={{fontWeight: 700}}>
+                      {` clicking here to add custom fields for your data objects.`}
+                    </Link>
+                  </Notification>
+                </div>
+              </Dialog.ContentSection>
+            </Show>
             <Dialog.ContentSection>
               <div className="col-flex-1">
                 <Card>
