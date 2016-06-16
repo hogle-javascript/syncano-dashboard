@@ -312,6 +312,17 @@ export default Radium(React.createClass({
     );
   },
 
+  renderUpgradeButton() {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <UpgradeButton
+          label="Upgrade my plan"
+          onTouchTap={this.handleShowPlanDialog}
+        />
+      </div>
+    );
+  },
+
   renderSummary() {
     const plan = Store.getPlan();
     const { profile } = this.state;
@@ -342,10 +353,11 @@ export default Radium(React.createClass({
               style={{ textAlign: 'center' }}
             >
               <div style={{ textDecoration: 'line-through', fontSize: '2rem' }}>${amountTotal}</div>
-              <div style={{ marginTop: 15, fontSize: '1rem' }}>Your Cost: $0</div>
+              <div className="vm-2" style={{ fontSize: '1rem' }}>Your Cost: $0</div>
             </div>
           </div>
           {plan === 'builder' && this.renderSubscriptionExpiringInfo()}
+          {plan === 'builder' && this.renderUpgradeButton()}
         </div>
       );
     }
@@ -371,12 +383,7 @@ export default Radium(React.createClass({
             <div className="vm-2" style={{ fontSize: '1rem' }}>
               ${covered} plan + ${overage} overage
             </div>
-            <div>
-              <UpgradeButton
-                label="Upgrade my plan"
-                onTouchTap={this.handleShowPlanDialog}
-              />
-            </div>
+            {this.renderUpgradeButton()}
           </div>
         </div>
       </div>
