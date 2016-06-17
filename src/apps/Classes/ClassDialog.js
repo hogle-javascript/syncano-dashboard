@@ -15,7 +15,7 @@ import { GroupsStore, GroupsActions } from '../Groups';
 // Components
 import { TextField, FlatButton, IconButton, Checkbox, Tabs, Tab } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
-import { Color, Show, SelectFieldWrapper, Tooltip, Dialog, Icon, Notification, ColorIconPicker } from '../../common/';
+import { Color, Show, SelectFieldWrapper, Dialog, Icon, Notification, ColorIconPicker } from '../../common/';
 
 export default React.createClass({
   displayName: 'ClassDialog',
@@ -174,13 +174,13 @@ export default React.createClass({
   hasFilter(fieldType) {
     const noFilterFields = ['file', 'text', 'object'];
 
-    return noFilterFields.indexOf(fieldType) < 0;
+    return !_.includes(noFilterFields, fieldType);
   },
 
   hasOrder(fieldType) {
     const noOrderFields = ['file', 'text', 'array', 'object', 'geopoint', 'relation'];
 
-    return _.indexOf(noOrderFields, fieldType) < 0;
+    return !_.includes(noOrderFields, fieldType);
   },
 
   handleAddSubmit() {
@@ -220,10 +220,15 @@ export default React.createClass({
 
   handleFieldAdd() {
     const { fields, fieldName, fieldType, fieldTarget } = this.state;
+    const filterCheckbox = this.refs[`checkboxFilter${fieldName}`];
+    const orderCheckbox = this.refs[`checkboxOrder${fieldName}`];
 
     if (_.includes(_.map(fields, 'fieldName'), fieldName)) {
-      this.refs.fieldName.setErrorText('Field with this name already exists.');
-      return;
+      return this.setState({
+        errors: {
+          fieldName: ['Field with this name already exists.']
+        }
+      });
     }
     if (!fieldName) {
       return;
@@ -234,8 +239,8 @@ export default React.createClass({
     let field = {
       fieldName,
       fieldType,
-      fieldOrder: this.refs.fieldOrder ? this.refs.fieldOrder.isChecked() : null,
-      fieldFilter: this.refs.fieldFilter ? this.refs.fieldFilter.isChecked() : null
+      fieldOrder: orderCheckbox ? orderCheckbox.isChecked() : null,
+      fieldFilter: filterCheckbox ? filterCheckbox.isChecked() : null
     };
 
     if (fieldType === 'reference' || fieldType === 'relation') {
@@ -293,7 +298,7 @@ export default React.createClass({
   },
 
   setFields(schema) {
-    const fields = this.state.fields;
+    const { fields } = this.state;
 
     _.map(schema, (item) => {
       fields.push({
@@ -330,9 +335,10 @@ export default React.createClass({
 
     return (
       <Checkbox
+        ref={`checkbox${_.upperFirst(indexType)}${item.fieldName}`}
         name={indexType}
-        defaultChecked={item[`field${_.upperFirst(indexType)}`]}
-        onCheck={this.handleOnCheck.bind(this, item)}
+        checked={item[`field${_.upperFirst(indexType)}`]}
+        onCheck={event => this.handleOnCheck(item, event)}
       />
     );
   },
@@ -347,13 +353,15 @@ export default React.createClass({
       <IconButton
         tooltip={`${fieldType} doesn't support ${message[indexType]}`}
         iconClassName="synicon-close-box-outline"
-        iconStyle={{ color: Colors.grey400 }}
+        iconStyle={{ color: Colors.grey400, marginLeft: -24 }}
       />
     );
   },
 
   renderSchemaFields() {
-    return this.state.fields.map((item) => {
+    const { fields } = this.state;
+
+    return _.map(fields, (item) => {
       return (
         <div
           key={item.fieldName}
@@ -382,6 +390,9 @@ export default React.createClass({
 
   render() {
     const {
+      name,
+      description,
+      canSubmit,
       isLoading,
       open,
       group,
@@ -394,6 +405,12 @@ export default React.createClass({
     } = this.state;
     const styles = this.getStyles();
     const title = this.hasEditMode() ? 'Update' : 'Add';
+    const newFieldObj = {
+      fieldOrder: false,
+      fieldFilter: false,
+      fieldType,
+      fieldName
+    };
     const permissions = [
       {
         text: 'none',
@@ -419,7 +436,7 @@ export default React.createClass({
         isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}
           />
@@ -465,7 +482,7 @@ export default React.createClass({
                   autoFocus={true}
                   disabled={this.hasEditMode()}
                   fullWidth={true}
-                  value={this.state.name}
+                  value={name}
                   onChange={(event, value) => this.setState({ name: value })}
                   errorText={this.getValidationMessages('name').join(' ')}
                   hintText="Class's name"
@@ -475,7 +492,7 @@ export default React.createClass({
                   ref="description"
                   name="description"
                   fullWidth={true}
-                  value={this.state.description}
+                  value={description}
                   onChange={(event, value) => this.setState({ description: value })}
                   errorText={this.getValidationMessages('description').join(' ')}
                   hintText="Class's description"
@@ -543,10 +560,11 @@ export default React.createClass({
                   ref="fieldName"
                   name="fieldName"
                   fullWidth={true}
-                  value={this.state.fieldName}
+                  value={fieldName}
                   onChange={(event, value) => this.setState({ fieldName: value })}
                   hintText="Field's name"
                   floatingLabelText="Name"
+                  errorText={this.getValidationMessages('fieldName').join(' ')}
                 />
               </div>
               <div className="col-xs-8">
@@ -575,36 +593,13 @@ export default React.createClass({
                 className="col-xs-3"
                 style={styles.checkBox}
               >
-                {this.renderCheckbox(item, 'filter')}
-
-
-                <Tooltip
-                  label={!this.hasFilter(fieldType) && `${fieldType} doesn't support filtering`}
-                  verticalPosition="bottom"
-                  horizontalPosition="center"
-                >
-                  <Checkbox
-                    ref="fieldFilter"
-                    disabled={!this.hasFilter(fieldType)}
-                    name="filter"
-                  />
-                </Tooltip>
+                {this.renderCheckbox(newFieldObj, 'filter')}
               </div>
               <div
                 className="col-xs-3"
                 style={styles.checkBox}
               >
-                <Tooltip
-                  label={!this.hasOrder(fieldType) && `${fieldType} doesn't support sorting`}
-                  verticalPosition="bottom"
-                  horizontalPosition="center"
-                >
-                  <Checkbox
-                    ref="fieldOrder"
-                    disabled={!this.hasOrder(fieldType)}
-                    name="order"
-                  />
-                </Tooltip>
+                {this.renderCheckbox(newFieldObj, 'order')}
               </div>
               <div
                 className="col-xs-5"
