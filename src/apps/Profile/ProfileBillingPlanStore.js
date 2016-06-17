@@ -89,6 +89,10 @@ export default Reflux.createStore({
   },
 
   getPlan() {
+    if (!this.data.profile) {
+      return null;
+    }
+
     return this.data.profile.subscription.plan;
   },
 

@@ -9,6 +9,7 @@ import { SnackbarNotificationMixin } from '../../mixins';
 import SessionActions from '../../apps/Session/SessionActions';
 import SessionStore from '../../apps/Session/SessionStore';
 import InstancesStore from '../../apps/Instances/InstancesStore';
+import ProfileBillingPlanStore from '../../apps/Profile/ProfileBillingPlanStore';
 
 // Components
 import Sticky from 'react-stickydiv';
@@ -143,9 +144,27 @@ const Header = Radium(React.createClass({
     );
   },
 
-  render() {
+  renderUpgradeButton() {
     const styles = this.getStyles();
     const { router } = this.props;
+    const plan = ProfileBillingPlanStore.getPlan();
+
+    if (plan !== 'builder') {
+      return false;
+    }
+
+    return (
+      <li
+        id="upgrade-button"
+        style={{ ...styles.toolbarListItem, ...{ paddingRight: 0 } }}
+      >
+        <UpgradeButton onTouchTap={() => router.push('profile-billing-plan')} />
+      </li>
+    );
+  },
+
+  render() {
+    const styles = this.getStyles();
 
     return (
       <Sticky zIndex={12}>
@@ -185,12 +204,7 @@ const Header = Radium(React.createClass({
               className="toolbar-list"
               style={styles.toolbarList}
             >
-              <li
-                id="upgrade-button"
-                style={{ ...styles.toolbarListItem, ...{ paddingRight: 0 } }}
-              >
-                <UpgradeButton onTouchTap={() => router.push('profile-billing-plan')} />
-              </li>
+              {this.renderUpgradeButton()}
               <li
                 id="menu-notifications"
                 style={styles.toolbarListItem}
