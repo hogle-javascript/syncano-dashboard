@@ -258,6 +258,9 @@ export default React.createClass({
     }
 
     this.setState({
+      errors: {
+        fieldName: []
+      },
       fields: classFields,
       fieldName: ''
     });
@@ -337,7 +340,7 @@ export default React.createClass({
       <Checkbox
         ref={`checkbox${_.upperFirst(indexType)}${item.fieldName}`}
         name={indexType}
-        checked={item[`field${_.upperFirst(indexType)}`]}
+        defaultChecked={item[`field${_.upperFirst(indexType)}`]}
         onCheck={event => this.handleOnCheck(item, event)}
       />
     );
