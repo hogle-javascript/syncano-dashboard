@@ -9,7 +9,7 @@ export default React.createClass({
     return _.map(items, (item) => {
       return (
         <MenuItem
-          key={item.payload}
+          key={`select-${item.payload}`}
           value={item.payload}
           primaryText={item.text}
         />

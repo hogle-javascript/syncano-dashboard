@@ -34,7 +34,7 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  componentWillUpdate() {
+  componentDidUpdate() {
     const { action, className } = this.context.params;
     const classObject = Store.getClassByName(className);
 

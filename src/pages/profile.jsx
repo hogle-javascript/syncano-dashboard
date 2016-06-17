@@ -35,7 +35,12 @@ export default React.createClass({
             <Sidebar.LinkListItem
               key="Billing plan"
               routeName="profile-billing-plan"
-              primaryText="Billing Plan"
+              primaryText="Plans & Pricing"
+            />
+            <Sidebar.LinkListItem
+              key="Usage"
+              routeName="profile-billing-usage"
+              primaryText="Usage"
             />
             <Sidebar.LinkListItem
               key="Payment methods"

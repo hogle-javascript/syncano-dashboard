@@ -1,3 +1,4 @@
+import accounts from '../tempAccounts';
 import utils from '../utils';
 
 const apiKeysCommands = {
@@ -19,7 +20,7 @@ export default {
       locateStrategy: 'xpath'
     },
     apiKeysListItem: {
-      selector: '//div[@class="api-keys-list"]//div[text()="api_key"]',
+      selector: `//div[@class="api-keys-list"]//div[text()="${accounts.navigationUser.tempApiKeyNames[0]}"]`,
       locateStrategy: 'xpath'
     },
     createModalDescriptionInput: {
