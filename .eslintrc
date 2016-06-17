@@ -85,7 +85,7 @@
     "new-cap": [2, {"newIsCap": true, "capIsNew": false}],
     "prefer-const": 1,
     "no-underscore-dangle": 0, // to be removed after formMixin is deleted
-    "react/prefer-es6-class": [0, "never"],
+    "react/prefer-es6-class": [0],
     "react/prop-types": [0],
     "react/prefer-stateless-function": [0]
   }
