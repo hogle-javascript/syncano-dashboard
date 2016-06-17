@@ -4,11 +4,13 @@ const createTestAccount = require('./create/testAccount.js');
 const createTestInstances = require('./create/testInstance.js');
 const createTestClasses = require('./create/testClasses.js');
 const createTestScripts = require('./create/testScripts.js');
+const createTestScriptEndpoints = require('./create/testScriptEndpoint.js');
 const createAPNSSocket = require('./create/apnsSocket.js');
 const createGCMSocket = require('./create/gcmSocket.js');
 const createAPNSDevices = require('./create/apnsDevices.js');
 const createGCMDevices = require('./create/gcmDevices.js');
 const createTestUsers = require('./create/testUser');
+const createTestApiKey = require('./create/testApiKey');
 const getCertFile = require('./files/getCertificate.js');
 const saveAccountsToFile = require('./files/saveAccounts.js');
 
@@ -44,18 +46,29 @@ function createNavigationUser() {
   return createTestAccount()
     .then((tempAccount) => createTestInstances(tempAccount, 1))
     .then((tempAccount) => createTestScripts(tempAccount, 1))
+    .then((tempAccount) => createTestScriptEndpoints(tempAccount, 1))
     .then((tempAccount) => createTestUsers(tempAccount, 1))
+    .then((tempAccount) => createTestApiKey(tempAccount, 1))
     .then((tempAccount) => {
       delete tempAccount.connection;
       accounts.navigationUser = tempAccount;
     });
 }
 
-getCertFile();
-createInstanceUser()
-  .then(createAltInstanceUser)
-  .then(createNavigationUser)
-  .then(() => {
-    console.log('Account details for debugging:\n', accounts);
-    saveAccountsToFile(accounts);
-  });
+if (!process.env.NIGHTWATCH_EMAIL || !process.env.NIGHTWATCH_PASSWORD || !process.env.NIGHTWATCH_ACCOUNT_KEY) {
+  throw `Missing exported env variables!!
+  Please check if you have exported:
+  ο NIGHTWATCH_EMAIL
+  ο NIGHTWATCH_PASSWORD
+  ο NIGHTWATCH_ACCOUNT_KEY
+  `;
+} else {
+  getCertFile();
+  createInstanceUser()
+    .then(createAltInstanceUser)
+    .then(createNavigationUser)
+    .then(() => {
+      console.log('Account details for debugging:\n', accounts);
+      saveAccountsToFile(accounts);
+    });
+}
