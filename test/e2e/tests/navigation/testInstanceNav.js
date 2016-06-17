@@ -83,14 +83,14 @@ module.exports = {
 
     leftMenuPage.clickElement('@users');
     usersPage.waitForElementPresent('@user');
+  },
+  'User goes to Script Endpoint Traces View': (client) => {
+    const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
+    const instanceName = accounts.navigationUser.instanceName;
+    const tempScriptEndpointsNames = accounts.navigationUser.tempScriptEndpointsNames[0];
+
+    scriptEndpointTracesPage
+      .goToUrl(instanceName, `script-endpoints/${tempScriptEndpointsNames}/traces`)
+      .waitForElementPresent('@scriptEndpointTracesEmptyView');
   }
-  // 'User goes to Script Endpoint Traces View': (client) => {
-  //   const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
-  //   const instanceName = accounts.navigationUser.instanceName;
-  //   const tempScriptNames = accounts.navigationUser.tempScriptNames[0];
-  //
-  //   scriptEndpointTracesPage
-  //     .goToUrl(instanceName, 'script-endpoints/${tempScriptNames}/traces')
-  //     .waitForElementPresent('@scriptEndpointTracesEmptyView');
-  // }
 };
