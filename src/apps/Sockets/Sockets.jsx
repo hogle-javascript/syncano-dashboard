@@ -130,6 +130,7 @@ export default React.createClass({
         <DataEndpoints.Dialog />
         <DataEndpoints.SummaryDialog />
         <Schedules.Dialog />
+        <Schedules.SummaryDialog />
         <Triggers.Dialog />
         <Channels.Dialog />
         <PushNotifications.APNSConfigDialog />

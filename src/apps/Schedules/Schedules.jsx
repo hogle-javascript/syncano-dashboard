@@ -13,6 +13,7 @@ import ScheduleDialog from './ScheduleDialog';
 import { RaisedButton } from 'material-ui';
 import { Container } from '../../common/';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
+import ScheduleSummaryDialog from './ScheduleSummaryDialog';
 
 export default React.createClass({
   displayName: 'ScheduleSockets',
@@ -34,6 +35,7 @@ export default React.createClass({
       <div>
         <Helmet title="Schedules" />
         <ScheduleDialog />
+        <ScheduleSummaryDialog />
 
         <SocketsInnerToolbar>
           <RaisedButton
