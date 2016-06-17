@@ -9,6 +9,7 @@ const createGCMSocket = require('./create/gcmSocket.js');
 const createAPNSDevices = require('./create/apnsDevices.js');
 const createGCMDevices = require('./create/gcmDevices.js');
 const createTestUsers = require('./create/testUser');
+const createTestApiKey = require('./create/testApiKey');
 const getCertFile = require('./files/getCertificate.js');
 const saveAccountsToFile = require('./files/saveAccounts.js');
 
@@ -45,17 +46,27 @@ function createNavigationUser() {
     .then((tempAccount) => createTestInstances(tempAccount, 1))
     .then((tempAccount) => createTestScripts(tempAccount, 1))
     .then((tempAccount) => createTestUsers(tempAccount, 1))
+    .then((tempAccount) => createTestApiKey(tempAccount, 1))
     .then((tempAccount) => {
       delete tempAccount.connection;
       accounts.navigationUser = tempAccount;
     });
 }
 
-getCertFile();
-createInstanceUser()
-  .then(createAltInstanceUser)
-  .then(createNavigationUser)
-  .then(() => {
-    console.log('Account details for debugging:\n', accounts);
-    saveAccountsToFile(accounts);
-  });
+if (!process.env.NIGHTWATCH_EMAIL || !process.env.NIGHTWATCH_PASSWORD || !process.env.NIGHTWATCH_ACCOUNT_KEY) {
+  throw `Missing exported env variables!!
+  Please check if you have exported:
+  ο NIGHTWATCH_EMAIL
+  ο NIGHTWATCH_PASSWORD
+  ο NIGHTWATCH_ACCOUNT_KEY
+  `;
+} else {
+  getCertFile();
+  createInstanceUser()
+    .then(createAltInstanceUser)
+    .then(createNavigationUser)
+    .then(() => {
+      console.log('Account details for debugging:\n', accounts);
+      saveAccountsToFile(accounts);
+    });
+}
