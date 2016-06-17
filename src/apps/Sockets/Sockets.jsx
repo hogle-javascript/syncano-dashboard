@@ -127,6 +127,7 @@ export default React.createClass({
         <Helmet title="Sockets" />
         <SocketsDialog />
         <ScriptEndpoints.Dialog />
+        <ScriptEndpoints.SummaryDialog />
         <DataEndpoints.Dialog />
         <DataEndpoints.SummaryDialog />
         <Schedules.Dialog />
