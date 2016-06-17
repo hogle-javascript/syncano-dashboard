@@ -71,14 +71,14 @@ export default React.createClass({
 
         <Container>
           <Lists.Container className="row">
-            <div className="col-lg-8">
+            <div className="col-md-8">
               <GroupsList
                 isLoading={groups.isLoading}
                 items={groups.items}
                 hideDialogs={groups.hideDialogs}
               />
             </div>
-            <div className="col-lg-27">
+            <div className="col-md-27">
               <Show if={users.items}>
                 <UsersList
                   items={users.items}

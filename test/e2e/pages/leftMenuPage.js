@@ -60,7 +60,7 @@ export default {
       locateStrategy: 'xpath'
     },
     billingPlan: {
-      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Billing Plan"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Plans & Pricing"]',
       locateStrategy: 'xpath'
     },
     paymentMethods: {

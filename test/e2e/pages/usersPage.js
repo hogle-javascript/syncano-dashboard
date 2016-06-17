@@ -80,11 +80,11 @@ export default {
       locateStrategy: 'xpath'
     },
     userList: {
-      selector: '//div[@class="col-lg-27"]//div[@class="col-xs-12"]',
+      selector: '//div[@class="col-md-27"]//div[@class="col-xs-12"]',
       locateStrategy: 'xpath'
     },
     groupList: {
-      selector: '//div[@class="col-lg-8"]/div/div[2]',
+      selector: '//div[@class="col-md-8"]/div/div[2]',
       locateStrategy: 'xpath'
     }
   }
