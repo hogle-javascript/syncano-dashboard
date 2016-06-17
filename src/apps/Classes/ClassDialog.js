@@ -13,7 +13,7 @@ import ClassesStore from './ClassesStore';
 import { GroupsStore, GroupsActions } from '../Groups';
 
 // Components
-import { TextField, FlatButton, Checkbox, Tabs, Tab } from 'material-ui';
+import { TextField, FlatButton, IconButton, Checkbox, Tabs, Tab } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 import { Color, Show, SelectFieldWrapper, Tooltip, Dialog, Icon, Notification, ColorIconPicker } from '../../common/';
 
@@ -161,6 +161,14 @@ export default React.createClass({
 
     groupsObjects.unshift(emptyItem);
     return groupsObjects;
+  },
+
+  hasIndex(indexType, fieldType) {
+    if (indexType === 'filter') {
+      return this.hasFilter(fieldType);
+    }
+
+    return this.hasOrder(fieldType);
   },
 
   hasFilter(fieldType) {
@@ -315,6 +323,35 @@ export default React.createClass({
     );
   },
 
+  renderCheckbox(item, indexType) {
+    if (!this.hasIndex(indexType, item.fieldType)) {
+      return this.renderDisabledCheckbox(item.fieldType, indexType);
+    }
+
+    return (
+      <Checkbox
+        name={indexType}
+        defaultChecked={item[`field${_.upperFirst(indexType)}`]}
+        onCheck={this.handleOnCheck.bind(this, item)}
+      />
+    );
+  },
+
+  renderDisabledCheckbox(fieldType, indexType) {
+    const message = {
+      filter: 'filtering',
+      order: 'sorting'
+    };
+
+    return (
+      <IconButton
+        tooltip={`${fieldType} doesn't support ${message[indexType]}`}
+        iconClassName="synicon-close-box-outline"
+        iconStyle={{ color: Colors.grey400 }}
+      />
+    );
+  },
+
   renderSchemaFields() {
     return this.state.fields.map((item) => {
       return (
@@ -326,32 +363,10 @@ export default React.createClass({
           <span className="col-xs-8">{item.fieldType}</span>
           <span className="col-xs-8">{item.fieldTarget}</span>
           <span className="col-xs-3">
-            <Tooltip
-              label={!this.hasFilter(item.fieldType) && `${item.fieldType} doesn't support filtering`}
-              verticalPosition="bottom"
-              horizontalPosition="center"
-            >
-              <Checkbox
-                name="filter"
-                defaultChecked={item.fieldFilter}
-                disabled={!this.hasFilter(item.fieldType)}
-                onCheck={this.handleOnCheck.bind(this, item)}
-              />
-            </Tooltip>
+            {this.renderCheckbox(item, 'filter')}
           </span>
           <span className="col-xs-3">
-            <Tooltip
-              label={!this.hasOrder(item.fieldType) && `${item.fieldType} doesn't support sorting`}
-              verticalPosition="bottom"
-              horizontalPosition="center"
-            >
-              <Checkbox
-                name="order"
-                defaultChecked={item.fieldOrder}
-                disabled={!this.hasOrder(item.fieldType)}
-                onCheck={this.handleOnCheck.bind(this, item)}
-              />
-            </Tooltip>
+            {this.renderCheckbox(item, 'order')}
           </span>
           <span className="col-xs-5">
             <FlatButton
@@ -560,6 +575,9 @@ export default React.createClass({
                 className="col-xs-3"
                 style={styles.checkBox}
               >
+                {this.renderCheckbox(item, 'filter')}
+
+
                 <Tooltip
                   label={!this.hasFilter(fieldType) && `${fieldType} doesn't support filtering`}
                   verticalPosition="bottom"
