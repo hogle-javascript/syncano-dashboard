@@ -19,7 +19,7 @@ export default Radium(React.createClass({
     if (isNewSubscription) {
       return (
         <div className="row" style={{ flexDirection: 'column' }}>
-          <div style={style.explorerButton}>
+          <div style={style}>
             <FlatButton
               primary={true}
               label={'Cancel Change'}
