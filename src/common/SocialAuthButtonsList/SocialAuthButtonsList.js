@@ -1,8 +1,8 @@
 import React from 'react';
 import ListItem from './SocialAuthButtonsListItem';
 import ListItemDivider from './SocialAuthButtonsListItemDivider';
-import {List} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { List } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'SocialAuthButtonsList',
@@ -23,7 +23,7 @@ export default React.createClass({
   },
 
   renderSocialButtons() {
-    let {networks, mode, onSocialLogin} = this.props;
+    let { networks, mode, onSocialLogin } = this.props;
     let lastListItemIndex = networks.length - 1;
     let buttons = [];
 
@@ -33,7 +33,8 @@ export default React.createClass({
           key={`network-${network}`}
           network={network}
           mode={mode}
-          onTouchTap={() => onSocialLogin(network)} />
+          onTouchTap={() => onSocialLogin(network)}
+        />
       );
       if (index < lastListItemIndex) {
         buttons.push(<ListItemDivider key={`divider-${index}`} />);

@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import {Paper} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { Paper } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 import ColumnListConstans from './ColumnListConstans';
 import _ from 'lodash';
 
@@ -54,7 +54,8 @@ export default Radium(React.createClass({
           styles.hoverable,
           this.props.checked === true && styles.checked
         )}
-        rounded={false}>
+        rounded={false}
+      >
         {this.props.children}
       </Paper>
     );
@@ -72,7 +73,8 @@ export default Radium(React.createClass({
           styles.noBackground,
           this.props.checked === true && styles.checked
         )}
-        rounded={false}>
+        rounded={false}
+      >
         {this.props.children}
       </Paper>
     );

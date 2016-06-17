@@ -11,18 +11,18 @@ import StoreHelpersMixin from './StoreHelpersMixin';
 import StoreLoadingMixin from './StoreLoadingMixin';
 import WaitForStoreMixin from './WaitForStoreMixin';
 
-export {CheckListStoreMixin};
-export {DialogMixin};
-export {DialogsMixin};
-export {DialogStoreMixin};
-export {FormMixin};
-export {MousetrapMixin};
-export {ScrollLockMixin};
-export {SnackbarNotificationMixin};
-export {StoreFormMixin};
-export {StoreHelpersMixin};
-export {StoreLoadingMixin};
-export {WaitForStoreMixin};
+export { CheckListStoreMixin };
+export { DialogMixin };
+export { DialogsMixin };
+export { DialogStoreMixin };
+export { FormMixin };
+export { MousetrapMixin };
+export { ScrollLockMixin };
+export { SnackbarNotificationMixin };
+export { StoreFormMixin };
+export { StoreHelpersMixin };
+export { StoreLoadingMixin };
+export { WaitForStoreMixin };
 
 export default {
   CheckListStoreMixin,

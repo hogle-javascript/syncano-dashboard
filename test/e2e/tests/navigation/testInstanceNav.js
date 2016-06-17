@@ -1,4 +1,5 @@
 import path from 'path';
+import accounts from '../../tempAccounts';
 
 module.exports = {
   tags: ['instanceNav'],
@@ -8,7 +9,7 @@ module.exports = {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.navigationUser.email, accounts.navigationUser.password);
   },
   after(client) {
     client.end();
@@ -31,11 +32,11 @@ module.exports = {
 
     client.saveScreenshot(fileNamePath, done);
   },
-  'User goes to Sockets View': (client) => {
-    const socketsPage = client.page.socketsPage();
+  // 'User goes to Sockets View': (client) => {
+  //   const socketsPage = client.page.socketsPage();
 
-    socketsPage.waitForElementPresent('@socketsDropDownAll');
-  },
+  //   socketsPage.waitForElementPresent('@socketsDropDownAll');
+  // },
   'User goes to Classes View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const classesPage = client.page.classesPage();
@@ -49,6 +50,8 @@ module.exports = {
     const scriptEditPage = client.page.scriptEditPage();
 
     leftMenuPage.clickElement('@scripts');
+    // Workaround for endless loadings
+    client.pause(1500);
     scriptsPage.clickElement('@scriptListItem');
     scriptEditPage.waitForElementPresent('@scriptEditView');
   },
@@ -58,6 +61,8 @@ module.exports = {
     const scriptEditPage = client.page.scriptEditPage();
 
     leftMenuPage.clickElement('@scripts');
+    // Workaround for endless loadings
+    client.pause(1500);
     scriptsPage.clickElement('@scriptListItem');
     scriptEditPage
       .clickElement('@traces')
@@ -78,12 +83,14 @@ module.exports = {
 
     leftMenuPage.clickElement('@users');
     usersPage.waitForElementPresent('@user');
-  },
-  'User goes to Script Endpoint Traces View': (client) => {
-    const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
-
-    scriptEndpointTracesPage
-      .navigate()
-      .waitForElementPresent('@scriptEndpointTracesEmptyView');
   }
+  // 'User goes to Script Endpoint Traces View': (client) => {
+  //   const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
+  //   const instanceName = accounts.navigationUser.instanceName;
+  //   const tempScriptNames = accounts.navigationUser.tempScriptNames[0];
+  //
+  //   scriptEndpointTracesPage
+  //     .goToUrl(instanceName, 'script-endpoints/${tempScriptNames}/traces')
+  //     .waitForElementPresent('@scriptEndpointTracesEmptyView');
+  // }
 };

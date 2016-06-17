@@ -1,7 +1,7 @@
 export default {
   elements: {
     emptyInvoicesView: {
-      selector: '//div[@class="invoices-list"]',
+      selector: '//span[@class="synicon-file-outline"]',
       locateStrategy: 'xpath'
     }
   }

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
@@ -5,9 +6,9 @@ import Reflux from 'reflux';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
-import {IconButton} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
-import {Tour} from '../../common/';
+import { IconButton } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
+import { Tour } from '../../common/';
 
 export default React.createClass({
   displayName: 'InstancesTour',
@@ -107,13 +108,14 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div style={{position: 'fixed', left: 10, bottom: 10}}>
+        <div style={{ position: 'fixed', left: 10, bottom: 10 }}>
           <IconButton
             ref="addInstanceButton"
             iconClassName="synicon-help-circle"
             onClick={this.onNextStep}
-            touch={true}
-            iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
+            touch
+            iconStyle={{ color: 'rgba(0,0,0,.4)' }}
+          />
         </div>
 
         <Tour
@@ -121,7 +123,8 @@ export default React.createClass({
           currentStep={this.state.currentStep}
           visible={this.state.isTourVisible}
           onClick={this.onNextStep}
-          showDots={true}/>
+          showDots
+        />
       </div>
     );
   }

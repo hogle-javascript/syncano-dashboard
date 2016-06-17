@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Actions from './DataEndpointsActions';
-import {SnackbarNotificationMixin} from '../../mixins';
+import { SnackbarNotificationMixin } from '../../mixins';
 
-import {MenuItem} from 'material-ui';
-import {Color, ColumnList, Clipboard} from '../../common/';
+import { MenuItem } from 'material-ui';
+import { Color, ColumnList, Clipboard } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -19,12 +19,13 @@ export default React.createClass({
   mixins: [SnackbarNotificationMixin],
 
   render() {
-    const {item, onIconClick, showDeleteDialog} = this.props;
+    const { item, onIconClick, showDeleteDialog } = this.props;
 
     return (
       <ColumnList.Item
         checked={item.checked}
-        key={item.name}>
+        key={item.name}
+      >
         <Column.CheckIcon.Socket
           className="col-xs-12"
           id={item.name}
@@ -43,8 +44,10 @@ export default React.createClass({
                 message: 'Data Endpoint url copied!'
               })}
               type="link"
-              tooltip="Copy Data Endpoint url" />
-          }/>
+              tooltip="Copy Data Endpoint url"
+            />
+          }
+        />
         <Column.Desc className="col-flex-1">
           {item.description}
         </Column.Desc>
@@ -55,11 +58,13 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={() => Actions.showDialog(item)}
-            primaryText="Edit" />
+            primaryText="Edit"
+          />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
-            primaryText="Delete" />
+            primaryText="Delete"
+          />
         </Column.Menu>
       </ColumnList.Item>
     );

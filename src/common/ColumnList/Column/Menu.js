@@ -1,8 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
-import {IconButton, IconMenu} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { IconButton, IconMenu } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'ColumnDesc',
@@ -51,8 +51,9 @@ export default Radium(React.createClass({
     return (
       <IconButton
         touch={true}
-        tooltipPosition='bottom-left'
-        iconClassName='synicon-dots-vertical' />
+        tooltipPosition="bottom-left"
+        iconClassName="synicon-dots-vertical"
+      />
     );
   },
 
@@ -62,12 +63,14 @@ export default Radium(React.createClass({
     return (
       <div
         className={this.props.className}
-        style={styles}>
+        style={styles}
+      >
         <IconMenu
           onTouchTap={this.handleTouchTap}
           iconButtonElement={this.renderItemIconMenuButton()}
-          anchorOrigin={{horizontal: 'middle', vertical: 'center'}}
-          targetOrigin={{horizontal: 'right', vertical: 'top'}}>
+          anchorOrigin={{ horizontal: 'middle', vertical: 'center' }}
+          targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+        >
           {this.props.children}
         </IconMenu>
       </div>

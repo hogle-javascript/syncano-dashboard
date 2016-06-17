@@ -1,10 +1,10 @@
 import React from 'react';
 import Radium from 'radium';
 import IconStore from '../Icon/IconStore';
-import {FontIcon} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { FontIcon } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
-export default Radium(({selectedIcon, onIconChange}) => {
+export default Radium(({ selectedIcon, onIconChange }) => {
   const getStyles = () => ({
     container: {
       display: 'flex',
@@ -37,7 +37,8 @@ export default Radium(({selectedIcon, onIconChange}) => {
         id={icon}
         className={`synicon-${icon}`}
         style={styles}
-        onClick={() => onIconChange(icon)} />
+        onClick={() => onIconChange(icon)}
+      />
     );
   };
 

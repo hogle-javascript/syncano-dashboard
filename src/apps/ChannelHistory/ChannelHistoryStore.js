@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import {StoreLoadingMixin} from '../../mixins';
+import { StoreLoadingMixin } from '../../mixins';
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';

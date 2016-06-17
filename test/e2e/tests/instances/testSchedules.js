@@ -1,3 +1,4 @@
+import accounts from '../../tempAccounts';
 import utils from '../../utils';
 
 export default {
@@ -8,7 +9,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
+      .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
   after(client) {
     client.end();
@@ -16,13 +17,14 @@ export default {
   'Administrator adds a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const schedule = utils.addSuffix('schedule');
+    const instanceName = accounts.instanceUser.instanceName;
 
     schedulesPage
-      .navigate()
+      .goToUrl(instanceName, 'schedules')
       .clickElement('@addScheduleButton')
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInput('@addScheduleModalLabel', schedule)
-      .selectDropdownValue('@addScheduleModalScript', 'snippet')
+      .selectDropdownValue('@addScheduleModalScript', accounts.instanceUser.tempScriptNames[1])
       .sendKeys('@addScheduleModalCronTab', '0 0 1 1 *')
       // click into title as workaround for enter key closing modal view
       .clickElement('@addScheduleModalTitle')
@@ -32,13 +34,13 @@ export default {
   'Administrator edits a Schedule Socket Crontab': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const schedule = utils.addSuffix('schedule');
+    const instanceName = accounts.instanceUser.instanceName;
 
     schedulesPage
-      .navigate()
+      .goToUrl(instanceName, 'schedules')
       .clickListItemDropdown(schedule, 'Edit')
       .waitForElementVisible('@editScheduleModalTitle')
-      .clearInput('@addScheduleModalCronTab')
-      .sendKeys('@addScheduleModalCronTab', '0 0 * * *')
+      .fillInput('@addScheduleModalCronTab', '0 0 * * *')
       // click into title as workaround for enter key closing modal view
       .clickElement('@editScheduleModalTitle')
       .clickElement('@confirm')
@@ -46,13 +48,17 @@ export default {
   },
   'Administrator deletes a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
+    const listsPage = client.page.listsPage();
     const schedule = utils.addSuffix('schedule');
+    const instanceName = accounts.instanceUser.instanceName;
 
     schedulesPage
-      .navigate()
+      .goToUrl(instanceName, 'schedules')
       .clickListItemDropdown(schedule, 'Delete')
       .waitForElementPresent('@deleteScheduleModalTitle')
       .clickElement('@confirm')
       .waitForElementNotPresent('@selectScheduleTableRow');
+
+    listsPage.waitForElementVisible('@emptyListItem');
   }
 };

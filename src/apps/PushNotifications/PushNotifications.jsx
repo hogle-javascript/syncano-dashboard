@@ -12,8 +12,8 @@ import PushNotificationsList from './PushNotificationsList';
 import APNSConfigDialog from './APNS/APNSConfigDialog';
 import GCMConfigDialog from './GCM/GCMConfigDialog';
 import ConfigPushNotificationsPopover from './ConfigPushNotificationsPopover';
-import {RaisedButton} from 'material-ui';
-import {Container} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container } from '../../common/';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 
 export default React.createClass({
@@ -32,28 +32,30 @@ export default React.createClass({
   },
 
   render() {
-    const {APNSPushNotifications, GCMPushNotifications} = this.state;
-    const {pushSocketPopover} = this.refs;
+    const { APNSPushNotifications, GCMPushNotifications } = this.state;
+    const { pushSocketPopover } = this.refs;
     const items = APNSPushNotifications.items.concat(GCMPushNotifications.items);
 
     return (
       <div>
         <Helmet title="Push Notifications" />
-        <APNSConfigDialog/>
-        <GCMConfigDialog/>
+        <APNSConfigDialog />
+        <GCMConfigDialog />
         <SocketsInnerToolbar>
           <RaisedButton
             label="Add"
             primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={pushSocketPopover ? pushSocketPopover.toggle : null} />
+            style={{ marginRight: 0 }}
+            onTouchTap={pushSocketPopover ? pushSocketPopover.toggle : null}
+          />
         </SocketsInnerToolbar>
-        <ConfigPushNotificationsPopover ref="pushSocketPopover"/>
+        <ConfigPushNotificationsPopover ref="pushSocketPopover" />
         <Container>
           <PushNotificationsList
             isLoading={APNSPushNotifications.isLoading || GCMPushNotifications.isLoading}
             name="Push Notification Sockets (BETA)"
-            items={items}/>
+            items={items}
+          />
         </Container>
       </div>
     );

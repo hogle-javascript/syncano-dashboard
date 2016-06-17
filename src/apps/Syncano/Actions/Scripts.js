@@ -5,7 +5,7 @@ export default {
     this.NewLibConnection
       .Script
       .please()
-      .get({id})
+      .get({ id })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -14,23 +14,23 @@ export default {
     this.NewLibConnection
       .Script
       .please()
-      .update({id}, params)
+      .update({ id }, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
   run(updateParams, runParams) {
-    const {id, payload} = runParams;
+    const { id, payload } = runParams;
 
     this.NewLibConnection
       .Script
       .please()
-      .update({id}, updateParams)
+      .update({ id }, updateParams)
       .then(() => {
         return this.NewLibConnection
           .Script
           .please()
-          .run({id}, {payload})
+          .run({ id }, { payload })
           .then(this.completed)
           .catch(this.failure);
       })
@@ -49,7 +49,7 @@ export default {
 
   create(payload) {
     let source = '';
-    const {runtime_name, label, description} = payload;
+    const { runtime_name, label, description } = payload;
     const comment = {
       python: '#',
       javascript: '//',
@@ -66,13 +66,13 @@ export default {
     this.NewLibConnection
       .Script
       .please()
-      .create({runtime_name, label, description, source})
+      .create({ runtime_name, label, description, source })
       .then(this.completed)
       .catch(this.failure);
   },
 
   remove(scripts) {
-    const promises = _.map(scripts, (script) => this.NewLibConnection.Script.please().delete({id: script.id}));
+    const promises = _.map(scripts, (script) => this.NewLibConnection.Script.please().delete({ id: script.id }));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -83,7 +83,7 @@ export default {
     this.NewLibConnection
       .ScriptTrace
       .please()
-      .get({scriptId, id})
+      .get({ scriptId, id })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -93,7 +93,7 @@ export default {
       .ScriptTrace
       .please()
       .ordering('desc')
-      .list({scriptId})
+      .list({ scriptId })
       .then(this.completed)
       .catch(this.failure);
   },

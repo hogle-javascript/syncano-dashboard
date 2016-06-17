@@ -61,7 +61,8 @@ export default React.createClass({
     return (
       <div
         style={styles.listItem}
-        className="row align-middle">
+        className="row align-middle"
+      >
         <div className="col-xs-9"></div>
         <div className="col-xs-3">
           {this.renderSocketIcon(this.props.socketName)}
@@ -73,7 +74,8 @@ export default React.createClass({
             tooltipPosition="bottom-center"
             onTouchTap={this.props.handleAdd}
             style={styles.addIconContainer}
-            iconStyle={styles.addIcon}/>
+            iconStyle={styles.addIcon}
+          />
         </div>
       </div>
     );

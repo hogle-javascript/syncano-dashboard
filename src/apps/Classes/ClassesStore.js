@@ -4,7 +4,7 @@ import Promise from 'axios';
 
 // Utils & Mixins
 import Constans from '../../constants/Constants';
-import {StoreHelpersMixin, CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin} from '../../mixins';
+import { StoreHelpersMixin, CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
@@ -151,7 +151,7 @@ export default Reflux.createStore({
   },
 
   setProtectedFromEditClasses(item) {
-    let indexInProtectedFromEditArray = _.findIndex(Constans.PROTECTED_FROM_EDIT_CLASS_NAMES, {name: item.name});
+    let indexInProtectedFromEditArray = _.findIndex(Constans.PROTECTED_FROM_EDIT_CLASS_NAMES, { name: item.name });
 
     if (indexInProtectedFromEditArray > -1) {
       item.protectedFromEdit = Constans.PROTECTED_FROM_EDIT_CLASS_NAMES[indexInProtectedFromEditArray];
@@ -170,7 +170,7 @@ export default Reflux.createStore({
   setClasses(items) {
     this.data.items = _.map(items, (item) => {
       if (_.isEmpty(item.metadata)) {
-        item.metadata = {color: 'indigo', icon: 'cloud'};
+        item.metadata = { color: 'indigo', icon: 'cloud' };
       }
       return item;
     });

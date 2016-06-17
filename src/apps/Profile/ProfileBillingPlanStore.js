@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import moment from 'moment';
 import _ from 'lodash';
 
-import {WaitForStoreMixin} from '../../mixins';
+import { WaitForStoreMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './ProfileBillingPlanActions';
@@ -83,12 +83,16 @@ export default Reflux.createStore({
 
   getBuilderLimits() {
     return {
-      api: {included: '100000'},
-      cbx: {included: '20000'}
+      api: { included: '100000' },
+      cbx: { included: '20000' }
     };
   },
 
   getPlan() {
+    if (!this.data.profile) {
+      return null;
+    }
+
     return this.data.profile.subscription.plan;
   },
 
@@ -137,9 +141,9 @@ export default Reflux.createStore({
       let amount = value.included * value.overage;
 
       result.amount += amount;
-      result[key] = _.extend({}, value, {amount});
+      result[key] = _.extend({}, value, { amount });
       return result;
-    }, {amount: 0});
+    }, { amount: 0 });
 
     if (start.isAfter(desiredStart, 'day') && start.isSame(desiredStart, 'month')) {
       let currentDate = start.get('date');

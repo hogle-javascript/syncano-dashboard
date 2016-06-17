@@ -24,12 +24,12 @@ export default {
 
   showDialog(instance, secondInstance) {
     console.debug('DialogStoreMixin::showDialog');
-    let state = {_dialogVisible: true};
+    let state = { _dialogVisible: true };
 
     if (this.isInstanceObject(instance)) {
-      state = _.assign(state, instance, {_dialogMode: 'edit'});
+      state = _.assign(state, instance, { _dialogMode: 'edit' });
     } else if (this.isInstanceObject(secondInstance)) {
-      state = _.assign(state, {secondInstance});
+      state = _.assign(state, { secondInstance });
     }
 
     this.trigger(state);

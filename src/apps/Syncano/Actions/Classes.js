@@ -22,13 +22,13 @@ export default {
     this.NewLibConnection
       .Class
       .please()
-      .update({name}, payload)
+      .update({ name }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   remove(classes) {
-    const promises = classes.map((item) => this.NewLibConnection.Class.please().delete({name: item.name}));
+    const promises = classes.map((item) => this.NewLibConnection.Class.please().delete({ name: item.name }));
 
     this.Promise.all(promises)
       .then(this.completed)

@@ -1,10 +1,12 @@
 import Reflux from 'reflux';
 
-import {StoreFormMixin, WaitForStoreMixin, SnackbarNotificationMixin} from '../../mixins';
+import { StoreFormMixin, WaitForStoreMixin, SnackbarNotificationMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import Actions from './TemplateActions';
+
+import _ from 'lodash';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -70,7 +72,7 @@ export default Reflux.createStore({
   saveRenderedTemplate(renderedTemplate) {
     console.debug('TemplateStore::saveRenderedTemplate');
     this.data.isRendering = false;
-    this.data.renderedTemplate = renderedTemplate;
+    this.data.renderedTemplate = _.has(renderedTemplate, 'data') ? renderedTemplate.data : renderedTemplate;
     this.trigger(this.data);
   },
 
@@ -113,7 +115,7 @@ export default Reflux.createStore({
     this.data.template = template;
     this.dismissSnackbarNotification();
     if (this.data.successValidationAction === 'tabRender') {
-      let {dataSource} = this.data;
+      let { dataSource } = this.data;
       const apiKey = SessionStore.getToken();
 
       dataSource = dataSource.endsWith('/') ? dataSource : dataSource + '/';

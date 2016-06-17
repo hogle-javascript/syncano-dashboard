@@ -86,10 +86,10 @@ export default Reflux.createStore({
       grid: {
         x: {
           lines: [
-            {value: today, text: 'Today', position: 'start'}
+            { value: today, text: 'Today', position: 'start' }
           ]
         },
-        y: {lines: []}
+        y: { lines: [] }
       },
       tooltip: {
         format: {
@@ -103,7 +103,7 @@ export default Reflux.createStore({
             return title;
           },
           name: (name) => {
-            return {api: 'API calls', cbx: 'Script seconds', total: 'Total'}[name];
+            return { api: 'API calls', cbx: 'Script seconds', total: 'Total' }[name];
           },
           value: (value) => d3.format('$')(_.round(value, 5))
         }
@@ -113,7 +113,7 @@ export default Reflux.createStore({
         end: _.last(allDates),
         class: 'predictions'
       }],
-      legend: {show: false}
+      legend: { show: false }
     };
   },
 
@@ -128,19 +128,19 @@ export default Reflux.createStore({
     let subscription = profile.subscription || {};
     let plan = subscription.plan || null;
     let pricing = subscription.pricing;
-    let usageAmount = {api: 0, cbx: 0};
-    let columns = {api: {}, cbx: {}, total: {}};
+    let usageAmount = { api: 0, cbx: 0 };
+    let columns = { api: {}, cbx: {}, total: {} };
 
     if (_.isEmpty(pricing)) {
       // $5.25
       pricing = {
-        api: {overage: 0.0000200, included: 200000},
-        cbx: {overage: 0.0002500, included: 5000}
+        api: { overage: 0.0000200, included: 200000 },
+        cbx: { overage: 0.0002500, included: 5000 }
       };
     }
 
     // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 0.0000200}}
-    _.forEach(usage.objects, (_usage) => {
+    _.forEach(usage, (_usage) => {
       if (typeof columns[_usage.source] === 'undefined') {
         return;
       }
@@ -160,9 +160,9 @@ export default Reflux.createStore({
 
       result.amount += amount;
       result.total.amount += amount;
-      result[key] = _.extend({}, value, {amount});
+      result[key] = _.extend({}, value, { amount });
       return result;
-    }, {amount: 0, total: {amount: 0}});
+    }, { amount: 0, total: { amount: 0 } });
 
     state.covered.amount = _.round(state.covered.amount, 0);
 
@@ -173,12 +173,12 @@ export default Reflux.createStore({
 
       result.amount += amount;
       result.total.amount += amount;
-      result[key] = result[key] = _.extend({}, value, {amount, included});
+      result[key] = result[key] = _.extend({}, value, { amount, included });
       return result;
-    }, {amount: 0, total: {amount: 0}});
+    }, { amount: 0, total: { amount: 0 } });
 
     _.forEach(columns, (values, name) => {
-      state.charts[name].title = {api: 'API calls', cbx: 'Script seconds', total: 'Total'}[name];
+      state.charts[name].title = { api: 'API calls', cbx: 'Script seconds', total: 'Total' }[name];
       state.charts[name].data.columns.push([name].concat(values));
       state.charts[name].data.groups[0].push(name);
       state.charts[name].data.types[name] = 'area';
@@ -197,13 +197,13 @@ export default Reflux.createStore({
           percent: _.round((usageAmount.api / pricing.api.overage) / pricing.api.included * 100, 0),
           amount: _.round(usageAmount.api / pricing.api.overage, 0),
           label: 'API calls',
-          styles: {background: '#77D8F6'}
+          styles: { background: '#77D8F6' }
         },
         {
           percent: _.round((usageAmount.cbx / pricing.cbx.overage) / pricing.cbx.included * 100, 0),
           amount: _.round(usageAmount.cbx / pricing.cbx.overage, 0),
           label: 'Script seconds',
-          styles: {background: '#FFBC5A'}
+          styles: { background: '#FFBC5A' }
         }
       ],
       showPercents: plan === 'paid-commitment'
@@ -269,14 +269,14 @@ export default Reflux.createStore({
   },
 
   getAllDates() {
-    let {year, month} = this.getDate();
+    let { year, month } = this.getDate();
     let days = _.range(1, this.getNumberOfDays() + 1);
 
     return _.map(days, (day) => moment(new Date(year, month, day)).format(this.format));
   },
 
   getNumberOfDays() {
-    let {year, month} = this.getDate();
+    let { year, month } = this.getDate();
 
     return new Date(year, month + 1, 0).getDate();
   }

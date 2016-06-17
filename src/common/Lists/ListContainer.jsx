@@ -13,7 +13,7 @@ export default React.createClass({
       marginBottom: 48
     };
 
-    return {...styles, ...this.props.style};
+    return { ...styles, ...this.props.style };
   },
 
   render() {
@@ -22,7 +22,8 @@ export default React.createClass({
     return (
       <div
         style={styles}
-        className={this.props.className}>
+        className={this.props.className}
+      >
         {this.props.children}
       </div>
     );

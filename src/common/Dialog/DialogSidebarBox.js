@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({children}) => {
+export default ({ children }) => {
   const styles = {
     root: {
       background: 'rgba(184, 192, 201, 0.1)',

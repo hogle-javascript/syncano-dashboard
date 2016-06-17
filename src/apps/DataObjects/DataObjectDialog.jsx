@@ -272,7 +272,7 @@ export default React.createClass({
   getGroups() {
     const groups = GroupsStore.getGroups();
     const emptyItem = {
-      payload: null,
+      payload: undefined,
       text: 'none'
     };
 
@@ -706,7 +706,7 @@ export default React.createClass({
           );
         }
 
-        if (item.type === 'relation') {
+        if (item.type === 'relation' || item.type === 'reference') {
           const defaultValue = this.state[item.name] && this.state[item.name].value;
 
           return (
@@ -760,7 +760,9 @@ export default React.createClass({
             handleCancel={this.handleCancel}
             handleConfirm={this.handleFormValidation}/>
         }>
-        {this.renderFormNotifications()}
+        <div className="vm-2-b">
+          {this.renderFormNotifications()}
+        </div>
         <div className="row">
           <div className="col-xs-20">
             {this.renderBuiltinFields()}

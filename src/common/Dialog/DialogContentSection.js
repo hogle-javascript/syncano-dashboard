@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-export default ({className, noMargin, title, last, children, style}) => {
+export default ({ className, noMargin, title, last, children, style }) => {
   const styles = {
     title: {
       color: '#aaa',
@@ -19,7 +19,8 @@ export default ({className, noMargin, title, last, children, style}) => {
       {title && <div style={styles.title}>{title}</div>}
       <div
         style={style}
-        className="row">
+        className="row"
+      >
         {children}
       </div>
     </div>

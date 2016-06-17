@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
-import {FontIcon, ListItem} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/';
+import { FontIcon, ListItem } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default Radium(React.createClass({
   displayName: 'SocialAuthButtonsList',
@@ -35,13 +35,14 @@ export default Radium(React.createClass({
     return (
       <FontIcon
         style={styles.listItemIcon}
-        className={`synicon-${this.props.network}`}/>
+        className={`synicon-${this.props.network}`}
+      />
     );
   },
 
   render() {
     let styles = this.getStyles();
-    let {network, onTouchTap} = this.props;
+    let { network, onTouchTap } = this.props;
     let buttonLabel = this.props.mode === 'signup' ? 'Sign up with ' : 'Login with ';
 
     return (
@@ -49,7 +50,8 @@ export default Radium(React.createClass({
         style={styles.listItem}
         primaryText={buttonLabel + network}
         onTouchTap={onTouchTap}
-        leftIcon={this.renderIcon()}/>
+        leftIcon={this.renderIcon()}
+      />
     );
   }
 }));

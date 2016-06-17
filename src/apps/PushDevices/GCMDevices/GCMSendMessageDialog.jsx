@@ -7,7 +7,7 @@ import DevicesStore from './GCMDevicesStore';
 import SendMessageDialog from '../SendMessageDialog';
 
 const getPhoneIcon = () => {
-  return <div dangerouslySetInnerHTML={{__html: require('./phone-android-empty-screen.svg')}}></div>;
+  return <div dangerouslySetInnerHTML={{ __html: require('./phone-android-empty-screen.svg') }}></div>;
 };
 const props = {
   getCheckedItems: DevicesStore.getCheckedItems,

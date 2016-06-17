@@ -3,7 +3,7 @@ export default {
     this.NewLibConnection
       .ScriptEndpoint
       .please()
-      .get({name})
+      .get({ name })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -31,7 +31,7 @@ export default {
     this.NewLibConnection
       .ScriptEndpoint
       .please()
-      .update({name}, payload)
+      .update({ name }, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -41,7 +41,7 @@ export default {
       this.NewLibConnection
         .ScriptEndpoint
         .please()
-        .delete({name: scriptEndpoint.name}));
+        .delete({ name: scriptEndpoint.name }));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -51,7 +51,7 @@ export default {
   listTraces(scriptEndpointName) {
     this.NewLibConnection
       .ScriptEndpointTrace
-      .please({scriptEndpointName})
+      .please({ scriptEndpointName })
       .ordering('desc')
       .then(this.completed)
       .catch(this.failure);

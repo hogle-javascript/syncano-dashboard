@@ -2,9 +2,9 @@ import _ from 'lodash';
 
 export default {
   list(params = {}) {
-    _.defaults(params, {ordering: 'desc'});
+    _.defaults(params, { ordering: 'desc' });
 
-    const {baseUrl, accountKey} = this.NewLibConnection;
+    const { baseUrl, accountKey } = this.NewLibConnection;
     const instanceName = this.NewLibConnection.getInstanceName();
     const query = _.map(params, (value, key) => `${key}=${value}`).join('&');
     const keys = [
@@ -19,19 +19,19 @@ export default {
       'apnsDevices'
     ];
     const requests = [
-      {method: 'GET', path: `/v1.1/instances/${instanceName}/endpoints/data/?${query}`},
-      {method: 'GET', path: `/v1.1/instances/${instanceName}/endpoints/scripts/?${query}`},
-      {method: 'GET', path: `/v1.1/instances/${instanceName}/triggers/?${query}`},
-      {method: 'GET', path: `/v1.1/instances/${instanceName}/schedules/?${query}`},
-      {method: 'GET', path: `/v1.1/instances/${instanceName}/channels/?${query}`},
-      {method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/gcm/config/?${query}`},
-      {method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/apns/config/?${query}`},
-      {method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/gcm/devices/?${query}`},
-      {method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/apns/devices/?${query}`}
+      { method: 'GET', path: `/v1.1/instances/${instanceName}/endpoints/data/?${query}` },
+      { method: 'GET', path: `/v1.1/instances/${instanceName}/endpoints/scripts/?${query}` },
+      { method: 'GET', path: `/v1.1/instances/${instanceName}/triggers/?${query}` },
+      { method: 'GET', path: `/v1.1/instances/${instanceName}/schedules/?${query}` },
+      { method: 'GET', path: `/v1.1/instances/${instanceName}/channels/?${query}` },
+      { method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/gcm/config/?${query}` },
+      { method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/apns/config/?${query}` },
+      { method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/gcm/devices/?${query}` },
+      { method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/apns/devices/?${query}` }
     ];
 
     this.Promise
-      .post(`${baseUrl}/v1.1/instances/${instanceName}/batch/?api_key=${accountKey}`, {requests, serialize: false})
+      .post(`${baseUrl}/v1.1/instances/${instanceName}/batch/?api_key=${accountKey}`, { requests, serialize: false })
       .then((responses) => {
         return _.reduce(responses.data, (result, response, index) => {
           const key = keys[index];

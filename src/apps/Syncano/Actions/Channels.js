@@ -22,13 +22,13 @@ export default {
     this.NewLibConnection
       .Channel
       .please()
-      .update({name}, params)
+      .update({ name }, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
   remove(channels) {
-    const promises = channels.map((channel) => this.NewLibConnection.Channel.please().delete({name: channel.name}));
+    const promises = channels.map((channel) => this.NewLibConnection.Channel.please().delete({ name: channel.name }));
 
     this.Promise.all(promises)
       .then(this.completed)
@@ -39,7 +39,7 @@ export default {
     this.NewLibConnection
       .Channel
       .please()
-      .get({name})
+      .get({ name })
       .then(this.completed)
       .catch(this.failure);
   },
@@ -48,7 +48,7 @@ export default {
     this.NewLibConnection
       .Channel
       .please()
-      .history({name})
+      .history({ name })
       .ordering('desc')
       .then(this.completed)
       .catch(this.failure);

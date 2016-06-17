@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import Helmet from 'react-helmet';
 
 // Stores and Actions
@@ -10,8 +10,8 @@ import InstanceDialogActions from './InstanceDialogActions';
 import Store from './InstancesStore';
 
 // Components
-import {RaisedButton} from 'material-ui';
-import {Container, Show, InnerToolbar} from '../../common/';
+import { RaisedButton } from 'material-ui';
+import { Container, Show, InnerToolbar } from '../../common/';
 
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';
@@ -39,43 +39,45 @@ const Instances = React.createClass({
   },
 
   transitionToFirstInstance() {
-    const {router} = this.props;
-    const {myInstances} = this.state;
+    const { router } = this.props;
+    const { myInstances } = this.state;
     const firstInstance = myInstances.length ? myInstances[0].name : null;
 
     if (firstInstance) {
-      router.push({name: 'instance', instanceName: firstInstance});
+      router.push({ name: 'instance', instanceName: firstInstance });
     }
 
     SessionStore.hideWelcomeDialog();
   },
 
   render() {
-    const {blocked, isLoading, hideDialogs, myInstances, sharedInstances} = this.state;
+    const { blocked, isLoading, hideDialogs, myInstances, sharedInstances } = this.state;
     const title = 'Instances';
 
     if (blocked) {
       return (
         <div className="row vp-5-t">
-          <Helmet title="Account blocked"/>
+          <Helmet title="Account blocked" />
           <Container.Empty
-            icon='synicon-block-helper'
-            text={blocked}/>
+            icon="synicon-block-helper"
+            text={blocked}
+          />
         </div>
       );
     }
 
     return (
       <div>
-        <Helmet title={title}/>
+        <Helmet title={title} />
         <InstanceDialog />
 
         <InnerToolbar title={title}>
           <RaisedButton
             label="Add"
             primary={true}
-            style={{marginRight: 0}}
-            onTouchTap={InstanceDialogActions.showDialog} />
+            style={{ marginRight: 0 }}
+            onTouchTap={InstanceDialogActions.showDialog}
+          />
         </InnerToolbar>
 
         <Container id="instances">
@@ -86,14 +88,16 @@ const Instances = React.createClass({
             isLoading={isLoading}
             hideDialogs={hideDialogs}
             emptyItemHandleClick={this.showInstanceDialog}
-            emptyItemContent="Create an instance" />
+            emptyItemContent="Create an instance"
+          />
 
           <Show if={sharedInstances.length && !isLoading}>
             <SharedInstancesList
               ref="otherInstancesList"
               items={sharedInstances}
               hideDialogs={hideDialogs}
-              isLoading={isLoading}/>
+              isLoading={isLoading}
+            />
           </Show>
         </Container>
       </div>

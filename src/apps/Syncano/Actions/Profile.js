@@ -2,10 +2,7 @@ export default {
   updateSettings(payload) {
     this.NewLibConnection
       .Account
-      .update({
-        first_name: payload.firstName,
-        last_name: payload.lastName
-      })
+      .update(payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -24,16 +21,16 @@ export default {
   setPassword(password) {
     this.NewLibConnection
       .Account
-      .setPassword({password})
+      .setPassword({ password })
       .then(this.completed)
       .catch(this.failure);
   },
 
   getUser() {
-    const {baseUrl, accountKey} = this.NewLibConnection;
+    const { baseUrl, accountKey } = this.NewLibConnection;
 
     this.Promise
-      .get(`${baseUrl}/v1.1/account/`, {params: {api_key: accountKey}})
+      .get(`${baseUrl}/v1.1/account/`, { params: { api_key: accountKey } })
       .then(this.completed)
       .catch(this.failure);
   },

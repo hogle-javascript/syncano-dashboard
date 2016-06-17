@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import {StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin, CheckListStoreMixin} from '../../mixins';
+import { StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin, CheckListStoreMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './SocketsActions';

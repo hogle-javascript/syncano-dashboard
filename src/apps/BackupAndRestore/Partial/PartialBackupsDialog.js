@@ -1,14 +1,14 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import {DialogMixin, FormMixin} from '../../../mixins';
+import { DialogMixin, FormMixin } from '../../../mixins';
 
 import Actions from './PartialBackupsActions';
 import Store from './PartialBackupsDialogStore';
 
-import {TextField} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles';
-import {Dialog, Editor, Notification, Show} from '../../../common';
+import { TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles';
+import { Dialog, Editor, Notification, Show } from '../../../common';
 
 export default React.createClass({
   displayName: 'CreatePartialBackupDialog',
@@ -70,13 +70,13 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    const {label, description, queryArgs} = this.state;
+    const { label, description, queryArgs } = this.state;
 
-    Actions.createPartialBackup({label, description, query_args: JSON.parse(queryArgs)});
+    Actions.createPartialBackup({ label, description, query_args: JSON.parse(queryArgs) });
   },
 
   render() {
-    const {isLoading, open, label, description, queryArgs} = this.state;
+    const { isLoading, open, label, description, queryArgs } = this.state;
     const styles = this.getStyles();
 
     return (
@@ -88,11 +88,13 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
+        bindShortcuts={false}
         actions={
           <Dialog.StandardButtons
             disabled={isLoading}
             handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
+            handleConfirm={this.handleFormValidation}
+          />
         }
         sidebar={
           <Dialog.SidebarBox>
@@ -112,7 +114,8 @@ export default React.createClass({
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
-        }>
+        }
+      >
         <div>
           <TextField
             autoFocus={true}
@@ -121,14 +124,16 @@ export default React.createClass({
             onChange={(event, value) => this.handleChange(value, 'label')}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Backup's label"
-            floatingLabelText="Label" />
+            floatingLabelText="Label"
+          />
           <TextField
             fullWidth={true}
             value={description}
             onChange={(event, value) => this.handleChange(value, 'description')}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText="Backup's description"
-            floatingLabelText="Description" />
+            floatingLabelText="Description"
+          />
           <div className="vm-3-t">
             <div style={styles.queryArgsLabel}>QUERY ARGS</div>
             <Editor
@@ -137,7 +142,8 @@ export default React.createClass({
               mode="json"
               height="400px"
               onChange={(value) => this.handleChange(value, 'queryArgs')}
-              value={queryArgs || ['{', '  ', '}'].join('\n')}/>
+              value={queryArgs || ['{', '  ', '}'].join('\n')}
+            />
           </div>
           <div className="vm-2-t">
             {this.renderFormNotifications()}

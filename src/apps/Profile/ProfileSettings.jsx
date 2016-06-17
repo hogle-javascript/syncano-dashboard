@@ -2,13 +2,13 @@ import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
-import {FormMixin} from '../../mixins';
+import { FormMixin } from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileSettingsStore';
 
-import {TextField, RaisedButton} from 'material-ui';
-import {Container, InnerToolbar} from '../../common/';
+import { TextField, RaisedButton } from 'material-ui';
+import { Container, InnerToolbar } from '../../common/';
 
 export default React.createClass({
   displayName: 'ProfileSettings',
@@ -19,10 +19,10 @@ export default React.createClass({
   ],
 
   validatorConstraints: {
-    firstName: {
+    first_name: {
       presence: true
     },
-    lastName: {
+    last_name: {
       presence: true
     }
   },
@@ -51,60 +51,64 @@ export default React.createClass({
   },
 
   render() {
+    const { first_name, last_name, canSubmit, email } = this.state;
     const styles = this.getStyles();
     const title = 'Profile';
 
     return (
       <div>
         <Helmet title={title} />
-        <InnerToolbar title={title}/>
+        <InnerToolbar title={title} />
         <Container>
           {this.renderFormNotifications()}
           <form
             style={styles.form}
             onSubmit={this.handleFormValidation}
             acceptCharset="UTF-8"
-            method="post">
+            method="post"
+          >
             <TextField
               ref="firstName"
-              value={this.state.firstName}
-              onChange={(event, value) => this.setState({firstName: value})}
-              defaultValue={this.state.firstName}
-              errorText={this.getValidationMessages('firstName').join(' ')}
+              value={first_name}
+              onChange={(event, value) => this.setState({ first_name: value })}
+              defaultValue={first_name}
+              errorText={this.getValidationMessages('first_name').join(' ')}
               name="firstName"
               floatingLabelText="First name"
-              autoComplete="firstName"
               hintText="First name"
-              fullWidth={true}/>
+              fullWidth={true}
+            />
             <TextField
               ref="lastName"
-              value={this.state.lastName}
-              onChange={(event, value) => this.setState({lastName: value})}
-              defaultValue={this.state.lastName}
-              errorText={this.getValidationMessages('lastName').join(' ')}
+              value={last_name}
+              onChange={(event, value) => this.setState({ last_name: value })}
+              defaultValue={last_name}
+              errorText={this.getValidationMessages('last_name').join(' ')}
               name="lastName"
               floatingLabelText="Last name"
-              autoComplete="lastName"
               hintText="Last name"
-              fullWidth={true}/>
+              fullWidth={true}
+            />
             <TextField
               ref="email"
               name="email"
-              value={this.state.email}
+              value={email}
               floatingLabelText="Email"
               className="vm-6-b"
               autoComplete="email"
               hintText="Your email"
               disabled={true}
-              fullWidth={true}/>
+              fullWidth={true}
+            />
             <RaisedButton
               type="submit"
               label="Update"
               style={styles.updateButton}
               labelStyle={styles.updateButtonLabel}
               className="raised-button"
-              disabled={!this.state.canSubmit}
-              primary={true}/>
+              disabled={!canSubmit}
+              primary={true}
+            />
           </form>
         </Container>
       </div>

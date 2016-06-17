@@ -1,7 +1,7 @@
 export default {
   elements: {
     openPlansExplorerButton: {
-      selector: '//button//span[text()="Upgrade your plan"]',
+      selector: '//button//span[text()="Upgrade my plan"]',
       locateStrategy: 'xpath'
     }
   }
