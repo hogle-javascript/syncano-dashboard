@@ -69,7 +69,7 @@
     "global-require": 0,
     "max-len": [2, 120],
     "import/no-unresolved": [2, { ignore: ['\.assets$'] }],
-    "no-param-reassign": ["error", { "props": false }],
+    "no-param-reassign": [2, { "props": false }],
     "no-unused-expressions": [2, { "allowShortCircuit": true }],
     "react/jsx-first-prop-new-line": [2, "multiline"],
     "react/jsx-boolean-value": [2, "always"],
