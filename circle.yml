@@ -9,8 +9,7 @@ general:
 
 test:
   override:
-    - ./test.sh:
-        timeout: 120
+    - npm run lint
 
 deployment:
   production:
