@@ -9,9 +9,9 @@ function e2e_setup {
     npm run build
     mv ./dist ./dist_e2e
     npm run e2e-setup
-    nohup npm run e2e-selenium-server > ./reports/selenium.log 2>&1&
-    nohup npm run e2e-http-server &
-    nohup npm run oauth-server &
+    nohup npm run e2e-http-server > ./reports/http-server.log 2>&1&
+    nohup npm run e2e-selenium-server > ./reports/selenium-server.log 2>&1&
+    nohup npm run oauth-server > ./reports/oauth-server.log 2>&1&
     sleep 5
 }
 
