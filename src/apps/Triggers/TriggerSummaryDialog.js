@@ -7,7 +7,7 @@ import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
 import { CodePreview, Dialog } from '../../common/';
-import { Card, CardTitle, CardText, RaisedButton } from 'material-ui';
+import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
@@ -58,31 +58,6 @@ export default React.createClass({
                     Data Object inside selected Class is created, updated or deleted (depends on "signal" field value).
                   </p>
                 </div>
-              </div>
-            </Dialog.ContentSection>
-            <Dialog.ContentSection>
-              <div className="col-flex-1">
-                <Card>
-                  <CardTitle title="Preview Data" />
-                  <CardText>
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                      <div style={{ flex: 1 }}>
-                        Click the link on the right to open your Trigger in a new browser tab.
-                      </div>
-                      <div style={{ paddingLeft: 20 }}>
-                        <RaisedButton
-                          primary={true}
-                          label="Open Trigger in new tab"
-                          linkButton={true}
-                          target="_blank"
-                          href={`
-                            ${SYNCANO_BASE_URL.slice(0, -1)}${item.links.self}?api_key=${token}
-                          `}
-                        />
-                      </div>
-                    </div>
-                  </CardText>
-                </Card>
               </div>
             </Dialog.ContentSection>
             <Dialog.ContentSection>
