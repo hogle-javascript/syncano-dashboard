@@ -70,6 +70,12 @@ export default Reflux.createStore({
     this.data.subscriptions = subscriptions;
   },
 
+  getActiveSubscriptionEndDate() {
+    const activeSubscription = _.last(this.data.subscriptions);
+
+    return activeSubscription && activeSubscription.end;
+  },
+
   isPlanCanceled() {
     if (!this.data.subscriptions || this.data.subscriptions.length > 1) {
       return false;
@@ -105,7 +111,6 @@ export default Reflux.createStore({
 
     return planDict[this.getPlan()];
   },
-
 
   getLimitsData(subscription, plan) {
     if (plan === 'builder') {
