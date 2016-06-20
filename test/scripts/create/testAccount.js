@@ -1,11 +1,11 @@
 import Syncano from 'syncano';
 
-export default function createTestAccount() {
+const createTestAccount = () => {
   const baseUrl = 'https://api.syncano.rocks';
   const connection = Syncano({ baseUrl });
   let tempAccount;
 
-  function createAccount() {
+  const createAccount = () => {
     return connection
       .Account
       .register({
@@ -19,9 +19,9 @@ export default function createTestAccount() {
         return;
       })
       .catch((error) => console.error('createAccount', error));
-  }
+  };
 
-  function setup() {
+  const setup = () => {
     tempAccount = {
       password: Date.now(),
       email: `syncano.bot+${Date.now()}@syncano.com`
@@ -33,7 +33,9 @@ export default function createTestAccount() {
 
         return tempAccount;
       });
-  }
+  };
 
   return setup();
-}
+};
+
+export default createTestAccount;

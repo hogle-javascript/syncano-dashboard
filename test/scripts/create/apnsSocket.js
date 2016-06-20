@@ -1,7 +1,7 @@
 import Syncano from 'syncano';
 import utils from '../../e2e/utils';
 
-export default function createAPNSSocket(tempAccount) {
+const createAPNSSocket = (tempAccount) => {
   return tempAccount.connection
     .APNSConfig
     .please()
@@ -14,4 +14,6 @@ export default function createAPNSSocket(tempAccount) {
       tempAccount.tempAPNSSocket = true;
       return tempAccount;
     });
-}
+};
+
+export default createAPNSSocket;

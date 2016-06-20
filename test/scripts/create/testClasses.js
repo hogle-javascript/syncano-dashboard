@@ -1,9 +1,8 @@
-export default function createTestClasses(tempAccount, classAmount) {
+const createTestClasses = (tempAccount, classAmount) => {
   const classes = [];
   const classesNames = [];
-  let i;
 
-  for (i = 0; i < classAmount; i++) {
+  for (let i = 0; i < classAmount; i++) {
     const name = 'class_' + Date.now() + i;
     classesNames.push(name);
     classes.push(tempAccount.connection.Class({
@@ -22,4 +21,6 @@ export default function createTestClasses(tempAccount, classAmount) {
       return tempAccount;
     })
     .catch((error) => console.log(error));
-}
+};
+
+export default createTestClasses;

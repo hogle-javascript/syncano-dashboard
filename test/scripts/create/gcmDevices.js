@@ -1,11 +1,10 @@
 import utils from '../../e2e/utils';
 
-export default function createTestGCMDevices(tempAccount, gcmAmount) {
+const createTestGCMDevices = (tempAccount, gcmAmount) => {
   const gcmDevices = [];
   const gcmDevicesNames = [];
-  let i;
 
-  for (i = 0; i < gcmAmount; i++) {
+  for (let i = 0; i < gcmAmount; i++) {
     const label = 'android_' + Date.now() + i;
     gcmDevicesNames.push(label);
     gcmDevices.push(tempAccount.connection.GCMDevice({
@@ -22,4 +21,6 @@ export default function createTestGCMDevices(tempAccount, gcmAmount) {
       return tempAccount;
     })
     .catch((error) => console.log(error));
-}
+};
+
+export default createTestGCMDevices;

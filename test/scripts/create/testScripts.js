@@ -1,9 +1,8 @@
-export default function createTestScripts(tempAccount, classAmount) {
+const createTestScripts = (tempAccount, classAmount) => {
   const scripts = [];
   const scriptsNames = [];
-  let i;
 
-  for (i = 0; i < classAmount; i++) {
+  for (let i = 0; i < classAmount; i++) {
     const label = 'script_' + Date.now() + i;
     scriptsNames.push(label);
     scripts.push(tempAccount.connection.Script({
@@ -21,4 +20,6 @@ export default function createTestScripts(tempAccount, classAmount) {
       return tempAccount;
     })
     .catch((error) => console.log(error));
-}
+};
+
+export default createTestScripts;

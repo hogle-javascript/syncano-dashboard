@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export default function saveAccountsToFile(data) {
+const saveAccountsToFile = (data) => {
   const fileName = 'tempAccounts.js';
   const path = `${__dirname}/../../e2e/${fileName}`;
   const configFile = fs.createWriteStream(path);
@@ -11,4 +11,6 @@ export default function saveAccountsToFile(data) {
   configFile.write(prefix + json + suffix);
 
   return console.log(`File saved at ${path}`);
-}
+};
+
+export default saveAccountsToFile;

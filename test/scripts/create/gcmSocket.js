@@ -1,6 +1,6 @@
 import utils from '../../e2e/utils';
 
-export default function createGCMSocket(tempAccount) {
+const createGCMSocket = (tempAccount) => {
   return tempAccount.connection
     .GCMConfig
     .please()
@@ -12,4 +12,6 @@ export default function createGCMSocket(tempAccount) {
       tempAccount.createGCMSocket = true;
       return tempAccount;
     });
-}
+};
+
+export default createGCMSocket;

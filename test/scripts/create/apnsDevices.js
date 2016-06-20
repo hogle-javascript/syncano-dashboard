@@ -1,11 +1,10 @@
 import utils from '../../e2e/utils';
 
-export default function createAPNSDevices(tempAccount, apnsAmount) {
+const createAPNSDevices = (tempAccount, apnsAmount) => {
   const apnsDevices = [];
   const apnsDevicesNames = [];
-  let i;
 
-  for (i = 0; i < apnsAmount; i++) {
+  for (let i = 0; i < apnsAmount; i++) {
     const label = 'ios_' + Date.now() + i;
     apnsDevicesNames.push(label);
     apnsDevices.push(tempAccount.connection.APNSDevice({
@@ -22,4 +21,6 @@ export default function createAPNSDevices(tempAccount, apnsAmount) {
       return tempAccount;
     })
     .catch((error) => console.log(error));
-}
+};
+
+export default createAPNSDevices;

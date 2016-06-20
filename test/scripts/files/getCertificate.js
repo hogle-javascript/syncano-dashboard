@@ -2,7 +2,7 @@ import Syncano from 'syncano';
 import fs from 'fs';
 import https from 'https';
 
-export default function getCertFile() {
+const getCertFile = () => {
   const baseUrl = 'https://api.syncano.rocks';
   const certName = 'cert.p12';
   const credentials = {
@@ -42,4 +42,6 @@ export default function getCertFile() {
       });
     });
   return;
-}
+};
+
+export default getCertFile;

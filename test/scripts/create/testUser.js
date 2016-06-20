@@ -1,9 +1,8 @@
-export default function createTestUsers(tempAccount, userAmount) {
+const createTestUsers = (tempAccount, userAmount) => {
   const users = [];
   const usersNames = [];
-  let i;
 
-  for (i = 0; i < userAmount; i++) {
+  for (let i = 0; i < userAmount; i++) {
     const password = String(Date.now() + i);
     const username = `user_${password}`;
     usersNames.push(username);
@@ -21,4 +20,6 @@ export default function createTestUsers(tempAccount, userAmount) {
       return tempAccount;
     })
     .catch((error) => console.log(error));
-}
+};
+
+export default createTestUsers;

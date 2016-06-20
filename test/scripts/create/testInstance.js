@@ -1,9 +1,8 @@
-export default function createTestInstances(tempAccount, instanceAmount) {
+const createTestInstances = (tempAccount, instanceAmount) => {
   const instances = [];
   const instancesNames = [];
-  let i;
 
-  for (i = 0; i < instanceAmount; i++) {
+  for (let i = 0; i < instanceAmount; i++) {
     const name = 'in' + Date.now() + i;
     instancesNames.push(name);
     instances.push(tempAccount.connection.Instance({
@@ -21,4 +20,6 @@ export default function createTestInstances(tempAccount, instanceAmount) {
       return tempAccount;
     })
     .catch((error) => console.log(error));
-}
+};
+
+export default createTestInstances;

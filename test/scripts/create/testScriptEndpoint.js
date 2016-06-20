@@ -1,9 +1,8 @@
-export default function createTestScriptEndpoints(tempAccount, endpointsAmount) {
+const createTestScriptEndpoints = (tempAccount, endpointsAmount) => {
   const scriptEndpoints = [];
   const scriptEndpointsNames = [];
-  let i;
 
-  for (i = 0; i < endpointsAmount; i++) {
+  for (let i = 0; i < endpointsAmount; i++) {
     const name = `scriptEndpoint_${Date.now() + i}`;
     const script = 1;
 
@@ -22,4 +21,6 @@ export default function createTestScriptEndpoints(tempAccount, endpointsAmount) 
       return tempAccount;
     })
     .catch((error) => console.log(error));
-}
+};
+
+export default createTestScriptEndpoints;

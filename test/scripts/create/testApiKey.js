@@ -1,9 +1,8 @@
-export default function createTestApiKey(tempAccount, keyAmount) {
+const createTestApiKey = (tempAccount, keyAmount) => {
   const apiKey = [];
   const apiKeyNames = [];
-  let i;
 
-  for (i = 0; i < keyAmount; i++) {
+  for (let i = 0; i < keyAmount; i++) {
     const description = `apiKey_${Date.now() + i}`;
     apiKeyNames.push(description);
     apiKey.push(tempAccount.connection.ApiKey({
@@ -19,4 +18,6 @@ export default function createTestApiKey(tempAccount, keyAmount) {
       return tempAccount;
     })
     .catch((error) => console.log(error));
-}
+};
+
+export default createTestApiKey;
