@@ -706,23 +706,6 @@ export default React.createClass({
           );
         }
 
-        if (item.type === 'relation' || item.type === 'reference') {
-          const defaultValue = this.state[item.name] && this.state[item.name].value;
-
-          return (
-            <TextField
-              key={`field-${item.name}`}
-              ref={`field-${item.name}`}
-              name={item.name}
-              style={styles.dialogField}
-              fullWidth={true}
-              defaultValue={defaultValue}
-              errorText={this.getValidationMessages(item.name).join(' ')}
-              hintText={`Field ${item.name}`}
-              floatingLabelText={`${item.name} (${item.type})`}/>
-          );
-        }
-
         return (
           <TextField
             key={`field-${item.name}`}
