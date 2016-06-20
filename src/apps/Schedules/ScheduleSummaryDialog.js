@@ -52,7 +52,7 @@ export default React.createClass({
                 <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
                   <p>
                     Schedule you just created can always be modified later. You can change which Script should be
-                    run and time when it will be execute. Also you can set timezone adapted to your needs.
+                    run and the time when it will be execute. You can also set timezone based on your needs.
                   </p>
                 </div>
               </div>
