@@ -51,6 +51,7 @@ import Schedules from './apps/Schedules';
 import PushNotifications from './apps/PushNotifications';
 import PushDevices from './apps/PushDevices';
 import Usage from './apps/Usage';
+import DemoApps from './apps/DemoApps';
 
 function redirectToLogin(nextState, replace) {
   if (!auth.loggedIn()) {
@@ -519,6 +520,21 @@ export default (
           to="solutions-list"
         />
         <IndexRoute component={Solutions.ListView} />
+      </Route>
+
+      {/* Demo Apps */}
+      <Route
+        name="demo-apps"
+        path="/demo-apps"
+        component={DemoApps}
+      >
+        <Route
+          name="demo-apps-list"
+          path="list"
+          component={DemoApps.List}
+        />
+
+        <IndexRoute component={DemoApps.List} />
       </Route>
 
       <IndexRoute component={Instances} />
