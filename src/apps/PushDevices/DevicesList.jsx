@@ -144,6 +144,7 @@ const DevicesList = Radium(React.createClass({
           {titleText[type]}
         </div>
         <IconButton
+          tooltip={`Config ${type.toUpperCase()} Push Notification Socket`}
           iconStyle={{ color: Colors.blue400 }}
           iconClassName="synicon-settings"
           onTouchTap={() => router.push({ name: 'push-notification-config', params })}
@@ -163,10 +164,7 @@ const DevicesList = Radium(React.createClass({
       return (
         <div style={styles.listTitleContainer}>
           {title}
-          <NoConfigView
-            router={router}
-            type={type}
-          />
+          <NoConfigView type={type} />
         </div>
       );
     }

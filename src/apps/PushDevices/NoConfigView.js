@@ -1,7 +1,8 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { FontIcon, RaisedButton } from 'material-ui';
 
-const NoConfigView = ({ type, router }, context) => {
+const NoConfigView = ({ type, router }, { params }) => {
   const socketType = type.toUpperCase();
 
   return (
@@ -17,7 +18,7 @@ const NoConfigView = ({ type, router }, context) => {
         className="vm-4-t"
         primary={true}
         label={`Config ${socketType} Socket`}
-        onTouchTap={() => router.push({ name: 'push-notification-config', params: context.params })}
+        onTouchTap={() => router.push({ name: 'push-notification-config', params })}
       />
     </div>
   );
@@ -25,4 +26,4 @@ const NoConfigView = ({ type, router }, context) => {
 
 NoConfigView.contextTypes = { params: React.PropTypes.object };
 
-export default NoConfigView;
+export default withRouter(NoConfigView);
