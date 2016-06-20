@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function removeCert() {
+export default function removeCert() {
   fs.exists('./cert.p12', (exists) => {
     if (exists) {
       fs.unlink('./cert.p12');
@@ -8,5 +8,3 @@ function removeCert() {
   });
   return console.log('Deleted file: ./cert.p12');
 }
-
-module.exports = removeCert;

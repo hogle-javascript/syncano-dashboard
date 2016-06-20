@@ -1,10 +1,9 @@
-'use strict';
+export default function createTestApiKey(tempAccount, keyAmount) {
+  const apiKey = [];
+  const apiKeyNames = [];
+  let i;
 
-function createTestApiKey(tempAccount, keyAmount) {
-  let apiKey = [];
-  let apiKeyNames = [];
-
-  for (var i = 0; i < keyAmount; i++) {
+  for (i = 0; i < keyAmount; i++) {
     const description = `apiKey_${Date.now() + i}`;
     apiKeyNames.push(description);
     apiKey.push(tempAccount.connection.ApiKey({
@@ -15,11 +14,9 @@ function createTestApiKey(tempAccount, keyAmount) {
   return tempAccount.connection.ApiKey
     .please()
     .bulkCreate(apiKey)
-    .then((response) => {
+    .then(() => {
       tempAccount.tempApiKeyNames = apiKeyNames;
       return tempAccount;
     })
     .catch((error) => console.log(error));
 }
-
-module.exports = createTestApiKey;

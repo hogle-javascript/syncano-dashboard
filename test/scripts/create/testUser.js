@@ -1,10 +1,9 @@
-'use strict';
+export default function createTestUsers(tempAccount, userAmount) {
+  const users = [];
+  const usersNames = [];
+  let i;
 
-function createTestUsers(tempAccount, userAmount) {
-  let users = [];
-  let usersNames = [];
-
-  for (var i = 0; i < userAmount; i++) {
+  for (i = 0; i < userAmount; i++) {
     const password = String(Date.now() + i);
     const username = `user_${password}`;
     usersNames.push(username);
@@ -17,11 +16,9 @@ function createTestUsers(tempAccount, userAmount) {
   return tempAccount.connection.User
     .please()
     .bulkCreate(users)
-    .then((response) => {
+    .then(() => {
       tempAccount.tempUserNames = usersNames;
       return tempAccount;
     })
     .catch((error) => console.log(error));
 }
-
-module.exports = createTestUsers;

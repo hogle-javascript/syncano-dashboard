@@ -1,10 +1,9 @@
-'use strict';
+export default function createTestScripts(tempAccount, classAmount) {
+  const scripts = [];
+  const scriptsNames = [];
+  let i;
 
-function createTestScripts(tempAccount, classAmount) {
-  let scripts = [];
-  let scriptsNames = [];
-
-  for (var i = 0; i < classAmount; i++) {
+  for (i = 0; i < classAmount; i++) {
     const label = 'script_' + Date.now() + i;
     scriptsNames.push(label);
     scripts.push(tempAccount.connection.Script({
@@ -17,11 +16,9 @@ function createTestScripts(tempAccount, classAmount) {
   return tempAccount.connection.Script
     .please()
     .bulkCreate(scripts)
-    .then((response) => {
+    .then(() => {
       tempAccount.tempScriptNames = scriptsNames;
       return tempAccount;
     })
     .catch((error) => console.log(error));
 }
-
-module.exports = createTestScripts;
