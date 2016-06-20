@@ -56,7 +56,7 @@ export default React.createClass({
                   <p>
                     Script Endpoint you just created can always be modified later. You can find list of your Script
                     Endpoints, under Sockets tab in our Dashboard. If a Script Endpoint is public, you can see a
-                    clip icon in the Public column. You can click it to copy the link.
+                    clip icon in the Public column.
                   </p>
                 </div>
               </div>
