@@ -8,6 +8,7 @@ import UsersActions from '../Users/UsersActions';
 import UsersStore from '../Users/UsersStore';
 
 import { colors as Colors } from 'material-ui/styles/';
+import { IconButton } from 'material-ui';
 import { ColumnList, Loading, Container, Lists, Dialog, ShowMore } from '../../common/';
 import ListItem from './DevicesListItem';
 import NoConfigView from './NoConfigView';
@@ -134,6 +135,21 @@ const DevicesList = Radium(React.createClass({
       apns: 'iOS Devices',
       gcm: 'Android Devices'
     };
+    const title = (
+      <div
+        className="row align-middle"
+        style={styles.listTitle}
+      >
+        <div>
+          {titleText[type]}
+        </div>
+        <IconButton
+          iconStyle={{ color: Colors.blue400 }}
+          iconClassName="synicon-settings"
+          onTouchTap={() => router.push({ name: 'push-notification-config', params })}
+        />
+      </div>
+    );
     const moreLink = (
       <ShowMore
         label="MORE DEVICES"
@@ -146,8 +162,11 @@ const DevicesList = Radium(React.createClass({
     if (!hasConfig && !isLoading) {
       return (
         <div style={styles.listTitleContainer}>
-          <span style={styles.listTitle}>{titleText[type]}</span>
-          <NoConfigView type={type} />
+          {title}
+          <NoConfigView
+            router={router}
+            type={type}
+          />
         </div>
       );
     }
@@ -155,7 +174,7 @@ const DevicesList = Radium(React.createClass({
     return (
       <div>
         <div style={styles.listTitleContainer}>
-          <span style={styles.listTitle}>{titleText[type]}</span>
+          {title}
         </div>
         <GCMSendMessageDialog />
         <APNSSendMessageDialog />
