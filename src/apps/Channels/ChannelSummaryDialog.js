@@ -7,7 +7,7 @@ import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
 import { CodePreview, Dialog } from '../../common/';
-import { Card, CardTitle, CardText, RaisedButton } from 'material-ui';
+import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
@@ -56,31 +56,6 @@ export default React.createClass({
                     to get notifications about changes that happen to Data Objects connected to those Channels.
                   </p>
                 </div>
-              </div>
-            </Dialog.ContentSection>
-            <Dialog.ContentSection>
-              <div className="col-flex-1">
-                <Card>
-                  <CardTitle title="Preview Data" />
-                  <CardText>
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                      <div style={{ flex: 1 }}>
-                        Click the link on the right to open your Channel in a new browser tab.
-                      </div>
-                      <div style={{ paddingLeft: 20 }}>
-                        <RaisedButton
-                          primary={true}
-                          label="Open Channel in new tab"
-                          linkButton={true}
-                          target="_blank"
-                          href={`
-                            ${SYNCANO_BASE_URL.slice(0, -1)}${item.links.self}?api_key=${token}
-                          `}
-                        />
-                      </div>
-                    </div>
-                  </CardText>
-                </Card>
               </div>
             </Dialog.ContentSection>
             <Dialog.ContentSection>
