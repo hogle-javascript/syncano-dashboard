@@ -31,7 +31,7 @@ export default React.createClass({
     const item = DataEndpointsStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
-    const itemClass = item ? ClassesStore.getClassByName(item.class) : null;
+    const schema = item ? ClassesStore.getClassByName(item.class.schema) : null;
 
     return (
       <Dialog.FullPage
@@ -62,7 +62,7 @@ export default React.createClass({
                 </div>
               </div>
             </Dialog.ContentSection>
-            <Show if={!itemClass.schema || !itemClass.schema.length}>
+            <Show if={!schema || !schema.length}>
               <Dialog.ContentSection>
                 <div className="col-flex-1">
                   <Notification>
