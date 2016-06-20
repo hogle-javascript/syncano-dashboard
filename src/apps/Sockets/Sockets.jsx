@@ -131,6 +131,7 @@ export default React.createClass({
         <DataEndpoints.SummaryDialog />
         <Schedules.Dialog />
         <Triggers.Dialog />
+        <Triggers.SummaryDialog />
         <Channels.Dialog />
         <PushNotifications.APNSConfigDialog />
         <PushNotifications.GCMConfigDialog />
