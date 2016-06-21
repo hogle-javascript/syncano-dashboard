@@ -28,6 +28,7 @@ export default React.createClass({
     const item = ScriptEndpointsStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
+    const showSummaryDialog = (!item || !currentInstance || !token || scriptEndpoints.isLoading);
 
     return (
       <Dialog.FullPage
@@ -48,7 +49,7 @@ export default React.createClass({
             }}
           />
         </div>
-        {!item || !currentInstance || !token || scriptEndpoints.isLoading ? null : (
+        {showSummaryDialog ? null : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
