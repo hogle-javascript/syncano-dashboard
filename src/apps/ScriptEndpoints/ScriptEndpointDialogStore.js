@@ -5,6 +5,7 @@ import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 
 // Stores & Actions
 import Actions from './ScriptEndpointsActions';
+import ScriptEndpointSummaryDialogActions from './ScriptEndpointSummaryDialogActions';
 import ScriptsActions from '../Scripts/ScriptsActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 
@@ -46,8 +47,9 @@ export default Reflux.createStore({
 
   onCreateScriptEndpointCompleted() {
     console.debug('ScriptEndpointsDialogStore::onCreateScriptEndpointCompleted');
-    this.dismissDialog();
     Actions.fetchScriptEndpoints();
+    ScriptEndpointSummaryDialogActions.showDialog();
+    this.dismissDialog();
   },
 
   onUpdateScriptEndpointCompleted() {

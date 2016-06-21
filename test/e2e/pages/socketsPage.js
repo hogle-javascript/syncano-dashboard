@@ -195,6 +195,10 @@ export default {
     configuration: {
       selector: '//span[@class="synicon-socket-push"]/../../following-sibling::div//span[1]',
       locateStrategy: 'xpath'
+    },
+    summaryDialogCloseButton: {
+      selector: '//span[@class="synicon-close"]',
+      locateStrategy: 'xpath'
     }
   }
 };
