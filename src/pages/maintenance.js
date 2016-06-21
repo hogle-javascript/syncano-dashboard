@@ -44,7 +44,7 @@ export default class extends Component {
       <AlertPageContent
         imgSrc={require('!file-loader!../assets/img/illustrations/undergoing-maintenance.svg')}
         headline="Our platform is currently undergoing maintenance."
-        message={<span>We'll be back as soon as we update a few things.<br />Thank you for your patience!</span>}
+        message={<span>{`We'll be back as soon as we update a few things.`}<br />Thank you for your patience!</span>}
         buttonSet={
           <div>
             <a href="https://www.syncano.io/" target="_blank">
