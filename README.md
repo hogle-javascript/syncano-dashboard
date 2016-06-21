@@ -88,6 +88,11 @@ If you are ready just run dev server:
 
     $ npm start
 
+then start selenium server with chromedriver node:
+
+    $ npm run e2e-selenium-server
+    $ npm run e2e-selenium-chromedriver
+
 and start testing:
 
     $ npm run-script e2e
@@ -98,5 +103,3 @@ If part of the tests fail for some reason, you can temporarily disable them by `
     "e2e": "nightwatch --skiptags classes",
 
 Tests will continue to run but the classes tests will be skipped. Refer to the test files for the appropriate tag name.
-
-
