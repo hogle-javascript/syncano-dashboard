@@ -133,6 +133,7 @@ export default React.createClass({
         <Schedules.Dialog />
         <Schedules.SummaryDialog />
         <Triggers.Dialog />
+        <Triggers.SummaryDialog />
         <Channels.Dialog />
         <Channels.SummaryDialog />
         <PushNotifications.APNSConfigDialog />

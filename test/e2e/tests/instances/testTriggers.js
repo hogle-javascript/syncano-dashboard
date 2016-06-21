@@ -28,6 +28,7 @@ export default {
       .selectDropdownValue('@addTriggerModalClass', 'user_profile')
       .selectDropdownValue('@addTriggerModalScript', accounts.alternativeUser.tempScriptNames[0])
       .clickElement('@confirm')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementPresent('@triggerTableRow');
   },
   'Administrator edits a Trigger Signal': (client) => {
