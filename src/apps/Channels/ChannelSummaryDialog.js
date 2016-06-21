@@ -28,6 +28,7 @@ export default React.createClass({
     const item = ChannelsStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
+    const showSummaryDialog = (!item || !currentInstance || !token || channels.isLoading);
 
     return (
       <Dialog.FullPage
@@ -45,7 +46,7 @@ export default React.createClass({
             style={{ color: Colors.blue500, fontSize: 32 }}
           />
         </div>
-        {!item || !currentInstance || !token || channels.isLoading ? null : (
+        {showSummaryDialog ? null : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
