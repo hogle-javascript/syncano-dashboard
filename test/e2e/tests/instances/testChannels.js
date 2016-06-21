@@ -25,6 +25,7 @@ export default {
       .waitForElementVisible('@addChannelModalTitle')
       .fillInput('@modalNameInput', Utils.addSuffix('channel'))
       .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementVisible('@channelTableRow');
   },
   'User edits a Channel Socket': (client) => {
