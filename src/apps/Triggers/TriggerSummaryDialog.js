@@ -19,15 +19,16 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Reflux.connect(TriggersStore, 'dataEndpoints'),
+    Reflux.connect(TriggersStore, 'triggers'),
     DialogMixin
   ],
 
   render() {
-    const { open, dataEndpoints } = this.state;
+    const { open, triggers } = this.state;
     const item = TriggersStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
+    const showSummaryDialog = (!item || !currentInstance || !token || triggers.isLoading);
 
     return (
       <Dialog.FullPage
@@ -36,7 +37,7 @@ export default React.createClass({
         title="You've just created a Trigger!"
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
-        loading={dataEndpoints.isLoading}
+        loading={triggers.isLoading}
         open={open}
       >
         <div style={{ position: 'absolute', top: 0, left: 24 }}>
@@ -48,7 +49,7 @@ export default React.createClass({
             }}
           />
         </div>
-        {!item || !currentInstance || !token || dataEndpoints.isLoading ? null : (
+        {showSummaryDialog ? null : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
