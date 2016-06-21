@@ -88,9 +88,10 @@ If you are ready just run dev server:
 
     $ npm start
 
-then start selenium server:
+then start selenium server with chromedriver node:
 
     $ npm run e2e-selenium-server
+    $ npm run e2e-selenium-chromedriver
 
 and start testing:
 

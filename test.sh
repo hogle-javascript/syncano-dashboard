@@ -7,7 +7,7 @@ function e2e_setup {
     npm run e2e-setup
     npm run e2e-create-accounts
     nohup npm run e2e-selenium-server > ./reports/selenium-server.log 2>&1&
-    nohup npm run e2e-selenium-chromedrive > ./reports/selenium-chrome.log 2>&1&
+    nohup npm run e2e-selenium-chromedriver > ./reports/selenium-chrome.log 2>&1&
     nohup npm run e2e-http-server > ./reports/http-server.log 2>&1&
     sleep 5
 }
