@@ -2,81 +2,9 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 import ListItem from './DemoAppListItem';
+import { Loading } from '../../common';
 
 export default class DemoAppsList extends Component {
-  static defaultProps = {
-    items: [
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: 'aosdjias'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demost demo app descript ahisdu haisud hais'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app de'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      },
-      {
-        title: '1st demo app',
-        description: '1st demo app description 1st demo app description 1st demo app description 1st demo app descript'
-      }
-    ]
-  }
-
   getStyles() {
     return {
       container: {
@@ -93,17 +21,20 @@ export default class DemoAppsList extends Component {
   renderItems() {
     const { items } = this.props;
 
-    return _.map(items, (item) => (<ListItem item={item} />));
+    return _.map(items, (item) => <ListItem item={item} />);
   }
 
   render() {
     const styles = this.getStyles();
+    const { isLoading } = this.props;
 
     return (
       <div style={styles.container}>
-        <div style={styles.list}>
-          {this.renderItems()}
-        </div>
+        <Loading show={isLoading}>
+          <div style={styles.list}>
+            {this.renderItems()}
+          </div>
+        </Loading>
       </div>
     );
   }

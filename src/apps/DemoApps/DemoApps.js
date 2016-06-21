@@ -1,6 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Reflux from 'reflux';
 
-export default class DemoApps extends Component {
+import Actions from './DemoAppsActions';
+import Store from './DemoAppsStore';
+
+import DemoAppsList from './DemoAppsList';
+
+export default React.createClass({
+  displayName: 'DemoApps',
+
+  mixins: [
+    Reflux.connect(Store)
+  ],
+
+  componentDidMount() {
+    Actions.fetch();
+  },
+
   getStyles() {
     return {
       container: {
@@ -14,10 +30,10 @@ export default class DemoApps extends Component {
         fontSize: 32
       }
     };
-  }
+  },
 
   render() {
-    const { children } = this.props;
+    const { isLoading, items } = this.state;
     const styles = this.getStyles();
 
     return (
@@ -28,8 +44,11 @@ export default class DemoApps extends Component {
         <div style={styles.title}>
           Syncano DEMO Apps
         </div>
-        {children}
+        <DemoAppsList
+          isLoading={isLoading}
+          items={items}
+        />
       </div>
     );
   }
-}
+});

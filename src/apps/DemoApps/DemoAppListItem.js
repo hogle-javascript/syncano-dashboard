@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Actions from './DemoAppsActions';
+
 import { Paper, RaisedButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 
@@ -22,9 +24,19 @@ export default class DemoAppListItem extends Component {
       },
       description: {
         textAlign: 'center',
-        color: Colors.grey500
+        color: Colors.grey500,
+        maxHeight: 180,
+        overflowY: 'hidden'
       }
     };
+  }
+
+  truncate(text, maxCount) {
+    if (text.length > maxCount) {
+      return `${text.slice(0, maxCount)}...`;
+    }
+
+    return text;
   }
 
   render() {
@@ -40,10 +52,11 @@ export default class DemoAppListItem extends Component {
           {item.title}
         </div>
         <div style={styles.description}>
-          {item.description}
+          {this.truncate(item.description, 300)}
         </div>
         <RaisedButton
-          onTouchTap={() => console.error('install DEMO app')}
+          disabled={!item.backup_file}
+          onTouchTap={Actions.fetchDemoApps}
           primary={true}
           label="Install App"
         />

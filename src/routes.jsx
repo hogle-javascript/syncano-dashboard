@@ -527,15 +527,7 @@ export default (
         name="demo-apps"
         path="/demo-apps"
         component={DemoApps}
-      >
-        <Route
-          name="demo-apps-list"
-          path="list"
-          component={DemoApps.List}
-        />
-
-        <IndexRoute component={DemoApps.List} />
-      </Route>
+      />
 
       <IndexRoute component={Instances} />
     </Route>
