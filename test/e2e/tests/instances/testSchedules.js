@@ -29,6 +29,7 @@ export default {
       // click into title as workaround for enter key closing modal view
       .clickElement('@addScheduleModalTitle')
       .clickElement('@confirm')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementPresent('@scheduleTableRow');
   },
   'Administrator edits a Schedule Socket Crontab': (client) => {
