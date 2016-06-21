@@ -77,6 +77,10 @@ export default {
     runOnceAYear: {
       selector: '//div[text()="Run once a year at midnight"]',
       locateStrategy: 'xpath'
+    },
+    summaryDialogCloseButton: {
+      selector: '//span[@class="synicon-close"]',
+      locateStrategy: 'xpath'
     }
   }
 };
