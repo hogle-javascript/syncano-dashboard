@@ -28,6 +28,7 @@ export default React.createClass({
     const item = SchedulesStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
+    const showSummaryDialog = (!item || !currentInstance || !token || Schedules.isLoading);
 
     return (
       <Dialog.FullPage
@@ -45,7 +46,7 @@ export default React.createClass({
             style={{ color: Colors.lime400, fontSize: 32 }}
           />
         </div>
-        {!item || !currentInstance || !token || Schedules.isLoading ? null : (
+        {showSummaryDialog ? null : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
