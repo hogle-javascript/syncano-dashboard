@@ -32,8 +32,7 @@ export default class extends Component {
   };
 
   fetchCurrentStatus = () => {
-    // add url to config
-    const url = '';
+    const url = 'https://6l1kzwgr7t06.statuspage.io/api/v2/status.json';
 
     axios.get(url).then((response) => this.setState({ status: response.data }));
   };
