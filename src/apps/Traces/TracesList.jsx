@@ -24,9 +24,8 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       traceResult: {
-        maxHeight: 0,
-        overflow: 'hidden',
-        transition: 'max-height 450ms ease-out'
+        maxHeight: 500,
+        overflow: 'auto'
       },
       noTracesContainer: {
         padding: '96px 0',
@@ -92,18 +91,6 @@ export default Radium(React.createClass({
       status.duration = 'execution problem';
     }
 
-    if (item.id === this.state.visibleTraceId) {
-      styles.traceResult = {
-        maxHeight: '500px',
-        marginBottom: 15,
-        transition: 'max-height 450ms ease-in',
-        overflow: 'auto'
-      };
-      styles.trace = {
-        margin: '15px 0 0'
-      };
-    }
-
     return (
       <Paper
         key={item.id}
@@ -114,7 +101,6 @@ export default Radium(React.createClass({
           checked={item.checked}
           id={item.id}
           zDepth={0}
-          handleClick={() => this.toggleTrace(item.id)}
         >
           <Column.CheckIcon
             id={item.id.toString()}
