@@ -4,6 +4,7 @@ import Reflux from 'reflux';
 import { WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
 
 // Stores & Actions
+import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import Actions from './DemoAppsActions';
 
@@ -17,6 +18,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
+      clickedAppName: null,
       items: [],
       isLoading: true
     };
@@ -36,9 +38,24 @@ export default Reflux.createStore({
     Actions.fetchDemoApps();
   },
 
+  getKey() {
+    return this.data.accountKey;
+  },
+
+  onSetClickedApp(clickedAppName) {
+    this.data.clickedAppName = clickedAppName;
+    this.trigger(this.data);
+  },
+
   onFetchDemoAppsCompleted(demoApps) {
     console.debug('DemoAppsStore::onFetchDemoAppsCompleted');
+    this.data.accountKey = demoApps.data.accountKey;
     this.data.items = demoApps.data.objects;
     this.trigger(this.data);
+  },
+
+  onInstallDemoAppCompleted() {
+    console.debug('InstallDemoAppDialogStore::onInstallDemoAppCompleted');
+    SessionStore.getRouter().push({ name: 'sockets', params: { instanceName: this.data.clickedAppName } });
   }
 });

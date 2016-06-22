@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import Actions from './DemoAppsActions';
-
 import { Paper, RaisedButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 
@@ -40,7 +38,7 @@ export default class DemoAppListItem extends Component {
   }
 
   render() {
-    const { item } = this.props;
+    const { item, handleClickInstall } = this.props;
     const styles = this.getStyles();
 
     return (
@@ -49,14 +47,13 @@ export default class DemoAppListItem extends Component {
         style={styles.container}
       >
         <div style={styles.title}>
-          {item.title}
+          {item.name}
         </div>
         <div style={styles.description}>
           {this.truncate(item.description, 300)}
         </div>
         <RaisedButton
-          disabled={!item.backup_file}
-          onTouchTap={Actions.fetchDemoApps}
+          onTouchTap={handleClickInstall}
           primary={true}
           label="Install App"
         />

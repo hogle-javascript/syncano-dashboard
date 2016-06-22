@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
+import Actions from './DemoAppsActions';
+
 import ListItem from './DemoAppListItem';
 import { Loading } from '../../common';
 
@@ -18,10 +20,26 @@ export default class DemoAppsList extends Component {
     };
   }
 
+  handleClickInstall(item) {
+    if (this.props.handleClickInstall) {
+      this.props.handleClickInstall();
+    }
+
+    Actions.setClickedApp(item.name);
+  }
+
   renderItems() {
     const { items } = this.props;
 
-    return _.map(items, (item) => <ListItem item={item} />);
+    return _.map(items, (item) => {
+      return (
+        <ListItem
+          handleClickInstall={() => this.handleClickInstall(item)}
+          key={item.name}
+          item={item}
+        />
+      );
+    });
   }
 
   render() {
