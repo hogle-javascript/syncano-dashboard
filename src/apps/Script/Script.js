@@ -85,7 +85,7 @@ const Script = React.createClass({
   },
 
   componentWillMount() {
-    this.savePayloadToStorageThrottled = _.throttle(this.savePayloadToStorage, 5000);
+    this.savePayloadToStorageThrottled = _.throttle(this.savePayloadToStorage, 1000);
   },
 
   componentDidMount() {
@@ -277,7 +277,6 @@ const Script = React.createClass({
   },
 
   handlePayloadChange(payload) {
-    console.error('a');
     this.savePayloadToStorageThrottled();
     this.setState({ payload });
   },
@@ -285,21 +284,26 @@ const Script = React.createClass({
   savePayloadToStorage() {
     const { currentScript, payload } = this.state;
     const instance = localStorage.getItem('lastInstance');
-    console.error('dasdad');
-    localStorage.setItem(`${instance}-${currentScript.id}`, payload);
+    return currentScript ? localStorage.setItem(`${instance}-${currentScript.id}`, payload) : null;
   },
 
-  fetchPayloadFromStorage() {
-    const { currentScript } = this.state;
-    const instance = localStorage.getItem('lastInstance');
-    const defaultPayload = [
+  setPayloadValue() {
+    const defaultValue = [
       '{',
       '    "foo": "bar",',
       '    "bar": "foo"',
       '}'
     ].join('\n');
-    const payload = currentScript ? localStorage.getItem(`${instance}-${currentScript.id}`) : null;
-    return !payload ? defaultPayload : payload;
+    const payload = this.payloadFromStorage() ? this.payloadFromStorage() : defaultValue;
+    this.savePayloadToStorageThrottled();
+    return payload;
+  },
+
+  payloadFromStorage() {
+    const { currentScript } = this.state;
+    const instance = localStorage.getItem('lastInstance');
+
+    return currentScript ? localStorage.getItem(`${instance}-${currentScript.id}`) : null;
   },
 
   setFlag(flag) {
@@ -606,7 +610,7 @@ const Script = React.createClass({
                     height="200px"
                     onChange={this.handlePayloadChange}
                     onLoad={this.clearAutosaveTimer}
-                    value={this.fetchPayloadFromStorage()}
+                    value={this.setPayloadValue()}
                   />
                 </TogglePanel>
                 <Show if={this.getValidationMessages('payload').length}>
