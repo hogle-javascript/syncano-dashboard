@@ -14,7 +14,7 @@ import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
 import { FlatButton, IconButton, RaisedButton, TextField } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
-import { Billing, Container, Loading, Color, Dialog, InnerToolbar, UpgradeButton } from '../../common/';
+import { Billing, Container, Loading, Color, Dialog, InnerToolbar, UpgradeButton, PricingPlans } from '../../common/';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 
@@ -448,6 +448,12 @@ export default Radium(React.createClass({
               >
                 {this.renderSummary()}
               </div>
+            </div>
+          </div>
+
+          <div className="row vp-6-b">
+            <div className="col-flex-1">
+              <PricingPlans />
             </div>
           </div>
 

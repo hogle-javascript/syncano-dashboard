@@ -126,7 +126,6 @@ export default React.createClass({
               label="Upgrade Now"
               backgroundColor="#FFCC01"
               labelStyle={{ fontWeight: 500, color: '#1D2228' }}
-              style={{ fontWeight: 500 }}
             />
           </Link>
         </div>
