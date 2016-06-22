@@ -19,7 +19,6 @@ function e2e_cleanup {
 
 npm run lint
 e2e_setup
-cat /proc/sys/kernel/random/entropy_avail
 
 case "$CIRCLE_NODE_INDEX" in
     0) npm run e2e ;;

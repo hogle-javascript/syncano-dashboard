@@ -11,6 +11,8 @@ test:
   override:
     - ./test.sh:
         timeout: 120
+  post:
+    - echo "Available entropy after tests:" && cat /proc/sys/kernel/random/entropy_avail
 
 deployment:
   production:
