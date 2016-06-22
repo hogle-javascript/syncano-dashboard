@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 // Components
-import { MenuItem } from 'material-ui';
+import { MenuItem, IconButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 import { Color, ColumnList } from '../../common/';
 
@@ -19,74 +19,46 @@ const DeviceListItem = React.createClass({
     params: React.PropTypes.object
   },
 
-  getStyles() {
-    return {
-      linksSection: {
-        color: '#9B9B9B',
-        fontSize: 12
-      },
-      separator: {
-        padding: '0 8px'
-      },
-      linkItem: {
-        cursor: 'pointer',
-        ':hover': {
-          color: Colors.blue400
-        }
-      }
-    };
-  },
-
   render() {
     const { params } = this.context;
-    const { item, devicesRoute, router } = this.props;
-    const styles = this.getStyles();
+    const { item, devicesRoute, router, deviceIcon, label, showConfigDialog } = this.props;
+    const iconColor = Colors.grey800;
 
     return (
-      <ColumnList.Item key={this.props.label}>
+      <ColumnList.Item key={label}>
         <Column.CheckIcon.Socket
-          id={`push-notification${this.props.label}`}
+          id={`push-notification${label}`}
           iconClassName="socket-push"
           checkable={false}
           iconColor={Color.getColorByName('indigo', 'light')}
-          primaryText={this.props.label}
-          secondaryText={
-            <div>
-              <span
-                key="configuration"
-                style={styles.linkItem}
-                onClick={this.props.showConfigDialog}
-              >
-                Configuration
-              </span>
-              <span
-                key="separator"
-                style={styles.separator}
-              >
-                |
-              </span>
-              <span
-                key="devices"
-                onClick={() => router.push({ name: devicesRoute, params })}
-                style={styles.linkItem}
-              >
-                Devices
-              </span>
-            </div>
-          }
+          primaryText={label}
         />
         <Column.Desc />
-        <Column.Desc>
-          {item ? item.hasConfig.toString() : null}
+        <Column.Desc className="col-sm-6">
+          <span style={{ color: iconColor }}>
+            {item ? item.hasConfig.toString() : null}
+          </span>
         </Column.Desc>
-        <Column.Desc>
+        <Column.Desc className="col-sm-6">
+          <IconButton
+            style={{ marginLeft: -12 }}
+            iconStyle={{ color: iconColor }}
+            iconClassName="synicon-message-alert"
+          />
+        </Column.Desc>
+        <Column.Desc className="col-sm-4">
           {item ? item.devicesCount : null}
+          <IconButton
+            iconStyle={{ color: iconColor }}
+            iconClassName={deviceIcon}
+            onTouchTap={() => router.push({ name: devicesRoute, params })}
+          />
         </Column.Desc>
         <Column.Desc />
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={this.props.showConfigDialog}
+            onTouchTap={showConfigDialog}
             primaryText="Edit"
           />
           <MenuItem
