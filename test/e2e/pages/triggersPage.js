@@ -49,6 +49,10 @@ export default {
     signalTriggerTableRow: {
       selector: `//div[text()="${utils.addSuffix('trigger')}"]/../../parent::div/following-sibling::div[text()="post_update"]`,
       locateStrategy: 'xpath'
+    },
+    summaryDialogCloseButton: {
+      selector: '//span[@class="synicon-close"]',
+      locateStrategy: 'xpath'
     }
   }
 };

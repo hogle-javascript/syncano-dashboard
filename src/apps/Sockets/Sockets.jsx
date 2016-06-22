@@ -127,11 +127,15 @@ export default React.createClass({
         <Helmet title="Sockets" />
         <SocketsDialog />
         <ScriptEndpoints.Dialog />
+        <ScriptEndpoints.SummaryDialog />
         <DataEndpoints.Dialog />
         <DataEndpoints.SummaryDialog />
         <Schedules.Dialog />
+        <Schedules.SummaryDialog />
         <Triggers.Dialog />
+        <Triggers.SummaryDialog />
         <Channels.Dialog />
+        <Channels.SummaryDialog />
         <PushNotifications.APNSConfigDialog />
         <PushNotifications.GCMConfigDialog />
 

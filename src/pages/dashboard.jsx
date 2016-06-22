@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Reflux from 'reflux';
 import { withRouter } from 'react-router';
 import { Grid, Breakpoint } from 'react-responsive-grid';
 import SessionStore from '../apps/Session/SessionStore';
 import ProfileBillingPlanStore from '../apps/Profile/ProfileBillingPlanStore';
 import { UpgradeNowToolbar, Header, NoMobileInfo } from '../common/';
 
-class Dashboard extends Component {
+const Dashboard = React.createClass({
+  displayName: 'Dashboard',
+
+  mixins: [Reflux.connect(ProfileBillingPlanStore, 'billing')],
+
   componentDidMount() {
     const { router } = this.props;
 
@@ -15,7 +20,11 @@ class Dashboard extends Component {
     }
 
     ProfileBillingPlanStore.init();
-  }
+  },
+
+  componentWillUnmount() {
+    ProfileBillingPlanStore.clearData();
+  },
 
   renderUpgradeToolbar() {
     const plan = ProfileBillingPlanStore.getPlan();
@@ -26,7 +35,7 @@ class Dashboard extends Component {
     }
 
     return <UpgradeNowToolbar subscriptionEndDate={endDate} />;
-  }
+  },
 
   render() {
     return (
@@ -48,6 +57,6 @@ class Dashboard extends Component {
       </div>
     );
   }
-}
+});
 
 export default withRouter(Dashboard);

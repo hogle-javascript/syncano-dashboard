@@ -37,6 +37,11 @@ export default Reflux.createStore({
     );
   },
 
+  clearData() {
+    this.data = this.getInitialState();
+    this.trigger(this.data);
+  },
+
   refreshData() {
     console.debug('ClassesStore::refreshData');
 

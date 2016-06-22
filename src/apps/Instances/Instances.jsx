@@ -83,7 +83,7 @@ const Instances = React.createClass({
         <Container id="instances">
           <InstancesList
             ref="myInstancesList"
-            name="My instances"
+            name="Instances"
             items={myInstances}
             isLoading={isLoading}
             hideDialogs={hideDialogs}

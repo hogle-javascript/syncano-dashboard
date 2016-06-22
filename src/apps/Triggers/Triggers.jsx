@@ -13,6 +13,7 @@ import { Container } from '../../common/';
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
+import TriggerSummaryDialog from './TriggerSummaryDialog';
 
 export default React.createClass({
   displayName: 'TriggerSockets',
@@ -34,6 +35,7 @@ export default React.createClass({
       <div>
         <Helmet title="Triggers" />
         <TriggerDialog />
+        <TriggerSummaryDialog />
 
         <SocketsInnerToolbar>
           <RaisedButton
