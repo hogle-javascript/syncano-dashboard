@@ -38,10 +38,6 @@ export default Reflux.createStore({
     Actions.fetchDemoApps();
   },
 
-  getKey() {
-    return this.data.accountKey;
-  },
-
   onSetClickedApp(clickedAppName) {
     this.data.clickedAppName = clickedAppName;
     this.trigger(this.data);
@@ -49,8 +45,7 @@ export default Reflux.createStore({
 
   onFetchDemoAppsCompleted(demoApps) {
     console.debug('DemoAppsStore::onFetchDemoAppsCompleted');
-    this.data.accountKey = demoApps.data.accountKey;
-    this.data.items = demoApps.data.objects;
+    this.data.items = demoApps;
     this.trigger(this.data);
   },
 

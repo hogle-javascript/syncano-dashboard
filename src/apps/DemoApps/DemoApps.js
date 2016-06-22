@@ -42,7 +42,6 @@ export default React.createClass({
     const email = SessionStore.getUser() ? SessionStore.getUser().email : null;
     const params = {
       email,
-      accountKey: Store.getKey(),
       instanceName: clickedAppName
     };
 
@@ -64,7 +63,7 @@ export default React.createClass({
         ),
         children: (
           <div>
-            This action will install Demo App {clickedAppName}. You will be redirected to new Instance.
+            This action will install {clickedAppName} Demo App. You will be redirected to new Instance.
           </div>
         )
       }
