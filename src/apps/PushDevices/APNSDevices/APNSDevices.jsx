@@ -9,6 +9,7 @@ import SendMessagesActions from './APNSSendMessagesActions';
 import { Container } from '../../../common/';
 import DevicesList from '../DevicesList';
 import APNSDialog from './APNSDeviceDialog';
+import APNSConfigDialog from '../../PushNotifications/APNS/APNSConfigDialog';
 
 export default React.createClass({
 
@@ -30,6 +31,7 @@ export default React.createClass({
       <Container>
         <Helmet title="iOS Devices" />
         <APNSDialog />
+        <APNSConfigDialog />
         <DevicesList
           type="apns"
           hasConfig={hasConfig}
