@@ -272,6 +272,37 @@ const Script = React.createClass({
     this.setState({ scriptConfig });
   },
 
+  handlePayload(payload) {
+    this.throttled();
+    this.setState({ payload });
+    // setTimeout(this.savePayloadToStorage, 1000);
+    console.error('as');
+  },
+
+  throttled() {
+    return _.debounce(() => console.error('dupa'), 1000);
+  },
+
+  savePayloadToStorage() {
+    const { currentScript, payload } = this.state;
+    const instance = localStorage.getItem('lastInstance');
+    localStorage.setItem(`${instance}-${currentScript.id}`, payload);
+    console.error('dasdad');
+  },
+
+  fetchPayloadFromStorage() {
+    const { currentScript } = this.state;
+    const instance = localStorage.getItem('lastInstance');
+    const defaultPayload = [
+      '{',
+      '    "foo": "bar",',
+      '    "bar": "foo"',
+      '}'
+    ].join('\n');
+    const payload = currentScript ? localStorage.getItem(`${instance}-${currentScript.id}`) : null;
+    return !payload ? defaultPayload : payload;
+  },
+
   setFlag(flag) {
     this.setState({ shouldRun: flag }, this.handleFormValidation);
   },
@@ -574,13 +605,9 @@ const Script = React.createClass({
                     ref="payloadSource"
                     mode="json"
                     height="200px"
-                    onChange={(payload) => this.setState({ payload })}
-                    value={[
-                      '{',
-                      '    "foo": "bar",',
-                      '    "bar": "foo"',
-                      '}'
-                    ].join('\n')}
+                    onChange={(payload) => this.handlePayload(payload)}
+                    onLoad={this.clearAutosaveTimer}
+                    value={this.fetchPayloadFromStorage()}
                   />
                 </TogglePanel>
                 <Show if={this.getValidationMessages('payload').length}>
