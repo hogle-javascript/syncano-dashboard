@@ -4,9 +4,10 @@ import _ from 'lodash';
 
 export default {
   list() {
+    const accountKey = SYNCANO_DEMO_APPS_ACCOUNT_KEY;
     const connection = Syncano({
-      baseUrl: SYNCANO_BASE_URL,
-      accountKey: SYNCANO_DEMO_APPS_ACCOUNT_KEY
+      accountKey,
+      baseUrl: SYNCANO_BASE_URL
     })
 
     connection
@@ -19,9 +20,10 @@ export default {
 
   install(payload) {
     const { email, instanceName } = payload;
+    const accountKey = SYNCANO_DEMO_APPS_ACCOUNT_KEY;
     const connection = Syncano({
+      accountKey,
       baseUrl: SYNCANO_BASE_URL,
-      accountKey: SYNCANO_DEMO_APPS_ACCOUNT_KEY,
       defaults: {
         instanceName
       }
@@ -31,15 +33,6 @@ export default {
       email,
       role: 'read'
     }
-    // const config = {
-    //   method: 'post',
-    //   url: `${SYNCANO_BASE_URL}v1.1/instances/${instanceName}/invitations/?api_key=${SYNCANO_DEMO_APPS_ACCOUNT_KEY}`,
-    //   data: {
-    //     instanceName,
-    //     email,
-    //     role: 'read'
-    //   }
-    // };
 
     connection
       .InstanceInvitation
@@ -56,19 +49,5 @@ export default {
       })
       .then(this.completed)
       .catch(this.failure);
-
-    // this.Promise
-    //   .request(config)
-    //   .then(() => this.NewLibConnection.Invitation.please().list())
-    //   .then((invitations) => {
-    //     const invitationToAccept = _.find(invitations, (invitation) => invitation.instance === instanceName);
-    //
-    //     return this.NewLibConnection
-    //       .Invitation
-    //       .please()
-    //       .accept(invitationToAccept.key)
-    //   })
-    //   .then(this.completed)
-    //   .catch(this.failure);
   }
 };
