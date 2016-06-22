@@ -123,6 +123,10 @@ export default Reflux.createStore({
     allFields.map((item) => {
       if (item.order_index) {
         orderPayload.push({
+          text: 'None',
+          payload: 'null'
+        });
+        orderPayload.push({
           text: item.name + ' (ascending)',
           payload: item.name
         });
