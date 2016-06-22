@@ -17,6 +17,7 @@ function e2e_cleanup {
     npm run e2e-remove-certificate
 }
 
+touch ./reports/docker-entropy.log
 nohup ./check_entropy.sh > ./reports/docker-entropy.log 2>&1&
 npm run lint
 e2e_setup
