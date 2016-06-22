@@ -15,6 +15,7 @@ function message() {
   echo -e "#  "$@"                                               "
   echo -e "#                                                     "
   echo -e "######################################################"
+  echo -e ""
 }
 
 trap cleanup EXIT
@@ -24,7 +25,7 @@ npm run e2e-create-accounts
 message "Starting Selenium in background..."
 nohup npm run e2e-selenium-server > ./reports/selenium-server.log 2>&1&
 nohup npm run e2e-selenium-chromedriver > ./reports/selenium-chrome.log 2>&1&
-
+sleep 5
 
 if [ -n "$1" ]
   then
