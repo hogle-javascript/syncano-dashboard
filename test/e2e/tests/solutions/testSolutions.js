@@ -17,7 +17,10 @@ export default {
     const solutionsPage = client.page.solutionsPage();
 
     solutionsPage
-      .navigate()
+      .navigate();
+    // Added as favorites selection is not applied without pause.
+    client.pause(1500);
+    solutionsPage
       .clickElement('@favorite')
       .waitForElementVisible('@favoriteSolutionTitle');
   },

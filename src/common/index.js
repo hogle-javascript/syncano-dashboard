@@ -41,6 +41,7 @@ import Popover from './Popover';
 import Sidebar from './Sidebar';
 import ShowMore from './ShowMore';
 import UpgradeButton from './UpgradeButton';
+import UpgradeNowToolbar from './UpgradeNowToolbar';
 
 export { AlertPageContent };
 export { Billing };
@@ -85,6 +86,7 @@ export { Popover };
 export { Sidebar };
 export { ShowMore };
 export { UpgradeButton };
+export { UpgradeNowToolbar };
 
 export default {
   AlertPageContent,
@@ -129,5 +131,6 @@ export default {
   Popover,
   Sidebar,
   ShowMore,
-  UpgradeButton
+  UpgradeButton,
+  UpgradeNowToolbar
 };

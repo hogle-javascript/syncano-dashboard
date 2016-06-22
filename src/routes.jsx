@@ -19,6 +19,7 @@ import NotFoundPage from './pages/notfound';
 import PushDevicesPage from './pages/pushDevices';
 import ExpiredAccountPage from './pages/expiredAccount';
 import FailedPaymentPage from './pages/failedPayment';
+import MaintenancePage from './pages/maintenance';
 
 // Apps
 import Account from './apps/Account';
@@ -182,6 +183,12 @@ export default (
         name="failed-payment"
         component={FailedPaymentPage}
         path="failed-payment"
+      />
+
+      <Route
+        name="maintenance"
+        component={MaintenancePage}
+        path="maintenance"
       />
 
       <Route

@@ -1,26 +1,11 @@
-'use strict';
+import Syncano from 'syncano';
 
-function createTestAccount() {
-  const Syncano = require('syncano');
+const createTestAccount = () => {
   const baseUrl = 'https://api.syncano.rocks';
-  const connection = Syncano({baseUrl});
+  const connection = Syncano({ baseUrl });
   let tempAccount;
 
-  function setup() {
-    tempAccount = {
-      password: Date.now(),
-      email: `syncano.bot+${Date.now()}@syncano.com`
-    };
-
-    return createAccount()
-      .then(() => { 
-        tempAccount.connection = connection;
-
-        return tempAccount;
-      });
-  }
-
-  function createAccount() {
+  const createAccount = () => {
     return connection
       .Account
       .register({
@@ -34,10 +19,23 @@ function createTestAccount() {
         return;
       })
       .catch((error) => console.error('createAccount', error));
-  }
+  };
+
+  const setup = () => {
+    tempAccount = {
+      password: Date.now(),
+      email: `syncano.bot+${Date.now()}@syncano.com`
+    };
+
+    return createAccount()
+      .then(() => {
+        tempAccount.connection = connection;
+
+        return tempAccount;
+      });
+  };
 
   return setup();
-}
+};
 
-
-module.exports = createTestAccount;
+export default createTestAccount;

@@ -7,7 +7,7 @@
   "globals_path" : "test/e2e/globals.js",
 
   "selenium" : {
-    "start_process" : true,
+    "start_process" : false,
     "server_path" : "./node_modules/selenium-standalone/.selenium/selenium-server/2.53.0-server.jar",
     "log_path" : "./reports/",
     "host" : "127.0.0.1",

@@ -26,6 +26,7 @@ export default {
       .fillInput('@modalNameInput', script)
       .selectDropdownValue('@addCodeBoxModalScriptDropdown', accounts.alternativeUser.tempScriptNames[0])
       .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementVisible('@codeBoxTableRow');
   },
   'User edits a Script Socket': (client) => {

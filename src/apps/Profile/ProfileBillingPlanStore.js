@@ -37,6 +37,11 @@ export default Reflux.createStore({
     );
   },
 
+  clearData() {
+    this.data = this.getInitialState();
+    this.trigger(this.data);
+  },
+
   refreshData() {
     console.debug('ClassesStore::refreshData');
 
@@ -68,6 +73,12 @@ export default Reflux.createStore({
 
   setSubscriptions(subscriptions) {
     this.data.subscriptions = subscriptions;
+  },
+
+  getActiveSubscriptionEndDate() {
+    const activeSubscription = _.last(this.data.subscriptions);
+
+    return activeSubscription && activeSubscription.end;
   },
 
   isPlanCanceled() {
@@ -105,7 +116,6 @@ export default Reflux.createStore({
 
     return planDict[this.getPlan()];
   },
-
 
   getLimitsData(subscription, plan) {
     if (plan === 'builder') {

@@ -7,6 +7,7 @@ import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 import SchedulesActions from './SchedulesActions';
 import ScriptsActions from '../Scripts/ScriptsActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
+import ScheduleSummaryDialogActions from './ScheduleSummaryDialogActions';
 
 export default Reflux.createStore({
   listenables: SchedulesActions,
@@ -75,8 +76,9 @@ export default Reflux.createStore({
 
   onCreateScheduleCompleted() {
     console.debug('ScheduleDialogStore::onCreateScheduleCompleted');
-    this.dismissDialog();
     SchedulesActions.fetchSchedules();
+    ScheduleSummaryDialogActions.showDialog();
+    this.dismissDialog();
   },
 
   onUpdateScheduleCompleted() {

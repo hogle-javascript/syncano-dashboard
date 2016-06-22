@@ -17,6 +17,7 @@ import { Container } from '../../common/';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import ChannelsList from './ChannelsList';
 import ChannelDialog from './ChannelDialog';
+import ChannelSummaryDialog from './ChannelSummaryDialog';
 
 export default React.createClass({
   displayName: 'Channels',
@@ -38,6 +39,7 @@ export default React.createClass({
       <div>
         <Helmet title="Channels" />
         <ChannelDialog />
+        <ChannelSummaryDialog />
 
         <SocketsInnerToolbar>
           <RaisedButton
