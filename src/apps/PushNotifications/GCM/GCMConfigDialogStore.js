@@ -6,6 +6,7 @@ import { DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../..
 // Stores & Actions
 import SessionActions from '../../Session/SessionActions';
 import Actions from './GCMPushNotificationsActions';
+import GCMDevicesActions from '../../PushDevices/GCMDevices/GCMDevicesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -36,6 +37,7 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('GCMConfigDialogStore::refreshData');
     Actions.fetchGCMPushNotificationConfig();
+    GCMDevicesActions.fetchGCMConfig();
   },
 
   onFetchGCMPushNotificationConfig() {

@@ -39,23 +39,23 @@ const DeviceListItem = React.createClass({
 
   render() {
     const { params } = this.context;
-    const { item, devicesRoute, router } = this.props;
+    const { item, devicesRoute, router, showConfigDialog, label } = this.props;
     const styles = this.getStyles();
 
     return (
-      <ColumnList.Item key={this.props.label}>
+      <ColumnList.Item key={label}>
         <Column.CheckIcon.Socket
-          id={`push-notification${this.props.label}`}
+          id={`push-notification${label}`}
           iconClassName="socket-push"
           checkable={false}
           iconColor={Color.getColorByName('indigo', 'light')}
-          primaryText={this.props.label}
+          primaryText={label}
           secondaryText={
             <div>
               <span
                 key="configuration"
                 style={styles.linkItem}
-                onClick={this.props.showConfigDialog}
+                onClick={showConfigDialog}
               >
                 Configuration
               </span>
@@ -86,7 +86,7 @@ const DeviceListItem = React.createClass({
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={this.props.showConfigDialog}
+            onTouchTap={showConfigDialog}
             primaryText="Edit"
           />
           <MenuItem
