@@ -84,6 +84,10 @@ const Script = React.createClass({
     return validateObj;
   },
 
+  componentWillMount() {
+    this.savePayloadToStorageThrottled = _.throttle(this.savePayloadToStorage, 5000);
+  },
+
   componentDidMount() {
     Actions.fetch();
     this.bindShortcut(['command+s', 'ctrl+s'], () => {
@@ -272,22 +276,17 @@ const Script = React.createClass({
     this.setState({ scriptConfig });
   },
 
-  handlePayload(payload) {
-    this.throttled();
+  handlePayloadChange(payload) {
+    console.error('a');
+    this.savePayloadToStorageThrottled();
     this.setState({ payload });
-    // setTimeout(this.savePayloadToStorage, 1000);
-    console.error('as');
-  },
-
-  throttled() {
-    return _.debounce(() => console.error('dupa'), 1000);
   },
 
   savePayloadToStorage() {
     const { currentScript, payload } = this.state;
     const instance = localStorage.getItem('lastInstance');
-    localStorage.setItem(`${instance}-${currentScript.id}`, payload);
     console.error('dasdad');
+    localStorage.setItem(`${instance}-${currentScript.id}`, payload);
   },
 
   fetchPayloadFromStorage() {
@@ -605,7 +604,7 @@ const Script = React.createClass({
                     ref="payloadSource"
                     mode="json"
                     height="200px"
-                    onChange={(payload) => this.handlePayload(payload)}
+                    onChange={this.handlePayloadChange}
                     onLoad={this.clearAutosaveTimer}
                     value={this.fetchPayloadFromStorage()}
                   />
