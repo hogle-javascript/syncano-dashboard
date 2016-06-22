@@ -8,8 +8,6 @@ general:
     - "reports/"
 
 test:
-  pre:
-    - ./check_entropy.sh > ./reports/docker-entropy.log 2>&1&
   override:
     - ./test.sh:
         timeout: 120
