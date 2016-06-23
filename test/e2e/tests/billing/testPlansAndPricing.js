@@ -1,5 +1,4 @@
 import accounts from '../../tempAccounts.js';
-import utils from '../../utils.js';
 
 export default {
   tags: ['plansAndPricing'],
@@ -14,11 +13,16 @@ export default {
   after: (client) => {
     client.end();
   },
-  'User opens plans explorer': (client) => {
+  'User switches to production plan': (client) => {
     const billingPage = client.page.billingPlanPage();
 
     billingPage
       .navigate()
-      .clickElement('@openPlansExplorerButton');
+      .clickElement('@openPlansExplorerButton')
+      .fillInput('@cardNumberInput', 4000056655665556)
+      .fillInput('@cvcInput', 666)
+      .fillInput('@monthExpirationInput', 10)
+      .fillInput('@yearExpirationInput', 2020)
+      .click('@confirmButton');
   }
 };

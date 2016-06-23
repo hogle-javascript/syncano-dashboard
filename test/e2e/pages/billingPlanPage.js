@@ -6,6 +6,22 @@ export default {
     openPlansExplorerButton: {
       selector: '//button//span[text()="Upgrade my plan"]',
       locateStrategy: 'xpath'
+    },
+    cardNumberInput: {
+      selector: 'input[name="number"]'
+    },
+    cvcInput: {
+      selector: 'input[name="cvc"]'
+    },
+    monthExpirationInput: {
+      selector: 'input[name="exp_month"]'
+    },
+    yearExpirationInput: {
+      selector: 'input[name="exp_year"]'
+    },
+    confirmButton: {
+      selector: '//button/div/span[text()="Confirm"]',
+      locateStrategy: 'xpath'
     }
   }
 };
