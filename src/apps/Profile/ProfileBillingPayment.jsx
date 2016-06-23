@@ -71,15 +71,16 @@ export default Radium(React.createClass({
 
   toggleForm(state) {
     this.setState({
-      showForm: state
+      showForm: state,
+      show_form: state
     });
   },
 
   render() {
-    const { isLoading, card, showForm, canSubmit } = this.state;
+    const { isLoading, card, showForm, show_form, canSubmit } = this.state;
     const title = 'Payment methods';
     const hasCard = !_.isEmpty(card);
-    const displayForm = !hasCard || showForm === true;
+    const displayForm = !hasCard || showForm === true || show_form === true;
     const formSubmitButtonLabel = hasCard ? 'Update payment' : 'Add payment';
     const expirationMonthRange = Array.from(Array(12).keys()).map((value) => (value + 1));
     const expirationYearRange = Array.from(Array(41).keys()).map((value) => {
@@ -98,6 +99,7 @@ export default Radium(React.createClass({
               method="post"
             >
               {this.renderFormNotifications()}
+
               <div className="row">
                 <div className="col-lg-20">
                   <TextField

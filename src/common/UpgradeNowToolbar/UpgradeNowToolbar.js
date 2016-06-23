@@ -82,7 +82,7 @@ export default React.createClass({
     const { subscriptionEndDate } = this.props;
     const dayVariant = this.getDayVariant(subscriptionEndDate);
 
-    if (dayVariant) {
+    if (dayVariant && subscriptionEndDate) {
       return true;
     }
 
