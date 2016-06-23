@@ -24,6 +24,7 @@ import Groups from './Groups';
 import Users from './Users';
 import Usage from './Usage';
 import GlobalConfig from './GlobalConfig';
+import DemoApps from './DemoApps';
 
 export default {
   Account,
@@ -51,5 +52,6 @@ export default {
   Users,
   Usage,
   Templates,
-  GlobalConfig
+  GlobalConfig,
+  DemoApps
 };
