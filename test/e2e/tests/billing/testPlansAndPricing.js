@@ -18,11 +18,15 @@ export default {
 
     billingPage
       .navigate()
+      .waitForElementVisible('@openPlansExplorerButton')
+      .verify.containsText('@planBarLocator', 'Builder')
       .clickElement('@openPlansExplorerButton')
       .fillInput('@cardNumberInput', 4000056655665556)
       .fillInput('@cvcInput', 666)
       .fillInput('@monthExpirationInput', 10)
       .fillInput('@yearExpirationInput', 2020)
-      .click('@confirmButton');
+      .click('@confirmButton')
+      .waitForElementVisible('@newPlanText')
+      .verify.containsText('@planBarLocator', 'Production');
   }
 };

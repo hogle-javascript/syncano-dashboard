@@ -22,6 +22,14 @@ export default {
     confirmButton: {
       selector: '//button/div/span[text()="Confirm"]',
       locateStrategy: 'xpath'
+    },
+    planBarLocator: {
+      selector: '//span/strong',
+      locateStrategy: 'xpath'
+    },
+    newPlanText: {
+      selector: '//div[text()="New plan "]',
+      locateStrategy: 'xpath'
     }
   }
 };
