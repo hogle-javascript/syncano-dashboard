@@ -85,7 +85,7 @@ const Script = React.createClass({
   },
 
   componentWillMount() {
-    this.savePayloadToStorageThrottled = _.throttle(this.savePayloadToStorage, 1000);
+    this.savePayloadToStorageThrottled = _.throttle(this.savePayloadToStorage, 1000, { leading: false });
   },
 
   componentDidMount() {
@@ -281,29 +281,29 @@ const Script = React.createClass({
     this.setState({ payload });
   },
 
-  savePayloadToStorage() {
-    const { currentScript, payload } = this.state;
+  handlePayloadFromStorage() {
+    const { currentScript } = this.state;
     const instance = localStorage.getItem('lastInstance');
-    return currentScript ? localStorage.setItem(`${instance}-${currentScript.id}`, payload) : null;
+
+    return currentScript ? localStorage.getItem(`${instance}-${currentScript.id}`) : null;
   },
 
-  setPayloadValue() {
+  handlePayloadValue() {
     const defaultValue = [
       '{',
       '    "foo": "bar",',
       '    "bar": "foo"',
       '}'
     ].join('\n');
-    const payload = this.payloadFromStorage() ? this.payloadFromStorage() : defaultValue;
-    this.savePayloadToStorageThrottled();
-    return payload;
+
+    return this.handlePayloadFromStorage() || defaultValue;
   },
 
-  payloadFromStorage() {
-    const { currentScript } = this.state;
+  savePayloadToStorage() {
+    const { currentScript, payload } = this.state;
     const instance = localStorage.getItem('lastInstance');
 
-    return currentScript ? localStorage.getItem(`${instance}-${currentScript.id}`) : null;
+    return currentScript && localStorage.setItem(`${instance}-${currentScript.id}`, payload);
   },
 
   setFlag(flag) {
@@ -610,7 +610,7 @@ const Script = React.createClass({
                     height="200px"
                     onChange={this.handlePayloadChange}
                     onLoad={this.clearAutosaveTimer}
-                    value={this.setPayloadValue()}
+                    value={this.handlePayloadValue()}
                   />
                 </TogglePanel>
                 <Show if={this.getValidationMessages('payload').length}>
