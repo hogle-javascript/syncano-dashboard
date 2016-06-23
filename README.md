@@ -97,6 +97,18 @@ and start testing:
 
     $ npm run-script e2e
 
+Or using alternative metod:
+
+    $ npm start
+    $ npm e2e-run
+
+If you want only one test tag to run use for example:
+
+    $ npm e2e-run class
+
+This will run only tests with tag = class.
+
+
 
 If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` e2e line, so that it looks like this:
 

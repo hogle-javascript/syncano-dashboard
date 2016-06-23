@@ -31,7 +31,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdown: {
-      selector: '//div[@name="role"]',
+      selector: '(//div[@class="invite--admin--dropdown"]/div/div)[1]',
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdownRead: {
@@ -43,7 +43,7 @@ export default {
       locateStrategy: 'xpath'
     },
     adminInvoTableRow: {
-      selector: `//div[text()="invo@invo.com"]`,
+      selector: '//div[text()="invo@invo.com"]',
       locateStrategy: 'xpath'
     },
     selectAdminTableRow: {
