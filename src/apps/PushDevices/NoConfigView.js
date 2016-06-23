@@ -1,9 +1,16 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+
+import APNSSocketActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
+import GCMSocketActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
+
 import { FontIcon, RaisedButton } from 'material-ui';
 
-const NoConfigView = ({ type, router }, { params }) => {
+const NoConfigView = ({ type }) => {
   const socketType = type.toUpperCase();
+  const showConfigDialog = {
+    apns: APNSSocketActions.showDialog,
+    gcm: GCMSocketActions.showDialog
+  };
 
   return (
     <div style={{ textAlign: 'center', marginTop: 32 }}>
@@ -18,7 +25,7 @@ const NoConfigView = ({ type, router }, { params }) => {
         className="vm-4-t"
         primary={true}
         label={`Config ${socketType} Socket`}
-        onTouchTap={() => router.push({ name: 'push-notification-config', params })}
+        onTouchTap={showConfigDialog[type]}
       />
     </div>
   );
@@ -26,4 +33,4 @@ const NoConfigView = ({ type, router }, { params }) => {
 
 NoConfigView.contextTypes = { params: React.PropTypes.object };
 
-export default withRouter(NoConfigView);
+export default NoConfigView;
