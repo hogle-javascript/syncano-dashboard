@@ -272,7 +272,7 @@ export default React.createClass({
   getGroups() {
     const groups = GroupsStore.getGroups();
     const emptyItem = {
-      payload: undefined,
+      payload: null,
       text: 'none'
     };
 

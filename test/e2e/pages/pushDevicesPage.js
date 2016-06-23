@@ -1,11 +1,11 @@
 export default {
   elements: {
     androidDevicesHeading: {
-      selector: '//span[text()="Android Devices"]',
+      selector: '(//div[text()="Android Devices"])[2]',
       locateStrategy: 'xpath'
     },
     iosDevicesHeading: {
-      selector: '//span[text()="iOS Devices"]',
+      selector: '(//div[text()="iOS Devices"])[2]',
       locateStrategy: 'xpath'
     },
     firstDevice: {

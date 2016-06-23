@@ -165,13 +165,12 @@ export default React.createClass({
           />
           <AutoComplete
             floatingLabelText="Timezone"
-            hintText="Choose option from the dropdown or type timezone"
+            hintText="Start typing to see available timezones"
             animated={false}
             fullWidth={true}
             filter={(searchText, key) => _.toLower(key).includes(_.toLower(searchText))}
             maxSearchResults={5}
             searchText={timezone}
-            openOnFocus={true}
             onNewRequest={(value) => this.handleChangeFields('timezone', value)}
             onUpdateInput={(value) => this.handleChangeFields('timezone', value)}
             dataSource={this.renderTimezoneDataSource()}
