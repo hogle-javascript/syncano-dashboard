@@ -6,6 +6,7 @@ import { DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin, StoreFormMixin 
 // Stores & Actions
 import SessionActions from '../../Session/SessionActions';
 import Actions from './APNSPushNotificationsActions';
+import APNSDevicesActions from '../../PushDevices/APNSDevices/APNSDevicesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -45,6 +46,7 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('APNSConfigDialogStore::refreshData');
     Actions.fetchAPNSPushNotificationConfig();
+    APNSDevicesActions.fetchAPNSConfig();
   },
 
   onFetchAPNSPushNotificationConfig() {
