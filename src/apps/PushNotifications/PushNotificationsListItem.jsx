@@ -1,10 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 
+import { DialogsMixin } from '../../mixins';
+
 // Components
 import { MenuItem, IconButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
-import { Color, ColumnList } from '../../common/';
+import { Color, ColumnList, Dialog } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -19,13 +21,32 @@ const DeviceListItem = React.createClass({
     params: React.PropTypes.object
   },
 
+  mixins: [DialogsMixin],
+
+  initDialogs() {
+    const { isLoading, clearConfig, item } = this.props;
+
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'clearConfigDialog',
+        ref: 'clearConfigDialog',
+        title: 'Delete an Instance',
+        handleConfirm: clearConfig,
+        isLoading,
+        children: `Do you really want to clear ${item.name} config?`
+      }
+    }];
+  },
+
   render() {
     const { params } = this.context;
     const { item, devicesRoute, router, deviceIcon, label, showConfigDialog } = this.props;
-    const iconColor = Colors.grey800;
+    const iconColor = Colors.blue400;
 
     return (
       <ColumnList.Item key={label}>
+        {this.getDialogs()}
         <Column.CheckIcon.Socket
           id={`push-notification${label}`}
           iconClassName="socket-push"
@@ -35,9 +56,12 @@ const DeviceListItem = React.createClass({
         />
         <Column.Desc />
         <Column.Desc className="col-sm-6">
-          <span style={{ color: iconColor }}>
-            {item ? item.hasConfig.toString() : null}
-          </span>
+          <div
+            style={{ color: iconColor, cursor: 'pointer' }}
+            onTouchTap={showConfigDialog}
+          >
+            {item && item.hasConfig.toString()}
+          </div>
         </Column.Desc>
         <Column.Desc className="col-sm-6">
           <IconButton
@@ -47,7 +71,7 @@ const DeviceListItem = React.createClass({
           />
         </Column.Desc>
         <Column.Desc className="col-sm-4">
-          {item ? item.devicesCount : null}
+          {item && item.devicesCount}
           <IconButton
             iconStyle={{ color: iconColor }}
             iconClassName={deviceIcon}
@@ -62,9 +86,9 @@ const DeviceListItem = React.createClass({
             primaryText="Edit"
           />
           <MenuItem
-            className="dropdown-item-devices"
-            onTouchTap={() => router.push({ name: devicesRoute, params })}
-            primaryText="Devices list"
+            className="dropdown-item-delete"
+            onTouchTap={() => this.showDialog('clearConfigDialog')}
+            primaryText="Delete"
           />
         </Column.Menu>
       </ColumnList.Item>
