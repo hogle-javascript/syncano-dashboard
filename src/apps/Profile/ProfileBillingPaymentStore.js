@@ -11,7 +11,6 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       showForm: false,
-      show_form: false,
       isLoading: true,
       card: {},
       number: null,
