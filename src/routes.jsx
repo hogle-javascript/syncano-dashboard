@@ -52,6 +52,7 @@ import Schedules from './apps/Schedules';
 import PushNotifications from './apps/PushNotifications';
 import PushDevices from './apps/PushDevices';
 import Usage from './apps/Usage';
+import PushMessages from './apps/PushMessages';
 
 function redirectToLogin(nextState, replace) {
   if (!auth.loggedIn()) {
@@ -265,13 +266,13 @@ export default (
           path="push-notifications"
         >
 
-          {/* Push Notification Devices */}
           <Route
             name="push-notification-config"
             path="config"
             component={PushNotifications}
           />
 
+          {/* Push Notification Devices */}
           <Route
             name="push-notification-devices"
             path="devices"
@@ -295,6 +296,32 @@ export default (
             <Redirect
               from="/instances/:instanceName/push-notifications/devices"
               to="all-push-notification-devices"
+            />
+          </Route>
+
+          <Route
+            name="push-notification-messages"
+            path="messages"
+            component={PushMessages}
+          >
+            <Route
+              name="all-push-notification-messages"
+              path="all"
+              component={PushMessages}
+            />
+            <Route
+              name="apns-messages"
+              path="apns"
+              component={PushMessages}
+            />
+            <Route
+              name="gcm-messages"
+              path="gcm"
+              component={PushMessages}
+            />
+            <Redirect
+              from="/instances/:instanceName/push-notifications/messages"
+              to="all-push-notification-messages"
             />
           </Route>
 
