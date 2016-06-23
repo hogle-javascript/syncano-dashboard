@@ -285,7 +285,7 @@ const Script = React.createClass({
     const { currentScript } = this.state;
     const instance = localStorage.getItem('lastInstance');
 
-    return currentScript ? localStorage.getItem(`${instance}-${currentScript.id}`) : null;
+    return currentScript && localStorage.getItem(`${instance}-${currentScript.id}`);
   },
 
   handlePayloadValue() {
