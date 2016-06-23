@@ -21,7 +21,7 @@ export default {
       selector: 'input[name=fieldName]'
     },
     createModalDropdownType: {
-      selector: '//div[@class="fieldType-dropdown"]',
+      selector: '//div[@class="fieldType-dropdown"]/div/div',
       locateStrategy: 'xpath'
     },
     createModalDescriptionInput: {
