@@ -5,7 +5,7 @@ export default {
       selector: '.logo-white'
     },
     solutions: {
-      selector: '//ul[@class="toolbar-list"]/li[1]/a',
+      selector: '//ul[@class="toolbar-list"]/li[2]/a',
       locateStrategy: 'xpath'
     },
     account: {
