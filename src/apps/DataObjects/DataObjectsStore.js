@@ -1,5 +1,6 @@
 import Reflux from 'reflux';
 import URI from 'urijs';
+import NewLibConnection from '../Session/NewLibConnection';
 
 // Utils & Mixins
 import { CheckListStoreMixin, StoreFormMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
@@ -24,6 +25,7 @@ export default Reflux.createStore({
       items: [],
       isLoading: true,
       selectedRows: [],
+      currentPage: 1,
       columns: [
         {
           id: 'id',
@@ -116,6 +118,12 @@ export default Reflux.createStore({
   refreshDataObjects() {
     console.debug('DataObjectsStore::refreshDataObjects', this.getCurrentClassName());
     DataObjectsActions.fetchDataObjects(this.getCurrentClassName());
+    for (let i = this.data.currentPage; i > 0; i--) {
+      console.error(this.data.nextParams);
+      DataObjectsActions.subFetchDataObjects(this.data.nextParams);
+      console.error('refreshDataObjects', this.data.currentPage);
+    }
+    console.error('refreshDataObjectsOutOfLoop', this.data);
   },
 
   getCurrentClassName() {
@@ -167,6 +175,11 @@ export default Reflux.createStore({
     console.debug('DataObjectsStore::setSelectedRows');
     this.data.selectedRows = selectedRows;
     this.trigger(this.data);
+  },
+
+  fetchDataObjectsPaged() {
+    console.error('libka', NewLibConnection);
+    // NewLibConnection.DataObject.please().list().then((res) => console.error)
   },
 
   getColumn(columnId) {

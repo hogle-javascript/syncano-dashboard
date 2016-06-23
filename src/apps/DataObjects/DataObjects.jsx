@@ -85,7 +85,10 @@ const DataObjects = React.createClass({
   handleMoreRows() {
     const { nextParams } = this.state;
 
-    Actions.subFetchDataObjects(nextParams);
+    _.debounce(Actions.subFetchDataObjects(nextParams), 1000);
+    this.setState({
+      currentPage: this.state.currentPage++
+    });
   },
 
   handleBackClick() {
