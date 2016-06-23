@@ -45,7 +45,7 @@ export default {
       locateStrategy: 'xpath'
     },
     solutionAvatars: {
-      selector: '//div[@class="row"]//div[@size="55"]',
+      selector: '//div[@class="row"]//img[@size="55"]',
       locateStrategy: 'xpath'
     }
   }

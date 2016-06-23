@@ -41,7 +41,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalScriptDropdown: {
-      selector: '//div[@class="script-dropdown"]',
+      selector: '//div[@class="script-dropdown"]/div/div',
       locateStrategy: 'xpath'
     },
     codeBoxTableRow: {
