@@ -11,6 +11,7 @@ import GCMPushNotificationsActions from './GCM/GCMPushNotificationsActions';
 import GCMPushNotificationsStore from './GCM/GCMPushNotificationsStore';
 import GCMConfigDialog from './GCM/GCMConfigDialog';
 import GCMDialogStore from './GCM/GCMConfigDialogStore';
+import APNSPushNotificationsSummaryDialog from './APNS/APNSPushNotificationsSummaryDialog';
 
 PushNotifications.List = PushNotificationsList;
 PushNotifications.ListItem = PushNotificationsListItem;
@@ -24,5 +25,6 @@ PushNotifications.GCMActions = GCMPushNotificationsActions;
 PushNotifications.GCMStore = GCMPushNotificationsStore;
 PushNotifications.GCMConfigDialog = GCMConfigDialog;
 PushNotifications.GCMDialogStore = GCMDialogStore;
+PushNotifications.SummaryDialog = APNSPushNotificationsSummaryDialog;
 
 export default PushNotifications;
