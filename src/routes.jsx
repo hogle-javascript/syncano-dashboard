@@ -307,17 +307,17 @@ export default (
             <Route
               name="all-push-notification-messages"
               path="all"
-              component={PushMessages}
+              component={PushMessages.AllList}
             />
             <Route
               name="apns-messages"
               path="apns"
-              component={PushMessages}
+              component={PushMessages.APNSList}
             />
             <Route
               name="gcm-messages"
               path="gcm"
-              component={PushMessages}
+              component={PushMessages.GCMList}
             />
             <Redirect
               from="/instances/:instanceName/push-notifications/messages"

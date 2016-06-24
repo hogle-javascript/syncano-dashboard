@@ -162,6 +162,7 @@ export default (store, props) => {
       const checkedItems = props.getCheckedItems().map((item) => item.registration_id);
       const registrationIds = checkedItems.length ? checkedItems : [registration_id];
       let payload = {
+        registration_ids: registrationIds,
         environment
       };
 
@@ -189,7 +190,7 @@ export default (store, props) => {
         payload = _.merge(payload, { notification: JSON.parse(JSONMessage) });
       }
 
-      onSendMessage(registrationIds, payload);
+      onSendMessage(payload);
     },
 
     handleToggleEnvironment(environment) {
