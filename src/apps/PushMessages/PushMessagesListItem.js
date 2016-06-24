@@ -8,7 +8,7 @@ import { ColumnList, Truncate } from '../../common';
 let Column = ColumnList.Column;
 
 export default React.createClass({
-  displayName: 'DeviceListItem',
+  displayName: 'MessageListItem',
 
   formatMessageBody(bodyObj) {
     return _.map(bodyObj, (value, key) => <Truncate text={`"${key}": "${value}"`} />);
