@@ -84,6 +84,10 @@ const Script = React.createClass({
     return validateObj;
   },
 
+  componentWillMount() {
+    this.savePayloadToStorageThrottled = _.throttle(this.savePayloadToStorage, 1000, { leading: false });
+  },
+
   componentDidMount() {
     Actions.fetch();
     this.bindShortcut(['command+s', 'ctrl+s'], () => {
@@ -270,6 +274,36 @@ const Script = React.createClass({
       scriptConfig[fieldIndex].value = type === 'integer' ? 0 : '';
     }
     this.setState({ scriptConfig });
+  },
+
+  handlePayloadChange(payload) {
+    this.savePayloadToStorageThrottled();
+    this.setState({ payload });
+  },
+
+  handlePayloadFromStorage() {
+    const { currentScript } = this.state;
+    const instance = localStorage.getItem('lastInstance');
+
+    return currentScript && localStorage.getItem(`${instance}-${currentScript.id}`);
+  },
+
+  handlePayloadValue() {
+    const defaultValue = [
+      '{',
+      '    "foo": "bar",',
+      '    "bar": "foo"',
+      '}'
+    ].join('\n');
+
+    return this.handlePayloadFromStorage() || defaultValue;
+  },
+
+  savePayloadToStorage() {
+    const { currentScript, payload } = this.state;
+    const instance = localStorage.getItem('lastInstance');
+
+    return currentScript && localStorage.setItem(`${instance}-${currentScript.id}`, payload);
   },
 
   setFlag(flag) {
@@ -574,13 +608,9 @@ const Script = React.createClass({
                     ref="payloadSource"
                     mode="json"
                     height="200px"
-                    onChange={(payload) => this.setState({ payload })}
-                    value={[
-                      '{',
-                      '    "foo": "bar",',
-                      '    "bar": "foo"',
-                      '}'
-                    ].join('\n')}
+                    onChange={this.handlePayloadChange}
+                    onLoad={this.clearAutosaveTimer}
+                    value={this.handlePayloadValue()}
                   />
                 </TogglePanel>
                 <Show if={this.getValidationMessages('payload').length}>
