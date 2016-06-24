@@ -82,10 +82,9 @@ export default Radium(React.createClass({
     const hasCard = !_.isEmpty(card);
     const displayForm = !hasCard || showForm === true || show_form === true;
     const formSubmitButtonLabel = hasCard ? 'Update payment' : 'Add payment';
-    const expirationMonthRange = Array.from(Array(12).keys()).map((value) => (value + 1));
-    const expirationYearRange = Array.from(Array(41).keys()).map((value) => {
-      return new Date().getFullYear() + value - 20;
-    });
+    const currentYear = new Date().getFullYear();
+    const expirationMonthRange = _.range(1, 13);
+    const expirationYearRange = _.range(currentYear - 20, currentYear + 20);
 
     return (
       <Loading show={isLoading}>

@@ -80,13 +80,14 @@ export default React.createClass({
 
   shouldDisplay() {
     const { subscriptionEndDate } = this.props;
-    const dayVariant = this.getDayVariant(subscriptionEndDate);
 
-    if (dayVariant && subscriptionEndDate) {
-      return true;
+    if (!subscriptionEndDate) {
+      return false;
     }
 
-    return false;
+    const dayVariant = this.getDayVariant(subscriptionEndDate);
+
+    return dayVariant && true;
   },
 
   hide() {
