@@ -14,14 +14,12 @@ export default CreateActions(
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.getClass'
-
     },
     fetchDataObjects: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.list'
-
     },
     subFetchDataObjects: {
       asyncResult: true,

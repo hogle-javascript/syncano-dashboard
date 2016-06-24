@@ -1,6 +1,4 @@
 import Reflux from 'reflux';
-import URI from 'urijs';
-import NewLibConnection from '../Session/NewLibConnection';
 
 // Utils & Mixins
 import { CheckListStoreMixin, StoreFormMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
@@ -117,13 +115,7 @@ export default Reflux.createStore({
 
   refreshDataObjects() {
     console.debug('DataObjectsStore::refreshDataObjects', this.getCurrentClassName());
-    DataObjectsActions.fetchDataObjects(this.getCurrentClassName());
-    for (let i = this.data.currentPage; i > 0; i--) {
-      console.error(this.data.nextParams);
-      DataObjectsActions.subFetchDataObjects(this.data.nextParams);
-      console.error('refreshDataObjects', this.data.currentPage);
-    }
-    console.error('refreshDataObjectsOutOfLoop', this.data);
+    DataObjectsActions.fetchDataObjects(this.data.currentPage);
   },
 
   getCurrentClassName() {
@@ -177,11 +169,6 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  fetchDataObjectsPaged() {
-    console.error('libka', NewLibConnection);
-    // NewLibConnection.DataObject.please().list().then((res) => console.error)
-  },
-
   getColumn(columnId) {
     let column = null;
 
@@ -197,14 +184,14 @@ export default Reflux.createStore({
   setDataObjects(items, rawData) {
     console.debug('DataObjectsStore::setDataObjects');
 
-    this.data.hasNextPage = items.hasNext();
+    this.data.hasNextPage = rawData.hasNext();
 
     if (!this.data.items) {
       this.data.items = [];
     }
 
-    this.data.items = this.data.items.concat(items);
-    this.data.nextParams = new URI(rawData.next || '').search(true);
+    this.data.items = [...this.data.items, ...items];
+    this.data.nextParams = rawData;
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -280,15 +267,16 @@ export default Reflux.createStore({
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjectsCompleted(items, rawData) {
+  onFetchDataObjectsCompleted({ allItems, rawData }) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
     this.data.items = [];
-    DataObjectsActions.setDataObjects(items, rawData);
+    DataObjectsActions.setDataObjects(allItems, rawData);
   },
 
-  onSubFetchDataObjectsCompleted(items, rawData) {
+  onSubFetchDataObjectsCompleted(items) {
     console.debug('DataObjectsStore::onSubFetchDataObjectsCompleted');
-    DataObjectsActions.setDataObjects(items, rawData);
+    this.data.currentPage += 1;
+    DataObjectsActions.setDataObjects(items, items);
   },
 
   onCreateDataObjectCompleted() {
