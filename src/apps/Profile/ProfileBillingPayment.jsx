@@ -69,6 +69,12 @@ export default Radium(React.createClass({
     Actions.updateBillingCard(params);
   },
 
+  handleDeleteButtonClick() {
+    this.setState({ card: null });
+
+    Actions.deleteBillingCard();
+  },
+
   toggleForm(state) {
     this.setState({
       showForm: state,
@@ -100,7 +106,7 @@ export default Radium(React.createClass({
               {this.renderFormNotifications()}
 
               <div className="row">
-                <div className="col-lg-20">
+                <div className="col-sm-35 col-md-30 col-lg-12">
                   <TextField
                     ref="number"
                     name="number"
@@ -115,7 +121,7 @@ export default Radium(React.createClass({
                 </div>
               </div>
               <div className="row vm-4-b">
-                <div className="col-lg-20">
+                <div className="col-sm-35 col-md-30 col-lg-12">
                   <div className="row">
                     <div className="col-flex-2">
                       <SelectField
@@ -179,7 +185,10 @@ export default Radium(React.createClass({
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-20" style={{ display: 'flex' }}>
+                <div
+                  className="col-sm-35 col-md-30 col-lg-12"
+                  style={{ display: 'flex' }}
+                >
                   <Show if={hasCard}>
                     <RaisedButton
                       onClick={this.toggleForm.bind(this, false)}
@@ -204,10 +213,14 @@ export default Radium(React.createClass({
             <div>
               <CreditCard card={card} />
               <RaisedButton
+                onClick={this.handleDeleteButtonClick}
+                label="Remove payment"
+                style={{ marginRight: 8 }}
+              />
+              <RaisedButton
                 onClick={this.toggleForm.bind(null, true)}
                 type="submit"
                 label="Update payment"
-                className="raised-button"
                 primary={true}
               />
             </div>

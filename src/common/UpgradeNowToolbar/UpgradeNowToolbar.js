@@ -118,7 +118,7 @@ export default React.createClass({
         <div style={{ padding: '9px 20px', whiteSpace: 'nowrap' }}>
           <FlatButton
             label="Remind Me Later"
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 8 }}
             labelStyle={{ fontWeight: 500, color: '#fff' }}
             onClick={this.hide}
           />

@@ -58,6 +58,15 @@ export default {
     });
   },
 
+  removeCard() {
+    this.NewLibConnection
+      .Card
+      .please()
+      .delete()
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   listInvoices() {
     this.NewLibConnection
       .Invoice
