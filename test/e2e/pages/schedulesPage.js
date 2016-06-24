@@ -43,7 +43,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalScript: {
-      selector: '//div[@class="script-dropdown"]',
+      selector: '//div[@class="script-dropdown"]/div/div',
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {
