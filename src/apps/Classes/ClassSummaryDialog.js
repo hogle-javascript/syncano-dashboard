@@ -63,7 +63,7 @@ export default React.createClass({
                   <p>
                     Class you just created can always be modified later. You can update the schema of the class,
                     the color or icon, or edit the permissions of the class. To do this, open your Dashboard,
-                    click on "Classes in the left sidebar, and click the three dot edit button on the right side
+                    click on "Classes" in the left sidebar, and click the three dot edit button on the right side
                     of the class row.
                   </p>
                 </div>
