@@ -29,6 +29,10 @@ export default React.createClass({
       delivered: {
         backgroundColor: Colors.green400,
         iconClassName: 'check'
+      },
+      partially_delivered: {
+        backgroundColor: Colors.yellow700,
+        iconClassName: 'alert-circle-outline'
       }
     };
 

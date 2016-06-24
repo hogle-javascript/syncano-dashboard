@@ -13,7 +13,6 @@ const PushMessages = React.createClass({
   },
 
   render() {
-    console.error('page', this.props);
     const { children } = this.props;
 
     return (
