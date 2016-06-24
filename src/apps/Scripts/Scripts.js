@@ -17,6 +17,7 @@ import SnippetsInnerToolbar from '../Snippets/SnippetsInnerToolbar';
 // Local components
 import ScriptsList from './ScriptsList';
 import ScriptDialog from './ScriptDialog';
+import ScriptSummaryDialog from './ScriptSummaryDialog';
 
 export default React.createClass({
   displayName: 'Scripts',
@@ -44,6 +45,7 @@ export default React.createClass({
       <div>
         <Helmet title="Scripts" />
         <ScriptDialog />
+        <ScriptSummaryDialog />
 
         <SnippetsInnerToolbar>
           <RaisedButton
