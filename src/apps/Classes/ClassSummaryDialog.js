@@ -28,8 +28,8 @@ export default React.createClass({
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
     const showSummaryDialog = (!item || !currentInstance || !token || classes.isLoading);
+    const { icon, color } = item ? item.metadata : {};
 
-    console.error(item);
     return (
       <Dialog.FullPage
         key="dialog"
@@ -42,9 +42,9 @@ export default React.createClass({
       >
         <div style={{ position: 'absolute', top: 0, left: 24 }}>
           <span
-            className={'synicon-tag'}
+            className={`synicon-${icon}`}
             style={{
-              backgroundColor: Color.getColorByName(item.metadata.color),
+              backgroundColor: Color.getColorByName(color),
               color: '#fff',
               fontSize: 24,
               borderRadius: '50%',
