@@ -9,7 +9,8 @@ import Store from './DataEndpointsStore';
 
 // Components
 import ListItem from './DataEndpointsListItem';
-import { ColumnList, Dialog, Lists } from '../../common/';
+import { colors as Colors } from 'material-ui/styles';
+import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -65,7 +66,28 @@ export default React.createClass({
   },
 
   render() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other } = this.props;
+    const {
+      handleTitleClick,
+      handleSelectAll,
+      handleUnselectAll,
+      getCheckedItems,
+      items,
+      isLoading,
+      ...other
+    } = this.props;
+
+    if ((!items || !items.length) && !isLoading) {
+      return (
+        <EmptyView
+          iconClassName="synicon-socket-data"
+          iconColor={Colors.green400}
+          title="Data Endpoint"
+          description="Create custom endpoints that return data, the way you want it."
+          docsUrl="http://docs.syncano.io/docs/endpoints-data"
+          handleClickAdd={Actions.showDialog}
+        />
+      );
+    }
 
     return (
       <Lists.Container>
@@ -103,6 +125,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...other}
+          isLoading={isLoading}
+          items={items}
           key="dataendpoints-list"
           renderItem={this.renderItem}
         />
