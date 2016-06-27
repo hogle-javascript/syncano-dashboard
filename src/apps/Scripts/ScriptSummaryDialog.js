@@ -71,8 +71,9 @@ export default React.createClass({
               <div className="col-flex-1">
                 <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
                   <p>
-                    Script you just created is a very powerful tool. Just like with code, you can do a lot with it.
-                    Additionally, Syncano gives you many ways to run Scripts. This is where you can get creative.
+                    Script is a piece of code that can be run in the cloud. Technology used for the environments
+                    created during the code execution is powered by Docker. Scripts can be run directly, by Triggers,
+                    Schedules and Script Endpoint Sockets.
                   </p>
                 </div>
               </div>

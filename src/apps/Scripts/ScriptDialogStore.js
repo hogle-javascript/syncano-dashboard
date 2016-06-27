@@ -50,7 +50,7 @@ export default Reflux.createStore({
     const current = _.filter(runtimes, isNonDeprecated);
     const deprecated = _.filter(runtimes, isDeprecated);
 
-    this.trigger({ runtimes: { current, deprecated }});
+    this.trigger({ runtimes: { current, deprecated } });
   },
 
   onCreateScriptCompleted() {
