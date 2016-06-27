@@ -59,10 +59,12 @@ export default Reflux.createStore({
     this.trigger({ isCertLoading: true });
   },
 
-  onConfigGCMPushNotificationCompleted() {
+  onConfigGCMPushNotificationCompleted(config) {
     console.debug('GCMConfigDialogStore::onConfigGCMPushNotificationCompleted');
     this.dismissDialog();
-    GCMSummaryDialogActions.showDialog();
+    if (config.development_api_key || config.production_api_key) {
+      GCMSummaryDialogActions.showDialog();
+    }
     this.refreshData();
   }
 });
