@@ -72,9 +72,9 @@ We are using [nightwatchjs](http://nightwatchjs.org/) for e2e testing.
 
 For selenium to start you will also need:
 
-    [Java](https://java.com/en/download/)
-    [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-    [Chrome](https://www.google.com/chrome/)
+* [Java](https://java.com/en/download/)
+* [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Chrome](https://www.google.com/chrome/)
 
 You'll also need to configure env variables for the tests to work locally:
 
