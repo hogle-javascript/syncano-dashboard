@@ -4,6 +4,7 @@ import _ from 'lodash';
 import Actions from './DemoAppsActions';
 
 import ListItem from './DemoAppListItem';
+import InstallDetailsDialog from './DemoAppsIntallationDetailsDialog';
 import { Loading } from '../../common';
 
 export default class DemoAppsList extends Component {
@@ -48,6 +49,7 @@ export default class DemoAppsList extends Component {
 
     return (
       <div style={styles.container}>
+        <InstallDetailsDialog />
         <Loading show={isLoading}>
           <div style={styles.list}>
             {this.renderItems()}
