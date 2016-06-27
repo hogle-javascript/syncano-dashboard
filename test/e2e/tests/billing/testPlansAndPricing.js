@@ -21,10 +21,10 @@ export default {
       .waitForElementVisible('@openPlansExplorerButton')
       .verify.containsText('@planBarLocator', 'Builder')
       .clickElement('@openPlansExplorerButton')
-      .fillInput('@cardNumberInput', 4000056655665556)
+      .fillInput('@cardNumberInput', '4000056655665556')
       .clickListItemDropdown('@monthExpirationInput', '01')
       .clickListItemDropdown('@yearExpirationInput', '2019')
-      .fillInput('@cvcInput', 666)
+      .fillInput('@cvcInput', '666')
       .clickElement('@confirmButton')
       .waitForElementVisible('@openPlansExplorerButton')
       .verify.containsText('@planBarLocator', 'Production');
