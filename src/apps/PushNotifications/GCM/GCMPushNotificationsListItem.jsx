@@ -15,6 +15,7 @@ export default (props) => {
       {...props}
       name="GCM"
       label="Google Cloud Messaging (GCM)"
+      messagesRoute="gcm-messages"
       devicesRoute="gcm-devices"
       icon="android"
       clearConfig={() => Actions.configGCMPushNotification(params)}

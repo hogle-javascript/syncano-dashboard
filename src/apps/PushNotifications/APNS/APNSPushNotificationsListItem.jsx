@@ -18,6 +18,7 @@ export default (props) => {
     <PushNotificationsListItem
       {...props}
       label="Apple Push Notifications service (APNs)"
+      messagesRoute="apns-messages"
       devicesRoute="apns-devices"
       icon="apple"
       clearConfig={() => Actions.removeCertificate(params)}
