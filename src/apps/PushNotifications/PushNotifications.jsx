@@ -11,6 +11,7 @@ import GCMPushNotificationsStore from './GCM/GCMPushNotificationsStore';
 import PushNotificationsList from './PushNotificationsList';
 import APNSConfigDialog from './APNS/APNSConfigDialog';
 import GCMConfigDialog from './GCM/GCMConfigDialog';
+import GCMSummaryDialog from './GCM/GCMSummaryDialog';
 import ConfigPushNotificationsPopover from './ConfigPushNotificationsPopover';
 import { RaisedButton } from 'material-ui';
 import { Container } from '../../common/';
@@ -41,6 +42,7 @@ export default React.createClass({
         <Helmet title="Push Notifications" />
         <APNSConfigDialog />
         <GCMConfigDialog />
+        <GCMSummaryDialog />
         <SocketsInnerToolbar>
           <RaisedButton
             label="Add"

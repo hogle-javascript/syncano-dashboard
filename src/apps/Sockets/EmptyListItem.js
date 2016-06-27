@@ -34,10 +34,14 @@ const styles = {
     color: '#888',
     fontSize: 14,
     lineHeight: '19px'
+  },
+  documentationUrl: {
+    fontSize: 14,
+    lineHeight: '19px'
   }
 };
 
-export default ({ socketName, title, description, handleCreate, label = 'Add' }) => (
+export default ({ socketName, title, description, documentationUrl, handleCreate, label = 'Add' }) => (
   <div style={styles.container}>
     <div className="row align-middle">
       <div className="col-flex-0" style={{ width: 'auto' }}>
@@ -55,6 +59,9 @@ export default ({ socketName, title, description, handleCreate, label = 'Add' })
         </div>
         <div style={styles.description}>
           {description}
+        </div>
+        <div style={styles.documentationUrl}>
+          <a href={documentationUrl} target="_blank">{title} docs.</a>
         </div>
       </div>
       <div className="col-flex-0" style={{ width: 'auto' }}>
