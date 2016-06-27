@@ -38,7 +38,7 @@ export default React.createClass({
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
     const showSummaryDialog = (!item || !currentInstance || !token || Scripts.isLoading);
-    const runtime = ScriptsStore.getRuntimeColorIcon(item.runtime_name) || {};
+    const runtime = item ? ScriptsStore.getRuntimeColorIcon(item.runtime_name) : {};
 
     return (
       <Dialog.FullPage
