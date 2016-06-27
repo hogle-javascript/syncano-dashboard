@@ -4,17 +4,16 @@ set -e
 function cleanup {
   message "Closing selenium server. Please wait..."
   kill $(ps aux | grep '[.]selenium' | awk '{print $2}')
-  sleep 5
-  message "Done"
+  sleep 5 && message "Done"
 }
 
 function message() {
   echo -e ""
-  echo -e "######################################################"
-  echo -e "#                                                     "
-  echo -e "#  "$@"                                               "
-  echo -e "#                                                     "
-  echo -e "######################################################"
+  echo -e "########################################################"
+  echo -e "#                                                       "
+  echo -e "#  "$@"                                                 "
+  echo -e "#                                                       "
+  echo -e "########################################################"
   echo -e ""
 }
 
