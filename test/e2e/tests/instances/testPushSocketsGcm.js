@@ -54,7 +54,7 @@ export default {
     const pushDevicesPage = client.page.pushDevicesPage();
 
     socketsPage
-      .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Devices list');
+      .clickElement('@GCMDevicesLinkIcon');
     pushDevicesPage
       .waitForElementVisible('@androidDevicesHeading');
   }

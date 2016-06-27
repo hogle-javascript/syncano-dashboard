@@ -45,8 +45,12 @@ export default Reflux.createStore({
     const runtimes = _.sortBy(_.map(payload, (value, runtime) => {
       return { payload: runtime, text: runtimesLabelMap[runtime] };
     }), 'text');
+    const isDeprecated = (runtime) => _.includes(runtime.text, 'deprecated');
+    const isNonDeprecated = (runtime) => !_.includes(runtime.text, 'deprecated');
+    const current = _.filter(runtimes, isNonDeprecated);
+    const deprecated = _.filter(runtimes, isDeprecated);
 
-    this.trigger({ runtimes });
+    this.trigger({ runtimes: { current, deprecated } });
   },
 
   onCreateScriptCompleted(resp) {

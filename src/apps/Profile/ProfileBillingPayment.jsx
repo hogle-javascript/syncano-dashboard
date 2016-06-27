@@ -4,20 +4,21 @@ import Radium from 'radium';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
-import { FormMixin } from '../../mixins';
+import { FormMixin, DialogsMixin } from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
 
 import { TextField, RaisedButton, SelectField, MenuItem } from 'material-ui';
-import { Container, CreditCard, Show, Loading, InnerToolbar } from '../../common/';
+import { Container, CreditCard, Dialog, Show, Loading, InnerToolbar } from '../../common/';
 
 export default Radium(React.createClass({
   displayName: 'ProfileBillingPayment',
 
   mixins: [
-    Reflux.connect(Store),
-    FormMixin
+    FormMixin,
+    DialogsMixin,
+    Reflux.connect(Store)
   ],
 
   validatorConstraints: {
@@ -43,7 +44,7 @@ export default Radium(React.createClass({
       presence: true,
       numericality: {
         onlyInteger: true,
-        greaterThanOrEqualTo: new Date().getFullYear() - 20,
+        greaterThanOrEqualTo: new Date().getFullYear(),
         lessThanOrEqualTo: new Date().getFullYear() + 20
       }
     }
@@ -69,10 +70,18 @@ export default Radium(React.createClass({
     Actions.updateBillingCard(params);
   },
 
-  handleDeleteButtonClick() {
-    this.setState({ card: null });
-
-    Actions.deleteBillingCard();
+  initDialogs() {
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'deleteBillingCard',
+        ref: 'deleteBillingCard',
+        title: 'Remove Billing Card',
+        handleConfirm: Actions.deleteBillingCard,
+        modal: true,
+        children: ['Are you sure you want to remove your billing card?']
+      }
+    }];
   },
 
   toggleForm(state) {
@@ -90,11 +99,12 @@ export default Radium(React.createClass({
     const formSubmitButtonLabel = hasCard ? 'Update payment' : 'Add payment';
     const currentYear = new Date().getFullYear();
     const expirationMonthRange = _.range(1, 13);
-    const expirationYearRange = _.range(currentYear - 20, currentYear + 20);
+    const expirationYearRange = _.range(currentYear, currentYear + 20);
 
     return (
       <Loading show={isLoading}>
         <Helmet title={title} />
+        {this.getDialogs()}
         <InnerToolbar title={title} />
         <Container>
           <Show if={displayForm}>
@@ -167,7 +177,7 @@ export default Radium(React.createClass({
                         ))}
                       </SelectField>
                     </div>
-                    <div className="col-flex-1">
+                    <div className="col-sm-5">
                       <TextField
                         ref="cvc"
                         maxLength={3}
@@ -213,7 +223,7 @@ export default Radium(React.createClass({
             <div>
               <CreditCard card={card} />
               <RaisedButton
-                onClick={this.handleDeleteButtonClick}
+                onClick={() => this.showDialog('deleteBillingCard', {})}
                 label="Remove payment"
                 style={{ marginRight: 8 }}
               />
