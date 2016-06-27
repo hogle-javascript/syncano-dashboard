@@ -21,6 +21,8 @@ mkdir reports/
 touch ./reports/docker-entropy.log
 nohup ./check_entropy.sh > ./reports/docker-entropy.log 2>&1&
 npm run lint
+STRIPE_PUBLISHABLE_KEY=$STAGING_STRIPE_PUBLISHABLE_KEY
+export STRIPE_PUBLISHABLE_KEY
 e2e_setup
 
 case "$CIRCLE_NODE_INDEX" in
