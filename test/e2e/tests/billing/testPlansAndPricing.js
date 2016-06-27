@@ -26,7 +26,7 @@ export default {
       .fillInput('@monthExpirationInput', 10)
       .fillInput('@yearExpirationInput', 2020)
       .click('@confirmButton')
-      .waitForElementVisible('@newPlanText')
+      .waitForElementVisible('@openPlansExplorerButton')
       .verify.containsText('@planBarLocator', 'Production');
   }
 };

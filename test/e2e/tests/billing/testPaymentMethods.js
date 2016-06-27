@@ -25,5 +25,27 @@ export default {
       .fillInput('@yearExpirationInput', 2020)
       .click('@addPaymentButton')
       .waitForElementVisible('@updatePaymentButton');
+  },
+  'User updates Payment Method': (client) => {
+    const paymentPage = client.page.billingPaymentPage();
+    const visibleEndNumber = '*** **** *** 4444';
+    const cardNumberLocator = paymentPage.elements.lastFourDigits.selector;
+
+    paymentPage
+      .click('@updatePaymentButton')
+      .fillInput('@cardNumberInput', 5555555555554444)
+      .fillInput('@cvcInput', 777)
+      .fillInput('@monthExpirationInput', 11)
+      .fillInput('@yearExpirationInput', 2022)
+      .click('@updatePaymentButton')
+      .waitForElementVisible('@filledOutCard');
+
+    client
+      .pause(500)
+      .element('xpath', cardNumberLocator, (result) => {
+        client.elementIdText(result.value.ELEMENT, (text) => {
+          client.assert.equal(text.value, visibleEndNumber);
+        });
+      });
   }
 };
