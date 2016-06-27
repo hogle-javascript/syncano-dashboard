@@ -16,6 +16,7 @@ import { Container, Loading, InnerToolbar } from '../../common/';
 // Local components
 import ClassDialog from './ClassDialog';
 import ClassesList from './ClassesList';
+import ClassSummaryDialog from './ClassSummaryDialog';
 
 export default React.createClass({
   displayName: 'Classes',
@@ -51,6 +52,7 @@ export default React.createClass({
       <div>
         <Helmet title={title} />
         <ClassDialog />
+        <ClassSummaryDialog />
 
         <InnerToolbar title={title}>
           <RaisedButton

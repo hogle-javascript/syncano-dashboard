@@ -28,6 +28,7 @@ export default {
       .selectDropdownValue('@createModalDropdownType', 'string')
       .clickElement('@addButton')
       .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementNotPresent('@addClassTitle')
       .waitForElementVisible('@classTableRow');
 

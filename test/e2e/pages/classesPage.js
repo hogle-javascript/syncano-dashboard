@@ -107,6 +107,10 @@ export default {
     deleteButton: {
       selector: '//div[text()="Delete"]',
       locateStrategy: 'xpath'
+    },
+    summaryDialogCloseButton: {
+      selector: '//span[@class="synicon-close"]',
+      locateStrategy: 'xpath'
     }
   }
 };
