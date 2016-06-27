@@ -4,7 +4,8 @@ import Actions from './DataEndpointsActions';
 import { SnackbarNotificationMixin } from '../../mixins';
 
 import { MenuItem } from 'material-ui';
-import { Color, ColumnList, Clipboard } from '../../common/';
+import { colors as Colors } from 'material-ui/styles';
+import { ColumnList, Clipboard } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -30,7 +31,7 @@ export default React.createClass({
           className="col-xs-12"
           id={item.name}
           iconClassName="socket-data"
-          iconColor={Color.getColorByName('green', 'light')}
+          iconColor={Colors.green400}
           checked={item.checked}
           keyName="name"
           handleIconClick={onIconClick}
