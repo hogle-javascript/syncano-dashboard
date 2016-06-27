@@ -103,6 +103,7 @@ export default {
       .fillInput('@inputLabel', labelName)
       .fillInput('@inputRegistrationId', registrationId)
       .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementNotPresent('@addTitleHeading');
 
     pushDevicesPage
