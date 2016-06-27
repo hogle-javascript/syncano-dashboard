@@ -41,7 +41,7 @@ const DeviceListItem = React.createClass({
 
   render() {
     const { params } = this.context;
-    const { item, devicesRoute, router, deviceIcon, label, showConfigDialog } = this.props;
+    const { item, devicesRoute, router, deviceIcon, label, showConfigDialog, messagesRoute } = this.props;
     const iconColor = Colors.blue400;
 
     return (
@@ -68,6 +68,7 @@ const DeviceListItem = React.createClass({
             style={{ marginLeft: -12 }}
             iconStyle={{ color: iconColor }}
             iconClassName="synicon-message-alert"
+            onTouchTap={() => router.push({ name: messagesRoute, params })}
           />
         </Column.Desc>
         <Column.Desc className="col-sm-4">

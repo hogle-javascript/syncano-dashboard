@@ -53,7 +53,8 @@ const DevicesList = Radium(React.createClass({
         padding: '16px 8px'
       },
       listTitle: {
-        fontSize: 18
+        fontSize: 18,
+        color: Colors.grey400
       },
       moreLink: {
         color: Colors.blue500,

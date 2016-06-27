@@ -1,5 +1,4 @@
 import Reflux from 'reflux';
-import URI from 'urijs';
 
 // Utils & Mixins
 import { CheckListStoreMixin, StoreFormMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
@@ -24,6 +23,7 @@ export default Reflux.createStore({
       items: [],
       isLoading: true,
       selectedRows: [],
+      currentPage: 1,
       columns: [
         {
           id: 'id',
@@ -115,7 +115,7 @@ export default Reflux.createStore({
 
   refreshDataObjects() {
     console.debug('DataObjectsStore::refreshDataObjects', this.getCurrentClassName());
-    DataObjectsActions.fetchDataObjects(this.getCurrentClassName());
+    DataObjectsActions.fetchDataObjects(this.data.currentPage);
   },
 
   getCurrentClassName() {
@@ -184,14 +184,14 @@ export default Reflux.createStore({
   setDataObjects(items, rawData) {
     console.debug('DataObjectsStore::setDataObjects');
 
-    this.data.hasNextPage = items.hasNext();
+    this.data.hasNextPage = rawData.hasNext();
 
     if (!this.data.items) {
       this.data.items = [];
     }
 
-    this.data.items = this.data.items.concat(items);
-    this.data.nextParams = new URI(rawData.next || '').search(true);
+    this.data.items = [...this.data.items, ...items];
+    this.data.nextParams = rawData;
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -267,15 +267,16 @@ export default Reflux.createStore({
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjectsCompleted(items, rawData) {
+  onFetchDataObjectsCompleted({ allItems, rawData }) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
     this.data.items = [];
-    DataObjectsActions.setDataObjects(items, rawData);
+    DataObjectsActions.setDataObjects(allItems, rawData);
   },
 
-  onSubFetchDataObjectsCompleted(items, rawData) {
+  onSubFetchDataObjectsCompleted(items) {
     console.debug('DataObjectsStore::onSubFetchDataObjectsCompleted');
-    DataObjectsActions.setDataObjects(items, rawData);
+    this.data.currentPage += 1;
+    DataObjectsActions.setDataObjects(items, items);
   },
 
   onCreateDataObjectCompleted() {

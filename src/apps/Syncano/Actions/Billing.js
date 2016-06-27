@@ -37,8 +37,15 @@ export default {
       this.NewLibConnection
         .Card
         .please()
-        .update({}, { id: response.id })
-        .then(this.completed)
+        .delete()
+        .then(() => {
+          return this.NewLibConnection
+            .Card
+            .please()
+            .create({ token: response.id })
+            .then(this.completed)
+            .catch(this.failure);
+        })
         .catch(this.failure);
     });
   },

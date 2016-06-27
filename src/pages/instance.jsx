@@ -89,7 +89,7 @@ const Instance = React.createClass({
                   ]}
                 />
 
-                <Sidebar.LinkListItem
+                {/* <Sidebar.LinkListItem
                   key="pushDevices"
                   routeName="all-push-notification-devices"
                   primaryText="Push Devices (BETA)"
@@ -106,6 +106,27 @@ const Instance = React.createClass({
                       key="androidDevices"
                       routeName="gcm-devices"
                       primaryText="Android Devices"
+                    />
+                  ]}
+                /> */}
+
+                <Sidebar.LinkListItem
+                  key="pushNotifications"
+                  routeName="all-push-notification-messages"
+                  primaryText="Push Notifications (BETA)"
+                  iconClassName="synicon-cellphone-iphone"
+                  initiallyOpen={true}
+                  autoGenerateNestedIndicator={false}
+                  nestedItems={[
+                    <Sidebar.NestedLinkListItem
+                      key="iOSNotifications"
+                      routeName="apns-messages"
+                      primaryText="iOS Notifications"
+                    />,
+                    <Sidebar.NestedLinkListItem
+                      key="androidNotifications"
+                      routeName="gcm-messages"
+                      primaryText="Android Notifications"
                     />
                   ]}
                 />
