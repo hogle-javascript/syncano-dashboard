@@ -5,6 +5,7 @@ import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Loading, Container, Lists, ShowMore } from '../../common/';
 import APNSMessageListItem from './APNS/APNSMessageListItem';
 import GCMMessageListItem from './GCM/GCMMessageListItem';
+import EmptyView from './PushMessagesEmptyView';
 
 const Column = ColumnList.Column;
 
@@ -27,6 +28,17 @@ const PushMessagesList = React.createClass({
         marginLeft: 64
       }
     };
+  },
+
+  redirectToPushDevices() {
+    const { router, type } = this.props;
+    const { params } = this.context;
+    const redirectRouteMap = {
+      GCM: 'gcm-devices',
+      APNS: 'apns-devices'
+    };
+
+    router.push({ name: redirectRouteMap[type], params });
   },
 
   renderItem(item) {
@@ -67,7 +79,7 @@ const PushMessagesList = React.createClass({
           {title}
         </div>
         <Loading show={isLoading}>
-          <Lists.Container>
+          {!items || !items.length ? <EmptyView handleClickSend={this.redirectToPushDevices} /> : <Lists.Container>
             <ColumnList.Header>
               <Column.ColumnHeader
                 columnName="CHECK_ICON"
@@ -97,7 +109,7 @@ const PushMessagesList = React.createClass({
               items={slicedItems}
               renderItem={this.renderItem}
             />
-          </Lists.Container>
+          </Lists.Container>}
           <ShowMore
             style={{ margin: '-30px 0 40px 0' }}
             visible={items.length > visibleItems && isAllMessagesRouteActive}
