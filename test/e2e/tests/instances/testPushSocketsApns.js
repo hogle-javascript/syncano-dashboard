@@ -81,7 +81,7 @@ export default {
 
     socketsPage
       .goToUrl(instanceName, 'push-notifications/config')
-      .clickListItemDropdown('Apple Push Notification service (APNs)', 'Devices list');
+      .clickElement('@APNSDevicesLinkIcon');
 
     pushDevicesPage
       .waitForElementVisible('@iosDevicesHeading');
