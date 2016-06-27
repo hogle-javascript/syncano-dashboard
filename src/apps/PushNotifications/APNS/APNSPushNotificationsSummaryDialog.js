@@ -34,7 +34,7 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a APNS Push Notification!"
+        title="You've just created an APNS Push Notification!"
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={APNSPPushNotifications.isLoading}
