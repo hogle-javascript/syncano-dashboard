@@ -8,7 +8,8 @@ import Store from './ScriptEndpointsStore';
 
 // Components
 import ListItem from './ScriptEndpointsListItem';
-import { ColumnList, Dialog, Lists } from '../../common/';
+import { colors as Colors } from 'material-ui/styles';
+import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -64,7 +65,28 @@ export default React.createClass({
   },
 
   render() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other } = this.props;
+    const {
+      handleTitleClick,
+      handleSelectAll,
+      handleUnselectAll,
+      getCheckedItems,
+      items,
+      isLoading,
+      ...other
+    } = this.props;
+
+    if ((!items || !items.length) && !isLoading) {
+      return (
+        <EmptyView
+          iconClassName="synicon-socket-script-endpoint"
+          iconColor={Colors.red400}
+          title="Script Endpoint"
+          description="Create script endpoint which is a URLs that run your custom code in the cloud."
+          docsUrl="http://docs.syncano.io/docs/endpoints-scripts"
+          handleClickAdd={Actions.showDialog}
+        />
+      );
+    }
 
     return (
       <Lists.Container>
@@ -114,6 +136,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...other}
+          isLoading={isLoading}
+          items={items}
           key="script-endpoints-list"
           renderItem={this.renderItem}
         />
