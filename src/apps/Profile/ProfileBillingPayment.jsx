@@ -4,20 +4,21 @@ import Radium from 'radium';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
-import { FormMixin } from '../../mixins';
+import { FormMixin, DialogsMixin } from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
 
-import { TextField, RaisedButton } from 'material-ui';
-import { Container, CreditCard, Show, Loading, InnerToolbar } from '../../common/';
+import { TextField, RaisedButton, SelectField, MenuItem } from 'material-ui';
+import { Container, CreditCard, Dialog, Show, Loading, InnerToolbar } from '../../common/';
 
 export default Radium(React.createClass({
   displayName: 'ProfileBillingPayment',
 
   mixins: [
-    Reflux.connect(Store),
-    FormMixin
+    FormMixin,
+    DialogsMixin,
+    Reflux.connect(Store)
   ],
 
   validatorConstraints: {
@@ -43,7 +44,7 @@ export default Radium(React.createClass({
       presence: true,
       numericality: {
         onlyInteger: true,
-        greaterThanOrEqualTo: new Date().getFullYear() - 20,
+        greaterThanOrEqualTo: new Date().getFullYear(),
         lessThanOrEqualTo: new Date().getFullYear() + 20
       }
     }
@@ -69,6 +70,20 @@ export default Radium(React.createClass({
     Actions.updateBillingCard(params);
   },
 
+  initDialogs() {
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'deleteBillingCard',
+        ref: 'deleteBillingCard',
+        title: 'Remove Billing Card',
+        handleConfirm: Actions.deleteBillingCard,
+        modal: true,
+        children: ['Are you sure you want to remove your billing card?']
+      }
+    }];
+  },
+
   toggleForm(state) {
     this.setState({
       showForm: state,
@@ -77,15 +92,19 @@ export default Radium(React.createClass({
   },
 
   render() {
-    const { card, showForm, show_form, isLoading, canSubmit } = this.state;
+    const { isLoading, card, showForm, show_form, canSubmit } = this.state;
     const title = 'Payment methods';
     const hasCard = !_.isEmpty(card);
-    const labelPrefix = hasCard ? 'Update' : 'Add';
     const displayForm = !hasCard || showForm === true || show_form === true;
+    const formSubmitButtonLabel = hasCard ? 'Update payment' : 'Add payment';
+    const currentYear = new Date().getFullYear();
+    const expirationMonthRange = _.range(1, 13);
+    const expirationYearRange = _.range(currentYear, currentYear + 20);
 
     return (
       <Loading show={isLoading}>
         <Helmet title={title} />
+        {this.getDialogs()}
         <InnerToolbar title={title} />
         <Container>
           <Show if={displayForm}>
@@ -97,10 +116,10 @@ export default Radium(React.createClass({
               {this.renderFormNotifications()}
 
               <div className="row">
-                <div className="col-lg-20">
+                <div className="col-sm-35 col-md-30 col-lg-12">
                   <TextField
-                    name="number"
                     ref="number"
+                    name="number"
                     fullWidth={true}
                     value={this.state.number}
                     onChange={(event, value) => this.setState({ number: value })}
@@ -111,57 +130,75 @@ export default Radium(React.createClass({
                   />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-lg-20">
-                  <TextField
-                    name="cvc"
-                    ref="cvc"
-                    fullWidth={true}
-                    value={this.state.cvc}
-                    onChange={(event, value) => this.setState({ cvc: value })}
-                    errorText={this.getValidationMessages('cvc').join(' ')}
-                    hintText="CVC"
-                    floatingLabelText="CVC"
-                    dataStripe="cvc"
-                  />
-                </div>
-              </div>
               <div className="row vm-4-b">
-                <div className="col-lg-20">
+                <div className="col-sm-35 col-md-30 col-lg-12">
                   <div className="row">
-                    <div className="col-flex-1">
-                      <TextField
-                        name="exp_month"
+                    <div className="col-flex-2">
+                      <SelectField
                         ref="exp_month"
-                        size={2}
+                        name="exp_month"
                         fullWidth={true}
+                        floatingLabelText="Expiration month"
                         value={this.state.exp_month}
-                        onChange={(event, value) => this.setState({ exp_month: value })}
+                        onChange={(event, index, value) => this.setState({ exp_month: value })}
                         errorText={this.getValidationMessages('exp_month').join(' ')}
-                        hintText="Expiration month (MM)"
-                        floatingLabelText="Expiration month (MM)"
                         dataStripe="exp-month"
-                      />
+                      >
+                        {expirationMonthRange.map((value) => {
+                          const primaryText = value < 10 ? `0${value}` : value;
+
+                          return (
+                            <MenuItem
+                              key={value}
+                              value={value}
+                              primaryText={primaryText}
+                            />
+                          );
+                        })}
+                      </SelectField>
                     </div>
-                    <div className="col-flex-1">
-                      <TextField
-                        name="exp_year"
+                    <div className="col-flex-2">
+                      <SelectField
                         ref="exp_year"
-                        size={4}
+                        name="exp_year"
                         fullWidth={true}
+                        floatingLabelText="Expiration year"
                         value={this.state.exp_year}
-                        onChange={(event, value) => this.setState({ exp_year: value })}
+                        onChange={(event, index, value) => this.setState({ exp_year: value })}
                         errorText={this.getValidationMessages('exp_year').join(' ')}
-                        hintText="Expiration year (YYYY)"
-                        floatingLabelText="Expiration year (YYYY)"
                         dataStripe="exp-year"
+                      >
+                        {expirationYearRange.map((value) => (
+                          <MenuItem
+                            key={value}
+                            value={value}
+                            primaryText={value}
+                          />
+                        ))}
+                      </SelectField>
+                    </div>
+                    <div className="col-sm-5">
+                      <TextField
+                        ref="cvc"
+                        maxLength={3}
+                        name="cvc"
+                        fullWidth={true}
+                        value={this.state.cvc}
+                        onChange={(event, value) => this.setState({ cvc: value })}
+                        errorText={this.getValidationMessages('cvc').join(' ')}
+                        hintText="CVC"
+                        floatingLabelText="CVC"
+                        dataStripe="cvc"
                       />
                     </div>
                   </div>
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-20" style={{ display: 'flex' }}>
+                <div
+                  className="col-sm-35 col-md-30 col-lg-12"
+                  style={{ display: 'flex' }}
+                >
                   <Show if={hasCard}>
                     <RaisedButton
                       onClick={this.toggleForm.bind(this, false)}
@@ -171,7 +208,7 @@ export default Radium(React.createClass({
                   </Show>
                   <RaisedButton
                     type="submit"
-                    label={labelPrefix + ' payment'}
+                    label={formSubmitButtonLabel}
                     className="raised-button"
                     primary={true}
                     disabled={!canSubmit}
@@ -182,14 +219,18 @@ export default Radium(React.createClass({
             </form>
           </Show>
 
-          <Show if={!showForm}>
+          <Show if={!displayForm}>
             <div>
               <CreditCard card={card} />
               <RaisedButton
+                onClick={() => this.showDialog('deleteBillingCard', {})}
+                label="Remove payment"
+                style={{ marginRight: 8 }}
+              />
+              <RaisedButton
                 onClick={this.toggleForm.bind(null, true)}
                 type="submit"
-                label={labelPrefix + ' payment'}
-                className="raised-button"
+                label="Update payment"
                 primary={true}
               />
             </div>
