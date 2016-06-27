@@ -7,6 +7,7 @@ import { DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../..
 import SessionActions from '../../Session/SessionActions';
 import Actions from './GCMPushNotificationsActions';
 import GCMDevicesActions from '../../PushDevices/GCMDevices/GCMDevicesActions';
+import GCMSummaryDialogActions from './GCMSummaryDialogActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -61,6 +62,7 @@ export default Reflux.createStore({
   onConfigGCMPushNotificationCompleted() {
     console.debug('GCMConfigDialogStore::onConfigGCMPushNotificationCompleted');
     this.dismissDialog();
+    GCMSummaryDialogActions.showDialog();
     this.refreshData();
   }
 });
