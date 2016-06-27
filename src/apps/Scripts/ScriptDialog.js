@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils
 import { DialogMixin, FormMixin } from '../../mixins';
@@ -9,8 +10,8 @@ import Actions from './ScriptsActions';
 import Store from './ScriptDialogStore';
 
 // Components
-import { TextField } from 'material-ui';
-import { Dialog, SelectFieldWrapper } from '../../common/';
+import { TextField, SelectField, Divider, MenuItem } from 'material-ui';
+import { Dialog } from '../../common/';
 
 export default React.createClass({
   displayName: 'ScriptDialog',
@@ -47,9 +48,27 @@ export default React.createClass({
     Actions.createScript({ label, description, runtime_name });
   },
 
+  renderRuntimeOption(item) {
+    return (
+      <MenuItem
+        key={`select-${item.payload}`}
+        value={item.payload}
+        primaryText={item.text}
+      />
+    );
+  },
+
+  renderRuntimesSelectOptions() {
+    const { current, deprecated } = this.state.runtimes;
+    const currentOptions = _.map(current, this.renderRuntimeOption);
+    const deprecatedOptions = _.map(deprecated, this.renderRuntimeOption);
+
+    return [...currentOptions, <Divider />, ...deprecatedOptions];
+  },
+
   render() {
     const title = this.hasEditMode() ? 'Edit' : 'Add';
-    const { isLoading, runtimes, runtime_name, open } = this.state;
+    const { isLoading, runtime_name, open } = this.state;
 
     return (
       <Dialog.FullPage
@@ -110,14 +129,15 @@ export default React.createClass({
           hintText="Script's description"
           floatingLabelText="Description (optional)"
         />
-        <SelectFieldWrapper
+        <SelectField
           name="runtime_name"
-          options={runtimes}
           value={runtime_name}
           floatingLabelText="Runtime environment"
           onChange={(event, index, value) => this.setSelectFieldValue('runtime_name', value)}
           errorText={this.getValidationMessages('runtime_name').join(' ')}
-        />
+        >
+          {this.renderRuntimesSelectOptions()}
+        </SelectField>
       </Dialog.FullPage>
     );
   }

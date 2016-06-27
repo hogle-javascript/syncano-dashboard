@@ -36,10 +36,22 @@ export default (props) => {
           {props.name}
         </Column.ColumnHeader>
         <Column.ColumnHeader columnName="DESC" />
-        <Column.ColumnHeader columnName="DESC">
+        <Column.ColumnHeader
+          columnName="DESC"
+          className="col-sm-6"
+        >
           Configured
         </Column.ColumnHeader>
-        <Column.ColumnHeader columnName="DESC">
+        <Column.ColumnHeader
+          className="col-sm-6"
+          columnName="DESC"
+        >
+          Messages
+        </Column.ColumnHeader>
+        <Column.ColumnHeader
+          className="col-sm-4"
+          columnName="DESC"
+        >
           Devices
         </Column.ColumnHeader>
         <Column.ColumnHeader columnName="DESC" />

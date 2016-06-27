@@ -20,10 +20,11 @@ export default React.createClass({
 
   validatorConstraints() {
     const { itemLabelName, groupName, withConfirm } = this.props;
-    const items = this.getItems();
-    const confirmText = items.length ? items[0][itemLabelName] : '';
 
     if (withConfirm) {
+      const items = this.getItems();
+      const confirmText = items.length ? items[0][itemLabelName] : '';
+
       return {
         validationText: {
           presence: {

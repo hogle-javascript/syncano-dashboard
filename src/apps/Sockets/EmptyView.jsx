@@ -62,6 +62,7 @@ export default React.createClass({
             socketName="DataEndpoint"
             title="Data Endpoint"
             description="Place your objects and manage how your data is returned from Syncano."
+            documentationUrl="http://docs.syncano.io/docs/endpoints-data"
           />
 
           <EmptyListItem
@@ -69,6 +70,7 @@ export default React.createClass({
             socketName="ScriptEndpoint"
             title="Script Endpoint"
             description="Run Scripts on our servers and use them for business logic."
+            documentationUrl="http://docs.syncano.io/docs/endpoints-scripts"
           />
 
           <EmptyListItem
@@ -76,6 +78,7 @@ export default React.createClass({
             socketName="Trigger"
             title="Trigger"
             description="Execute a Script when your data is created, updated or deleted."
+            documentationUrl="http://docs.syncano.io/docs/triggers"
           />
 
           <EmptyListItem
@@ -83,6 +86,7 @@ export default React.createClass({
             socketName="Schedule"
             title="Schedule"
             description="Plan events and run Scripts at desired times."
+            documentationUrl="http://docs.syncano.io/docs/schedules"
           />
 
           <EmptyListItem
@@ -90,6 +94,7 @@ export default React.createClass({
             socketName="Channel"
             title="Channel"
             description="Get real-time updates to keep your data synchronized."
+            documentationUrl="http://docs.syncano.io/docs/realtime-communication"
           />
 
           <EmptyListItem
@@ -98,6 +103,7 @@ export default React.createClass({
             socketName="Push"
             title="APNS Push Notifications (BETA)"
             description="Instantly message your mobile users with timely and relevant content."
+            documentationUrl="http://docs.syncano.io/docs/push-notification-sockets-ios"
           />
 
           <EmptyListItem
@@ -106,6 +112,7 @@ export default React.createClass({
             socketName="Push"
             title="GCM Push Notifications (BETA)"
             description="Instantly message your mobile users with timely and relevant content."
+            documentationUrl="http://docs.syncano.io/docs/push-notification-sockets-android"
           />
         </div>
       </div>
