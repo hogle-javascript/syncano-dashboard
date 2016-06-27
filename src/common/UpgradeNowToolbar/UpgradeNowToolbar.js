@@ -80,13 +80,14 @@ export default React.createClass({
 
   shouldDisplay() {
     const { subscriptionEndDate } = this.props;
-    const dayVariant = this.getDayVariant(subscriptionEndDate);
 
-    if (dayVariant) {
-      return true;
+    if (!subscriptionEndDate) {
+      return false;
     }
 
-    return false;
+    const dayVariant = this.getDayVariant(subscriptionEndDate);
+
+    return dayVariant && true;
   },
 
   hide() {
@@ -117,7 +118,7 @@ export default React.createClass({
         <div style={{ padding: '9px 20px', whiteSpace: 'nowrap' }}>
           <FlatButton
             label="Remind Me Later"
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 8 }}
             labelStyle={{ fontWeight: 500, color: '#fff' }}
             onClick={this.hide}
           />
