@@ -6,8 +6,8 @@ function e2e_setup {
     mv ./dist ./dist_e2e
     npm run e2e-setup
     npm run e2e-create-accounts
-    nohup npm run e2e-selenium-server > ./reports/selenium-server.log 2>&1&
-    nohup npm run e2e-selenium-chromedriver > ./reports/selenium-chrome.log 2>&1&
+    nohup npm run e2e-selenium-server -Djava.security.egd=file:/dev/./urandom > ./reports/selenium-server.log 2>&1&
+    nohup npm run e2e-selenium-chromedriver -Djava.security.egd=file:/dev/./urandom > ./reports/selenium-chrome.log 2>&1&
     nohup npm run e2e-http-server > ./reports/http-server.log 2>&1&
     sleep 5
 }

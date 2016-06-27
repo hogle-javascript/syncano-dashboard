@@ -75,6 +75,7 @@ You'll also need to configure env variables for the tests to work locally:
     $ export NIGHTWATCH_EMAIL="xx"
     $ export NIGHTWATCH_PASSWORD="xx"
     $ export NIGHTWATCH_ACCOUNT_KEY="xx"
+    $ export STRIPE_PUBLISHABLE_KEY="xx"
 
 Or for some tests (they are being rewrited):
 
