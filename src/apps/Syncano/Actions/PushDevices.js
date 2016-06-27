@@ -40,14 +40,17 @@ export default {
       .catch(this.failure);
   },
 
-  sendMessagesToAPNS(registrationIds, payload) {
-    const promises = registrationIds.map((registrationId) =>
-      this.NewLibConnection
-        .APNSDevice
-        .please()
-        .sendMessage({ registration_id: registrationId }, payload));
+  sendMessagesToAPNS(content) {
+    const instanceName = this.NewLibConnection.getInstanceName();
+    const accountKey = this.NewLibConnection.getAccountKey();
+    const params = {
+      method: 'post',
+      url: `${SYNCANO_BASE_URL}v1.1/instances/${instanceName}/push_notifications/apns/messages/?api_key=${accountKey}`,
+      data: { content }
+    };
 
-    this.Promise.all(promises)
+    this.Promise
+      .request(params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -93,15 +96,17 @@ export default {
       .catch(this.failure);
   },
 
-  sendMessagesToGCM(registrationIds, payload) {
-    const promises = registrationIds.map((registrationId) =>
-      this.NewLibConnection
-        .GCMDevice
-        .please()
-        .sendMessage({ registration_id: registrationId }, payload)
-    );
+  sendMessagesToGCM(content) {
+    const instanceName = this.NewLibConnection.getInstanceName();
+    const accountKey = this.NewLibConnection.getAccountKey();
+    const params = {
+      method: 'post',
+      url: `${SYNCANO_BASE_URL}v1.1/instances/${instanceName}/push_notifications/gcm/messages/?api_key=${accountKey}`,
+      data: { content }
+    };
 
-    this.Promise.all(promises)
+    this.Promise
+      .request(params)
       .then(this.completed)
       .catch(this.failure);
   }

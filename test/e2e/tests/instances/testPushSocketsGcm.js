@@ -54,8 +54,10 @@ export default {
   'Test Admin Goes to GCM Device list': (client) => {
     const socketsPage = client.page.socketsPage();
     const pushDevicesPage = client.page.pushDevicesPage();
+    const instanceName = accounts.alternativeUser.instanceName;
 
     socketsPage
+      .goToUrl(instanceName, 'push-notifications/config')
       .clickElement('@GCMDevicesLinkIcon');
     pushDevicesPage
       .waitForElementVisible('@androidDevicesHeading');
