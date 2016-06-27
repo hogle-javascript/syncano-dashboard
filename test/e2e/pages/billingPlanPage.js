@@ -14,10 +14,12 @@ export default {
       selector: 'input[name="cvc"]'
     },
     monthExpirationInput: {
-      selector: 'input[name="exp_month"]'
+      selector: '//div[@class="col-flex-2"][1]/div/div/div',
+      locateStrategy: 'xpath'
     },
     yearExpirationInput: {
-      selector: 'input[name="exp_year"]'
+      selector: '//div[@class="col-flex-2"][2]/div/div/div',
+      locateStrategy: 'xpath'
     },
     confirmButton: {
       selector: '//button/div/span[text()="Confirm"]',
@@ -25,10 +27,6 @@ export default {
     },
     planBarLocator: {
       selector: '//span/strong',
-      locateStrategy: 'xpath'
-    },
-    newPlanText: {
-      selector: '//div[text()="New plan "]',
       locateStrategy: 'xpath'
     }
   }

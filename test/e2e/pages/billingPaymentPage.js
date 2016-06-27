@@ -14,10 +14,12 @@ export default {
       selector: 'input[name="cvc"]'
     },
     monthExpirationInput: {
-      selector: 'input[name="exp_month"]'
+      selector: '//div[@class="col-flex-2"][1]/div/div/div',
+      locateStrategy: 'xpath'
     },
     yearExpirationInput: {
-      selector: 'input[name="exp_year"]'
+      selector: '//div[@class="col-flex-2"][2]/div/div/div',
+      locateStrategy: 'xpath'
     },
     addPaymentButton: {
       selector: '//div/span[text()="Add payment"]',

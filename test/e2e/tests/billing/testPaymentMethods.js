@@ -20,9 +20,9 @@ export default {
       .navigate()
       .waitForElementVisible('@paymentTopBarText')
       .fillInput('@cardNumberInput', 4000056655665556)
+      .clickListItemDropdown('@monthExpirationInput', 10)
+      .clickListItemDropdown('@yearExpirationInput', 2020)
       .fillInput('@cvcInput', 666)
-      .fillInput('@monthExpirationInput', 10)
-      .fillInput('@yearExpirationInput', 2020)
       .click('@addPaymentButton')
       .waitForElementVisible('@updatePaymentButton');
   },
@@ -34,9 +34,9 @@ export default {
     paymentPage
       .click('@updatePaymentButton')
       .fillInput('@cardNumberInput', 5555555555554444)
+      .clickListItemDropdown('@monthExpirationInput', 11)
+      .clickListItemDropdown('@yearExpirationInput', 2022)
       .fillInput('@cvcInput', 777)
-      .fillInput('@monthExpirationInput', 11)
-      .fillInput('@yearExpirationInput', 2022)
       .click('@updatePaymentButton')
       .waitForElementVisible('@filledOutCard');
 
