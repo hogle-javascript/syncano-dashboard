@@ -73,19 +73,32 @@ export default React.createClass({
                         title="cURL"
                         languageClassName="markup"
                         code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"https://api.syncano.io/v1.1/instances/` +
-                        `${currentInstance.name}/triggers/${item.id}/"`}
+                        `${currentInstance.name}/push_notifications/apns/config/"`}
                       />
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
                         code={`my_trigger = Trigger.please.get(id=${item.id}, instance_name=` +
                         `"${currentInstance.name}")\n\nprint(my_trigger.label)`}
+                        code={`import syncano\n` +
+                              `from syncano.models import APNSConfig\n\n` +
+                              `syncano.connect(api_key="${token}")\n\n` +
+                              `apns_config = APNSConfig.please.get(instance_name="${currentInstance.name}")\n\n` +
+                              `print(apns_config.production_certificate_name)\n` +
+                              'print(apns_config.production_certificate)  # Will return TRUE if certificate is' +
+                              'uploaded\nprint(apns_config.development_certificate_name)\n' +
+                              'print(apns_config.development_certificate)   # Will return TRUE if certificate is' +
+                              'uploaded'}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`Trigger\n  .please()\n  .get({instanceName: '${currentInstance.name}',` +
-                        ` id: ${item.id}})\n  .then(function(trigger) {});`}
+                        code={`var Syncano = require("syncano");\n` +
+                              'var connection = Syncano({accountKey: "ACCOUNT_KEY"});' +
+                              'var APNSConfig = connection.APNSConfig;\n\n' +
+                              `APNSConfig.please().get({instanceName: "${currentInstance.name}"}).` +
+                              'then(function(config) {\n  "console.log(Config, config); \n});'
+                            }
                       />
                     </CodePreview>
                   </CardText>

@@ -67,11 +67,13 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onConfigAPNSPushNotificationCompleted() {
+  onConfigAPNSPushNotificationCompleted(config) {
     console.debug('APNSConfigDialogStore::onConfigAPNSPushNotification');
-    console.error('New APNS Created');
     this.dismissDialog();
-    APNSPushNotificationsSummaryDialogActions.showDialog();
     this.refreshData();
+
+    if (config.development_certificate || config.production_certificate) {
+      APNSPushNotificationsSummaryDialogActions.showDialog();
+    }
   }
 });
