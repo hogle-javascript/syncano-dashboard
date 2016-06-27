@@ -11,23 +11,24 @@ export default ({ title, description, iconClassName, iconColor, handleClickAdd, 
       alignItems: 'center',
       height: '100%',
       textAlign: 'center',
-      padding: '100px 120px'
+      padding: '70px 100px'
     },
     mainContainer: {
-      width: 700,
-      height: 600,
-      border: '2px #aaa dashed',
+      width: 600,
+      height: 500,
+      border: '2px #dedede dashed',
       borderRadius: 5,
       margin: '50px auto 0 auto'
     },
     title: {
       marginTop: 40,
-      fontSize: 32,
-      fontWeight: 500
+      fontSize: 26,
+      fontWeight: 400,
+      lineHeight: '34px'
     },
     description: {
-      lineHeight: 1.3,
-      fontSize: 24
+      lineHeight: '26px',
+      fontSize: 18
     }
   };
 
