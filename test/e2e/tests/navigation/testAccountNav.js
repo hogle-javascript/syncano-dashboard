@@ -82,14 +82,14 @@ module.exports = {
   'User goes to Payment methods view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
-    const paymentMethodsPage = client.page.paymentMethodsPage();
+    const paymentMethodsPage = client.page.billingPaymentPage();
 
     topNavigationPage
       .clickElement('@account')
       .waitForElementVisible('@fox')
       .clickElement('@accountDropdown');
     leftMenuPage.clickElement('@paymentMethods');
-    paymentMethodsPage.waitForElementPresent('@addPaymentButton');
+    paymentMethodsPage.waitForElementPresent('@updatePaymentButton');
   },
   'User goes to Invoices view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
