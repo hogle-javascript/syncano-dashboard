@@ -1,13 +1,6 @@
 #!/bin/bash
 set -e
 
-function entropy_setup {
-  apt-get install rng-tools \
-    && sleep 5 \
-    && echo "HRNGDEVICE=/dev/urandom" >> /etc/default/rng-tools \
-    && /etc/init.d/rng-tools start
-}
-
 function e2e_setup {
     npm run build
     mv ./dist ./dist_e2e
@@ -28,7 +21,6 @@ mkdir reports/
 touch ./reports/docker-entropy.log
 nohup ./check_entropy.sh > ./reports/docker-entropy.log 2>&1&
 npm run lint
-entropy_setup
 e2e_setup
 
 case "$CIRCLE_NODE_INDEX" in
