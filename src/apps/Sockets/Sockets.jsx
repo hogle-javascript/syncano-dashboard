@@ -139,6 +139,7 @@ export default React.createClass({
         <PushNotifications.APNSConfigDialog />
         <PushNotifications.SummaryDialog />
         <PushNotifications.GCMConfigDialog />
+        <PushNotifications.GCMSummaryDialog />
 
         {this.getDialogs()}
         <SocketsInnerToolbar empty={!sockets.hasAnyItem || sockets.isLoading}>

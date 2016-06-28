@@ -4,6 +4,7 @@ import { StoreFormMixin, DialogStoreMixin, WaitForStoreMixin } from '../../mixin
 
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
+import ClassSummaryDialogActions from './ClassSummaryDialogActions';
 import Actions from './ClassesActions';
 
 export default Reflux.createStore({
@@ -52,6 +53,7 @@ export default Reflux.createStore({
   onCreateClassCompleted() {
     console.debug('ClassDialogStore::onCreateClassCompleted');
     this.dismissDialog();
+    ClassSummaryDialogActions.showDialog();
     this.refreshData();
     SessionStore.getRouter().push({ name: 'classes', params: SessionStore.getParams() });
   },

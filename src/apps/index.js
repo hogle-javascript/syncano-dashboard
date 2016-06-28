@@ -13,6 +13,7 @@ import Profile from './Profile';
 import ProfileInvitations from './ProfileInvitations';
 import PushDevices from './PushDevices';
 import PushNotifications from './PushNotifications';
+import PushMessages from './PushMessages';
 import Schedules from './Schedules';
 import Session from './Session';
 import SnackbarNotification from './SnackbarNotification';
@@ -41,6 +42,7 @@ export default {
   ProfileInvitations,
   PushDevices,
   PushNotifications,
+  PushMessages,
   Schedules,
   Session,
   SnackbarNotification,

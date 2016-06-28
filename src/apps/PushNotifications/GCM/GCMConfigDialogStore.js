@@ -7,6 +7,7 @@ import { DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../..
 import SessionActions from '../../Session/SessionActions';
 import Actions from './GCMPushNotificationsActions';
 import GCMDevicesActions from '../../PushDevices/GCMDevices/GCMDevicesActions';
+import GCMSummaryDialogActions from './GCMSummaryDialogActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -58,9 +59,12 @@ export default Reflux.createStore({
     this.trigger({ isCertLoading: true });
   },
 
-  onConfigGCMPushNotificationCompleted() {
+  onConfigGCMPushNotificationCompleted(config) {
     console.debug('GCMConfigDialogStore::onConfigGCMPushNotificationCompleted');
     this.dismissDialog();
+    if (config.development_api_key || config.production_api_key) {
+      GCMSummaryDialogActions.showDialog();
+    }
     this.refreshData();
   }
 });

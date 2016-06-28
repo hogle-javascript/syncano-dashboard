@@ -42,6 +42,7 @@ import Sidebar from './Sidebar';
 import ShowMore from './ShowMore';
 import UpgradeButton from './UpgradeButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
+import EmptyView from './EmptyView';
 
 export { AlertPageContent };
 export { Billing };
@@ -87,6 +88,7 @@ export { Sidebar };
 export { ShowMore };
 export { UpgradeButton };
 export { UpgradeNowToolbar };
+export { EmptyView };
 
 export default {
   AlertPageContent,
@@ -132,5 +134,6 @@ export default {
   Sidebar,
   ShowMore,
   UpgradeButton,
-  UpgradeNowToolbar
+  UpgradeNowToolbar,
+  EmptyView
 };

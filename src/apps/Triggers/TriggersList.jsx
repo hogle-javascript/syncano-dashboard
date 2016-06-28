@@ -8,7 +8,8 @@ import { DialogsMixin } from '../../mixins';
 
 // Components
 import ListItem from './TriggersListItem';
-import { ColumnList, Dialog, Lists } from '../../common/';
+import { colors as Colors } from 'material-ui/styles';
+import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -63,7 +64,28 @@ export default React.createClass({
   },
 
   render() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other } = this.props;
+    const {
+      handleTitleClick,
+      handleSelectAll,
+      handleUnselectAll,
+      getCheckedItems,
+      items,
+      isLoading,
+      ...other
+    } = this.props;
+
+    if ((!items || !items.length) && !isLoading) {
+      return (
+        <EmptyView
+          iconClassName="synicon-socket-trigger"
+          iconColor={Colors.amber400}
+          title="Triggers"
+          description="Execute a Script when your data is created, updated or deleted."
+          docsUrl="http://docs.syncano.io/docs/triggers"
+          handleClickAdd={Actions.showDialog}
+        />
+      );
+    }
 
     return (
       <Lists.Container className="triggers-list">
@@ -112,6 +134,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...other}
+          isLoading={isLoading}
+          items={items}
           emptyItemContent="Add a Trigger Socket"
           emptyItemHandleClick={Actions.showDialog}
           key="triggers-list"

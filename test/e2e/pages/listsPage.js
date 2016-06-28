@@ -37,7 +37,7 @@ export default {
       locateStrategy: 'xpath'
     },
     firstItemRowName: {
-      selector: '(//div[@class="col-xs-12"])[2]',
+      selector: '(//div[@class="col-xs-12"]/div)[2]',
       locateStrategy: 'xpath'
     },
     firstItemRowDescription: {
@@ -69,6 +69,10 @@ export default {
     },
     firstAppleCheckbox: {
       selector: '(//span[@class="synicon-apple"])[1]',
+      locateStrategy: 'xpath'
+    },
+    summaryDialogCloseButton: {
+      selector: '//span[@class="synicon-close"]',
       locateStrategy: 'xpath'
     }
   }

@@ -37,8 +37,15 @@ export default {
       this.NewLibConnection
         .Card
         .please()
-        .update({}, { id: response.id })
-        .then(this.completed)
+        .delete()
+        .then(() => {
+          return this.NewLibConnection
+            .Card
+            .please()
+            .create({ token: response.id })
+            .then(this.completed)
+            .catch(this.failure);
+        })
         .catch(this.failure);
     });
   },
@@ -56,6 +63,15 @@ export default {
         .then(this.completed)
         .catch(this.failure);
     });
+  },
+
+  removeCard() {
+    this.NewLibConnection
+      .Card
+      .please()
+      .delete()
+      .then(this.completed)
+      .catch(this.failure);
   },
 
   listInvoices() {

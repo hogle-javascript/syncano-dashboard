@@ -45,9 +45,9 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchGlobalConfigCompleted(config) {
+  onFetchGlobalConfigCompleted(response) {
     console.debug('GlobalConfigDialogStore::onFetchGlobalConfigCompleted');
-    this.data.globalConfig = JSON.stringify(config.data.config, null, 2);
+    this.data.globalConfig = JSON.stringify(response.config, null, 2);
     this.data.isConfigLoading = false;
     this.trigger(this.data);
   },

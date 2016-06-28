@@ -1,25 +1,44 @@
 import Constants from '../../../constants/Constants';
 import _ from 'lodash';
+import PromiseSeries from 'promise-series';
 
 export default {
-  list() {
-    this.NewLibConnection
-      .DataObject
-      .please()
-      .list()
-      .orderBy('-created_at')
-      .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
+  list(pageNumber = 1) {
+    const series = new PromiseSeries();
+    let allItems = [];
+
+    series.add(() => {
+      return this.NewLibConnection
+        .DataObject
+        .please()
+        .list()
+        .orderBy('-created_at')
+        .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
+        .then((items) => {
+          allItems = [...allItems, ...items];
+
+          return items;
+        });
+    });
+
+    _.times((pageNumber - 1), () => {
+      series.add((nextParams) => {
+        return nextParams.next().then((items) => {
+          allItems = [...allItems, ...items];
+
+          return items;
+        });
+      });
+    });
+
+    series.add((rawData) => ({ allItems, rawData }));
+    series.run()
       .then(this.completed)
       .catch(this.failure);
   },
 
   subList(nextParams) {
-    this.NewLibConnection
-      .DataObject
-      .please()
-      .list({}, nextParams)
-      .orderBy('-created_at')
-      .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
+    nextParams.next()
       .then(this.completed)
       .catch(this.failure);
   },

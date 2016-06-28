@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import { Paper, RaisedButton } from 'material-ui';
+import Actions from './DemoAppsIntallationDetailsDialogActions';
+
+import { Paper, RaisedButton, FlatButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 
 export default class DemoAppListItem extends Component {
@@ -25,6 +27,18 @@ export default class DemoAppListItem extends Component {
         color: Colors.grey500,
         maxHeight: 180,
         overflowY: 'hidden'
+      },
+      buttonsContainer: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center'
+      },
+      installButton: {
+        margin: '0 8px'
+      },
+      moreButton: {
+        position: 'absolute',
+        justifySelf: 'flex-end'
       }
     };
   }
@@ -52,11 +66,19 @@ export default class DemoAppListItem extends Component {
         <div style={styles.description}>
           {this.truncate(item.description, 300)}
         </div>
-        <RaisedButton
-          onTouchTap={handleClickInstall}
-          primary={true}
-          label="Install App"
-        />
+        <div style={styles.buttonsContainer}>
+          <RaisedButton
+            style={styles.installButton}
+            onTouchTap={handleClickInstall}
+            primary={true}
+            label="Install App"
+          />
+          <FlatButton
+            style={styles.moreButton}
+            label="More"
+            onTouchTap={() => Actions.showDialog(item)}
+          />
+        </div>
       </Paper>
     );
   }
