@@ -112,7 +112,7 @@ export default React.createClass({
       <div style={styles.upgradeNowToolbar}>
         <div style={{ padding: '9px 20px' }}>
           <p style={{ margin: 0, fontSize: 16 }}>
-            Your free builder account expires in {days} {daysText}. Please upgrade to keep using Syncano.
+            Your free builder account expires in {days} {daysText}. Upgrade to keep using Syncano after this period.
           </p>
         </div>
         <div style={{ padding: '9px 20px', whiteSpace: 'nowrap' }}>
