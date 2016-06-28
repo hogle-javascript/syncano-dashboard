@@ -197,12 +197,6 @@ export default (
         path="instances/:instanceName"
       >
 
-        <Redirect
-          from="prolong"
-          to="instances"
-          query={{ prolong: true }}
-        />
-
         {/* Sockets */}
         <Route
           name="sockets"
