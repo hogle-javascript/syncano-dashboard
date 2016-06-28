@@ -70,6 +70,10 @@ export default {
     firstAppleCheckbox: {
       selector: '(//span[@class="synicon-apple"])[1]',
       locateStrategy: 'xpath'
+    },
+    summaryDialogCloseButton: {
+      selector: '//span[@class="synicon-close"]',
+      locateStrategy: 'xpath'
     }
   }
 };
