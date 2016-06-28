@@ -6,7 +6,7 @@ import GCMPushNotificationsStore from './GCMPushNotificationsStore';
 import SessionStore from '../../Session/SessionStore';
 
 import { DialogMixin } from '../../../mixins';
-import { CodePreview, Dialog } from '../../../common/';
+import { CodePreview, Dialog, Loading } from '../../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
@@ -34,19 +34,21 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just configured Push Notification Socket - GCM!"
+        title={!showSummaryDialog ? "You've just configured Push Notification Socket - GCM!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={GCMs.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className="synicon-socket-push"
-            style={{ color: Colors.indigo300, fontSize: 32 }}
-          />
-        </div>
-        {showSummaryDialog ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className="synicon-socket-push"
+              style={{ color: Colors.indigo300, fontSize: 32 }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -77,14 +79,17 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`gcm_config = GCMConfig.please.get(instance_name="${currentInstance.name}")\n\n` +
-                        `gcm_config.development_api_key = "${item.development_api_key}"\n` +
+                        code={`import syncano\nfrom syncano.models import GCMConfig\n\nsyncano.connect(api_key=` +
+                        `'${token}')\n\ngcm_config = GCMConfig.please.get(instance_name="${currentInstance.name}")` +
+                        `\n\ngcm_config.development_api_key = "${item.development_api_key}"\n` +
                         `gcm_config.production_api_key = "${item.production_api_key}"\n\ngcm_config.save()`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`var update = {\n  production_api_key: "${item.production_api_key}",\n  ` +
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar GCMConfig = connection.GCMConfig;\n\n` +
+                        `var update = {\n  production_api_key: "${item.production_api_key}",\n  ` +
                         `development_api_key: "${item.development_api_key}"\n};\n\nGCMConfig\n  .please()\n  ` +
                         `.update({instanceName: '${currentInstance.name}'}, update)\n  .then(calback);`}
                       />
