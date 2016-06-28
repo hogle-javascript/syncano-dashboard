@@ -31,7 +31,8 @@ export default React.createClass({
     const item = DataEndpointsStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
-    const schema = item ? ClassesStore.getClassByName(item.class).schema : null;
+    const itemClass = item ? ClassesStore.getClassByName(item.class) : null;
+    const schema = itemClass ? itemClass.schema : null;
 
     return (
       <Dialog.FullPage
