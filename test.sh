@@ -4,7 +4,7 @@ set -e
 function entropy_setup {
   apt-get install rng-tools \
     && sleep 5 \
-    && echo "HRNGDEVICE=/dev/urandom" >> /etc/default/rng-tools
+    && echo "HRNGDEVICE=/dev/urandom" >> /etc/default/rng-tools \
     && /etc/init.d/rng-tools start
 }
 
