@@ -26,6 +26,7 @@ export default React.createClass({
   render() {
     const { open, GCMs } = this.state;
     const token = SessionStore.getToken();
+    const item = GCMPushNotificationsStore.data.items[0];
     const currentInstance = SessionStore.getInstance();
     const showSummaryDialog = (!currentInstance || !token || GCMs.isLoading);
 
@@ -69,22 +70,22 @@ export default React.createClass({
                         title="cURL"
                         languageClassName="markup"
                         code={`curl -X PATCH \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
-                        `\\\n-d '{"production_api_key":"GCM_PRODUCTION_KEY","development_api_key":` +
-                        `"GCM_DEVELOPMENT_KEY"}' \\\n"https://api.syncano.io/v1.1/instances/${currentInstance.name}` +
-                        '/push_notifications/gcm/config/"'}
+                        `\\\n-d '{"production_api_key":"${item.production_api_key}","development_api_key":` +
+                        `"${item.development_api_key}"}' \\\n"https://api.syncano.io/v1.1/instances/` +
+                        `${currentInstance.name}/push_notifications/gcm/config/"`}
                       />
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
                         code={`gcm_config = GCMConfig.please.get(instance_name="${currentInstance.name}")\n\n` +
-                        'gcm_config.development_api_key = "DEVELOPMENT_API_KEY"\ngcm_config.production_api_key = ' +
-                        '"PRODUCTION_API_KEY"\n\ngcm_config.save()'}
+                        `gcm_config.development_api_key = "${item.development_api_key}"\n` +
+                        `gcm_config.production_api_key = "${item.production_api_key}"\n\ngcm_config.save()`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={'var update = {\n  production_api_key: "PRODUCTION_KEY",\n  development_api_key: ' +
-                        '"DEVELOPMENT_KEY"\n};\n\nGCMConfig\n  .please()\n  ' +
+                        code={`var update = {\n  production_api_key: "${item.production_api_key}",\n  ` +
+                        `development_api_key: "${item.development_api_key}"\n};\n\nGCMConfig\n  .please()\n  ` +
                         `.update({instanceName: '${currentInstance.name}'}, update)\n  .then(calback);`}
                       />
                     </CodePreview>
