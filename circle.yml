@@ -2,7 +2,7 @@ machine:
   node:
     version: 6.2.1
   post:
-    - apt-get install rng-tools
+    - sudo apt-get install rng-tools
     - sudo echo "HRNGDEVICE=/dev/urandom" >> /etc/default/rng-tools
     - sudo /etc/init.d/rng-tools start
 
