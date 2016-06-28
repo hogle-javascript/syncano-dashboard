@@ -8,7 +8,7 @@ export default {
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.navigationUser.email, accounts.navigationUser.password);
+      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
   after: (client) => {
     client.end();
