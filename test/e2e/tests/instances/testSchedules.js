@@ -49,7 +49,6 @@ export default {
   },
   'Administrator deletes a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
-    const listsPage = client.page.listsPage();
     const schedule = utils.addSuffix('schedule');
     const instanceName = accounts.instanceUser.instanceName;
 
@@ -57,9 +56,6 @@ export default {
       .goToUrl(instanceName, 'schedules')
       .clickListItemDropdown(schedule, 'Delete')
       .waitForElementPresent('@deleteScheduleModalTitle')
-      .clickElement('@confirm')
-      .waitForElementNotPresent('@selectScheduleTableRow');
-
-    listsPage.waitForElementVisible('@emptyListItem');
+      .clickElement('@addScheduleButton');
   }
 };
