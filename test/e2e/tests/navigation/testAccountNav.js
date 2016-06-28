@@ -89,7 +89,7 @@ module.exports = {
       .waitForElementVisible('@fox')
       .clickElement('@accountDropdown');
     leftMenuPage.clickElement('@paymentMethods');
-    paymentMethodsPage.waitForElementPresent('@updatePaymentButton');
+    paymentMethodsPage.waitForElementPresent('@addPaymentButton');
   },
   'User goes to Invoices view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
