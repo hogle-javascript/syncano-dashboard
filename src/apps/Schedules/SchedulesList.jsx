@@ -8,7 +8,8 @@ import { DialogsMixin } from '../../mixins';
 
 // Components
 import ListItem from './SchedulesListItem';
-import { ColumnList, Dialog, Lists } from '../../common/';
+import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
+import { colors as Colors } from 'material-ui/styles';
 
 const Column = ColumnList.Column;
 
@@ -65,7 +66,28 @@ export default React.createClass({
   },
 
   render() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other } = this.props;
+    const {
+      handleTitleClick,
+      handleSelectAll,
+      handleUnselectAll,
+      getCheckedItems,
+      items,
+      isLoading,
+      ...other
+    } = this.props;
+
+    if ((!items || !items.length) && !isLoading) {
+      return (
+        <EmptyView
+          iconClassName="synicon-socket-schedule"
+          iconColor={Colors.lime400}
+          title="Schedule"
+          description="Run Scripts as jobs at desired times or intervals."
+          docsUrl="http://docs.syncano.io/docs/schedules"
+          handleClickAdd={Actions.showDialog}
+        />
+        );
+    }
 
     return (
       <Lists.Container className="schedules-list">
@@ -120,6 +142,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...other}
+          isLoading={isLoading}
+          items={items}
           key="schedules-list"
           renderItem={this.renderItem}
         />
