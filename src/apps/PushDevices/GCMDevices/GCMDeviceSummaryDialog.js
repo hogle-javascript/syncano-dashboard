@@ -30,7 +30,6 @@ export default React.createClass({
     const currentInstance = SessionStore.getInstance();
     const showSummaryDialog = (!item || !currentInstance || !token || GCMDevices.isLoading);
 
-    console.error(item);
     return (
       <Dialog.FullPage
         key="dialog"
@@ -86,16 +85,17 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`device = GCMDevice.please.get(\n  instance_name='${currentInstance.name}', ` +
-                        `\n  registration_id='${item.registration_id}'\n) \n\ndevice.send_message(\n  content={\n` +
-                        "    'environment': 'development',\n    'aps': {'alert': 'hello'}\n  }\n)"}
+                        code={`gcm_device = GCMDevice.please.get(\n  instance_name='${currentInstance.name}', ` +
+                        `\n  registration_id='${item.registration_id}'\n) \n\ngcm_device.send_message(\n  content={\n` +
+                        "    'environment': 'development',\n    'data': {\n      'one': 1,\n      'two': 2,\n    " +
+                        '}\n  }\n)'}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
                         code={`var query = {\n  instanceName: "${currentInstance.name}",\n  ` +
                         `registration_id: "${item.registration_id}" \n};\n` +
-                        'var content = {\n  environment: "development",\n  aps: {alert: "hello"}\n};' +
+                        'var content = {\n  environment: "development",\n  data: {\n    one: 1,\n    two: 2\n  }\n};' +
                         `\n\n\GCMDevice\n  .please()\n  .sendMessage(query, content)\n  .then(calback);`}
                       />
                     </CodePreview>
