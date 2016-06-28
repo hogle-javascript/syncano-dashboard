@@ -4,7 +4,7 @@ import Radium from 'radium';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
-import { FormMixin, DialogsMixin } from '../../mixins';
+import { DialogsMixin, FormMixin } from '../../mixins';
 
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
@@ -16,8 +16,8 @@ export default Radium(React.createClass({
   displayName: 'ProfileBillingPayment',
 
   mixins: [
-    FormMixin,
     DialogsMixin,
+    FormMixin,
     Reflux.connect(Store)
   ],
 
