@@ -2,7 +2,6 @@ var Raven = require('raven-js');
 
 if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
   require('raven-js/plugins/console');
-  require('raven-js/plugins/native');
 
   var ravenOptions = {
     tags: {
@@ -24,13 +23,13 @@ if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
       'atomicFindClose',
       // Facebook borked
       'fb_xd_fragment',
-      // ISP "optimizing" proxy - `Cache-Control: no-transform` seems to reduce this. (thanks @acdha)
-      // See http://stackoverflow.com/questions/4113268/how-to-stop-javascript-injection-from-vodafone-proxy
+      // ISP "optimizing" proxy - `Cache-Control: no-transform` seems to
+      // reduce this. (thanks @acdha)
+      // See http://stackoverflow.com/questions/4113268
       'bmi_SafeAddOnload',
       'EBCallBackMessageReceived',
       // See http://toolbar.conduit.com/Developer/HtmlAndGadget/Methods/JSInjection.aspx
-      'conduitPage',
-      /No route matches path/i
+      'conduitPage'
     ],
     ignoreUrls: [
       // Facebook flakiness
@@ -45,7 +44,6 @@ if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
       /^chrome:\/\//i,
       // Other plugins
       /127\.0\.0\.1:4001\/isrunning/i,  // Cacaoweb
-      /localhost/i,
       /webappstoolbarba\.texthelp\.com\//i,
       /metrics\.itunes\.apple\.com\.edgesuite\.net\//i
     ]
