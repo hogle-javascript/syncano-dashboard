@@ -57,18 +57,13 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       container: {
-        maxWidth: 550
+        maxWidth: 500
       },
       cardIcon: {
         width: 40,
         height: 'auto',
         display: 'block',
         marginRight: 10
-      },
-      formDescriptionText: {
-        fontSize: 10,
-        color: 'rgb(170, 170, 170)',
-        textTransform: 'uppercase'
       }
     };
   },
@@ -135,6 +130,11 @@ export default Radium(React.createClass({
             >
               {this.renderFormNotifications()}
 
+              <div className="row vm-2-b">
+                <div className="col-sm-35">
+                  <p style={{ margin: 0 }}>This is a secure 256-bit SSL encrypted payment.</p>
+                </div>
+              </div>
               <div className="row">
                 <div
                   className="col-sm-35"
@@ -168,7 +168,7 @@ export default Radium(React.createClass({
                   />
                 </div>
               </div>
-              <div className="row vm-2-b">
+              <div className="row vm-4-b">
                 <div className="col-flex-2">
                   <SelectField
                     ref="exp_month"
@@ -226,15 +226,6 @@ export default Radium(React.createClass({
                     floatingLabelText="CVC"
                     dataStripe="cvc"
                   />
-                </div>
-              </div>
-              <div className="row vm-4-b">
-                <div className="col-sm-35">
-                  <div style={styles.formDescriptionText}>
-                    <p>The card security code (CVC) is located on the back of MasterCard, Visa, Discover, Diners Club,
-                    and JCB credit or debit cards and is typically a separate group of 3 digits to the right of the
-                    signature strip.</p>
-                  </div>
                 </div>
               </div>
               <div className="row">
