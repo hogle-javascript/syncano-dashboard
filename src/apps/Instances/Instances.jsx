@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import { withRouter } from 'react-router';
 import Helmet from 'react-helmet';
+import _ from 'lodash';
 import { colors as Colors } from 'material-ui/styles/';
 
 // Stores and Actions
@@ -37,9 +38,9 @@ const Instances = React.createClass({
     Actions.fetch();
 
     const { prolongDialog } = this.refs;
-    const { search } = this.props.location;
+    const { query } = this.props.location;
 
-    if (prolongDialog && search === '?prolong') {
+    if (prolongDialog && _.has(query, 'prolong')) {
       prolongDialog.show();
     }
   },
