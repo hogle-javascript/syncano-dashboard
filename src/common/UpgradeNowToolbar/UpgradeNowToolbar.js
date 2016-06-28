@@ -98,20 +98,20 @@ export default React.createClass({
   },
 
   render() {
-    const { shouldDisplay, isHidden } = this.state;
+    // const { shouldDisplay, isHidden } = this.state;
     const { subscriptionEndDate } = this.props;
     const styles = this.getStyles();
     const days = Moment(subscriptionEndDate).diff(new Date(), 'days');
     const daysText = days > 1 ? 'days' : 'day';
 
-    if (!shouldDisplay || isHidden) {
-      return null;
-    }
+    // if (!shouldDisplay || isHidden) {
+    //   return null;
+    // }
 
     return (
       <div style={styles.upgradeNowToolbar}>
         <div style={{ padding: '9px 20px' }}>
-          <p style={{ margin: 0, fontSize: 16 }}>
+          <p style={{ margin: 0, fontSize: 16, lineHeight: 1.4 }}>
             Your free builder account expires in {days} {daysText}. Upgrade to keep using Syncano after this period.
           </p>
         </div>
