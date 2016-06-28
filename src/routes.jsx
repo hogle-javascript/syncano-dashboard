@@ -122,7 +122,6 @@ export default (
     onEnter={onRootEnter}
     path="/"
   >
-
     <Route
       name="login"
       path="login"
@@ -166,7 +165,13 @@ export default (
         name="instances"
         component={Instances}
         path="instances"
-      />
+      >
+        <Route
+          name="prolong"
+          component={Instances}
+          path="?prolong"
+        />
+      </Route>
 
       <Route
         name="setup"
