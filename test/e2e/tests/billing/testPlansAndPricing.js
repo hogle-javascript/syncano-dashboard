@@ -22,8 +22,8 @@ export default {
       .verify.containsText('@planBarLocator', 'Builder')
       .clickElement('@openPlansExplorerButton')
       .fillInput('@cardNumberInput', '4000056655665556')
-      .clickListItemDropdown('@monthExpirationInput', 11)
-      .clickListItemDropdown('@yearExpirationInput', 2021)
+      .selectDropdownValue('@monthExpirationInput', 11)
+      .selectDropdownValue('@yearExpirationInput', 2021)
       .fillInput('@cvcInput', '666')
       .clickElement('@confirmButton')
       .waitForElementVisible('@openPlansExplorerButton');
