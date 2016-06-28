@@ -98,15 +98,15 @@ export default React.createClass({
   },
 
   render() {
-    // const { shouldDisplay, isHidden } = this.state;
+    const { shouldDisplay, isHidden } = this.state;
     const { subscriptionEndDate } = this.props;
     const styles = this.getStyles();
     const days = Moment(subscriptionEndDate).diff(new Date(), 'days');
     const daysText = days > 1 ? 'days' : 'day';
 
-    // if (!shouldDisplay || isHidden) {
-    //   return null;
-    // }
+    if (!shouldDisplay || isHidden) {
+      return null;
+    }
 
     return (
       <div style={styles.upgradeNowToolbar}>
