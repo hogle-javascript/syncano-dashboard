@@ -65,7 +65,7 @@ export default Radium(React.createClass({
       <div className="vm-3-b" style={styles.cardContainer}>
         <div>
           <div style={styles.cardHeadline}>Card number</div>
-          <div>*** **** **** {this.props.card.last4}</div>
+          <div>**** **** **** {this.props.card.last4}</div>
         </div>
         <div style={styles.cardFooter}>
           <div>
