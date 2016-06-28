@@ -24,7 +24,7 @@ export default React.createClass({
         background: '#0070D3',
         color: '#fff',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'center'
       }
     };
