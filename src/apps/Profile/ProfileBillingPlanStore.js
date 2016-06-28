@@ -82,14 +82,29 @@ export default Reflux.createStore({
   },
 
   isPlanCanceled() {
-    if (!this.data.subscriptions || this.data.subscriptions.length > 1) {
+    const { subscriptions } = this.data;
+    const lastSubscription = _.last(subscriptions);
+
+    if (this.isNewSubscription() || !subscriptions) {
       return false;
     }
-    return this.data.subscriptions[0].end || false;
+
+    if (_.isString(lastSubscription.start) && _.isString(lastSubscription.end)) {
+      return true;
+    }
+
+    return false;
   },
 
   isNewSubscription() {
-    return (this.data.subscriptions && this.data.subscriptions.length > 1);
+    const { subscriptions } = this.data;
+    const lastSubscription = _.last(subscriptions);
+
+    if (subscriptions && _.isString(lastSubscription.start) && !_.isString(lastSubscription.end)) {
+      return true;
+    }
+
+    return false;
   },
 
   getBuilderLimits() {

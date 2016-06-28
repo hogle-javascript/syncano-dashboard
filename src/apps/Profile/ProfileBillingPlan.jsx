@@ -14,7 +14,7 @@ import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
 import { FlatButton, IconButton, RaisedButton, TextField } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
-import { Billing, Container, Loading, Color, Dialog, InnerToolbar, UpgradeButton } from '../../common/';
+import { Billing, Container, Loading, Dialog, InnerToolbar, UpgradeButton } from '../../common/';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 
@@ -78,17 +78,31 @@ export default Radium(React.createClass({
         marginRight: 8,
         display: 'flex',
         justifyContent: 'center'
+      },
+      smallText: {
+        color: 'rgb(170, 170, 170)',
+        fontSize: 10,
+        textTransform: 'uppercase',
+        paddingRight: 10
       }
     };
   },
 
   handleCancelCancelProductionPlan() {
     this.hideDialogs(true);
-    this.setupToggles();
   },
 
   handleCancelProductionPlan() {
-    Actions.cancelSubscriptions(this.state.subscriptions.map((item) => item.id));
+    console.error(this.state.subscriptions);
+    const subscriptionIDs = _.compact(_.map(this.state.subscriptions, (item) => {
+      if (item.plan === 'builder') {
+        return false;
+      }
+
+      return item.id;
+    }));
+
+    Actions.cancelSubscriptions(subscriptionIDs);
   },
 
   handleShowPlanDialog() {
@@ -97,7 +111,6 @@ export default Radium(React.createClass({
   },
 
   handlePlanDialogDismiss() {
-    this.setupToggles();
     Actions.fetch();
   },
 
@@ -136,20 +149,7 @@ export default Radium(React.createClass({
     }];
   },
 
-  setupToggles() {
-    const plan = Store.getPlan();
-    const isPlanCanceled = _.isBoolean(Store.isPlanCanceled());
-    const toggleDict = {
-      builder: false,
-      free: true,
-      'paid-commitment': isPlanCanceled
-    };
-
-    this.refs.toggle.setToggled(toggleDict[plan]);
-  },
-
   renderMainDesc() {
-    const styles = this.getStyles();
     const plan = Store.getPlan();
 
     if (plan === 'free') {
@@ -158,7 +158,7 @@ export default Radium(React.createClass({
 
     if (plan === 'builder') {
       return (
-        <div>
+        <div className="vm-3-b">
           <div style={{ marginBottom: 16 }}>It does not cost you anything but there are limits:</div>
           <div>
             <Limits data={Store.getLimitsData('default', plan)} />
@@ -167,11 +167,9 @@ export default Radium(React.createClass({
       );
     } else if (plan === 'paid-commitment') {
       return (
-        <div>
-          <div style={styles.mainDesc}>
-            <div style={{ lineHeight: '48px' }}>
-              Current plan <strong>${Store.getTotalPlanValue('default')}</strong>:
-            </div>
+        <div className="vm-3-b">
+          <div className="vm-2-b">
+            Current plan <strong>${Store.getTotalPlanValue('default')}</strong>:
           </div>
           <div>
             <Limits data={Store.getLimitsData('default', plan)} />
@@ -181,53 +179,52 @@ export default Radium(React.createClass({
     }
   },
 
-  renderCommment() {
+  renderComment() {
     const styles = this.getStyles();
     const plan = Store.getPlan();
 
     if (plan === 'builder') {
       return (
-        <div>
+        <div className="vm-5-b">
           If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
           If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
         </div>
       );
-    } else if (plan === 'paid-commitment') {
+    }
+
+    if (plan === 'paid-commitment') {
       if (Store.isNewSubscription()) {
-        const subscription = this.state.subscriptions[1];
+        const subscription = _.last(this.state.subscriptions);
         const total = Store.getTotalPlanValue(subscription);
         const limitsData = Store.getLimitsData(subscription, plan);
 
-        let toolTip = (
-          <div style={{ whiteSpace: 'normal', textAlign: 'left', width: 250 }}>
-            Your current plan will expire at the end of the month and your new plan
-            will begin on {Moment(subscription.start).format('LL')}
-          </div>
-        );
-
         return (
-          <div>
+          <div className="vm-5-b">
             <div style={styles.mainDesc}>
-              <div style={{ lineHeight: '48px' }}>New plan <strong>${total}</strong>:</div>
-              <IconButton
-                iconClassName="synicon-information-outline"
-                iconStyle={{ color: Color.getColorByName('blue', 'light') }}
-                tooltip={toolTip}
-              />
+              <div className="vm-2-b">
+                New plan <strong>${total}</strong>:
+              </div>
+            </div>
+            <div className="vm-2-b">
+              <Limits data={limitsData} />
             </div>
             <div>
-              <Limits data={limitsData} />
+              <p style={styles.smallText}>
+                Your current plan will expire at the end of the month and your new plan will begin
+                on {Moment(subscription.start).format('LL')}
+              </p>
             </div>
           </div>
         );
       }
-      return (
-        <div>
-          You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
-          Your new monthly fixed price will start from next billing period.
-        </div>
-      );
     }
+
+    return (
+      <div style={{ lineHeight: '1.5em' }}>
+        You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>. Your new
+        monthly fixed price will start from next billing period.
+      </div>
+    );
   },
 
   renderLimitsForm() {
@@ -323,6 +320,23 @@ export default Radium(React.createClass({
     );
   },
 
+  renderCancelSubscriptionButton() {
+    const plan = Store.getPlan();
+
+    if (plan === 'builder' || plan === 'free' || Store.isPlanCanceled()) {
+      return null;
+    }
+
+    return (
+      <div style={{ marginTop: 8, textAlign: 'center' }}>
+        <FlatButton
+          label="Cancel my plan"
+          onTouchTap={() => this.showDialog('cancelProductionPlan')}
+        />
+      </div>
+    );
+  },
+
   renderSummary() {
     const plan = Store.getPlan();
     const { profile } = this.state;
@@ -384,6 +398,7 @@ export default Radium(React.createClass({
               ${covered} plan + ${overage} overage
             </div>
             {this.renderUpgradeButton()}
+            {this.renderCancelSubscriptionButton()}
           </div>
         </div>
       </div>
@@ -397,6 +412,8 @@ export default Radium(React.createClass({
     if (this.state.isLoading) {
       return <Loading show={true} />;
     }
+
+    console.error(subscriptions);
 
     if (subscriptions && subscriptions.length === 0) {
       return (
@@ -431,12 +448,8 @@ export default Radium(React.createClass({
         <Container>
           <div className="row vp-6-b">
             <div className="col-flex-1">
-              <div className="vm-3-t">
-                {this.renderMainDesc()}
-              </div>
-              <div className="vm-3-t">
-                {this.renderCommment()}
-              </div>
+              {this.renderMainDesc()}
+              {this.renderComment()}
             </div>
             <div
               className="col-md-14"
