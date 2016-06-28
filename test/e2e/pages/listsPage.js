@@ -37,7 +37,7 @@ export default {
       locateStrategy: 'xpath'
     },
     firstItemRowName: {
-      selector: '(//div[@class="col-xs-12"])[2]',
+      selector: '(//div[@class="col-xs-12"]/div)[2]',
       locateStrategy: 'xpath'
     },
     firstItemRowDescription: {

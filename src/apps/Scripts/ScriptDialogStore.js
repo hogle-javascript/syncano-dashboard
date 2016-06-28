@@ -5,8 +5,8 @@ import _ from 'lodash';
 import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 
 // Stores & Actions
-import SessionStore from '../Session/SessionStore';
 import Actions from './ScriptsActions';
+import ScriptSummaryDialogActions from './ScriptSummaryDialogActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -53,16 +53,11 @@ export default Reflux.createStore({
     this.trigger({ runtimes: { current, deprecated } });
   },
 
-  onCreateScriptCompleted(resp) {
+  onCreateScriptCompleted() {
     console.debug('ScriptsStore::onCreateScriptCompleted');
     this.dismissDialog();
-
-    const params = {
-      ...SessionStore.getParams(),
-      scriptId: resp.id
-    };
-
-    SessionStore.getRouter().push({ name: 'script', params });
+    Actions.fetchScripts();
+    ScriptSummaryDialogActions.showDialog();
   },
 
   onUpdateScriptCompleted() {
