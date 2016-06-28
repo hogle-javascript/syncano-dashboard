@@ -26,7 +26,10 @@ export default {
       .clickListItemDropdown('@yearExpirationInput', '2019')
       .fillInput('@cvcInput', '666')
       .clickElement('@confirmButton')
-      .waitForElementVisible('@openPlansExplorerButton')
+      .waitForElementVisible('@openPlansExplorerButton');
+    // To avoid test failing as site take some time to reload after payment
+    client.pause(1500);
+    billingPage
       .verify.containsText('@planBarLocator', 'Production');
   }
 };
