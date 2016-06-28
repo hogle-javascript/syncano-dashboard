@@ -165,13 +165,7 @@ export default (
         name="instances"
         component={Instances}
         path="instances"
-      >
-        <Route
-          name="prolong"
-          component={Instances}
-          path="?prolong"
-        />
-      </Route>
+      />
 
       <Route
         name="setup"
@@ -205,8 +199,8 @@ export default (
 
         <Redirect
           from="prolong"
-          to="sockets"
-          query={{ showProlongDialog: true }}
+          to="instances"
+          query={{ prolong: true }}
         />
 
         {/* Sockets */}
