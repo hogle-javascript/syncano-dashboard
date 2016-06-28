@@ -138,7 +138,7 @@ export default Radium(React.createClass({
               <div className="row">
                 <div
                   className="col-sm-35"
-                  style={{ display: 'flex' }}
+                  style={{ display: 'flex', alignItems: 'center' }}
                 >
                   <PaymentIcon style={styles.cardIcon} />
                   <PaymentIcon type="MasterCard" style={styles.cardIcon} />
@@ -146,6 +146,11 @@ export default Radium(React.createClass({
                   <PaymentIcon type="Discover" style={styles.cardIcon} />
                   <PaymentIcon type="Diners Club" style={styles.cardIcon} />
                   <PaymentIcon type="Jcb" style={styles.cardIcon} />
+                  <img
+                    src={require('!file-loader!../../assets/img/stripe-badge@3x.png')}
+                    alt="Powered by Stripe"
+                    style={{ display: 'block', height: 78 / 3, marginLeft: 'auto' }}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -163,7 +168,7 @@ export default Radium(React.createClass({
                   />
                 </div>
               </div>
-              <div className="row vm-4-b">
+              <div className="row vm-2-b">
                 <div className="col-flex-2">
                   <SelectField
                     ref="exp_month"
@@ -239,15 +244,16 @@ export default Radium(React.createClass({
                       onClick={this.toggleForm.bind(this, false)}
                       label="Cancel"
                       className="raised-button"
+                      style={{ marginRight: 8 }}
                     />
                   </Show>
                   <RaisedButton
                     type="submit"
                     label={formSubmitButtonLabel}
-                    className="raised-button"
                     primary={true}
-                    disabled={!canSubmit}
+                    className="raised-button"
                     style={{ margin: '0 0 0 auto' }}
+                    disabled={!canSubmit}
                   />
                 </div>
               </div>
@@ -263,8 +269,8 @@ export default Radium(React.createClass({
                 style={{ marginRight: 8 }}
               />
               <RaisedButton
-                onClick={this.toggleForm.bind(null, true)}
                 type="submit"
+                onClick={this.toggleForm.bind(null, true)}
                 label="Update payment"
                 primary={true}
               />

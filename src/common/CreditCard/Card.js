@@ -62,10 +62,10 @@ export default Radium(React.createClass({
     let cardTypeIcon = this.props.card.brand ? this.getCardTypeIcon(this.props.card.brand) : null;
 
     return (
-      <div className="vm-6-b" style={styles.cardContainer}>
+      <div className="vm-3-b" style={styles.cardContainer}>
         <div>
           <div style={styles.cardHeadline}>Card number</div>
-          <div>*** **** *** {this.props.card.last4}</div>
+          <div>*** **** **** {this.props.card.last4}</div>
         </div>
         <div style={styles.cardFooter}>
           <div>
