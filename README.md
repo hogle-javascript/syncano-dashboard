@@ -58,7 +58,7 @@ or if you are using `fish` shell:
 We are using set of [Material Design Icons](http://materialdesignicons.com/).
 Icons are attached as font in static assets `src/assets` so if you want to rebuild whole font just use npm command:
 
-    $ npm run-script iconfont
+    $ npm run iconfont
 
 and commit your changes.
 
@@ -68,7 +68,7 @@ and commit your changes.
 We are using [nightwatchjs](http://nightwatchjs.org/) for e2e testing.
 **nightwatchjs** requires few binary files which can be installed via proper NPM command:
 
-    $ npm run-script e2e-setup
+    $ npm run e2e-setup
 
 You'll also need to configure env variables for the tests to work locally:
 
@@ -78,7 +78,7 @@ You'll also need to configure env variables for the tests to work locally:
 
 Or for some tests (they are being rewrited):
 
-    $ npm run-script e2e-create-accounts
+    $ npm run e2e-create-accounts
 
 This will create set of three accounts for tests (Accounts will be deleted after 1h of no activity).
 
@@ -95,16 +95,16 @@ then start selenium server with chromedriver node:
 
 and start testing:
 
-    $ npm run-script e2e
+    $ npm run e2e
 
 Or using alternative metod:
 
     $ npm start
-    $ npm e2e-run
+    $ npm run e2e-run
 
 If you want only one test tag to run use for example:
 
-    $ npm e2e-run class
+    $ npm run e2e-run class
 
 This will run only tests with tag = class.
 
