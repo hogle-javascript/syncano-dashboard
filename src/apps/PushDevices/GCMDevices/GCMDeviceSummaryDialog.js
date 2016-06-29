@@ -63,7 +63,7 @@ export default React.createClass({
               <div className="col-flex-1">
                 <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
                   <p>
-                    Android Device you just created can always be modified later. Now You can Send Push Notification
+                    Android Device you just created can always be modified later. Now you can send Push Notification
                     Messages to this device.
                   </p>
                 </div>
