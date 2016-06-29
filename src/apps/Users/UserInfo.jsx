@@ -48,9 +48,18 @@ export default Radium(React.createClass({
   renderCustomFields() {
     const styles = this.getStyles();
     const { profile } = this.props.user;
-    const fields = _.omit(profile, 'links');
+    const userProfile = _.omit(profile, 'links');
 
-    const userInfo = _.map(fields, (value, key) => {
+    const sortUserProfile = (map) => {
+      const keys = _.sortBy(_.keys(map), (a) => { return a; });
+      const newmap = {};
+      _.each(keys, (k) => {
+        newmap[k] = map[k];
+      });
+      return newmap;
+    };
+
+    const userInfo = _.map(sortUserProfile(userProfile), (value, key) => {
       return (
         <div style={styles.item}>
           {key}
@@ -58,7 +67,6 @@ export default Radium(React.createClass({
         </div>
        );
     });
-
     return userInfo;
   },
 
