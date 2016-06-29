@@ -8,7 +8,7 @@ import DataEndpointsStore from './DataEndpointsStore';
 import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
-import { CodePreview, Dialog, Notification, Show } from '../../common/';
+import { CodePreview, Dialog, Notification, Show, Loading } from '../../common/';
 import { Card, CardTitle, CardText, RaisedButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
@@ -31,6 +31,7 @@ export default React.createClass({
     const item = DataEndpointsStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
+    const showSummaryDialog = (!item || !currentInstance || !token || dataEndpoints.isLoading);
     const itemClass = item && ClassesStore.getClassByName(item.class);
     const itemClassSchema = itemClass && itemClass.schema;
 
@@ -38,19 +39,21 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a Data Endpoint!"
+        title={!showSummaryDialog ? "You've just created a Data Endpoint!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={dataEndpoints.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className="synicon-socket-data"
-            style={{ color: Colors.green400, fontSize: 32 }}
-          />
-        </div>
-        {!item || !currentInstance || !token || dataEndpoints.isLoading ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className="synicon-socket-data"
+              style={{ color: Colors.green400, fontSize: 32 }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -123,7 +126,9 @@ export default React.createClass({
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`DataEndpoint\n  .please()\n  .fetchData({name: '${item.name}', instanceName: '` +
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar DataEndpoint = connection.DataEndpoint;\n\n` +
+                        `DataEndpoint\n  .please()\n  .fetchData({name: '${item.name}', instanceName: '` +
                         `${currentInstance.name}'})\n  .then(function(dataObjects) {});`}
                       />
                     </CodePreview>
