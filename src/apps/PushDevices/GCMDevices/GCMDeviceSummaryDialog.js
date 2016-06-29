@@ -1,16 +1,17 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Store from './ScriptSummaryDialogStore';
-import ScriptsStore from './ScriptsStore';
-import SessionStore from '../Session/SessionStore';
+import Store from './GCMDeviceSummaryDialogStore';
+import GCMDevicesStore from './GCMDevicesStore';
+import SessionStore from '../../Session/SessionStore';
 
-import { DialogMixin } from '../../mixins';
-import { CodePreview, Dialog, Loading } from '../../common/';
+import { DialogMixin } from '../../../mixins';
+import { CodePreview, Dialog, Loading } from '../../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
-  displayName: 'ScriptSummaryDialog',
+  displayName: 'GCMDeviceSummaryDialog',
 
   contextTypes: {
     params: React.PropTypes.object
@@ -18,44 +19,33 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Reflux.connect(ScriptsStore, 'Scripts'),
+    Reflux.connect(GCMDevicesStore, 'GCMDevices'),
     DialogMixin
   ],
 
-  hideDialog() {
-    this.dismiss();
-    this.resetDialogState();
-    const params = {
-      ...SessionStore.getParams(),
-      scriptId: ScriptsStore.data.items[0].id
-    };
-    SessionStore.getRouter().push({ name: 'script', params });
-  },
-
   render() {
-    const { open, Scripts } = this.state;
-    const item = ScriptsStore.data.items[0];
+    const { open, GCMDevices } = this.state;
+    const item = GCMDevicesStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
-    const showSummaryDialog = (!item || !currentInstance || !token || Scripts.isLoading);
-    const runtime = item ? ScriptsStore.getRuntimeColorIcon(item.runtime_name) : {};
+    const showSummaryDialog = (!item || !currentInstance || !token || GCMDevices.isLoading);
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title={!showSummaryDialog ? "You've just created a Script!" : ''}
+        title={!showSummaryDialog ? "You've just added Android Device!" : ''}
         titleStyle={{ paddingLeft: 72 }}
-        onRequestClose={this.hideDialog}
-        loading={Scripts.isLoading}
+        onRequestClose={this.handleCancel}
+        loading={GCMDevices.isLoading}
         open={open}
       >
         {!showSummaryDialog && (
           <div style={{ position: 'absolute', top: 0, left: 24 }}>
             <span
-              className={`synicon-${runtime.icon}`}
+              className="synicon-android"
               style={{
-                backgroundColor: runtime.color,
+                backgroundColor: Colors.blue500,
                 color: '#fff',
                 fontSize: 24,
                 borderRadius: '50%',
@@ -73,9 +63,8 @@ export default React.createClass({
               <div className="col-flex-1">
                 <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
                   <p>
-                    Script is a piece of code that can be run in the cloud. Technology used for the environments
-                    created during the code execution is powered by Docker. Scripts can be run directly, by Triggers,
-                    Schedules and Script Endpoint Sockets.
+                    Android Device you just created can always be modified later. Now you can send Push Notification
+                    Messages to this device.
                   </p>
                 </div>
               </div>
@@ -90,25 +79,29 @@ export default React.createClass({
                       <CodePreview.Item
                         title="cURL"
                         languageClassName="markup"
-                        code={`curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" \\\n` +
-                        `-d '{"payload":{"KEY":"VALUE"}}' \\\n"https://api.syncano.io/v1.1/instances/` +
-                        `${currentInstance.name}/snippets/scripts/${item.id}/run/"`}
+                        code={`curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
+                        `\\\n-d '{"content": {"data": {"one": 1, "two": 2}, "environment": "development"}}' \\\n` +
+                        `"https://api.syncano.io/v1.1/instances/${currentInstance.name}/push_notifications/` +
+                        `gcm/devices/${item.registration_id}/send_message/`}
                       />
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`import syncano\nfrom syncano.models import Script\n\nconnection = syncano.connect` +
-                        `(api_key="${token}")\n\ntrace = Script.please.run(\n  ` +
-                        `instance_name="${currentInstance.name}",\n  id="${item.id}",\n  payload={'KEY': 'VALUE'}\n)`}
+                        code={`import syncano\nfrom syncano.models import GCMDevice\n\nsyncano.connect(api_key=` +
+                        `'${token}')\n\ngcm_device = GCMDevice.please.get(\n  instance_name='` +
+                        `${currentInstance.name}', \n  registration_id='${item.registration_id}'\n) \n\n` +
+                        "gcm_device.send_message(\n  content={\n    'environment': 'development',\n    " +
+                        "data': {\n      'one': 1,\n      'two': 2,\n    }\n  }\n)"}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
                         code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
-                        `'${token}'});\nvar Script = connection.Script;\n\n` +
-                        `var payload = {"payload": {"KEY":"VALUE"}};\n\nScript\n  .please()\n  ` +
-                        `.run({instanceName: '${currentInstance.name}', id: ${item.id}}, payload)\n` +
-                        '  .then(calback);'}
+                        `'${token}'});\nvar GCMDevice = connection.GCMDevice;\n\n` +
+                        `var query = {\n  instanceName: "${currentInstance.name}",\n  ` +
+                        `registration_id: "${item.registration_id}" \n};\n` +
+                        'var content = {\n  environment: "development",\n  data: {\n    one: 1,\n    two: 2\n  }\n};' +
+                        `\n\n\GCMDevice\n  .please()\n  .sendMessage(query, content)\n  .then(calback);`}
                       />
                     </CodePreview>
                   </CardText>

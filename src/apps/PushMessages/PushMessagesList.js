@@ -2,10 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 import { colors as Colors } from 'material-ui/styles';
-import { ColumnList, Loading, Container, Lists, ShowMore } from '../../common/';
+import { ColumnList, Loading, Container, Lists, ShowMore, EmptyView } from '../../common/';
 import APNSMessageListItem from './APNS/APNSMessageListItem';
 import GCMMessageListItem from './GCM/GCMMessageListItem';
-import EmptyView from './PushMessagesEmptyView';
 
 const Column = ColumnList.Column;
 
@@ -79,37 +78,39 @@ const PushMessagesList = React.createClass({
           {title}
         </div>
         <Loading show={isLoading}>
-          {!items || !items.length ? <EmptyView handleClickSend={this.redirectToPushDevices} /> : <Lists.Container>
-            <ColumnList.Header>
-              <Column.ColumnHeader
-                columnName="CHECK_ICON"
-                className="col-sm-8"
-              >
-                <div style={styles.status}>
-                  Status
-                </div>
-              </Column.ColumnHeader>
-              <Column.ColumnHeader
-                columnName="DESC"
-                className="col-sm-13"
-              >
-                Message
-              </Column.ColumnHeader>
-              <Column.ColumnHeader columnName="DESC">
-                Environment
-              </Column.ColumnHeader>
-              <Column.ColumnHeader columnName="DESC">
-                Devices
-              </Column.ColumnHeader>
-              <Column.ColumnHeader columnName="DATE">
-                Sent
-              </Column.ColumnHeader>
-            </ColumnList.Header>
-            <Lists.List
-              items={slicedItems}
-              renderItem={this.renderItem}
-            />
-          </Lists.Container>}
+          {!items || !items.length
+            ? <EmptyView.PushMessages handleClickSend={this.redirectToPushDevices} />
+            : <Lists.Container>
+              <ColumnList.Header>
+                <Column.ColumnHeader
+                  columnName="CHECK_ICON"
+                  className="col-sm-8"
+                >
+                  <div style={styles.status}>
+                    Status
+                  </div>
+                </Column.ColumnHeader>
+                <Column.ColumnHeader
+                  columnName="DESC"
+                  className="col-sm-13"
+                >
+                  Message
+                </Column.ColumnHeader>
+                <Column.ColumnHeader columnName="DESC">
+                  Environment
+                </Column.ColumnHeader>
+                <Column.ColumnHeader columnName="DESC">
+                  Devices
+                </Column.ColumnHeader>
+                <Column.ColumnHeader columnName="DATE">
+                  Sent
+                </Column.ColumnHeader>
+              </ColumnList.Header>
+              <Lists.List
+                items={slicedItems}
+                renderItem={this.renderItem}
+              />
+            </Lists.Container>}
           <ShowMore
             style={{ margin: '-30px 0 40px 0' }}
             visible={items.length > visibleItems && isAllMessagesRouteActive}
