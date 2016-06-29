@@ -17,7 +17,7 @@ function e2e_cleanup {
     npm run e2e-remove-certificate
 }
 
-MESSAGE=$(git log -1 HEAD --pretty=format:%s)
+MESSAGE=$(git log --pretty=format:%s -n 1 $CIRCLE_SHA1)
 
 if [[ "$MESSAGE" == *\[E2E SKIP\]* ]]; then
     npm run lint
