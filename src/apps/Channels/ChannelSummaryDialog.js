@@ -73,13 +73,13 @@ export default React.createClass({
                         title="cURL"
                         languageClassName="markup"
                         code={'|| Pooling for changes\n\n' +
-                        `curl -X GET \\\n-H "X-API-KEY: ${token}" \\\n"https://api.syncano.io/v1.1/instances/` +
+                        `curl -X GET \\\n-H "X-API-KEY: ${token}" \\\n"${SYNCANO_BASE_URL}v1.1/instances/` +
                         `${currentInstance.name}/channels/${item.name}/poll/"\n\n` +
-                        '|| Publishing custom messages\n\n' +
+                        '|| Publishing custom messages (custom_publish flag must be set on true)\n\n' +
                         `curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-type: application/json" \\\n` +
                         `-d '{"payload":{"message":"Hello there!", "type":"welcome"}, "room":"${item.name}"}' \\\n` +
-                        `"https://api.syncano.io/v1.1/instances/${currentInstance.name}/channels/` +
-                        'can_publish/publish/"'}
+                        `"${SYNCANO_BASE_URL}v1.1/instances/${currentInstance.name}/channels/` +
+                        `${item.name}/publish/"`}
                       />
                       <CodePreview.Item
                         title="Python"
@@ -89,7 +89,7 @@ export default React.createClass({
                         `def callback(message=None):\n  print message.payload\n  return True\n\n` +
                         `syncano.connect(api_key="${token}")\n\nchannel = Channel.please.get(\n  instance_name="` +
                         `${currentInstance.name}",\n  name="${item.name}"\n)\n\nchannel.poll(callback=callback)\n\n` +
-                        '# Publishing custom messages\n\n' +
+                        '# Publishing custom messages (custom_publish flag must be set on true)\n\n' +
                         `channel = Channel.please.get(instance_name="${currentInstance.name}", name="${item.name}")\n` +
                         'channel.publish(\n  payload={"message":"Hello there!"}\n)'}
                       />
@@ -104,7 +104,7 @@ export default React.createClass({
                         `  console.log('poll::create', data)\n});\n\npoll.on('update', function(data) {\n` +
                         `  console.log('poll::update', data)\n});\n\npoll.on('delete', function(data) {\n` +
                         `  console.log('poll::delete', data)\n});\n\n` +
-                        '// Publishing custom messages\n\n' +
+                        '// Publishing custom messages (custom_publish flag has to be set on true)\n\n' +
                         `var query = {instanceName: "${currentInstance.name}", name: "${item.name}"};\n` +
                         `var message = {content: "Hello there!"};\n\n` +
                         'Channel\n  .please()\n  .publish(query, message)\n  .then(callback);'}
