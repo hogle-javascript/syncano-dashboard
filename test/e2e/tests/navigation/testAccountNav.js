@@ -82,7 +82,7 @@ module.exports = {
   'User goes to Payment methods view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
-    const paymentMethodsPage = client.page.paymentMethodsPage();
+    const paymentMethodsPage = client.page.billingPaymentPage();
 
     topNavigationPage
       .clickElement('@account')
