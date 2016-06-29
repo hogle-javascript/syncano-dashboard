@@ -34,6 +34,7 @@ export default {
       .fillInput('@inputRegistrationId', registrationId)
       .fillInput('@inputDeviceId', deviceId)
       .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementNotPresent('@addTitleHeading');
 
     pushDevicesPage
