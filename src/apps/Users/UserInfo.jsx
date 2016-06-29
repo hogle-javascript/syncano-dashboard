@@ -52,11 +52,11 @@ export default Radium(React.createClass({
 
     const sortUserProfile = (map) => {
       const keys = _.sortBy(_.keys(map), (a) => { return a; });
-      const newmap = {};
+      const newMap = {};
       _.each(keys, (k) => {
-        newmap[k] = map[k];
+        newMap[k] = map[k];
       });
-      return newmap;
+      return newMap;
     };
 
     const userInfo = _.map(sortUserProfile(userProfile), (value, key) => {
