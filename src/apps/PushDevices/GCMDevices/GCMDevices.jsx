@@ -10,6 +10,7 @@ import { Container } from '../../../common/';
 import DevicesList from '../DevicesList';
 import GCMDialog from './GCMDeviceDialog';
 import GCMConfigDialog from '../../PushNotifications/GCM/GCMConfigDialog';
+import GCMDeviceSummaryDialog from './GCMDeviceSummaryDialog';
 
 export default React.createClass({
 
@@ -32,6 +33,7 @@ export default React.createClass({
         <Helmet title="Android Devices" />
         <GCMDialog />
         <GCMConfigDialog />
+        <GCMDeviceSummaryDialog />
         <DevicesList
           type="gcm"
           hasConfig={hasConfig}
