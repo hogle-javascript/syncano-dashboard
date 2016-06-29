@@ -12,7 +12,6 @@ import { SelectField, MenuItem } from 'material-ui';
 import { Container, InnerToolbar, Billing } from '../../common/';
 import Chart from '../Profile/ProfileBillingChart';
 
-
 export default React.createClass({
   displayName: 'ProfileBillingPlan',
 
