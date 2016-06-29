@@ -28,7 +28,7 @@ export default React.createClass({
     const token = SessionStore.getToken();
     const item = GCMPushNotificationsStore.data.items[0];
     const currentInstance = SessionStore.getInstance();
-    const showSummaryDialog = (!currentInstance || !token || GCMs.isLoading);
+    const showSummaryDialog = (!item || !currentInstance || !token || GCMs.isLoading);
 
     return (
       <Dialog.FullPage

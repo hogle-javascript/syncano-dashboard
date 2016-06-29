@@ -95,15 +95,17 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`trace = Script.please.run(\n  instance_name="${currentInstance.name}",\n` +
-                        `  id="${item.id}",\n  payload={'KEY': 'VALUE'}\n)`}
+                        code={`import syncano\nfrom syncano.models import Script\n\nconnection = syncano.connect` +
+                        `(api_key="${token}")\n\ntrace = Script.please.run(\n  ` +
+                        `instance_name="${currentInstance.name}",\n  id="${item.id}",\n  payload={'KEY': 'VALUE'}\n)`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`var payload = {"payload": {"KEY":"VALUE"}};\n\nScript\n  .please()\n  ` +
-                        `.run({instanceName: '${currentInstance.name}', id: ${item.id}}, payload)\n` +
-                        '  .then(calback);'}
+                        code={`var Syncano = require("syncano");\nvar connection = Syncano({accountKey: "${token}"});` +
+                        `\nvar Script = connection.Script;\n\nvar payload = {"payload": {"KEY": "VALUE"}};\n\n` +
+                        `Script\n  .please()\n  .run({instanceName: '${currentInstance.name}', id: ${item.id}}, ` +
+                        'payload)\n  .then(calback);'}
                       />
                     </CodePreview>
                   </CardText>
