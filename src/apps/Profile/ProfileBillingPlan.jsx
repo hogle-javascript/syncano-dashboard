@@ -80,10 +80,9 @@ export default Radium(React.createClass({
         justifyContent: 'center'
       },
       smallText: {
+        marginTop: 3,
         color: 'rgb(170, 170, 170)',
-        fontSize: 10,
-        textTransform: 'uppercase',
-        paddingRight: 10
+        fontSize: 12
       }
     };
   },
@@ -93,7 +92,6 @@ export default Radium(React.createClass({
   },
 
   handleCancelProductionPlan() {
-    console.error(this.state.subscriptions);
     const subscriptionIDs = _.compact(_.map(this.state.subscriptions, (item) => {
       if (item.plan === 'builder') {
         return false;
@@ -132,14 +130,14 @@ export default Radium(React.createClass({
         ref: 'cancelProductionPlan',
         title: 'Cancel Production Plan',
         actions: [
-          <RaisedButton
+          <FlatButton
             style={{ marginRight: 10 }}
-            primary={true}
-            label="No, I want to keep my plan."
+            label="Go Back"
             onTouchTap={this.handleCancelCancelProductionPlan}
           />,
-          <FlatButton
-            label="Yes, I want to cancel."
+          <RaisedButton
+            label="Yes, I want to cancel"
+            primary={true}
             onTouchTap={this.handleCancelProductionPlan}
           />
         ],
@@ -150,6 +148,7 @@ export default Radium(React.createClass({
   },
 
   renderMainDesc() {
+    const styles = this.getStyles();
     const plan = Store.getPlan();
 
     if (plan === 'free') {
@@ -158,7 +157,7 @@ export default Radium(React.createClass({
 
     if (plan === 'builder') {
       return (
-        <div className="vm-3-b">
+        <div className="vm-5-b">
           <div style={{ marginBottom: 16 }}>It does not cost you anything but there are limits:</div>
           <div>
             <Limits data={Store.getLimitsData('default', plan)} />
@@ -167,9 +166,12 @@ export default Radium(React.createClass({
       );
     } else if (plan === 'paid-commitment') {
       return (
-        <div className="vm-3-b">
-          <div className="vm-2-b">
+        <div className="vm-5-b">
+          <div className="vm-1-b">
             Current plan <strong>${Store.getTotalPlanValue('default')}</strong>:
+            {(Store.isNewSubscriptionVisible() || Store.isPlanCanceled()) && <div style={styles.smallText}>
+              will expire at the end of the month
+            </div>}
           </div>
           <div>
             <Limits data={Store.getLimitsData('default', plan)} />
@@ -193,7 +195,7 @@ export default Radium(React.createClass({
     }
 
     if (plan === 'paid-commitment') {
-      if (Store.isNewSubscription()) {
+      if (Store.isNewSubscriptionVisible()) {
         const subscription = _.last(this.state.subscriptions);
         const total = Store.getTotalPlanValue(subscription);
         const limitsData = Store.getLimitsData(subscription, plan);
@@ -201,18 +203,13 @@ export default Radium(React.createClass({
         return (
           <div className="vm-5-b">
             <div style={styles.mainDesc}>
-              <div className="vm-2-b">
+              <div className="vm-1-b">
                 New plan <strong>${total}</strong>:
+                <div style={styles.smallText}>will begin on {Moment(subscription.start).format('LL')}</div>
               </div>
             </div>
             <div className="vm-2-b">
               <Limits data={limitsData} />
-            </div>
-            <div>
-              <p style={styles.smallText}>
-                Your current plan will expire at the end of the month and your new plan will begin
-                on {Moment(subscription.start).format('LL')}
-              </p>
             </div>
           </div>
         );
@@ -412,8 +409,6 @@ export default Radium(React.createClass({
     if (this.state.isLoading) {
       return <Loading show={true} />;
     }
-
-    console.error(subscriptions);
 
     if (subscriptions && subscriptions.length === 0) {
       return (

@@ -92,29 +92,6 @@ export default {
       .catch(this.failure);
   },
 
-  cancelNewPlan(subscriptions) {
-    const currentPlan = subscriptions[0];
-
-    this.NewLibConnection
-      .Subscription
-      .please()
-      .cancel(subscriptions[1].id)
-      .then(
-        this.NewLibConnection
-          .Plan
-          .please()
-          .subscribe(currentPlan.plan, {
-            commitment: JSON.stringify({
-              api: currentPlan.commitment.api,
-              cbx: currentPlan.commitment.cbx
-            })
-          })
-          .then(this.completed)
-          .catch(this.failure)
-      )
-      .catch(this.failure);
-  },
-
   listPlans() {
     this.NewLibConnection
       .Plan

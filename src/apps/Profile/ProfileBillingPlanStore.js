@@ -100,11 +100,35 @@ export default Reflux.createStore({
     const { subscriptions } = this.data;
     const lastSubscription = _.last(subscriptions);
 
-    if (subscriptions && _.isString(lastSubscription.start) && !_.isString(lastSubscription.end)) {
+    if (!subscriptions || subscriptions.length < 3) {
+      return false;
+    }
+
+    if (_.isString(lastSubscription.start) && !_.isString(lastSubscription.end)) {
       return true;
     }
 
     return false;
+  },
+
+  isNewSubscriptionSame() {
+    const { subscriptions } = this.data;
+    const newPricing = _.last(subscriptions).pricing;
+    const pricing = _.nth(subscriptions, -2).pricing;
+
+    if (!subscriptions || !this.isNewSubscription()) {
+      return false;
+    }
+
+    if (newPricing.api.included === pricing.api.included) {
+      return true;
+    }
+
+    return false;
+  },
+
+  isNewSubscriptionVisible() {
+    return (this.isNewSubscription() && !this.isNewSubscriptionSame());
   },
 
   getBuilderLimits() {
@@ -219,12 +243,6 @@ export default Reflux.createStore({
   },
 
   onCancelSubscriptionsCompleted() {
-    this.data.isLoading = false;
-    this.data.hideDialogs = true;
-    this.refreshData();
-  },
-
-  onCancelNewPlanCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
