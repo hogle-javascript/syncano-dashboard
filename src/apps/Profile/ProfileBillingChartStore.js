@@ -178,7 +178,7 @@ export default Reflux.createStore({
     }, { amount: 0, total: { amount: 0 } });
 
     _.forEach(columns, (values, name) => {
-      state.charts[name].title = { api: 'API calls', cbx: 'Script seconds', total: 'Total' }[name];
+      state.charts[name].title = { api: 'API calls', cbx: 'Script seconds', total: 'API calls + Script seconds' }[name];
       state.charts[name].data.columns.push([name].concat(values));
       state.charts[name].data.groups[0].push(name);
       state.charts[name].data.types[name] = 'area';

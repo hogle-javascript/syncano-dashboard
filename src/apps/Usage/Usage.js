@@ -1,16 +1,15 @@
 import React from 'react';
 import Reflux from 'reflux';
-// import Radium from 'radium';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
 import Store from '../Profile/ProfileBillingPlanStore';
+import Actions from '../Profile/ProfileBillingChartActions';
 import InstancesActions from '../../apps/Instances/InstancesActions';
 import InstancesStore from '../../apps/Instances/InstancesStore';
 
-import { DropDownMenu, MenuItem } from 'material-ui';
+import { SelectField, MenuItem } from 'material-ui';
 import { Container, InnerToolbar, Billing } from '../../common/';
-// import HeaderInstancesDropdown from '../../common/Header/HeaderInstancesDropdown';
 import Chart from '../Profile/ProfileBillingChart';
 
 
@@ -20,7 +19,6 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     Reflux.connect(InstancesStore, 'instances')
-
   ],
 
   getInitialState() {
@@ -37,7 +35,8 @@ export default React.createClass({
     this.setState({
       selectedInstance: value
     }, () => {
-      Store.refreshData();
+      Actions.fetchBillingProfile();
+      Actions.fetchTotalDailyUsage(this.state.selectedInstance);
     });
   },
 
@@ -45,14 +44,12 @@ export default React.createClass({
     const { myInstances } = this.state.instances;
     const emptyItem = (<MenuItem value="all" primaryText="All" />);
 
-    console.error('fodfasdf: ', myInstances);
     const instances = _.map(myInstances, (item) => {
       return (
         <MenuItem value={item.name} primaryText={item.name} />
       );
     });
     instances.unshift(emptyItem);
-    // console.error(allitems);
     return instances;
   },
 
@@ -63,16 +60,17 @@ export default React.createClass({
     return (
       <div>
         <Helmet title="Usage" />
-        <InnerToolbar title="Usage">
-          <DropDownMenu
+        <InnerToolbar title="Usage" />
+        <Container>
+
+          <SelectField
+            style={{ width: 240, marginBottom: 20 }}
+            floatingLabelText="Usage for Instance"
             value={selectedInstance}
             onChange={this.handleOnChangeDropdown}
           >
             {this.renderInstancesDropdown()}
-          </DropDownMenu>
-        </InnerToolbar>
-        <Container>
-
+          </SelectField>
           <div className="row vp-2-b">
             <div
               className="col-flex-1 vp-1-b"
