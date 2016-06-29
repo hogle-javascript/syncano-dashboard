@@ -6,7 +6,7 @@ import ClassesStore from './../Classes/ClassesStore';
 import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
-import { CodePreview, Dialog, Color } from '../../common/';
+import { CodePreview, Dialog, Color, Loading } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 
 export default React.createClass({
@@ -35,28 +35,30 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a Class!"
+        title={!showSummaryDialog ? "You've just created a Class!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={classes.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className={`synicon-${icon}`}
-            style={{
-              backgroundColor: Color.getColorByName(color),
-              color: '#fff',
-              fontSize: 24,
-              borderRadius: '50%',
-              width: '40px',
-              height: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center' }}
-          />
-        </div>
-        {showSummaryDialog ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className={`synicon-${icon}`}
+              style={{
+                backgroundColor: Color.getColorByName(color),
+                color: '#fff',
+                fontSize: 24,
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center' }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -86,18 +88,21 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`class_instance = Class.please.get(instance_name='${currentInstance.name}', ` +
-                        `name='${item.name}') \n\nclass_instance.schema.add(\n  ` +
-                        `${stringSchemaFields.slice(1, -1).replace(/(},)/g, '},\n  ')}\n)\nclass_instance_save()`}
+                        code={`import syncano\nfrom syncano.models import Class\n\nsyncano.connect(api_key=` +
+                        `'${token}')\n\nclass_instance = Class.please.get(instance_name='${currentInstance.name}', ` +
+                        `name='${item.name}') \n\nclass_instance.schema.add(\n` +
+                        `  {"type": "string", "name": "String"},\n  {"type": "array", "name": "Array"}\n)\n` +
+                        'class_instance_save()'}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={'var update = {\n  "schema": [\n' +
-                        `    ${stringSchemaFields.slice(1, -1).replace(/(},)/g, '},\n    ')}\n  ]\n};\n\n` +
-                        `Class\n  .please()\n  .update({name: '${item.name}', instanceName: '` +
-                        `${currentInstance.name}'}, update)\n  .then((response) => console.log(response))\n` +
-                        '  .catch((error) => console.log(error));'}
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar Class = connection.Class;\n\n` +
+                        'var update = {\n  "schema": [\n    {"type":"string","name":"String"},\n    ' +
+                        `{"type":"array","name":"Array"}\n  ]\n};\n\nClass\n  .please()\n  ` +
+                        `.update({name: '${item.name}', instanceName: '` +
+                        `${currentInstance.name}'}, update)\n  .then(calback);`}
                       />
                     </CodePreview>
                   </CardText>

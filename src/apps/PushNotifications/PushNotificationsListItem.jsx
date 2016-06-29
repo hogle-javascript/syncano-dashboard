@@ -6,7 +6,7 @@ import { DialogsMixin } from '../../mixins';
 // Components
 import { MenuItem, IconButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
-import { Color, ColumnList, Dialog } from '../../common/';
+import { Color, ColumnList, Dialog, Tooltip } from '../../common/';
 
 let Column = ColumnList.Column;
 
@@ -57,27 +57,45 @@ const DeviceListItem = React.createClass({
         <Column.Desc />
         <Column.Desc className="col-sm-6">
           <div
-            style={{ color: iconColor, cursor: 'pointer' }}
+            style={{ color: iconColor, cursor: 'pointer', width: '100%' }}
+            className="row align-center align-middle"
             onTouchTap={showConfigDialog}
           >
-            {item && item.hasConfig.toString()}
+            <Tooltip
+              label="Config Push Socket"
+              horizontalPosition="center"
+            >
+              {item && item.hasConfig.toString()}
+            </Tooltip>
           </div>
         </Column.Desc>
         <Column.Desc className="col-sm-6">
-          <IconButton
-            style={{ marginLeft: -12 }}
-            iconStyle={{ color: iconColor }}
-            iconClassName="synicon-message-alert"
-            onTouchTap={() => router.push({ name: messagesRoute, params })}
-          />
+          <div
+            style={{ width: '100%' }}
+            className="row align-center align-middle"
+          >
+            <IconButton
+              style={{ marginLeft: -12 }}
+              iconStyle={{ color: iconColor }}
+              tooltip="Go to Push Messages list"
+              iconClassName="synicon-message-alert"
+              onTouchTap={() => router.push({ name: messagesRoute, params })}
+            />
+          </div>
         </Column.Desc>
         <Column.Desc className="col-sm-4">
-          {item && item.devicesCount}
-          <IconButton
-            iconStyle={{ color: iconColor }}
-            iconClassName={deviceIcon}
-            onTouchTap={() => router.push({ name: devicesRoute, params })}
-          />
+          <div
+            style={{ width: '100%' }}
+            className="row align-center align-middle"
+          >
+            <IconButton
+              tooltip="Go to Devices list"
+              iconStyle={{ color: iconColor }}
+              iconClassName={deviceIcon}
+              onTouchTap={() => router.push({ name: devicesRoute, params })}
+            />
+            {item && item.devicesCount}
+          </div>
         </Column.Desc>
         <Column.Desc />
         <Column.Menu>
