@@ -91,17 +91,15 @@ export default React.createClass({
                         code={`import syncano\nfrom syncano.models import Class\n\nsyncano.connect(api_key=` +
                         `'${token}')\n\nclass_instance = Class.please.get(instance_name='${currentInstance.name}', ` +
                         `name='${item.name}') \n\nclass_instance.schema.add(\n` +
-                        `  {"type": "string", "name": "String"},\n  {"type": "array", "name": "Array"}\n)\n` +
-                        'class_instance_save()'}
+                        `  ${stringSchemaFields.slice(1, -1).replace(/(},)/g, '},\n  ')}\n)\nclass_instance_save()`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
                         code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
-                        `'${token}'});\nvar Class = connection.Class;\n\n` +
-                        'var update = {\n  "schema": [\n    {"type":"string","name":"String"},\n    ' +
-                        `{"type":"array","name":"Array"}\n  ]\n};\n\nClass\n  .please()\n  ` +
-                        `.update({name: '${item.name}', instanceName: '` +
+                        `'${token}'});\nvar Class = connection.Class;\n\nvar update = {\n  "schema": [\n    ` +
+                        `${stringSchemaFields.slice(1, -1).replace(/(},)/g, '},\n    ')}\n  ]\n};\n\n` +
+                        `Class\n  .please()\n  .update({name: '${item.name}', instanceName: '` +
                         `${currentInstance.name}'}, update)\n  .then(calback);`}
                       />
                     </CodePreview>
