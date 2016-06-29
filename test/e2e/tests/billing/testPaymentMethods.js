@@ -28,7 +28,7 @@ export default {
   },
   'User updates Payment Method': (client) => {
     const paymentPage = client.page.billingPaymentPage();
-    const visibleEndNumber = '*** **** *** 4444';
+    const visibleEndNumber = '**** **** **** 4444';
     const cardNumberLocator = paymentPage.elements.lastFourDigits.selector;
 
     paymentPage
@@ -48,5 +48,14 @@ export default {
           client.assert.equal(text.value, visibleEndNumber);
         });
       });
+  },
+  'User deletes Payment Method': (client) => {
+    const paymentPage = client.page.billingPaymentPage();
+
+    paymentPage
+      .navigate()
+      .clickElement('@removePaymentButton')
+      .click('@confirmRemoveButton')
+      .waitForElementVisible('@addPaymentButton');
   }
 };

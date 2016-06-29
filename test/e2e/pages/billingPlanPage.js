@@ -14,11 +14,11 @@ export default {
       selector: 'input[name="cvc"]'
     },
     monthExpirationInput: {
-      selector: '//div[@class="col-flex-2"][1]/div/div/div',
+      selector: '//label[text()="Expiration month"]',
       locateStrategy: 'xpath'
     },
     yearExpirationInput: {
-      selector: '//div[@class="col-flex-2"][2]/div/div/div',
+      selector: '//label[text()="Expiration year"]',
       locateStrategy: 'xpath'
     },
     confirmButton: {
