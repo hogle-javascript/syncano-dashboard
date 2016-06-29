@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import { WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
+import { WaitForStoreMixin, StoreLoadingMixin, SnackbarNotificationMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -13,7 +13,8 @@ export default Reflux.createStore({
 
   mixins: [
     WaitForStoreMixin,
-    StoreLoadingMixin
+    StoreLoadingMixin,
+    SnackbarNotificationMixin
   ],
 
   getInitialState() {
@@ -52,5 +53,11 @@ export default Reflux.createStore({
   onInstallDemoAppCompleted() {
     console.debug('InstallDemoAppDialogStore::onInstallDemoAppCompleted');
     SessionStore.getRouter().push({ name: 'sockets', params: { instanceName: this.data.clickedAppName } });
+    this.setSnackbarNotification({
+      autoHideDuration: null,
+      onActionTouchTap: this.dismissSnackbarNotification,
+      action: 'DISMISS',
+      message: `Demo App ${this.data.clickedAppName} has been successfully installed`
+    });
   }
 });

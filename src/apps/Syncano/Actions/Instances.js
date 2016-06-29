@@ -92,9 +92,9 @@ export default {
       .catch(this.failure);
   },
 
-  removeShared(names, adminId) {
-    const promises = _.map(names, (name) => {
-      this.NewLibConnection.Instance.please().delete({ instanceName: name, id: adminId });
+  removeShared(instances, adminId) {
+    const promises = _.map(instances, (instance) => {
+      return this.NewLibConnection.Admin.please().delete({ instanceName: instance.name, id: adminId });
     });
 
     this.Promise.all(promises)

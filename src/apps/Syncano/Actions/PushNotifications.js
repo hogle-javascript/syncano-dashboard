@@ -49,6 +49,7 @@ export default {
       .GCMMessage
       .please()
       .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   },
@@ -58,6 +59,7 @@ export default {
       .APNSMessage
       .please()
       .list()
+      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   }

@@ -5,6 +5,7 @@ import { StoreFormMixin, DialogStoreMixin, StoreLoadingMixin } from '../../../mi
 
 // Stores & Actions
 import Actions from './APNSDevicesActions';
+import APNSDeviceSummaryDialogActions from './APNSDeviceSummaryDialogActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -29,6 +30,7 @@ export default Reflux.createStore({
   onCreateDeviceCompleted() {
     console.debug('DeviceDialogStore::onCreateDeviceCompleted');
     this.dismissDialog();
+    APNSDeviceSummaryDialogActions.showDialog();
     Actions.fetchDevices();
     this.trigger(this.data);
   },

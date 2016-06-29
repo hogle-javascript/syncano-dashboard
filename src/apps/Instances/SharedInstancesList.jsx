@@ -29,8 +29,8 @@ export default React.createClass({
     return [{
       dialog: Dialog.Delete,
       params: {
-        key: 'deleteSharedInstanceDialog',
-        ref: 'deleteSharedInstanceDialog',
+        key: 'leaveSharedInstanceDialog',
+        ref: 'leaveSharedInstanceDialog',
         title: 'Leave shared Instance',
         handleConfirm: Actions.removeSharedInstance,
         handleConfirmParam: SessionStore.getUser().id,
@@ -48,7 +48,7 @@ export default React.createClass({
         key={`shared-instances-list-item-${item.name}`}
         onIconClick={this.handleCheckInstance}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteSharedInstanceDialog', item)}
+        showDeleteDialog={() => this.showDialog('leaveSharedInstanceDialog', [item])}
       />
     );
   },
@@ -78,7 +78,7 @@ export default React.createClass({
               >
                 <Lists.MenuItem
                   primaryText="Leave Selected"
-                  onTouchTap={() => this.showDialog('deleteSharedInstanceDialog')}
+                  onTouchTap={() => this.showDialog('leaveSharedInstanceDialog')}
                 />
               </Lists.Menu>
             </Column.ColumnHeader>

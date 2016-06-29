@@ -48,7 +48,7 @@ export default React.createClass({
           checkable={false}
           keyName="id"
           background={iconMap[item.status].backgroundColor}
-          primaryText={item.status}
+          primaryText={_.replace(item.status, '_', ' ')}
           secondaryText={`ID: ${item.id.toString()}`}
         />
         <Column.Text className="col-sm-13">
@@ -59,7 +59,10 @@ export default React.createClass({
         </Column.Desc>
         <Column.Desc>
           {item.content.registration_ids.length}
-          <FontIcon className={devicesIcon} />
+          <FontIcon
+            color={Colors.blue400}
+            className={devicesIcon}
+          />
         </Column.Desc>
         <Column.Date
           date={item.created_at}

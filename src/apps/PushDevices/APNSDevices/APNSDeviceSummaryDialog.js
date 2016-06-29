@@ -1,8 +1,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Store from './GCMSummaryDialogStore';
-import GCMPushNotificationsStore from './GCMPushNotificationsStore';
+import Store from './APNSDeviceSummaryDialogStore';
+import APNSDevicesStore from './APNSDevicesStore';
 import SessionStore from '../../Session/SessionStore';
 
 import { DialogMixin } from '../../../mixins';
@@ -11,7 +11,7 @@ import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
-  displayName: 'GCMSummaryDialog',
+  displayName: 'APNSDeviceSummaryDialog',
 
   contextTypes: {
     params: React.PropTypes.object
@@ -19,31 +19,40 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Reflux.connect(GCMPushNotificationsStore, 'GCMs'),
+    Reflux.connect(APNSDevicesStore, 'APNSDevices'),
     DialogMixin
   ],
 
   render() {
-    const { open, GCMs } = this.state;
+    const { open, APNSDevices } = this.state;
+    const item = APNSDevicesStore.data.items[0];
     const token = SessionStore.getToken();
-    const item = GCMPushNotificationsStore.data.items[0];
     const currentInstance = SessionStore.getInstance();
-    const showSummaryDialog = (!item || !currentInstance || !token || GCMs.isLoading);
+    const showSummaryDialog = (!item || !currentInstance || !token || APNSDevices.isLoading);
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just configured Push Notification Socket - GCM!"
+        title="You've just added iOS Device!"
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
-        loading={GCMs.isLoading}
+        loading={APNSDevices.isLoading}
         open={open}
       >
         <div style={{ position: 'absolute', top: 0, left: 24 }}>
           <span
-            className="synicon-socket-push"
-            style={{ color: Colors.indigo300, fontSize: 32 }}
+            className="synicon-apple"
+            style={{
+              backgroundColor: Colors.blue500,
+              color: '#fff',
+              fontSize: 24,
+              borderRadius: '50%',
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center' }}
           />
         </div>
         {showSummaryDialog ? null : (
@@ -52,9 +61,8 @@ export default React.createClass({
               <div className="col-flex-1">
                 <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
                   <p>
-                    Push Notification Sockets allow for sending messages directly to your users devices.
-                    Thanks to this functionality, your users can be quickly informed about changes taking place
-                    within your application.
+                    iOS Device you just created can always be modified later. Now You can Send Push Notification
+                    Messages to this device.
                   </p>
                 </div>
               </div>
@@ -69,24 +77,25 @@ export default React.createClass({
                       <CodePreview.Item
                         title="cURL"
                         languageClassName="markup"
-                        code={`curl -X PATCH \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
-                        `\\\n-d '{"production_api_key":"${item.production_api_key}","development_api_key":` +
-                        `"${item.development_api_key}"}' \\\n"https://api.syncano.io/v1.1/instances/` +
-                        `${currentInstance.name}/push_notifications/gcm/config/"`}
+                        code={`curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
+                        `\\\n-d '{"content": {"environment": "development","aps": {"alert": "hello"}}' \\\n` +
+                        `"https://api.syncano.io/v1.1/instances/${currentInstance.name}/push_notifications/` +
+                        `apns/devices/${item.registration_id}/send_message/`}
                       />
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`gcm_config = GCMConfig.please.get(instance_name="${currentInstance.name}")\n\n` +
-                        `gcm_config.development_api_key = "${item.development_api_key}"\n` +
-                        `gcm_config.production_api_key = "${item.production_api_key}"\n\ngcm_config.save()`}
+                        code={`device = APNSDevice.please.get(\n  instance_name='${currentInstance.name}', ` +
+                        `\n  registration_id='${item.registration_id}'\n) \n\ndevice.send_message(\n  content={\n` +
+                        "    'environment': 'development',\n    'aps': {'alert': 'hello'}\n  }\n)"}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`var update = {\n  production_api_key: "${item.production_api_key}",\n  ` +
-                        `development_api_key: "${item.development_api_key}"\n};\n\nGCMConfig\n  .please()\n  ` +
-                        `.update({instanceName: '${currentInstance.name}'}, update)\n  .then(calback);`}
+                        code={`var query = {\n  instanceName: "${currentInstance.name}",\n  ` +
+                        `registration_id: "${item.registration_id}" \n};\n` +
+                        'var content = {\n  environment: "development",\n  aps: {alert: "hello"}\n};' +
+                        `\n\n\APNSDevice\n  .please()\n  .sendMessage(query, content)\n  .then(calback);`}
                       />
                     </CodePreview>
                   </CardText>
