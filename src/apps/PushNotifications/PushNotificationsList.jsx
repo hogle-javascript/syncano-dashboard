@@ -38,19 +38,34 @@ export default (props) => {
           columnName="DESC"
           className="col-sm-6"
         >
-          Configured
+          <div
+            style={{ width: '100%' }}
+            className="row align-center align-middle"
+          >
+            Configured
+          </div>
         </Column.ColumnHeader>
         <Column.ColumnHeader
           className="col-sm-6"
           columnName="DESC"
         >
-          Messages
+          <div
+            style={{ width: '100%' }}
+            className="row align-center align-middle"
+          >
+            Messages
+          </div>
         </Column.ColumnHeader>
         <Column.ColumnHeader
           className="col-sm-4"
           columnName="DESC"
         >
-          Devices
+          <div
+            style={{ width: '100%' }}
+            className="row align-center align-middle"
+          >
+            Devices
+          </div>
         </Column.ColumnHeader>
         <Column.ColumnHeader columnName="DESC" />
         <Column.ColumnHeader columnName="MENU" />
