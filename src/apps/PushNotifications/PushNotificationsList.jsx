@@ -3,6 +3,7 @@ import React from 'react';
 import { ColumnList, Loading, Container, Lists } from '../../common/';
 import APNSListItem from './APNS/APNSPushNotificationsListItem';
 import GCMListItem from './GCM/GCMPushNotificationsListItem';
+import APNSPushNotificationsSummaryDialog from './APNS/APNSPushNotificationsSummaryDialog';
 
 const Column = ColumnList.Column;
 
@@ -24,6 +25,7 @@ export default (props) => {
 
   return (
     <Lists.Container>
+      <APNSPushNotificationsSummaryDialog />
       <ColumnList.Header>
         <Column.ColumnHeader
           handleClick={props.handleTitleClick}
