@@ -29,10 +29,7 @@ export default React.createClass({
     const currentInstance = SessionStore.getInstance();
     const showSummaryDialog = (!item || !currentInstance || !token || classes.isLoading);
     const { icon, color } = item ? item.metadata : {};
-    const schemaFields = item.schema.map((field) => {
-      return field;
-    });
-    const stringSchemaFields = JSON.stringify(schemaFields);
+    const stringSchemaFields = JSON.stringify(item.schema);
 
     return (
       <Dialog.FullPage
