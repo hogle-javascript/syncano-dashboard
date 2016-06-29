@@ -88,13 +88,13 @@ export default React.createClass({
                         languageClassName="python"
                         code={`class_instance = Class.please.get(instance_name='${currentInstance.name}', ` +
                         `name='${item.name}') \n\nclass_instance.schema.add(\n  ` +
-                        `${stringSchemaFields.slice(1, -1).replace('},', '},\n  ')}\n)\nclass_instance_save()`}
+                        `${stringSchemaFields.slice(1, -1).replace(/(},)/g, '},\n  ')}\n)\nclass_instance_save()`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
                         code={'var update = {\n  "schema": [\n' +
-                        `    ${stringSchemaFields.slice(1, -1).replace('},', '},\n    ')}\n  ]\n};\n\n` +
+                        `    ${stringSchemaFields.slice(1, -1).replace(/(},)/g, '},\n    ')}\n  ]\n};\n\n` +
                         `Class\n  .please()\n  .update({name: '${item.name}', instanceName: '` +
                         `${currentInstance.name}'}, update)\n  .then((response) => console.log(response))\n` +
                         '  .catch((error) => console.log(error));'}
