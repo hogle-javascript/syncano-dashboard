@@ -319,10 +319,7 @@ export default (
             />
           </Route>
 
-          <Redirect
-            from="/instances/:instanceName/push-notifications"
-            to="push-notification-config"
-          />
+          <IndexRedirect to="/instances/:instanceName/push-notifications/config/" />
         </Route>
 
         {/* Backup & Restore */}
