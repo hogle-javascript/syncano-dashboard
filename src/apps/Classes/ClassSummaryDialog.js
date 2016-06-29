@@ -29,6 +29,10 @@ export default React.createClass({
     const currentInstance = SessionStore.getInstance();
     const showSummaryDialog = (!item || !currentInstance || !token || classes.isLoading);
     const { icon, color } = item ? item.metadata : {};
+    const schemaFields = item.schema.map((field) => {
+      return field;
+    });
+    const stringSchemaFields = JSON.stringify(schemaFields);
 
     return (
       <Dialog.FullPage
@@ -79,24 +83,24 @@ export default React.createClass({
                         title="cURL"
                         languageClassName="markup"
                         code={`curl -X PATCH \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
-                        `\\\n-d '{"schema":[{"type":"string","name":"String"},{"type":"array","name":"Array"}]}' \\\n` +
+                        `\\\n-d '{"schema":${stringSchemaFields}}' \\\n` +
                         `"https://api.syncano.io/v1.1/instances/${currentInstance.name}/classes/${item.name}"/`}
                       />
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
                         code={`class_instance = Class.please.get(instance_name='${currentInstance.name}', ` +
-                        `name='${item.name}') \n\nclass_instance.schema.add(\n` +
-                        `  {"type": "string", "name": "String"},\n  {"type": "array", "name": "Array"}\n)\n` +
-                        'class_instance_save()'}
+                        `name='${item.name}') \n\nclass_instance.schema.add(\n  ` +
+                        `${stringSchemaFields.slice(1, -1).replace('},', '},\n  ')}\n)\nclass_instance_save()`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={'var update = {\n  "schema": [\n    {"type":"string","name":"String"},\n    ' +
-                        `{"type":"array","name":"Array"}\n  ]\n};\n\nClass\n  .please()\n  ` +
-                        `.update({name: '${item.name}', instanceName: '` +
-                        `${currentInstance.name}'}, update)\n  .then(calback);`}
+                        code={'var update = {\n  "schema": [\n' +
+                        `    ${stringSchemaFields.slice(1, -1).replace('},', '},\n    ')}\n  ]\n};\n\n` +
+                        `Class\n  .please()\n  .update({name: '${item.name}', instanceName: '` +
+                        `${currentInstance.name}'}, update)\n  .then((response) => console.log(response))\n` +
+                        '  .catch((error) => console.log(error));'}
                       />
                     </CodePreview>
                   </CardText>
