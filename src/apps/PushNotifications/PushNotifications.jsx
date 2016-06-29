@@ -54,7 +54,7 @@ export default React.createClass({
           iconClassName="synicon-socket-push"
           iconColor={Colors.indigo400}
           title="Push Notifications"
-          description="Instantly message your mobile users with relevant content"
+          description="Instantly message your iOS or Android users with timely and relevant content."
           APNSDocsUrl="http://docs.syncano.io/docs/push-notifications-socket-ios"
           GCMDocsUrl="http://docs.syncano.io/docs/push-notifications-socket-android"
           handleClickAddIOS={APNSPushNotificationsActions.showDialog}

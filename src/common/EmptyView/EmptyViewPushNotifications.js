@@ -37,10 +37,22 @@ export default ({
     },
     description: {
       lineHeight: '26px',
-      fontSize: 16
+      fontSize: 16,
+      padding: 40
     },
-    button: {
-      marginTop: 10
+    url: {
+      display: 'block',
+      fontSize: 16,
+      marginBottom: 20
+    },
+    box: {
+      width: 240
+    },
+    flexContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'flex-start'
     }
   };
 
@@ -58,23 +70,30 @@ export default ({
         <div style={styles.description}>
           {description}
         </div>
-        <div style={styles.description}>
-          <a href={APNSDocsUrl} target="_blank">iOS Docs </a>
-          <br />
-          <a href={GCMDocsUrl} target="_blank"> Android Docs</a>
+        <div style={styles.flexContainer}>
+          <div style={styles.box}>
+            <div>
+              <a style={styles.url} href={APNSDocsUrl} target="_blank">iOS Docs</a>
+            </div>
+            <RaisedButton
+              label="Add APNS Socket"
+              primary={true}
+              onTouchTap={handleClickAddIOS}
+              icon={<FontIcon className="synicon-apple" />}
+            />
+          </div>
+          <div style={styles.box}>
+            <div>
+              <a style={styles.url} href={GCMDocsUrl} target="_blank">Android Docs </a>
+            </div>
+            <RaisedButton
+              label="Add GCM Socket"
+              primary={true}
+              onTouchTap={handleClickAddGCM}
+              icon={<FontIcon className="synicon-android" />}
+            />
+          </div>
         </div>
-        <RaisedButton
-          label="Add APNS Socket"
-          primary={true}
-          onTouchTap={handleClickAddIOS}
-          icon={<FontIcon className="synicon-apple" />}
-        />
-        <RaisedButton
-          label="Add GCM Socket"
-          primary={true}
-          onTouchTap={handleClickAddGCM}
-          icon={<FontIcon className="synicon-android" />}
-        />
       </div>
     </div>
   );
