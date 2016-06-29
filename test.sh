@@ -17,17 +17,24 @@ function e2e_cleanup {
     npm run e2e-remove-certificate
 }
 
-mkdir -p reports/
-touch ./reports/docker-entropy.log
-nohup ./check_entropy.sh > ./reports/docker-entropy.log 2>&1&
-npm run lint
-e2e_setup
+MESSAGE=$(git log -1 HEAD --pretty=format:%s)
 
-case "$CIRCLE_NODE_INDEX" in
-    0) npm run e2e ;;
-    1) npm run e2e-1 ;;
-    2) npm run e2e-2 ;;
-    *) npm run e2e ;;
-esac
+if [[ "$MESSAGE" == *\[E2E SKIP\]* ]]; then
+    npm run lint
+    echo "[WARN] Skipping E2E tests !!!"
+else
+    mkdir -p reports/
+    touch ./reports/docker-entropy.log
+    nohup ./check_entropy.sh > ./reports/docker-entropy.log 2>&1&
+    npm run lint
+    e2e_setup
 
-e2e_cleanup
+    case "$CIRCLE_NODE_INDEX" in
+        0) npm run e2e ;;
+        1) npm run e2e-1 ;;
+        2) npm run e2e-2 ;;
+        *) npm run e2e ;;
+    esac
+
+    e2e_cleanup
+fi
