@@ -102,3 +102,9 @@ If part of the tests fail for some reason, you can temporarily disable them by `
     "e2e": "nightwatch --skiptags classes",
 
 Tests will continue to run but the classes tests will be skipped. Refer to the test files for the appropriate tag name.
+
+# E2E Skipping
+
+If you want skip E2E tests because of valid reason, for example only updating text or README you can use add [E2E-SKIP] tag to your commit message.
+It will skip all e2e tests, only starting lint.
+Please do not overuse it !
