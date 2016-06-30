@@ -22,7 +22,11 @@ export default {
     const instanceName = accounts.alternativeUser.instanceName;
 
     socketsPage
-      .goToUrl(instanceName, 'sockets')
+      .goToUrl(instanceName, 'sockets');
+
+    client.pause(1000);
+
+    socketsPage
       .clickElement('@addApnsSocket')
       .waitForElementPresent('@certDragAndDrop');
 

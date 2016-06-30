@@ -4,25 +4,24 @@ set -e
 function cleanup {
   message "Closing selenium server. Please wait..."
   kill $(ps aux | grep '[.]selenium' | awk '{print $2}')
-  sleep 5
-  message "Done"
+  sleep 5 && message "Done"
 }
 
 function message() {
   echo -e ""
-  echo -e "######################################################"
-  echo -e "#                                                     "
-  echo -e "#  "$@"                                               "
-  echo -e "#                                                     "
-  echo -e "######################################################"
+  echo -e "########################################################"
+  echo -e "#                                                       "
+  echo -e "#  "$@"                                                 "
+  echo -e "#                                                       "
+  echo -e "########################################################"
   echo -e ""
 }
 
-trap cleanup EXIT
-
 message "Creating temporary accounts for tests..."
 npm run e2e-create-accounts
+
 message "Starting Selenium in background..."
+trap cleanup EXIT
 nohup npm run e2e-selenium-server > ./reports/selenium-server.log 2>&1&
 nohup npm run e2e-selenium-chromedriver > ./reports/selenium-chrome.log 2>&1&
 sleep 5

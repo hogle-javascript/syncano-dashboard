@@ -6,7 +6,7 @@ import SchedulesStore from './SchedulesStore';
 import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
-import { CodePreview, Dialog } from '../../common/';
+import { CodePreview, Dialog, Loading } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
@@ -34,19 +34,21 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a Schedule!"
+        title={!showSummaryDialog ? "You've just created a Schedule!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={Schedules.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className="synicon-socket-schedule"
-            style={{ color: Colors.lime400, fontSize: 32 }}
-          />
-        </div>
-        {showSummaryDialog ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className="synicon-socket-schedule"
+              style={{ color: Colors.lime400, fontSize: 32 }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -74,13 +76,16 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`schedule = Schedule.please.get(instance_name='${currentInstance.name}',` +
+                        code={`import syncano\nfrom syncano.models import Schedule\n\nsyncano.connect(api_key=` +
+                        `'${token}')\n\nschedule = Schedule.please.get(instance_name='${currentInstance.name}',` +
                         `id='${item.id}')\nprint(schedule.label)`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`Schedule\n  .please()\n  .get({instanceName: '${currentInstance.name}',` +
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar Schedule = connection.Schedule;\n\n` +
+                        `Schedule\n  .please()\n  .get({instanceName: '${currentInstance.name}',` +
                         `id: '${item.id}'})\n  .then(function(schedules) {});`}
                       />
                     </CodePreview>

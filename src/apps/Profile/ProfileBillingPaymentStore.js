@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-import { StoreFormMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
+import { SnackbarNotificationMixin, StoreFormMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 import Actions from './ProfileActions';
 import SessionActions from '../Session/SessionActions';
 
@@ -7,6 +7,7 @@ export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
+    SnackbarNotificationMixin,
     StoreFormMixin,
     StoreLoadingMixin,
     WaitForStoreMixin
@@ -58,15 +59,24 @@ export default Reflux.createStore({
 
   onUpdateBillingCardCompleted(payload) {
     this.setCard(payload);
+    this.setSnackbarNotification({
+      message: 'Your card has been updated successfully.'
+    });
   },
 
   onAddBillingCardCompleted(payload) {
     this.setCard(payload);
+    this.setSnackbarNotification({
+      message: 'Your card has been added successfully.'
+    });
   },
 
   onDeleteBillingCardCompleted() {
     this.data = this.getInitialState();
     this.refreshData();
     this.trigger(this.data);
+    this.setSnackbarNotification({
+      message: 'Your card has been removed successfully.'
+    });
   }
 });

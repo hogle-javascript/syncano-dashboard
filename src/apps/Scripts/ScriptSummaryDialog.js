@@ -6,7 +6,7 @@ import ScriptsStore from './ScriptsStore';
 import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
-import { CodePreview, Dialog } from '../../common/';
+import { CodePreview, Dialog, Loading } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 
 export default React.createClass({
@@ -44,28 +44,30 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a Script!"
+        title={!showSummaryDialog ? "You've just created a Script!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.hideDialog}
         loading={Scripts.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className={`synicon-${runtime.icon}`}
-            style={{
-              backgroundColor: runtime.color,
-              color: '#fff',
-              fontSize: 24,
-              borderRadius: '50%',
-              width: '40px',
-              height: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center' }}
-          />
-        </div>
-        {showSummaryDialog ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className={`synicon-${runtime.icon}`}
+              style={{
+                backgroundColor: runtime.color,
+                color: '#fff',
+                fontSize: 24,
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center' }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -95,13 +97,16 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`trace = Script.please.run(\n  instance_name="${currentInstance.name}",\n` +
-                        `  id="${item.id}",\n  payload={'KEY': 'VALUE'}\n)`}
+                        code={`import syncano\nfrom syncano.models import Script\n\nconnection = syncano.connect` +
+                        `(api_key="${token}")\n\ntrace = Script.please.run(\n  ` +
+                        `instance_name="${currentInstance.name}",\n  id="${item.id}",\n  payload={'KEY': 'VALUE'}\n)`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`var payload = {"payload": {"KEY":"VALUE"}};\n\nScript\n  .please()\n  ` +
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar Script = connection.Script;\n\n` +
+                        `var payload = {"payload": {"KEY":"VALUE"}};\n\nScript\n  .please()\n  ` +
                         `.run({instanceName: '${currentInstance.name}', id: ${item.id}}, payload)\n` +
                         '  .then(calback);'}
                       />

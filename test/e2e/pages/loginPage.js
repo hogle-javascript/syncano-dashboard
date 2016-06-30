@@ -33,7 +33,7 @@ export default {
       selector: 'input[name=pass]'
     },
     signInButtonFacebook: {
-      selector: 'input[name=login]'
+      selector: 'button[name=login]'
     },
     loginButtonGoogle: {
       selector: 'span.synicon-google'

@@ -122,7 +122,6 @@ export default (
     onEnter={onRootEnter}
     path="/"
   >
-
     <Route
       name="login"
       path="login"
@@ -197,12 +196,6 @@ export default (
         component={InstancePage}
         path="instances/:instanceName"
       >
-
-        <Redirect
-          from="prolong"
-          to="sockets"
-          query={{ showProlongDialog: true }}
-        />
 
         {/* Sockets */}
         <Route
@@ -326,10 +319,7 @@ export default (
             />
           </Route>
 
-          <Redirect
-            from="/instances/:instanceName/push-notifications"
-            to="push-notification-config"
-          />
+          <IndexRedirect to="/instances/:instanceName/push-notifications/config/" />
         </Route>
 
         {/* Backup & Restore */}
