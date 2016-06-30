@@ -74,7 +74,33 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    Actions.updateBillingProfile(this.state);
+    const {
+      company_name,
+      first_name,
+      last_name,
+      tax_number,
+      address_line1,
+      address_line2,
+      address_country,
+      address_state,
+      address_zip,
+      address_city,
+      canSubmit
+    } = this.state;
+
+    Actions.updateBillingProfile({
+      company_name,
+      first_name,
+      last_name,
+      tax_number,
+      address_line1,
+      address_line2,
+      address_country,
+      address_state,
+      address_zip,
+      address_city,
+      canSubmit
+    });
   },
 
   render() {

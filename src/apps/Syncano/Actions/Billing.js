@@ -14,7 +14,7 @@ export default {
     this.NewLibConnection
       .Profile
       .please()
-      .update(payload)
+      .update({}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
