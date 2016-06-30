@@ -1,8 +1,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Store from './APNSDeviceSummaryDialogStore';
-import APNSDevicesStore from './APNSDevicesStore';
+import Store from './GCMDeviceSummaryDialogStore';
+import GCMDevicesStore from './GCMDevicesStore';
 import SessionStore from '../../Session/SessionStore';
 
 import { DialogMixin } from '../../../mixins';
@@ -11,7 +11,7 @@ import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
-  displayName: 'APNSDeviceSummaryDialog',
+  displayName: 'GCMDeviceSummaryDialog',
 
   contextTypes: {
     params: React.PropTypes.object
@@ -19,31 +19,31 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Reflux.connect(APNSDevicesStore, 'APNSDevices'),
+    Reflux.connect(GCMDevicesStore, 'GCMDevices'),
     DialogMixin
   ],
 
   render() {
-    const { open, APNSDevices } = this.state;
-    const item = APNSDevicesStore.data.items[0];
+    const { open, GCMDevices } = this.state;
+    const item = GCMDevicesStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
-    const showSummaryDialog = (!item || !currentInstance || !token || APNSDevices.isLoading);
+    const showSummaryDialog = (!item || !currentInstance || !token || GCMDevices.isLoading);
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title={!showSummaryDialog ? "You've just created a iOS Device!" : ''}
+        title={!showSummaryDialog ? "You've just added Android Device!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
-        loading={APNSDevices.isLoading}
+        loading={GCMDevices.isLoading}
         open={open}
       >
         {!showSummaryDialog && (
           <div style={{ position: 'absolute', top: 0, left: 24 }}>
             <span
-              className="synicon-apple"
+              className="synicon-android"
               style={{
                 backgroundColor: Colors.blue500,
                 color: '#fff',
@@ -63,7 +63,7 @@ export default React.createClass({
               <div className="col-flex-1">
                 <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
                   <p>
-                    iOS Device you just created can always be modified later. Now You can Send Push Notification
+                    Android Device you just created can always be modified later. Now you can send Push Notification
                     Messages to this device.
                   </p>
                 </div>
@@ -80,27 +80,28 @@ export default React.createClass({
                         title="cURL"
                         languageClassName="markup"
                         code={`curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
-                        `\\\n-d '{"content": {"environment": "development","aps": {"alert": "hello"}}' \\\n` +
+                        `\\\n-d '{"content": {"data": {"one": 1, "two": 2}, "environment": "development"}}' \\\n` +
                         `"https://api.syncano.io/v1.1/instances/${currentInstance.name}/push_notifications/` +
-                        `apns/devices/${item.registration_id}/send_message/`}
+                        `gcm/devices/${item.registration_id}/send_message/`}
                       />
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`import syncano\nfrom syncano.models import APNSDevice\n\nsyncano.connect(api_key=` +
-                        `'${token}')\n\ndevice = APNSDevice.please.get(\n  instance_name='${currentInstance.name}', ` +
-                        `\n  registration_id='${item.registration_id}'\n) \n\ndevice.send_message(\n  content={\n` +
-                        "    'environment': 'development',\n    'aps': {'alert': 'hello'}\n  }\n)"}
+                        code={`import syncano\nfrom syncano.models import GCMDevice\n\nsyncano.connect(api_key=` +
+                        `'${token}')\n\ngcm_device = GCMDevice.please.get(\n  instance_name='` +
+                        `${currentInstance.name}', \n  registration_id='${item.registration_id}'\n) \n\n` +
+                        "gcm_device.send_message(\n  content={\n    'environment': 'development',\n    " +
+                        "data': {\n      'one': 1,\n      'two': 2,\n    }\n  }\n)"}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
                         code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
-                        `'${token}'});\nvar APNSDevice = connection.APNSDevice;\n\n` +
+                        `'${token}'});\nvar GCMDevice = connection.GCMDevice;\n\n` +
                         `var query = {\n  instanceName: "${currentInstance.name}",\n  ` +
                         `registration_id: "${item.registration_id}" \n};\n` +
-                        'var content = {\n  environment: "development",\n  aps: {alert: "hello"}\n};' +
-                        `\n\n\APNSDevice\n  .please()\n  .sendMessage(query, content)\n  .then(calback);`}
+                        'var content = {\n  environment: "development",\n  data: {\n    one: 1,\n    two: 2\n  }\n};' +
+                        `\n\n\GCMDevice\n  .please()\n  .sendMessage(query, content)\n  .then(calback);`}
                       />
                     </CodePreview>
                   </CardText>

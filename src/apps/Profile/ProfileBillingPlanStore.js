@@ -100,7 +100,7 @@ export default Reflux.createStore({
   },
 
   getPlan() {
-    if (!this.data.profile) {
+    if (!this.data.profile || !this.data.profile.subscription) {
       return null;
     }
 

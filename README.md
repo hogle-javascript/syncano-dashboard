@@ -70,37 +70,26 @@ We are using [nightwatchjs](http://nightwatchjs.org/) for e2e testing.
 
     $ npm run e2e-setup
 
+For selenium to start you will also need:
+
+* [Java](https://java.com/en/download/)
+* [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Chrome](https://www.google.com/chrome/)
+
 You'll also need to configure env variables for the tests to work locally:
 
     $ export NIGHTWATCH_EMAIL="xx"
     $ export NIGHTWATCH_PASSWORD="xx"
     $ export NIGHTWATCH_ACCOUNT_KEY="xx"
+    $ export STRIPE_PUBLISHABLE_KEY="xx"
 
-Or for some tests (they are being rewrited):
-
-    $ npm run e2e-create-accounts
-
-This will create set of three accounts for tests (Accounts will be deleted after 1h of no activity).
-
-
-
-If you are ready just run dev server:
+If you are ready just run dev server on first console:
 
     $ npm start
 
-then start selenium server with chromedriver node:
+and start testing by typing this into second console:
 
-    $ npm run e2e-selenium-server
-    $ npm run e2e-selenium-chromedriver
-
-and start testing:
-
-    $ npm run e2e
-
-Or using alternative metod:
-
-    $ npm start
-    $ npm run e2e-run
+    $ npm e2e-run
 
 If you want only one test tag to run use for example:
 
@@ -108,7 +97,7 @@ If you want only one test tag to run use for example:
 
 This will run only tests with tag = class.
 
-
+All accounts used for e2e testing will be deleted after 1h of no activity :fire: !
 
 If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` e2e line, so that it looks like this:
 

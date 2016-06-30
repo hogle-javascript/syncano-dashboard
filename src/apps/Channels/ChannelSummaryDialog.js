@@ -6,7 +6,7 @@ import ChannelsStore from './ChannelsStore';
 import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
-import { CodePreview, Dialog } from '../../common/';
+import { CodePreview, Dialog, Loading } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
@@ -34,19 +34,21 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a Channel!"
+        title={!showSummaryDialog ? "You've just created a Channel!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={channels.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className="synicon-socket-channel"
-            style={{ color: Colors.blue500, fontSize: 32 }}
-          />
-        </div>
-        {showSummaryDialog ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className="synicon-socket-channel"
+              style={{ color: Colors.blue500, fontSize: 32 }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -75,14 +77,17 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`def callback(message=None):\n  print message.payload\n  return True\n\n` +
-                        `channel = Channel.please.get(instance_name="${currentInstance.name}", name="${item.name}")` +
-                        `\n\nchannel.poll(callback=callback)`}
+                        code={'import syncano\nfrom syncano.models import Channel\n\n' +
+                        `def callback(message=None):\n  print message.payload\n  return True\n\n` +
+                        `syncano.connect(api_key="${token}")\n\nchannel = Channel.please.get(\n  instance_name="` +
+                        `${currentInstance.name}",\n  name="${item.name}"\n)\n\nchannel.poll(callback=callback)`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`var poll = Channel\n  .please()\n  .poll({ instanceName: '${currentInstance.name}',` +
+                        code={`var Syncano = require("syncano");\nvar connection = Syncano(` +
+                        `{accountKey: "${token}"});\nvar Channel = connection.Channel;\n\n` +
+                        `var poll = Channel\n  .please()\n  .poll({ instanceName: '${currentInstance.name}',` +
                         ` name: '${item.name}' });\n\npoll.on('create', function(data) {\n` +
                         `  console.log('poll::create', data)\n});\n\npoll.on('update', function(data) {\n` +
                         `  console.log('poll::update', data)\n});\n\npoll.on('delete', function(data) {\n` +
