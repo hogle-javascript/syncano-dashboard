@@ -19,7 +19,7 @@ module.exports = {
     instancesPage
       .navigate()
       .clickElement('@instancesTableName');
-    client.pause(200);
+    client.pause(500);
   },
   'User goes to General settings view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
