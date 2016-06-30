@@ -431,6 +431,15 @@ export default Radium(React.createClass({
         <Container>
           <div className="row vp-6-b">
             <div className="col-flex-1">
+              <PricingPlans
+                currentPlan={Store.getPlan()}
+                currentPlanLimits={Store.getLimitsData('default', Store.getPlan())}
+              />
+            </div>
+          </div>
+
+          <div className="row vp-6-b">
+            <div className="col-flex-1">
               <div className="vm-3-t">
                 {this.renderMainDesc()}
               </div>
@@ -448,12 +457,6 @@ export default Radium(React.createClass({
               >
                 {this.renderSummary()}
               </div>
-            </div>
-          </div>
-
-          <div className="row vp-6-b">
-            <div className="col-flex-1">
-              <PricingPlans />
             </div>
           </div>
 

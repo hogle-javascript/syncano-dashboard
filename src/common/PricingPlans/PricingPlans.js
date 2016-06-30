@@ -1,6 +1,6 @@
 import React from 'react';
 import { Breakpoint } from 'react-responsive-grid';
-import { RaisedButton } from 'material-ui';
+import { FlatButton } from 'material-ui';
 import PricingPlansPlan from './PricingPlansPlan';
 import PlanDialogActions from '../../apps/Profile/ProfileBillingPlanDialogActions';
 import axios from 'axios';
@@ -21,15 +21,14 @@ export default React.createClass({
 
   getStyles() {
     return {
-      mainContainer: {
+      container: {
         maxWidth: 900,
         marginLeft: 'auto',
         marginRight: 'auto'
       },
-      main: {
-        display: 'flex',
-        margin: '0 -12px',
-        flex: 1
+      heading: {
+        textAlign: 'center',
+        fontSize: '1.3em'
       },
       footer: {
         textAlign: 'center',
@@ -67,7 +66,6 @@ export default React.createClass({
   },
 
   handleShowPlanDialog() {
-    console.debug('ProfileBillingPlan::handleShowPlanDialog');
     PlanDialogActions.showDialog();
   },
 
@@ -82,6 +80,9 @@ export default React.createClass({
   render() {
     const styles = this.getStyles();
     const { plan } = this.state;
+    const { currentPlan, currentPlanLimits } = this.props;
+
+    console.log(currentPlanLimits);
 
     if (!plan) {
       return null;
@@ -89,8 +90,28 @@ export default React.createClass({
 
     return (
       <Breakpoint minWidth={1024}>
-        <div style={styles.mainContainer}>
-          <div style={styles.main}>
+        <div style={styles.container}>
+          <div className="row vm-3-b">
+            <div
+              className="col-flex-1"
+              style={styles.heading}
+            >
+              {currentPlan === 'builder' && <span>Your Current Plan is</span>}
+            </div>
+            <div
+              className="col-flex-1"
+              style={styles.heading}
+            >
+              {_.inRange(currentPlanLimits.api.included, 1000000, 2000000)}
+            </div>
+            <div
+              className="col-flex-1"
+              style={styles.heading}
+            >
+              {_.inRange(currentPlanLimits.api.included, 5000000, 100000000)}
+            </div>
+          </div>
+          <div className="row">
             <PricingPlansPlan
               title="Starter"
               price="Free"
@@ -105,6 +126,8 @@ export default React.createClass({
                 '2 concurrent Scripts',
                 'Unlimited users'
               ]}
+              highlighted={currentPlan === 'builder'}
+              disabled={currentPlan !== 'builder'}
             />
             <PricingPlansPlan
               title="Developer"
@@ -119,6 +142,7 @@ export default React.createClass({
                 '8 concurrent Scripts',
                 'Unlimited users'
               ]}
+              highlighted={_.inRange(currentPlanLimits.api.included, 1000000, 2000000)}
             />
             <PricingPlansPlan
               title="Business"
@@ -133,16 +157,23 @@ export default React.createClass({
                 '8 concurrent Scripts',
                 'Unlimited users'
               ]}
+              highlighted={_.inRange(currentPlanLimits.api.included, 5000000, 100000000)}
             />
           </div>
-          <footer style={styles.footer}>
-            <RaisedButton
-              label="Configure your own plan"
-              backgroundColor="#FFCC01"
-              labelStyle={{ fontWeight: 700, color: '#1D2228' }}
-              style={{ height: 44 }}
-              onTouchTap={this.handleShowPlanDialog}
-            />
+          <footer
+            className="row vm-3-t"
+            style={styles.footer}
+          >
+            <div
+              className="col-flex-1"
+              style={{ textAlign: 'center' }}
+            >
+              <FlatButton
+                label="Configure your own plan"
+                style={{ height: 44 }}
+                onTouchTap={this.handleShowPlanDialog}
+              />
+            </div>
           </footer>
         </div>
       </Breakpoint>

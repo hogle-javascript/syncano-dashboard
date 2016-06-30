@@ -9,20 +9,17 @@ export default React.createClass({
   getInitialState() {
     return {
       apiCalls: this.props.apiCallsOptions[0],
-      scripts: this.props.scriptsOptions[0],
-      selectValues: {
-        apiCalls: 'start',
-        scripts: 'start'
-      }
+      scripts: this.props.scriptsOptions[0]
     };
   },
 
   getStyles() {
     return {
-      pricingPlansPlan: {
-        flex: '0 0 calc(100%/3 - 24px)',
-        margin: '0 12px'
+      pricingPlansPlan: {},
+      pricingPlansPlanCurrent: {
+        backgroundColor: 'rgb(252, 252, 252)'
       },
+      pricingPlansPlanDisabled: {},
       subheader: {
         textAlign: 'center',
         padding: 0,
@@ -69,9 +66,20 @@ export default React.createClass({
   },
 
   handleSelectChange(event, field, value) {
-    const parsedValue = JSON.parse(value);
+    this.setState({ [field]: value });
+  },
 
-    this.setState({ [field]: parsedValue });
+  formatSelectLabel(field, o) {
+    const label = {
+      apiCalls: 'API calls',
+      scripts: 'Script seconds'
+    };
+
+    return `
+      ${_.toUpper(numeral(o.included).format('0 a'))}
+      ${label[field]}
+      ${o.price > 0 && `- $${o.price}`}
+    `;
   },
 
   renderPrice() {
@@ -99,15 +107,10 @@ export default React.createClass({
   },
 
   renderSelect(field) {
-    const { selectValues } = this.state;
     const { apiCallsOptions, scriptsOptions } = this.props;
     const options = {
       apiCalls: apiCallsOptions,
       scripts: scriptsOptions
-    };
-    const label = {
-      apiCalls: 'API calls',
-      scripts: 'Script seconds'
     };
     const count = options[field].length;
 
@@ -115,7 +118,7 @@ export default React.createClass({
       <SelectField
         key={field}
         fullWidth={true}
-        value={selectValues[field]}
+        value={this.state[field]}
         onChange={(event, index, value) => this.handleSelectChange(event, field, value)}
         disabled={count < 2}
       >
@@ -123,12 +126,9 @@ export default React.createClass({
           return (
             <MenuItem
               key={option.price}
-              value={JSON.stringify(option)}
-              primaryText={`
-                ${_.toUpper(numeral(option.included).format('0 a'))}
-                ${label[field]}
-                ${option.price > 0 && `- $${option.price}`}
-              `}
+              value={option}
+              primaryText={this.formatSelectLabel(field, option)}
+              label={this.formatSelectLabel(field, option)}
             />
           );
         })}
@@ -162,32 +162,45 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { title, period } = this.props;
+    const { title, period, highlighted, disabled } = this.props;
+
+    if (highlighted) {
+      _.assign(styles.pricingPlansPlan, styles.pricingPlansPlanCurrent);
+    }
+
+    if (disabled) {
+      _.assign(styles.pricingPlansPlan, styles.pricingPlansPlanDisabled);
+    }
 
     return (
-      <Paper style={styles.pricingPlansPlan}>
-        <Subheader style={styles.subheader}>
-          {title}
-        </Subheader>
-        <div style={{ padding: 16 }}>
-          {this.renderPrice()}
-          <div style={styles.period}>
-            {period}
-          </div>
-          <Subheader style={styles.includes}>
-            Includes:
+      <div className="col-flex-1">
+        <Paper
+          zDepth={highlighted ? 2 : 1}
+          style={styles.pricingPlansPlan}
+        >
+          <Subheader style={styles.subheader}>
+            {title}
           </Subheader>
-          {this.renderSelect('apiCalls')}
-          {this.renderSelect('scripts')}
-          <RaisedButton
-            label="Buy"
-            backgroundColor="#FFCC01"
-            labelStyle={{ fontWeight: 700, color: '#1D2228' }}
-            style={styles.button}
-          />
-        </div>
-        {this.renderFeatures()}
-      </Paper>
+          <div style={{ padding: 16 }}>
+            {this.renderPrice()}
+            <div style={styles.period}>
+              {period}
+            </div>
+            <Subheader style={styles.includes}>
+              Includes:
+            </Subheader>
+            {this.renderSelect('apiCalls')}
+            {this.renderSelect('scripts')}
+            <RaisedButton
+              label="Buy"
+              backgroundColor="#FFCC01"
+              labelStyle={{ fontWeight: 700, color: '#1D2228' }}
+              style={styles.button}
+            />
+          </div>
+          {this.renderFeatures()}
+        </Paper>
+      </div>
     );
   }
 });
