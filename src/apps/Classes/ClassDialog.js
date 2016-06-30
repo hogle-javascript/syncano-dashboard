@@ -13,7 +13,8 @@ import ClassesStore from './ClassesStore';
 import { GroupsStore, GroupsActions } from '../Groups';
 
 // Components
-import { TextField, FlatButton, IconButton, Checkbox, Tabs, Tab } from 'material-ui';
+import { TextField, FlatButton, IconButton, Checkbox, Tabs, Tab, Table,
+  TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 import { Color, Show, SelectFieldWrapper, Dialog, Icon, Notification, ColorIconPicker } from '../../common/';
 
@@ -61,8 +62,7 @@ export default React.createClass({
   getStyles() {
     return {
       schemaAddSection: {
-        alignItems: 'stretch',
-        height: 110
+        alignItems: 'stretch'
       },
       checkBox: {
         alignSelf: 'center'
@@ -102,6 +102,9 @@ export default React.createClass({
       tabItemContainerStyle: {
         background: 'transparent',
         borderBottom: '1px solid #b8c0c9'
+      },
+      tableRowColumn: {
+        fontSize: 16
       }
     };
   },
@@ -361,34 +364,116 @@ export default React.createClass({
     );
   },
 
-  renderSchemaFields() {
+  renderSchemaFieldRows() {
     const { fields } = this.state;
+    const styles = this.getStyles();
 
-    return _.map(fields, (item) => {
+    const schemaFields = _.map(fields, (item) => {
       return (
-        <div
-          key={item.fieldName}
-          className="row align-middle vm-1-b"
-        >
-          <span className="col-xs-8">{item.fieldName}</span>
-          <span className="col-xs-8">{item.fieldType}</span>
-          <span className="col-xs-8">{item.fieldTarget}</span>
-          <span className="col-xs-3">
-            {this.renderCheckbox(item, 'filter')}
-          </span>
-          <span className="col-xs-3">
-            {this.renderCheckbox(item, 'order')}
-          </span>
-          <span className="col-xs-5">
+        <TableRow>
+          <TableRowColumn style={styles.tableRowColumn}>
+            {item.fieldName}
+          </TableRowColumn>
+          <TableRowColumn style={styles.tableRowColumn}>{item.fieldType}</TableRowColumn>
+          <TableRowColumn style={styles.tableRowColumn}>{item.fieldTarget}</TableRowColumn>
+          <TableRowColumn>
+            <div
+              style={styles.checkBox}
+            >
+              {this.renderCheckbox(item, 'filter')}
+            </div>
+          </TableRowColumn>
+          <TableRowColumn>
+            <div
+              style={styles.checkBox}
+            >
+              {this.renderCheckbox(item, 'order')}
+            </div>
+          </TableRowColumn>
+          <TableRowColumn>
             <FlatButton
               label="Remove"
               secondary={true}
               onClick={this.handleRemoveField.bind(this, item)}
             />
-          </span>
-        </div>
+          </TableRowColumn>
+        </TableRow>
       );
     });
+
+    return schemaFields;
+  },
+
+  renderSchemaFieldNewRow() {
+    const styles = this.getStyles();
+
+    const {
+      fieldType,
+      fieldTarget,
+      fieldName
+    } = this.state;
+
+    const newFieldObj = {
+      fieldOrder: false,
+      fieldFilter: false,
+      fieldType,
+      fieldName
+    };
+
+    return (
+      <TableRow>
+        <TableRowColumn>
+          <TextField
+            ref="fieldName"
+            name="fieldName"
+            fullWidth={true}
+            value={newFieldObj.fieldName}
+            onChange={(event, value) => this.setState({ fieldName: value })}
+            errorText={this.getValidationMessages('fieldName').join(' ')}
+          />
+        </TableRowColumn>
+        <TableRowColumn>
+          <SelectFieldWrapper
+            options={this.getFieldTypes()}
+            value={newFieldObj.fieldType}
+            onChange={(event, index, value) => this.setSelectFieldValue('fieldType', value)}
+            errorText={this.getValidationMessages('fieldType').join(' ')}
+          />
+        </TableRowColumn>
+        <TableRowColumn>
+          <Show if={fieldType === 'reference' || fieldType === 'relation'}>
+            <SelectFieldWrapper
+              options={this.getFieldTargetOptions()}
+              value={fieldTarget}
+              onChange={(event, index, value) => this.setSelectFieldValue('fieldTarget', value)}
+              errorText={this.getValidationMessages('fieldTarget').join(' ')}
+            />
+          </Show>
+        </TableRowColumn>
+        <TableRowColumn>
+          <div
+            style={styles.checkBox}
+          >
+            {this.renderCheckbox(newFieldObj, 'filter')}
+          </div>
+        </TableRowColumn>
+        <TableRowColumn>
+          <div
+            style={styles.checkBox}
+          >
+            {this.renderCheckbox(newFieldObj, 'order')}
+          </div>
+        </TableRowColumn>
+        <TableRowColumn>
+          <FlatButton
+            label="Add"
+            disabled={!fieldType || !fieldName}
+            secondary={true}
+            onClick={this.handleFieldAdd}
+          />
+        </TableRowColumn>
+      </TableRow>
+    );
   },
 
   render() {
@@ -401,19 +486,10 @@ export default React.createClass({
       group,
       group_permissions,
       other_permissions,
-      metadata,
-      fieldType,
-      fieldTarget,
-      fieldName
+      metadata
     } = this.state;
     const styles = this.getStyles();
     const title = this.hasEditMode() ? 'Update' : 'Add';
-    const newFieldObj = {
-      fieldOrder: false,
-      fieldFilter: false,
-      fieldType,
-      fieldName
-    };
     const permissions = [
       {
         text: 'none',
@@ -546,80 +622,27 @@ export default React.createClass({
                 </Notification>
               </Show>
             </div>
-            <div className="row">
-              <div className="col-xs-8"></div>
-              <div className="col-xs-8"></div>
-              <div className="col-xs-8"></div>
-              <div className="col-xs-3">Filter</div>
-              <div className="col-xs-3">Order</div>
-              <div className="col-xs-5"></div>
-            </div>
             <Dialog.ContentSection
               style={styles.schemaAddSection}
               title="Schema"
             >
-              <div className="col-xs-8">
-                <TextField
-                  ref="fieldName"
-                  name="fieldName"
-                  fullWidth={true}
-                  value={fieldName}
-                  onChange={(event, value) => this.setState({ fieldName: value })}
-                  hintText="Field's name"
-                  floatingLabelText="Name"
-                  errorText={this.getValidationMessages('fieldName').join(' ')}
-                />
-              </div>
-              <div className="col-xs-8">
-                <SelectFieldWrapper
-                  name="fieldType"
-                  options={this.getFieldTypes()}
-                  value={fieldType}
-                  floatingLabelText="Type"
-                  onChange={(event, index, value) => this.setSelectFieldValue('fieldType', value)}
-                  errorText={this.getValidationMessages('fieldType').join(' ')}
-                />
-              </div>
-              <div className="col-xs-8">
-                <Show if={fieldType === 'reference' || fieldType === 'relation'}>
-                  <SelectFieldWrapper
-                    name="fieldTarget"
-                    options={this.getFieldTargetOptions()}
-                    value={fieldTarget}
-                    floatingLabelText="Target Class"
-                    onChange={(event, index, value) => this.setSelectFieldValue('fieldTarget', value)}
-                    errorText={this.getValidationMessages('fieldTarget').join(' ')}
-                  />
-                </Show>
-              </div>
-              <div
-                className="col-xs-3"
-                style={styles.checkBox}
-              >
-                {this.renderCheckbox(newFieldObj, 'filter')}
-              </div>
-              <div
-                className="col-xs-3"
-                style={styles.checkBox}
-              >
-                {this.renderCheckbox(newFieldObj, 'order')}
-              </div>
-              <div
-                className="col-xs-5"
-                style={styles.checkBox}
-              >
-                <FlatButton
-                  style={{ marginBottom: 4 }}
-                  label="Add"
-                  disabled={!fieldType || !fieldName}
-                  secondary={true}
-                  onClick={this.handleFieldAdd}
-                />
-              </div>
+              <Table selectable={false}>
+                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                  <TableRow>
+                    <TableHeaderColumn>Field Name</TableHeaderColumn>
+                    <TableHeaderColumn>Type</TableHeaderColumn>
+                    <TableHeaderColumn>Target Class</TableHeaderColumn>
+                    <TableHeaderColumn>Filter</TableHeaderColumn>
+                    <TableHeaderColumn>Order</TableHeaderColumn>
+                    <TableHeaderColumn>Action</TableHeaderColumn>
+                  </TableRow>
+                </TableHeader>
+                <TableBody displayRowCheckbox={false}>
+                  {this.renderSchemaFieldRows()}
+                  {this.renderSchemaFieldNewRow()}
+                </TableBody>
+              </Table>
             </Dialog.ContentSection>
-            <div className="vm-4-b">
-              {this.renderSchemaFields()}
-            </div>
           </Tab>
           <Tab
             style={styles.tab}
