@@ -34,11 +34,19 @@ export default {
       locateStrategy: 'xpath'
     },
     filledOutCard: {
-      selector: '//div[@class="vm-6-b"]/div[2]/div[2]/div',
+      selector: '//div[@class="vm-3-b"]/div[2]/div[2]/div',
       locateStrategy: 'xpath'
     },
     lastFourDigits: {
       selector: '//div[text()="Card number"]/../div[2][contains(text(), "")]',
+      locateStrategy: 'xpath'
+    },
+    removePaymentButton: {
+      selector: '//div/span[text()="Remove payment"]',
+      locateStrategy: 'xpath'
+    },
+    confirmRemoveButton: {
+      selector: '//div/span[text()="Confirm"]',
       locateStrategy: 'xpath'
     }
   }
