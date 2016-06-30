@@ -43,14 +43,12 @@ Social login requires proper configuration of env variables with newtork ids e.g
     $ export FACEBOOK_ID='xx'
     $ export GOOGLE_ID='xx'
     $ export GITHUB_ID='xx'
-    $ export OAUTH_PROXY_URL='xx'
 
 or if you are using `fish` shell:
 
     $ set -g -x FACEBOOK_ID xx
     $ set -g -x GOOGLE_ID xx
     $ set -g -x GITHUB_ID xx
-    $ set -g -x OAUTH_PROXY_URL xx
 
 
 # Icons
