@@ -256,11 +256,17 @@ export default Reflux.createStore({
       return;
     }
 
+    const query = _.omit(this.location.query, 'next');
+
     SessionActions.setUser(payload);
     this.token = payload.account_key;
     localStorage.setItem('token', payload.account_key);
     this.connection.setAccountKey(payload.account_key);
-    this.router.push({ name: 'dashboard' });
+    if (this.location.query.next) {
+      this.router.push({ pathname: this.location.query.next, query });
+    } else {
+      this.router.push({ name: 'dashboard', query });
+    }
   },
 
   onLogout() {
@@ -276,7 +282,8 @@ export default Reflux.createStore({
     Raven.setUserContext();
     window.analytics.identify();
     this.trigger(this);
-    this.router.push('/login');
+
+    this.router.push({ pathname: '/login', query: _.merge(this.location.query, { next: this.location.pathname }) });
   },
 
   isAuthenticated() {
