@@ -3,20 +3,20 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
-import Store from '../Profile/ProfileBillingPlanStore';
+import ChartStore from '../Profile/ProfileBillingChartStore';
 import Actions from '../Profile/ProfileBillingChartActions';
 import InstancesActions from '../../apps/Instances/InstancesActions';
 import InstancesStore from '../../apps/Instances/InstancesStore';
 
 import { SelectField, MenuItem } from 'material-ui';
-import { Container, InnerToolbar, Billing } from '../../common/';
+import { Container, InnerToolbar, Billing, Loading } from '../../common/';
 import Chart from '../Profile/ProfileBillingChart';
 
 export default React.createClass({
   displayName: 'ProfileBillingPlan',
 
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(ChartStore, 'chart'),
     Reflux.connect(InstancesStore, 'instances')
   ],
 
@@ -27,6 +27,8 @@ export default React.createClass({
   componentDidMount() {
     console.debug('Instance::componentWillMount');
 
+    Actions.fetchBillingProfile();
+    Actions.fetchTotalDailyUsage();
     InstancesActions.fetchInstances();
   },
 
@@ -54,7 +56,7 @@ export default React.createClass({
 
   render() {
     const headingStyle = { fontSize: '1.3em' };
-    const { selectedInstance } = this.state;
+    const { selectedInstance, chart } = this.state;
 
     return (
       <div>
@@ -70,22 +72,24 @@ export default React.createClass({
           >
             {this.renderInstancesDropdown()}
           </SelectField>
-          <div className="row vp-2-b">
-            <div
-              className="col-flex-1 vp-1-b"
-              style={headingStyle}
-            >
-              Usage with your <strong>current plan</strong>:
+          <Loading show={chart.isLoading}>
+            <div className="row vp-2-b">
+              <div
+                className="col-flex-1 vp-1-b"
+                style={headingStyle}
+              >
+                Usage with your <strong>current plan</strong>:
+              </div>
             </div>
-          </div>
 
-          <div className="row vp-3-b">
-            <div className="col-flex-1">
-              <Billing.ChartLegend {...this.state.chartLegend} />
+            <div className="row vp-3-b">
+              <div className="col-flex-1">
+                <Billing.ChartLegend {...chart.chartLegend} />
+              </div>
+              <div className="col-flex-1"></div>
             </div>
-            <div className="col-flex-1"></div>
-          </div>
-          <Chart />
+            <Chart charts={chart.charts} />
+          </Loading>
         </Container>
       </div>
     );
