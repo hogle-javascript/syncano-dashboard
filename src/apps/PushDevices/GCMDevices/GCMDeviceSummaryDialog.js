@@ -80,7 +80,8 @@ export default React.createClass({
                         title="cURL"
                         languageClassName="markup"
                         code={`curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
-                        `\\\n-d '{"content": {"data": {"one": 1, "two": 2}, "environment": "development"}}' \\\n` +
+                        `\\\n-d '{"content": {"data": {"title": "App name", "body": "Your push notif text` +
+                        `"}, "environment": "development"}}' \\\n` +
                         `"https://api.syncano.io/v1.1/instances/${currentInstance.name}/push_notifications/` +
                         `gcm/devices/${item.registration_id}/send_message/`}
                       />
@@ -91,7 +92,8 @@ export default React.createClass({
                         `'${token}')\n\ngcm_device = GCMDevice.please.get(\n  instance_name='` +
                         `${currentInstance.name}', \n  registration_id='${item.registration_id}'\n) \n\n` +
                         "gcm_device.send_message(\n  content={\n    'environment': 'development',\n    " +
-                        "data': {\n      'one': 1,\n      'two': 2,\n    }\n  }\n)"}
+                        "data: {\n      'title': 'App name',\n      'body': 'Your push notification text would " +
+                        "go here'\n    }\n  }\n)"}
                       />
                       <CodePreview.Item
                         title="JavaScript"
@@ -100,7 +102,8 @@ export default React.createClass({
                         `'${token}'});\nvar GCMDevice = connection.GCMDevice;\n\n` +
                         `var query = {\n  instanceName: "${currentInstance.name}",\n  ` +
                         `registration_id: "${item.registration_id}" \n};\n` +
-                        'var content = {\n  environment: "development",\n  data: {\n    one: 1,\n    two: 2\n  }\n};' +
+                        'var content = {\n  environment: "development",\n  data: {\n    "title": "App name",' +
+                        '\n    "body": "Your push notification text would go here"\n  }\n};' +
                         `\n\n\GCMDevice\n  .please()\n  .sendMessage(query, content)\n  .then(calback);`}
                       />
                     </CodePreview>
