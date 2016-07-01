@@ -31,5 +31,16 @@ export default {
     client.pause(1500);
     billingPage
       .verify.containsText('@planBarLocator', 'Production');
+  },
+  'User cancels production plan': (client) => {
+    const billingPage = client.page.billingPlanPage();
+
+    billingPage
+      .clickElement('@cancelPlanButton')
+      .clickElement('@confirmCancelPlanButton')
+      .waitForElementVisible('@openPlansExplorerButton')
+      .assert.elementNotPresent('@cancelPlanButton')
+      .waitForElementVisible('@expiredTextLocation')
+      .assert.containsText('@expiredTextLocation', 'will expire at the end of the month');
   }
 };
