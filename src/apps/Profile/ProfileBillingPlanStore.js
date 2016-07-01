@@ -81,15 +81,55 @@ export default Reflux.createStore({
     return activeSubscription && activeSubscription.end;
   },
 
-  isPlanCanceled() {
-    if (!this.data.subscriptions || this.data.subscriptions.length > 1) {
+  isNewSubscription() {
+    const { subscriptions } = this.data;
+    const lastSubscription = _.last(subscriptions);
+
+    if (!subscriptions || subscriptions.length < 3) {
       return false;
     }
-    return this.data.subscriptions[0].end || false;
+
+    if (_.isString(lastSubscription.start) && !_.isString(lastSubscription.end)) {
+      return true;
+    }
+
+    return false;
   },
 
-  isNewSubscription() {
-    return (this.data.subscriptions && this.data.subscriptions.length > 1);
+  isNewSubscriptionSame() {
+    const { subscriptions } = this.data;
+
+    if (!subscriptions || !this.isNewSubscription()) {
+      return false;
+    }
+
+    const newPricing = _.last(subscriptions).pricing;
+    const pricing = _.nth(subscriptions, -2).pricing;
+
+    if (newPricing.api.included === pricing.api.included && newPricing.cbx.included === pricing.cbx.included) {
+      return true;
+    }
+
+    return false;
+  },
+
+  isNewSubscriptionVisible() {
+    return (this.isNewSubscription() && !this.isNewSubscriptionSame());
+  },
+
+  isPlanCanceled() {
+    const { subscriptions } = this.data;
+    const lastSubscription = _.last(subscriptions);
+
+    if (this.isNewSubscription() || !subscriptions) {
+      return false;
+    }
+
+    if (_.isString(lastSubscription.start) && _.isString(lastSubscription.end)) {
+      return true;
+    }
+
+    return false;
   },
 
   getBuilderLimits() {
@@ -204,12 +244,6 @@ export default Reflux.createStore({
   },
 
   onCancelSubscriptionsCompleted() {
-    this.data.isLoading = false;
-    this.data.hideDialogs = true;
-    this.refreshData();
-  },
-
-  onCancelNewPlanCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
