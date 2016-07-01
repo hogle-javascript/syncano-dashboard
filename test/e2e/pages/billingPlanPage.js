@@ -28,6 +28,18 @@ export default {
     planBarLocator: {
       selector: '//span/strong',
       locateStrategy: 'xpath'
+    },
+    cancelPlanButton: {
+      selector: '//button/div/span[text()="Cancel my plan"]',
+      locateStrategy: 'xpath'
+    },
+    confirmCancelPlanButton: {
+      selector: '//button/div/div/span[text()="Yes, I want to cancel"]',
+      locateStrategy: 'xpath'
+    },
+    expiredTextLocation: {
+      selector: '(//div[@class="vm-1-b"]/div)[1]',
+      locateStrategy: 'xpath'
     }
   }
 };
