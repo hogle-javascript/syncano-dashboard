@@ -1,34 +1,50 @@
 import React from 'react';
+import _ from 'lodash';
+
 import { Show } from '../../common/';
 
-export default React.createClass({
-  displayName: 'Limits',
+export default ({ data }) => {
+  const styles = {
+    cell: {
+      lineHeight: '1.5em',
+      whiteSpace: 'nowrap'
+    }
+  };
 
-  render() {
-    return (
-      <div className="row">
-        <div className="col-md-9" style={{ whiteSpace: 'nowrap' }}>
-          <div>API calls</div>
-          <div>Script seconds</div>
-        </div>
-        <div className="col-md-9" style={{ textAlign: 'right' }}>
-          <div><strong>{parseInt(this.props.data.api.included, 10).toLocaleString()}/month</strong></div>
-          <div><strong>{parseInt(this.props.data.cbx.included, 10).toLocaleString()}/month</strong></div>
-        </div>
-
-        <Show if={this.props.data.api.overage && this.props.data.cbx.overage}>
-          <div className="col-md-8" style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
-            <div>+{this.props.data.api.overage}</div>
-            <div>+{this.props.data.cbx.overage}</div>
-          </div>
-        </Show>
-        <Show if={this.props.data.api.overage && this.props.data.cbx.overage}>
-          <div className="col-md-9" style={{ paddingLeft: 3 }}>
-            <div style={{ whiteSpace: 'nowrap' }}>per extra call</div>
-            <div style={{ whiteSpace: 'nowrap' }}>per extra second</div>
-          </div>
-        </Show>
+  return (
+    <div className="row">
+      <div
+        className="col-md-9"
+        style={styles.cell}
+      >
+        <div>API calls</div>
+        <div>Script seconds</div>
       </div>
-    );
-  }
-});
+      <div
+        className="col-md-9"
+        style={styles.cell}
+      >
+        <div><strong>{parseInt(data.api.included, 10).toLocaleString()} / month</strong></div>
+        <div><strong>{parseInt(data.cbx.included, 10).toLocaleString()} / month</strong></div>
+      </div>
+      <Show if={data.api.overage && data.cbx.overage}>
+        <div
+          className="col-md-8"
+          style={_.merge({}, styles.cell, { textAlign: 'right' })}
+        >
+          <div>+{data.api.overage}</div>
+          <div>+{data.cbx.overage}</div>
+        </div>
+      </Show>
+      <Show if={data.api.overage && data.cbx.overage}>
+        <div
+          className="col-md-9"
+          style={styles.cell}
+        >
+          <div style={{ whiteSpace: 'nowrap' }}>per extra call</div>
+          <div style={{ whiteSpace: 'nowrap' }}>per extra second</div>
+        </div>
+      </Show>
+    </div>
+  );
+};
