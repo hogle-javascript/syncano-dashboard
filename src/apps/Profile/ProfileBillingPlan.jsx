@@ -429,7 +429,10 @@ export default Radium(React.createClass({
         <InnerToolbar title={<div>Your plan: <span><strong> {Store.getPlanName()}</strong></span></div>} />
 
         <Container>
-          <div className="row vp-6-b">
+          <div
+            className="row vp-6-b"
+            style={{ display: 'none' }}
+          >
             <div className="col-flex-1">
               <PricingPlans
                 currentPlan={Store.getPlan()}

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Paper, Subheader, SelectField, List, ListItem, MenuItem, RaisedButton } from 'material-ui';
 import numeral from 'numeral';
 
-export default React.createClass({
+const PricingPlansPlan = React.createClass({
   displayName: 'PricingPlansPlan',
 
   getInitialState() {
@@ -69,16 +69,16 @@ export default React.createClass({
     this.setState({ [field]: value });
   },
 
-  formatSelectLabel(field, o) {
+  formatSelectLabel(field, option) {
     const label = {
       apiCalls: 'API calls',
       scripts: 'Script seconds'
     };
 
     return `
-      ${_.toUpper(numeral(o.included).format('0 a'))}
+      ${_.toUpper(numeral(option.included).format('0 a'))}
       ${label[field]}
-      ${o.price > 0 && `- $${o.price}`}
+      ${option.price > 0 ? `- $${option.price}` : ''}
     `;
   },
 
@@ -117,7 +117,6 @@ export default React.createClass({
     return (
       <SelectField
         key={field}
-        fullWidth={true}
         value={this.state[field]}
         onChange={(event, index, value) => this.handleSelectChange(event, field, value)}
         disabled={count < 2}
@@ -128,7 +127,6 @@ export default React.createClass({
               key={option.price}
               value={option}
               primaryText={this.formatSelectLabel(field, option)}
-              label={this.formatSelectLabel(field, option)}
             />
           );
         })}
@@ -204,3 +202,9 @@ export default React.createClass({
     );
   }
 });
+
+PricingPlansPlan.contextTypes = {
+  currentPlanLimits: React.PropTypes.object
+};
+
+export default PricingPlansPlan;
