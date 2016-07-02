@@ -83,7 +83,7 @@ export default React.createClass({
                         languageClassName="markup"
                         code={`curl -X PATCH \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
                         `\\\n-d '{"schema":${stringSchemaFields}}' \\\n` +
-                        `"https://api.syncano.io/v1.1/instances/${currentInstance.name}/classes/${item.name}"/`}
+                        `"${SYNCANO_BASE_URL}v1.1/instances/${currentInstance.name}/classes/${item.name}"/`}
                       />
                       <CodePreview.Item
                         title="Python"

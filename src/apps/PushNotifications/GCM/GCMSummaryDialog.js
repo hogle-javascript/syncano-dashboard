@@ -73,7 +73,7 @@ export default React.createClass({
                         languageClassName="markup"
                         code={`curl -X PATCH \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
                         `\\\n-d '{"production_api_key":"${item.production_api_key}","development_api_key":` +
-                        `"${item.development_api_key}"}' \\\n"https://api.syncano.io/v1.1/instances/` +
+                        `"${item.development_api_key}"}' \\\n"${SYNCANO_BASE_URL}v1.1/instances/` +
                         `${currentInstance.name}/push_notifications/gcm/config/"`}
                       />
                       <CodePreview.Item

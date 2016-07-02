@@ -82,7 +82,7 @@ export default React.createClass({
                         code={`curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
                         `\\\n-d '{"content": {"data": {"title": "App name", "body": "Your push notif text` +
                         `"}, "environment": "development"}}' \\\n` +
-                        `"https://api.syncano.io/v1.1/instances/${currentInstance.name}/push_notifications/` +
+                        `"${SYNCANO_BASE_URL}v1.1/instances/${currentInstance.name}/push_notifications/` +
                         `gcm/devices/${item.registration_id}/send_message/`}
                       />
                       <CodePreview.Item
