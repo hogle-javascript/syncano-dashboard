@@ -52,6 +52,12 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Billing.updateCard'
   },
+  deleteBillingCard: {
+    asyncResult: true,
+    asyncForm: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Billing.removeCard'
+  },
   fetchInvoices: {
     asyncResult: true,
     children: ['completed', 'failure'],

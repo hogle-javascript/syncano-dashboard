@@ -31,15 +31,15 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerModalSignal: {
-      selector: '//div[@class="signal-dropdown"]',
+      selector: '//div[@class="signal-dropdown"]/div/div',
       locateStrategy: 'xpath'
     },
     addTriggerModalClass: {
-      selector: '//div[@class="class-dropdown"]',
+      selector: '//div[@class="class-dropdown"]/div/div',
       locateStrategy: 'xpath'
     },
     addTriggerModalScript: {
-      selector: '//div[@class="script-dropdown"]',
+      selector: '//div[@class="script-dropdown"]/div/div',
       locateStrategy: 'xpath'
     },
     triggerTableRow: {

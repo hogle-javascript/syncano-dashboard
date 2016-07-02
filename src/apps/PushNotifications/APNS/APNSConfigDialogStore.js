@@ -5,7 +5,9 @@ import { DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin, StoreFormMixin 
 
 // Stores & Actions
 import SessionActions from '../../Session/SessionActions';
+import APNSPushNotificationsSummaryDialogActions from './APNSPushNotificationsSummaryDialogActions';
 import Actions from './APNSPushNotificationsActions';
+import APNSDevicesActions from '../../PushDevices/APNSDevices/APNSDevicesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -45,6 +47,7 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('APNSConfigDialogStore::refreshData');
     Actions.fetchAPNSPushNotificationConfig();
+    APNSDevicesActions.fetchAPNSConfig();
   },
 
   onFetchAPNSPushNotificationConfig() {
@@ -64,9 +67,13 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onConfigAPNSPushNotificationCompleted() {
+  onConfigAPNSPushNotificationCompleted(config) {
     console.debug('APNSConfigDialogStore::onConfigAPNSPushNotification');
     this.dismissDialog();
     this.refreshData();
+
+    if (config.development_certificate || config.production_certificate) {
+      APNSPushNotificationsSummaryDialogActions.showDialog();
+    }
   }
 });

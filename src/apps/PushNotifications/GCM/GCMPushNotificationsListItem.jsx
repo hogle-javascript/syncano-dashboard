@@ -1,18 +1,26 @@
 import React from 'react';
 
-import GCMPushNotificationsActions from './GCMPushNotificationsActions';
+import Actions from './GCMPushNotificationsActions';
 
 import PushNotificationsListItem from '../PushNotificationsListItem';
 
 export default (props) => {
+  const params = {
+    production_api_key: null,
+    development_api_key: null
+  };
+
   return (
     <PushNotificationsListItem
       {...props}
       name="GCM"
       label="Google Cloud Messaging (GCM)"
+      messagesRoute="gcm-messages"
       devicesRoute="gcm-devices"
       icon="android"
-      showConfigDialog={GCMPushNotificationsActions.showDialog}
+      clearConfig={() => Actions.configGCMPushNotification(params)}
+      deviceIcon="synicon-cellphone-android"
+      showConfigDialog={Actions.showDialog}
     />
   );
 };

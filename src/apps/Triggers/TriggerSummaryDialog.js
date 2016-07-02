@@ -6,7 +6,7 @@ import TriggersStore from './TriggersStore';
 import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
-import { CodePreview, Dialog } from '../../common/';
+import { CodePreview, Dialog, Loading } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
@@ -34,22 +34,24 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a Trigger!"
+        title={!showSummaryDialog ? "You've just created a Trigger!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={triggers.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className="synicon-socket-trigger"
-            style={{
-              color: Colors.amber300,
-              fontSize: 32
-            }}
-          />
-        </div>
-        {showSummaryDialog ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className="synicon-socket-trigger"
+              style={{
+                color: Colors.amber300,
+                fontSize: 32
+              }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -71,19 +73,22 @@ export default React.createClass({
                       <CodePreview.Item
                         title="cURL"
                         languageClassName="markup"
-                        code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"https://api.syncano.io/v1.1/instances/` +
+                        code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"${SYNCANO_BASE_URL}v1.1/instances/` +
                         `${currentInstance.name}/triggers/${item.id}/"`}
                       />
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`my_trigger = Trigger.please.get(id=${item.id}, instance_name=` +
+                        code={`import syncano\nfrom syncano.models import Trigger\n\nsyncano.connect(api_key=` +
+                        `'${token}')\n\nmy_trigger = Trigger.please.get(id=${item.id}, instance_name=` +
                         `"${currentInstance.name}")\n\nprint(my_trigger.label)`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`Trigger\n  .please()\n  .get({instanceName: '${currentInstance.name}',` +
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar Trigger = connection.Trigger;\n\n` +
+                        `Trigger\n  .please()\n  .get({instanceName: '${currentInstance.name}',` +
                         ` id: ${item.id}})\n  .then(function(trigger) {});`}
                       />
                     </CodePreview>

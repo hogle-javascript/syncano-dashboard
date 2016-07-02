@@ -6,6 +6,8 @@ import { DialogsMixin } from '../../mixins';
 
 import UsersActions from '../Users/UsersActions';
 import UsersStore from '../Users/UsersStore';
+import APNSSocketActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
+import GCMSocketActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
 
 import { colors as Colors } from 'material-ui/styles/';
 import { IconButton } from 'material-ui';
@@ -51,7 +53,8 @@ const DevicesList = Radium(React.createClass({
         padding: '16px 8px'
       },
       listTitle: {
-        fontSize: 18
+        fontSize: 18,
+        color: Colors.grey400
       },
       moreLink: {
         color: Colors.blue500,
@@ -131,9 +134,15 @@ const DevicesList = Radium(React.createClass({
       ...other
     } = this.props;
     const checkedItemsCount = getCheckedItems().length;
-    const titleText = {
-      apns: 'iOS Devices',
-      gcm: 'Android Devices'
+    const typeMap = {
+      apns: {
+        title: 'iOS Devices',
+        showConfigDialog: APNSSocketActions.showDialog
+      },
+      gcm: {
+        title: 'Android Devices',
+        showConfigDialog: GCMSocketActions.showDialog
+      }
     };
     const title = (
       <div
@@ -141,13 +150,13 @@ const DevicesList = Radium(React.createClass({
         style={styles.listTitle}
       >
         <div>
-          {titleText[type]}
+          {typeMap[type].title}
         </div>
         <IconButton
           tooltip={`Config ${type.toUpperCase()} Push Notification Socket`}
           iconStyle={{ color: Colors.blue400 }}
           iconClassName="synicon-settings"
-          onTouchTap={() => router.push({ name: 'push-notification-config', params })}
+          onTouchTap={typeMap[type].showConfigDialog}
         />
       </div>
     );

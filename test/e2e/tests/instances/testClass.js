@@ -28,6 +28,7 @@ export default {
       .selectDropdownValue('@createModalDropdownType', 'string')
       .clickElement('@addButton')
       .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementNotPresent('@addClassTitle')
       .waitForElementVisible('@classTableRow');
 
@@ -40,12 +41,15 @@ export default {
     classesPage
       .clickElement('@classesListItemDropDown')
       .clickElement('@editButton')
-      .waitForElementVisible('@createModalDescriptionInput')
       .fillInput('@createModalDescriptionInput', edit)
-      .clickElement('@confirmButton')
-      .waitForElementVisible('@classTableRowDescription');
+      .clickElement('@confirmButton');
 
-    classesPage.verify.containsText('@classTableRowDescription', edit);
+    // Pause as dashboard may refresh itself thus random failes
+    client.pause(1500);
+
+    classesPage
+      .waitForElementVisible('@classTableRowDescription')
+      .verify.containsText('@classTableRowDescription', edit);
   },
   'Test Delete Class': (client) => {
     const classesPage = client.page.classesPage();

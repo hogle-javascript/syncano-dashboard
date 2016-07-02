@@ -22,7 +22,11 @@ export default {
     const instanceName = accounts.alternativeUser.instanceName;
 
     socketsPage
-      .goToUrl(instanceName, 'sockets')
+      .goToUrl(instanceName, 'sockets');
+
+    client.pause(1000);
+
+    socketsPage
       .clickElement('@addApnsSocket')
       .waitForElementPresent('@certDragAndDrop');
 
@@ -81,7 +85,7 @@ export default {
 
     socketsPage
       .goToUrl(instanceName, 'push-notifications/config')
-      .clickListItemDropdown('Apple Push Notification service (APNs)', 'Devices list');
+      .clickElement('@APNSDevicesLinkIcon');
 
     pushDevicesPage
       .waitForElementVisible('@iosDevicesHeading');

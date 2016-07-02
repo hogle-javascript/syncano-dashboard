@@ -52,6 +52,8 @@ import Schedules from './apps/Schedules';
 import PushNotifications from './apps/PushNotifications';
 import PushDevices from './apps/PushDevices';
 import Usage from './apps/Usage';
+import PushMessages from './apps/PushMessages';
+import DemoApps from './apps/DemoApps';
 
 function redirectToLogin(nextState, replace) {
   if (!auth.loggedIn()) {
@@ -120,7 +122,6 @@ export default (
     onEnter={onRootEnter}
     path="/"
   >
-
     <Route
       name="login"
       path="login"
@@ -196,12 +197,6 @@ export default (
         path="instances/:instanceName"
       >
 
-        <Redirect
-          from="prolong"
-          to="sockets"
-          query={{ showProlongDialog: true }}
-        />
-
         {/* Sockets */}
         <Route
           name="sockets"
@@ -265,13 +260,13 @@ export default (
           path="push-notifications"
         >
 
-          {/* Push Notification Devices */}
           <Route
             name="push-notification-config"
             path="config"
             component={PushNotifications}
           />
 
+          {/* Push Notification Devices */}
           <Route
             name="push-notification-devices"
             path="devices"
@@ -298,10 +293,33 @@ export default (
             />
           </Route>
 
-          <Redirect
-            from="/instances/:instanceName/push-notifications"
-            to="push-notification-config"
-          />
+          <Route
+            name="push-notification-messages"
+            path="messages"
+            component={PushMessages}
+          >
+            <Route
+              name="all-push-notification-messages"
+              path="all"
+              component={PushMessages.AllList}
+            />
+            <Route
+              name="apns-messages"
+              path="apns"
+              component={PushMessages.APNSList}
+            />
+            <Route
+              name="gcm-messages"
+              path="gcm"
+              component={PushMessages.GCMList}
+            />
+            <Redirect
+              from="/instances/:instanceName/push-notifications/messages"
+              to="all-push-notification-messages"
+            />
+          </Route>
+
+          <IndexRedirect to="/instances/:instanceName/push-notifications/config/" />
         </Route>
 
         {/* Backup & Restore */}
@@ -527,6 +545,13 @@ export default (
         />
         <IndexRoute component={Solutions.ListView} />
       </Route>
+
+      {/* Demo Apps */}
+      <Route
+        name="demo-apps"
+        path="/demo-apps"
+        component={DemoApps}
+      />
 
       <IndexRoute component={Instances} />
     </Route>

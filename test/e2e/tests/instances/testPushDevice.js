@@ -34,6 +34,7 @@ export default {
       .fillInput('@inputRegistrationId', registrationId)
       .fillInput('@inputDeviceId', deviceId)
       .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementNotPresent('@addTitleHeading');
 
     pushDevicesPage
@@ -103,6 +104,7 @@ export default {
       .fillInput('@inputLabel', labelName)
       .fillInput('@inputRegistrationId', registrationId)
       .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton')
       .waitForElementNotPresent('@addTitleHeading');
 
     pushDevicesPage

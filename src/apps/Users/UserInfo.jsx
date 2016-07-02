@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import pluralize from 'pluralize';
+import _ from 'lodash';
 import { colors as Colors } from 'material-ui/styles/';
 
 export default Radium(React.createClass({
@@ -45,43 +45,40 @@ export default Radium(React.createClass({
     return value;
   },
 
+  renderCustomFields() {
+    const styles = this.getStyles();
+    const { profile } = this.props.user;
+    const userProfile = _.omit(profile, 'links');
+
+    const sortUserProfile = (map) => {
+      const keys = _.sortBy(_.keys(map), (a) => { return a; });
+      const newMap = {};
+      _.each(keys, (k) => {
+        newMap[k] = map[k];
+      });
+      return newMap;
+    };
+
+    const userInfo = _.map(sortUserProfile(userProfile), (value, key) => {
+      return (
+        <div style={styles.item}>
+          {key}
+          <div style={styles.itemValue}>{this.renderContent(value)}</div>
+        </div>
+       );
+    });
+    return userInfo;
+  },
+
   render() {
     let styles = this.getStyles();
-    let user = this.props.user;
 
     return (
       <div style={[styles.base, styles.infoHidden, this.props.visible && styles.infoVisible]}>
         <div
           style={styles.container}
         >
-          <div style={styles.item}>
-            User key:
-            <div style={styles.itemValue}>{user.user_key}</div>
-          </div>
-          <div style={styles.item}>
-            Group permissions:
-            <div style={styles.itemValue}>{this.renderContent(user.profile.group_permissions)}</div>
-          </div>
-          <div style={styles.item}>
-            Other permissions:
-            <div style={styles.itemValue}>{this.renderContent(user.profile.other_permissions)}</div>
-          </div>
-          <div style={styles.item}>
-            Owner permissions:
-            <div style={styles.itemValue}>{this.renderContent(user.profile.owner_permissions)}</div>
-          </div>
-          <div style={styles.item}>
-            {pluralize('Revision', user.profile.revision)}:
-            <div style={styles.itemValue}>{user.profile.revision}</div>
-          </div>
-          <div style={styles.item}>
-            Channel:
-            <div style={styles.itemValue}>{this.renderContent(user.profile.channel)}</div>
-          </div>
-          <div style={styles.item}>
-            Channel room:
-            <div style={styles.itemValue}>{this.renderContent(user.profile.channel_room)}</div>
-          </div>
+          {this.renderCustomFields()}
         </div>
       </div>
     );

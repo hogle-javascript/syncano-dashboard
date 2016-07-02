@@ -37,7 +37,7 @@ export default React.createClass({
     if (invoice.status === 'payment failed') {
       return (
         <RaisedButton
-          label="RETRY PAYMENT"
+          label="Retry Payment"
           secondary={true}
           disabled={invoice.actionDisabled}
           onClick={() => this.handleRetryPaymentClick(invoice)}
@@ -47,7 +47,7 @@ export default React.createClass({
 
     return (
       <RaisedButton
-        label="VIEW"
+        label="Download"
         primary={true}
         onClick={() => this.handlePDFClick(invoice)}
       />

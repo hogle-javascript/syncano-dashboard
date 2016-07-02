@@ -1,11 +1,14 @@
+// import moment from 'moment';
+
 export default {
-  listTotalDailyUsage() {
+  listTotalDailyUsage(instanceName) {
+    const params = instanceName !== 'all' ? { instance: instanceName } : { total: true };
+
     this.NewLibConnection
       .DailyUsage
       .please()
-      .list()
+      .list({}, params)
       .currentMonth()
-      .total()
       .then(this.completed)
       .catch(this.failure);
   }

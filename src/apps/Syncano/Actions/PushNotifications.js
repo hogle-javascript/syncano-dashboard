@@ -42,5 +42,25 @@ export default {
       .removeCertificate(params)
       .then(this.completed)
       .catch(this.failure);
+  },
+
+  listGCMMessages() {
+    this.NewLibConnection
+      .GCMMessage
+      .please()
+      .list()
+      .ordering('desc')
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  listAPNSMessages() {
+    this.NewLibConnection
+      .APNSMessage
+      .please()
+      .list()
+      .ordering('desc')
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

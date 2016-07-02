@@ -1,12 +1,17 @@
 import Reflux from 'reflux';
-
-import { StoreFormMixin } from '../../mixins';
-
+import { SnackbarNotificationMixin, StoreFormMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 import Actions from './ProfileActions';
+import SessionActions from '../Session/SessionActions';
 
 export default Reflux.createStore({
   listenables: Actions,
-  mixins: [StoreFormMixin],
+
+  mixins: [
+    SnackbarNotificationMixin,
+    StoreFormMixin,
+    StoreLoadingMixin,
+    WaitForStoreMixin
+  ],
 
   getInitialState() {
     return {
@@ -22,33 +27,56 @@ export default Reflux.createStore({
   },
 
   init() {
+    this.data = this.getInitialState();
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
+    this.setLoadingStates();
     this.listenToForms();
   },
 
-  onFetchBillingCardCompleted(payload) {
-    this.trigger({
-      isLoading: false,
-      card: payload
-    });
-  },
-
-  onFetchBillingCardFailure() {
-    this.trigger({ isLoading: false });
+  refreshData() {
+    console.debug('AdminsStore::refreshData');
+    Actions.fetchBillingCard();
   },
 
   setCard(card) {
-    let state = this.getInitialState();
+    this.data.card = card;
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
 
-    state.card = card;
-    state.isLoading = false;
-    this.trigger(state);
+  onFetchBillingCardCompleted(payload) {
+    this.setCard(payload);
+  },
+
+  onFetchBillingCardFailure() {
+    this.data.isLoading = false;
+    this.trigger(this.data);
   },
 
   onUpdateBillingCardCompleted(payload) {
     this.setCard(payload);
+    this.setSnackbarNotification({
+      message: 'Your card has been updated successfully.'
+    });
   },
 
   onAddBillingCardCompleted(payload) {
     this.setCard(payload);
+    this.setSnackbarNotification({
+      message: 'Your card has been added successfully.'
+    });
+  },
+
+  onDeleteBillingCardCompleted() {
+    this.data = this.getInitialState();
+    this.refreshData();
+    this.trigger(this.data);
+    this.setSnackbarNotification({
+      message: 'Your card has been removed successfully.'
+    });
   }
 });

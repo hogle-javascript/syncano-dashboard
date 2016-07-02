@@ -41,7 +41,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalScriptDropdown: {
-      selector: '//div[@class="script-dropdown"]',
+      selector: '//div[@class="script-dropdown"]/div/div',
       locateStrategy: 'xpath'
     },
     codeBoxTableRow: {
@@ -135,7 +135,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addApnsSocket: {
-      selector: '//div[text()="APNS Push Notifications (BETA)"]/following::div[2]//button/div/div/span',
+      selector: '//div[text()="APNS Push Notifications (BETA)"]/following::div[3]//button/div/div/span',
       locateStrategy: 'xpath'
     },
     uploadApnsDevCert: {
@@ -143,7 +143,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addGcmSocket: {
-      selector: '//div[text()="GCM Push Notifications (BETA)"]/following::div[2]//button/div/div/span',
+      selector: '//div[text()="GCM Push Notifications (BETA)"]/following::div[3]//button/div/div/span',
       locateStrategy: 'xpath'
     },
     inputGcmDevKey: {
@@ -193,11 +193,19 @@ export default {
       locateStrategy: 'xpath'
     },
     configuration: {
-      selector: '//span[@class="synicon-socket-push"]/../../following-sibling::div//span[1]',
+      selector: '(//div[text()="true"])[1]',
       locateStrategy: 'xpath'
     },
     summaryDialogCloseButton: {
       selector: '//span[@class="synicon-close"]',
+      locateStrategy: 'xpath'
+    },
+    GCMDevicesLinkIcon: {
+      selector: '//span[@class="synicon-cellphone-android"]',
+      locateStrategy: 'xpath'
+    },
+    APNSDevicesLinkIcon: {
+      selector: '(//span[@class="synicon-cellphone-iphone"])[2]',
       locateStrategy: 'xpath'
     }
   }

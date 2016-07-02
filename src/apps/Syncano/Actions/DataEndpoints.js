@@ -28,14 +28,8 @@ export default {
         name: payload.class,
         schema: ''
       })
-      .then(() => {
-        this.NewLibConnection
-          .DataEndpoint
-          .please()
-          .create(payload)
-          .then(this.completed)
-          .catch(this.failure);
-      })
+      .then(() => this.NewLibConnection.DataEndpoint.please().create(payload))
+      .then(this.completed)
       .catch((error) => {
         if (error.name) {
           return this.failure({ class: error.name });
@@ -65,7 +59,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateWithClass(id, payload) {
+  updateWithClass(name, payload) {
     this.NewLibConnection
       .Class
       .please()
@@ -73,14 +67,8 @@ export default {
         name: payload.class,
         schema: ''
       })
-      .then(() => {
-        this.NewLibConnection
-          .DataEndpoint
-          .please()
-          .update(id, payload)
-          .then(this.completed)
-          .catch(this.failure);
-      })
+      .then(() => this.NewLibConnection.DataEndpoint.please().update({ name }, payload))
+      .then(this.completed)
       .catch((error) => {
         if (error.name) {
           return this.failure({ class: error.name });

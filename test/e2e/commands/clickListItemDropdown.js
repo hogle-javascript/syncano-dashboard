@@ -1,7 +1,7 @@
 // 'element' is the element to click in order to open the dropdown
 // 'dropdoownChoice' can be part of the name of the dropdown option like "Edit" or "Delete"
 
-exports.command = function(listItem, dropdownChoice) {
+exports.command = function clickListItemDropdown(listItem, dropdownChoice) {
   // if xpath pass, else construct xpath
   const isSelector = ['/', '('];
   const listItemDropdown = isSelector.indexOf(listItem[0]) !== -1 ? listItem

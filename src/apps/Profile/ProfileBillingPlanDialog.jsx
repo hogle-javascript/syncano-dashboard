@@ -1,13 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import { DialogMixin, FormMixin } from '../../mixins';
 
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
 
-import { TextField, FlatButton } from 'material-ui';
+import { TextField, FlatButton, SelectField, MenuItem } from 'material-ui';
 import { CreditCard, Loading, Slider, Dialog } from '../../common/';
 import SliderSection from './SliderSection';
 
@@ -53,7 +54,7 @@ const ProfileBillingPlanDialog = React.createClass({
         presence: true,
         numericality: {
           onlyInteger: true,
-          greaterThanOrEqualTo: new Date().getFullYear() - 20,
+          greaterThanOrEqualTo: new Date().getFullYear(),
           lessThanOrEqualTo: new Date().getFullYear() + 20
         }
       }
@@ -143,6 +144,9 @@ const ProfileBillingPlanDialog = React.createClass({
   renderCard() {
     const { router } = this.props;
     const { card } = this.state;
+    const currentYear = new Date().getFullYear();
+    const expirationMonthRange = _.range(1, 13);
+    const expirationYearRange = _.range(currentYear, currentYear + 20);
 
     if (typeof card === 'undefined') {
       return <Loading show={true} />;
@@ -164,9 +168,15 @@ const ProfileBillingPlanDialog = React.createClass({
         </div>
       );
     }
+
     return (
       <div>
         <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
+        <div className="row vm-2-t">
+          <div className="col-sm-35">
+            <p style={{ margin: 0 }}>This is a secure 256-bit SSL encrypted payment.</p>
+          </div>
+        </div>
         <div className="row">
           <div className="col-flex-1">
             <TextField
@@ -183,12 +193,56 @@ const ProfileBillingPlanDialog = React.createClass({
             />
           </div>
         </div>
-
         <div className="row">
-          <div className="col-md-5">
+          <div className="col-flex-1">
+            <SelectField
+              ref="exp_month"
+              name="exp_month"
+              fullWidth={true}
+              floatingLabelText="Expiration month"
+              value={this.state.exp_month}
+              onChange={(event, index, value) => this.setState({ exp_month: value })}
+              errorText={this.getValidationMessages('exp_month').join(' ')}
+              dataStripe="exp-month"
+            >
+              {expirationMonthRange.map((value) => {
+                const primaryText = value < 10 ? `0${value}` : value;
+
+                return (
+                  <MenuItem
+                    key={value}
+                    value={value}
+                    primaryText={primaryText}
+                  />
+                );
+              })}
+            </SelectField>
+          </div>
+          <div className="col-flex-1">
+            <SelectField
+              ref="exp_year"
+              name="exp_year"
+              fullWidth={true}
+              floatingLabelText="Expiration year"
+              value={this.state.exp_year}
+              onChange={(event, index, value) => this.setState({ exp_year: value })}
+              errorText={this.getValidationMessages('exp_year').join(' ')}
+              dataStripe="exp-year"
+            >
+              {expirationYearRange.map((value) => (
+                <MenuItem
+                  key={value}
+                  value={value}
+                  primaryText={value}
+                />
+              ))}
+            </SelectField>
+          </div>
+          <div className="col-sm-5">
             <TextField
-              name="cvc"
               ref="cvc"
+              maxLength={3}
+              name="cvc"
               fullWidth={true}
               value={this.state.cvc}
               onChange={(event, value) => this.setState({ cvc: value })}
@@ -196,34 +250,6 @@ const ProfileBillingPlanDialog = React.createClass({
               hintText="CVC"
               floatingLabelText="CVC"
               dataStripe="cvc"
-            />
-          </div>
-
-          <div className="col-flex-1">
-            <TextField
-              name="exp_month"
-              ref="exp_month"
-              fullWidth={true}
-              value={this.state.exp_month}
-              onChange={(event, value) => this.setState({ exp_month: value })}
-              errorText={this.getValidationMessages('exp_month').join(' ')}
-              hintText="MM"
-              floatingLabelText="Expiration month (MM)"
-              dataStripe="exp-month"
-            />
-          </div>
-
-          <div className="col-flex-1">
-            <TextField
-              name="exp_year"
-              ref="exp_year"
-              fullWidth={true}
-              value={this.state.exp_year}
-              onChange={(event, value) => this.setState({ exp_year: value })}
-              errorText={this.getValidationMessages('exp_year').join(' ')}
-              hintText="YYYY"
-              floatingLabelText="Expiration year (YYYY)"
-              dataStripe="exp-year"
             />
           </div>
         </div>

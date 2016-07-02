@@ -137,7 +137,9 @@ export default React.createClass({
         <Channels.Dialog />
         <Channels.SummaryDialog />
         <PushNotifications.APNSConfigDialog />
+        <PushNotifications.SummaryDialog />
         <PushNotifications.GCMConfigDialog />
+        <PushNotifications.GCMSummaryDialog />
 
         {this.getDialogs()}
         <SocketsInnerToolbar empty={!sockets.hasAnyItem || sockets.isLoading}>

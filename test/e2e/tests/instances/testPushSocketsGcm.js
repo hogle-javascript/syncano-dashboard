@@ -42,19 +42,23 @@ export default {
       .fillInput('@inputGcmDevKey', gcmDevKey)
       .fillInput('@inputGcmProdKey', gcmProdKey)
       .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton')
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
       .waitForElementVisible('@gcmTitleHeading')
       .waitForElementVisible('@inputGcmDevKey')
       .verify.valueContains('@inputGcmDevKey', gcmDevKey)
       .verify.valueContains('@inputGcmProdKey', gcmProdKey)
-      .clickElement('@confirmButton');
+      .clickElement('@confirmButton')
+      .clickElement('@summaryDialogCloseButton');
   },
   'Test Admin Goes to GCM Device list': (client) => {
     const socketsPage = client.page.socketsPage();
     const pushDevicesPage = client.page.pushDevicesPage();
+    const instanceName = accounts.alternativeUser.instanceName;
 
     socketsPage
-      .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Devices list');
+      .goToUrl(instanceName, 'push-notifications/config')
+      .clickElement('@GCMDevicesLinkIcon');
     pushDevicesPage
       .waitForElementVisible('@androidDevicesHeading');
   }
