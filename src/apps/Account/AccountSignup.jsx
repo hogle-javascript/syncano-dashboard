@@ -94,7 +94,6 @@ const AccountSignup = React.createClass({
 
   handleSocialLogin(network) {
     SessionStore.showWelcomeDialog();
-    SessionStore.setSignUpMode();
     Actions.socialLogin(network);
   },
 
