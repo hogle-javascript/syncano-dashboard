@@ -72,10 +72,10 @@ export default React.createClass({
                       <CodePreview.Item
                         title="cURL"
                         languageClassName="markup"
-                        code={'|| Pooling for changes\n\n' +
+                        code={'# Polling for changes\n\n' +
                         `curl -X GET \\\n-H "X-API-KEY: ${token}" \\\n"${SYNCANO_BASE_URL}v1.1/instances/` +
                         `${currentInstance.name}/channels/${item.name}/poll/"\n\n` +
-                        '|| Publishing custom messages (custom_publish flag must be set on true)\n\n' +
+                        '# Publishing custom messages (custom_publish flag must be set on true)\n\n' +
                         `curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-type: application/json" \\\n` +
                         `-d '{"payload":{"message":"Hello there!", "type":"welcome"}, "room":"${item.name}"}' \\\n` +
                         `"${SYNCANO_BASE_URL}v1.1/instances/${currentInstance.name}/channels/` +
@@ -84,7 +84,7 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={'# Pooling for changes\n\n' +
+                        code={'# Polling for changes\n\n' +
                         'import syncano\nfrom syncano.models import Channel\n\n' +
                         `def callback(message=None):\n  print message.payload\n  return True\n\n` +
                         `syncano.connect(api_key="${token}")\n\nchannel = Channel.please.get(\n  instance_name="` +
@@ -96,7 +96,7 @@ export default React.createClass({
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={'// Pooling for changes\n\n' +
+                        code={'// Polling for changes\n\n' +
                         `var Syncano = require("syncano");\nvar connection = Syncano(` +
                         `{accountKey: "${token}"});\nvar Channel = connection.Channel;\n\n` +
                         `var poll = Channel\n  .please()\n  .poll({ instanceName: '${currentInstance.name}',` +
