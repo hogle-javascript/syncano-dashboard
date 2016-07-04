@@ -36,37 +36,37 @@ export default {
       .navigate()
       .waitForElementPresent('@instancesTable');
   },
-  // 'Admin Logs in with Google': (client) => {
-  //   const loginPage = client.page.loginPage();
-  //   const instancesPage = client.page.instancesPage();
-  //
-  //   loginPage.clickElement('@loginButtonGoogle');
-  //   client
-  //     .pause(1000)
-  //     .windowHandles((result) => {
-  //       const handle = result.value[1];
-  //
-  //       client.switchWindow(handle);
-  //     });
-  //   loginPage
-  //     .fillInput('@emailInputGoogle', process.env.NIGHTWATCH_EMAIL)
-  //     .clickElement('@nextButtonGoogle')
-  //     .fillInput('@passInputGoogle', process.env.NIGHTWATCH_PASSWORD)
-  //     .clickElement('@signInButtonGoogle');
-  //
-  //   client.pause(2000);
-  //
-  //   loginPage.clickElement('@approveAccessButtonGoogle');
-  //
-  //   client.windowHandles((result) => {
-  //     const handle = result.value[0];
-  //
-  //     client.switchWindow(handle);
-  //   });
-  //   instancesPage
-  //     .navigate()
-  //     .waitForElementPresent('@instancesTable');
-  // },
+  'Admin Logs in with Google': (client) => {
+    const loginPage = client.page.loginPage();
+    const instancesPage = client.page.instancesPage();
+
+    loginPage.clickElement('@loginButtonGoogle');
+    client
+      .pause(1000)
+      .windowHandles((result) => {
+        const handle = result.value[1];
+
+        client.switchWindow(handle);
+      });
+    loginPage
+      .fillInput('@emailInputGoogle', process.env.NIGHTWATCH_EMAIL)
+      .clickElement('@nextButtonGoogle')
+      .fillInput('@passInputGoogle', process.env.NIGHTWATCH_PASSWORD)
+      .clickElement('@signInButtonGoogle');
+
+    client.pause(2000);
+
+    loginPage.clickElement('@approveAccessButtonGoogle');
+
+    client.windowHandles((result) => {
+      const handle = result.value[0];
+
+      client.switchWindow(handle);
+    });
+    instancesPage
+      .navigate()
+      .waitForElementPresent('@instancesTable');
+  },
   'Admin Logs in with Github': (client) => {
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
