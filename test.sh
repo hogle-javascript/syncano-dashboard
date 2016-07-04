@@ -25,8 +25,7 @@ if [[ "$MESSAGE" == *\[E2E-SKIP\]* ]]; then
     echo "[WARN] Skipping E2E tests !!!"
 else
     mkdir -p reports/
-    touch ./reports/docker-entropy.log
-    nohup ./check_entropy.sh > ./reports/docker-entropy.log 2>&1&
+    nohup ./check_docker.sh > ./reports/docker-stats.log 2>&1&
     npm run lint
     e2e_setup
 
