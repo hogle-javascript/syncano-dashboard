@@ -38,6 +38,7 @@ import Logo from './Logo';
 import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
 import Popover from './Popover';
+import PricingPlans from './PricingPlans';
 import Sidebar from './Sidebar';
 import ShowMore from './ShowMore';
 import UpgradeButton from './UpgradeButton';
@@ -84,6 +85,7 @@ export { Logo };
 export { NoMobileInfo };
 export { Notification };
 export { Popover };
+export { PricingPlans };
 export { Sidebar };
 export { ShowMore };
 export { UpgradeButton };
@@ -131,6 +133,7 @@ export default {
   NoMobileInfo,
   Notification,
   Popover,
+  PricingPlans,
   Sidebar,
   ShowMore,
   UpgradeButton,

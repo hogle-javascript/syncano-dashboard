@@ -190,8 +190,7 @@ export default Reflux.createStore({
       });
     });
 
-    PlanActions.setOverage(state.overage);
-    PlanActions.setChartLegend({
+    state.chartLegend = {
       rows: [
         {
           percent: _.round((usageAmount.api / pricing.api.overage) / pricing.api.included * 100, 0),
@@ -207,7 +206,10 @@ export default Reflux.createStore({
         }
       ],
       showPercents: plan === 'paid-commitment'
-    });
+    };
+
+    PlanActions.setOverage(state.overage);
+    PlanActions.setChartLegend(state.chartLegend);
 
     this.trigger(state);
   },
@@ -279,5 +281,10 @@ export default Reflux.createStore({
     let { year, month } = this.getDate();
 
     return new Date(year, month + 1, 0).getDate();
+  },
+
+  onFetchTotalDailyUsage() {
+    console.debug('ProfileBillingChartStore::onFetchTotalDailyUsage');
+    this.trigger({ isLoading: true });
   }
 });
