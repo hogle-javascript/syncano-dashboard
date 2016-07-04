@@ -28,6 +28,7 @@
     "moment-timezone": "0.5.4",
     "mousetrap": "1.6.0",
     "normalize.css": "3.0.3",
+    "numeral": "1.5.3",
     "pluralize": "1.2.1",
     "promise-series": "1.0.0",
     "radium": "0.17.1",
