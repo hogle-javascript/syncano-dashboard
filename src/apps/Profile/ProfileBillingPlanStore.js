@@ -2,15 +2,16 @@ import Reflux from 'reflux';
 import moment from 'moment';
 import _ from 'lodash';
 
-import { WaitForStoreMixin } from '../../mixins';
+import { StoreLoadingMixin } from '../../mixins';
 
-import SessionActions from '../Session/SessionActions';
 import Actions from './ProfileBillingPlanActions';
 
 export default Reflux.createStore({
   listenables: Actions,
 
-  mixins: [WaitForStoreMixin],
+  mixins: [
+    StoreLoadingMixin
+  ],
 
   getInitialState() {
     return {
@@ -31,10 +32,7 @@ export default Reflux.createStore({
 
   init() {
     this.data = this.getInitialState();
-    this.waitFor(
-      SessionActions.setUser,
-      this.refreshData
-    );
+    this.setLoadingStates();
   },
 
   clearData() {
@@ -43,7 +41,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('ClassesStore::refreshData');
+    console.debug('ProfileBillingPlanStore::refreshData');
 
     const join = this.joinTrailing(
       Actions.fetchBillingProfile.completed,
@@ -234,23 +232,19 @@ export default Reflux.createStore({
   },
 
   onFetchBillingProfileCompleted(payload) {
-    this.data.isLoading = false;
     this.setProfile(payload);
   },
 
   onFetchBillingSubscriptionsCompleted(payload) {
-    this.data.isLoading = false;
     this.setSubscriptions(payload);
   },
 
   onCancelSubscriptionsCompleted() {
-    this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
   },
 
   onSubscribePlanCompleted() {
-    this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
   },
