@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
+import Store from '../Profile/ProfileBillingPlanStore';
 import ChartStore from '../Profile/ProfileBillingChartStore';
 import Actions from '../Profile/ProfileBillingChartActions';
 import InstancesActions from '../../apps/Instances/InstancesActions';
@@ -16,6 +17,7 @@ export default React.createClass({
   displayName: 'ProfileBillingPlan',
 
   mixins: [
+    Reflux.connect(Store),
     Reflux.connect(ChartStore, 'chart'),
     Reflux.connect(InstancesStore, 'instances')
   ],

@@ -20,12 +20,14 @@ export default {
     planusagePage
       .navigate()
       .waitForElementPresent('@planUsageTitle')
+      .waitForElementPresent('@usageWithCurrentPlanText')
       .assert.containsText('@usageWithCurrentPlanText', 'Usage with your current plan:')
       .waitForElementVisible('@apiCallsText')
       .assert.containsText('@apiCallsText', 'API calls')
       .assert.containsText('@scriptSecondsText', 'Script seconds')
       .selectDropdownValue('@instancePlanDropdown', accounts.instanceUser.instanceName)
       .assert.containsText('@instancePlanDropdown', accounts.instanceUser.instanceName)
+      .waitForElementVisible('@usageCharts')
       .assertSelectedCount('xpath', usageChartsSelector, 3);
   }
 };
