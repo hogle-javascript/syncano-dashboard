@@ -13,7 +13,6 @@ export default React.createClass({
   propTypes: {
     onIconClick: React.PropTypes.func.isRequired,
     showEditDialog: React.PropTypes.func.isRequired,
-    showSendMessageDialog: React.PropTypes.func.isRequired,
     showDeleteDialog: React.PropTypes.func.isRequired
   },
 
@@ -25,9 +24,7 @@ export default React.createClass({
       icon,
       onIconClick,
       showEditDialog,
-      showDeleteDialog,
-      checkedItemsCount,
-      showSendMessageDialog
+      showDeleteDialog
     } = this.props;
 
     return (
@@ -77,12 +74,6 @@ export default React.createClass({
             className="dropdown-item-delete"
             onTouchTap={showDeleteDialog}
             primaryText="Delete"
-          />
-          <MenuItem
-            disabled={checkedItemsCount > 1}
-            className="dropdown-item-delete"
-            onTouchTap={showSendMessageDialog}
-            primaryText="Send Message"
           />
         </Column.Menu>
       </ColumnList.Item>

@@ -10,6 +10,7 @@ const getPhoneIcon = () => {
   return <div dangerouslySetInnerHTML={{ __html: require('./phone-apple-empty-screen.svg') }}></div>;
 };
 const props = {
+  getDevices: DevicesStore.getDevices,
   getCheckedItems: DevicesStore.getCheckedItems,
   onSendMessage: Actions.sendMessagesToAPNS,
   phoneIcon: getPhoneIcon()

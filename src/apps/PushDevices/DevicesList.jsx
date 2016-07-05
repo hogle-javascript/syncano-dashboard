@@ -22,10 +22,6 @@ const Column = ColumnList.Column;
 const DevicesList = Radium(React.createClass({
   displayName: 'DevicesList',
 
-  propTypes: {
-    showSendMessagesDialog: React.PropTypes.func.isRequired
-  },
-
   contextTypes: {
     params: React.PropTypes.object
   },
@@ -95,7 +91,7 @@ const DevicesList = Radium(React.createClass({
   },
 
   renderItem(item) {
-    const { getCheckedItems, actions, type, showSendMessagesDialog } = this.props;
+    const { actions, type } = this.props;
     const icon = {
       apns: 'apple',
       gcm: 'android'
@@ -107,11 +103,9 @@ const DevicesList = Radium(React.createClass({
     return (
       <ListItem
         key={`devices-list-item-${item.registration_id}`}
-        checkedItemsCount={getCheckedItems().length}
         actions={actions}
         onIconClick={actions.checkItem}
         icon={icon[type]}
-        showSendMessageDialog={() => showSendMessagesDialog(item)}
         showEditDialog={() => actions.showDialog(item)}
         showDeleteDialog={() => this.showDialog('deleteDeviceDialog', item)}
         item={item}
@@ -129,7 +123,6 @@ const DevicesList = Radium(React.createClass({
       type,
       actions,
       isLoading,
-      showSendMessagesDialog,
       router,
       ...other
     } = this.props;
@@ -215,10 +208,6 @@ const DevicesList = Radium(React.createClass({
                 handleSelectAll={actions.selectAll}
                 handleUnselectAll={actions.uncheckAll}
               >
-                <Lists.MenuItem
-                  primaryText="Send message"
-                  onTouchTap={showSendMessagesDialog}
-                />
                 <Lists.MenuItem onTouchTap={() => this.showDialog('deleteDeviceDialog')} />
               </Lists.Menu>
             </ColumnList.Header>
