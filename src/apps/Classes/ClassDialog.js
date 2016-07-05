@@ -506,6 +506,7 @@ export default React.createClass({
             <SelectFieldWrapper
               ref="fieldTarget"
               name="fieldTarget"
+              floatingLabelText=""
               options={this.getFieldTargetOptions()}
               value={fieldTarget}
               underlineStyle={this.handleUnderlineStyle('fieldTarget')}
