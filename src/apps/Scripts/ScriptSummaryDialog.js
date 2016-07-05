@@ -6,7 +6,7 @@ import ScriptsStore from './ScriptsStore';
 import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
-import { CodePreview, Dialog } from '../../common/';
+import { CodePreview, Dialog, Loading } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 
 export default React.createClass({
@@ -44,28 +44,30 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a Script!"
+        title={!showSummaryDialog ? "You've just created a Script!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.hideDialog}
         loading={Scripts.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className={`synicon-${runtime.icon}`}
-            style={{
-              backgroundColor: runtime.color,
-              color: '#fff',
-              fontSize: 24,
-              borderRadius: '50%',
-              width: '40px',
-              height: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center' }}
-          />
-        </div>
-        {showSummaryDialog ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className={`synicon-${runtime.icon}`}
+              style={{
+                backgroundColor: runtime.color,
+                color: '#fff',
+                fontSize: 24,
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center' }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -89,7 +91,7 @@ export default React.createClass({
                         title="cURL"
                         languageClassName="markup"
                         code={`curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" \\\n` +
-                        `-d '{"payload":{"KEY":"VALUE"}}' \\\n"https://api.syncano.io/v1.1/instances/` +
+                        `-d '{"payload":{"KEY":"VALUE"}}' \\\n"${SYNCANO_BASE_URL}v1.1/instances/` +
                         `${currentInstance.name}/snippets/scripts/${item.id}/run/"`}
                       />
                       <CodePreview.Item
@@ -102,10 +104,11 @@ export default React.createClass({
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`var Syncano = require("syncano");\nvar connection = Syncano({accountKey: "${token}"});` +
-                        `\nvar Script = connection.Script;\n\nvar payload = {"payload": {"KEY": "VALUE"}};\n\n` +
-                        `Script\n  .please()\n  .run({instanceName: '${currentInstance.name}', id: ${item.id}}, ` +
-                        'payload)\n  .then(calback);'}
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar Script = connection.Script;\n\n` +
+                        `var payload = {"payload": {"KEY":"VALUE"}};\n\nScript\n  .please()\n  ` +
+                        `.run({instanceName: '${currentInstance.name}', id: ${item.id}}, payload)\n` +
+                        '  .then(calback);'}
                       />
                     </CodePreview>
                   </CardText>

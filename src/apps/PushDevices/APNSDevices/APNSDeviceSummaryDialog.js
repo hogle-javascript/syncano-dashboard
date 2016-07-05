@@ -6,7 +6,7 @@ import APNSDevicesStore from './APNSDevicesStore';
 import SessionStore from '../../Session/SessionStore';
 
 import { DialogMixin } from '../../../mixins';
-import { CodePreview, Dialog } from '../../../common/';
+import { CodePreview, Dialog, Loading } from '../../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
@@ -34,28 +34,30 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just added iOS Device!"
+        title={!showSummaryDialog ? "You've just created a iOS Device!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={APNSDevices.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className="synicon-apple"
-            style={{
-              backgroundColor: Colors.blue500,
-              color: '#fff',
-              fontSize: 24,
-              borderRadius: '50%',
-              width: '40px',
-              height: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center' }}
-          />
-        </div>
-        {showSummaryDialog ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className="synicon-apple"
+              style={{
+                backgroundColor: Colors.blue500,
+                color: '#fff',
+                fontSize: 24,
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center' }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -79,20 +81,23 @@ export default React.createClass({
                         languageClassName="markup"
                         code={`curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
                         `\\\n-d '{"content": {"environment": "development","aps": {"alert": "hello"}}' \\\n` +
-                        `"https://api.syncano.io/v1.1/instances/${currentInstance.name}/push_notifications/` +
+                        `"${SYNCANO_BASE_URL}v1.1/instances/${currentInstance.name}/push_notifications/` +
                         `apns/devices/${item.registration_id}/send_message/`}
                       />
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`device = APNSDevice.please.get(\n  instance_name='${currentInstance.name}', ` +
+                        code={`import syncano\nfrom syncano.models import APNSDevice\n\nsyncano.connect(api_key=` +
+                        `'${token}')\n\ndevice = APNSDevice.please.get(\n  instance_name='${currentInstance.name}', ` +
                         `\n  registration_id='${item.registration_id}'\n) \n\ndevice.send_message(\n  content={\n` +
                         "    'environment': 'development',\n    'aps': {'alert': 'hello'}\n  }\n)"}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`var query = {\n  instanceName: "${currentInstance.name}",\n  ` +
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar APNSDevice = connection.APNSDevice;\n\n` +
+                        `var query = {\n  instanceName: "${currentInstance.name}",\n  ` +
                         `registration_id: "${item.registration_id}" \n};\n` +
                         'var content = {\n  environment: "development",\n  aps: {alert: "hello"}\n};' +
                         `\n\n\APNSDevice\n  .please()\n  .sendMessage(query, content)\n  .then(calback);`}

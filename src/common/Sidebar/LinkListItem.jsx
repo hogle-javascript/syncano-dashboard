@@ -19,19 +19,23 @@ const LinkListItem = React.createClass({
     };
   },
 
-  getMenuItemHref(pathName) {
+  getMenuItemHref(routeName) {
     const { params } = this.context;
     const { router } = this.props;
 
-    return router.createHref({ name: pathName, params });
+    return router.createHref({ name: routeName, params });
   },
 
-  handleTouchTap(pathName, event) {
+  handleTouchTap(routeName) {
     const { params } = this.context;
     const { router } = this.props;
+    const isActive = router.isActive({ name: routeName, params }, true);
 
-    event.preventDefault();
-    router.push({ name: pathName, params });
+    if (isActive) {
+      return;
+    }
+
+    router.push({ name: routeName, params });
   },
 
   render() {
@@ -43,7 +47,8 @@ const LinkListItem = React.createClass({
     return (
       <ListItem
         style={{ ...style, ...(isActive && styles.active) }}
-        onTouchTap={this.handleTouchTap.bind(null, routeName)}
+        onTouchTap={() => this.handleTouchTap(routeName)}
+        onClick={(event) => event.preventDefault()}
         href={this.getMenuItemHref(routeName)}
         iconColor={isActive ? styles.active.color : null}
         {...other}

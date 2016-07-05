@@ -172,6 +172,11 @@ const ProfileBillingPlanDialog = React.createClass({
     return (
       <div>
         <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
+        <div className="row vm-2-t">
+          <div className="col-sm-35">
+            <p style={{ margin: 0 }}>This is a secure 256-bit SSL encrypted payment.</p>
+          </div>
+        </div>
         <div className="row">
           <div className="col-flex-1">
             <TextField
@@ -188,9 +193,8 @@ const ProfileBillingPlanDialog = React.createClass({
             />
           </div>
         </div>
-
         <div className="row">
-          <div className="col-flex-2">
+          <div className="col-flex-1">
             <SelectField
               ref="exp_month"
               name="exp_month"
@@ -214,8 +218,7 @@ const ProfileBillingPlanDialog = React.createClass({
               })}
             </SelectField>
           </div>
-
-          <div className="col-flex-2">
+          <div className="col-flex-1">
             <SelectField
               ref="exp_year"
               name="exp_year"
@@ -235,7 +238,6 @@ const ProfileBillingPlanDialog = React.createClass({
               ))}
             </SelectField>
           </div>
-
           <div className="col-sm-5">
             <TextField
               ref="cvc"

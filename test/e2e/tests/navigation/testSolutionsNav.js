@@ -1,4 +1,3 @@
-import path from 'path';
 import accounts from '../../tempAccounts';
 
 module.exports = {
@@ -19,19 +18,8 @@ module.exports = {
 
     instancesPage
       .navigate()
-      .setResolution(client)
       .clickElement('@instancesTableName');
-  },
-  afterEach(client, done) {
-    if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
-      done();
-      return;
-    }
-    const res = client.globals.test_settings.resolution;
-    const prefix = client.currentTest.name.replace(/\s/g, '-').replace(/"|'/g, '');
-    const fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation', res, prefix + '.png'));
-
-    client.saveScreenshot(fileNamePath, done);
+    client.pause(500);
   },
   'User goes to Solutions View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();

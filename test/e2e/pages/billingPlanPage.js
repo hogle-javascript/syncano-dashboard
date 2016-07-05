@@ -14,11 +14,11 @@ export default {
       selector: 'input[name="cvc"]'
     },
     monthExpirationInput: {
-      selector: '//div[@class="col-flex-2"][1]/div/div/div',
+      selector: '//label[text()="Expiration month"]',
       locateStrategy: 'xpath'
     },
     yearExpirationInput: {
-      selector: '//div[@class="col-flex-2"][2]/div/div/div',
+      selector: '//label[text()="Expiration year"]',
       locateStrategy: 'xpath'
     },
     confirmButton: {
@@ -27,6 +27,28 @@ export default {
     },
     planBarLocator: {
       selector: '//span/strong',
+      locateStrategy: 'xpath'
+    },
+    cancelPlanButton: {
+      selector: '//button/div/span[text()="Cancel my plan"]',
+      locateStrategy: 'xpath'
+    },
+    confirmCancelPlanButton: {
+      selector: '//button/div/div/span[text()="Yes, I want to cancel"]',
+      locateStrategy: 'xpath'
+    },
+    expiredTextLocation: {
+      selector: '(//div[@class="vm-1-b"]/div)[1]',
+      locateStrategy: 'xpath'
+    },
+    softLimitInput: {
+      selector: 'input[name=soft_limit]'
+    },
+    hardLimitInput: {
+      selector: 'input[name=hard_limit]'
+    },
+    setLimitsButton: {
+      selector: '//button/div/span[text()="Set Limits"]',
       locateStrategy: 'xpath'
     }
   }

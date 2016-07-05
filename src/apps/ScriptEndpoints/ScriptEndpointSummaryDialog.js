@@ -6,7 +6,7 @@ import ScriptEndpointsStore from './ScriptEndpointsStore';
 import SessionStore from '../Session/SessionStore';
 
 import { DialogMixin } from '../../mixins';
-import { CodePreview, Dialog } from '../../common/';
+import { CodePreview, Dialog, Loading } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
@@ -34,22 +34,24 @@ export default React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a Script Endpoint!"
+        title={!showSummaryDialog ? "You've just created a Script Endpoint!" : ''}
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={scriptEndpoints.isLoading}
         open={open}
       >
-        <div style={{ position: 'absolute', top: 0, left: 24 }}>
-          <span
-            className="synicon-socket-script-endpoint"
-            style={{
-              color: Colors.red400,
-              fontSize: 32
-            }}
-          />
-        </div>
-        {showSummaryDialog ? null : (
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className="synicon-socket-script-endpoint"
+              style={{
+                color: Colors.red400,
+                fontSize: 32
+              }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
@@ -72,19 +74,22 @@ export default React.createClass({
                       <CodePreview.Item
                         title="cURL"
                         languageClassName="markup"
-                        code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"https://api.syncano.io/v1.1/instances/` +
+                        code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"${SYNCANO_BASE_URL}v1.1/instances/` +
                         `${currentInstance.name}/endpoints/scripts/${item.name}"`}
                       />
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`script_endpoint = ScriptEndpoint.please.get(\n  instance_name='` +
+                        code={`import syncano\nfrom syncano.models import ScriptEndpoint\n\nsyncano.connect(api_key=` +
+                        `'${token}')\n\nscript_endpoint = ScriptEndpoint.please.get(\n  instance_name='` +
                         `${currentInstance.name}',\n  name='${item.name}'\n)\n\nprint(script_endpoint.script)`}
                       />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`ScriptEndpoint\n  .please()\n  .get({instanceName: '${currentInstance.name}',` +
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar ScriptEndpoint = connection.ScriptEndpoint;\n\n` +
+                        `ScriptEndpoint\n  .please()\n  .get({instanceName: '${currentInstance.name}',` +
                         `name: '${item.name}'})\n  .then(function(scriptEndpoint){});`}
                       />
                     </CodePreview>
