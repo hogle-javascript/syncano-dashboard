@@ -15,7 +15,6 @@ export default {
       .fillInput('@passInput', tempPass)
       .clickElement('@submitButton')
       .waitForElementNotPresent('@setupScreen')
-      .waitForElementVisible('@firstLoginScreen')
-      .verify.containsText('@firstLoginScreen', 'Start building your app here');
+      .waitForElementVisible('@firstLoginScreen');
   }
 };

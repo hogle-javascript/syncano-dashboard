@@ -23,7 +23,7 @@ export default {
       locateStrategy: 'xpath'
     },
     firstLoginScreen: {
-      selector: '//div[@class="col-flex-1"]/div/div/div/div/div[@style="text-align: center; font-size: 25px; line-height: 34px; font-weight: 500; color: rgb(74, 74, 74); margin-bottom: 10px;"]',
+      selector: '//div[text()="Start building your app here"]',
       locateStrategy: 'xpath'
     },
     termsOfUseLink: {

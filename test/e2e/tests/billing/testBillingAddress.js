@@ -2,7 +2,7 @@ import accounts from '../../tempAccounts';
 
 export default {
   tags: ['billingAddress'],
-  beforeEach: (client) => {
+  before: (client) => {
     const loginPage = client.page.loginPage();
 
     loginPage
@@ -10,7 +10,7 @@ export default {
       .setResolution(client)
       .login(accounts.instanceUser.email, accounts.instanceUser.password);
   },
-  afterEach: (client, done) => {
+  after: (client, done) => {
     client.end(done);
   },
   'User adds Billing Address': (client) => {
@@ -18,7 +18,6 @@ export default {
 
     billingAddressPage
       .navigate()
-      .waitForElementPresent('@billingAddressTitle')
       .fillInput('@companyNameInput', 'E2E Inc.')
       .fillInput('@firstNameInput', 'John')
       .fillInput('@lastNameInput', 'Smith')
@@ -36,9 +35,6 @@ export default {
     const billingAddressPage = client.page.billingAddressPage();
 
     billingAddressPage
-      .navigate()
-      .waitForElementPresent('@billingAddressTitle')
-      .waitForElementVisible('@lastNameInput')
       .assert.valueContains('@lastNameInput', 'Smith')
       .fillInput('@lastNameInput', 'Snow')
       .fillInput('@taxNumberInput', '555-111-555')
@@ -50,8 +46,6 @@ export default {
     const billingAddressPage = client.page.billingAddressPage();
 
     billingAddressPage
-      .navigate()
-      .waitForElementPresent('@billingAddressTitle')
       .assert.valueContains('@companyNameInput', 'E2E Inc.')
       .assert.valueContains('@firstNameInput', 'John')
       .assert.valueContains('@lastNameInput', 'Snow')
