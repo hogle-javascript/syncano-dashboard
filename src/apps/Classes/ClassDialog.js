@@ -481,6 +481,7 @@ export default React.createClass({
           <TextField
             ref="fieldName"
             name="fieldName"
+            floatingLabelText=""
             fullWidth={true}
             value={newFieldObj.fieldName}
             underlineStyle={this.handleUnderlineStyle('fieldName')}
@@ -490,6 +491,9 @@ export default React.createClass({
         </TableRowColumn>
         <TableRowColumn className="col-sm-8">
           <SelectFieldWrapper
+            ref="fieldType"
+            name="fieldType"
+            floatingLabelText=""
             options={this.getFieldTypes()}
             value={newFieldObj.fieldType}
             underlineStyle={this.handleUnderlineStyle('fieldType')}
@@ -500,6 +504,8 @@ export default React.createClass({
         <TableRowColumn className="col-sm-8">
           <Show if={fieldType === 'reference' || fieldType === 'relation'}>
             <SelectFieldWrapper
+              ref="fieldTarget"
+              name="fieldTarget"
               options={this.getFieldTargetOptions()}
               value={fieldTarget}
               underlineStyle={this.handleUnderlineStyle('fieldTarget')}
@@ -707,31 +713,31 @@ export default React.createClass({
                       style={styles.tableHeaderColumn}
                       className="col-sm-8"
                     >
-                    Type
+                      Field Type
                     </TableHeaderColumn>
                     <TableHeaderColumn
                       style={styles.tableHeaderColumn}
                       className="col-sm-8"
                     >
-                    Target Class
+                      Target Class
                     </TableHeaderColumn>
                     <TableHeaderColumn
                       style={styles.tableHeaderColumn}
                       className="col-sm-3"
                     >
-                    Filter
+                      Filter
                     </TableHeaderColumn>
                     <TableHeaderColumn
                       style={styles.tableHeaderColumn}
                       className="col-sm-3"
                     >
-                    Order
+                      Order
                     </TableHeaderColumn>
                     <TableHeaderColumn
                       style={styles.tableHeaderColumnButton}
                       className="col-sm-5"
                     >
-                    Action
+                      Action
                     </TableHeaderColumn>
                   </TableRow>
                 </TableHeader>
