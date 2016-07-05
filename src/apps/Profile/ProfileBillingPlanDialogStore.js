@@ -122,7 +122,8 @@ export default Reflux.createStore({
 
   onSubscribePlanCompleted() {
     this.setLimits();
-    BillingPlanActions.fetch();
+    BillingPlanActions.fetchBillingProfile();
+    BillingPlanActions.fetchBillingSubscriptions();
     this.trigger(this.data);
   },
 
@@ -160,7 +161,8 @@ export default Reflux.createStore({
   },
 
   onUpdateBillingProfileCompleted() {
-    BillingPlanActions.fetch();
+    BillingPlanActions.fetchBillingProfile();
+    BillingPlanActions.fetchBillingSubscriptions();
     this.trigger(this.data);
   },
 

@@ -92,6 +92,7 @@ export default Reflux.createStore({
     window.analytics.alias(payload.email);
 
     if (payload.created === true) {
+      SessionStore.setSignUpMode();
       window.analytics.track('Sign up Dashboard', {
         authBackend: payload.network,
         email: payload.email

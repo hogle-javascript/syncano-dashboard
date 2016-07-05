@@ -14,7 +14,7 @@ export default {
     this.NewLibConnection
       .Profile
       .please()
-      .update(payload)
+      .update({}, payload)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -92,29 +92,6 @@ export default {
       .catch(this.failure);
   },
 
-  cancelNewPlan(subscriptions) {
-    const currentPlan = subscriptions[0];
-
-    this.NewLibConnection
-      .Subscription
-      .please()
-      .cancel(subscriptions[1].id)
-      .then(
-        this.NewLibConnection
-          .Plan
-          .please()
-          .subscribe(currentPlan.plan, {
-            commitment: JSON.stringify({
-              api: currentPlan.commitment.api,
-              cbx: currentPlan.commitment.cbx
-            })
-          })
-          .then(this.completed)
-          .catch(this.failure)
-      )
-      .catch(this.failure);
-  },
-
   listPlans() {
     this.NewLibConnection
       .Plan
@@ -134,9 +111,7 @@ export default {
   },
 
   cancelSubscriptions(ids) {
-    const promises = ids.map((id) => {
-      this.NewLibConnection.Subscription.please().cancel({ id }).request();
-    });
+    const promises = ids.map((id) => this.NewLibConnection.Subscription.please().cancel({ id }));
 
     this.Promise
       .all(promises)
