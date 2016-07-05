@@ -40,6 +40,16 @@ export default {
     expiredTextLocation: {
       selector: '(//div[@class="vm-1-b"]/div)[1]',
       locateStrategy: 'xpath'
+    },
+    softLimitInput: {
+      selector: 'input[name=soft_limit]'
+    },
+    hardLimitInput: {
+      selector: 'input[name=hard_limit]'
+    },
+    setLimitsButton: {
+      selector: '//button/div/span[text()="Set Limits"]',
+      locateStrategy: 'xpath'
     }
   }
 };

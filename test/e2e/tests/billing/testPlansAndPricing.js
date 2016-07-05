@@ -42,5 +42,13 @@ export default {
       .assert.elementNotPresent('@cancelPlanButton')
       .waitForElementVisible('@expiredTextLocation')
       .assert.containsText('@expiredTextLocation', 'will expire at the end of the month');
+  },
+  'User sets soft & hard limits on plan usage': (client) => {
+    const billingPage = client.page.billingPlanPage();
+
+    billingPage
+      .fillInput('@softLimitInput', 10)
+      .fillInput('@hardLimitInput', 30)
+      .click('@setLimitsButton');
   }
 };

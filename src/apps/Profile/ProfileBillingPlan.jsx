@@ -51,7 +51,8 @@ export default Radium(React.createClass({
   },
 
   componentDidMount() {
-    Actions.fetch();
+    Actions.fetchBillingProfile();
+    Actions.fetchBillingSubscriptions();
   },
 
   componentWillUpdate(nextProps, nextState) {

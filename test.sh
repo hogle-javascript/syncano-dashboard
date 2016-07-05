@@ -29,12 +29,11 @@ else
     npm run lint
     e2e_setup
 
-    case "$CIRCLE_NODE_INDEX" in
-        0) npm run e2e ;;
-        1) npm run e2e-1 ;;
-        2) npm run e2e-2 ;;
-        *) npm run e2e ;;
-    esac
+    if [ $CIRCLE_BRANCH = 'master' ] || [ $CIRCLE_BRANCH = 'devel' ]; then
+        npm run e2e-master-devel
+    else
+        npm run e2e
+    fi
 
     e2e_cleanup
 fi

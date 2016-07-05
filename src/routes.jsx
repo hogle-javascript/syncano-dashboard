@@ -57,16 +57,25 @@ import DemoApps from './apps/DemoApps';
 
 function redirectToLogin(nextState, replace) {
   if (!auth.loggedIn()) {
-    replace({
-      pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
-    });
+    const query = _.omit(nextState.location.query, 'next');
+
+    if (nextState.location.query.next) {
+      replace({
+        name: 'login',
+        state: { nextPathname: nextState.location.pathname },
+        query: _.merge({ next: nextState.location.pathname }, query)
+      });
+    } else {
+      replace({ name: 'login', query: _.merge({ next: nextState.location.pathname }, query) });
+    }
   }
 }
 
 function redirectToDashboard(nextState, replace) {
   if (auth.loggedIn()) {
-    replace('/');
+    replace({
+      pathname: '/'
+    });
   }
 }
 
