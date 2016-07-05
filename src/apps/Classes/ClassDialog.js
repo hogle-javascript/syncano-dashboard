@@ -1,3 +1,4 @@
+/* eslint-disable no-duplicate-imports, import/no-duplicates */
 import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
@@ -13,8 +14,8 @@ import ClassesStore from './ClassesStore';
 import { GroupsStore, GroupsActions } from '../Groups';
 
 // Components
-import { TextField, FlatButton, RaisedButton, IconButton, Checkbox, Tabs, Tab, Table,
-  TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui';
+import { TextField, FlatButton, RaisedButton, IconButton, Checkbox, Tabs, Tab } from 'material-ui';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 import { Color, Show, SelectFieldWrapper, Dialog, Icon, Notification, ColorIconPicker } from '../../common/';
 
