@@ -14,8 +14,6 @@ import { IconButton } from 'material-ui';
 import { ColumnList, Loading, Container, Lists, Dialog, ShowMore } from '../../common/';
 import ListItem from './DevicesListItem';
 import NoConfigView from './NoConfigView';
-import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
-import APNSSendMessageDialog from './APNSDevices/APNSSendMessageDialog';
 
 const Column = ColumnList.Column;
 
@@ -176,8 +174,6 @@ const DevicesList = Radium(React.createClass({
         <div style={styles.listTitleContainer}>
           {title}
         </div>
-        <GCMSendMessageDialog />
-        <APNSSendMessageDialog />
         <Loading show={isLoading}>
           <Lists.Container>
             {this.getDialogs()}

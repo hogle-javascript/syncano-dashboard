@@ -10,6 +10,8 @@ import GCMSendMessagesActions from '../../src/apps/PushDevices/GCMDevices/GCMSen
 import APNSDevicesStore from '../../src/apps/PushDevices/APNSDevices/APNSDevicesStore';
 import GCMDevicesStore from '../../src/apps/PushDevices/GCMDevices/GCMDevicesStore';
 
+import GCMSendMessageDialog from '../../src/apps/PushDevices/GCMDevices/GCMSendMessageDialog';
+import APNSSendMessageDialog from '../../src/apps/PushDevices/APNSDevices/APNSSendMessageDialog';
 import { ListItem, FontIcon, RaisedButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 import { Popover, InnerToolbar } from '../common/';
@@ -118,6 +120,8 @@ const PushDevicesPage = React.createClass({
     return (
       <div>
         <Helmet title={title} />
+        <GCMSendMessageDialog />
+        <APNSSendMessageDialog />
         <InnerToolbar title={title}>
           {this.renderSendMessagesButton()}
           {this.renderAddButton()}
@@ -167,7 +171,7 @@ const PushDevicesPage = React.createClass({
                   className="synicon-android"
                 />
               }
-              onTouchTap={() => this.handleAddDevice('gcm-devices')}
+              onTouchTap={() => this.handleSendMessages('gcm-devices')}
               primaryText="Android Device"
             />
             <ListItem
@@ -179,7 +183,7 @@ const PushDevicesPage = React.createClass({
                   className="synicon-apple"
                 />
               }
-              onTouchTap={() => this.handleAddDevice('apns-devices')}
+              onTouchTap={() => this.handleSendMessages('apns-devices')}
               primaryText="iOS Device"
             />
           </Popover>

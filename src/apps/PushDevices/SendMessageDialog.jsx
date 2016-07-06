@@ -506,17 +506,17 @@ export default (store, props) => Radium(React.createClass({
             <Stepper activeStep={stepIndex}>
               <Step>
                 <StepLabel icon={getStepIcon(0)}>
-                  Choose environment and type message
+                  <span className="hm-1-l">Choose environment and type message</span>
                 </StepLabel>
               </Step>
               <Step>
                 <StepLabel icon={getStepIcon(1)}>
-                  Choose devices
+                  <span className="hm-1-l">Choose devices</span>
                 </StepLabel>
               </Step>
               <Step>
                 <StepLabel icon={getStepIcon(2)}>
-                  Confirm & Send
+                  <span className="hm-1-l">Confirm & Send</span>
                 </StepLabel>
               </Step>
             </Stepper>
