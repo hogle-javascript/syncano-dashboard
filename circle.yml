@@ -23,6 +23,7 @@ deployment:
     branch: devel
     commands:
       - NODE_ENV=staging npm run deployment-devel
+      - NODE_ENV=beta npm run deployment-beta
 
   sockets:
     branch: /.*/
