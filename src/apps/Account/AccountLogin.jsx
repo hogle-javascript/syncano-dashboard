@@ -16,7 +16,7 @@ import Constants from './AuthConstants';
 // Components
 import AccountContainer from './AccountContainer';
 import { TextField, RaisedButton } from 'material-ui';
-import { SocialAuthButtonsList } from '../../common/';
+import { SocialAuthButtonsList, Notification, Show } from '../../common/';
 
 const AccountLogin = React.createClass({
   displayName: 'AccountLogin',
@@ -88,6 +88,7 @@ const AccountLogin = React.createClass({
 
   render() {
     const { query } = this.props.location;
+    const { email, password, canSubmit } = this.state;
 
     return (
       <AccountContainer>
@@ -102,9 +103,17 @@ const AccountLogin = React.createClass({
           method="post"
         >
 
+          <div className="vm-2-b">
+            <Show if={this.getValidationMessages('detail').length}>
+              <Notification type="error">
+                {this.getValidationMessages('detail').join(' ')}
+              </Notification>
+            </Show>
+          </div>
+
           <TextField
             ref="email"
-            value={this.state.email}
+            value={email}
             onChange={(event, value) => this.setState({ email: value })}
             errorText={this.getValidationMessages('email').join(' ')}
             name="email"
@@ -116,7 +125,7 @@ const AccountLogin = React.createClass({
 
           <TextField
             ref="password"
-            value={this.state.password}
+            value={password}
             onChange={(event, value) => this.setState({ password: value })}
             errorText={this.getValidationMessages('password').join(' ')}
             type="password"
@@ -131,7 +140,7 @@ const AccountLogin = React.createClass({
             type="submit"
             label="Login"
             labelStyle={{ fontSize: '16px', lineHeight: '48px' }}
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             style={{ boxShadow: 'none', height: '48px', width: '100%' }}
             primary={true}
           />
