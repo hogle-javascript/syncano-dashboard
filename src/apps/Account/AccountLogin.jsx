@@ -103,6 +103,14 @@ const AccountLogin = React.createClass({
           method="post"
         >
 
+          <div className="vm-2-b">
+            <Show if={this.getValidationMessages('detail').length}>
+              <Notification type="error">
+                {this.getValidationMessages('detail').join(' ')}
+              </Notification>
+            </Show>
+          </div>
+
           <TextField
             ref="email"
             value={email}
@@ -122,19 +130,11 @@ const AccountLogin = React.createClass({
             errorText={this.getValidationMessages('password').join(' ')}
             type="password"
             name="password"
-            className="text-field vm-2-b"
+            className="text-field vm-4-b"
             autoComplete="password"
             hintText="My password"
             fullWidth={true}
           />
-
-          <div className="vm-2-b">
-            <Show if={this.getValidationMessages('detail').length}>
-              <Notification type="error">
-                {this.getValidationMessages('detail').join(' ')}
-              </Notification>
-            </Show>
-          </div>
 
           <RaisedButton
             type="submit"
