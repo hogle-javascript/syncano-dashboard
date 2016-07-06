@@ -46,6 +46,7 @@ export default Radium(React.createClass({
 
     return (
       <Paper
+        {...this.props}
         onTouchTap={this.props.handleClick}
         zDepth={this.props.zDepth}
         style={_.merge(
@@ -66,6 +67,7 @@ export default Radium(React.createClass({
 
     return (
       <Paper
+        {...this.props}
         zDepth={0}
         style={_.merge(
           {},
