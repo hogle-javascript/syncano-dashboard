@@ -20,7 +20,7 @@ function e2e_cleanup {
 
 MESSAGE=$(git log --pretty=format:%s -n 1 "$CIRCLE_SHA1")
 
-if [[ "$MESSAGE" == *\[E2E-SKIP\]* ]]; then
+if [[ "$MESSAGE" == *\[e2e-skip\]* ]]; then
     npm run lint
     echo "[WARN] Skipping E2E tests !!!"
 else

@@ -38,7 +38,7 @@ Start local dev version (available at https://localhost:8080/)
 
 # Social login
 
-Social login requires proper configuration of env variables with newtork ids e.g:
+Social login requires proper configuration of env variables with network ids e.g:
 
     $ export FACEBOOK_ID='xx'
     $ export GOOGLE_ID='xx'
@@ -105,6 +105,6 @@ Tests will continue to run but the classes tests will be skipped. Refer to the t
 
 # E2E Skipping
 
-If you want skip E2E tests because of valid reason, for example only updating text or README you can use add [E2E-SKIP] tag to your commit message.
+If you want skip E2E tests because of valid reason, for example only updating text or README you can add [e2e-skip] tag to your commit message.
 It will skip all e2e tests, only starting lint.
 Please do not overuse it !
