@@ -21,6 +21,7 @@ module.exports = function() {
 
   if (ENV === 'beta') {
     aws.params.Bucket = 'not-dashboard-syncano-rocks';
+    delete aws.distributionId;
   }
 
   var src       = ['./dist/**/*', '!./dist/rev-manifest.json'],
