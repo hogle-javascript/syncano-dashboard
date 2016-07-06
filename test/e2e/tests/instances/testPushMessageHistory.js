@@ -4,15 +4,14 @@ export default {
   tags: ['pushHistory'],
   before: (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
-  after: (client) => {
-    client.end();
-  },
+  after: (client) => client.end(),
   'Test User views Push Notification history': (client) => {
     const pushHistoryPage = client.page.pushHistoryPage();
     const { instanceName } = accounts.instanceUser;

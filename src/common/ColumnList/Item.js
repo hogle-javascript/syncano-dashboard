@@ -83,7 +83,6 @@ export default Radium(React.createClass({
   },
 
   render() {
-    console.error(this.props);
     let isClickable = this.props.handleClick;
 
     return isClickable ? this.renderClickableItem() : this.renderItem();
