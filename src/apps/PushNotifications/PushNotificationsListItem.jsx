@@ -31,7 +31,7 @@ const DeviceListItem = React.createClass({
       params: {
         key: 'clearConfigDialog',
         ref: 'clearConfigDialog',
-        title: 'Delete an Instance',
+        title: `Delete ${item.name} config`,
         handleConfirm: clearConfig,
         isLoading,
         children: `Do you really want to clear ${item.name} config?`
