@@ -128,6 +128,7 @@ const Header = Radium(React.createClass({
       return gravatarUrl;
     }
 
+
     /* eslint-disable */
     const gravatar = Gravatar.url(userEmail, {d: '404'}, true);
     /* eslint-enable */
