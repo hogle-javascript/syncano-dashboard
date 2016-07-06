@@ -40,7 +40,7 @@ export default React.createClass({
       <ColumnList.Item
         key={item.id}
         checked={item.checked}
-        data-e2e="push-msg-li"
+        data-e2e="push-message-list-item"
       >
         <Column.CheckIcon
           id={item.id}
