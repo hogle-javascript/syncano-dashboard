@@ -48,7 +48,8 @@ const Header = Radium(React.createClass({
         height: '100%',
         width: 256,
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'initial'
       },
       logo: {
         width: 120
@@ -163,6 +164,16 @@ const Header = Radium(React.createClass({
     );
   },
 
+  renderBetaBadge() {
+    if (process.env.NODE_ENV !== 'beta') {
+      return null;
+    }
+
+    return (
+      <span style={{ color: '#fff', fontWeight: 600, paddingLeft: 10, paddingTop: 5 }}>BETA</span>
+    );
+  },
+
   render() {
     const styles = this.getStyles();
 
@@ -176,6 +187,7 @@ const Header = Radium(React.createClass({
                 className="logo-white"
               />
             </Link>
+            {this.renderBetaBadge()}
           </ToolbarGroup>
           <ToolbarGroup style={{ height: '100%' }}>
             <ul

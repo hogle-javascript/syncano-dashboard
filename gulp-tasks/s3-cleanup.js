@@ -13,6 +13,10 @@ module.exports = function(cb) {
   if (ENV === 'production') {
     params.bucket = 'dashboard-syncano-io'
   }
+  
+  if (ENV === 'beta') {
+    params.bucket = 'not-dashboard-syncano-rocks'
+  }
 
   listKeys(s3Client, params, function (err, keys) {
     if (err) throw err;

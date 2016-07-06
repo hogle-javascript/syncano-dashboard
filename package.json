@@ -160,6 +160,7 @@
     "upload-screenshots": "gulp upload-screenshots",
     "s3-cleanup": "gulp s3-cleanup",
     "deployment-master": "gulp deployment-master",
+    "deployment-beta": "gulp deployment-beta",
     "deployment-devel": "gulp deployment-devel",
     "deployment-branch": "gulp deployment-branch",
     "git-config": "git config --global user.email \"ci@syncano.com\" && git config --global user.name \"CI\"",
