@@ -84,6 +84,15 @@ export default Radium(React.createClass({
         marginTop: 3,
         color: 'rgb(170, 170, 170)',
         fontSize: 12
+      },
+      limitsContainer: {
+        display: 'flex',
+        alignItems: 'baseline'
+      },
+      limitsSymbol: {
+        position: 'relative',
+        top: -1,
+        paddingRight: 4
       }
     };
   },
@@ -251,26 +260,32 @@ export default Radium(React.createClass({
           <div style={styles.heading}>Limits</div>
           <div className="row">
             <div className="col-md-8 col-lg-5">
-              <TextField
-                ref="soft_limit"
-                value={this.state.soft_limit}
-                onChange={(event, value) => this.setState({ soft_limit: value })}
-                errorText={this.getValidationMessages('soft_limit').join(' ')}
-                name="soft_limit"
-                floatingLabelText="Soft Limit"
-                fullWidth={true}
-              />
+              <div style={styles.limitsContainer}>
+                <div style={styles.limitsSymbol}>$</div>
+                <TextField
+                  ref="soft_limit"
+                  value={this.state.soft_limit}
+                  onChange={(event, value) => this.setState({ soft_limit: value })}
+                  errorText={this.getValidationMessages('soft_limit').join(' ')}
+                  name="soft_limit"
+                  floatingLabelText="Soft Limit"
+                  fullWidth={true}
+                />
+              </div>
             </div>
             <div className="col-md-8 col-lg-5">
-              <TextField
-                ref="hard_limit"
-                value={this.state.hard_limit}
-                onChange={(event, value) => this.setState({ hard_limit: value })}
-                errorText={this.getValidationMessages('hard_limit').join(' ')}
-                name="hard_limit"
-                floatingLabelText="Hard Limit"
-                fullWidth={true}
-              />
+              <div style={styles.limitsContainer}>
+                <div style={styles.limitsSymbol}>$</div>
+                <TextField
+                  ref="hard_limit"
+                  value={this.state.hard_limit}
+                  onChange={(event, value) => this.setState({ hard_limit: value })}
+                  errorText={this.getValidationMessages('hard_limit').join(' ')}
+                  name="hard_limit"
+                  floatingLabelText="Hard Limit"
+                  fullWidth={true}
+                />
+              </div>
             </div>
             <div className="col-flex-1">
               <div className="vp-3-t" style={{ display: 'flex', alignItems: 'center' }}>
