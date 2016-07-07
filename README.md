@@ -95,7 +95,7 @@ If you want only one test tag to run use for example:
 
 This will run only tests with tag = class.
 
-All accounts used for e2e testing will be deleted after 1h of no activity :fire: !
+All accounts used for e2e testing will be deleted after 2h of no activity :fire: !
 
 If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` e2e line, so that it looks like this:
 

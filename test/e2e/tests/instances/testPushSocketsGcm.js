@@ -21,7 +21,7 @@ export default {
 
     socketsPage
       .goToUrl(instanceName, 'sockets')
-      .waitForElementVisible('@addCodeBoxModalTitle')
+      .clickElement('@addCodeBoxButton')
       .clickElement('@addGcmSocket')
       .fillInput('@inputGcmDevKey', gcmDevKey)
       .clickElement('@confirmButton')
@@ -37,15 +37,11 @@ export default {
 
     socketsPage
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
-      .waitForElementVisible('@gcmTitleHeading')
-      .waitForElementVisible('@inputGcmDevKey')
       .fillInput('@inputGcmDevKey', gcmDevKey)
       .fillInput('@inputGcmProdKey', gcmProdKey)
       .clickElement('@confirmButton')
       .clickElement('@summaryDialogCloseButton')
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
-      .waitForElementVisible('@gcmTitleHeading')
-      .waitForElementVisible('@inputGcmDevKey')
       .verify.valueContains('@inputGcmDevKey', gcmDevKey)
       .verify.valueContains('@inputGcmProdKey', gcmProdKey)
       .clickElement('@confirmButton')

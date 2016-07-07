@@ -11,11 +11,7 @@ export default {
       .setResolution(client)
       .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
   },
-  afterEach: (client, done) => {
-    client.end(function() {
-      done();
-    });
-  },
+  afterEach: (client, done) => client.end(done),
   'Test Admin Adds APNS Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const filePath = './cert12';
@@ -54,7 +50,7 @@ export default {
         className: 'apns_cert'
       }
     });
-    const params = {instanceName};
+    const params = { instanceName };
     const update = {
       development_certificate: Syncano.file(filePath),
       development_certificate_name: 'certName',
@@ -66,7 +62,7 @@ export default {
       .please()
       .update(params, update)
       .then((resp) => console.log('Development certifacte uploaded?: ', resp.development_certificate))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
 
     socketsPage
       .goToUrl(instanceName, 'sockets')
@@ -82,6 +78,34 @@ export default {
     const socketsPage = client.page.socketsPage();
     const pushDevicesPage = client.page.pushDevicesPage();
     const instanceName = accounts.alternativeUser.instanceName;
+
+    // This duplicates action above so additional api calls is done
+    // For now there is no other way to do it as tests before it
+    // can't properly add push socket
+    const accountKey = accounts.alternativeUser.accountKey;
+    const filePath = './cert.p12';
+    const baseUrl = 'https://api.syncano.rocks';
+    const connection = Syncano({
+      baseUrl,
+      accountKey,
+      defaults: {
+        instanceName,
+        className: 'apns_cert'
+      }
+    });
+    const params = { instanceName };
+    const update = {
+      development_certificate: Syncano.file(filePath),
+      development_certificate_name: 'certName',
+      development_bundle_identifier: 'certBundle'
+    };
+
+    connection
+      .APNSConfig
+      .please()
+      .update(params, update)
+      .then((resp) => console.log('Development certifacte uploaded?: ', resp.development_certificate))
+      .catch((err) => console.error(err));
 
     socketsPage
       .goToUrl(instanceName, 'push-notifications/config')
