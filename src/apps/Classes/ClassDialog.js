@@ -598,7 +598,7 @@ export default React.createClass({
               <i>Note: Schema field name has to start with a letter!</i>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Filtering & Ordering">
-              To be able to filter and order the Data Objects you'll need to add proper indexes to your
+              To be able to filter and order the Data Objects you&#39;ll need to add proper indexes to your
               Class Schema fields by selecting the corresponding checkboxes.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection>
