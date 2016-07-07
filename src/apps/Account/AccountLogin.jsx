@@ -147,7 +147,7 @@ const AccountLogin = React.createClass({
         </form>
 
         <SocialAuthButtonsList
-          networks={Constants.SOCIAL_NETWORKS}
+          networks={Constants.SOCIAL_NETWORKS_LOGIN}
           onSocialLogin={this.handleSocialLogin}
         />
 

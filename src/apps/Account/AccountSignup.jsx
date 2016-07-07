@@ -162,7 +162,7 @@ const AccountSignup = React.createClass({
 
         <SocialAuthButtonsList
           mode="signup"
-          networks={Constants.SOCIAL_NETWORKS}
+          networks={Constants.SOCIAL_NETWORKS_SIGNUP}
           onSocialLogin={this.handleSocialLogin}
         />
 
