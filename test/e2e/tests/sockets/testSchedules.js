@@ -5,11 +5,12 @@ export default {
   tags: ['schedules'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.alternativeUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -17,14 +18,15 @@ export default {
   'Administrator adds a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const schedule = utils.addSuffix('schedule');
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
+    const scriptName = accounts.alternativeUser.tempScriptNames[0];
 
     schedulesPage
       .goToUrl(instanceName, 'schedules')
       .clickElement('@addScheduleButton')
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInput('@addScheduleModalLabel', schedule)
-      .selectDropdownValue('@addScheduleModalScript', accounts.instanceUser.tempScriptNames[1])
+      .selectDropdownValue('@addScheduleModalScript', scriptName)
       .sendKeys('@addScheduleModalCronTab', '0 0 1 1 *')
       // click into title as workaround for enter key closing modal view
       .clickElement('@addScheduleModalTitle')
@@ -35,7 +37,7 @@ export default {
   'Administrator edits a Schedule Socket Crontab': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const schedule = utils.addSuffix('schedule');
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
 
     schedulesPage
       .goToUrl(instanceName, 'schedules')
@@ -50,7 +52,7 @@ export default {
   'Administrator deletes a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const schedule = utils.addSuffix('schedule');
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
 
     schedulesPage
       .goToUrl(instanceName, 'schedules')
