@@ -70,6 +70,23 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Templates let you wrap your data returned from any endpoint and convert it into a desired document
+              structure. It can be html, xml, csv or any other format.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Conten type">
+              Content-Type field is to describe the data contained in the body fully enough so that the receiving
+              user agent can pick an appropriate method to process the data.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/snippets-templates">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
+        }
       >
         {this.renderFormNotifications()}
         <Dialog.ContentSection>
@@ -90,7 +107,7 @@ export default React.createClass({
           <AutoComplete
             ref="class"
             name="class"
-            floatingLabelText="Content type"
+            floatingLabelText="Content-Type"
             hintText="Start typing to narrow down content types or type a new one"
             filter={this.handleTemplateAutocompleteFilter}
             dataSource={dataSource}
