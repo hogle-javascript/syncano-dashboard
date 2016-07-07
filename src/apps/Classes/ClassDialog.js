@@ -373,7 +373,12 @@ export default React.createClass({
 
   renderCheckbox(item, indexType) {
     if (!this.hasIndex(indexType, item.fieldType)) {
-      return this.renderDisabledCheckbox(item.fieldType, indexType);
+      return (
+        <IconButton
+          iconClassName="synicon-close-box-outline"
+          iconStyle={{ color: Colors.grey400, marginLeft: -24 }}
+        />
+    );
     }
 
     return (
@@ -382,21 +387,6 @@ export default React.createClass({
         name={indexType}
         defaultChecked={item[`field${_.upperFirst(indexType)}`]}
         onCheck={event => this.handleOnCheck(item, event)}
-      />
-    );
-  },
-
-  renderDisabledCheckbox(fieldType, indexType) {
-    const message = {
-      filter: 'filtering',
-      order: 'sorting'
-    };
-
-    return (
-      <IconButton
-        tooltip={`${fieldType} doesn't support ${message[indexType]}`}
-        iconClassName="synicon-close-box-outline"
-        iconStyle={{ color: Colors.grey400, marginLeft: -24 }}
       />
     );
   },
@@ -607,9 +597,16 @@ export default React.createClass({
             <Dialog.SidebarSection>
               <i>Note: Schema field name has to start with a letter!</i>
             </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Filtering & Ordering">
+              To be able to filter and order the Data Objects you&#39;ll need to add proper indexes to your
+              Class Schema fields by selecting the corresponding checkboxes.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection>
+              <i>Note: Not all the Class Schema Field types allow for adding filter/order indexes.</i>
+            </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/classes">
-                Learn more
+                Learn more about Classes
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
           </Dialog.SidebarBox>
