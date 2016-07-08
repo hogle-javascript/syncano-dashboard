@@ -4,11 +4,11 @@ export default {
   tags: ['billingAddress'],
   before: (client) => {
     const loginPage = client.page.loginPage();
-
+    const { email, password } = accounts.instanceUser;
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after: (client, done) => {
     client.end(done);
@@ -16,8 +16,10 @@ export default {
   'User adds Billing Address': (client) => {
     const billingAddressPage = client.page.billingAddressPage();
 
+    billingAddressPage.navigate();
+    client.pause(500);
+
     billingAddressPage
-      .navigate()
       .fillInput('@companyNameInput', 'E2E Inc.')
       .fillInput('@firstNameInput', 'John')
       .fillInput('@lastNameInput', 'Smith')

@@ -87,11 +87,11 @@ If you are ready just run dev server on first console:
 
 and start testing by typing this into second console:
 
-    $ npm e2e-run
+    $ npm run e2e-tests
 
 If you want only one test tag to run use for example:
 
-    $ npm run e2e-run class
+    $ npm run e2e-tests class
 
 This will run only tests with tag = class.
 
