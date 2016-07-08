@@ -105,8 +105,8 @@ export default React.createClass({
         </Dialog.ContentSection>
         <Dialog.ContentSection>
           <AutoComplete
-            ref="class"
-            name="class"
+            ref="content_type"
+            name="content_type"
             floatingLabelText="Content-Type"
             hintText="Start typing to narrow down content types or type a new one"
             filter={this.handleTemplateAutocompleteFilter}
