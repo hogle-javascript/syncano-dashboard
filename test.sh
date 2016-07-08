@@ -40,14 +40,35 @@ function selenium_install {
 }
 
 function selenium_start {
-    nohup npm run e2e-selenium-server > ./reports/selenium-server.log 2>&1&
-    nohup npm run e2e-selenium-chromedriver > ./reports/selenium-chrome.log 2>&1&
-    sleep 5
+    SELENIUM_JAR="java -jar ./node_modules/selenium-standalone/.selenium/selenium-server/2.53.0-server.jar"
+    SELENIUM_ENTROPY="-Djava.security.egd=file:/dev/./urandom"
+    SELENIUM="${SELENIUM_JAR} ${SELENIUM_ENTROPY}"
+
+    SELENIUM_ROLE_HUB="-role hub"
+    SELENIUM_SERVER="${SELENIUM} ${SELENIUM_ROLE_HUB}"
+
+    SELENIUM_CHROMEDRIVER="-Dwebdriver.chrome.driver=./node_modules/selenium-standalone/.selenium/chromedriver/2.16-x64-chromedriver"
+    SELENIUM_ROLE_WEBDRIVER="-role webdriver -hub http://localhost:4444/grid/register"
+    SELENIUM_CHROMEDRIVER="${SELENIUM} ${SELENIUM_CHROMEDRIVER} ${SELENIUM_ROLE_WEBDRIVER}"
+
+    nohup $SELENIUM_SERVER > ./reports/selenium-server.log 2>&1&
+    sleep 10
+    nohup $SELENIUM_CHROMEDRIVER > ./reports/selenium-chrome.log 2>&1&
+    sleep 10
+}
+
+function http_server_start {
+    KEY="--key ./node_modules/webpack-dev-server/ssl/server.key"
+    CERT="--cert ./node_modules/webpack-dev-server/ssl/server.crt"
+    HTTP_SERVER="http-server ./dist_e2e --ssl ${CERT} ${KEY}"
+
+    nohup $HTTP_SERVER > ./reports/http-server.log 2>&1&
+    sleep 10
 }
 
 function ci_cleanup {
     rm -rf ./dist_e2e
-    npm run e2e-remove-certificate
+    babel-node ./test/scripts/files/removeCertificate.js
 }
 
 function ci_setup {
@@ -57,11 +78,10 @@ function ci_setup {
     npm run build
     mv ./dist ./dist_e2e
 
-    npm run e2e-create-accounts
-    selenium_start
+    babel-node ./test/scripts/createTempAccounts.js
 
-    nohup npm run e2e-http-server > ./reports/http-server.log 2>&1&
-    sleep 5
+    selenium_start
+    http_server_start
 }
 
 function ci_tests {
@@ -77,7 +97,7 @@ function ci_tests {
         if [ $CIRCLE_BRANCH = 'master' ] || [ $CIRCLE_BRANCH = 'devel' ]; then
             npm run e2e-master-devel
         else
-            npm run e2e
+            npm run e2e-branch
         fi
 
         ci_cleanup
@@ -94,7 +114,7 @@ function local_setup {
     selenium_install
 
     message "Creating temporary accounts for tests..."
-    npm run e2e-create-accounts
+    babel-node ./test/scripts/createTempAccounts.js
 
     message "Starting Selenium in background..."
     trap local_cleanup EXIT
@@ -106,8 +126,8 @@ function local_tests {
     local_setup
 
     if [ -n "$1" ]; then
-        message "Custom local tests starts..."
-        npm run e2e-custom $1
+        message "Tag: ${1} local tests starts..."
+        npm run e2e-tag $1
     else
         message "Full local tests starts..."
         npm run e2e-local
@@ -115,7 +135,7 @@ function local_tests {
 }
 
 if [ "$CI" = true ]; then
-    ci_tests $@
+    ci_tests
 else
     local_tests $@
 fi

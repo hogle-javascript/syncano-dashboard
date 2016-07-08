@@ -64,9 +64,6 @@ and commit your changes.
 # E2E Testing
 
 We are using [nightwatchjs](http://nightwatchjs.org/) for e2e testing.
-**nightwatchjs** requires few binary files which can be installed via proper NPM command:
-
-    $ npm run e2e-setup
 
 For selenium to start you will also need:
 
@@ -87,19 +84,19 @@ If you are ready just run dev server on first console:
 
 and start testing by typing this into second console:
 
-    $ npm run e2e-tests
+    $ npm run e2e
 
 If you want only one test tag to run use for example:
 
-    $ npm run e2e-tests class
+    $ npm run e2e class
 
 This will run only tests with tag = class.
 
 All accounts used for e2e testing will be deleted after 2h of no activity :fire: !
 
-If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` e2e line, so that it looks like this:
+If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` and then `e2e-local` line, so that it looks like this:
 
-    "e2e": "nightwatch --skiptags classes",
+    "e2e-local": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins",
 
 Tests will continue to run but the classes tests will be skipped. Refer to the test files for the appropriate tag name.
 
