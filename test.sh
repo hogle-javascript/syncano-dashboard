@@ -25,9 +25,24 @@ function message {
     echo ""
 }
 
+function selenium_install {
+    SELENIUM_DIR="./node_modules/selenium-standalone/.selenium/"
+
+    if [ ! -d "$SELENIUM_DIR" ]; then
+
+      if [ "$CI" != true ]; then
+      message "Installing selenium..."
+      fi
+
+      gulp selenium-install
+      mkdir -p reports/
+    fi
+}
+
 function selenium_start {
     nohup npm run e2e-selenium-server > ./reports/selenium-server.log 2>&1&
     nohup npm run e2e-selenium-chromedriver > ./reports/selenium-chrome.log 2>&1&
+    sleep 5
 }
 
 function ci_cleanup {
@@ -36,15 +51,15 @@ function ci_cleanup {
 }
 
 function ci_setup {
-    mkdir -p reports/
-    touch ./reports/docker-stats.log
+    selenium_install
     docker_healthcheck > ./reports/docker-stats.log 2>&1&
-    sleep 10
+
     npm run build
     mv ./dist ./dist_e2e
-    npm run e2e-setup
+
     npm run e2e-create-accounts
     selenium_start
+
     nohup npm run e2e-http-server > ./reports/http-server.log 2>&1&
     sleep 5
 }
@@ -64,6 +79,7 @@ function ci_tests {
         else
             npm run e2e
         fi
+
         ci_cleanup
     fi
 }
@@ -75,6 +91,8 @@ function local_cleanup {
 }
 
 function local_setup {
+    selenium_install
+
     message "Creating temporary accounts for tests..."
     npm run e2e-create-accounts
 
@@ -97,7 +115,7 @@ function local_tests {
 }
 
 if [ "$CI" = true ]; then
-    ci_tests
+    ci_tests $@
 else
     local_tests $@
 fi

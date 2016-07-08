@@ -147,7 +147,6 @@
     "e2e-local": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins",
     "e2e-local-ff": "nightwatch -e firefox --suiteRetries 1 --skiptags socialLogins,instanceSettingsNav,authSettings,templates,templateView",
     "e2e-screenshots": "nightwatch -e chrome,360x640,768x1024 --tag navigation || true",
-    "e2e-setup": "gulp selenium-install && mkdir -p reports/",
     "e2e-create-accounts": "babel-node ./test/scripts/createTempAccounts.js",
     "e2e-remove-certificate": "babel-node ./test/scripts/files/removeCertificate.js",
     "e2e-http-server": "http-server ./dist_e2e --ssl --cert ./node_modules/webpack-dev-server/ssl/server.crt --key ./node_modules/webpack-dev-server/ssl/server.key",
