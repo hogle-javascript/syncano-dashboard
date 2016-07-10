@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Paper } from 'material-ui';
 import { Logo } from '../../common/';
+import Helmet from 'react-helmet';
 
 import './AccountContainer.sass';
 
@@ -23,21 +24,29 @@ export default React.createClass({
     const { id, bottomContent, style, children } = this.props;
 
     return (
-      <div
-        className="col-lg-15 account-container"
-        id={id}
-        style={{ ...styles, ...style }}
-      >
-        <div className="account-logo">
-          <Link to="login"><Logo className="logo-blue" /></Link>
-        </div>
-        <Paper
-          className="account-container__content"
-          rounded={false}
+      <div>
+        <Helmet
+          meta={[{
+            name: 'robots',
+            content: 'noindex, nofollow'
+          }]}
+        />
+        <div
+          className="col-lg-15 account-container"
+          id={id}
+          style={{ ...styles, ...style }}
         >
-          {children}
-        </Paper>
-        {bottomContent}
+          <div className="account-logo">
+            <Link to="login"><Logo className="logo-blue" /></Link>
+          </div>
+          <Paper
+            className="account-container__content"
+            rounded={false}
+          >
+            {children}
+          </Paper>
+          {bottomContent}
+        </div>
       </div>
     );
   }
