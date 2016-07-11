@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 
 // Utils
 import { DialogMixin, FormMixin } from '../../mixins';
+import Constants from '../../constants/Constants';
 
 // Stores and Actions
 import Actions from './TemplatesActions';
@@ -51,7 +52,7 @@ export default React.createClass({
   },
 
   render() {
-    const dataSource = ['text/html', 'text/css', 'text/csv', 'text/plain', 'application/xml', 'application/json'];
+    const dataSource = Constants.SNIPPET_TEMPLATE_DATA_SOURCE_TYPES;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
     const { open, isLoading, canSubmit } = this.state;
 
