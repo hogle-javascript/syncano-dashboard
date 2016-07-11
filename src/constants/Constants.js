@@ -102,5 +102,14 @@ export default {
 
   PROTECTED_FROM_DELETE_CLASS_NAMES: [
     'user_profile'
+  ],
+
+  SNIPPET_TEMPLATE_DATA_SOURCE_TYPES: [
+    'text/html',
+    'text/css',
+    'text/csv',
+    'text/plain',
+    'application/xml',
+    'application/json'
   ]
 };
