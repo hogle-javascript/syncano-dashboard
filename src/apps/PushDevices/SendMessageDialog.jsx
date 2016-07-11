@@ -444,7 +444,6 @@ export default (store, props) => Radium(React.createClass({
               {this.renderMessageFields()}
             </div>
           </div>
-          {this.renderFormNotifications()}
           <Show if={this.getValidationMessages('content').length}>
             <div className="vm-2-t">
               <Notification type="error">
@@ -543,6 +542,9 @@ export default (store, props) => Radium(React.createClass({
           />
         )}
       >
+        <div className="vm-2-b">
+          {this.renderFormNotifications()}
+        </div>
         {this.renderStepContent(stepIndex)}
       </Dialog.FullPage>
     );

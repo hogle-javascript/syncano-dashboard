@@ -41,18 +41,12 @@ export default {
   },
 
   sendMessagesToAPNS(content) {
-    const instanceName = this.NewLibConnection.getInstanceName();
-    const accountKey = this.NewLibConnection.getAccountKey();
-    const params = {
-      method: 'post',
-      url: `${SYNCANO_BASE_URL}v1.1/instances/${instanceName}/push_notifications/apns/messages/?api_key=${accountKey}`,
-      data: { content }
-    };
-
-    this.Promise
-      .request(params)
+    this.NewLibConnection
+      .APNSDevice
+      .please()
+      .sendMessages({}, content)
       .then(this.completed)
-      .catch(this.failure);
+      .catch((errors) => this.failure(errors.errors));
   },
 
   listGCMDevices() {
@@ -97,17 +91,11 @@ export default {
   },
 
   sendMessagesToGCM(content) {
-    const instanceName = this.NewLibConnection.getInstanceName();
-    const accountKey = this.NewLibConnection.getAccountKey();
-    const params = {
-      method: 'post',
-      url: `${SYNCANO_BASE_URL}v1.1/instances/${instanceName}/push_notifications/gcm/messages/?api_key=${accountKey}`,
-      data: { content }
-    };
-
-    this.Promise
-      .request(params)
+    this.NewLibConnection
+      .GCMDevice
+      .please()
+      .sendMessages({}, content)
       .then(this.completed)
-      .catch(this.failure);
+      .catch((errors) => this.failure(errors.errors));
   }
 };
