@@ -19,6 +19,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: [],
+      hasItems: false,
       hasConfig: false,
       isLoading: true
     };
@@ -45,6 +46,7 @@ export default Reflux.createStore({
   setDevices(devices) {
     console.debug('APNSDevicesStore::setDevices');
     this.data.items = devices;
+    this.data.hasItems = devices.length;
     this.trigger(this.data);
   },
 
@@ -67,6 +69,6 @@ export default Reflux.createStore({
   onFetchAPNSConfigCompleted(config) {
     console.debug('APNSDevicesStore::onFetchAPNSConfigCompleted');
     this.data.hasConfig = config.development_certificate || config.production_certificate;
-    this.trigger({ hasConfig: this.data.hasConfig });
+    this.trigger(this.data);
   }
 });
