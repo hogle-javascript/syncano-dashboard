@@ -89,8 +89,8 @@ const PushDevicesPage = React.createClass({
   renderSendMessagesButton() {
     const { routes } = this.context;
     const { gcmDevices, apnsDevices } = this.state;
-    const hasGCMItems = gcmDevices.items && gcmDevices.items.length;
-    const hasAPNSItems = apnsDevices.items && apnsDevices.items.length;
+    const hasGCMItems = gcmDevices.hasItems;
+    const hasAPNSItems = apnsDevices.hasItems;
     const disableMap = {
       'all-push-notification-devices': !hasAPNSItems && !hasGCMItems,
       'apns-devices': !hasAPNSItems,

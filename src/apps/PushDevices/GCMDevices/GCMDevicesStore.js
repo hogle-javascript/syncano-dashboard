@@ -20,6 +20,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: [],
+      hasItems: false,
       hasConfig: false,
       isLoading: true
     };
@@ -46,6 +47,7 @@ export default Reflux.createStore({
   setDevices(devices) {
     console.debug('GCMDevicesStore::setGCMDevices');
     this.data.items = devices;
+    this.data.hasItems = devices.length > 0;
     this.trigger(this.data);
   },
 
@@ -68,6 +70,6 @@ export default Reflux.createStore({
   onFetchGCMConfigCompleted(config) {
     console.debug('GCMDevicesStore::onFetchGCMConfigCompleted');
     this.data.hasConfig = !_.isEmpty(config.development_api_key) || !_.isEmpty(config.production_api_key);
-    this.trigger({ hasConfig: this.data.hasConfig });
+    this.trigger(this.data);
   }
 });
