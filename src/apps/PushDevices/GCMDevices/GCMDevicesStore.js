@@ -47,7 +47,7 @@ export default Reflux.createStore({
   setDevices(devices) {
     console.debug('GCMDevicesStore::setGCMDevices');
     this.data.items = devices;
-    this.data.hasItems = devices.length;
+    this.data.hasItems = devices.length > 0;
     this.trigger(this.data);
   },
 
