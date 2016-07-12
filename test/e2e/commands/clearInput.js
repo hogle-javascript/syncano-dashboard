@@ -1,3 +1,5 @@
+// Custom command that clears specified element by using CTRL+A and then DELETE
+// oparation. Created as a workaround for AceEditor clearing.
 exports.command = function clearInput(element) {
   const mainKey = process.platform === 'darwin' ? this.Keys.COMMAND : this.Keys.CONTROL;
 

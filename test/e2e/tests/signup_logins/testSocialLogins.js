@@ -1,4 +1,6 @@
-export default {
+import { addTestNamePrefixes } from '../../utils';
+
+export default addTestNamePrefixes({
   tags: ['socialLogins'],
   beforeEach(client) {
     const loginPage = client.page.loginPage();
@@ -70,7 +72,6 @@ export default {
   'Admin Logs in with Github': (client) => {
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
-    const screenshotPath = './reports/';
 
     loginPage.clickElement('@loginButtonGithub');
     client
@@ -92,14 +93,11 @@ export default {
         client.assert.equal(result.value.length, 1, 'There should be only one window open.');
         client.switchWindow(result.value[0]);
       })
-      .pause(3000)
-      .saveScreenshot(screenshotPath + 'GitHub-afterlogin.png');
+      .pause(3000);
 
     instancesPage.navigate();
-    client
-      .pause(3000)
-      .saveScreenshot(screenshotPath + 'GitHub-beforeassertion.png');
+    client.pause(3000);
     instancesPage
       .waitForElementPresent('@instancesTable');
   }
-};
+});

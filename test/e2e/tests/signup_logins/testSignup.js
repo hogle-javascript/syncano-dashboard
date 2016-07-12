@@ -1,4 +1,6 @@
-export default {
+import { addTestNamePrefixes } from '../../utils';
+
+export default addTestNamePrefixes({
   tags: ['signup'],
   after(client) {
     client.end();
@@ -17,4 +19,4 @@ export default {
       .waitForElementNotPresent('@setupScreen')
       .waitForElementVisible('@firstLoginScreen');
   }
-};
+});

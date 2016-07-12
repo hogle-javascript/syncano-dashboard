@@ -1,18 +1,19 @@
 import accounts from '../../tempAccounts';
-import utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['passwordSettings'],
   after(client) {
     client.end();
   },
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.navigationUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.navigationUser.email, accounts.navigationUser.password);
+      .login(email, password);
   },
   'Administrator resets his password': (client) => {
     const authenticationPage = client.page.authenticationPage();
@@ -41,5 +42,4 @@ export default {
 
     accounts.navigationUser.password = newPassword;
   }
-};
-
+});

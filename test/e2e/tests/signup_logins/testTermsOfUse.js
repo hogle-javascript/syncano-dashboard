@@ -1,4 +1,6 @@
-module.exports = {
+import { addTestNamePrefixes } from '../../utils';
+
+export default addTestNamePrefixes({
   tags: ['terms'],
   'User Goes to terms of use page': (client) => {
     const signupPage = client.page.signupPage();
@@ -21,4 +23,4 @@ module.exports = {
     termsPage.expect.element('@termsOfUseContainer').to.contain.text('Terms and Legal');
     client.end();
   }
-};
+});

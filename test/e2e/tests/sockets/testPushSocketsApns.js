@@ -1,21 +1,23 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 import Syncano from 'syncano';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['pushSocketsApns'],
   beforeEach: (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.alternativeUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
+      .login(email, password);
   },
   afterEach: (client, done) => client.end(done),
   'Test Admin Adds APNS Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const filePath = './cert12';
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
 
     socketsPage
       .goToUrl(instanceName, 'sockets');
@@ -39,8 +41,8 @@ export default {
     const socketsPage = client.page.socketsPage();
     const filePath = './cert.p12';
 
-    const accountKey = accounts.alternativeUser.accountKey;
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { accountKey } = accounts.alternativeUser;
+    const { instanceName } = accounts.alternativeUser;
     const baseUrl = 'https://api.syncano.rocks';
     const connection = Syncano({
       baseUrl,
@@ -77,12 +79,12 @@ export default {
   'Test Admin Goes to APNS Device list': (client) => {
     const socketsPage = client.page.socketsPage();
     const pushDevicesPage = client.page.pushDevicesPage();
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
 
     // This duplicates action above so additional api calls is done
     // For now there is no other way to do it as tests before it
     // can't properly add push socket
-    const accountKey = accounts.alternativeUser.accountKey;
+    const { accountKey } = accounts.alternativeUser;
     const filePath = './cert.p12';
     const baseUrl = 'https://api.syncano.rocks';
     const connection = Syncano({
@@ -114,4 +116,4 @@ export default {
     pushDevicesPage
       .waitForElementVisible('@iosDevicesHeading');
   }
-};
+});

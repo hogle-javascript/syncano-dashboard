@@ -1,15 +1,16 @@
-import utils from '../../utils';
 import accounts from '../../tempAccounts';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['users'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -17,7 +18,7 @@ export default {
   'Administrator adds a User': (client) => {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('user');
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     usersPage
       .goToUrl(instanceName, 'users')
@@ -32,7 +33,7 @@ export default {
   },
   'Administrator deletes a User': (client) => {
     const usersPage = client.page.usersPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     usersPage
       .goToUrl(instanceName, 'users')
@@ -43,4 +44,4 @@ export default {
       .clickElement('@confirm')
       .waitForElementNotPresent('@userTableRow');
   }
-};
+});

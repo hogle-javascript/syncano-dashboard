@@ -1,14 +1,16 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-module.exports = {
+export default addTestNamePrefixes({
   tags: ['instanceNav'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.navigationUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.navigationUser.email, accounts.navigationUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -75,11 +77,11 @@ module.exports = {
   },
   'User goes to Script Endpoint Traces View': (client) => {
     const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
-    const instanceName = accounts.navigationUser.instanceName;
+    const { instanceName } = accounts.navigationUser;
     const tempScriptEndpointsNames = accounts.navigationUser.tempScriptEndpointsNames[0];
 
     scriptEndpointTracesPage
       .goToUrl(instanceName, `script-endpoints/${tempScriptEndpointsNames}/traces`)
       .waitForElementPresent('@scriptEndpointTracesEmptyView');
   }
-};
+});

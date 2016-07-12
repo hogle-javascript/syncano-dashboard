@@ -1,22 +1,24 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['authSettings'],
   after: (client) => {
     client.end();
   },
   before: (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.navigationUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.navigationUser.email, accounts.navigationUser.password);
+      .login(email, password);
   },
   'Test Administrator copies an Account key': (client) => {
     const authenticationPage = client.page.authenticationPage();
-    const tempAccountKey = accounts.navigationUser.accountKey;
-    const stackUrl = `http://stackoverflow.com/search?q=${tempAccountKey}`;
+    const { accountKey } = accounts.navigationUser;
+    const stackUrl = `http://stackoverflow.com/search?q=${accountKey}`;
 
     authenticationPage
       .navigate()
@@ -32,7 +34,7 @@ export default {
       .waitForElementPresent('input.textbox')
       .element('css selector', 'input.textbox', (result) => {
         client.elementIdAttribute(result.value.ELEMENT, 'value', (attribute) => {
-          client.assert.equal(attribute.value, accounts.navigationUser.accountKey);
+          client.assert.equal(attribute.value, accountKey);
         });
       });
   },
@@ -60,4 +62,4 @@ export default {
         });
       });
   }
-};
+});

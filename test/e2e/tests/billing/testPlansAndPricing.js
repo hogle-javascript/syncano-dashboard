@@ -1,14 +1,16 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['plansAndPricing'],
   before: (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.alternativeUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
+      .login(email, password);
   },
   after: (client) => {
     client.end();
@@ -51,4 +53,4 @@ export default {
       .fillInput('@hardLimitInput', 30)
       .click('@setLimitsButton');
   }
-};
+});

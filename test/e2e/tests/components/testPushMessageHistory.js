@@ -1,6 +1,7 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['pushHistory'],
   before: (client) => {
     const loginPage = client.page.loginPage();
@@ -21,4 +22,4 @@ export default {
       .goToUrl(instanceName, 'push-notifications/messages/all/')
       .assertSelectedCount('xpath', messageListSelector, 2);
   }
-};
+});

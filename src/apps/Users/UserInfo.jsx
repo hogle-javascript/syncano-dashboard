@@ -39,6 +39,17 @@ export default Radium(React.createClass({
   },
 
   renderContent(value) {
+    if (_.isObject(value)) {
+      const typeMap = {
+        geopoint: `latitude: ${value.latitude}, longitude: ${value.longitude}`,
+        relation: `target: ${value.target}, ids: ${JSON.stringify(value.value)}`,
+        reference: `target: ${value.target}, id: ${value.value}`,
+        array: JSON.stringify(value),
+        file: `url: ${value.value}`,
+        default: JSON.stringify(value, null, 2)
+      };
+      return typeMap[value.type || 'default'];
+    }
     if (!value) {
       return 'none';
     }
@@ -51,14 +62,13 @@ export default Radium(React.createClass({
     const userProfile = _.omit(profile, 'links');
 
     const sortUserProfile = (map) => {
-      const keys = _.sortBy(_.keys(map), (a) => { return a; });
+      const keys = _.sortBy(_.keys(map), (a) => a);
       const newMap = {};
       _.each(keys, (k) => {
         newMap[k] = map[k];
       });
       return newMap;
     };
-
     const userInfo = _.map(sortUserProfile(userProfile), (value, key) => {
       return (
         <div style={styles.item}>
@@ -71,13 +81,11 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     return (
       <div style={[styles.base, styles.infoHidden, this.props.visible && styles.infoVisible]}>
-        <div
-          style={styles.container}
-        >
+        <div style={styles.container}>
           {this.renderCustomFields()}
         </div>
       </div>

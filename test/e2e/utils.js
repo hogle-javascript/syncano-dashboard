@@ -1,4 +1,18 @@
 const _ = require('lodash');
+const NIGHTWATCH_METHODS = ['tags', 'before', 'after', 'afterEach', 'beforeEach'];
+
+const addTestNamePrefixes = (config) => {
+  const prefix = config.tags.join(',');
+  return _.mapKeys(config, (value, key) => {
+    if (_.includes(NIGHTWATCH_METHODS, key)) {
+      return key;
+    }
+
+    return `[${prefix}] ${key}`;
+  });
+};
+
+export { addTestNamePrefixes };
 
 export default {
   suffix: '_' + new Date().getTime() + _.random(0, 99999),

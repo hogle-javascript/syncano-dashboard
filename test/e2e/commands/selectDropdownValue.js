@@ -1,3 +1,4 @@
+// Command that selects given dropdownValue from targeted element.
 exports.command = function selectDropdownValue(element, dropdownValue) {
   const value = `//iframe//following-sibling::div//div[text()="${dropdownValue}"]`;
 

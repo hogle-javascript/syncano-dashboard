@@ -1,14 +1,16 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-module.exports = {
+export default addTestNamePrefixes({
   tags: ['nav'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.navigationUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.navigationUser.email, accounts.navigationUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -70,14 +72,14 @@ module.exports = {
   'User goes to Payment methods view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
-    const paymentMethodsPage = client.page.billingPaymentPage();
+    const billingPaymentPage = client.page.billingPaymentPage();
 
     topNavigationPage
       .clickElement('@account')
       .waitForElementVisible('@fox')
       .clickElement('@accountDropdown');
     leftMenuPage.clickElement('@paymentMethods');
-    paymentMethodsPage.waitForElementPresent('@addPaymentButton');
+    billingPaymentPage.waitForElementPresent('@addPaymentButton');
   },
   'User goes to Invoices view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
@@ -103,4 +105,4 @@ module.exports = {
     leftMenuPage.clickElement('@billingAddress');
     billingAddressPage.waitForElementPresent('@billingAddressTitle');
   }
-};
+});

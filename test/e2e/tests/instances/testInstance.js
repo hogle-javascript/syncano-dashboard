@@ -1,15 +1,16 @@
 import accounts from '../../tempAccounts';
-import utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['instance'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -39,7 +40,7 @@ export default {
   },
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
-    const tempInstanceNames = accounts.instanceUser.tempInstanceNames;
+    const { tempInstanceNames } = accounts.instanceUser;
 
     instancesPage.navigate();
     client.pause(1000);
@@ -50,4 +51,4 @@ export default {
       .clickElement('@confirmDeleteButton')
       .waitForElementNotPresent('@deleteInstanceModalTitle');
   }
-};
+});

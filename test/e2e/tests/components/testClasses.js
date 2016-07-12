@@ -1,21 +1,23 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['classes'],
   after(client) {
     client.end();
   },
   'Test create classes': (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     classesPage
       .goToUrl(instanceName, 'classes')
@@ -34,4 +36,4 @@ export default {
       client.assert.equal(result.value.length, 1, 'user_profile class was not deleted');
     });
   }
-};
+});

@@ -1,15 +1,16 @@
 import accounts from '../../tempAccounts';
-import utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['groups'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -17,7 +18,7 @@ export default {
   'Administrator adds a Group': (client) => {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('group');
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     usersPage
       .goToUrl(instanceName, 'users')
@@ -31,7 +32,7 @@ export default {
   },
   'Administrator deletes a Group': (client) => {
     const usersPage = client.page.usersPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     usersPage
       .goToUrl(instanceName, 'users')
@@ -43,5 +44,4 @@ export default {
       .waitForElementVisible('@groupList')
       .waitForElementNotPresent('@groupTableRowDropdown');
   }
-};
-
+});

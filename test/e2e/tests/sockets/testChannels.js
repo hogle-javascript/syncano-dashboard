@@ -1,59 +1,60 @@
 import accounts from '../../tempAccounts';
-import Utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['channels'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
   },
   'User adds a Channel Socket': (client) => {
     const channelsPage = client.page.channelsPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     channelsPage
       .goToUrl(instanceName, 'channels')
       .waitForElementVisible('@channelSocketsListTitle')
       .clickElement('@addChannelButton')
       .waitForElementVisible('@addChannelModalTitle')
-      .fillInput('@modalNameInput', Utils.addSuffix('channel'))
+      .fillInput('@modalNameInput', utils.addSuffix('channel'))
       .clickElement('@confirmButton')
       .clickElement('@summaryDialogCloseButton')
       .waitForElementVisible('@channelTableRow');
   },
   'User edits a Channel Socket': (client) => {
     const channelsPage = client.page.channelsPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     channelsPage
       .goToUrl(instanceName, 'channels')
       .waitForElementVisible('@channelSocketsListTitle')
-      .clickListItemDropdown(Utils.addSuffix('channel'), 'Edit')
+      .clickListItemDropdown(utils.addSuffix('channel'), 'Edit')
       .waitForElementVisible('@editChannelModalTitle')
-      .fillInput('@channelModalDescriptionInput', Utils.addSuffix('edit'))
+      .fillInput('@channelModalDescriptionInput', utils.addSuffix('edit'))
       .clickElement('@confirmButton')
       .waitForElementVisible('@channelTableRow')
       .waitForElementVisible('@channelTableRowDescription');
 
-    channelsPage.verify.containsText('@channelTableRowDescription', Utils.addSuffix('edit'));
+    channelsPage.verify.containsText('@channelTableRowDescription', utils.addSuffix('edit'));
   },
   'User deletes a Channel Socket': (client) => {
     const channelsPage = client.page.channelsPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     channelsPage
       .goToUrl(instanceName, 'channels')
       .waitForElementVisible('@channelSocketsListTitle')
-      .clickListItemDropdown(Utils.addSuffix('channel'), 'Delete')
+      .clickListItemDropdown(utils.addSuffix('channel'), 'Delete')
       .waitForElementVisible('@deleteChannelModalTitle')
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@selectChannelTableRow');
   }
-};
+});

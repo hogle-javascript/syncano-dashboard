@@ -1,15 +1,16 @@
 import accounts from '../../tempAccounts';
-import utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['administrators'],
   before: (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after: (client) => {
     client.end();
@@ -17,7 +18,7 @@ export default {
   'User invites an Administrator': (client) => {
     const email = utils.addSuffix('admin') + '@syncano.com';
     const adminsPage = client.page.adminsPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     adminsPage
       .goToUrl(instanceName, 'admins')
@@ -32,7 +33,7 @@ export default {
   'User deletes an Administrator invitation': (client) => {
     const adminsPage = client.page.adminsPage();
     const listsPage = client.page.listsPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     adminsPage
       .goToUrl(instanceName, 'admins')
@@ -45,4 +46,4 @@ export default {
     listsPage
       .waitForElementVisible('@emptyListItem');
   }
-};
+});

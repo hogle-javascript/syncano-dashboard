@@ -1,15 +1,16 @@
 import accounts from '../../tempAccounts';
-import utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['pushSocketsGcm'],
   before: (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.alternativeUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
+      .login(email, password);
   },
   after: (client) => {
     client.end();
@@ -17,7 +18,7 @@ export default {
   'Test Admin Adds GCM Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const gcmDevKey = utils.randomString(39);
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
 
     socketsPage
       .goToUrl(instanceName, 'sockets')
@@ -50,7 +51,7 @@ export default {
   'Test Admin Goes to GCM Device list': (client) => {
     const socketsPage = client.page.socketsPage();
     const pushDevicesPage = client.page.pushDevicesPage();
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
 
     socketsPage
       .goToUrl(instanceName, 'push-notifications/config')
@@ -58,4 +59,4 @@ export default {
     pushDevicesPage
       .waitForElementVisible('@androidDevicesHeading');
   }
-};
+});

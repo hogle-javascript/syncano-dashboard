@@ -1,15 +1,16 @@
 import accounts from '../../tempAccounts';
-import utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['class'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.alternativeUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -17,7 +18,7 @@ export default {
   'Test Add Class': (client) => {
     const classesPage = client.page.classesPage();
     const className = utils.addSuffix('class');
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
 
     classesPage
       .goToUrl(instanceName, 'classes')
@@ -78,4 +79,4 @@ export default {
   // assert that Delete Class element is greyed out
     classesPage.assert.attributeContains('@inactiveDeleteButton', 'style', utils.getGreyedOutStyle(client));
   }
-};
+});

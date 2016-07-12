@@ -1,14 +1,16 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['invoices'],
   beforeEach: (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.alternativeUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
+      .login(email, password);
   },
   afterEach: (client, done) => {
     client.end(done);
@@ -22,4 +24,4 @@ export default {
       .waitForElementVisible('@invoiceAmountColumn')
       .verify.containsText('@invoiceAmountColumn', '$');
   }
-};
+});
