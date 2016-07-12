@@ -1,15 +1,16 @@
 import accounts from '../../tempAccounts';
-import utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['pushDevice'],
   before: (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after: (client) => {
     client.end();
@@ -17,7 +18,7 @@ export default {
   'Test Admin Adds Android Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
     const labelName = utils.addSuffix('androidlabel');
     const registrationId = utils.randomString(64);
     const deviceId = utils.randomInt(100, 1000);
@@ -70,7 +71,7 @@ export default {
   'Test Admin Deletes Android Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
-    const tempGCMDevicesNames = accounts.instanceUser.tempGCMDevicesNames;
+    const { tempGCMDevicesNames } = accounts.instanceUser;
     const lastDeviceName = tempGCMDevicesNames[tempGCMDevicesNames.length - 1];
 
     pushDevicesPage
@@ -89,7 +90,7 @@ export default {
   'Test Admin Adds iOS Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
     const labelName = utils.addSuffix('ioslabel');
     const registrationId = utils.randomString(64);
 
@@ -138,7 +139,7 @@ export default {
   'Test Admin Deletes iOS Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
-    const tempAPNSDevicesNames = accounts.instanceUser.tempAPNSDevicesNames;
+    const { tempAPNSDevicesNames } = accounts.instanceUser;
     const lastDeviceName = tempAPNSDevicesNames[tempAPNSDevicesNames.length - 1];
 
     pushDevicesPage
@@ -154,4 +155,4 @@ export default {
     pushDevicesPage
       .verify.containsText('@firstDevice', lastDeviceName);
   }
-};
+});

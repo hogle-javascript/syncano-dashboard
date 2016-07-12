@@ -1,23 +1,24 @@
-import Utils from '../../utils';
 import accounts from '../../tempAccounts';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['profile'],
   after(client) {
     client.end();
   },
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.navigationUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.navigationUser.email, accounts.navigationUser.password);
+      .login(email, password);
   },
   'Administrator changes his name and surname': (client) => {
     const profilePage = client.page.profilePage();
-    const firstName = Utils.addSuffix('name');
-    const lastName = Utils.addSuffix('surname');
+    const firstName = utils.addSuffix('name');
+    const lastName = utils.addSuffix('surname');
 
     profilePage
       .navigate()
@@ -33,4 +34,4 @@ export default {
       .verify.value('@firstName', firstName)
       .verify.value('@lastName', lastName);
   }
-};
+});

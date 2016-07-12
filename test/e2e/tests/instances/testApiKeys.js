@@ -1,15 +1,16 @@
 import accounts from '../../tempAccounts';
-import Utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
-  tags: ['api_keys'],
+export default addTestNamePrefixes({
+  tags: ['apiKeys'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
 
   after(client) {
@@ -18,8 +19,8 @@ export default {
 
   'Test Add Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
-    const description = Utils.addSuffix();
-    const instanceName = accounts.instanceUser.instanceName;
+    const description = utils.addSuffix();
+    const { instanceName } = accounts.instanceUser;
 
     apiKeysPage
       .goToUrl(instanceName, 'api-keys')
@@ -31,8 +32,8 @@ export default {
   },
   'Test Reset Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
-    const description = Utils.addSuffix();
-    const instanceName = accounts.instanceUser.instanceName;
+    const description = utils.addSuffix();
+    const { instanceName } = accounts.instanceUser;
     let apiKeyValue = null;
 
     apiKeysPage
@@ -59,8 +60,8 @@ export default {
   },
   'Test Delete Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
-    const description = Utils.addSuffix();
-    const instanceName = accounts.instanceUser.instanceName;
+    const description = utils.addSuffix();
+    const { instanceName } = accounts.instanceUser;
 
     apiKeysPage
       .goToUrl(instanceName, 'api-keys')
@@ -68,4 +69,4 @@ export default {
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@selectApiKey');
   }
-};
+});

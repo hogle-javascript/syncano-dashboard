@@ -1,6 +1,7 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['billingAddress'],
   before: (client) => {
     const loginPage = client.page.loginPage();
@@ -59,4 +60,4 @@ export default {
       .assert.valueContains('@zipCodeInput', '00-007')
       .assert.valueContains('@cityInput', 'Norcia');
   }
-};
+});

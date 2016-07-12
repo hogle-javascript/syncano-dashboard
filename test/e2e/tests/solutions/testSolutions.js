@@ -1,14 +1,16 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['solutions'],
   beforeEach(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.navigationUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.navigationUser.email, accounts.navigationUser.password);
+      .login(email, password);
   },
   afterEach(client, done) {
     client.end(done);
@@ -49,4 +51,4 @@ export default {
       }
     });
   }
-};
+});

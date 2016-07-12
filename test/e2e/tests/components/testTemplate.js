@@ -1,23 +1,24 @@
 import accounts from '../../tempAccounts';
-import utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['template'],
   after(client) {
     client.end();
   },
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   'Test Add Template': (client) => {
     const listsPage = client.page.listsPage();
     const templateName = utils.addSuffix('template');
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     listsPage
       .goToUrl(instanceName, 'templates')
@@ -56,4 +57,4 @@ export default {
     client
       .singleItemSelectUnselect('synicon-arrow-up-bold', optionsMenu, selectedItem);
   }
-};
+});

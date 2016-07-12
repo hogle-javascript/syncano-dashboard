@@ -1,7 +1,7 @@
 import accounts from '../../tempAccounts';
-import utils from '../../utils';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['schedules'],
   before(client) {
     const loginPage = client.page.loginPage();
@@ -60,4 +60,4 @@ export default {
       .waitForElementPresent('@deleteScheduleModalTitle')
       .clickElement('@addScheduleButton');
   }
-};
+});

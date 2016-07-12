@@ -1,17 +1,19 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['templates'],
   after(client) {
     client.end();
   },
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   'Test Select/Deselect multiple Templates': (client) => {
     const listsPage = client.page.listsPage();
@@ -47,4 +49,4 @@ export default {
       .clickElement('@confirmButton')
       .waitForElementVisible('@emptyListItem');
   }
-};
+});

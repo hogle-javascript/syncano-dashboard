@@ -1,14 +1,16 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['scripts'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -16,9 +18,9 @@ export default {
   'User goes to Script edit view': (client) => {
     const listsPage = client.page.listsPage();
     const scriptEditPage = client.page.scriptEditPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
-    // ToDo: Remove pause when endless loarding bug will disappear
+    // ToDo: Remove pause when endless loading bug will disappear
     client
       .pause(2500)
       .goToUrl(instanceName, 'scripts');
@@ -28,7 +30,7 @@ export default {
   'User goes to Script traces view': (client) => {
     const listsPage = client.page.listsPage();
     const scriptEditPage = client.page.scriptEditPage();
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     client
       .pause(2500)
@@ -37,4 +39,4 @@ export default {
     scriptEditPage.clickElement('@traces');
     scriptEditPage.waitForElementPresent('@tracesEmpty');
   }
-};
+});

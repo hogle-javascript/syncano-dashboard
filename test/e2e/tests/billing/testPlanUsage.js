@@ -1,14 +1,16 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['planUsage'],
   beforeEach: (client) => {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   afterEach: (client, done) => {
     client.end(done);
@@ -30,4 +32,4 @@ export default {
       .waitForElementVisible('@usageCharts')
       .assertSelectedCount('xpath', usageChartsSelector, 3);
   }
-};
+});

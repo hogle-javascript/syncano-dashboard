@@ -1,14 +1,16 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-module.exports = {
+export default addTestNamePrefixes({
   tags: ['topNavigation'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.navigationUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.navigationUser.email, accounts.navigationUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -42,4 +44,4 @@ module.exports = {
       .clickElement('@menuNotifications')
       .waitForElementVisible('@notificationsDropdown');
   }
-};
+});

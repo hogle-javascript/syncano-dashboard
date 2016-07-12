@@ -1,15 +1,16 @@
-import utils from '../../utils';
 import accounts from '../../tempAccounts';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['scriptSockets'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.alternativeUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -17,7 +18,7 @@ export default {
   'User adds a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const script = utils.addSuffix('script');
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
 
 
     socketsPage
@@ -53,4 +54,4 @@ export default {
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@codeBoxTableRow');
   }
-};
+});

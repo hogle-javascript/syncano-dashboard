@@ -1,14 +1,16 @@
 import accounts from '../../tempAccounts';
+import { addTestNamePrefixes } from '../../utils';
 
-export default {
+export default addTestNamePrefixes({
   tags: ['snippets'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.instanceUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.instanceUser.email, accounts.instanceUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -17,7 +19,7 @@ export default {
     const listsPage = client.page.listsPage();
     const selectedItems = listsPage.elements.selectedItem.selector;
     const optionsMenu = listsPage.elements.optionsMenu.selector;
-    const instanceName = accounts.instanceUser.instanceName;
+    const { instanceName } = accounts.instanceUser;
 
     client
       .goToUrl(instanceName, 'scripts')
@@ -40,4 +42,4 @@ export default {
       .clickElement('@confirmButton')
       .waitForElementVisible('@emptyListItem');
   }
-};
+});

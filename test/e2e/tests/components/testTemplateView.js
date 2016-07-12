@@ -1,15 +1,16 @@
-import utils from '../../utils';
 import accounts from '../../tempAccounts';
+import utils, { addTestNamePrefixes } from '../../utils';
 
-module.exports = {
+export default addTestNamePrefixes({
   tags: ['templateView'],
   before(client) {
     const loginPage = client.page.loginPage();
+    const { email, password } = accounts.alternativeUser;
 
     loginPage
       .navigate()
       .setResolution(client)
-      .login(accounts.alternativeUser.email, accounts.alternativeUser.password);
+      .login(email, password);
   },
   after(client) {
     client.end();
@@ -17,7 +18,7 @@ module.exports = {
   'Test Admin Edits and Saves Template Code': (client) => {
     const templateViewPage = client.page.templateViewPage();
     const codeText = utils.addSuffix('templates');
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
 
     templateViewPage
       .goToUrl(instanceName, 'templates')
@@ -35,7 +36,7 @@ module.exports = {
     templateViewPage.verify.containsText('@codeEditorContent', codeText);
   },
   'Test Admin Renders Template Using Data Url and Context': (client) => {
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
     const templateViewPage = client.page.templateViewPage();
     const controlTimestamp = utils.addSuffix('template');
     const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${instanceName}/classes/user_profile/`;
@@ -55,7 +56,7 @@ module.exports = {
       .verify.containsText('@previewEditorContent', expectedPreviewResult);
   },
   'Test Admin Renders Template in Tab': (client) => {
-    const instanceName = accounts.alternativeUser.instanceName;
+    const { instanceName } = accounts.alternativeUser;
     const templateViewPage = client.page.templateViewPage();
     const dataSourceUrl = `https://api.syncano.rocks/v1.1/instances/${instanceName}/classes/user_profile/`;
     const controlTimestamp = utils.addSuffix('template');
@@ -81,4 +82,4 @@ module.exports = {
       .waitForElementPresent('body')
       .verify.containsText('body', expectedTabResult);
   }
-};
+});
