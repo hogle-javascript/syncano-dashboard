@@ -3,13 +3,14 @@ import Reflux from 'reflux';
 
 // Utils
 import { DialogMixin, FormMixin } from '../../mixins';
+import Constants from '../../constants/Constants';
 
 // Stores and Actions
 import Actions from './TemplatesActions';
 import DialogStore from './TemplateDialogStore';
 
 // Components
-import { TextField } from 'material-ui';
+import { TextField, AutoComplete } from 'material-ui';
 import { Dialog } from '../../common/';
 
 export default React.createClass({
@@ -30,6 +31,14 @@ export default React.createClass({
     }
   },
 
+  handleTemplateAutocompleteFilter(searchText, key) {
+    if (!searchText) {
+      return true;
+    }
+
+    return searchText !== '' && key.includes(searchText);
+  },
+
   handleAddSubmit() {
     const { name, content_type } = this.state;
 
@@ -43,6 +52,7 @@ export default React.createClass({
   },
 
   render() {
+    const dataSource = Constants.SNIPPET_TEMPLATE_DATA_SOURCE_TYPES;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
     const { open, isLoading, canSubmit } = this.state;
 
@@ -61,30 +71,54 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
+        sidebar={
+          <Dialog.SidebarBox>
+            <Dialog.SidebarSection>
+              Templates let you wrap your data returned from any endpoint and convert it into a desired document
+              structure. It can be html, xml, csv or any other format.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Conten type">
+              Content-Type field is to describe the data contained in the body fully enough so that the receiving
+              user agent can pick an appropriate method to process the data.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection last={true}>
+              <Dialog.SidebarLink to="http://docs.syncano.io/docs/snippets-templates">
+                Learn more
+              </Dialog.SidebarLink>
+            </Dialog.SidebarSection>
+          </Dialog.SidebarBox>
+        }
       >
         {this.renderFormNotifications()}
-        <TextField
-          ref="name"
-          name="name"
-          autoFocus={true}
-          fullWidth={true}
-          disabled={this.hasEditMode()}
-          value={this.state.name}
-          onChange={(event, value) => this.setState({ name: value })}
-          errorText={this.getValidationMessages('name').join(' ')}
-          hintText="Name of the Template"
-          floatingLabelText="Name"
-        />
-        <TextField
-          ref="content_type"
-          name="content_type"
-          fullWidth={true}
-          value={this.state.content_type}
-          onChange={(event, value) => this.setState({ content_type: value })}
-          errorText={this.getValidationMessages('content_type').join(' ')}
-          hintText="Content type of the Template"
-          floatingLabelText="Content type"
-        />
+        <Dialog.ContentSection>
+          <TextField
+            ref="name"
+            name="name"
+            autoFocus={true}
+            fullWidth={true}
+            disabled={this.hasEditMode()}
+            value={this.state.name}
+            onChange={(event, value) => this.setState({ name: value })}
+            errorText={this.getValidationMessages('name').join(' ')}
+            hintText="Name of the Template"
+            floatingLabelText="Name"
+          />
+        </Dialog.ContentSection>
+        <Dialog.ContentSection>
+          <AutoComplete
+            ref="content_type"
+            name="content_type"
+            floatingLabelText="Content-Type"
+            hintText="Start typing to narrow down content types or type a new one"
+            filter={this.handleTemplateAutocompleteFilter}
+            dataSource={dataSource}
+            searchText={this.state.content_type}
+            onNewRequest={(value) => this.setState({ content_type: value })}
+            onUpdateInput={(value) => this.setState({ content_type: value })}
+            fullWidth={true}
+            openOnFocus={true}
+          />
+        </Dialog.ContentSection>
       </Dialog.FullPage>
     );
   }

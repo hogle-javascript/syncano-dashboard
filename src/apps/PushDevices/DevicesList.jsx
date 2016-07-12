@@ -6,22 +6,19 @@ import { DialogsMixin } from '../../mixins';
 
 import UsersActions from '../Users/UsersActions';
 import UsersStore from '../Users/UsersStore';
+import APNSSocketActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
+import GCMSocketActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
 
 import { colors as Colors } from 'material-ui/styles/';
+import { IconButton } from 'material-ui';
 import { ColumnList, Loading, Container, Lists, Dialog, ShowMore } from '../../common/';
 import ListItem from './DevicesListItem';
 import NoConfigView from './NoConfigView';
-import GCMSendMessageDialog from './GCMDevices/GCMSendMessageDialog';
-import APNSSendMessageDialog from './APNSDevices/APNSSendMessageDialog';
 
 const Column = ColumnList.Column;
 
 const DevicesList = Radium(React.createClass({
   displayName: 'DevicesList',
-
-  propTypes: {
-    showSendMessagesDialog: React.PropTypes.func.isRequired
-  },
 
   contextTypes: {
     params: React.PropTypes.object
@@ -50,7 +47,8 @@ const DevicesList = Radium(React.createClass({
         padding: '16px 8px'
       },
       listTitle: {
-        fontSize: 18
+        fontSize: 18,
+        color: Colors.grey400
       },
       moreLink: {
         color: Colors.blue500,
@@ -91,7 +89,7 @@ const DevicesList = Radium(React.createClass({
   },
 
   renderItem(item) {
-    const { getCheckedItems, actions, type, showSendMessagesDialog } = this.props;
+    const { actions, type } = this.props;
     const icon = {
       apns: 'apple',
       gcm: 'android'
@@ -103,11 +101,9 @@ const DevicesList = Radium(React.createClass({
     return (
       <ListItem
         key={`devices-list-item-${item.registration_id}`}
-        checkedItemsCount={getCheckedItems().length}
         actions={actions}
         onIconClick={actions.checkItem}
         icon={icon[type]}
-        showSendMessageDialog={() => showSendMessagesDialog(item)}
         showEditDialog={() => actions.showDialog(item)}
         showDeleteDialog={() => this.showDialog('deleteDeviceDialog', item)}
         item={item}
@@ -125,15 +121,36 @@ const DevicesList = Radium(React.createClass({
       type,
       actions,
       isLoading,
-      showSendMessagesDialog,
       router,
       ...other
     } = this.props;
     const checkedItemsCount = getCheckedItems().length;
-    const titleText = {
-      apns: 'iOS Devices',
-      gcm: 'Android Devices'
+    const typeMap = {
+      apns: {
+        title: 'iOS Devices',
+        showConfigDialog: APNSSocketActions.showDialog
+      },
+      gcm: {
+        title: 'Android Devices',
+        showConfigDialog: GCMSocketActions.showDialog
+      }
     };
+    const title = (
+      <div
+        className="row align-middle"
+        style={styles.listTitle}
+      >
+        <div>
+          {typeMap[type].title}
+        </div>
+        <IconButton
+          tooltip={`Config ${type.toUpperCase()} Push Notification Socket`}
+          iconStyle={{ color: Colors.blue400 }}
+          iconClassName="synicon-settings"
+          onTouchTap={typeMap[type].showConfigDialog}
+        />
+      </div>
+    );
     const moreLink = (
       <ShowMore
         label="MORE DEVICES"
@@ -146,7 +163,7 @@ const DevicesList = Radium(React.createClass({
     if (!hasConfig && !isLoading) {
       return (
         <div style={styles.listTitleContainer}>
-          <span style={styles.listTitle}>{titleText[type]}</span>
+          {title}
           <NoConfigView type={type} />
         </div>
       );
@@ -155,10 +172,8 @@ const DevicesList = Radium(React.createClass({
     return (
       <div>
         <div style={styles.listTitleContainer}>
-          <span style={styles.listTitle}>{titleText[type]}</span>
+          {title}
         </div>
-        <GCMSendMessageDialog />
-        <APNSSendMessageDialog />
         <Loading show={isLoading}>
           <Lists.Container>
             {this.getDialogs()}
@@ -189,10 +204,6 @@ const DevicesList = Radium(React.createClass({
                 handleSelectAll={actions.selectAll}
                 handleUnselectAll={actions.uncheckAll}
               >
-                <Lists.MenuItem
-                  primaryText="Send message"
-                  onTouchTap={showSendMessagesDialog}
-                />
                 <Lists.MenuItem onTouchTap={() => this.showDialog('deleteDeviceDialog')} />
               </Lists.Menu>
             </ColumnList.Header>

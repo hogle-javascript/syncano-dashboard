@@ -1,4 +1,3 @@
-import path from 'path';
 import accounts from '../../tempAccounts';
 
 module.exports = {
@@ -20,17 +19,7 @@ module.exports = {
     instancesPage
       .navigate()
       .clickElement('@instancesTableName');
-  },
-  afterEach(client, done) {
-    if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
-      done();
-      return;
-    }
-    const res = client.globals.test_settings.resolution;
-    const prefix = client.currentTest.name.replace(/\s/g, '-').replace(/"|'/g, '');
-    const fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation', res, prefix + '.png'));
-
-    client.saveScreenshot(fileNamePath, done);
+    client.pause(500);
   },
   // 'User goes to Sockets View': (client) => {
   //   const socketsPage = client.page.socketsPage();
@@ -83,14 +72,14 @@ module.exports = {
 
     leftMenuPage.clickElement('@users');
     usersPage.waitForElementPresent('@user');
+  },
+  'User goes to Script Endpoint Traces View': (client) => {
+    const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
+    const instanceName = accounts.navigationUser.instanceName;
+    const tempScriptEndpointsNames = accounts.navigationUser.tempScriptEndpointsNames[0];
+
+    scriptEndpointTracesPage
+      .goToUrl(instanceName, `script-endpoints/${tempScriptEndpointsNames}/traces`)
+      .waitForElementPresent('@scriptEndpointTracesEmptyView');
   }
-  // 'User goes to Script Endpoint Traces View': (client) => {
-  //   const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
-  //   const instanceName = accounts.navigationUser.instanceName;
-  //   const tempScriptNames = accounts.navigationUser.tempScriptNames[0];
-  //
-  //   scriptEndpointTracesPage
-  //     .goToUrl(instanceName, 'script-endpoints/${tempScriptNames}/traces')
-  //     .waitForElementPresent('@scriptEndpointTracesEmptyView');
-  // }
 };

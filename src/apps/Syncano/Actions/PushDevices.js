@@ -40,16 +40,13 @@ export default {
       .catch(this.failure);
   },
 
-  sendMessagesToAPNS(registrationIds, payload) {
-    const promises = registrationIds.map((registrationId) =>
-      this.NewLibConnection
-        .APNSDevice
-        .please()
-        .sendMessage({ registration_id: registrationId }, payload));
-
-    this.Promise.all(promises)
+  sendMessagesToAPNS(content) {
+    this.NewLibConnection
+      .APNSDevice
+      .please()
+      .sendMessages({}, content)
       .then(this.completed)
-      .catch(this.failure);
+      .catch((errors) => this.failure(errors.errors));
   },
 
   listGCMDevices() {
@@ -93,16 +90,12 @@ export default {
       .catch(this.failure);
   },
 
-  sendMessagesToGCM(registrationIds, payload) {
-    const promises = registrationIds.map((registrationId) =>
-      this.NewLibConnection
-        .GCMDevice
-        .please()
-        .sendMessage({ registration_id: registrationId }, payload)
-    );
-
-    this.Promise.all(promises)
+  sendMessagesToGCM(content) {
+    this.NewLibConnection
+      .GCMDevice
+      .please()
+      .sendMessages({}, content)
       .then(this.completed)
-      .catch(this.failure);
+      .catch((errors) => this.failure(errors.errors));
   }
 };

@@ -5,8 +5,8 @@ import _ from 'lodash';
 import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 
 // Stores & Actions
-import SessionStore from '../Session/SessionStore';
 import Actions from './ScriptsActions';
+import ScriptSummaryDialogActions from './ScriptSummaryDialogActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -45,20 +45,19 @@ export default Reflux.createStore({
     const runtimes = _.sortBy(_.map(payload, (value, runtime) => {
       return { payload: runtime, text: runtimesLabelMap[runtime] };
     }), 'text');
+    const isDeprecated = (runtime) => _.includes(runtime.text, 'deprecated');
+    const isNonDeprecated = (runtime) => !_.includes(runtime.text, 'deprecated');
+    const current = _.filter(runtimes, isNonDeprecated);
+    const deprecated = _.filter(runtimes, isDeprecated);
 
-    this.trigger({ runtimes });
+    this.trigger({ runtimes: { current, deprecated } });
   },
 
-  onCreateScriptCompleted(resp) {
+  onCreateScriptCompleted() {
     console.debug('ScriptsStore::onCreateScriptCompleted');
     this.dismissDialog();
-
-    const params = {
-      ...SessionStore.getParams(),
-      scriptId: resp.id
-    };
-
-    SessionStore.getRouter().push({ name: 'script', params });
+    Actions.fetchScripts();
+    ScriptSummaryDialogActions.showDialog();
   },
 
   onUpdateScriptCompleted() {

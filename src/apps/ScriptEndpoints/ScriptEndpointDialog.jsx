@@ -11,8 +11,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 
 // Components
 import { TextField, Toggle } from 'material-ui';
-import { colors as Colors } from 'material-ui/styles/';
-import { Dialog, LinkWrapper, SelectFieldWrapper } from '../../common/';
+import { Dialog, SelectFieldWrapper } from '../../common/';
 
 export default React.createClass({
   displayName: 'ScriptEndpointDialog',
@@ -73,7 +72,6 @@ export default React.createClass({
   },
 
   render() {
-    const { params } = this.context;
     const { open, isLoading, canSubmit, scripts, script } = this.state;
     const title = this.hasEditMode() ? 'Edit' : 'Add';
 
@@ -101,15 +99,9 @@ export default React.createClass({
             <Dialog.SidebarSection title="Script">
               A Script is an object that contains a piece of code that can be run on Syncano servers.
               If you haven&#39;t created one you can do so&nbsp;
-              <LinkWrapper
-                style={{ color: Colors.blue400 }}
-                to={{
-                  name: 'scripts',
-                  params
-                }}
-              >
-                here
-              </LinkWrapper>
+              <Dialog.SidebarLink to="scripts">
+                here.
+              </Dialog.SidebarLink>
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Public">
               Determines whether the Script Endpoint public link is active. They are accessible to anyone who knows the

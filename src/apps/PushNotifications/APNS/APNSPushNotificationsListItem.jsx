@@ -1,17 +1,29 @@
 import React from 'react';
 
-import APNSPushNotificationsActions from './APNSPushNotificationsActions';
+import Actions from './APNSPushNotificationsActions';
 
 import PushNotificationsListItem from '../PushNotificationsListItem';
 
 export default (props) => {
+  const params = {
+    development_certificate: false,
+    development_certificate_name: null,
+    development_bundle_identifier: null,
+    production_certificate: false,
+    production_certificate_name: null,
+    production_bundle_identifier: null
+  };
+
   return (
     <PushNotificationsListItem
       {...props}
-      label="Apple Push Notification service (APNs)"
+      label="Apple Push Notifications service (APNs)"
+      messagesRoute="apns-messages"
       devicesRoute="apns-devices"
       icon="apple"
-      showConfigDialog={APNSPushNotificationsActions.showDialog}
+      clearConfig={() => Actions.removeCertificate(params)}
+      deviceIcon="synicon-cellphone-iphone"
+      showConfigDialog={Actions.showDialog}
     />
   );
 };

@@ -20,10 +20,11 @@ export default React.createClass({
 
   validatorConstraints() {
     const { itemLabelName, groupName, withConfirm } = this.props;
-    const items = this.getItems();
-    const confirmText = items.length ? items[0][itemLabelName] : '';
 
     if (withConfirm) {
+      const items = this.getItems();
+      const confirmText = items.length ? items[0][itemLabelName] : '';
+
       return {
         validationText: {
           presence: {
@@ -187,10 +188,13 @@ export default React.createClass({
       >
         <div className="row">
           <FontIcon
-            style={{ fontSize: 60, color: withConfirm ? Colors.orange400 : customizeColor }}
             className={`${withConfirm ? 'synicon-alert' : icon} col-sm-7 vm-2-t`}
+            style={{ fontSize: 60, color: withConfirm ? Colors.orange400 : customizeColor }}
           />
-          <div className="vm-1-t col-sm-28" style={{ lineHeight: 1.6 }}>
+          <div
+            className="vm-1-t col-sm-28"
+            style={{ lineHeight: 1.6 }}
+          >
             {children || this.renderContent()}
           </div>
         </div>

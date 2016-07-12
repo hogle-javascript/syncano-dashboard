@@ -2,6 +2,8 @@ import React from 'react';
 import Reflux from 'reflux';
 import { withRouter } from 'react-router';
 import Helmet from 'react-helmet';
+import _ from 'lodash';
+import { colors as Colors } from 'material-ui/styles/';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -9,9 +11,12 @@ import Actions from './InstancesActions';
 import InstanceDialogActions from './InstanceDialogActions';
 import Store from './InstancesStore';
 
+// Utils
+import { DialogsMixin } from '../../mixins';
+
 // Components
 import { RaisedButton } from 'material-ui';
-import { Container, Show, InnerToolbar } from '../../common/';
+import { Container, Show, InnerToolbar, Dialog } from '../../common/';
 
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';
@@ -23,11 +28,21 @@ import './Instances.sass';
 const Instances = React.createClass({
   displayName: 'Instances',
 
-  mixins: [Reflux.connect(Store)],
+  mixins: [
+    Reflux.connect(Store),
+    DialogsMixin
+  ],
 
   componentDidMount() {
     console.info('Instances::componentDidMount');
     Actions.fetch();
+
+    const { prolongDialog } = this.refs;
+    const { query } = this.props.location;
+
+    if (prolongDialog && _.has(query, 'prolong')) {
+      prolongDialog.show();
+    }
   },
 
   componentWillUnmount() {
@@ -48,6 +63,34 @@ const Instances = React.createClass({
     }
 
     SessionStore.hideWelcomeDialog();
+  },
+
+  initDialogs() {
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        icon: 'synicon-thumb-up-outline',
+        iconColor: Colors.green400,
+        key: 'prolongDialog',
+        ref: 'prolongDialog',
+        title: 'Your account has been reactivated.',
+        children: (
+          <div>
+            You have successfully reactivated your account. This means, we won't
+            deactivate or delete it anytime soon while you will be active.
+          </div>
+        ),
+        actions: (
+          <RaisedButton
+            key="cancel"
+            onTouchTap={() => this.handleCancel('prolongDialog')}
+            primary={true}
+            label="Close"
+            ref="cancel"
+          />
+        )
+      }
+    }];
   },
 
   render() {
@@ -71,6 +114,7 @@ const Instances = React.createClass({
         <Helmet title={title} />
         <InstanceDialog />
 
+        {this.getDialogs()}
         <InnerToolbar title={title}>
           <RaisedButton
             label="Add"
@@ -83,7 +127,7 @@ const Instances = React.createClass({
         <Container id="instances">
           <InstancesList
             ref="myInstancesList"
-            name="My instances"
+            name="Instances"
             items={myInstances}
             isLoading={isLoading}
             hideDialogs={hideDialogs}

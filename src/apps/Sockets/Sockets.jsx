@@ -127,13 +127,19 @@ export default React.createClass({
         <Helmet title="Sockets" />
         <SocketsDialog />
         <ScriptEndpoints.Dialog />
+        <ScriptEndpoints.SummaryDialog />
         <DataEndpoints.Dialog />
         <DataEndpoints.SummaryDialog />
         <Schedules.Dialog />
+        <Schedules.SummaryDialog />
         <Triggers.Dialog />
+        <Triggers.SummaryDialog />
         <Channels.Dialog />
+        <Channels.SummaryDialog />
         <PushNotifications.APNSConfigDialog />
+        <PushNotifications.SummaryDialog />
         <PushNotifications.GCMConfigDialog />
+        <PushNotifications.GCMSummaryDialog />
 
         {this.getDialogs()}
         <SocketsInnerToolbar empty={!sockets.hasAnyItem || sockets.isLoading}>

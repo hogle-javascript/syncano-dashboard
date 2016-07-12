@@ -1,18 +1,18 @@
-'use strict';
+import createTestAccount from './create/testAccount.js';
+import createTestInstances from './create/testInstance.js';
+import createTestClasses from './create/testClasses.js';
+import createTestScripts from './create/testScripts.js';
+import createTestScriptEndpoints from './create/testScriptEndpoint.js';
+import createAPNSSocket from './create/apnsSocket.js';
+import createGCMSocket from './create/gcmSocket.js';
+import createAPNSDevices from './create/apnsDevices.js';
+import createGCMDevices from './create/gcmDevices.js';
+import createTestUsers from './create/testUser';
+import createTestApiKey from './create/testApiKey';
+import getCertFile from './files/getCertificate.js';
+import saveAccountsToFile from './files/saveAccounts.js';
 
-const createTestAccount = require('./create/testAccount.js');
-const createTestInstances = require('./create/testInstance.js');
-const createTestClasses = require('./create/testClasses.js');
-const createTestScripts = require('./create/testScripts.js');
-const createAPNSSocket = require('./create/apnsSocket.js');
-const createGCMSocket = require('./create/gcmSocket.js');
-const createAPNSDevices = require('./create/apnsDevices.js');
-const createGCMDevices = require('./create/gcmDevices.js');
-const createTestUsers = require('./create/testUser');
-const getCertFile = require('./files/getCertificate.js');
-const saveAccountsToFile = require('./files/saveAccounts.js');
-
-let accounts = {};
+const accounts = {};
 
 function createInstanceUser() {
   return createTestAccount()
@@ -44,18 +44,30 @@ function createNavigationUser() {
   return createTestAccount()
     .then((tempAccount) => createTestInstances(tempAccount, 1))
     .then((tempAccount) => createTestScripts(tempAccount, 1))
+    .then((tempAccount) => createTestScriptEndpoints(tempAccount, 1))
     .then((tempAccount) => createTestUsers(tempAccount, 1))
+    .then((tempAccount) => createTestApiKey(tempAccount, 1))
     .then((tempAccount) => {
       delete tempAccount.connection;
       accounts.navigationUser = tempAccount;
     });
 }
 
-getCertFile();
-createInstanceUser()
-  .then(createAltInstanceUser)
-  .then(createNavigationUser)
-  .then(() => {
-    console.log('Account details for debugging:\n', accounts);
-    saveAccountsToFile(accounts);
-  });
+if (!process.env.NIGHTWATCH_EMAIL || !process.env.NIGHTWATCH_PASSWORD || !process.env.NIGHTWATCH_ACCOUNT_KEY) {
+  throw new Error(`Missing exported env variables!!
+  Please check if you have exported:
+  ο NIGHTWATCH_EMAIL
+  ο NIGHTWATCH_PASSWORD
+  ο NIGHTWATCH_ACCOUNT_KEY
+  `);
+} else {
+  getCertFile();
+  createInstanceUser()
+    .then(createAltInstanceUser)
+    .then(createNavigationUser)
+    .then(() => {
+      console.log('Account details for debugging:\n', accounts);
+      saveAccountsToFile(accounts);
+    })
+    .catch((error) => console.log(error));
+}

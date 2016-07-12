@@ -18,6 +18,14 @@ export default {
     submitButton: {
       selector: 'button[type=submit]'
     },
+    setupScreen: {
+      selector: '//div[@class="col-flex-1"]/div[@class="vm-3-b"]',
+      locateStrategy: 'xpath'
+    },
+    firstLoginScreen: {
+      selector: '//div[text()="Start building your app here"]',
+      locateStrategy: 'xpath'
+    },
     termsOfUseLink: {
       selector: 'p.vm-0-b.text--center a'
     }

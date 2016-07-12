@@ -2,15 +2,12 @@ import React from 'react';
 import { Link } from 'react-router';
 import { RaisedButton } from 'material-ui';
 
-export default ({ imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonDescription }) => {
+export default ({ imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonSet, buttonDescription, bottomText }) => {
   const styles = {
     root: {
       display: 'flex',
       flexDirection: 'column',
       height: 'calc(100vh - 50px)'
-    },
-    textLink: {
-      color: '#4A90E2'
     },
     flexTop: {
       flex: 1,
@@ -38,10 +35,18 @@ export default ({ imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonDe
       lineHeight: '19px',
       color: 'rgba(0,0,0,0.54)'
     },
+    buttonSet: {
+      marginTop: 70,
+      marginBottom: 10,
+      marginLeft: -10,
+      marginRight: -10,
+      display: 'flex',
+      justifyContent: 'center'
+    },
     button: {
       height: 44,
       width: 230,
-      margin: '70px auto 10px',
+      margin: '0 10px',
       boxShadow: 'none'
     },
     buttonDescription: {
@@ -62,6 +67,13 @@ export default ({ imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonDe
     }
   };
 
+  const defaultBottomText = (
+    <span>
+      If you think this is an error, please contact us at: <br />
+      <a href="mailto:support@syncano.com">support@syncano.com</a>
+    </span>
+  );
+
   return (
     <div style={styles.root}>
       <div style={styles.flexTop}>
@@ -76,27 +88,23 @@ export default ({ imgSrc, headline, message, buttonLinkTo, buttonLabel, buttonDe
         <p style={styles.message}>
           {message}
         </p>
-        <Link to={buttonLinkTo}>
-          <RaisedButton
-            label={buttonLabel}
-            backgroundColor="#FFCC01"
-            labelColor="#1D2228"
-            style={styles.button}
-            labelStyle={{ fontWeight: 700 }}
-          />
-        </Link>
+        <div style={styles.buttonSet}>
+          {buttonLinkTo && <Link to={buttonLinkTo}>
+            <RaisedButton
+              label={buttonLabel}
+              backgroundColor="#FFCC01"
+              labelColor="#1D2228"
+              style={styles.button}
+              labelStyle={{ fontWeight: 700 }}
+            />
+          </Link>}
+          {buttonSet}
+        </div>
         {buttonDescription && <p style={styles.buttonDescription}>{buttonDescription}</p>}
       </div>
       <div style={styles.flexBottom}>
         <p style={styles.flexBottomText}>
-          If you think this is an error, please contact us at:
-          <br />
-          <a
-            href="mailto:support@syncano.com"
-            style={styles.textLink}
-          >
-            support@syncano.com
-          </a>
+          {bottomText || defaultBottomText}
         </p>
       </div>
     </div>

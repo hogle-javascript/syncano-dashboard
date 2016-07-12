@@ -38,19 +38,17 @@ Start local dev version (available at https://localhost:8080/)
 
 # Social login
 
-Social login requires proper configuration of env variables with newtork ids e.g:
+Social login requires proper configuration of env variables with network ids e.g:
 
     $ export FACEBOOK_ID='xx'
     $ export GOOGLE_ID='xx'
     $ export GITHUB_ID='xx'
-    $ export OAUTH_PROXY_URL='xx'
 
 or if you are using `fish` shell:
 
     $ set -g -x FACEBOOK_ID xx
     $ set -g -x GOOGLE_ID xx
     $ set -g -x GITHUB_ID xx
-    $ set -g -x OAUTH_PROXY_URL xx
 
 
 # Icons
@@ -58,7 +56,7 @@ or if you are using `fish` shell:
 We are using set of [Material Design Icons](http://materialdesignicons.com/).
 Icons are attached as font in static assets `src/assets` so if you want to rebuild whole font just use npm command:
 
-    $ npm run-script iconfont
+    $ npm run iconfont
 
 and commit your changes.
 
@@ -66,37 +64,44 @@ and commit your changes.
 # E2E Testing
 
 We are using [nightwatchjs](http://nightwatchjs.org/) for e2e testing.
-**nightwatchjs** requires few binary files which can be installed via proper NPM command:
 
-    $ npm run-script e2e-setup
+For selenium to start you will also need:
+
+* [Java](https://java.com/en/download/)
+* [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Chrome](https://www.google.com/chrome/)
 
 You'll also need to configure env variables for the tests to work locally:
 
     $ export NIGHTWATCH_EMAIL="xx"
     $ export NIGHTWATCH_PASSWORD="xx"
     $ export NIGHTWATCH_ACCOUNT_KEY="xx"
+    $ export STRIPE_PUBLISHABLE_KEY="xx"
 
-Or for some tests (they are being rewrited):
-
-    $ npm run-script e2e-create-accounts
-
-This will create set of three accounts for tests (Accounts will be deleted after 1h of no activity).
-
-
-
-If you are ready just run dev server:
+If you are ready just run dev server on first console:
 
     $ npm start
 
-and start testing:
+and start testing by typing this into second console:
 
-    $ npm run-script e2e
+    $ npm run e2e
 
+If you want only one test tag to run use for example:
 
-If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` e2e line, so that it looks like this:
+    $ npm run e2e class
 
-    "e2e": "nightwatch --skiptags classes",
+This will run only tests with tag = class.
+
+All accounts used for e2e testing will be deleted after 2h of no activity :fire: !
+
+If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` and then `e2e-local` line, so that it looks like this:
+
+    "e2e-local": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins",
 
 Tests will continue to run but the classes tests will be skipped. Refer to the test files for the appropriate tag name.
 
+# E2E Skipping
 
+If you want skip E2E tests because of valid reason, for example only updating text or README you can add [e2e-skip] tag to your commit message.
+It will skip all e2e tests, only starting lint.
+Please do not overuse it !

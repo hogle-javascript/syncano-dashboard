@@ -260,7 +260,6 @@ export default Reflux.createStore({
     this.token = payload.account_key;
     localStorage.setItem('token', payload.account_key);
     this.connection.setAccountKey(payload.account_key);
-    this.router.push({ name: 'dashboard' });
   },
 
   onLogout() {
@@ -276,7 +275,8 @@ export default Reflux.createStore({
     Raven.setUserContext();
     window.analytics.identify();
     this.trigger(this);
-    this.router.push('/login');
+
+    this.router.push({ pathname: '/login', query: _.merge(this.location.query, { next: this.location.pathname }) });
   },
 
   isAuthenticated() {

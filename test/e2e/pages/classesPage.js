@@ -21,7 +21,7 @@ export default {
       selector: 'input[name=fieldName]'
     },
     createModalDropdownType: {
-      selector: '//div[@class="fieldType-dropdown"]',
+      selector: '//div[@class="fieldType-dropdown"]/div/div',
       locateStrategy: 'xpath'
     },
     createModalDescriptionInput: {
@@ -32,7 +32,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addButton: {
-      selector: '(//span[text()="Add"])[2]',
+      selector: '//table//button',
       locateStrategy: 'xpath'
     },
     classTableRows: {
@@ -106,6 +106,10 @@ export default {
     },
     deleteButton: {
       selector: '//div[text()="Delete"]',
+      locateStrategy: 'xpath'
+    },
+    summaryDialogCloseButton: {
+      selector: '//span[@class="synicon-close"]',
       locateStrategy: 'xpath'
     }
   }

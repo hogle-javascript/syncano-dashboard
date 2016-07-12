@@ -9,6 +9,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 import ClassesActions from '../Classes/ClassesActions';
 import ScriptsStore from '../Scripts/ScriptsStore';
 import ClassesStore from '../Classes/ClassesStore';
+import TriggerSummaryDialogActions from './TriggerSummaryDialogActions';
 
 export default Reflux.createStore({
   listenables: TriggersActions,
@@ -80,6 +81,7 @@ export default Reflux.createStore({
   onCreateTriggerCompleted() {
     console.debug('TriggerDialogStore::onCreateTriggerCompleted');
     this.dismissDialog();
+    TriggerSummaryDialogActions.showDialog();
     TriggersActions.fetchTriggers();
   },
 

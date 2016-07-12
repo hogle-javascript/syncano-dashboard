@@ -14,7 +14,7 @@ import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
 import { FlatButton, IconButton, RaisedButton, TextField } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
-import { Billing, Container, Loading, Color, Dialog, InnerToolbar, UpgradeButton } from '../../common/';
+import { Billing, Container, Loading, Dialog, InnerToolbar, UpgradeButton } from '../../common/';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 
@@ -51,7 +51,8 @@ export default Radium(React.createClass({
   },
 
   componentDidMount() {
-    Actions.fetch();
+    Actions.fetchBillingProfile();
+    Actions.fetchBillingSubscriptions();
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -78,17 +79,38 @@ export default Radium(React.createClass({
         marginRight: 8,
         display: 'flex',
         justifyContent: 'center'
+      },
+      smallText: {
+        marginTop: 3,
+        color: 'rgb(170, 170, 170)',
+        fontSize: 12
+      },
+      limitsContainer: {
+        display: 'flex',
+        alignItems: 'baseline'
+      },
+      limitsSymbol: {
+        position: 'relative',
+        top: -1,
+        paddingRight: 4
       }
     };
   },
 
   handleCancelCancelProductionPlan() {
     this.hideDialogs(true);
-    this.setupToggles();
   },
 
   handleCancelProductionPlan() {
-    Actions.cancelSubscriptions(this.state.subscriptions.map((item) => item.id));
+    const subscriptionIDs = _.compact(_.map(this.state.subscriptions, (item) => {
+      if (item.plan === 'builder') {
+        return false;
+      }
+
+      return item.id;
+    }));
+
+    Actions.cancelSubscriptions(subscriptionIDs);
   },
 
   handleShowPlanDialog() {
@@ -97,7 +119,6 @@ export default Radium(React.createClass({
   },
 
   handlePlanDialogDismiss() {
-    this.setupToggles();
     Actions.fetch();
   },
 
@@ -119,14 +140,14 @@ export default Radium(React.createClass({
         ref: 'cancelProductionPlan',
         title: 'Cancel Production Plan',
         actions: [
-          <RaisedButton
+          <FlatButton
             style={{ marginRight: 10 }}
-            primary={true}
-            label="No, I want to keep my plan."
+            label="Go Back"
             onTouchTap={this.handleCancelCancelProductionPlan}
           />,
-          <FlatButton
-            label="Yes, I want to cancel."
+          <RaisedButton
+            label="Yes, I want to cancel"
+            primary={true}
             onTouchTap={this.handleCancelProductionPlan}
           />
         ],
@@ -134,18 +155,6 @@ export default Radium(React.createClass({
         children: ['Are you sure you want to cancel your Production plan?']
       }
     }];
-  },
-
-  setupToggles() {
-    const plan = Store.getPlan();
-    const isPlanCanceled = _.isBoolean(Store.isPlanCanceled());
-    const toggleDict = {
-      builder: false,
-      free: true,
-      'paid-commitment': isPlanCanceled
-    };
-
-    this.refs.toggle.setToggled(toggleDict[plan]);
   },
 
   renderMainDesc() {
@@ -158,7 +167,7 @@ export default Radium(React.createClass({
 
     if (plan === 'builder') {
       return (
-        <div>
+        <div className="vm-5-b">
           <div style={{ marginBottom: 16 }}>It does not cost you anything but there are limits:</div>
           <div>
             <Limits data={Store.getLimitsData('default', plan)} />
@@ -167,11 +176,12 @@ export default Radium(React.createClass({
       );
     } else if (plan === 'paid-commitment') {
       return (
-        <div>
-          <div style={styles.mainDesc}>
-            <div style={{ lineHeight: '48px' }}>
-              Current plan <strong>${Store.getTotalPlanValue('default')}</strong>:
-            </div>
+        <div className="vm-5-b">
+          <div className="vm-1-b">
+            Current plan <strong>${Store.getTotalPlanValue('default')}</strong>:
+            {(Store.isNewSubscriptionVisible() || Store.isPlanCanceled()) && <div style={styles.smallText}>
+              will expire at the end of the month
+            </div>}
           </div>
           <div>
             <Limits data={Store.getLimitsData('default', plan)} />
@@ -181,53 +191,47 @@ export default Radium(React.createClass({
     }
   },
 
-  renderCommment() {
+  renderComment() {
     const styles = this.getStyles();
     const plan = Store.getPlan();
 
     if (plan === 'builder') {
       return (
-        <div>
+        <div className="vm-5-b">
           If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
           If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
         </div>
       );
-    } else if (plan === 'paid-commitment') {
-      if (Store.isNewSubscription()) {
-        const subscription = this.state.subscriptions[1];
+    }
+
+    if (plan === 'paid-commitment') {
+      if (Store.isNewSubscriptionVisible()) {
+        const subscription = _.last(this.state.subscriptions);
         const total = Store.getTotalPlanValue(subscription);
         const limitsData = Store.getLimitsData(subscription, plan);
 
-        let toolTip = (
-          <div style={{ whiteSpace: 'normal', textAlign: 'left', width: 250 }}>
-            Your current plan will expire at the end of the month and your new plan
-            will begin on {Moment(subscription.start).format('LL')}
-          </div>
-        );
-
         return (
-          <div>
+          <div className="vm-5-b">
             <div style={styles.mainDesc}>
-              <div style={{ lineHeight: '48px' }}>New plan <strong>${total}</strong>:</div>
-              <IconButton
-                iconClassName="synicon-information-outline"
-                iconStyle={{ color: Color.getColorByName('blue', 'light') }}
-                tooltip={toolTip}
-              />
+              <div className="vm-1-b">
+                New plan <strong>${total}</strong>:
+                <div style={styles.smallText}>will begin on {Moment(subscription.start).format('LL')}</div>
+              </div>
             </div>
-            <div>
+            <div className="vm-2-b">
               <Limits data={limitsData} />
             </div>
           </div>
         );
       }
-      return (
-        <div>
-          You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
-          Your new monthly fixed price will start from next billing period.
-        </div>
-      );
     }
+
+    return (
+      <div style={{ lineHeight: '1.5em' }}>
+        You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>. Your new
+        monthly fixed price will start from next billing period.
+      </div>
+    );
   },
 
   renderLimitsForm() {
@@ -256,26 +260,32 @@ export default Radium(React.createClass({
           <div style={styles.heading}>Limits</div>
           <div className="row">
             <div className="col-md-8 col-lg-5">
-              <TextField
-                ref="soft_limit"
-                value={this.state.soft_limit}
-                onChange={(event, value) => this.setState({ soft_limit: value })}
-                errorText={this.getValidationMessages('soft_limit').join(' ')}
-                name="soft_limit"
-                floatingLabelText="Soft Limit"
-                fullWidth={true}
-              />
+              <div style={styles.limitsContainer}>
+                <div style={styles.limitsSymbol}>$</div>
+                <TextField
+                  ref="soft_limit"
+                  value={this.state.soft_limit}
+                  onChange={(event, value) => this.setState({ soft_limit: value })}
+                  errorText={this.getValidationMessages('soft_limit').join(' ')}
+                  name="soft_limit"
+                  floatingLabelText="Soft Limit"
+                  fullWidth={true}
+                />
+              </div>
             </div>
             <div className="col-md-8 col-lg-5">
-              <TextField
-                ref="hard_limit"
-                value={this.state.hard_limit}
-                onChange={(event, value) => this.setState({ hard_limit: value })}
-                errorText={this.getValidationMessages('hard_limit').join(' ')}
-                name="hard_limit"
-                floatingLabelText="Hard Limit"
-                fullWidth={true}
-              />
+              <div style={styles.limitsContainer}>
+                <div style={styles.limitsSymbol}>$</div>
+                <TextField
+                  ref="hard_limit"
+                  value={this.state.hard_limit}
+                  onChange={(event, value) => this.setState({ hard_limit: value })}
+                  errorText={this.getValidationMessages('hard_limit').join(' ')}
+                  name="hard_limit"
+                  floatingLabelText="Hard Limit"
+                  fullWidth={true}
+                />
+              </div>
             </div>
             <div className="col-flex-1">
               <div className="vp-3-t" style={{ display: 'flex', alignItems: 'center' }}>
@@ -318,6 +328,23 @@ export default Radium(React.createClass({
         <UpgradeButton
           label="Upgrade my plan"
           onTouchTap={this.handleShowPlanDialog}
+        />
+      </div>
+    );
+  },
+
+  renderCancelSubscriptionButton() {
+    const plan = Store.getPlan();
+
+    if (plan === 'builder' || plan === 'free' || Store.isPlanCanceled()) {
+      return null;
+    }
+
+    return (
+      <div style={{ marginTop: 8, textAlign: 'center' }}>
+        <FlatButton
+          label="Cancel my plan"
+          onTouchTap={() => this.showDialog('cancelProductionPlan')}
         />
       </div>
     );
@@ -384,6 +411,7 @@ export default Radium(React.createClass({
               ${covered} plan + ${overage} overage
             </div>
             {this.renderUpgradeButton()}
+            {this.renderCancelSubscriptionButton()}
           </div>
         </div>
       </div>
@@ -431,12 +459,8 @@ export default Radium(React.createClass({
         <Container>
           <div className="row vp-6-b">
             <div className="col-flex-1">
-              <div className="vm-3-t">
-                {this.renderMainDesc()}
-              </div>
-              <div className="vm-3-t">
-                {this.renderCommment()}
-              </div>
+              {this.renderMainDesc()}
+              {this.renderComment()}
             </div>
             <div
               className="col-md-14"

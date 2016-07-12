@@ -1,6 +1,5 @@
-/* eslint-disable */
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import Reflux from 'reflux';
 
 import Store from './DataEndpointSummaryDialogStore';
@@ -8,17 +7,17 @@ import ClassesStore from './../Classes/ClassesStore';
 import DataEndpointsStore from './DataEndpointsStore';
 import SessionStore from '../Session/SessionStore';
 
-import {DialogMixin} from '../../mixins';
-import {CodePreview, Dialog, Notification, Show} from '../../common/';
-import {Card, CardTitle, CardText, RaisedButton} from 'material-ui';
-import {colors as Colors} from 'material-ui/styles/'
+import { DialogMixin } from '../../mixins';
+import { CodePreview, Dialog, Notification, Show, Loading } from '../../common/';
+import { Card, CardTitle, CardText, RaisedButton } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 export default React.createClass({
   displayName: 'DataEndpointSummaryDialog',
 
   contextTypes: {
     params: React.PropTypes.object
-  },  
+  },
 
   mixins: [
     Reflux.connect(Store),
@@ -27,36 +26,38 @@ export default React.createClass({
   ],
 
   render() {
-    const {params} = this.context;
-    const {open, dataEndpoints} = this.state;
+    const { params } = this.context;
+    const { open, dataEndpoints } = this.state;
     const item = DataEndpointsStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
-    const itemClass = item ? ClassesStore.getClassByName(item.class) : null;
+    const showSummaryDialog = (!item || !currentInstance || !token || dataEndpoints.isLoading);
+    const itemClass = item && ClassesStore.getClassByName(item.class);
+    const itemClassSchema = itemClass && itemClass.schema;
 
-    console.log(token);
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title="You've just created a Data Endpoint!"
-        titleStyle={{paddingLeft: 72}}
+        title={!showSummaryDialog ? "You've just created a Data Endpoint!" : ''}
+        titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
         loading={dataEndpoints.isLoading}
-        open={open}>
-        <div style={{position: 'absolute', top: 0, left: 24}}>
-          <span
-            className="synicon-socket-data"
-            style={{
-              color: Colors.green400,
-              fontSize: 32
-            }} />
-        </div>
-        {!item || !currentInstance || !token || dataEndpoints.isLoading ? null : (
+        open={open}
+      >
+        {!showSummaryDialog && (
+          <div style={{ position: 'absolute', top: 0, left: 24 }}>
+            <span
+              className="synicon-socket-data"
+              style={{ color: Colors.green400, fontSize: 32 }}
+            />
+          </div>
+        )}
+        {showSummaryDialog ? <Loading show={true} /> : (
           <div>
             <Dialog.ContentSection>
               <div className="col-flex-1">
-                <div style={{fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)'}}>
+                <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
                   <p>
                     Data Endpoint you just created can always be modified later. You can change which Data Object fields
                     should be hidden, which should stay visible and which reference fields to expand. You
@@ -65,7 +66,7 @@ export default React.createClass({
                 </div>
               </div>
             </Dialog.ContentSection>
-            <Show if={!itemClass.schema || !itemClass.schema.length}>
+            <Show if={!itemClassSchema || !itemClassSchema.length}>
               <Dialog.ContentSection>
                 <div className="col-flex-1">
                   <Notification>
@@ -74,10 +75,11 @@ export default React.createClass({
                     <Link
                       to={{
                         name: 'classEdit',
-                        params: {...params, className: item.class, action: 'edit'}
+                        params: { ...params, className: item.class, action: 'edit' }
                       }}
-                      style={{fontWeight: 700}}>
-                      {` clicking here to add custom fields for your Data Objects.`}
+                      style={{ fontWeight: 700 }}
+                    >
+                      {' clicking here to add custom fields for your Data Objects.'}
                     </Link>
                   </Notification>
                 </div>
@@ -88,11 +90,11 @@ export default React.createClass({
                 <Card>
                   <CardTitle title="Preview Data" />
                   <CardText>
-                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                      <div style={{flex: 1}}>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                      <div style={{ flex: 1 }}>
                         Click the link on the right to open your Endpoint in a new browser tab.
                       </div>
-                      <div style={{paddingLeft: 20}}>
+                      <div style={{ paddingLeft: 20 }}>
                         <RaisedButton
                           primary={true}
                           label="Open Endpoint in new tab"
@@ -100,7 +102,8 @@ export default React.createClass({
                           target="_blank"
                           href={`
                             ${SYNCANO_BASE_URL.slice(0, -1)}${item.links.get}?api_key=${token}
-                          `} />
+                          `}
+                        />
                       </div>
                     </div>
                   </CardText>
@@ -110,18 +113,24 @@ export default React.createClass({
             <Dialog.ContentSection>
               <div className="col-flex-1">
                 <Card>
-                  <CardTitle title="Use in your App"/>
+                  <CardTitle title="Use in your App" />
                   <CardText>
                     <p>Choose your favorite language below and copy the code.</p>
                     <CodePreview>
                       <CodePreview.Item
                         title="cURL"
                         languageClassName="markup"
-                        code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"https://api.syncano.io/v1.1/instances/${currentInstance.name}/endpoints/data/${item.name}/get/"`} />
+                        code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"${SYNCANO_BASE_URL}v1.1/instances/` +
+                        `${currentInstance.name}/endpoints/data/${item.name}/get/"`}
+                      />
                       <CodePreview.Item
                         title="JavaScript"
                         languageClassName="javascript"
-                        code={`DataEndpoint\n  .please()\n  .fetchData({name: '${item.name}', instanceName: '${currentInstance.name}'})\n  .then(function(dataObjects) {});`} />
+                        code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
+                        `'${token}'});\nvar DataEndpoint = connection.DataEndpoint;\n\n` +
+                        `DataEndpoint\n  .please()\n  .fetchData({name: '${item.name}', instanceName: '` +
+                        `${currentInstance.name}'})\n  .then(function(dataObjects) {});`}
+                      />
                     </CodePreview>
                   </CardText>
                 </Card>

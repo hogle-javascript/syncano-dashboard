@@ -13,6 +13,13 @@ export default Radium(React.createClass({
     };
   },
 
+  getDefaultProps() {
+    return {
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right'
+    };
+  },
+
   getStyles() {
     return {
       root: {
@@ -81,8 +88,6 @@ export default Radium(React.createClass({
       <Tooltip
         style={styles.tooltip}
         show={tooltipShowed}
-        verticalPosition="bottom"
-        horizontalPosition="right"
         {...this.props}
       />
     );

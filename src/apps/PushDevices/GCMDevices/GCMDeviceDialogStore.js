@@ -2,6 +2,7 @@ import Reflux from 'reflux';
 
 // Utils & Mixins
 import { StoreFormMixin, DialogStoreMixin, StoreLoadingMixin } from '../../../mixins';
+import GCMDeviceSummaryDialogActions from './GCMDeviceSummaryDialogActions';
 
 // Stores & Actions
 import Actions from './GCMDevicesActions';
@@ -29,6 +30,7 @@ export default Reflux.createStore({
   onCreateDeviceCompleted() {
     console.debug('GCMDeviceDialogStore::onCreateDeviceCompleted');
     this.dismissDialog();
+    GCMDeviceSummaryDialogActions.showDialog();
     Actions.fetchDevices();
     this.trigger(this.data);
   },

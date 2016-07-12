@@ -2,15 +2,16 @@ import Reflux from 'reflux';
 import moment from 'moment';
 import _ from 'lodash';
 
-import { WaitForStoreMixin } from '../../mixins';
+import { StoreLoadingMixin } from '../../mixins';
 
-import SessionActions from '../Session/SessionActions';
 import Actions from './ProfileBillingPlanActions';
 
 export default Reflux.createStore({
   listenables: Actions,
 
-  mixins: [WaitForStoreMixin],
+  mixins: [
+    StoreLoadingMixin
+  ],
 
   getInitialState() {
     return {
@@ -31,14 +32,16 @@ export default Reflux.createStore({
 
   init() {
     this.data = this.getInitialState();
-    this.waitFor(
-      SessionActions.setUser,
-      this.refreshData
-    );
+    this.setLoadingStates();
+  },
+
+  clearData() {
+    this.data = this.getInitialState();
+    this.trigger(this.data);
   },
 
   refreshData() {
-    console.debug('ClassesStore::refreshData');
+    console.debug('ProfileBillingPlanStore::refreshData');
 
     const join = this.joinTrailing(
       Actions.fetchBillingProfile.completed,
@@ -70,15 +73,61 @@ export default Reflux.createStore({
     this.data.subscriptions = subscriptions;
   },
 
-  isPlanCanceled() {
-    if (!this.data.subscriptions || this.data.subscriptions.length > 1) {
-      return false;
-    }
-    return this.data.subscriptions[0].end || false;
+  getActiveSubscriptionEndDate() {
+    const activeSubscription = _.last(this.data.subscriptions);
+
+    return activeSubscription && activeSubscription.end;
   },
 
   isNewSubscription() {
-    return (this.data.subscriptions && this.data.subscriptions.length > 1);
+    const { subscriptions } = this.data;
+    const lastSubscription = _.last(subscriptions);
+
+    if (!subscriptions || subscriptions.length < 3) {
+      return false;
+    }
+
+    if (_.isString(lastSubscription.start) && !_.isString(lastSubscription.end)) {
+      return true;
+    }
+
+    return false;
+  },
+
+  isNewSubscriptionSame() {
+    const { subscriptions } = this.data;
+
+    if (!subscriptions || !this.isNewSubscription()) {
+      return false;
+    }
+
+    const newPricing = _.last(subscriptions).pricing;
+    const pricing = _.nth(subscriptions, -2).pricing;
+
+    if (newPricing.api.included === pricing.api.included && newPricing.cbx.included === pricing.cbx.included) {
+      return true;
+    }
+
+    return false;
+  },
+
+  isNewSubscriptionVisible() {
+    return (this.isNewSubscription() && !this.isNewSubscriptionSame());
+  },
+
+  isPlanCanceled() {
+    const { subscriptions } = this.data;
+    const lastSubscription = _.last(subscriptions);
+
+    if (this.isNewSubscription() || !subscriptions) {
+      return false;
+    }
+
+    if (_.isString(lastSubscription.start) && _.isString(lastSubscription.end)) {
+      return true;
+    }
+
+    return false;
   },
 
   getBuilderLimits() {
@@ -89,7 +138,7 @@ export default Reflux.createStore({
   },
 
   getPlan() {
-    if (!this.data.profile) {
+    if (!this.data.profile || !this.data.profile.subscription) {
       return null;
     }
 
@@ -105,7 +154,6 @@ export default Reflux.createStore({
 
     return planDict[this.getPlan()];
   },
-
 
   getLimitsData(subscription, plan) {
     if (plan === 'builder') {
@@ -184,29 +232,19 @@ export default Reflux.createStore({
   },
 
   onFetchBillingProfileCompleted(payload) {
-    this.data.isLoading = false;
     this.setProfile(payload);
   },
 
   onFetchBillingSubscriptionsCompleted(payload) {
-    this.data.isLoading = false;
     this.setSubscriptions(payload);
   },
 
   onCancelSubscriptionsCompleted() {
-    this.data.isLoading = false;
-    this.data.hideDialogs = true;
-    this.refreshData();
-  },
-
-  onCancelNewPlanCompleted() {
-    this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
   },
 
   onSubscribePlanCompleted() {
-    this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
   },

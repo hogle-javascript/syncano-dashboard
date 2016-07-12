@@ -57,6 +57,10 @@ export default {
     channelModalDescriptionInput: {
       selector: '//textarea[@name="description"]',
       locateStrategy: 'xpath'
+    },
+    summaryDialogCloseButton: {
+      selector: '//span[@class="synicon-close"]',
+      locateStrategy: 'xpath'
     }
   }
 };

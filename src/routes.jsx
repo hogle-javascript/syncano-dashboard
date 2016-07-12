@@ -19,6 +19,7 @@ import NotFoundPage from './pages/notfound';
 import PushDevicesPage from './pages/pushDevices';
 import ExpiredAccountPage from './pages/expiredAccount';
 import FailedPaymentPage from './pages/failedPayment';
+import MaintenancePage from './pages/maintenance';
 
 // Apps
 import Account from './apps/Account';
@@ -51,19 +52,30 @@ import Schedules from './apps/Schedules';
 import PushNotifications from './apps/PushNotifications';
 import PushDevices from './apps/PushDevices';
 import Usage from './apps/Usage';
+import PushMessages from './apps/PushMessages';
+import DemoApps from './apps/DemoApps';
 
 function redirectToLogin(nextState, replace) {
   if (!auth.loggedIn()) {
-    replace({
-      pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
-    });
+    const query = _.omit(nextState.location.query, 'next');
+
+    if (nextState.location.query.next) {
+      replace({
+        name: 'login',
+        state: { nextPathname: nextState.location.pathname },
+        query: _.merge({ next: nextState.location.pathname }, query)
+      });
+    } else {
+      replace({ name: 'login', query: _.merge({ next: nextState.location.pathname }, query) });
+    }
   }
 }
 
 function redirectToDashboard(nextState, replace) {
   if (auth.loggedIn()) {
-    replace('/');
+    replace({
+      pathname: '/'
+    });
   }
 }
 
@@ -119,7 +131,6 @@ export default (
     onEnter={onRootEnter}
     path="/"
   >
-
     <Route
       name="login"
       path="login"
@@ -184,16 +195,16 @@ export default (
       />
 
       <Route
+        name="maintenance"
+        component={MaintenancePage}
+        path="maintenance"
+      />
+
+      <Route
         name="instance"
         component={InstancePage}
         path="instances/:instanceName"
       >
-
-        <Redirect
-          from="prolong"
-          to="sockets"
-          query={{ showProlongDialog: true }}
-        />
 
         {/* Sockets */}
         <Route
@@ -258,13 +269,13 @@ export default (
           path="push-notifications"
         >
 
-          {/* Push Notification Devices */}
           <Route
             name="push-notification-config"
             path="config"
             component={PushNotifications}
           />
 
+          {/* Push Notification Devices */}
           <Route
             name="push-notification-devices"
             path="devices"
@@ -291,10 +302,33 @@ export default (
             />
           </Route>
 
-          <Redirect
-            from="/instances/:instanceName/push-notifications"
-            to="push-notification-config"
-          />
+          <Route
+            name="push-notification-messages"
+            path="messages"
+            component={PushMessages}
+          >
+            <Route
+              name="all-push-notification-messages"
+              path="all"
+              component={PushMessages.AllList}
+            />
+            <Route
+              name="apns-messages"
+              path="apns"
+              component={PushMessages.APNSList}
+            />
+            <Route
+              name="gcm-messages"
+              path="gcm"
+              component={PushMessages.GCMList}
+            />
+            <Redirect
+              from="/instances/:instanceName/push-notifications/messages"
+              to="all-push-notification-messages"
+            />
+          </Route>
+
+          <IndexRedirect to="/instances/:instanceName/push-notifications/config/" />
         </Route>
 
         {/* Backup & Restore */}
@@ -520,6 +554,13 @@ export default (
         />
         <IndexRoute component={Solutions.ListView} />
       </Route>
+
+      {/* Demo Apps */}
+      <Route
+        name="demo-apps"
+        path="/demo-apps"
+        component={DemoApps}
+      />
 
       <IndexRoute component={Instances} />
     </Route>

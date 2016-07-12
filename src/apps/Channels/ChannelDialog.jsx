@@ -100,8 +100,7 @@ export default React.createClass({
               handy when you’d like to create e.g. a chat application.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Custom publishing">
-              It allows your Users to be able to send custom messages on a Channel. This functionality might come in
-              handy when you’d like.
+              It allows your Users to be able to send custom messages on a Channel.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/realtime-communication">

@@ -9,7 +9,8 @@ import Store from './ChannelsStore';
 
 // Components
 import ListItem from './ChannelsListItem';
-import { ColumnList, Dialog, Lists } from '../../common/';
+import { colors as Colors } from 'material-ui/styles';
+import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -65,7 +66,28 @@ export default React.createClass({
   },
 
   render() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems, ...other } = this.props;
+    const {
+      handleTitleClick,
+      handleSelectAll,
+      handleUnselectAll,
+      getCheckedItems,
+      items,
+      isLoading,
+      ...other
+    } = this.props;
+
+    if ((!items || !items.length) && !isLoading) {
+      return (
+        <EmptyView
+          iconClassName="synicon-socket-channel"
+          iconColor={Colors.blue500}
+          title="Channel"
+          description="Create channel which is a way of providing realtime communication functionality."
+          docsUrl="http://docs.syncano.io/docs/realtime-communication"
+          handleClickAdd={Actions.showDialog}
+        />
+      );
+    }
 
     return (
       <Lists.Container>
@@ -115,6 +137,8 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...other}
+          isLoading={isLoading}
+          items={items}
           key="channels-list"
           renderItem={this.renderItem}
         />

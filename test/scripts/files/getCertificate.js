@@ -1,17 +1,15 @@
-'use strict';
-var Syncano = require('syncano');
-var fs = require ('fs');
-var https = require ('https');
+import Syncano from 'syncano';
+import fs from 'fs';
+import https from 'https';
 
-function getCertFile() {
-  const accountKey = process.env.NIGHTWATCH_ACCOUNT_KEY;
+const getCertFile = () => {
   const baseUrl = 'https://api.syncano.rocks';
   const certName = 'cert.p12';
   const credentials = {
     email: process.env.NIGHTWATCH_EMAIL,
     password: process.env.NIGHTWATCH_PASSWORD
   };
-  let connection = Syncano({
+  const connection = Syncano({
     baseUrl,
     defaults: {
       instanceName: 'long-frost-7585',
@@ -28,10 +26,10 @@ function getCertFile() {
       return connection
         .DataObject
         .please()
-        .get({id: 3163});
+        .get({ id: 3163 });
     })
     .then((dataObject) => {
-      let certFile = fs.createWriteStream(certName);
+      const certFile = fs.createWriteStream(certName);
 
       https.get(dataObject.cert.value, (resp) => {
         resp.on('data', (data) => {
@@ -39,11 +37,11 @@ function getCertFile() {
         });
 
         resp.on('end', () => {
-          return console.log(`Dowloaded: ./${certName}`);
+          return console.log(`Downloaded: ./${certName}`);
         });
       });
     });
   return;
-}
+};
 
-module.exports = getCertFile;
+export default getCertFile;

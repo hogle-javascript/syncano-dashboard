@@ -18,6 +18,7 @@ import { Container } from '../../common/';
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import ScriptEndpointsList from './ScriptEndpointsList';
 import ScriptEndpointDialog from './ScriptEndpointDialog';
+import ScriptEndpointSummaryDialog from './ScriptEndpointSummaryDialog';
 
 export default React.createClass({
   displayName: 'ScriptEndpoints',
@@ -40,6 +41,7 @@ export default React.createClass({
       <div>
         <Helmet title="Script Endpoints" />
         <ScriptEndpointDialog />
+        <ScriptEndpointSummaryDialog />
 
         <SocketsInnerToolbar>
           <RaisedButton

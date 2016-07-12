@@ -43,7 +43,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalScript: {
-      selector: '//div[@class="script-dropdown"]',
+      selector: '//div[@class="script-dropdown"]/div/div',
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {
@@ -76,6 +76,10 @@ export default {
     },
     runOnceAYear: {
       selector: '//div[text()="Run once a year at midnight"]',
+      locateStrategy: 'xpath'
+    },
+    summaryDialogCloseButton: {
+      selector: '//span[@class="synicon-close"]',
       locateStrategy: 'xpath'
     }
   }

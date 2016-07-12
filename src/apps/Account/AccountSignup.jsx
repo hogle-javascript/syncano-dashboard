@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { withRouter, Link } from 'react-router';
+import _ from 'lodash';
 
 // Utils
 import { FormMixin } from '../../mixins';
@@ -38,37 +39,33 @@ const AccountSignup = React.createClass({
   },
 
   componentWillUpdate() {
-    const { router, location } = this.props;
+    const { location, router } = this.props;
 
-    // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
       let queryNext = location.query.next || null;
       let lastInstance = localStorage.getItem('lastInstance') || null;
 
-      if (queryNext !== null) {
-        router.replace(queryNext);
-      } else if (lastInstance !== null) {
-        router.replace('instance', { instanceName: lastInstance });
-      } else {
-        SessionStore
-          .getConnection()
-          .Instance
-          .please()
-          .list()
-          .then((instances) => {
-            if (instances.length > 0) {
-              let instance = instances[0];
-
-              localStorage.setItem('lastInstance', instance.name);
-              router.replace('instance', { instanceName: instance.name });
-            } else {
-              router.replace('sockets');
-            }
-          })
-          .catch(() => {
-            router.replace('sockets');
-          });
-      }
+      SessionStore
+        .getConnection()
+        .Instance
+        .please()
+        .list()
+        .then((instances) => {
+          if (_.includes(_.map(instances, (instance) => instance.name), lastInstance)) {
+            router.replace({
+              pathname: queryNext,
+              query: _.omit(location.query, 'next')
+            });
+          } else {
+            router.replace({
+              name: 'instances',
+              query: _.omit(location.query, 'next')
+            });
+          }
+        })
+        .catch(() => {
+          router.replace('instances');
+        });
     }
 
     let invKey = location.query.invitation_key || null;
@@ -94,7 +91,6 @@ const AccountSignup = React.createClass({
 
   handleSocialLogin(network) {
     SessionStore.showWelcomeDialog();
-    SessionStore.setSignUpMode();
     Actions.socialLogin(network);
   },
 
@@ -166,7 +162,7 @@ const AccountSignup = React.createClass({
 
         <SocialAuthButtonsList
           mode="signup"
-          networks={Constants.SOCIAL_NETWORKS}
+          networks={Constants.SOCIAL_NETWORKS_SIGNUP}
           onSocialLogin={this.handleSocialLogin}
         />
 

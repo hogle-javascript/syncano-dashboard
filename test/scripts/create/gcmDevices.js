@@ -1,36 +1,26 @@
-'use strict';
+import utils from '../../e2e/utils';
 
-function createTestGCMDevices(tempAccount, gcmAmount) {
-  let gcmDevices = [];
-  let gcmDevicesNames = [];
+const createTestGCMDevices = (tempAccount, gcmAmount) => {
+  const gcmDevices = [];
+  const gcmDevicesNames = [];
 
-  function randomString(length) {
-    const possible = 'ABCDEFabcdef0123456789';
-    let apiKey = '';
-
-    for (let i = 0; i < length; i++) {
-      apiKey += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return apiKey;
-  }
-
-  for (var i = 0; i < gcmAmount; i++) {
+  for (let i = 0; i < gcmAmount; i++) {
     const label = 'android_' + Date.now() + i;
     gcmDevicesNames.push(label);
     gcmDevices.push(tempAccount.connection.GCMDevice({
       label,
-      registration_id: randomString(64)
+      registration_id: utils.randomString(64)
     }));
   }
 
   return tempAccount.connection.GCMDevice
     .please()
     .bulkCreate(gcmDevices)
-    .then((response) => {
+    .then(() => {
       tempAccount.tempGCMDevicesNames = gcmDevicesNames;
       return tempAccount;
     })
     .catch((error) => console.log(error));
-}
+};
 
-module.exports = createTestGCMDevices;
+export default createTestGCMDevices;

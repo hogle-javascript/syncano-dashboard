@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { withRouter, Link } from 'react-router';
+import _ from 'lodash';
 
 // Utils
 import { FormMixin } from '../../mixins';
@@ -15,7 +16,7 @@ import Constants from './AuthConstants';
 // Components
 import AccountContainer from './AccountContainer';
 import { TextField, RaisedButton } from 'material-ui';
-import { SocialAuthButtonsList } from '../../common/';
+import { SocialAuthButtonsList, Notification, Show } from '../../common/';
 
 const AccountLogin = React.createClass({
   displayName: 'AccountLogin',
@@ -40,35 +41,31 @@ const AccountLogin = React.createClass({
   componentWillUpdate() {
     const { location, router } = this.props;
 
-    // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
       let queryNext = location.query.next || null;
       let lastInstance = localStorage.getItem('lastInstance') || null;
 
-      if (queryNext !== null) {
-        router.replace(queryNext);
-      } else if (lastInstance !== null) {
-        router.replace({ name: 'instance', params: { instanceName: lastInstance } });
-      } else {
-        SessionStore
-          .getConnection()
-          .Instance
-          .please()
-          .list()
-          .then((instances) => {
-            if (instances.length > 0) {
-              let instance = instances[0];
-
-              localStorage.setItem('lastInstance', instance.name);
-              router.replace({ name: 'instance', params: { instanceName: instance.name } });
-            } else {
-              router.replace('sockets');
-            }
-          })
-          .catch(() => {
-            router.replace('sockets');
-          });
-      }
+      SessionStore
+        .getConnection()
+        .Instance
+        .please()
+        .list()
+        .then((instances) => {
+          if (_.includes(_.map(instances, (instance) => instance.name), lastInstance)) {
+            router.replace({
+              pathname: queryNext,
+              query: _.omit(location.query, 'next')
+            });
+          } else {
+            router.replace({
+              name: 'instances',
+              query: _.omit(location.query, 'next')
+            });
+          }
+        })
+        .catch(() => {
+          router.replace('instances');
+        });
     }
 
     let invKey = location.query.invitation_key || null;
@@ -91,6 +88,7 @@ const AccountLogin = React.createClass({
 
   render() {
     const { query } = this.props.location;
+    const { email, password, canSubmit } = this.state;
 
     return (
       <AccountContainer>
@@ -105,9 +103,17 @@ const AccountLogin = React.createClass({
           method="post"
         >
 
+          <div className="vm-2-b">
+            <Show if={this.getValidationMessages('detail').length}>
+              <Notification type="error">
+                {this.getValidationMessages('detail').join(' ')}
+              </Notification>
+            </Show>
+          </div>
+
           <TextField
             ref="email"
-            value={this.state.email}
+            value={email}
             onChange={(event, value) => this.setState({ email: value })}
             errorText={this.getValidationMessages('email').join(' ')}
             name="email"
@@ -119,7 +125,7 @@ const AccountLogin = React.createClass({
 
           <TextField
             ref="password"
-            value={this.state.password}
+            value={password}
             onChange={(event, value) => this.setState({ password: value })}
             errorText={this.getValidationMessages('password').join(' ')}
             type="password"
@@ -134,14 +140,14 @@ const AccountLogin = React.createClass({
             type="submit"
             label="Login"
             labelStyle={{ fontSize: '16px', lineHeight: '48px' }}
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
             style={{ boxShadow: 'none', height: '48px', width: '100%' }}
             primary={true}
           />
         </form>
 
         <SocialAuthButtonsList
-          networks={Constants.SOCIAL_NETWORKS}
+          networks={Constants.SOCIAL_NETWORKS_LOGIN}
           onSocialLogin={this.handleSocialLogin}
         />
 
