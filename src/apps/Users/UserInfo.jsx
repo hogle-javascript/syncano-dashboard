@@ -2,6 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import _ from 'lodash';
 import { colors as Colors } from 'material-ui/styles/';
+import sortObj from 'sort-object';
 
 export default Radium(React.createClass({
   displayName: 'UserInfo',
@@ -58,18 +59,19 @@ export default Radium(React.createClass({
 
   renderCustomFields() {
     const styles = this.getStyles();
-    const { profile } = this.props.user;
-    const userProfile = _.omit(profile, 'links');
+    const { profile, user_key } = this.props.user;
+    const userProfile = { user_key, ..._.omit(profile, 'links') };
 
-    const sortUserProfile = (map) => {
-      const keys = _.sortBy(_.keys(map), (a) => a);
-      const newMap = {};
-      _.each(keys, (k) => {
-        newMap[k] = map[k];
-      });
-      return newMap;
-    };
-    const userInfo = _.map(sortUserProfile(userProfile), (value, key) => {
+    const sortedUserProfile = sortObj(userProfile, {
+      sort(a, b) {
+        if (a === 'user_key') return -1;
+        if (b === 'user_key') return 1;
+
+        return a < b ? -1 : 1;
+      }
+    });
+
+    return _.map(sortedUserProfile, (value, key) => {
       return (
         <div style={styles.item}>
           {key}
@@ -77,7 +79,6 @@ export default Radium(React.createClass({
         </div>
        );
     });
-    return userInfo;
   },
 
   render() {
